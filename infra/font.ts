@@ -47,7 +47,7 @@ export const getTextStyleByDepth = (depth: number) => {
         }
     case 4:
         return {
-            fontSize: '0.6rem',
+            fontSize: '0.5rem',
             fontWeight: 400,
             marginTop: '0',
             marginBottom: '0.5rem'
