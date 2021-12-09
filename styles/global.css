@@ -1,0 +1,36 @@
+@charset "UTF-8";
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', helvetica, 'Apple SD Gothic Neo', sans-serif;
+  color: #222426;
+}
+
+.drawer {
+  width: 240px;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+.drawer .MuiDrawer-paper {
+  width: 240px;
+}
+
+.drawer .MuiListItemText-primary {
+  font-size: 0.9rem;
+}
+
+.drawer .MuiListItemIcon-root {
+  min-width: 40px;
+}
+
+.content {
+  width: 800px;
+  margin: auto;
+  margin-top: 150px;
+}
+
+.content .title {
+  font-size: 50px;
+  font-weight: 800;
+}
+/*# sourceMappingURL=global.css.map */
