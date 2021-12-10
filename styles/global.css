@@ -17,10 +17,17 @@ body {
 
 .drawer .MuiListItemText-primary {
   font-size: 0.9rem;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .drawer .MuiListItemIcon-root {
   min-width: 40px;
+}
+
+.drawer .MuiListItem-root {
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .content {

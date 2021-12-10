@@ -46,11 +46,11 @@ export const SidebarLayout: React.FC<{
                   className={classes.root}
               >
                   {
-                      MainStore.metaData.map(data => {
-                          if (data.isFolder) {
-                              return <Folder key={Math.random()} document={data} depth={0}/>
+                      MainStore.documents.map(document => {
+                          if (document.children.length > 0) {
+                              return <Folder key={Math.random()} document={document} depth={0}/>
                           } else {
-                              return <File key={Math.random()} document={data} depth={0}/>
+                              return <File key={Math.random()} document={document} depth={0}/>
                           }
                       })
                   }

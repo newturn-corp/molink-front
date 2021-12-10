@@ -11,7 +11,7 @@ export const File: React.FC<{
   }> = observer(({ document, depth }) => {
       const useStyles = makeStyles((theme) => ({
           nested: {
-              paddingLeft: theme.spacing(2 + depth * 2)
+              paddingLeft: theme.spacing(3.6 + depth * 2)
           }
       }))
       const classes = useStyles()

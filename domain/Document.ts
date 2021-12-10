@@ -1,17 +1,11 @@
 export default class Document {
     title: string
-    hasIcon: boolean
-    iconName: string
     order: number
-    isFolder: boolean
-    childs?: Document[]
+    children: Document[] = []
 
-    constructor (title: string, order: number, isFolder: boolean = false, hasIcon: boolean = false, iconName: string = '', childs: Document[] = []) {
+    constructor (title: string, order: number, children: Document[]) {
         this.title = title
-        this.hasIcon = hasIcon
-        this.iconName = iconName
         this.order = order
-        this.isFolder = isFolder
-        this.childs = childs
+        this.children = children.map(child => new Document(child.title, child.order, child.children))
     }
 }
