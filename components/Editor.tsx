@@ -13,7 +13,7 @@ export const Editor: React.FC<{
       const renderElement = useCallback(props => <BlockComponent {...props} />, [])
       const renderLeaf = useCallback(props => <BlockNoLeafComponent {...props} />, [])
       const editor = useMemo(() => withHistory(withReact(createEditor())), [])
-      if (ContentManager.content.length === 0) {
+      if (!ContentManager.content) {
           return <></>
       }
       return <div className={'contents'}>

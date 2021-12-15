@@ -7,7 +7,7 @@ import ContentAPI from '../api/ContentAPI'
 import Document from '../domain/Document'
 
 class ContentManager {
-    _content: any = []
+    _content: any = null
 
     get content () {
         return toJS(this._content)
@@ -27,11 +27,15 @@ class ContentManager {
     }
 
     async openDocument (document: Document) {
+        if (this.openedDocument && document.id === this.openedDocument.id) {
+            return
+        }
         if (!document.content) {
             document.content = await ContentAPI.getContentByDocument(document)
         }
-        this.openedDocument = document
+        console.log(document.content)
         this.content = document.content
+        this.openedDocument = document
     }
 
     async updateContent () {
@@ -62,10 +66,6 @@ class ContentManager {
         const keys = []
         if (e.shiftKey) {
             keys.push('shift')
-            if (e.key === 'Enter') {
-                e.preventDefault()
-                editor.insertText('\n')
-            }
         } else if (e.altKey) {
             keys.push('alt')
         } else if (e.ctrlKey) {
@@ -74,6 +74,7 @@ class ContentManager {
         keys.push(e.key)
         switch (keys.join('+')) {
         case 'shift+Enter':
+            console.log('나 호출')
             e.preventDefault()
             editor.insertText('\n')
             break

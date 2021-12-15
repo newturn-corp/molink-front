@@ -4,6 +4,7 @@ import Document from '../domain/Document'
 import DocumentManager from './DocumentManager'
 import DocumentAPI from '../api/DocumentAPI'
 import MainStore from '../stores/MainStore'
+import ContentManager from './ContentManager'
 
 export enum DirectoryObjectType {
     Drawer,
@@ -58,19 +59,29 @@ class DirectoryManager {
         makeAutoObservable(this)
     }
 
-    createNewDocument () {
+    async createNewDocument () {
         if (!this._selectedDocument) {
             const newDocument = new Document(null, null, '', '📄', MainStore.documents.length, [], false, true, true)
             MainStore.documents.push(newDocument)
             this.selectedDocument = newDocument
-            DocumentManager.createDocument(newDocument)
+            await DocumentManager.createDocument(newDocument)
+            newDocument.content = [{
+                type: 'paragraph',
+                children: [{ text: '' }]
+            }]
+            ContentManager.openDocument(newDocument)
         } else {
             console.log(this._selectedDocument)
             const newDocument = new Document(null, this._selectedDocument, '', '📄', this._selectedDocument.children.length, [], false, true, true)
             this._selectedDocument.children.push(newDocument)
             this._selectedDocument.isOpen = true
             this.selectedDocument = newDocument
-            DocumentManager.createDocument(newDocument)
+            await DocumentManager.createDocument(newDocument)
+            newDocument.content = [{
+                type: 'paragraph',
+                children: [{ text: '' }]
+            }]
+            ContentManager.openDocument(newDocument)
         }
         this.openContextMenu = false
     }

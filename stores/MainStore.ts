@@ -22,10 +22,6 @@ class MainStore {
     async init () {
         runInAction(async () => {
             this.documents = await MainAPI.getDocuments()
-            await ContentManager.openDocument(this.documents[0])
-            // this.documents.forEach(doc => {
-            //     this.setParent(doc)
-            // })
         })
     }
 }
