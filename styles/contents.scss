@@ -1,0 +1,53 @@
+.contents {
+    width: 800px;
+    margin: auto;
+    margin-top: 150px;
+    .title {
+        font-size: 40px;
+        font-weight: 800;
+    }
+    // .content {
+    //     display: none;
+    //     width: 800px;
+    //     line-height: 20px;
+    //     min-height: 20px;
+    //     font-size: 16px;
+    //     border:none;
+    //     outline-width: 0;
+    //     margin-bottom: 10px;
+    //     overflow-wrap: break-word;
+    //     word-break: break-all;
+    // }
+    // .rendered-content {
+    //     width: 800px;
+    //     line-height: 20px;
+    //     min-height: 20px;
+    //     font-size: 16px;
+    //     border:none;
+    //     outline-width: 0;
+    //     margin-bottom: 10px;
+    //     overflow-wrap: break-word;
+    //     word-break: break-all;
+    //     cursor: text;
+    // }
+    // .disabled-rendered-content {
+    //     width: 0;
+    //     height: 0;
+    // }
+    .textline {
+        .MuiInputBase-input {
+            font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕',
+            helvetica, 'Apple SD Gothic Neo', sans-serif !important;
+            color: rgb(34, 36, 38);
+        }
+        .MuiInput-underline {
+            border-bottom: none !important
+        }
+        .MuiInput-underline::before {
+            border-bottom: none !important
+        }
+        .MuiInput-underline::after {
+            border-bottom: none !important
+        }
+    }
+}

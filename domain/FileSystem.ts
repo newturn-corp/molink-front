@@ -1,4 +1,4 @@
-export default class FileSystem {
+export default class DocumentSystem {
     title: string
     hasIcon: boolean
     iconName: string

@@ -22,6 +22,7 @@ module.exports = {
     rules: {
         indent: [2, 4],
         semi: [2, 'never'],
-        'no-use-before-define': 'off'
+        'no-use-before-define': 'off',
+        'no-unused-vars': 'off'
     }
 }
