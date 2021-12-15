@@ -55,7 +55,6 @@ class ContentManager {
             return
         }
         this.existAutoSavingTimeout = true
-        console.log('자동 저장 타이머 시작')
         setTimeout(async () => {
             await this.updateContent()
             this.existAutoSavingTimeout = false
@@ -72,7 +71,15 @@ class ContentManager {
             keys.push('ctrl')
         }
         keys.push(e.key)
+
         switch (keys.join('+')) {
+        case 'Enter':
+            if (editor.children[editor.selection.anchor.path[0]].type === 'code') {
+                console.log('나 호출')
+                e.preventDefault()
+                editor.insertText('\n')
+            }
+            break
         case 'shift+Enter':
             console.log('나 호출')
             e.preventDefault()
@@ -82,6 +89,19 @@ class ContentManager {
         case 'ctrl+S':
             e.preventDefault()
             await this.updateContent()
+            break
+        case 'ctrl+k':
+            e.preventDefault()
+            editor.insertNode({
+                type: 'code',
+                children: [
+                    {
+                        type: 'code',
+                        text: '<h1>Hi!</h1>',
+                        codehighlight: true
+                    }
+                ]
+            })
         }
     }
 }

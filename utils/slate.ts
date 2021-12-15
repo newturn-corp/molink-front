@@ -1,21 +1,26 @@
 import { ReactEditor } from 'slate-react'
 import {
-    BaseEditor
+    BaseEditor, Descendant
 } from 'slate'
-import Block from '../domain/Block'
-import BlockNoLeaf from '../domain/BlockNoLeaf'
 
 export type ParagraphElement = {
+  type: string
   children: CustomText[]
 }
 
 export type TextElement = {
+  type: string
   children: CustomText[]
 }
 
-export type CustomElement = ParagraphElement | TextElement
+export type BulletedListElement = {
+  type: 'bulleted-list'
+  children: Descendant[]
+}
 
-export type FormattedText = { text: string; bold?: true }
+export type CustomElement = ParagraphElement | TextElement | BulletedListElement
+
+export type FormattedText = { type: string, text: string; bold?: true; codehighlight?: true }
 
 export type CustomText = FormattedText
 
