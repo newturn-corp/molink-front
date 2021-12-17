@@ -3,7 +3,6 @@ import { makeAutoObservable, runInAction, toJS } from 'mobx'
 import Document from '../domain/Document'
 import DocumentManager from './DocumentManager'
 import DocumentAPI from '../api/DocumentAPI'
-import MainStore from '../stores/MainStore'
 import ContentManager from './ContentManager'
 
 export enum DirectoryObjectType {
@@ -61,8 +60,8 @@ class DirectoryManager {
 
     async createNewDocument () {
         if (!this._selectedDocument) {
-            const newDocument = new Document(null, null, '', '📄', MainStore.documents.length, [], false, true, true)
-            MainStore.documents.push(newDocument)
+            const newDocument = new Document(null, null, '', '📄', DocumentManager.documents.length, [], false, true, true)
+            DocumentManager.documents.push(newDocument)
             this.selectedDocument = newDocument
             await DocumentManager.createDocument(newDocument)
             newDocument.content = [{
@@ -97,7 +96,7 @@ class DirectoryManager {
     }
 
     deleteDocument () {
-        const sibling = this._selectedDocument.parent ? this._selectedDocument.parent.children : MainStore.documents
+        const sibling = this._selectedDocument.parent ? this._selectedDocument.parent.children : DocumentManager.documents
         sibling.splice(this._selectedDocument.order, 1)
         sibling.forEach((doc, idx) => {
             doc.order = idx
@@ -180,8 +179,8 @@ class DirectoryManager {
 
         // 기존 부모에게서 삭제
         if (parentBefore === null) {
-            MainStore.documents.splice(orderBefore, 1)
-            MainStore.documents.filter(doc => doc.order > orderBefore).forEach(doc => { doc.order -= 1 })
+            DocumentManager.documents.splice(orderBefore, 1)
+            DocumentManager.documents.filter(doc => doc.order > orderBefore).forEach(doc => { doc.order -= 1 })
         } else {
             parentBefore.children.splice(orderBefore, 1)
             parentBefore.children.filter(doc => doc.order > orderBefore).forEach(doc => { doc.order -= 1 })
@@ -205,8 +204,8 @@ class DirectoryManager {
 
         // 새 부모에게 추가
         if (this.draggingDocument.parent === null) {
-            MainStore.documents.splice(this.draggingDocument.order, 0, this.draggingDocument)
-            MainStore.documents.filter(doc => doc.order > orderBefore).forEach(doc => { doc.order -= 1 })
+            DocumentManager.documents.splice(this.draggingDocument.order, 0, this.draggingDocument)
+            DocumentManager.documents.filter(doc => doc.order > orderBefore).forEach(doc => { doc.order -= 1 })
         } else {
             this.draggingDocument.parent.children.splice(this.draggingDocument.order, 0, this.draggingDocument)
             this.draggingDocument.parent.children.filter(doc => doc.order >= orderBefore).forEach(doc => { doc.order += 1 })

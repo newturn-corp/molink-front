@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Folder } from '../Folder'
 import DirectoryManager from '../../manager/DirectoryManager'
 import { DrawerContextMenu } from '../ContextMenu'
-import MainStore from '../../stores/MainStore'
+import DocumentManager from '../../manager/DocumentManager'
 
 export const FileSystem: React.FC<{
   }> = observer(() => {
@@ -37,7 +37,7 @@ export const FileSystem: React.FC<{
                       aria-labelledby="nested-list-subheader"
                   >
                       {
-                          MainStore.documents.map(Document => {
+                          DocumentManager.documents.map(Document => {
                               return <Folder key={Math.random()} document={Document} depth={0}/>
                           })
                       }
