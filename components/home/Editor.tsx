@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react'
-import '../utils/prism'
+import '../../utils/prism'
 import Prism from 'prismjs'
 import React, { useCallback, useMemo } from 'react'
 import { Editable, withReact, Slate } from 'slate-react'
@@ -8,11 +8,11 @@ import {
     Text
 } from 'slate'
 import { withHistory } from 'slate-history'
-import ContentManager from '../manager/ContentManager'
-import { BlockComponent, BlockNoLeafComponent } from './BlockComponent'
-import { withImages } from '../utils/slate/withImages'
-import { withShortcuts } from '../utils/slate/withShortcuts'
-import { withLayout } from '../utils/slate/withLayout'
+import ContentManager from '../../manager/ContentManager'
+import { BlockComponent, BlockNoLeafComponent } from '../BlockComponent'
+import { withImages } from '../../utils/slate/withImages'
+import { withShortcuts } from '../../utils/slate/withShortcuts'
+import { withLayout } from '../../utils/slate/withLayout'
 
 export const Editor: React.FC<{
   }> = observer(() => {
@@ -61,25 +61,22 @@ export const Editor: React.FC<{
       if (!ContentManager.content) {
           return <></>
       }
-      return <div className={'contents'}>
-          <Slate editor={editor} value={ContentManager.content} onChange={value => {
-              ContentManager.content = value
-          }}>
-              <Editable
-                  decorate={decorate}
-                  renderElement={renderElement}
-                  renderLeaf={renderLeaf}
-                  //   placeholder="Enter some rich text…"
-                  spellCheck
-                  autoFocus
-                  onKeyDown={(e) => {
-                      ContentManager.handleKeyDown(editor, e)
-                  }}
-                  onPaste={(e) => {
-                      console.log(e.clipboardData.getData('Text'))
-                  }}
-              />
-          </Slate>
-      </div>
-      //   return <></>
+      return <Slate editor={editor} value={ContentManager.content} onChange={value => {
+          ContentManager.content = value
+      }}>
+          <Editable
+              decorate={decorate}
+              renderElement={renderElement}
+              renderLeaf={renderLeaf}
+              //   placeholder="Enter some rich text…"
+              spellCheck
+              autoFocus
+              onKeyDown={(e) => {
+                  ContentManager.handleKeyDown(editor, e)
+              }}
+              onPaste={(e) => {
+                  console.log(e.clipboardData.getData('Text'))
+              }}
+          />
+      </Slate>
   })

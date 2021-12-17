@@ -38,8 +38,8 @@ class ContentManager {
         if (!document.content) {
             document.content = await ContentAPI.getContentByDocument(document)
         }
-        this.content = document.content
         this.openedDocument = document
+        this.content = document.content
     }
 
     async saveContent (isAutoSaving: boolean = false) {
@@ -49,7 +49,7 @@ class ContentManager {
         this.preventSaving = true
         setTimeout(() => {
             this.preventSaving = false
-        }, 5000)
+        }, 10000)
         NotificationManager.showNotification(NOTIFICATION_TYPE.SUCCESS, isAutoSaving ? '자동 저장 중..' : '저장 중..', '', 3)
         await ContentAPI.updateContent(this.openedDocument, this.content)
         this.openedDocument.content = this.content

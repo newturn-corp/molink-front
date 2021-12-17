@@ -1,10 +1,19 @@
 .contents {
     width: 800px;
-    margin: auto;
-    margin-top: 150px;
+    margin-left: 160px;
+    margin-top: 100px;
     .title {
         font-size: 40px;
         font-weight: 800;
+    }
+    .icon {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 20px;
+        .MuiButton-label {
+            padding: 10px;
+            font-size: 60px;
+        }
     }
     .textline {
         .MuiInputBase-input {

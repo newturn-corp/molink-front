@@ -2,10 +2,11 @@ import React, { useEffect } from 'react'
 
 import { FileSystem } from '../components/global/FileSystem/FileSystem'
 import DirectoryManager from '../manager/DirectoryManager'
-import { Editor } from '../components/Editor'
+import { Editor } from '../components/home/Editor'
 import { DrawerWidthController } from '../components/global/DrawerWidthController'
 import { Header } from '../components/global/Header'
 import DocumentManager from '../manager/DocumentManager'
+import { ContentComponent } from '../components/home/ContentComponent'
 
 const Index = () => {
     useEffect(() => {
@@ -20,7 +21,7 @@ const Index = () => {
         <div className={'index-body'}>
             <FileSystem />
             <DrawerWidthController/>
-            <Editor/>
+            <ContentComponent/>
         </div>
         <div className={'drag-ghost-parent'}/>
     </div>
