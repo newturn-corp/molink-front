@@ -1,0 +1,100 @@
+.auth-page {
+  display: block;
+}
+
+.auth-page .logo {
+  display: block;
+  margin: 0 auto;
+  margin-top: 160px;
+  width: 300px;
+}
+
+.auth-page .title {
+  margin: 0 auto;
+  width: 300px;
+  text-align: center;
+  color: #424242;
+  font-size: 22px;
+  font-weight: 800;
+  margin-top: -30px;
+  margin-bottom: 1.375rem;
+}
+
+.auth-page .MuiInputBase-root {
+  width: 100%;
+}
+
+.auth-page .login-button {
+  width: 300px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.auth-page .sign-up-button {
+  width: 300px;
+  display: block;
+  margin: 0 auto;
+}
+
+.auth-page .email-helper-text {
+  margin: 0 auto;
+  width: 300px;
+  display: block;
+  color: red;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.auth-page .password-helper-text {
+  margin: 0 auto;
+  width: 300px;
+  display: block;
+  color: #424242;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.auth-page .auth-page-input {
+  height: 76px;
+}
+
+.auth-page .auth-page-input .input-field {
+  width: 300px;
+  display: block;
+  margin: 0 auto;
+}
+
+.sign-in-page .reset-password-container {
+  margin: 0 auto;
+  width: 300px;
+  display: block;
+  height: 35px;
+  margin-top: -15px;
+}
+
+.sign-in-page .reset-password-container .reset-password {
+  margin-top: 0px;
+  padding: 3px;
+  float: right;
+}
+
+.sign-in-page .reset-password-container .reset-password .MuiButton-label {
+  text-align: right;
+}
+
+.change-password-request-page .sub-title {
+  margin: 0 auto;
+  width: 300px;
+  color: #424242;
+  font-size: 15px;
+  margin-bottom: 0.875rem;
+}
+
+.change-password-request-page .email-helper-text {
+  margin: 0 auto;
+  width: 300px;
+  color: red;
+  font-size: 13px;
+}
+/*# sourceMappingURL=auth.css.map */

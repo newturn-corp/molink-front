@@ -1,10 +1,6 @@
+import Router from 'next/router'
 import { SERVER_BASE_URL } from '../infra/constants'
 import { AuthError, NetworkError, ServiceError } from './APIError'
-
-let franchiseeId = null
-export const setFranchiseeId = (id: number | null) => {
-    franchiseeId = id
-}
 
 export interface NetworkMessage {
   status: number
@@ -24,9 +20,6 @@ export abstract class BaseAPI {
             Accept: 'application/json',
             'Content-Type': 'application/json'
         }
-        if (franchiseeId) {
-            headers['x-hq-franchisee-id'] = franchiseeId
-        }
         return headers
     }
 
@@ -43,6 +36,7 @@ export abstract class BaseAPI {
         }
         if (res.status === 500) throw new ServiceError()
         if (res.status === 401) {
+            Router.push('/signin')
             throw new AuthError()
         }
         return res.json()
@@ -58,6 +52,7 @@ export abstract class BaseAPI {
                 credentials: 'include'
             })
         } catch (e) {
+            Router.push('/signin')
             throw new NetworkError()
         }
         if (res.status === 500) throw new ServiceError()
@@ -65,7 +60,7 @@ export abstract class BaseAPI {
     }
 
     protected async put (path: string, body: object): Promise<NetworkMessage> {
-        let res
+        let res: Response
         try {
             res = await fetch(`${SERVER_BASE_URL}/api${path}`, {
                 method: 'PUT',
@@ -74,6 +69,7 @@ export abstract class BaseAPI {
                 credentials: 'include'
             })
         } catch (e) {
+            Router.push('/signin')
             throw new NetworkError()
         }
         if (res.status === 500) throw new ServiceError()

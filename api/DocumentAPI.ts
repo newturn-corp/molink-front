@@ -5,7 +5,7 @@ import Document from '../domain/Document'
 
 class DocumentAPI extends BaseAPI {
     async getDocuments (): Promise<Document[]> {
-        const res = await this.get('/main/documents')
+        const res = await this.get('/documents')
         if (res.status !== 200) throw new APIError(res)
         return res.arr.map(raw => new Document(raw.id, null, raw.title, raw.icon, raw.order, raw.children, raw.isOpen))
     }

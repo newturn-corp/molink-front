@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx'
-import MainAPI from '../api/mainAPI'
+import DocumentAPI from '../api/DocumentAPI'
 import Document from '../domain/Document'
 import ContentManager from '../manager/ContentManager'
 
@@ -21,7 +21,7 @@ class MainStore {
 
     async init () {
         runInAction(async () => {
-            this.documents = await MainAPI.getDocuments()
+            this.documents = await DocumentAPI.getDocuments()
         })
     }
 }
