@@ -25,5 +25,8 @@ module.exports = {
         'no-use-before-define': 'off',
         'no-unused-vars': 'off',
         'no-useless-escape': 'off'
+    },
+    globals: {
+        JSX: true
     }
 }

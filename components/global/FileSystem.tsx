@@ -3,13 +3,12 @@ import { observer } from 'mobx-react'
 import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
 import { makeStyles } from '@material-ui/core/styles'
-import { Folder } from './Folder'
-import DocumentManager from '../manager/DocumentManager'
-import DirectoryManager from '../manager/DirectoryManager'
-import { DrawerContextMenu } from './ContextMenu'
-import MainStore from '../stores/MainStore'
+import { Folder } from '../Folder'
+import DirectoryManager from '../../manager/DirectoryManager'
+import { DrawerContextMenu } from '../ContextMenu'
+import MainStore from '../../stores/MainStore'
 
-export const SidebarLayout: React.FC<{
+export const FileSystem: React.FC<{
   }> = observer(() => {
       const width = DirectoryManager.directoryDrawerWidth
       const useStyles = makeStyles({
