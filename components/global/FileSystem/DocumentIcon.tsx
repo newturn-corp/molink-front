@@ -1,5 +1,5 @@
 import React from 'react'
-import Document from '../domain/Document'
+import Document from '../../../domain/Document'
 
 export const DocumentIcon: React.FC<{
     document: Document

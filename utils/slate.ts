@@ -3,6 +3,10 @@ import {
     BaseEditor, Descendant
 } from 'slate'
 
+export type EmptyText = {
+  text: string
+}
+
 export type ParagraphElement = {
   type: string
   children: CustomText[]
@@ -14,13 +18,24 @@ export type TextElement = {
 }
 
 export type BulletedListElement = {
-  type: 'bulleted-list'
+  type: string
   children: Descendant[]
 }
 
-export type CustomElement = ParagraphElement | TextElement | BulletedListElement
+export type ImageElement = {
+  type: 'image'
+  url: string
+  children: EmptyText[]
+}
 
-export type FormattedText = { type: string, text: string; bold?: true; codehighlight?: true }
+export type TitleElement = {
+  type: 'title'
+  children: Descendant[]
+}
+
+export type CustomElement = ParagraphElement | TextElement | BulletedListElement | ImageElement
+
+export type FormattedText = { text: string; bold?: true; codehighlight?: true }
 
 export type CustomText = FormattedText
 

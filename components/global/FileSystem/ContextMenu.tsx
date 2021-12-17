@@ -1,7 +1,7 @@
 import { reaction } from 'mobx'
 import { observer } from 'mobx-react'
 import React from 'react'
-import DirectoryManager from '../manager/DirectoryManager'
+import DirectoryManager from '../../../manager/DirectoryManager'
 
 let root: HTMLDivElement = null
 

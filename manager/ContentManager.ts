@@ -5,6 +5,7 @@ import { HistoryEditor } from 'slate-history'
 import { ReactEditor } from 'slate-react'
 import ContentAPI from '../api/ContentAPI'
 import Document from '../domain/Document'
+import NotificationManager, { NOTIFICATION_TYPE } from './NotificationManager'
 
 class ContentManager {
     _content: any = null
@@ -26,6 +27,10 @@ class ContentManager {
         makeAutoObservable(this)
     }
 
+    renameDocumentTitle (title: string) {
+        this.openedDocument.title = title
+    }
+
     async openDocument (document: Document) {
         if (this.openedDocument && document.id === this.openedDocument.id) {
             return
@@ -33,12 +38,11 @@ class ContentManager {
         if (!document.content) {
             document.content = await ContentAPI.getContentByDocument(document)
         }
-        console.log(document.content)
         this.content = document.content
         this.openedDocument = document
     }
 
-    async updateContent () {
+    async saveContent (isAutoSaving: boolean = false) {
         if (this.preventSaving) {
             return
         }
@@ -46,6 +50,7 @@ class ContentManager {
         setTimeout(() => {
             this.preventSaving = false
         }, 5000)
+        NotificationManager.showNotification(NOTIFICATION_TYPE.SUCCESS, isAutoSaving ? '자동 저장 중..' : '저장 중..', '', 3)
         await ContentAPI.updateContent(this.openedDocument, this.content)
         this.openedDocument.content = this.content
     }
@@ -56,7 +61,7 @@ class ContentManager {
         }
         this.existAutoSavingTimeout = true
         setTimeout(async () => {
-            await this.updateContent()
+            await this.saveContent(true)
             this.existAutoSavingTimeout = false
         }, 60000)
     }
@@ -73,35 +78,38 @@ class ContentManager {
         keys.push(e.key)
 
         switch (keys.join('+')) {
+        case 'shift+Enter':
+            console.log('나123 호출')
+            e.preventDefault()
+            editor.insertText('\n')
+            break
         case 'Enter':
             if (editor.children[editor.selection.anchor.path[0]].type === 'code') {
-                console.log('나 호출')
                 e.preventDefault()
                 editor.insertText('\n')
             }
             break
-        case 'shift+Enter':
-            console.log('나 호출')
+        case 'ctrl+O':
+        case 'ctrl+o':
             e.preventDefault()
-            editor.insertText('\n')
+            editor.insertText('sdksdkds')
+            break
+        case 'ctrl+z':
+            e.preventDefault()
+            editor.undo()
+            break
+        case 'ctrl+y':
+            e.preventDefault()
+            editor.redo()
             break
         case 'ctrl+s':
         case 'ctrl+S':
             e.preventDefault()
-            await this.updateContent()
+            await this.saveContent()
             break
         case 'ctrl+k':
             e.preventDefault()
-            editor.insertNode({
-                type: 'code',
-                children: [
-                    {
-                        type: 'code',
-                        text: '<h1>Hi!</h1>',
-                        codehighlight: true
-                    }
-                ]
-            })
+            console.log(editor.children)
         }
     }
 }

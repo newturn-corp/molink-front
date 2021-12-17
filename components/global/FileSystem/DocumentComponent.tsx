@@ -1,13 +1,13 @@
 import React, { useRef, useState } from 'react'
 import { observer } from 'mobx-react'
-import Document from '../domain/Document'
+import Document from '../../../domain/Document'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import { CircularProgress, Collapse, makeStyles } from '@material-ui/core'
 import { ArrowRight, ArrowDropDown } from '@material-ui/icons'
-import DirectoryManager from '../manager/DirectoryManager'
+import DirectoryManager from '../../../manager/DirectoryManager'
 import { DocumentTitle } from './DocumentTitle'
-import ContentManager from '../manager/ContentManager'
+import ContentManager from '../../../manager/ContentManager'
 
 enum DragLocation {
     Top,
@@ -16,7 +16,7 @@ enum DragLocation {
 }
 
 let ghost
-export const Folder: React.FC<{
+export const DocumentComponent: React.FC<{
     document: Document,
     depth: number
   }> = observer(({ document, depth }) => {
@@ -88,7 +88,7 @@ export const Folder: React.FC<{
                   onDragOver={(event) => handleDragOver(event)}
                   onDragLeave={() => DirectoryManager.handleDragLeave(document)}
                   onDrop={() => DirectoryManager.handleDrop(document)}
-                  //   style={getBorderStyle(newFolderLocation)}
+                  //   style={getBorderStyle(newDocumentLocation)}
                   onContextMenu={(event) => DirectoryManager.handleRightClick(event, document)}>
                   {
                       hasChildren
@@ -106,7 +106,7 @@ export const Folder: React.FC<{
                   <List component="div" disablePadding>
                       {
                           document.children.map(child => {
-                              return <Folder key={Math.random()} document={child} depth={depth + 1}/>
+                              return <DocumentComponent key={Math.random()} document={child} depth={depth + 1}/>
                           })
                       }
                   </List>

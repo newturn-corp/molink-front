@@ -1,0 +1,16 @@
+import React from 'react'
+import { Node } from 'slate'
+import ContentManager from '../../../manager/ContentManager'
+
+export const SlateTitleElement: React.FC<{
+    attributes,
+    children,
+    element
+  }> = ({ attributes, children, element }) => {
+      ContentManager.renameDocumentTitle(Node.string(element))
+      return (
+          <p className='title' {...attributes}>
+              {children}
+          </p>
+      )
+  }

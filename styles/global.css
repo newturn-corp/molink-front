@@ -6,7 +6,8 @@ body {
 }
 
 .header {
-  background-color: #333333;
+  background-color: #ffffff;
+  border-bottom: 1px solid #dfdfdf;
   width: 100%;
   height: 60px;
   z-index: 25000;
@@ -15,8 +16,36 @@ body {
   display: flex;
 }
 
+.header .logo {
+  height: 40px;
+  width: 40px;
+  margin: 10px;
+}
+
+.header .navigator {
+  width: calc(100vw - 120px);
+}
+
+.header .menu-container {
+  height: 40px;
+  width: 40px;
+  margin: 10px;
+}
+
+.header .menu-container .MuiIconButton-root {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
 .header .sign-out {
+  width: 140px;
   right: 0px;
+  color: white;
+  padding: 13px;
+  font-size: 20px;
+  text-align: center;
 }
 
 .index-body {
@@ -109,6 +138,10 @@ body {
 .drawer ::-webkit-scrollbar-thumb {
   background: #e4e4e4;
   border-radius: 5px;
+}
+
+.ant-notification {
+  top: 80px !important;
 }
 
 .drawer-width-controller {

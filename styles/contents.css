@@ -26,4 +26,8 @@
 .contents .textline .MuiInput-underline::after {
   border-bottom: none !important;
 }
+
+.contents .normal-text {
+  font-size: 1.125rem;
+}
 /*# sourceMappingURL=contents.css.map */

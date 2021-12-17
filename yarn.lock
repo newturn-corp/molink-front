@@ -2088,6 +2088,11 @@
   "resolved" "https://registry.npmjs.org/ignore/-/ignore-5.1.9.tgz"
   "version" "5.1.9"
 
+"image-extensions@^1.1.0":
+  "integrity" "sha1-uOa/YDnfAFbjM1AqALZjejEF2JQ="
+  "resolved" "https://registry.npmjs.org/image-extensions/-/image-extensions-1.1.0.tgz"
+  "version" "1.1.0"
+
 "image-size@1.0.0":
   "integrity" "sha512-JLJ6OwBfO1KcA+TvJT+v8gbE6iWbj24LyDNFgFEN0lzegn6cC6a/p3NIDaepMsJjQjlUWqIC7wJv8lBFxPNjcw=="
   "resolved" "https://registry.npmjs.org/image-size/-/image-size-1.0.0.tgz"
@@ -2295,6 +2300,11 @@
     "es-abstract" "^1.18.5"
     "foreach" "^2.0.5"
     "has-tostringtag" "^1.0.0"
+
+"is-url@^1.2.4":
+  "integrity" "sha512-ITvGim8FhRiYe4IQ5uHSkj7pVaPDrCTkNd3yq3cV7iZAcJdHTUMPMEHcqSOy9xZ9qFenQCvi+2wjH9a1nXqHww=="
+  "resolved" "https://registry.npmjs.org/is-url/-/is-url-1.2.4.tgz"
+  "version" "1.2.4"
 
 "is-weakref@^1.0.1":
   "integrity" "sha512-qctsuLZmIQ0+vSSMfoVvyFe2+GSEvnmZ2ezTup1SBse9+twCCeial6EEi3Nc2KFcf6+qz2FBPnjXsk8xhKSaPQ=="

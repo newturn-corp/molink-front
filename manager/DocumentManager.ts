@@ -4,7 +4,6 @@ import Document from '../domain/Document'
 import ContentManager from './ContentManager'
 class DocumentManager {
     documents: Document[] = []
-    currentContent: string
 
     constructor () {
         makeAutoObservable(this)

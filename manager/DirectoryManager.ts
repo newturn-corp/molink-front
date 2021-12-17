@@ -7,7 +7,7 @@ import ContentManager from './ContentManager'
 
 export enum DirectoryObjectType {
     Drawer,
-    Folder,
+    Document,
     File
 }
 

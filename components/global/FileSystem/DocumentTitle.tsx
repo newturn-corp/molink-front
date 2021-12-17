@@ -1,9 +1,9 @@
 import React, { useRef } from 'react'
 import { observer } from 'mobx-react'
-import Document from '../domain/Document'
-import DocumentManager from '../manager/DocumentManager'
+import Document from '../../../domain/Document'
+import DocumentManager from '../../../manager/DocumentManager'
 import { DocumentIcon } from './DocumentIcon'
-import DirectoryManager from '../manager/DirectoryManager'
+import DirectoryManager from '../../../manager/DirectoryManager'
 
 export const DocumentTitle: React.FC<{
     document: Document

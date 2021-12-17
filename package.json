@@ -25,6 +25,8 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.27.1",
+    "image-extensions": "^1.1.0",
+    "is-url": "^1.2.4",
     "mobx": "^6.3.8",
     "mobx-react": "^7.2.1",
     "moment-timezone": "^0.5.34",

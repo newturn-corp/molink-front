@@ -3,10 +3,10 @@ import { observer } from 'mobx-react'
 import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
 import { makeStyles } from '@material-ui/core/styles'
-import { Folder } from '../Folder'
-import DirectoryManager from '../../manager/DirectoryManager'
-import { DrawerContextMenu } from '../ContextMenu'
-import DocumentManager from '../../manager/DocumentManager'
+import DirectoryManager from '../../../manager/DirectoryManager'
+import { DrawerContextMenu } from './ContextMenu'
+import DocumentManager from '../../../manager/DocumentManager'
+import { DocumentComponent } from './DocumentComponent'
 
 export const FileSystem: React.FC<{
   }> = observer(() => {
@@ -38,7 +38,7 @@ export const FileSystem: React.FC<{
                   >
                       {
                           DocumentManager.documents.map(Document => {
-                              return <Folder key={Math.random()} document={Document} depth={0}/>
+                              return <DocumentComponent key={Math.random()} document={Document} depth={0}/>
                           })
                       }
                       <div style={{ width: '100%', height: 200 }} ></div>
