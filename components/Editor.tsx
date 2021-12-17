@@ -151,7 +151,6 @@ export const Editor: React.FC<{
       const renderElement = useCallback(props => <BlockComponent {...props} />, [])
       const renderLeaf = useCallback(props => <BlockNoLeafComponent {...props} />, [])
       const editor = useMemo(() => withHistory(withShortcuts(withReact(createEditor()))), [])
-      // decorate function depends on the language selected
 
       const getLength = token => {
           if (typeof token === 'string') {
@@ -194,22 +193,21 @@ export const Editor: React.FC<{
       if (!ContentManager.content) {
           return <></>
       }
-
+      console.log(ContentManager.content)
       return <div className={'contents'}>
           <Slate editor={editor} value={ContentManager.content} onChange={value => {
               ContentManager.content = value
-              ContentManager.handleOnChange()
           }}>
               <Editable
-                  decorate={decorate}
+                  //   decorate={decorate}
                   renderElement={renderElement}
                   renderLeaf={renderLeaf}
-                  placeholder="Enter some rich text…"
+                  //   placeholder="Enter some rich text…"
                   spellCheck
                   autoFocus
-                  onKeyDown={(e) => {
-                      ContentManager.handleKeyDown(editor, e)
-                  }}
+                  //   onKeyDown={(e) => {
+                  //       ContentManager.handleKeyDown(editor, e)
+                  //   }}
                   onPaste={(e) => {
                       console.log(e.clipboardData.getData('Text'))
                   }}

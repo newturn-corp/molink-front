@@ -109,5 +109,9 @@ class AutoAPI extends BaseAPI {
             return { success: true }
         }
     }
+
+    async signOut () {
+        await this.delete('/auth/sign-out')
+    }
 }
 export default new AutoAPI()

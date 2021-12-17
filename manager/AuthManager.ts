@@ -1,4 +1,5 @@
 import { makeAutoObservable, observable } from 'mobx'
+import Router from 'next/router'
 import AuthAPI, { PASSWORD_CHANGE_FAIL_REASON, SIGN_IN_FAIL_REASON, SIGN_UP_FAIL_REASON, START_PASSWORD_CHANGE_FAIL_REASON } from '../api/AuthAPI'
 import NotificationManager, { NOTIFICATION_TYPE } from './NotificationManager'
 
@@ -101,6 +102,11 @@ class AuthManager {
             NotificationManager.showNotification(NOTIFICATION_TYPE.SUCCESS, '이메일 인증 전송', '입력하신 이메일로 인증 링크가 전송되었습니다. 링크를 눌러 가입을 완료하시기 바랍니다.')
             return { success: true }
         }
+    }
+
+    async signOut () {
+        await AuthAPI.signOut()
+        Router.push('/signin')
     }
 
     verifyEmail (hash: string) {
