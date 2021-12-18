@@ -18,13 +18,13 @@ export const withLayout = editor => {
                 Transforms.insertNodes(editor, title, { at: path.concat(0) })
             }
 
-            if (editor.children.length < 2) {
-                const paragraph: ParagraphElement = {
-                    type: 'paragraph',
-                    children: [{ text: '' }]
-                }
-                Transforms.insertNodes(editor, paragraph, { at: path.concat(1) })
-            }
+            // if (editor.children.length < 2) {
+            //     const paragraph: ParagraphElement = {
+            //         type: 'paragraph',
+            //         children: [{ text: '' }]
+            //     }
+            //     Transforms.insertNodes(editor, paragraph, { at: path.concat(1) })
+            // }
 
             for (const [child, childPath] of Node.children(editor, path)) {
                 let type: string
@@ -41,10 +41,6 @@ export const withLayout = editor => {
                 switch (slateIndex) {
                 case 0:
                     type = 'title'
-                    enforceType(type)
-                    break
-                case 1:
-                    type = 'paragraph'
                     enforceType(type)
                     break
                 default:

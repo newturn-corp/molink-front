@@ -21,6 +21,21 @@
   font-size: 60px;
 }
 
+.contents .text-head1 {
+  font-size: 2em;
+  font-weight: 600;
+}
+
+.contents .text-head2 {
+  font-weight: 600;
+  font-size: 1.75em;
+}
+
+.contents .text-head3 {
+  font-weight: 600;
+  font-size: 1.5em;
+}
+
 .contents .textline .MuiInputBase-input {
   font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', helvetica, 'Apple SD Gothic Neo', sans-serif !important;
   color: #222426;

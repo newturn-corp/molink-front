@@ -15,8 +15,10 @@ import { withShortcuts } from '../../utils/slate/withShortcuts'
 import { withLayout } from '../../utils/slate/withLayout'
 import HotKeyManager from '../../manager/home/HotKeyManager'
 import { withMentions } from '../../utils/slate/withMentions'
-import { CommandView } from './CommandView'
+import { MentionListComponent } from './MentionListComponent'
+import { CommandListComponent } from './CommandListComponent'
 import MentionManager from '../../manager/home/MentionManager'
+import CommandManager from '../../manager/home/CommandManager'
 
 export const Editor: React.FC<{
   }> = observer(() => {
@@ -70,6 +72,7 @@ export const Editor: React.FC<{
           ContentManager.openedDocument.content = value
           console.log('onchange')
           MentionManager.onChange(editor)
+          CommandManager.onChange(editor)
       }}>
           <Editable
               decorate={decorate}
@@ -82,11 +85,13 @@ export const Editor: React.FC<{
                   console.log('onkeydown')
                   HotKeyManager.handleKeyDown(editor, e)
                   MentionManager.onKeyDown(e, editor)
+                  CommandManager.onKeyDown(e, editor)
               }}
               onPaste={(e) => {
                   console.log(e.clipboardData.getData('Text'))
               }}
           />
-          <CommandView editor={editor} />
+          <MentionListComponent editor={editor} />
+          <CommandListComponent editor={editor} />
       </Slate>
   })

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 import React from 'react'
 import { BaseRange, Editor, Range, Transforms } from 'slate'
 
@@ -476,13 +476,12 @@ class MentionManager {
             case 'Tab':
             case 'Enter':
                 event.preventDefault()
-                Transforms.select(editor, this.target)
+                Transforms.select(editor, toJS(this.target))
                 this.insertMention(editor, this.characters[this.index])
                 this.target = null
                 break
             case 'Escape':
                 event.preventDefault()
-                console.log('호출')
                 this.target = null
                 break
             }

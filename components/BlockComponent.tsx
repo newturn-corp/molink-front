@@ -4,6 +4,7 @@ import { css } from '@emotion/css'
 import { SlateImageElement } from './global/SlateElement/SlateImageElement'
 import { SlateTitleElement } from './global/SlateElement/SlateTitleElement'
 import { MentionElement } from './global/SlateElement/MentionElement'
+import { SlateTextElement } from './global/SlateElement/SlateTextElement'
 
 export const BlockComponent: React.FC<{
     attributes,
@@ -16,14 +17,16 @@ export const BlockComponent: React.FC<{
           return <SlateImageElement { ...props } />
       case 'title':
           return <SlateTitleElement { ...props } />
+      case 'text':
+          return <SlateTextElement { ...props } />
+      // case 'heading-one':
+      //     return <SlateHeadingElement { ...props } />
       case 'mention':
           return <MentionElement { ...props } />
       case 'block-quote':
           return <blockquote {...attributes}>{children}</blockquote>
       case 'bulleted-list':
           return <ul {...attributes}>{children}</ul>
-      case 'heading-one':
-          return <h1 {...attributes}>{children}</h1>
       case 'heading-three':
           return <h3 {...attributes}>{children}</h3>
       case 'heading-four':
