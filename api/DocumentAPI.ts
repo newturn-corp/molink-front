@@ -7,7 +7,7 @@ class DocumentAPI extends BaseAPI {
     async getDocuments (): Promise<Document[]> {
         const res = await this.get('/documents')
         if (res.status !== 200) throw new APIError(res)
-        return res.arr.map(raw => new Document(raw.id, null, raw.title, raw.icon, raw.order, raw.children, raw.isOpen))
+        return res.arr.map(raw => new Document(raw.id, null, raw.title, raw.icon, raw.order, raw.children, raw.isOpen, raw.isChildrenOpen))
     }
 
     async createDocument (document: Document): Promise<string> {
@@ -49,10 +49,10 @@ class DocumentAPI extends BaseAPI {
         if (res.status !== 200) throw new APIError(res)
     }
 
-    async setDocumentIsOpen (document: Document): Promise<void> {
-        const res = await this.put('/documents/is-open', {
+    async setDocumentIsChildrenOpen (document: Document): Promise<void> {
+        const res = await this.put('/documents/is-children-open', {
             id: document.id,
-            isOpen: document.isOpen
+            isChildrenOpen: document.isChildrenOpen
         })
         if (res.status !== 200) throw new APIError(res)
     }

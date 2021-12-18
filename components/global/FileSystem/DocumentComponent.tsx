@@ -8,6 +8,7 @@ import { ArrowRight, ArrowDropDown } from '@material-ui/icons'
 import DirectoryManager from '../../../manager/DirectoryManager'
 import { DocumentTitle } from './DocumentTitle'
 import ContentManager from '../../../manager/home/ContentManager'
+import EventManager from '../../../manager/home/EventManager'
 
 enum DragLocation {
     Top,
@@ -25,7 +26,8 @@ export const DocumentComponent: React.FC<{
       const padding = 8 + Number(!hasChildren) * 24 + depth * 8
 
       const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-          DirectoryManager.setDocumentIsOpen(document, !document.isOpen)
+          event.stopPropagation()
+          EventManager.issueOpenDocumentChildrenEvent(document)
       }
 
       const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -102,7 +104,7 @@ export const DocumentComponent: React.FC<{
                   }
                   <DocumentTitle document={document}/>
               </ListItem>
-              <Collapse in={document.isOpen} timeout="auto" unmountOnExit>
+              <Collapse in={document.isChildrenOpen} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
                       {
                           document.children.map(child => {

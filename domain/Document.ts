@@ -9,6 +9,7 @@ export default class Document {
     children: Document[] = []
 
     isOpen: boolean = false
+    isChildrenOpen: boolean = false
     isChangingName: boolean = false
     isNewDocument: boolean = false
     isSelected: boolean = false
@@ -18,29 +19,18 @@ export default class Document {
 
     content: Array<any> = null
 
-    constructor (id: string | null, parent: Document | null, title: string, icon: string, order: number, children: Document[], isOpen: boolean = false, isChangingName: boolean = false, isNewDocument: boolean = false) {
+    constructor (id: string | null, parent: Document | null, title: string, icon: string, order: number, children: Document[], isOpen: boolean = false, isChildrenOpen: boolean = false, isChangingName: boolean = false, isNewDocument: boolean = false) {
         // makeAutoObservable(this)
         this.id = id
         this.parent = parent
         this.title = title
         this.icon = icon
         this.order = order
-        this.children = children.map(child => new Document(child.id, this, child.title, child.icon, child.order, child.children, child.isOpen))
+        this.children = children.map(child => new Document(child.id, this, child.title, child.icon, child.order, child.children, child.isOpen, child.isChildrenOpen))
+        this.isChildrenOpen = isChildrenOpen
         this.isOpen = isOpen
         this.isChangingName = isChangingName
         this.isNewDocument = isNewDocument
-        // makeObservable(this, {
-        //     id: observable,
-        //     title: observable,
-        //     icon: observable,
-        //     children: computed,
-        //     isOpen: observable,
-        //     isChangingName: observable,
-        //     isNewDocument: observable,
-        //     isSelected: observable,
-        //     tryingGetOlderSibling: observable,
-        //     tryingGetYoungerSibling: observable
-        // })
         makeAutoObservable(this)
     }
 }

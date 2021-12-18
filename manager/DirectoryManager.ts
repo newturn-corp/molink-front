@@ -63,7 +63,7 @@ class DirectoryManager {
 
     async createNewDocument () {
         if (!this._selectedDocument) {
-            const newDocument = new Document(null, null, '', '📄', DocumentManager.documents.length, [], false, true, true)
+            const newDocument = new Document(null, null, '', '📄', DocumentManager.documents.length, [], false, false, true, true)
             DocumentManager.documents.push(newDocument)
             this.selectedDocument = newDocument
             await DocumentManager.createDocument(newDocument)
@@ -73,10 +73,9 @@ class DirectoryManager {
             }]
             ContentManager.openDocument(newDocument)
         } else {
-            console.log(this._selectedDocument)
-            const newDocument = new Document(null, this._selectedDocument, '', '📄', this._selectedDocument.children.length, [], false, true, true)
+            const newDocument = new Document(null, this._selectedDocument, '', '📄', this._selectedDocument.children.length, [], false, false, true, true)
             this._selectedDocument.children.push(newDocument)
-            this._selectedDocument.isOpen = true
+            this._selectedDocument.isChildrenOpen = true
             this.selectedDocument = newDocument
             await DocumentManager.createDocument(newDocument)
             newDocument.content = [{
@@ -91,11 +90,6 @@ class DirectoryManager {
     changeDocumentName () {
         this._selectedDocument.isChangingName = true
         this.openContextMenu = false
-    }
-
-    async setDocumentIsOpen (document: Document, isOpen: boolean) {
-        document.isOpen = isOpen
-        await DocumentAPI.setDocumentIsOpen(document)
     }
 
     deleteDocument (document: Document) {
