@@ -66,7 +66,7 @@ class CommandManager {
             break
         }
         Transforms.insertNodes(editor, node)
-        Transforms.move(editor)
+        // Transforms.move(editor)
     }
 
     onChange (editor: Editor) {

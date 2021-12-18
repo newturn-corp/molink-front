@@ -6,7 +6,8 @@ import { Editable, withReact, Slate } from 'slate-react'
 import {
     createEditor,
     Editor as SlateEditor,
-    Text
+    Text,
+    Transforms
 } from 'slate'
 import { withHistory } from 'slate-history'
 import ContentManager from '../../manager/home/ContentManager'
@@ -20,8 +21,10 @@ import { MentionListComponent } from './MentionListComponent'
 import { CommandListComponent } from './CommandListComponent'
 import MentionManager from '../../manager/home/MentionManager'
 import CommandManager from '../../manager/home/CommandManager'
+import { withHeadNextNormalText } from '../../utils/slate/withHeadNextNormalText'
+import { HeadNextNormalTextPlugin } from '../../plugin/HeaderWithNormalTextPlugin'
 
-const plugins = [withReact, withShortcuts, withHistory, withImages, withShortcuts, withLayout]
+const plugins = [withReact, withShortcuts, withHistory, withImages, withShortcuts, withLayout, withMentions, HeadNextNormalTextPlugin]
 const setPlugin = (editor: SlateEditor): SlateEditor => {
     return plugins.reduce((prev, current) => {
         return current(prev)

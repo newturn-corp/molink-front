@@ -8,7 +8,6 @@ export const SlateTextElement: React.FC<{
     children,
     element: TextElement
   }> = ({ attributes, children, element }) => {
-      console.log(element.category)
       return (
           <p className={`text-${element.category}`} {...attributes}>
               {children}

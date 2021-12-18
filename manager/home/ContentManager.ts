@@ -19,6 +19,13 @@ class ContentManager {
         makeAutoObservable(this, { editor: false, existAutoSavingTimeout: false, preventSaving: false })
         // 창 종료나 이동시 자동 저장
         EventManager.beforeUnloadListener.push(() => this.saveContent(true))
+        EventManager.deleteDocumentListener.push((document) => this.handleDeleteDocument(document))
+    }
+
+    handleDeleteDocument (document: Document) {
+        if (this.openedDocument && document.id === this.openedDocument.id) {
+            this.openedDocument = null
+        }
     }
 
     renameDocumentTitle (title: string) {
@@ -26,9 +33,6 @@ class ContentManager {
     }
 
     renameByFileSystem (document: Document) {
-        if (document.content) {
-            document.content[0].children = [{ text: document.title }]
-        }
         if (this.openedDocument && document.id === this.openedDocument.id) {
             this.editor.apply({ type: 'remove_node', path: [0], node: this.openedDocument.content[0] })
             this.editor.apply({ type: 'insert_node', path: [0], node: { type: 'title', children: [{ text: document.title }] } })
@@ -42,6 +46,7 @@ class ContentManager {
         if (this.openedDocument) {
             // 이미 열려있던 문서가 있는 경우
             this.saveContent(true, false)
+            this.openedDocument.isOpen = false
             this.openedDocument = null
             const deleteCount = this.editor.children.length
             for (let i = 0; i < deleteCount; i++) {
@@ -55,6 +60,7 @@ class ContentManager {
         }
 
         this.openedDocument = document
+        this.openedDocument.isOpen = true
         for (let i = 0; i < this.openedDocument.content.length; i++) {
             this.editor.apply({ type: 'insert_node', path: [i], node: toJS(this.openedDocument).content[i] })
         }

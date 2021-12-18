@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\huseo\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add is-url
+  C:\Program Files\nodejs\node.exe C:\Users\huseo\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add immer
 
 PATH: 
   C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\huseo\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\ProgramData\chocolatey\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Program Files\nodejs;C:\Users\huseo\AppData\Local\Programs\Python\Python39\Scripts;C:\Users\huseo\AppData\Local\Programs\Python\Python39;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\huseo\AppData\Local\Microsoft\WindowsApps;C:\Users\huseo\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Bandizip;C:\Users\huseo\AppData\Local\gitkraken\bin;C:\Users\huseo\AppData\Local\afreeca;C:\Users\huseo\AppData\Local\Microsoft\WindowsApps;C:\Users\huseo\AppData\Local\Android\Sdk\platform-tools;C:\Users\huseo\AppData\Roaming\npm;C:\Users\huseo\AppData\Local\Programs\EmEditor
@@ -44,6 +44,8 @@ npm manifest:
       "eslint-plugin-node": "^11.1.0",
       "eslint-plugin-promise": "^4.2.1",
       "eslint-plugin-react": "^7.27.1",
+      "image-extensions": "^1.1.0",
+      "is-url": "^1.2.4",
       "mobx": "^6.3.8",
       "mobx-react": "^7.2.1",
       "moment-timezone": "^0.5.34",
@@ -2156,6 +2158,11 @@ Lockfile:
     "resolved" "https://registry.npmjs.org/ignore/-/ignore-5.1.9.tgz"
     "version" "5.1.9"
   
+  "image-extensions@^1.1.0":
+    "integrity" "sha1-uOa/YDnfAFbjM1AqALZjejEF2JQ="
+    "resolved" "https://registry.npmjs.org/image-extensions/-/image-extensions-1.1.0.tgz"
+    "version" "1.1.0"
+  
   "image-size@1.0.0":
     "integrity" "sha512-JLJ6OwBfO1KcA+TvJT+v8gbE6iWbj24LyDNFgFEN0lzegn6cC6a/p3NIDaepMsJjQjlUWqIC7wJv8lBFxPNjcw=="
     "resolved" "https://registry.npmjs.org/image-size/-/image-size-1.0.0.tgz"
@@ -2363,6 +2370,11 @@ Lockfile:
       "es-abstract" "^1.18.5"
       "foreach" "^2.0.5"
       "has-tostringtag" "^1.0.0"
+  
+  "is-url@^1.2.4":
+    "integrity" "sha512-ITvGim8FhRiYe4IQ5uHSkj7pVaPDrCTkNd3yq3cV7iZAcJdHTUMPMEHcqSOy9xZ9qFenQCvi+2wjH9a1nXqHww=="
+    "resolved" "https://registry.npmjs.org/is-url/-/is-url-1.2.4.tgz"
+    "version" "1.2.4"
   
   "is-weakref@^1.0.1":
     "integrity" "sha512-qctsuLZmIQ0+vSSMfoVvyFe2+GSEvnmZ2ezTup1SBse9+twCCeial6EEi3Nc2KFcf6+qz2FBPnjXsk8xhKSaPQ=="

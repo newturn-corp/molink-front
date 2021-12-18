@@ -81,7 +81,7 @@ export const DocumentComponent: React.FC<{
                       padding: 0,
                       paddingLeft: padding,
                       paddingRight: 20,
-                      backgroundColor: document.isSelected ? '#e9e9e9' : undefined
+                      backgroundColor: document.isSelected || document.isOpen ? '#e9e9e9' : undefined
                   }}
                   draggable={!document.isChangingName}
                   onClick={(event) => ContentManager.openDocument(document)}

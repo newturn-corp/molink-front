@@ -3,8 +3,6 @@ import {
     Node,
     Element as SlateElement
 } from 'slate'
-import ContentManager from '../../manager/home/ContentManager'
-import { ParagraphElement, TitleElement } from '../slate'
 
 export const withLayout = editor => {
     const { normalizeNode } = editor
@@ -12,25 +10,23 @@ export const withLayout = editor => {
     editor.normalizeNode = ([node, path]) => {
         if (path.length === 0) {
             for (const [child, childPath] of Node.children(editor, path)) {
-                let type: string
                 const slateIndex = childPath[0]
-                const enforceType = type => {
-                    if (SlateElement.isElement(child) && child.type !== type) {
-                        const newProperties: Partial<SlateElement> = { type }
+                switch (slateIndex) {
+                case 0:
+                    if (SlateElement.isElement(child) && child.type !== 'title') {
+                        const newProperties: Partial<SlateElement> = { type: 'title' }
                         Transforms.setNodes<SlateElement>(editor, newProperties, {
                             at: childPath
                         })
                     }
-                }
-
-                switch (slateIndex) {
-                case 0:
-                    type = 'title'
-                    enforceType(type)
                     break
                 case 1:
-                    type = type === 'title' ? 'text' : type
-                    enforceType(type)
+                    if (SlateElement.isElement(child) && child.type === 'title') {
+                        const newProperties: Partial<SlateElement> = { type: 'text' }
+                        Transforms.setNodes<SlateElement>(editor, newProperties, {
+                            at: childPath
+                        })
+                    }
                     break
                 default:
                     break

@@ -36,6 +36,18 @@
   font-size: 1.5em;
 }
 
+.contents .text-content1 {
+  font-size: 1.25em;
+}
+
+.contents .text-content2 {
+  font-size: 1.125em;
+}
+
+.contents .text-content3 {
+  font-size: 1em;
+}
+
 .contents .textline .MuiInputBase-input {
   font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', helvetica, 'Apple SD Gothic Neo', sans-serif !important;
   color: #222426;
@@ -55,5 +67,9 @@
 
 .contents .normal-text {
   font-size: 1.125rem;
+}
+
+.contents .content-for-empty-document {
+  font-size: 1.5rem;
 }
 /*# sourceMappingURL=contents.css.map */

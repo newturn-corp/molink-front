@@ -23,7 +23,7 @@ class HotKeyManager {
             editor.insertText('\n')
             break
         case 'Enter':
-            if (editor.children[editor.selection.anchor.path[0]].type === 'code') {
+            if (editor.selection && editor.children[editor.selection.anchor.path[0]].type === 'code') {
                 e.preventDefault()
                 editor.insertText('\n')
             }
