@@ -24,7 +24,8 @@ module.exports = {
         semi: [2, 'never'],
         'no-use-before-define': 'off',
         'no-unused-vars': 'off',
-        'no-useless-escape': 'off'
+        'no-useless-escape': 'off',
+        'no-console': 'warn'
     },
     globals: {
         JSX: true

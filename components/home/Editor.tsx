@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react'
 import '../../utils/prism'
 import Prism from 'prismjs'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { Editable, withReact, Slate } from 'slate-react'
 import {
     createEditor,
+    Editor as SlateEditor,
     Text
 } from 'slate'
 import { withHistory } from 'slate-history'
@@ -20,11 +21,18 @@ import { CommandListComponent } from './CommandListComponent'
 import MentionManager from '../../manager/home/MentionManager'
 import CommandManager from '../../manager/home/CommandManager'
 
+const plugins = [withReact, withShortcuts, withHistory, withImages, withShortcuts]
+const setPlugin = (editor: SlateEditor): SlateEditor => {
+    return plugins.reduce((prev, current) => {
+        return current(prev)
+    }, editor)
+}
+
 export const Editor: React.FC<{
   }> = observer(() => {
       const renderElement = useCallback(props => <BlockComponent {...props} />, [])
       const renderLeaf = useCallback(props => <BlockNoLeafComponent {...props} />, [])
-      const editor = useMemo(() => withMentions(withLayout(withShortcuts(withImages(withHistory(withShortcuts(withReact(createEditor()))))))), [])
+      const editor = useMemo(() => setPlugin(createEditor()), [])
 
       const getLength = token => {
           if (typeof token === 'string') {
@@ -64,13 +72,17 @@ export const Editor: React.FC<{
           },
           ['html']
       )
+
+      useEffect(() => {
+          ContentManager.editor = editor
+      }, [])
       if (!ContentManager.openedDocument) {
           return <></>
       }
-
-      return <Slate editor={editor} value={ContentManager.openedDocument.content} onChange={value => {
-          ContentManager.openedDocument.content = value
-          console.log('onchange')
+      return <Slate editor={editor} value={[]} onChange={value => {
+          if (ContentManager.openedDocument) {
+              ContentManager.openedDocument.content = value
+          }
           MentionManager.onChange(editor)
           CommandManager.onChange(editor)
       }}>
@@ -82,7 +94,6 @@ export const Editor: React.FC<{
               spellCheck
               autoFocus
               onKeyDown={(e) => {
-                  console.log('onkeydown')
                   HotKeyManager.handleKeyDown(editor, e)
                   MentionManager.onKeyDown(e, editor)
                   CommandManager.onKeyDown(e, editor)
