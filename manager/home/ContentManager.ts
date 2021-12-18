@@ -1,8 +1,10 @@
 import { action, computed, makeAutoObservable, observable, runInAction, toJS } from 'mobx'
 import { Editor, Transforms } from 'slate'
 import ContentAPI from '../../api/ContentAPI'
+import DocumentAPI from '../../api/DocumentAPI'
 import Document from '../../domain/Document'
 import NotificationManager, { NOTIFICATION_TYPE } from '../NotificationManager'
+import EventManager from './EventManager'
 
 // 컨텐츠의 관리를 담당하는 매니저
 class ContentManager {
@@ -15,6 +17,8 @@ class ContentManager {
 
     constructor () {
         makeAutoObservable(this, { editor: false, existAutoSavingTimeout: false, preventSaving: false })
+        // 창 종료나 이동시 자동 저장
+        EventManager.beforeUnloadListener.push(() => this.saveContent(true))
     }
 
     renameDocumentTitle (title: string) {
@@ -22,20 +26,12 @@ class ContentManager {
     }
 
     renameByFileSystem (document: Document) {
+        if (document.content) {
+            document.content[0].children = [{ text: document.title }]
+        }
         if (this.openedDocument && document.id === this.openedDocument.id) {
-            // Transforms.setNodes(this.editor, newProperties, {
-            //     at: childPath
-            // })
-            // this.editor.apply({
-            //     type: 'set_node',
-            //     path: [0],
-            //     properties: {
-            //         children: []
-            //     },
-            //     newProperties: {
-            //         children: [{ text: document.title }]
-            //     }
-            // })
+            this.editor.apply({ type: 'remove_node', path: [0], node: this.openedDocument.content[0] })
+            this.editor.apply({ type: 'insert_node', path: [0], node: { type: 'title', children: [{ text: document.title }] } })
         }
     }
 
@@ -44,7 +40,8 @@ class ContentManager {
             return
         }
         if (this.openedDocument) {
-            // 이미 열려있던 문서가 있는 경우 초기화
+            // 이미 열려있던 문서가 있는 경우
+            this.saveContent(true, false)
             this.openedDocument = null
             const deleteCount = this.editor.children.length
             for (let i = 0; i < deleteCount; i++) {
@@ -63,8 +60,8 @@ class ContentManager {
         }
     }
 
-    async saveContent (isAutoSaving: boolean = false) {
-        if (this.preventSaving) {
+    async saveContent (force: boolean = false, isAutoSaving: boolean = false) {
+        if (!force && this.preventSaving) {
             return
         }
         this.preventSaving = true
@@ -73,6 +70,7 @@ class ContentManager {
         }, 10000)
         NotificationManager.showNotification(NOTIFICATION_TYPE.SUCCESS, isAutoSaving ? '자동 저장 중..' : '저장 중..', '', 3)
         await ContentAPI.updateContent(this.openedDocument, this.openedDocument.content)
+        await DocumentAPI.setDocumentTitle(this.openedDocument)
     }
 
     tryAutoSave () {
@@ -81,9 +79,9 @@ class ContentManager {
         }
         this.existAutoSavingTimeout = true
         setTimeout(async () => {
-            await this.saveContent(true)
+            await this.saveContent(false, true)
             this.existAutoSavingTimeout = false
-        }, 60000)
+        }, 30000)
     }
 
     async handleOnChange (editor: Editor) {

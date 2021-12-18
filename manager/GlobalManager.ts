@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx'
+import EventManager from './home/EventManager'
 
 export enum Browser {
     Chrome,
@@ -11,7 +12,7 @@ class GlobalManager {
     navigator: Navigator
     document: Document
     browser: Browser = null
-    window: Window
+    window: Window = null
     mousePositionX = 0
     mousePositionY = 0
 
@@ -21,7 +22,7 @@ class GlobalManager {
         this.window = window
 
         const agent = this.navigator.userAgent.toLowerCase()
-        console.log(agent)
+
         if (agent.indexOf('chrome') !== -1) {
             this.browser = Browser.Chrome
         } else if (agent.indexOf('safari') !== -1) {
@@ -37,6 +38,8 @@ class GlobalManager {
             this.mousePositionX = event.screenX
             this.mousePositionY = event.screenY
         })
+
+        EventManager.issueInitGlobalVariable()
     }
 
     constructor () {

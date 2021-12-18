@@ -28,6 +28,10 @@ export const withLayout = editor => {
                     type = 'title'
                     enforceType(type)
                     break
+                case 1:
+                    type = type === 'title' ? 'text' : type
+                    enforceType(type)
+                    break
                 default:
                     break
                 }

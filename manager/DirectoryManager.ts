@@ -75,7 +75,7 @@ class DirectoryManager {
         } else {
             const newDocument = new Document(null, this._selectedDocument, '', '📄', this._selectedDocument.children.length, [], false, false, true, true)
             this._selectedDocument.children.push(newDocument)
-            this._selectedDocument.isChildrenOpen = true
+            EventManager.issueOpenDocumentChildrenEvent(this._selectedDocument)
             this.selectedDocument = newDocument
             await DocumentManager.createDocument(newDocument)
             newDocument.content = [{
