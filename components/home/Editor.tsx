@@ -9,7 +9,7 @@ import {
     Text
 } from 'slate'
 import { withHistory } from 'slate-history'
-import ContentManager from '../../manager/ContentManager'
+import ContentManager from '../../manager/home/ContentManager'
 import { BlockComponent, BlockNoLeafComponent } from '../BlockComponent'
 import { withImages } from '../../utils/slate/withImages'
 import { withShortcuts } from '../../utils/slate/withShortcuts'
@@ -21,7 +21,7 @@ import { CommandListComponent } from './CommandListComponent'
 import MentionManager from '../../manager/home/MentionManager'
 import CommandManager from '../../manager/home/CommandManager'
 
-const plugins = [withReact, withShortcuts, withHistory, withImages, withShortcuts]
+const plugins = [withReact, withShortcuts, withHistory, withImages, withShortcuts, withLayout]
 const setPlugin = (editor: SlateEditor): SlateEditor => {
     return plugins.reduce((prev, current) => {
         return current(prev)

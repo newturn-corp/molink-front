@@ -3,6 +3,7 @@ import {
     Node,
     Element as SlateElement
 } from 'slate'
+import ContentManager from '../../manager/home/ContentManager'
 import { ParagraphElement, TitleElement } from '../slate'
 
 export const withLayout = editor => {
@@ -10,22 +11,6 @@ export const withLayout = editor => {
 
     editor.normalizeNode = ([node, path]) => {
         if (path.length === 0) {
-            if (editor.children.length < 1) {
-                const title: TitleElement = {
-                    type: 'title',
-                    children: [{ text: 'Untitled' }]
-                }
-                Transforms.insertNodes(editor, title, { at: path.concat(0) })
-            }
-
-            // if (editor.children.length < 2) {
-            //     const paragraph: ParagraphElement = {
-            //         type: 'paragraph',
-            //         children: [{ text: '' }]
-            //     }
-            //     Transforms.insertNodes(editor, paragraph, { at: path.concat(1) })
-            // }
-
             for (const [child, childPath] of Node.children(editor, path)) {
                 let type: string
                 const slateIndex = childPath[0]
@@ -47,6 +32,27 @@ export const withLayout = editor => {
                     break
                 }
             }
+
+            // for (const [child, childPath] of Node.children(editor, path)) {
+            //     let children
+            //     const slateIndex = childPath[0]
+            //     const enforceText = children => {
+            //         console.log('enforceText')
+            //         const newProperties: Partial<SlateElement> = { children }
+            //         Transforms.setNodes<SlateElement>(editor, newProperties, {
+            //             at: childPath
+            //         })
+            //     }
+
+            //     switch (slateIndex) {
+            //     case 0:
+            //         children = [{ text: ContentManager.openedDocument.title }]
+            //         enforceText(children)
+            //         break
+            //     default:
+            //         break
+            //     }
+            // }
         }
 
         return normalizeNode([node, path])

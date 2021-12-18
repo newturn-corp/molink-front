@@ -117,7 +117,7 @@ body {
 
 .drawer-width-controller {
     position: absolute;
-    z-index: 10000;
+    z-index: 100;
     width: 10px;
     left: 236px;
     cursor: ew-resize;
@@ -128,7 +128,7 @@ body {
     position: absolute;
     width: 1px;
     height: calc(100vh - 60px);
-    z-index: 10000;
+    z-index: 100;
     cursor: ew-resize;
     content: '';
     left: 3px;

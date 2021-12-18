@@ -3,7 +3,8 @@ import { makeAutoObservable, runInAction, toJS } from 'mobx'
 import Document from '../domain/Document'
 import DocumentManager from './DocumentManager'
 import DocumentAPI from '../api/DocumentAPI'
-import ContentManager from './ContentManager'
+import ContentManager from './home/ContentManager'
+import EventManager from './home/EventManager'
 
 export enum DirectoryObjectType {
     Drawer,
@@ -22,6 +23,7 @@ export interface DirectoryControlOption {
     callback: () => void
 }
 
+// 전반적인 FileSystem의 변화를 담당하는 매니저
 class DirectoryManager {
     openContextMenu: boolean = false
     directoryDrawerWidth: number = 240
@@ -56,6 +58,7 @@ class DirectoryManager {
 
     constructor () {
         makeAutoObservable(this)
+        EventManager.deleteDocumentListener.push((document: Document) => this.deleteDocument(document))
     }
 
     async createNewDocument () {
@@ -95,24 +98,23 @@ class DirectoryManager {
         await DocumentAPI.setDocumentIsOpen(document)
     }
 
-    deleteDocument () {
-        const sibling = this._selectedDocument.parent ? this._selectedDocument.parent.children : DocumentManager.documents
-        sibling.splice(this._selectedDocument.order, 1)
+    deleteDocument (document: Document) {
+        console.log('DirectioryManager 호출')
+        const sibling = document.parent ? document.parent.children : DocumentManager.documents
+        sibling.splice(document.order, 1)
         sibling.forEach((doc, idx) => {
             doc.order = idx
         })
-        DocumentManager.deleteDocument(this._selectedDocument)
         this.openContextMenu = false
     }
 
     setAvailControlOptionsByDocument (document: Document | null) {
         this.selectedDocument = document
-        console.log(this.selectedDocument)
         this._availControlOptions = []
         this._availControlOptions.push({ name: '문서 생성', callback: () => this.createNewDocument() })
         if (document) {
             this._availControlOptions.push({ name: '이름 변경', callback: () => this.changeDocumentName() })
-            this._availControlOptions.push({ name: '문서 삭제', callback: () => this.deleteDocument() })
+            this._availControlOptions.push({ name: '문서 삭제', callback: () => EventManager.issueDeleteDocumentEvent(this.selectedDocument) })
         }
     }
 

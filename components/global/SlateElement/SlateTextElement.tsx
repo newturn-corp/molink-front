@@ -1,6 +1,6 @@
 import React from 'react'
 import { Node } from 'slate'
-import ContentManager from '../../../manager/ContentManager'
+import ContentManager from '../../../manager/home/ContentManager'
 import { TextElement } from '../../../utils/slate'
 
 export const SlateTextElement: React.FC<{

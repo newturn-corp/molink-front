@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react'
 import '../../utils/prism'
 import React from 'react'
-import ContentManager from '../../manager/ContentManager'
+import ContentManager from '../../manager/home/ContentManager'
 import { Button } from '@material-ui/core'
 
 export const ContentHeaderIcon: React.FC<{

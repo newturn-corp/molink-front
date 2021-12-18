@@ -7,7 +7,7 @@ import { CircularProgress, Collapse, makeStyles } from '@material-ui/core'
 import { ArrowRight, ArrowDropDown } from '@material-ui/icons'
 import DirectoryManager from '../../../manager/DirectoryManager'
 import { DocumentTitle } from './DocumentTitle'
-import ContentManager from '../../../manager/ContentManager'
+import ContentManager from '../../../manager/home/ContentManager'
 
 enum DragLocation {
     Top,

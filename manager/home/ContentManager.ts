@@ -1,9 +1,10 @@
 import { action, computed, makeAutoObservable, observable, runInAction, toJS } from 'mobx'
-import { Editor } from 'slate'
-import ContentAPI from '../api/ContentAPI'
-import Document from '../domain/Document'
-import NotificationManager, { NOTIFICATION_TYPE } from './NotificationManager'
+import { Editor, Transforms } from 'slate'
+import ContentAPI from '../../api/ContentAPI'
+import Document from '../../domain/Document'
+import NotificationManager, { NOTIFICATION_TYPE } from '../NotificationManager'
 
+// 컨텐츠의 관리를 담당하는 매니저
 class ContentManager {
     editor: Editor = null
 
@@ -18,6 +19,24 @@ class ContentManager {
 
     renameDocumentTitle (title: string) {
         this.openedDocument.title = title
+    }
+
+    renameByFileSystem (document: Document) {
+        if (this.openedDocument && document.id === this.openedDocument.id) {
+            // Transforms.setNodes(this.editor, newProperties, {
+            //     at: childPath
+            // })
+            // this.editor.apply({
+            //     type: 'set_node',
+            //     path: [0],
+            //     properties: {
+            //         children: []
+            //     },
+            //     newProperties: {
+            //         children: [{ text: document.title }]
+            //     }
+            // })
+        }
     }
 
     async openDocument (document: Document) {
