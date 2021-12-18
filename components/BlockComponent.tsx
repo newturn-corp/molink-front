@@ -3,6 +3,7 @@ import { observer } from 'mobx-react'
 import { css } from '@emotion/css'
 import { SlateImageElement } from './global/SlateElement/SlateImageElement'
 import { SlateTitleElement } from './global/SlateElement/SlateTitleElement'
+import { MentionElement } from './global/SlateElement/MentionElement'
 
 export const BlockComponent: React.FC<{
     attributes,
@@ -15,6 +16,8 @@ export const BlockComponent: React.FC<{
           return <SlateImageElement { ...props } />
       case 'title':
           return <SlateTitleElement { ...props } />
+      case 'mention':
+          return <MentionElement { ...props } />
       case 'block-quote':
           return <blockquote {...attributes}>{children}</blockquote>
       case 'bulleted-list':

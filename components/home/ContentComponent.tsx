@@ -7,7 +7,7 @@ import { Button } from '@material-ui/core'
 
 export const ContentComponent: React.FC<{
   }> = observer(() => {
-      if (!ContentManager.content) {
+      if (!ContentManager.openedDocument) {
           return <></>
       }
       return <div className={'contents'}>

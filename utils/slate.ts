@@ -33,7 +33,14 @@ export type TitleElement = {
   children: Descendant[]
 }
 
-export type CustomElement = ParagraphElement | TextElement | BulletedListElement | ImageElement
+export type MentionElement = {
+  type: 'mention'
+  character: string
+  children: CustomText[]
+}
+
+export type CustomElement =
+ParagraphElement | TextElement | BulletedListElement | ImageElement | MentionElement
 
 export type FormattedText = { text: string; bold?: true; codehighlight?: true }
 
