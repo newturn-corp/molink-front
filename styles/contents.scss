@@ -80,3 +80,49 @@
         }
     }
 }
+.command-list {
+    width: 300px;
+    top: -9999px;
+    left: -9999px;
+    position: absolute;
+    z-index: 1;
+    padding: 3px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 5px rgba(0,0,0,.2);
+    .command-block {
+        display: flex;
+        padding: 1px 3px;
+        border-radius: 3px;
+        .command-img {
+            margin: 3px;
+            margin-left: 6px;
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            border: 1px solid rgb(196, 196, 196);
+        }
+        .text-container {
+            margin-left: 4px;
+            margin-top: 3px;
+            margin-bottom: 3px;
+            .name {
+                color: inherit;
+                font-size: 15px;
+                margin: 0px;
+                height: 25px;
+            }
+            .description {
+                color: rgb(100, 100, 100);
+                width: 250px;
+                height: 25px;
+                font-size: 13px;
+                margin: 0px;
+            }
+        }
+    }
+    .command-block.selected {
+        background: rgb(238, 238, 238)
+    }
+}
+    

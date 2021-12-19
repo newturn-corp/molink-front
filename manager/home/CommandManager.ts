@@ -1,6 +1,7 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import React from 'react'
 import { BaseRange, Editor, Element, Range, Transforms } from 'slate'
+import Command from '../../domain/Command'
 import { TextCategory } from '../../utils/slate'
 
 // /(슬래시)로 수행하는 명령을 맡아 처리하는 매니저
@@ -10,18 +11,18 @@ class CommandManager {
     index: number = 0
     searchedCommands: string[] = []
     commandsList = [
-        '제목1',
-        '제목2',
-        '제목3'
+        new Command('제목1', '큰 사이즈의 제목', './head-1.png'),
+        new Command('제목2', '중간 사이즈의 제목', './head-2.png'),
+        new Command('제목3', '작은 사이즈의 제목', './head-3.png')
     ]
 
     constructor () {
         makeAutoObservable(this)
     }
 
-    insertNodeByCommand (editor: Editor, command: string) {
+    insertNodeByCommand (editor: Editor, command: Command) {
         let node: Element
-        switch (command) {
+        switch (command.name) {
         case '제목1':
             node = {
                 type: 'text',
@@ -91,8 +92,8 @@ class CommandManager {
                 } else {
                     this.search = searchResult[1]
                 }
-                this.searchedCommands = this.commandsList.filter(character =>
-                    character.toLowerCase().startsWith(this.search.toLowerCase())
+                this.searchedCommands = this.commandsList.filter(command =>
+                    command.name.startsWith(this.search.toLowerCase())
                 ).slice(0, 10)
                 this.index = 0
                 return

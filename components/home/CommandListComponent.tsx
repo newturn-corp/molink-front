@@ -5,11 +5,30 @@ import '../../utils/prism'
 import { Editor } from 'slate'
 import { ReactEditor } from 'slate-react'
 import CommandManager from '../../manager/home/CommandManager'
+import Command from '../../domain/Command'
 
 const Portal = ({ children }) => {
     return typeof document === 'object'
         ? ReactDOM.createPortal(children, document.body)
         : null
+}
+
+const CommandBlock: React.FC<{
+    key: string | number,
+    index: number,
+    command: Command
+}> = ({ key, index, command }) => {
+    const className = index === CommandManager.index ? 'command-block selected' : 'command-block'
+    return <div
+        key={key}
+        className={className}
+    >
+        <img className='command-img' src={command.imgSrc}/>
+        <div className='text-container'>
+            <p className='name'>{command.name}</p>
+            <p className='description'>{command.description}</p>
+        </div>
+    </div>
 }
 
 export const CommandListComponent: React.FC<{
@@ -31,29 +50,11 @@ export const CommandListComponent: React.FC<{
           ? (<Portal>
               <div
                   ref={ref}
-                  style={{
-                      top: '-9999px',
-                      left: '-9999px',
-                      position: 'absolute',
-                      zIndex: 1,
-                      padding: '3px',
-                      background: 'white',
-                      borderRadius: '4px',
-                      boxShadow: '0 1px 5px rgba(0,0,0,.2)'
-                  }}
+                  className='command-list'
                   data-cy="mentions-portal"
               >
-                  {CommandManager.searchedCommands.map((char, i) => (
-                      <div
-                          key={char}
-                          style={{
-                              padding: '1px 3px',
-                              borderRadius: '3px',
-                              background: i === CommandManager.index ? '#B4D5FF' : 'transparent'
-                          }}
-                      >
-                          {char}
-                      </div>
+                  {CommandManager.searchedCommands.map((command, i) => (
+                      <CommandBlock key={Math.random()} index={i} command={command} />
                   ))}
               </div>
           </Portal>)

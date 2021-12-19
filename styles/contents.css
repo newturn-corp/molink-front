@@ -98,4 +98,59 @@
   border-left: 1px solid #cccccc;
   margin-left: -12px;
 }
+
+.command-list {
+  width: 300px;
+  top: -9999px;
+  left: -9999px;
+  position: absolute;
+  z-index: 1;
+  padding: 3px;
+  background: white;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.command-list .command-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 1px 3px;
+  border-radius: 3px;
+}
+
+.command-list .command-block .command-img {
+  margin: 3px;
+  margin-left: 6px;
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #c4c4c4;
+}
+
+.command-list .command-block .text-container {
+  margin-left: 4px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.command-list .command-block .text-container .name {
+  color: inherit;
+  font-size: 15px;
+  margin: 0px;
+  height: 25px;
+}
+
+.command-list .command-block .text-container .description {
+  color: #646464;
+  width: 250px;
+  height: 25px;
+  font-size: 13px;
+  margin: 0px;
+}
+
+.command-list .command-block.selected {
+  background: #eeeeee;
+}
 /*# sourceMappingURL=contents.css.map */
