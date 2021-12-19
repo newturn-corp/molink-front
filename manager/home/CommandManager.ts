@@ -9,7 +9,7 @@ class CommandManager {
     target: BaseRange = null
     search: string = ''
     index: number = 0
-    searchedCommands: string[] = []
+    searchedCommands: Command[] = []
     commandsList = [
         new Command('제목1', '큰 사이즈의 제목', './head-1.png'),
         new Command('제목2', '중간 사이즈의 제목', './head-2.png'),

@@ -3,7 +3,7 @@
     .logo {
         display: block;
         margin: 0 auto;
-        margin-top: 160px;
+        margin-top: 130px;
         width: 300px;
     }
     .title {
@@ -30,21 +30,13 @@
         display: block;
         margin: 0 auto;
     }
-    .email-helper-text {
+    .helper-text {
         margin: 0 auto;
         width: 300px;
         display: block;
-        color: red;
         font-size: 12px;
         margin-bottom: 4px;
-    }
-    .password-helper-text {
-        margin: 0 auto;
-        width: 300px;
-        display: block;
         color: rgb(66, 66, 66);
-        font-size: 12px;
-        margin-bottom: 4px;
     }
     .auth-page-input {
         height: 76px;
@@ -54,24 +46,6 @@
             margin: 0 auto;
         }
     }
-    // .MuiButton-containedPrimary {
-    //     background-color: rgb(42, 165, 48);
-    //     :hover {
-    //         background-color: rgb(42, 165, 48);  
-    //     }
-    //     .MuiButton-root::hover {
-    //         background-color: rgb(42, 165, 48);  
-    //     }
-    //     .MuiTouchRipple-root::hover {
-    //         background-color: rgb(42, 165, 48);  
-    //     }
-    //     .MuiButton-label {
-    //         background-color: rgb(42, 165, 48);
-    //     }
-    //     // .MuiTouchRipple-root {
-    //     //     background-color: rgb(42, 165, 48);
-    //     // }
-    // }
 }
 
 .sign-in-page {

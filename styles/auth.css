@@ -5,7 +5,7 @@
 .auth-page .logo {
   display: block;
   margin: 0 auto;
-  margin-top: 160px;
+  margin-top: 130px;
   width: 300px;
 }
 
@@ -37,22 +37,13 @@
   margin: 0 auto;
 }
 
-.auth-page .email-helper-text {
+.auth-page .helper-text {
   margin: 0 auto;
   width: 300px;
   display: block;
-  color: red;
   font-size: 12px;
   margin-bottom: 4px;
-}
-
-.auth-page .password-helper-text {
-  margin: 0 auto;
-  width: 300px;
-  display: block;
   color: #424242;
-  font-size: 12px;
-  margin-bottom: 4px;
 }
 
 .auth-page .auth-page-input {

@@ -4,9 +4,7 @@ import AuthAPI, { PASSWORD_CHANGE_FAIL_REASON, SIGN_IN_FAIL_REASON, SIGN_UP_FAIL
 import NotificationManager, { NOTIFICATION_TYPE } from './NotificationManager'
 
 export enum SignupError {
-
     NOT_EMAIL,
-
     SAME_EMAIL
 }
 
@@ -26,16 +24,24 @@ export enum PasswordState {
     PASSWORD_CONDITION_NOT_SATISFIED
 }
 
+export enum NicknameState {
+    Default,
+    NicknameAlreadyExists,
+    NicknameConditionNotSatisfied
+}
+
 class AuthManager {
     email: string = ''
     pwd: string = ''
     pwdCheck: string = ''
+    nickname: string = ''
 
     @observable
     signupError: SignupError = null
 
     emailState: EmailState = EmailState.DEFAULT
     passwordState: PasswordState = PasswordState.DEFAULT
+    nicknameState: NicknameState = NicknameState.Default
 
     constructor () {
         makeAutoObservable(this)
@@ -51,6 +57,15 @@ class AuthManager {
         // eslint-disable-next-line prefer-regex-literals
         const pwdReg = new RegExp(/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/)
         return pwdReg.test(pwd)
+    }
+
+    private validateNickname (nickname: string) {
+        if (nickname.length < 2) {
+            return false
+        } else if (nickname.length > 20) {
+            return false
+        }
+        return true
     }
 
     async signin () {
@@ -74,11 +89,18 @@ class AuthManager {
     }
 
     async signup () {
+        // 사전 이메일 확인
         if (!this.validateEmail(this.email)) {
             this.emailState = EmailState.NOT_EMAIL
             return { success: false }
         }
         this.emailState = EmailState.DEFAULT
+
+        if (!this.validateNickname(this.nickname)) {
+            this.nicknameState = NicknameState.NicknameConditionNotSatisfied
+        }
+        this.nicknameState = NicknameState.Default
+
         if (this.pwd !== this.pwdCheck) {
             this.passwordState = PasswordState.PASSWORD_MISMATCH
             return { success: false }
@@ -86,7 +108,7 @@ class AuthManager {
             this.passwordState = PasswordState.PASSWORD_CONDITION_NOT_SATISFIED
             return { success: false }
         } else {
-            const result = await AuthAPI.signUp(this.email, this.pwd)
+            const result = await AuthAPI.signUp(this.email, this.pwd, this.nickname)
             if (result.success === false) {
                 if (result.reason === SIGN_UP_FAIL_REASON.ALREADY_EXISTS) {
                     this.emailState = EmailState.SAME_EMAIL
@@ -96,6 +118,10 @@ class AuthManager {
                     this.passwordState = PasswordState.PASSWORD_CONDITION_NOT_SATISFIED
                 } else if (result.reason === SIGN_UP_FAIL_REASON.TOO_MANY_SIGN_UP_REQEUST) {
                     this.emailState = EmailState.TOO_MANY_REQUEST
+                } else if (result.reason === SIGN_UP_FAIL_REASON.INVALID_NICKNAME) {
+                    this.nicknameState = NicknameState.NicknameConditionNotSatisfied
+                } else if (result.reason === SIGN_UP_FAIL_REASON.NICKNAME_ALREADY_EXISTS) {
+                    this.nicknameState = NicknameState.NicknameAlreadyExists
                 }
                 return { success: false }
             }

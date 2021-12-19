@@ -7,6 +7,8 @@ export enum SIGN_UP_FAIL_REASON {
     ALREADY_EXISTS,
     INVALID_EMAIL,
     INVALID_PASSWORD,
+    INVALID_NICKNAME,
+    NICKNAME_ALREADY_EXISTS,
     TOO_MANY_SIGN_UP_REQEUST
 }
 
@@ -29,10 +31,11 @@ export enum VERIFY_EMAIL_FAIL_REASON {
 }
 
 class AutoAPI extends BaseAPI {
-    async signUp (email: string, pwd: string) {
+    async signUp (email: string, pwd: string, nickname: string) {
         const res = await this.post('/auth/sign-up', {
             email,
-            pwd
+            pwd,
+            nickname
         })
         if (res.status === 201) {
             return { success: true }
@@ -44,6 +47,10 @@ class AutoAPI extends BaseAPI {
             return { success: false, reason: SIGN_UP_FAIL_REASON.INVALID_PASSWORD }
         } else if (res.status === 409004) {
             return { success: false, reason: SIGN_UP_FAIL_REASON.TOO_MANY_SIGN_UP_REQEUST }
+        } else if (res.status === 409005) {
+            return { success: false, reason: SIGN_UP_FAIL_REASON.INVALID_NICKNAME }
+        } else if (res.status === 409006) {
+            return { success: false, reason: SIGN_UP_FAIL_REASON.NICKNAME_ALREADY_EXISTS }
         }
         return { success: true }
     }

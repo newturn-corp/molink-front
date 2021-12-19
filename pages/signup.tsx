@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Backdrop, Button, CircularProgress, TextField } from '@material-ui/core'
-import AuthManager, { EmailState, PasswordState, SignupError } from '../manager/AuthManager'
+import AuthManager, { EmailState, NicknameState, PasswordState, SignupError } from '../manager/AuthManager'
 import { observer } from 'mobx-react-lite'
 import { useRouter } from 'next/router'
 
@@ -9,15 +9,23 @@ const getEmailHelperText = (emailState: EmailState) => {
         return <></>
     }
     const text = emailState === EmailState.NOT_EMAIL ? '이메일 형식이 아닙니다.' : '이미 존재하는 이메일입니다.'
-    return <p className='email-helper-text'>{text}</p>
+    return <p className='helper-text' style={{ color: 'red' }}>{text}</p>
+}
+
+const getNicknameHelperText = (nicknameState: NicknameState) => {
+    if (nicknameState === NicknameState.Default) {
+        return <p className='helper-text'>{'2~15글자'}</p>
+    }
+    const text = nicknameState === NicknameState.NicknameConditionNotSatisfied ? '2~15글자 내로 닉네임을 정해주세요.' : '이미 존재하는 닉네임입니다.'
+    return <p className='helper-text' style={{ color: 'red' }}>{text}</p>
 }
 
 const getPasswordHelperText = (passwordState: PasswordState) => {
     if (passwordState === PasswordState.DEFAULT) {
-        return <p className='password-helper-text'>{'문자, 숫자, 특수문자 포함 최소 8글자'}</p>
+        return <p className='helper-text'>{'문자, 숫자, 특수문자 포함 최소 8글자'}</p>
     }
     const text = passwordState === PasswordState.PASSWORD_MISMATCH ? '비밀번호가 일치하지 않습니다.' : '문자, 숫자, 특수문자 포함 최소 8글자'
-    return <p className='password-helper-text' style={{ color: 'red' }}>{text}</p>
+    return <p className='helper-text' style={{ color: 'red' }}>{text}</p>
 }
 
 const Signup = observer(() => {
@@ -84,6 +92,22 @@ const Signup = observer(() => {
                     e.preventDefault()
                 }}
             />
+        </div>
+        <div className='auth-page-input'>
+            <TextField
+                className={'input-field'}
+                label="닉네임"
+                type="text"
+                variant='filled'
+                autoComplete='off'
+                error={AuthManager.nicknameState !== NicknameState.Default}
+                onChange={(e) => {
+                    const { value } = e.target
+                    AuthManager.nicknameState = NicknameState.Default
+                    AuthManager.nickname = value
+                }}
+            />
+            {getNicknameHelperText(AuthManager.nicknameState)}
         </div>
         <Button
             className={'sign-up-button'}
