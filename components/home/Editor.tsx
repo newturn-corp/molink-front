@@ -2,32 +2,43 @@ import { observer } from 'mobx-react'
 import '../../utils/prism'
 import Prism from 'prismjs'
 import React, { useCallback, useEffect, useMemo } from 'react'
-import { Editable, withReact, Slate } from 'slate-react'
+import { Editable, Slate, withReact } from 'slate-react'
 import {
-    createEditor,
     Editor as SlateEditor,
     Text,
-    Transforms
+    Transforms,
+    createEditor
 } from 'slate'
 import { withHistory } from 'slate-history'
+
 import ContentManager from '../../manager/home/ContentManager'
-import { CustomElementComponent } from '../SlateElement/CustomElementComponent'
-import { CustomLeafComponent } from '../SlateElement/CustomLeafComponent'
-import { withImages } from '../../utils/slate/withImages'
-import { withShortcuts } from '../../utils/slate/withShortcuts'
-import { withLayout } from '../../utils/slate/withLayout'
-import HotKeyManager from '../../manager/home/HotKeyManager'
-import { withMentions } from '../../utils/slate/withMentions'
-import { MentionListComponent } from './MentionListComponent'
-import { CommandListComponent } from './CommandListComponent'
 import MentionManager from '../../manager/home/MentionManager'
 import CommandManager from '../../manager/home/CommandManager'
-import { withHeadNextNormalText } from '../../utils/slate/withHeadNextNormalText'
+
+import { CustomElementComponent } from '../SlateElement/CustomElementComponent'
+import { CustomLeafComponent } from '../SlateElement/CustomLeafComponent'
+
+import { withImages } from '../../plugin/withImages'
+import { withShortcuts } from '../../plugin/withShortcuts'
+import { withLayout } from '../../plugin/withLayout'
+import { withMentions } from '../../plugin/withMentions'
 import { HeadNextNormalTextPlugin } from '../../plugin/HeaderWithNormalTextPlugin'
+import HotKeyManager from '../../manager/home/HotKeyManager'
+
+import { MentionListComponent } from './MentionListComponent'
+import { CommandListComponent } from './CommandListComponent'
+
+import { EditListPlugin } from '@productboard/slate-edit-list'
+
+const [
+    withEditList, // applies normalization to editor
+    onKeyDown, // keyDown handler for keyboard shortcuts
+    { Transforms: ListTransform, Editor: ListEditor }
+] = EditListPlugin({})
 
 // import Lists from '@convertkit/slate-lists'
 
-const plugins = [withReact, withShortcuts, withHistory, withImages, withShortcuts, withLayout, withMentions, HeadNextNormalTextPlugin]
+const plugins = [withReact, withShortcuts, withHistory, withImages, withShortcuts, withLayout, withMentions, HeadNextNormalTextPlugin, withEditList]
 const setPlugin = (editor: SlateEditor): SlateEditor => {
     return plugins.reduce((prev, current) => {
         return current(prev)
@@ -85,6 +96,7 @@ export const Editor: React.FC<{
       if (!ContentManager.openedDocument) {
           return <></>
       }
+      const inList = ListEditor.isSelectionInList(editor)
       return <Slate editor={editor} value={[]} onChange={value => {
           if (ContentManager.openedDocument) {
               ContentManager.openedDocument.content = value
@@ -92,6 +104,16 @@ export const Editor: React.FC<{
           MentionManager.onChange(editor)
           CommandManager.onChange(editor)
       }}>
+          <button
+              className={inList ? 'active' : ''}
+              onClick={() =>
+                  inList
+                      ? ListTransform.unwrapList(editor)
+                      : ListTransform.wrapInList(editor)
+              }
+          >
+              <i className="fa fa-list-ul fa-lg" />
+          </button>
           <Editable
               decorate={decorate}
               renderElement={renderElement}
@@ -103,6 +125,7 @@ export const Editor: React.FC<{
                   HotKeyManager.handleKeyDown(editor, e)
                   MentionManager.onKeyDown(e, editor)
                   CommandManager.onKeyDown(e, editor)
+                  onKeyDown(editor)(e)
               }}
           />
           <MentionListComponent editor={editor} />

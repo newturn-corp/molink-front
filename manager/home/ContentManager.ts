@@ -6,6 +6,12 @@ import Document from '../../domain/Document'
 import NotificationManager, { NOTIFICATION_TYPE } from '../NotificationManager'
 import EventManager from './EventManager'
 
+export enum ContentSaveStatus {
+    Saved,
+    Saving,
+    SaveFailed
+}
+
 // 컨텐츠의 관리를 담당하는 매니저
 class ContentManager {
     editor: Editor = null
@@ -14,6 +20,9 @@ class ContentManager {
 
     existAutoSavingTimeout: boolean = false
     preventSaving: boolean = false
+    contentSaveStatus: ContentSaveStatus = ContentSaveStatus.Saved
+    isSaving: boolean = false
+    lastSavedAt: Date = new Date()
 
     constructor () {
         makeAutoObservable(this, { editor: false, existAutoSavingTimeout: false, preventSaving: false })
@@ -78,8 +87,16 @@ class ContentManager {
             this.preventSaving = false
         }, 10000)
         // NotificationManager.showNotification(NOTIFICATION_TYPE.SUCCESS, isAutoSaving ? '자동 저장 중..' : '저장 중..', '', 3)
-        await ContentAPI.updateContent(this.openedDocument, this.openedDocument.content)
-        await DocumentAPI.setDocumentTitle(this.openedDocument)
+        this.contentSaveStatus = ContentSaveStatus.Saving
+        this.isSaving = true
+        try {
+            await ContentAPI.updateContent(this.openedDocument, this.openedDocument.content)
+            await DocumentAPI.setDocumentTitle(this.openedDocument)
+            this.contentSaveStatus = ContentSaveStatus.Saved
+            this.lastSavedAt = new Date()
+        } catch (err) {
+            this.contentSaveStatus = ContentSaveStatus.SaveFailed
+        }
     }
 
     tryAutoSave () {

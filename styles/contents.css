@@ -84,4 +84,18 @@
 .contents .content-for-empty-document {
   font-size: 1.5rem;
 }
+
+.contents ul {
+  list-style: disc;
+  margin-left: -20px;
+}
+
+.contents ul li::marker {
+  color: #37352f;
+}
+
+.contents ul ul {
+  border-left: 1px solid #cccccc;
+  margin-left: -12px;
+}
 /*# sourceMappingURL=contents.css.map */

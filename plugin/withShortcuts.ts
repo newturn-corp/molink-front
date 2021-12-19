@@ -7,7 +7,7 @@ import {
     Transforms,
     Point
 } from 'slate'
-import { BulletedListElement } from '../slate'
+import { BulletedListElement } from '../utils/slate'
 
 const SHORTCUTS = {
     '*': 'list-item',
@@ -74,7 +74,7 @@ export const withShortcuts = editor => {
 
                 if (type === 'list-item') {
                     const list: BulletedListElement = {
-                        type: 'bulleted-list',
+                        type: 'ul_list',
                         children: []
                     }
                     Transforms.wrapNodes(editor, list, {

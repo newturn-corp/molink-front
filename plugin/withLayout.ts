@@ -3,7 +3,7 @@ import {
     Node,
     Element as SlateElement
 } from 'slate'
-import { TextCategory } from '../slate'
+import { TextCategory } from '../utils/slate'
 
 export const withLayout = editor => {
     const { normalizeNode } = editor
@@ -33,27 +33,6 @@ export const withLayout = editor => {
                     break
                 }
             }
-
-            // for (const [child, childPath] of Node.children(editor, path)) {
-            //     let children
-            //     const slateIndex = childPath[0]
-            //     const enforceText = children => {
-            //         console.log('enforceText')
-            //         const newProperties: Partial<SlateElement> = { children }
-            //         Transforms.setNodes<SlateElement>(editor, newProperties, {
-            //             at: childPath
-            //         })
-            //     }
-
-            //     switch (slateIndex) {
-            //     case 0:
-            //         children = [{ text: ContentManager.openedDocument.title }]
-            //         enforceText(children)
-            //         break
-            //     default:
-            //         break
-            //     }
-            // }
         }
 
         return normalizeNode([node, path])

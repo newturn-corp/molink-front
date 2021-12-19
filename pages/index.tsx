@@ -4,7 +4,7 @@ import { FileSystem } from '../components/home/FileSystem/FileSystem'
 import DirectoryManager from '../manager/DirectoryManager'
 import { Editor } from '../components/home/Editor'
 import { DrawerWidthController } from '../components/global/DrawerWidthController'
-import { Header } from '../components/global/Header'
+import { Header } from '../components/global/Header/Header'
 import DocumentManager from '../manager/DocumentManager'
 import { ContentComponent } from '../components/home/ContentComponent'
 

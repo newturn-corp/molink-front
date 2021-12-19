@@ -29,7 +29,7 @@ export type TextElement = {
 }
 
 export type BulletedListElement = {
-  type: string
+  type: 'ul_list'
   children: Descendant[]
 }
 
@@ -55,7 +55,7 @@ ParagraphElement | TextElement | BulletedListElement | ImageElement | MentionEle
 
 export type FormattedText = { text: string; bold?: true; codehighlight?: true }
 
-export type CustomText = FormattedText
+export type CustomText = FormattedText | EmptyText
 
 declare module 'slate' {
     interface CustomTypes {

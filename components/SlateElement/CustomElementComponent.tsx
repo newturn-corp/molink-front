@@ -16,6 +16,14 @@ export const CustomElementComponent: React.FC<{
           return <SlateTitleElement { ...props } />
       case 'text':
           return <SlateTextElement { ...props } />
+      case 'ul_list':
+          return <ul {...attributes}>{children}</ul>
+      case 'ol_list':
+          return <ol {...attributes}>{children}</ol>
+      case 'list_item':
+          return <li {...attributes}>{children}</li>
+      case 'heading':
+          return <h1 {...attributes}>{children}</h1>
       default:
           return <p {...attributes}>{children}</p>
       }

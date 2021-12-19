@@ -28,12 +28,27 @@ body {
         margin: 10px;
     }
     .navigator {
-        width: calc(100vw - 120px);
+        width: calc(100vw - 150px);
+    }
+    .network-status-container {
+        height: 40px;
+        width: 40px;
+        margin: 10px;
+        margin-right: 0px;
+        margin-left: 0px;
+        display: flex;
+        .MuiSvgIcon-root {
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            padding: 4px;
+        }
     }
     .menu-container {
         height: 40px;
         width: 40px;
         margin: 10px;
+        margin-left: 0px;
         .MuiIconButton-root {
             width: 100%;
             height: 100%;

@@ -1,18 +1,15 @@
 import { Descendant, Editor, Node, Operation, Point, Range, Text, Transforms } from 'slate'
-import { TextCategory, TextElement } from '../slate'
+import { TextCategory } from '../utils/slate'
 import { createDraft, finishDraft, isDraft } from 'immer'
 
 export const withHeadNextNormalText = (editor: Editor) => {
-    const { isInline, isVoid, apply, insertBreak } = editor
-
     const { transform } = Transforms
     Transforms.transform = (editor: Editor, op: Operation): void => {
-        const { path, position, properties } = op
-
         // 이 함수는 split_node 명령이 Head1, 2, 3일 때만 따로 수행함
         if (op.type !== 'split_node') {
             return transform(editor, op)
         }
+        const { path, position, properties } = op
 
         const node: any = Node.get(editor, path)
 

@@ -22,12 +22,12 @@ class HotKeyManager {
             e.preventDefault()
             editor.insertText('\n')
             break
-        case 'Enter':
-            if (editor.selection && editor.children[editor.selection.anchor.path[0]].type === 'code') {
-                e.preventDefault()
-                editor.insertText('\n')
-            }
-            break
+        // case 'Enter':
+        //     if (editor.selection && editor.children[editor.selection.anchor.path[0]].type === 'code') {
+        //         e.preventDefault()
+        //         editor.insertText('\n')
+        //     }
+        //     break
         case 'ctrl+O':
         case 'ctrl+o':
             e.preventDefault()

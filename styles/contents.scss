@@ -68,4 +68,15 @@
     .content-for-empty-document {
         font-size: 1.5rem;
     }
+    ul {
+        list-style: disc;
+        margin-left: -20px;
+        li::marker {
+            color: rgb(55, 53, 47);
+        }
+        ul {
+            border-left: 1px solid rgb(204, 204, 204);
+            margin-left: -12px;
+        }
+    }
 }
