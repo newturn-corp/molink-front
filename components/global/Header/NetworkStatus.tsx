@@ -9,11 +9,11 @@ import moment from 'moment'
 const getNetworkStatusTooltip = (status: ContentSaveStatus, diff: number) => {
     switch (status) {
     case ContentSaveStatus.Saved:
-        return `연결 정상\n${diff}초 전에 저장됨`
+        return `연결 정상: ${diff}초 전에 저장됨`
     case ContentSaveStatus.Saving:
-        return '저장 중'
+        return '저장 중...'
     case ContentSaveStatus.SaveFailed:
-        return `연결 끊김\n${diff}초 전에 저장됨`
+        return `연결 끊김: ${diff}초 전에 저장됨`
     }
 }
 

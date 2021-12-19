@@ -7,7 +7,9 @@ export const SlateTitleElement: React.FC<{
     children,
     element
   }> = ({ attributes, children, element }) => {
-      ContentManager.renameDocumentTitle(Node.string(element))
+      if (ContentManager.openedDocument) {
+          ContentManager.openedDocument.title = Node.string(element)
+      }
       return (
           <p className='title' {...attributes}>
               {children}

@@ -8,6 +8,7 @@ class EventManager {
     deleteDocumentListener: ((document: Document) => void)[] = []
     openDocumentChildrenListener: ((document: Document, value: boolean) => void)[] = []
     changeDocumentIconListeners: ((document: Document, icon: string) => void)[] = []
+    renameDocumentTitleListeners: ((document: Document, title: string) => void)[] = []
 
     constructor () {
         this.initGlobalVariableListener.push(() => this.addGlobalEventListener())
@@ -42,6 +43,12 @@ class EventManager {
     issueChangeDocumentIcon (document: Document, icon: string) {
         this.changeDocumentIconListeners.forEach(listener => {
             listener(document, icon)
+        })
+    }
+
+    issueRenameDocumentTitle (document: Document, title: string) {
+        this.renameDocumentTitleListeners.forEach(listener => {
+            listener(document, title)
         })
     }
 }

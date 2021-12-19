@@ -29,6 +29,7 @@ class ContentManager {
         // 창 종료나 이동시 자동 저장
         EventManager.beforeUnloadListener.push(() => this.saveContent(true))
         EventManager.deleteDocumentListener.push((document) => this.handleDeleteDocument(document))
+        EventManager.renameDocumentTitleListeners.push((document: Document, title: string) => this.handleRenameDocumentTitle(document, title))
     }
 
     handleDeleteDocument (document: Document) {
@@ -37,15 +38,18 @@ class ContentManager {
         }
     }
 
-    renameDocumentTitle (title: string) {
-        this.openedDocument.title = title
-    }
-
-    renameByFileSystem (document: Document) {
-        if (this.openedDocument && document.id === this.openedDocument.id) {
-            this.editor.apply({ type: 'remove_node', path: [0], node: this.openedDocument.content[0] })
-            this.editor.apply({ type: 'insert_node', path: [0], node: { type: 'title', children: [{ text: document.title }] } })
+    handleRenameDocumentTitle (document: Document, title: string) {
+        if (!this.openedDocument) {
+            return
         }
+        if (this.openedDocument.id !== document.id) {
+            if (document.content) {
+                document.content[0].children[0].text = title
+            }
+            return
+        }
+        this.editor.apply({ type: 'remove_node', path: [0], node: this.openedDocument.content[0] })
+        this.editor.apply({ type: 'insert_node', path: [0], node: { type: 'title', children: [{ text: title }] } })
     }
 
     async openDocument (document: Document) {
@@ -110,7 +114,7 @@ class ContentManager {
         }, 30000)
     }
 
-    async handleOnChange (editor: Editor) {
+    async handleOnChange () {
         this.tryAutoSave()
     }
 }

@@ -3,6 +3,7 @@ import { observer } from 'mobx-react'
 import Document from '../../../../domain/Document'
 import DocumentManager from '../../../../manager/DocumentManager'
 import DirectoryManager from '../../../../manager/DirectoryManager'
+import EventManager from '../../../../manager/home/EventManager'
 
 export const DocumentTitle: React.FC<{
     document: Document
@@ -27,7 +28,6 @@ export const DocumentTitle: React.FC<{
       }
 
       const handleChangeNameEnd = async () => {
-          await DocumentManager.setDocumentTitle(document)
           DirectoryManager.selectedDocument = null
           document.isChangingName = false
       }
@@ -46,11 +46,11 @@ export const DocumentTitle: React.FC<{
                       return
                   }
                   event.preventDefault()
-                  document.title = inputRef.current.innerText
+                  EventManager.issueRenameDocumentTitle(document, inputRef.current.innerText)
                   handleChangeNameEnd()
               }}
               onBlur={() => {
-                  document.title = inputRef.current.innerText
+                  EventManager.issueRenameDocumentTitle(document, inputRef.current.innerText)
                   handleChangeNameEnd()
               }}
           >{document.title}</div>

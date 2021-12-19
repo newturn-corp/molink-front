@@ -96,24 +96,14 @@ export const Editor: React.FC<{
       if (!ContentManager.openedDocument) {
           return <></>
       }
-      const inList = ListEditor.isSelectionInList(editor)
       return <Slate editor={editor} value={[]} onChange={value => {
           if (ContentManager.openedDocument) {
               ContentManager.openedDocument.content = value
           }
           MentionManager.onChange(editor)
           CommandManager.onChange(editor)
+          ContentManager.handleOnChange()
       }}>
-          <button
-              className={inList ? 'active' : ''}
-              onClick={() =>
-                  inList
-                      ? ListTransform.unwrapList(editor)
-                      : ListTransform.wrapInList(editor)
-              }
-          >
-              <i className="fa fa-list-ul fa-lg" />
-          </button>
           <Editable
               decorate={decorate}
               renderElement={renderElement}

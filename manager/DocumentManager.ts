@@ -13,6 +13,7 @@ class DocumentManager {
         EventManager.deleteDocumentListener.push((document: Document) => this.deleteDocument(document))
         EventManager.openDocumentChildrenListener.push((document: Document, value: boolean) => this.openDocumentChildren(document, value))
         EventManager.changeDocumentIconListeners.push((document: Document, icon: string) => this.setDocumentIcon(document, icon))
+        EventManager.renameDocumentTitleListeners.push((document: Document, title: string) => this.setDocumentTitle(document, title))
     }
 
     async init () {
@@ -24,9 +25,9 @@ class DocumentManager {
         document.id = id
     }
 
-    async setDocumentTitle (document: Document) {
+    async setDocumentTitle (document: Document, title: string) {
+        document.title = title
         await DocumentAPI.setDocumentTitle(document)
-        ContentManager.renameByFileSystem(document)
     }
 
     async setDocumentIcon (document: Document, icon: string) {
