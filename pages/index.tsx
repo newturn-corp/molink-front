@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { FileSystem } from '../components/global/FileSystem/FileSystem'
+import { FileSystem } from '../components/home/FileSystem/FileSystem'
 import DirectoryManager from '../manager/DirectoryManager'
 import { Editor } from '../components/home/Editor'
 import { DrawerWidthController } from '../components/global/DrawerWidthController'

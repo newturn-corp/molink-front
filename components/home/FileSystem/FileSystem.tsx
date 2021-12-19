@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import DirectoryManager from '../../../manager/DirectoryManager'
 import { DrawerContextMenu } from './ContextMenu'
 import DocumentManager from '../../../manager/DocumentManager'
-import { DocumentComponent } from './DocumentComponent'
+import { DocumentComponent } from './Document/DocumentComponent'
 
 export const FileSystem: React.FC<{
   }> = observer(() => {

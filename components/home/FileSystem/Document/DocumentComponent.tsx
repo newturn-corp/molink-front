@@ -1,14 +1,14 @@
 import React, { useRef, useState } from 'react'
 import { observer } from 'mobx-react'
-import Document from '../../../domain/Document'
+import Document from '../../../../domain/Document'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
-import { CircularProgress, Collapse, makeStyles } from '@material-ui/core'
-import { ArrowRight, ArrowDropDown } from '@material-ui/icons'
-import DirectoryManager from '../../../manager/DirectoryManager'
+import { Collapse } from '@material-ui/core'
+import DirectoryManager from '../../../../manager/DirectoryManager'
 import { DocumentTitle } from './DocumentTitle'
-import ContentManager from '../../../manager/home/ContentManager'
-import EventManager from '../../../manager/home/EventManager'
+import ContentManager from '../../../../manager/home/ContentManager'
+import { DocumentIcon } from './DocumentIcon'
+import { DocumentChildOpenButton } from './DocumentChildOpenButton'
 
 enum DragLocation {
     Top,
@@ -22,13 +22,7 @@ export const DocumentComponent: React.FC<{
     depth: number
   }> = observer(({ document, depth }) => {
       const divRef = useRef<HTMLDivElement>(null)
-      const hasChildren = !!document.children.length
-      const padding = 8 + Number(!hasChildren) * 24 + depth * 8
-
-      const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-          event.stopPropagation()
-          EventManager.issueOpenDocumentChildrenEvent(document, !document.isChildrenOpen)
-      }
+      const padding = 8 + depth * 12
 
       const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
           if (!DirectoryManager.draggingDocument) {
@@ -52,7 +46,6 @@ export const DocumentComponent: React.FC<{
           }
       }
 
-      //   const ghost = globalThis.document.createElement('div')
       const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
           ghost = divRef.current.cloneNode()
           ghost.style.backgroundColor = '#e9e9e9'
@@ -90,18 +83,9 @@ export const DocumentComponent: React.FC<{
                   onDragOver={(event) => handleDragOver(event)}
                   onDragLeave={() => DirectoryManager.handleDragLeave(document)}
                   onDrop={() => DirectoryManager.handleDrop(document)}
-                  //   style={getBorderStyle(newDocumentLocation)}
                   onContextMenu={(event) => DirectoryManager.handleRightClick(event, document)}>
-                  {
-                      hasChildren
-                          ? <div className='child-open-button' onClick={(event) => handleClick(event)}>
-                              {
-                                  document.isChildrenOpen
-                                      ? <ArrowDropDown />
-                                      : <ArrowRight/>}
-                          </div>
-                          : <></>
-                  }
+                  <DocumentChildOpenButton document={document}/>
+                  <DocumentIcon document={document}/>
                   <DocumentTitle document={document}/>
               </ListItem>
               <Collapse in={document.isChildrenOpen} timeout="auto" unmountOnExit>

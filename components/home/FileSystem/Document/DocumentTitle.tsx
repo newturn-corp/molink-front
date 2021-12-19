@@ -1,15 +1,15 @@
 import React, { useRef } from 'react'
 import { observer } from 'mobx-react'
-import Document from '../../../domain/Document'
-import DocumentManager from '../../../manager/DocumentManager'
-import { DocumentIcon } from './DocumentIcon'
-import DirectoryManager from '../../../manager/DirectoryManager'
+import Document from '../../../../domain/Document'
+import DocumentManager from '../../../../manager/DocumentManager'
+import DirectoryManager from '../../../../manager/DirectoryManager'
 
 export const DocumentTitle: React.FC<{
     document: Document
   }> = observer(({ document }) => {
       const inputRef = useRef<HTMLDivElement>(null)
-      const text = document.children.length ? `${document.title} (${document.children.length})` : `${document.title}`
+      const textClassName = document.isOpen ? 'text text-opened' : 'text'
+
       if (document.isChangingName && inputRef) {
           new Promise(resolve => setTimeout(resolve, 100)).then(() => {
               inputRef.current.focus()
@@ -25,26 +25,22 @@ export const DocumentTitle: React.FC<{
               selection.addRange(range)
           })
       }
+
       const handleChangeNameEnd = async () => {
           await DocumentManager.setDocumentTitle(document)
           DirectoryManager.selectedDocument = null
           document.isChangingName = false
       }
+
       return <div className={'document-title'} style={{
-          borderLeft: '0px',
-          borderRight: '0px',
           borderTop: document.tryingGetOlderSibling ? '2px solid #e6e6e6' : '2px solid #00000000',
           borderBottom: document.tryingGetYoungerSibling ? '2px solid #e6e6e6' : '2px solid #00000000'
       }} >
-          <DocumentIcon document={document}/>
           <div
               contentEditable={document.isChangingName}
               ref={inputRef}
-              className={'text'}
+              className={textClassName}
               spellCheck={false}
-              //   value={document.isChangingName ? document.title : text}
-              //   disabled={!document.isChangingName}
-              //   autoFocus={document.isChangingName}
               onKeyDown={event => {
                   if (event.key !== 'Enter') {
                       return
@@ -57,9 +53,6 @@ export const DocumentTitle: React.FC<{
                   document.title = inputRef.current.innerText
                   handleChangeNameEnd()
               }}
-              style={{
-                  border: '0px'
-              }}
-          >{document.isChangingName ? document.title : text}</div>
+          >{document.title}</div>
       </div>
   })

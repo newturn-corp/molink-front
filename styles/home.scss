@@ -1,0 +1,99 @@
+.drawer {
+    flex-shrink: 0;
+    overflow-x: hidden;
+    height: calc(100vh - 60px);
+    .MuiDrawer-paper {
+        overflow-x: auto;
+        overflow-y: auto;
+        position: relative;
+        height: calc(100vh - 60px);
+        background-color: #F7F6F3;
+        .MuiListItemIcon-root {
+            min-width: 25px;
+        }
+        aside.emoji-picker-react {
+            position: absolute;
+            margin-top: -20px;
+            z-index: 100;   
+        }
+        .MuiListItem-root {
+            width: max-content;
+            min-width: 100%;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            cursor: move; /* fallback if grab cursor is unsupported */
+            cursor: grab;
+            height: 30px;
+            .child-open-button {
+                width: 24px;
+                height: 24px;
+                border-radius: 3px;
+                &:hover {
+                    background-color: #dddddd;
+                    transition: 0.3s;
+                }
+            }
+            .document-title {
+                display: flex;
+                border-left: 0px;
+                border-right: 0px;
+                .icon {
+                    display: inline;
+                    margin-top: 4px;
+                    margin-bottom: 4px;
+                    .MuiListItemText-primary {
+                        margin: 0px;
+                        font-size: 0.7rem;
+                    }
+                }
+                .text {
+                    display: inline;
+                    padding-top: 4px;
+                    padding-bottom: 4px;
+                    margin-left: 6px;
+                    white-space: nowrap;
+                    background-color: transparent;
+                    border:none;
+                    outline-width: 0;
+                    color: rgb(85, 85, 85);
+                }
+                .text-opened {
+                    color: rgb(34, 36, 38);
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #e7e7e7;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgb(228, 228, 228);
+        border-radius: 5px;
+    }
+}
+
+.drawer-width-controller {
+    position: absolute;
+    z-index: 100;
+    width: 10px;
+    left: 236px;
+    cursor: ew-resize;
+    height: calc(100vh - 60px);
+    top: 60px;
+}
+
+.drawer-width-controller::after {
+    position: absolute;
+    width: 1px;
+    height: calc(100vh - 60px);
+    z-index: 100;
+    cursor: ew-resize;
+    content: '';
+    left: 3px;
+    border-right: 1px solid #dfdfdf;
+}

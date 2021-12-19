@@ -1,0 +1,121 @@
+.drawer {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  overflow-x: hidden;
+  height: calc(100vh - 60px);
+}
+
+.drawer .MuiDrawer-paper {
+  overflow-x: auto;
+  overflow-y: auto;
+  position: relative;
+  height: calc(100vh - 60px);
+  background-color: #F7F6F3;
+}
+
+.drawer .MuiDrawer-paper .MuiListItemIcon-root {
+  min-width: 25px;
+}
+
+.drawer .MuiDrawer-paper aside.emoji-picker-react {
+  position: absolute;
+  margin-top: -20px;
+  z-index: 100;
+}
+
+.drawer .MuiDrawer-paper .MuiListItem-root {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  min-width: 100%;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  cursor: move;
+  /* fallback if grab cursor is unsupported */
+  cursor: -webkit-grab;
+  cursor: grab;
+  height: 30px;
+}
+
+.drawer .MuiDrawer-paper .MuiListItem-root .child-open-button {
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+}
+
+.drawer .MuiDrawer-paper .MuiListItem-root .child-open-button:hover {
+  background-color: #dddddd;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.drawer .MuiDrawer-paper .MuiListItem-root .document-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-left: 0px;
+  border-right: 0px;
+}
+
+.drawer .MuiDrawer-paper .MuiListItem-root .document-title .icon {
+  display: inline;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.drawer .MuiDrawer-paper .MuiListItem-root .document-title .icon .MuiListItemText-primary {
+  margin: 0px;
+  font-size: 0.7rem;
+}
+
+.drawer .MuiDrawer-paper .MuiListItem-root .document-title .text {
+  display: inline;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-left: 6px;
+  white-space: nowrap;
+  background-color: transparent;
+  border: none;
+  outline-width: 0;
+  color: #555555;
+}
+
+.drawer .MuiDrawer-paper .MuiListItem-root .document-title .text-opened {
+  color: #222426;
+  font-weight: 600;
+}
+
+.drawer ::-webkit-scrollbar {
+  width: 10px;
+}
+
+.drawer ::-webkit-scrollbar-track {
+  background: #e7e7e7;
+}
+
+.drawer ::-webkit-scrollbar-thumb {
+  background: #e4e4e4;
+  border-radius: 5px;
+}
+
+.drawer-width-controller {
+  position: absolute;
+  z-index: 100;
+  width: 10px;
+  left: 236px;
+  cursor: ew-resize;
+  height: calc(100vh - 60px);
+  top: 60px;
+}
+
+.drawer-width-controller::after {
+  position: absolute;
+  width: 1px;
+  height: calc(100vh - 60px);
+  z-index: 100;
+  cursor: ew-resize;
+  content: '';
+  left: 3px;
+  border-right: 1px solid #dfdfdf;
+}
+/*# sourceMappingURL=home.css.map */
