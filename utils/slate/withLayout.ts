@@ -3,6 +3,7 @@ import {
     Node,
     Element as SlateElement
 } from 'slate'
+import { TextCategory } from '../slate'
 
 export const withLayout = editor => {
     const { normalizeNode } = editor
@@ -22,7 +23,7 @@ export const withLayout = editor => {
                     break
                 case 1:
                     if (SlateElement.isElement(child) && child.type === 'title') {
-                        const newProperties: Partial<SlateElement> = { type: 'text' }
+                        const newProperties: Partial<SlateElement> = { type: 'text', category: TextCategory.Content3 }
                         Transforms.setNodes<SlateElement>(editor, newProperties, {
                             at: childPath
                         })

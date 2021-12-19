@@ -28,30 +28,35 @@
   margin-bottom: 0.3em;
 }
 
-.contents .text-head1 {
+.contents .text {
+  margin: 0px;
+  padding: 3px;
+}
+
+.contents .head1 {
   font-size: 2em;
   font-weight: 600;
 }
 
-.contents .text-head2 {
+.contents .head2 {
   font-weight: 600;
   font-size: 1.75em;
 }
 
-.contents .text-head3 {
+.contents .head3 {
   font-weight: 600;
   font-size: 1.5em;
 }
 
-.contents .text-content1 {
+.contents .content1 {
   font-size: 1.25em;
 }
 
-.contents .text-content2 {
+.contents .content2 {
   font-size: 1.125em;
 }
 
-.contents .text-content3 {
+.contents .content3 {
   font-size: 1em;
 }
 
