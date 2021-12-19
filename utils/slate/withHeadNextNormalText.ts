@@ -20,8 +20,6 @@ export const withHeadNextNormalText = (editor: Editor) => {
             return transform(editor, op)
         }
 
-        console.log('나 호출')
-
         editor.children = createDraft(editor.children)
         const selection = editor.selection && createDraft(editor.selection)
 

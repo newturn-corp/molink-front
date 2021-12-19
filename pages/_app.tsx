@@ -8,6 +8,7 @@ import '../styles/auth.css'
 import { AppProps } from 'next/dist/shared/lib/router/router'
 import { configure } from 'mobx'
 import GlobalManager from '../manager/GlobalManager'
+import ContentManager from '../manager/home/ContentManager'
 
 configure(
     {
@@ -28,11 +29,12 @@ const App = ({ Component, pageProps }: AppProps) => {
         GlobalManager.init()
     }, [])
 
+    const headText = ContentManager.openedDocument ? ContentManager.openedDocument.title : 'Knowlink'
     return (
         <>
             <SafeHydrate>
                 <Head>
-                    <title>{'good'}</title>
+                    <title>{headText}</title>
                     <link rel='shortcut icon' href='/favicon.ico' />
                 </Head>
                 <Component {...pageProps} />

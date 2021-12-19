@@ -11,7 +11,7 @@ class DocumentManager {
     constructor () {
         makeAutoObservable(this)
         EventManager.deleteDocumentListener.push((document: Document) => this.deleteDocument(document))
-        EventManager.openDocumentChildrenListener.push((document: Document) => this.openDocumentChildren(document))
+        EventManager.openDocumentChildrenListener.push((document: Document, value: boolean) => this.openDocumentChildren(document, value))
         EventManager.changeDocumentIconListeners.push((document: Document, icon: string) => this.setDocumentIcon(document, icon))
     }
 
@@ -38,8 +38,8 @@ class DocumentManager {
         await DocumentAPI.deleteDocument(document)
     }
 
-    async openDocumentChildren (document: Document) {
-        document.isChildrenOpen = !document.isChildrenOpen
+    async openDocumentChildren (document: Document, value: boolean) {
+        document.isChildrenOpen = value
         await DocumentAPI.setDocumentIsChildrenOpen(document)
     }
 }

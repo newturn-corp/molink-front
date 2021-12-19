@@ -6,7 +6,7 @@ class EventManager {
 
     beforeUnloadListener: (() => void)[] = []
     deleteDocumentListener: ((document: Document) => void)[] = []
-    openDocumentChildrenListener: ((document: Document) => void)[] = []
+    openDocumentChildrenListener: ((document: Document, value: boolean) => void)[] = []
     changeDocumentIconListeners: ((document: Document, icon: string) => void)[] = []
 
     constructor () {
@@ -33,9 +33,9 @@ class EventManager {
         })
     }
 
-    issueOpenDocumentChildrenEvent (document: Document) {
+    issueOpenDocumentChildrenEvent (document: Document, value: boolean) {
         this.openDocumentChildrenListener.forEach(listener => {
-            listener(document)
+            listener(document, value)
         })
     }
 

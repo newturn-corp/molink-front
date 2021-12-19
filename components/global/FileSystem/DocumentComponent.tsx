@@ -27,7 +27,7 @@ export const DocumentComponent: React.FC<{
 
       const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
           event.stopPropagation()
-          EventManager.issueOpenDocumentChildrenEvent(document)
+          EventManager.issueOpenDocumentChildrenEvent(document, !document.isChildrenOpen)
       }
 
       const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -96,7 +96,7 @@ export const DocumentComponent: React.FC<{
                       hasChildren
                           ? <div className='child-open-button' onClick={(event) => handleClick(event)}>
                               {
-                                  document.isOpen
+                                  document.isChildrenOpen
                                       ? <ArrowDropDown />
                                       : <ArrowRight/>}
                           </div>

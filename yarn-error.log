@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\huseo\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add emoji-picker-react
+  C:\Program Files\nodejs\node.exe C:\Users\huseo\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @convertkit/slate-lists
 
 PATH: 
-  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\huseo\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\ProgramData\chocolatey\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Program Files\nodejs;C:\Users\huseo\AppData\Local\Programs\Python\Python39\Scripts;C:\Users\huseo\AppData\Local\Programs\Python\Python39;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\huseo\AppData\Local\Microsoft\WindowsApps;C:\Users\huseo\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Bandizip;C:\Users\huseo\AppData\Local\gitkraken\bin;C:\Users\huseo\AppData\Local\afreeca;C:\Users\huseo\AppData\Local\Microsoft\WindowsApps;C:\Users\huseo\AppData\Local\Android\Sdk\platform-tools;C:\Users\huseo\AppData\Roaming\npm;C:\Users\huseo\AppData\Local\Programs\EmEditor
+  C:\Users\huseo\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\huseo\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\ProgramData\chocolatey\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Program Files\nodejs;C:\Users\huseo\AppData\Local\Programs\Python\Python39\Scripts;C:\Users\huseo\AppData\Local\Programs\Python\Python39;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\huseo\AppData\Local\Microsoft\WindowsApps;C:\Users\huseo\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Bandizip;C:\Users\huseo\AppData\Local\gitkraken\bin;C:\Users\huseo\AppData\Local\afreeca;C:\Users\huseo\AppData\Local\Microsoft\WindowsApps;C:\Users\huseo\AppData\Local\Android\Sdk\platform-tools;C:\Users\huseo\AppData\Roaming\npm;C:\Users\huseo\AppData\Local\Programs\EmEditor;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl;C;C:\Users\huseo\.yarn\bin
 
 Yarn version: 
   1.22.17
@@ -37,6 +37,7 @@ npm manifest:
       "@typescript-eslint/parser": "^5.6.0",
       "antd": "^4.17.3",
       "class-transformer": "^0.5.1",
+      "emoji-picker-react": "^3.4.12",
       "emotion": "^11.0.0",
       "eslint": "^7.12.1",
       "eslint-config-standard": "^16.0.3",
@@ -1512,6 +1513,11 @@ Lockfile:
       "inherits" "^2.0.4"
       "minimalistic-assert" "^1.0.1"
       "minimalistic-crypto-utils" "^1.0.1"
+  
+  "emoji-picker-react@^3.4.12":
+    "integrity" "sha512-i2VRfKRltFJjsY5ste7UPOn24uXcb4yuOVU6u9Cm3gsSc1MvCqr3XsBGhhhK8jPLeDB9llWtFQ6vABZSqNKQxA=="
+    "resolved" "https://registry.npmjs.org/emoji-picker-react/-/emoji-picker-react-3.4.12.tgz"
+    "version" "3.4.12"
   
   "emoji-regex@^8.0.0":
     "integrity" "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A=="

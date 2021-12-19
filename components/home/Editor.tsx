@@ -11,7 +11,8 @@ import {
 } from 'slate'
 import { withHistory } from 'slate-history'
 import ContentManager from '../../manager/home/ContentManager'
-import { BlockComponent, BlockNoLeafComponent } from '../BlockComponent'
+import { CustomElementComponent } from '../SlateElement/CustomElementComponent'
+import { CustomLeafComponent } from '../SlateElement/CustomLeafComponent'
 import { withImages } from '../../utils/slate/withImages'
 import { withShortcuts } from '../../utils/slate/withShortcuts'
 import { withLayout } from '../../utils/slate/withLayout'
@@ -24,6 +25,8 @@ import CommandManager from '../../manager/home/CommandManager'
 import { withHeadNextNormalText } from '../../utils/slate/withHeadNextNormalText'
 import { HeadNextNormalTextPlugin } from '../../plugin/HeaderWithNormalTextPlugin'
 
+// import Lists from '@convertkit/slate-lists'
+
 const plugins = [withReact, withShortcuts, withHistory, withImages, withShortcuts, withLayout, withMentions, HeadNextNormalTextPlugin]
 const setPlugin = (editor: SlateEditor): SlateEditor => {
     return plugins.reduce((prev, current) => {
@@ -33,8 +36,8 @@ const setPlugin = (editor: SlateEditor): SlateEditor => {
 
 export const Editor: React.FC<{
   }> = observer(() => {
-      const renderElement = useCallback(props => <BlockComponent {...props} />, [])
-      const renderLeaf = useCallback(props => <BlockNoLeafComponent {...props} />, [])
+      const renderElement = useCallback(props => <CustomElementComponent {...props} />, [])
+      const renderLeaf = useCallback(props => <CustomLeafComponent {...props} />, [])
       const editor = useMemo(() => setPlugin(createEditor()), [])
 
       const getLength = token => {
@@ -100,9 +103,6 @@ export const Editor: React.FC<{
                   HotKeyManager.handleKeyDown(editor, e)
                   MentionManager.onKeyDown(e, editor)
                   CommandManager.onKeyDown(e, editor)
-              }}
-              onPaste={(e) => {
-                  console.log(e.clipboardData.getData('Text'))
               }}
           />
           <MentionListComponent editor={editor} />
