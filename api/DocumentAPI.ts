@@ -56,5 +56,13 @@ class DocumentAPI extends BaseAPI {
         })
         if (res.status !== 200) throw new APIError(res)
     }
+
+    async setDocumentIcon (document: Document): Promise<void> {
+        const res = await this.put('/documents/icon', {
+            id: document.id,
+            icon: document.icon
+        })
+        if (res.status !== 200) throw new APIError(res)
+    }
 }
 export default new DocumentAPI()

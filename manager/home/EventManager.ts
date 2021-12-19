@@ -1,4 +1,3 @@
-import { reaction } from 'mobx'
 import Document from '../../domain/Document'
 import GlobalManager from '../GlobalManager'
 
@@ -8,6 +7,7 @@ class EventManager {
     beforeUnloadListener: (() => void)[] = []
     deleteDocumentListener: ((document: Document) => void)[] = []
     openDocumentChildrenListener: ((document: Document) => void)[] = []
+    changeDocumentIconListeners: ((document: Document, icon: string) => void)[] = []
 
     constructor () {
         this.initGlobalVariableListener.push(() => this.addGlobalEventListener())
@@ -36,6 +36,12 @@ class EventManager {
     issueOpenDocumentChildrenEvent (document: Document) {
         this.openDocumentChildrenListener.forEach(listener => {
             listener(document)
+        })
+    }
+
+    issueChangeDocumentIcon (document: Document, icon: string) {
+        this.changeDocumentIconListeners.forEach(listener => {
+            listener(document, icon)
         })
     }
 }

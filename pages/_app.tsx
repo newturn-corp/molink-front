@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react'
 import Head from 'next/head'
+import 'antd/dist/antd.css'
 import '../styles/global.css'
 import '../styles/contents.css'
 import '../styles/auth.css'
-import 'antd/dist/antd.css'
 import { AppProps } from 'next/dist/shared/lib/router/router'
 import { configure } from 'mobx'
 import GlobalManager from '../manager/GlobalManager'

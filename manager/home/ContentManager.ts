@@ -45,7 +45,7 @@ class ContentManager {
         }
         if (this.openedDocument) {
             // 이미 열려있던 문서가 있는 경우
-            this.saveContent(true, false)
+            await this.saveContent(true, false)
             this.openedDocument.isOpen = false
             this.openedDocument = null
             const deleteCount = this.editor.children.length
@@ -70,11 +70,14 @@ class ContentManager {
         if (!force && this.preventSaving) {
             return
         }
+        if (!this.openedDocument) {
+            return
+        }
         this.preventSaving = true
         setTimeout(() => {
             this.preventSaving = false
         }, 10000)
-        NotificationManager.showNotification(NOTIFICATION_TYPE.SUCCESS, isAutoSaving ? '자동 저장 중..' : '저장 중..', '', 3)
+        // NotificationManager.showNotification(NOTIFICATION_TYPE.SUCCESS, isAutoSaving ? '자동 저장 중..' : '저장 중..', '', 3)
         await ContentAPI.updateContent(this.openedDocument, this.openedDocument.content)
         await DocumentAPI.setDocumentTitle(this.openedDocument)
     }

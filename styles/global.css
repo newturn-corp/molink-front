@@ -6,6 +6,7 @@ html {
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', helvetica, 'Apple SD Gothic Neo', sans-serif !important;
   color: #222426;
+  font-size: 16px;
 }
 
 .header {
@@ -108,13 +109,19 @@ body {
   display: inline;
   padding-top: 4px;
   padding-bottom: 4px;
-  margin-left: 6px;
+  margin-left: 4px;
   font-size: 0.9rem;
   white-space: nowrap;
   background-color: transparent;
   border: none;
   outline-width: 0;
   color: #222426;
+}
+
+.drawer .MuiDrawer-paper aside.emoji-picker-react {
+  position: absolute;
+  margin-top: -20px;
+  z-index: 100;
 }
 
 .drawer .MuiDrawer-paper .MuiListItem-root {

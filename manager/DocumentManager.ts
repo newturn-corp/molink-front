@@ -12,6 +12,7 @@ class DocumentManager {
         makeAutoObservable(this)
         EventManager.deleteDocumentListener.push((document: Document) => this.deleteDocument(document))
         EventManager.openDocumentChildrenListener.push((document: Document) => this.openDocumentChildren(document))
+        EventManager.changeDocumentIconListeners.push((document: Document, icon: string) => this.setDocumentIcon(document, icon))
     }
 
     async init () {
@@ -28,12 +29,16 @@ class DocumentManager {
         ContentManager.renameByFileSystem(document)
     }
 
+    async setDocumentIcon (document: Document, icon: string) {
+        document.icon = icon
+        await DocumentAPI.setDocumentIcon(document)
+    }
+
     async deleteDocument (document: Document) {
         await DocumentAPI.deleteDocument(document)
     }
 
     async openDocumentChildren (document: Document) {
-        console.log('낳 ㅗ출')
         document.isChildrenOpen = !document.isChildrenOpen
         await DocumentAPI.setDocumentIsChildrenOpen(document)
     }
