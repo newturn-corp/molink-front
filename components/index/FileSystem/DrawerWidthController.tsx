@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { observer } from 'mobx-react'
-import DirectoryManager from '../../manager/DirectoryManager'
-import GlobalManager, { Browser } from '../../manager/GlobalManager'
-import { reaction } from 'mobx'
-
-const mousePosition = 236
-const isDragging = false
-const isFirefox = false
+import GlobalManager, { Browser } from '../../../manager/GlobalManager'
+import FileSystemManager from '../../../manager/renew/FileSystemManager'
 
 export const DrawerWidthController: React.FC<{
   }> = observer(() => {
       const [controllerPosition, setControllerPosition] = useState(236)
+      if (!FileSystemManager.directoryInfoList) {
+          return <></>
+      }
       return (
           <>
               <div className={'drawer-width-controller'}
@@ -29,7 +27,7 @@ export const DrawerWidthController: React.FC<{
                       } else {
                           setControllerPosition(GlobalManager.mousePositionX - 3)
                       }
-                      DirectoryManager.directoryDrawerWidth = GlobalManager.browser !== Browser.Firefox ? event.pageX : GlobalManager.mousePositionX
+                      FileSystemManager.directoryDrawerWidth = GlobalManager.browser !== Browser.Firefox ? event.pageX : GlobalManager.mousePositionX
                   }}>
               </div>
           </>

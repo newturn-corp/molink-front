@@ -1,22 +1,27 @@
-import React, { useEffect } from 'react'
-
-import { FileSystem } from '../components/home/FileSystem/FileSystem'
-import DirectoryManager from '../manager/DirectoryManager'
-import { Editor } from '../components/home/Editor'
-import { DrawerWidthController } from '../components/global/DrawerWidthController'
+import React from 'react'
+import ContentManager from '../manager/renew/ContentManager'
+import { DrawerWidthController } from '../components/index/FileSystem/DrawerWidthController'
+import { FileSystem } from '../components/index/FileSystem/FileSystem'
 import { Header } from '../components/global/Header/Header'
-import DocumentManager from '../manager/DocumentManager'
+import UserManager from '../manager/UserManager'
 import { ContentComponent } from '../components/home/ContentComponent'
+import GlobalManager from '../manager/GlobalManager'
+import { useRouter } from 'next/router'
 
 const Index = () => {
-    useEffect(() => {
-        DocumentManager.init()
-    }, [])
-
-    return <div onClick={() => {
-        DirectoryManager.openContextMenu = false
-        DirectoryManager.selectedDocument = null
-    } } >
+    const router = useRouter()
+    UserManager.updateUserProfile()
+        .then(() => {
+            const documentId = new URLSearchParams(GlobalManager.window.location.search).get('id')
+            if (documentId) {
+                ContentManager.tryOpenDocumentByDocumentId(documentId)
+            } else {
+                if (!UserManager.isUserAuthorized) {
+                    router.push('/signin')
+                }
+            }
+        })
+    return <div>
         <Header />
         <div className={'index-body'}>
             <FileSystem />

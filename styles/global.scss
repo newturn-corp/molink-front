@@ -22,13 +22,36 @@ body {
     height: 60px;
     z-index: 25000;
     display: flex;
+    flex-direction: row-reverse;
     .logo {
         height: 40px;
         width: 40px;
         margin: 10px;
     }
     .navigator {
-        width: calc(100vw - 150px);
+        width: fit-content
+    }
+    .visibility-container {
+        height: 40px;
+        width: 40px;
+        margin: 10px;
+        margin-left: 0px;
+        margin-right: 0px;
+        .MuiIconButton-root {
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+        .public-icon {
+            color: rgb(48, 175, 31);
+        }
+        .private-icon {
+            color: rgb(201, 198, 25);
+        }
+        .only-friend-icon {
+            color: #23a3bc;
+        }
     }
     .network-status-container {
         height: 40px;

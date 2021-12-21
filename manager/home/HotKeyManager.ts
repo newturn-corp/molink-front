@@ -2,7 +2,7 @@ import { KeyboardEvent } from 'react'
 import { BaseEditor } from 'slate'
 import { HistoryEditor } from 'slate-history'
 import { ReactEditor } from 'slate-react'
-import ContentManager from './ContentManager'
+import SaveManager from '../renew/SaveManager'
 
 // 단축키를 눌러 사용하는 명령을 담당하는 매니저
 class HotKeyManager {
@@ -44,11 +44,10 @@ class HotKeyManager {
         case 'ctrl+s':
         case 'ctrl+S':
             e.preventDefault()
-            await ContentManager.saveContent()
+            await SaveManager.saveContent()
             break
         case 'ctrl+k':
             e.preventDefault()
-            console.log(editor.children)
         }
     }
 }

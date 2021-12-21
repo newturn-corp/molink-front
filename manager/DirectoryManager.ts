@@ -1,10 +1,11 @@
 import React from 'react'
 import { makeAutoObservable, runInAction, toJS } from 'mobx'
-import Document from '../domain/Document'
+import Document, { DocumentVisibility } from '../domain/Document'
 import DocumentManager from './DocumentManager'
 import DocumentAPI from '../api/DocumentAPI'
 import ContentManager from './home/ContentManager'
 import EventManager from './home/EventManager'
+import TempManager from './renew/ContentManager'
 
 export enum DirectoryObjectType {
     Drawer,
@@ -63,26 +64,26 @@ class DirectoryManager {
 
     async createNewDocument () {
         if (!this._selectedDocument) {
-            const newDocument = new Document(null, null, '', '📄', DocumentManager.documents.length, [], false, false, true, true)
+            const newDocument = new Document(null, null, '', '📄', DocumentManager.documents.length, [], false, false, true, true, DocumentVisibility.Private)
             DocumentManager.documents.push(newDocument)
             this.selectedDocument = newDocument
             await DocumentManager.createDocument(newDocument)
             newDocument.content = [{
-                type: 'paragraph',
+                type: 'title',
                 children: [{ text: '' }]
             }]
-            ContentManager.openDocument(newDocument)
+            TempManager.tryOpenDocument(newDocument.id)
         } else {
-            const newDocument = new Document(null, this._selectedDocument, '', '📄', this._selectedDocument.children.length, [], false, false, true, true)
+            const newDocument = new Document(null, this._selectedDocument, '', '📄', this._selectedDocument.children.length, [], false, false, true, true, DocumentVisibility.Private)
             this._selectedDocument.children.push(newDocument)
             EventManager.issueOpenDocumentChildrenEvent(this._selectedDocument, true)
             this.selectedDocument = newDocument
             await DocumentManager.createDocument(newDocument)
             newDocument.content = [{
-                type: 'paragraph',
+                type: 'title',
                 children: [{ text: '' }]
             }]
-            ContentManager.openDocument(newDocument)
+            TempManager.tryOpenDocument(newDocument.id)
         }
         this.openContextMenu = false
     }
