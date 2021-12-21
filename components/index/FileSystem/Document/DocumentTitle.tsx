@@ -11,7 +11,7 @@ export const DocumentTitle: React.FC<{
       const textClassName = document.directoryInfo.isOpen ? 'text text-opened' : 'text'
 
       if (document.directoryInfo.isChangingName && inputRef) {
-          new Promise(resolve => setTimeout(resolve, 100)).then(() => {
+          new Promise(resolve => setTimeout(resolve, 30)).then(() => {
               inputRef.current.focus()
               const range = globalThis.document.createRange()
               if (!inputRef.current.firstChild) {

@@ -6,7 +6,7 @@ import { Editor } from 'slate'
 import DialogManager from '../DialogManager'
 import DocumentAuthority from '../../domain/DocumentAuthority'
 import UserManager from '../UserManager'
-import EventManager, { ChangeDocumentTitleInFileSystemParam, Event, OpenDocumentParam } from '../home/EventManager'
+import EventManager, { ChangeDocumentTitleInFileSystemParam, DeleteDocumentParam, Event, OpenDocumentParam } from '../home/EventManager'
 import FileSystemManager from './FileSystemManager'
 import Document, { DocumentVisibility } from '../../domain/renew/Document'
 import { DocumentInitialInfoDTO } from '../../DTO/DocumentDto'
@@ -34,6 +34,12 @@ class ContentManager {
                 this.handleRenameDocumentTitle(param.document, param.title)
             }, 1
         )
+        EventManager.addEventLinstener(
+            Event.DelteDocument,
+            (param: DeleteDocumentParam) => {
+                this.handleDeleteDocument(param.document)
+            }, 1
+        )
     }
 
     async exitDocument () {
@@ -45,6 +51,13 @@ class ContentManager {
         for (let i = 0; i < deleteCount; i++) {
             const node = this.editor.children[i]
             this.editor.apply({ type: 'remove_node', path: [0], node })
+        }
+    }
+
+    handleDeleteDocument (document: Document) {
+        if (this.openedDocument.equal(document) || this.openedDocument.isChildOf(document)) {
+            Router.push('')
+            this.exitDocument()
         }
     }
 

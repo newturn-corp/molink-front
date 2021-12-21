@@ -101,14 +101,26 @@ export class SetDocumentTitleDTO {
     }
 }
 
+export class SetDocumentIsChildrenOpenDTO {
+    id: string
+    isChildrenOpen: boolean
+
+    constructor (id: string, isChildrenOpen: boolean) {
+        this.id = id
+        this.isChildrenOpen = isChildrenOpen
+    }
+}
+
 export class DeleteDocumentDTO {
     id: string
     parentId: string | null
     order: number
+    contentId: string
 
-    constructor (id: string, parentId: string | null, order: number) {
+    constructor (id: string, parentId: string | null, order: number, contentId: string) {
         this.id = id
         this.parentId = parentId
         this.order = order
+        this.contentId = contentId
     }
 }

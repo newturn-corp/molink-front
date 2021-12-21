@@ -75,7 +75,7 @@ export const DocumentComponent: React.FC<{
                       padding: 0,
                       paddingLeft: padding,
                       paddingRight: 20,
-                      backgroundColor: document.directoryInfo.isSelected ? '#e9e9e9' : undefined
+                      backgroundColor: document.directoryInfo.isSelected || document.directoryInfo.isOpen ? '#e9e9e9' : undefined
                   }}
                   draggable={!document.directoryInfo.isChangingName}
                   onClick={(event) => {

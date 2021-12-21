@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import DocumentAPI from '../../api/renew/DocumentAPI'
-import { DocumentInitialInfoDTO, SetDocumentLocationDTO } from '../../DTO/DocumentDto'
+import { DocumentInitialInfoDTO, SetDocumentIsChildrenOpenDTO, SetDocumentLocationDTO } from '../../DTO/DocumentDto'
 import FileSystemManager from '../../manager/renew/FileSystemManager'
 import Document from './Document'
 import DocumentMeta from './DocumentMeta'
@@ -34,7 +34,7 @@ export default class DocumentDirectoryInfo {
         this.parentId = dto.parentId
         this.order = dto.order
         this.isChildrenOpen = dto.isChildrenOpen
-        makeAutoObservable(this, { document: false })
+        makeAutoObservable(this, { document: false, parent: false })
     }
 
     delete () {
@@ -70,5 +70,10 @@ export default class DocumentDirectoryInfo {
             this.parent.directoryInfo.children.splice(this.order, 0, this.document)
             this.parent.directoryInfo.children.filter(info => info.directoryInfo.order >= orderBefore).forEach(info => { info.directoryInfo.order += 1 })
         }
+    }
+
+    async setIsChildrenOpen (isChildrenOpen: boolean) {
+        this.isChildrenOpen = isChildrenOpen
+        await DocumentAPI.setDocumentIsChildrenOpen(new SetDocumentIsChildrenOpenDTO(this.meta.id, this.isChildrenOpen))
     }
 }

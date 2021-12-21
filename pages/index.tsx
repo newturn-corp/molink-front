@@ -7,6 +7,7 @@ import UserManager from '../manager/UserManager'
 import { ContentComponent } from '../components/home/ContentComponent'
 import GlobalManager from '../manager/GlobalManager'
 import { useRouter } from 'next/router'
+import FileSystemManager from '../manager/renew/FileSystemManager'
 
 const Index = () => {
     const router = useRouter()
@@ -21,7 +22,10 @@ const Index = () => {
                 }
             }
         })
-    return <div>
+    return <div onClick={() => {
+        FileSystemManager.openContextMenu = false
+        FileSystemManager.selectedDocument = null
+    } } >
         <Header />
         <div className={'index-body'}>
             <FileSystem />

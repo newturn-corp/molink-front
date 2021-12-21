@@ -10,12 +10,17 @@ export enum Event {
     OpenDocument,
     ChangeDocumentTitleInEditor,
     UserAuthorization,
-    ChangeDocumentTitleInFileSystem
+    ChangeDocumentTitleInFileSystem,
+    DelteDocument
 }
 
 type EventListener = (param: EventParam) => void
 
-export type EventParam = OnEditorKeyDownParam | DocumentChildrenOpenParam | UserProfileInitedParam | OpenDocumentParam | ChangeDocumentTitleInEditorParam | UserAuthorizationParam | ChangeDocumentTitleInFileSystemParam
+export type EventParam = OnEditorKeyDownParam | DocumentChildrenOpenParam | UserProfileInitedParam | OpenDocumentParam | ChangeDocumentTitleInEditorParam | UserAuthorizationParam | ChangeDocumentTitleInFileSystemParam | DeleteDocumentParam
+
+export type DeleteDocumentParam = {
+    document: Document
+}
 
 export type ChangeDocumentTitleInFileSystemParam = {
     document: Document
@@ -56,7 +61,15 @@ class EventManager {
     changeDocumentVisibilityListeners: ((document: Document, visibility: DocumentVisibility) => void)[] = []
 
     constructor () {
-        [Event.DocumentChildrenOpen, Event.EditorOnKeyDown, Event.UserProfileInited, Event.OpenDocument, Event.ChangeDocumentTitleInEditor, Event.UserAuthorization, Event.ChangeDocumentTitleInFileSystem].forEach(event => this._eventListenerMap.set(event, []))
+        [
+            Event.DocumentChildrenOpen,
+            Event.EditorOnKeyDown,
+            Event.UserProfileInited,
+            Event.OpenDocument,
+            Event.ChangeDocumentTitleInEditor,
+            Event.UserAuthorization,
+            Event.ChangeDocumentTitleInFileSystem,
+            Event.DelteDocument].forEach(event => this._eventListenerMap.set(event, []))
         this.initGlobalVariableListener.push(() => this.addGlobalEventListener())
     }
 

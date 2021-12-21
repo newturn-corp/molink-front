@@ -63,7 +63,6 @@ class FileSystemManager {
 
     constructor () {
         makeAutoObservable(this)
-        EventManager.deleteDocumentListener.push((document: Document) => this.deleteDocument(document))
         EventManager.addEventLinstener(
             Event.OpenDocument,
             (param: OpenDocumentParam) => this.handleOpenDocument(param.document), 10)
@@ -76,12 +75,13 @@ class FileSystemManager {
     }
 
     async createNewDocument () {
-        const parent = this.selectedDocument || null
-        const order = this.selectedDocument ? this.selectedDocument.directoryInfo.children.length : this.documents.length
+        const parent = this._selectedDocument || null
+        const order = this._selectedDocument ? this._selectedDocument.directoryInfo.children.length : this.documents.length
         const document = await Document.create(parent, order)
         this.selectedDocument = document
         this.openContextMenu = false
         document.directoryInfo.isChangingName = true
+        Router.push('?id=' + document.meta.id)
         await ContentManager.tryOpenDocumentByDocumentId(document.meta.id)
     }
 
@@ -90,8 +90,8 @@ class FileSystemManager {
         this.openContextMenu = false
     }
 
-    deleteDocument (document: Document) {
-        document.delete()
+    async deleteDocument () {
+        await this._selectedDocument.delete()
         this.openContextMenu = false
     }
 
@@ -101,7 +101,7 @@ class FileSystemManager {
         this._availControlOptions.push({ name: document ? '하위 문서 생성' : '문서 생성', callback: () => this.createNewDocument() })
         if (document) {
             this._availControlOptions.push({ name: '이름 변경', callback: () => this.changeDocumentName() })
-            this._availControlOptions.push({ name: '문서 삭제', callback: () => EventManager.issueDeleteDocumentEvent(this.selectedDocument) })
+            this._availControlOptions.push({ name: '문서 삭제', callback: () => this.deleteDocument() })
         }
     }
 
