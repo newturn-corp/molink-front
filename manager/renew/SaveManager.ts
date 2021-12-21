@@ -34,7 +34,7 @@ class SaveManager {
         setTimeout(() => {
             this.preventSaving = false
         }, 10000)
-        // NotificationManager.showNotification(NOTIFICATION_TYPE.SUCCESS, isAutoSaving ? '자동 저장 중..' : '저장 중..', '', 3)
+
         this.contentSaveStatus = ContentSaveStatus.Saving
         this.isSaving = true
 

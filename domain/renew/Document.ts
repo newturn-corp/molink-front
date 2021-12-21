@@ -34,7 +34,8 @@ export default class Document {
         this.directoryInfo.delete()
     }
 
-    async ChangeDocumentVisibility (visibility: DocumentVisibility) {
+    async changeDocumentVisibility (visibility: DocumentVisibility) {
+        this.meta.visibility = visibility
         await DocumentAPI.setDocumentVisibility(new SetDocumentVisibilityDTO(this.meta.id, visibility))
     }
 

@@ -34,8 +34,10 @@ export const Visibility: React.FC<{
       }
 
       const handleClose = (key: DocumentVisibility) => {
-          //   EventManager.issueChangeDocumentVisibility(ContentManager.openedDocument, key)
-          //   setAnchorEl(null)
+          if (key !== ContentManager.openedDocument.meta.visibility) {
+              ContentManager.openedDocument.changeDocumentVisibility(key)
+          }
+          setAnchorEl(null)
       }
 
       return <div className='visibility-container'>
