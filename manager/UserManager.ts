@@ -1,5 +1,5 @@
 import UserAPI from '../api/UserAPI'
-import EventManager, { Event } from './home/EventManager'
+import EventManager, { Event } from './EventManager'
 
 class UserManager {
     isUserAuthorized: boolean = false

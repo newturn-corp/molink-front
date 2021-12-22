@@ -1,7 +1,7 @@
 import { BaseAPI } from '../baseAPI'
 import { APIError } from '../APIError'
 
-import { CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, GetDocumentDto, SetDocumentIsChildrenOpenDTO, SetDocumentLocationDTO, SetDocumentTitleDTO, SetDocumentVisibilityDTO } from '../../DTO/DocumentDto'
+import { CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, GetDocumentDto, SetDocumentIconDTO, SetDocumentIsChildrenOpenDTO, SetDocumentLocationDTO, SetDocumentTitleDTO, SetDocumentVisibilityDTO } from '../../DTO/DocumentDto'
 import { DocumentNotExists } from '../../Errors/DocumentError'
 
 class DocumentAPI extends BaseAPI {
@@ -48,6 +48,11 @@ class DocumentAPI extends BaseAPI {
 
     async setDocumentIsChildrenOpen (dto: SetDocumentIsChildrenOpenDTO): Promise<void> {
         const res = await this.put('/documents/is-children-open', dto)
+        if (res.status !== 200) throw new APIError(res)
+    }
+
+    async setDocumentIcon (dto: SetDocumentIconDTO): Promise<void> {
+        const res = await this.put('/documents/icon', dto)
         if (res.status !== 200) throw new APIError(res)
     }
 }

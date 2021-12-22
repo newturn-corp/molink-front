@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react'
 import '../../utils/prism'
 import React from 'react'
-import ContentManager from '../../manager/home/ContentManager'
+import ContentManager from '../../manager/ContentManager'
 
 export const ContentForEmptyDocument: React.FC<{
   }> = observer(() => {

@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import { observer } from 'mobx-react'
 import '../../utils/prism'
-import { Editor, Range, Transforms } from 'slate'
+import { Editor } from 'slate'
 import { ReactEditor } from 'slate-react'
-import MentionManager from '../../manager/home/MentionManager'
+import MentionManager from '../../manager/MentionManager'
 
 const Portal = ({ children }) => {
     return typeof document === 'object'

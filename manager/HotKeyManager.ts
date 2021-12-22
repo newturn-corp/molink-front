@@ -2,7 +2,7 @@ import { KeyboardEvent } from 'react'
 import { BaseEditor } from 'slate'
 import { HistoryEditor } from 'slate-history'
 import { ReactEditor } from 'slate-react'
-import SaveManager from '../renew/SaveManager'
+import SaveManager from './SaveManager'
 
 // 단축키를 눌러 사용하는 명령을 담당하는 매니저
 class HotKeyManager {

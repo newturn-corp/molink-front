@@ -98,6 +98,18 @@
   border-radius: 5px;
 }
 
+.drag-indicator {
+  position: absolute;
+  background-color: #c9c9c9;
+  height: 1.5px;
+  visibility: hidden;
+}
+
+.ant-tooltip {
+  z-index: 10000;
+  visibility: hidden;
+}
+
 .drawer-width-controller {
   position: absolute;
   z-index: 100;

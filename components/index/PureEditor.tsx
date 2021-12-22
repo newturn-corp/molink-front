@@ -20,13 +20,13 @@ import { withMentions } from '../../plugin/withMentions'
 import { HeadNextNormalTextPlugin } from '../../plugin/HeaderWithNormalTextPlugin'
 
 import { EditListPlugin } from '@productboard/slate-edit-list'
-import ContentManager from '../../manager/renew/ContentManager'
+import ContentManager from '../../manager/ContentManager'
 import { MentionListComponent } from '../home/MentionListComponent'
 import { CommandListComponent } from '../home/CommandListComponent'
-import HotKeyManager from '../../manager/home/HotKeyManager'
-import MentionManager from '../../manager/home/MentionManager'
-import CommandManager from '../../manager/home/CommandManager'
-import SaveManager from '../../manager/renew/SaveManager'
+import HotKeyManager from '../../manager/HotKeyManager'
+import MentionManager from '../../manager/MentionManager'
+import CommandManager from '../../manager/CommandManager'
+import SaveManager from '../../manager/SaveManager'
 
 const [
     withEditList,

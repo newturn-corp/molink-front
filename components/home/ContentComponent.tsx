@@ -1,14 +1,15 @@
 import { observer } from 'mobx-react'
 import '../../utils/prism'
 import React from 'react'
-import { Editor } from './Editor'
 import { PureEditor } from '../index/PureEditor'
+import { ContentForEmptyDocument } from './ContentForEmptyDocument'
+import { ContentHeaderIcon } from './ContentHeaderIcon'
 
 export const ContentComponent: React.FC<{
   }> = observer(() => {
       return <div className={'contents'}>
-          {/* <ContentForEmptyDocument />
-          <ContentHeaderIcon/> */}
+          <ContentForEmptyDocument />
+          <ContentHeaderIcon/>
           <PureEditor/>
       </div>
   })

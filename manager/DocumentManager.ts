@@ -1,53 +1,42 @@
 import { makeAutoObservable } from 'mobx'
-import DocumentAPI from '../api/DocumentAPI'
-import Document, { DocumentVisibility } from '../domain/Document'
-import ContentManager from './home/ContentManager'
-import EventManager from './home/EventManager'
+import DocumentAPI from '../api/renew/DocumentAPI'
+import Document from '../domain/Document'
+import EventManager, { Event } from './EventManager'
+import FileSystemManager from './FileSystemManager'
 
 // 특정 Document의 대한 변화를 추적해서 서버로 반영하는 역할
 class DocumentManager {
-    documents: Document[] = []
+    isDocumentMapInited = false
+    documentMap: Map<string, Document> = new Map<string, Document>()
 
     constructor () {
+        EventManager.addEventLinstener(Event.UserProfileInited, () => this.init(), 2)
         makeAutoObservable(this)
-        EventManager.deleteDocumentListener.push((document: Document) => this.deleteDocument(document))
-        EventManager.openDocumentChildrenListener.push((document: Document, value: boolean) => this.openDocumentChildren(document, value))
-        EventManager.changeDocumentIconListeners.push((document: Document, icon: string) => this.setDocumentIcon(document, icon))
-        EventManager.renameDocumentTitleListeners.push((document: Document, title: string) => this.setDocumentTitle(document, title))
-        EventManager.changeDocumentVisibilityListeners.push((document: Document, visibilty: DocumentVisibility) => this.setDocumentVisibility(document, visibilty))
     }
 
     async init () {
-        this.documents = await DocumentAPI.getDocuments()
-    }
-
-    async createDocument (document: Document) {
-        const id = await DocumentAPI.createDocument(document)
-        document.id = id
-    }
-
-    async setDocumentTitle (document: Document, title: string) {
-        document.title = title
-        await DocumentAPI.setDocumentTitle(document)
-    }
-
-    async setDocumentIcon (document: Document, icon: string) {
-        document.icon = icon
-        await DocumentAPI.setDocumentIcon(document)
-    }
-
-    async deleteDocument (document: Document) {
-        await DocumentAPI.deleteDocument(document)
-    }
-
-    async openDocumentChildren (document: Document, value: boolean) {
-        document.isChildrenOpen = value
-        await DocumentAPI.setDocumentIsChildrenOpen(document)
-    }
-
-    async setDocumentVisibility (document: Document, visibility: DocumentVisibility) {
-        document.visibility = visibility
-        await DocumentAPI.setDocumentVisibility(document)
+        const initialInfoDTOList = await DocumentAPI.getDocumentInitialInfoList()
+        const documents = initialInfoDTOList.map(infoDTO => new Document(infoDTO))
+        console.log(documents)
+        const tempMap = new Map<string, Document>()
+        documents.forEach(document => {
+            tempMap.set(document.meta.id, document)
+            this.documentMap.set(document.meta.id, document)
+        })
+        documents.filter(document => document.directoryInfo.parentId).forEach(document => {
+            const parent = tempMap.get(document.directoryInfo.parentId || '')
+            if (parent) {
+                parent.directoryInfo.children.push(document)
+                document.directoryInfo.parent = parent
+            }
+        })
+        documents.filter(document => document.directoryInfo.parentId).forEach(document => {
+            tempMap.delete(document.meta.id)
+        })
+        documents.forEach(document => document.directoryInfo.children.sort((a, b) => a.directoryInfo.order - b.directoryInfo.order))
+        FileSystemManager.documents = Array.from(tempMap.values()).sort((a, b) => a.directoryInfo.order - b.directoryInfo.order)
+        EventManager.issueEvent(Event.DocumentMapInited, {})
+        this.isDocumentMapInited = true
     }
 }
 export default new DocumentManager()

@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx'
-import EventManager from './home/EventManager'
+import EventManager, { Event } from './EventManager'
 
 export enum Browser {
     Chrome,
@@ -39,6 +39,7 @@ class GlobalManager {
             this.mousePositionY = event.screenY
         })
 
+        EventManager.issueEvent(Event.InitGlobalVariable, {})
         EventManager.issueInitGlobalVariable()
     }
 

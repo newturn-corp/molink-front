@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Node } from 'slate'
-import ContentManager from '../../manager/renew/ContentManager'
+import ContentManager from '../../manager/ContentManager'
 
 export const SlateTitleElement: React.FC<{
     attributes,

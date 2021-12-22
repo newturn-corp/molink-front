@@ -1,7 +1,7 @@
 import React from 'react'
 import { Editor } from 'slate'
-import Document, { DocumentVisibility } from '../../domain/renew/Document'
-import GlobalManager from '../GlobalManager'
+import Document, { DocumentVisibility } from '../domain/Document'
+import GlobalManager from './GlobalManager'
 
 export enum Event {
     EditorOnKeyDown,
@@ -11,7 +11,9 @@ export enum Event {
     ChangeDocumentTitleInEditor,
     UserAuthorization,
     ChangeDocumentTitleInFileSystem,
-    DelteDocument
+    DelteDocument,
+    DocumentMapInited,
+    InitGlobalVariable
 }
 
 type EventListener = (param: EventParam) => void
@@ -69,7 +71,9 @@ class EventManager {
             Event.ChangeDocumentTitleInEditor,
             Event.UserAuthorization,
             Event.ChangeDocumentTitleInFileSystem,
-            Event.DelteDocument].forEach(event => this._eventListenerMap.set(event, []))
+            Event.DelteDocument,
+            Event.DocumentMapInited,
+            Event.InitGlobalVariable].forEach(event => this._eventListenerMap.set(event, []))
         this.initGlobalVariableListener.push(() => this.addGlobalEventListener())
     }
 

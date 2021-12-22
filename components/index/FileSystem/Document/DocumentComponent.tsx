@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { observer } from 'mobx-react'
-import Document from '../../../../domain/renew/Document'
+import Document from '../../../../domain/Document'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import { Collapse } from '@material-ui/core'
@@ -8,8 +8,10 @@ import { DocumentTitle } from './DocumentTitle'
 import { DocumentIcon } from './DocumentIcon'
 import { DocumentChildOpenButton } from './DocumentChildOpenButton'
 
-import FileSystemManager from '../../../../manager/renew/FileSystemManager'
-import EventManager, { Event } from '../../../../manager/home/EventManager'
+import FileSystemManager from '../../../../manager/FileSystemManager'
+import EventManager, { Event } from '../../../../manager/EventManager'
+import { useRouter } from 'next/router'
+import FileDragManager from '../../../../manager/FileSystemManager/FileDragManager'
 enum DragLocation {
     Top,
     Middle,
@@ -23,28 +25,7 @@ export const DocumentComponent: React.FC<{
   }> = observer(({ document, depth }) => {
       const divRef = useRef<HTMLDivElement>(null)
       const padding = 8 + depth * 12
-
-      const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-          if (!FileSystemManager.draggingDocument) {
-              return
-          }
-          if (FileSystemManager.draggingDocument.meta.id === document.directoryInfo.meta.id) {
-              return
-          }
-          event.preventDefault()
-          const mouseY = event.pageY
-          const y = divRef.current.getBoundingClientRect().y
-          const height = divRef.current.offsetHeight
-          const topStandard = y + height * 0.33
-          const bottomStandard = y + height * 0.67
-          if (mouseY < topStandard) {
-              FileSystemManager.handleDragOver(document, DragLocation.Top)
-          } else if (mouseY > bottomStandard) {
-              FileSystemManager.handleDragOver(document, DragLocation.Bottom)
-          } else {
-              FileSystemManager.handleDragOver(document, DragLocation.Middle)
-          }
-      }
+      const router = useRouter()
 
       const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
           ghost = divRef.current.cloneNode()
@@ -58,17 +39,14 @@ export const DocumentComponent: React.FC<{
           ghost.style.right = '0px'
           globalThis.document.getElementsByClassName('drag-ghost-parent')[0].appendChild(ghost)
           event.dataTransfer.setDragImage(ghost, event.clientX, event.clientY - divRef.current.getBoundingClientRect().y)
-          FileSystemManager.handleDragStart(document.directoryInfo.document)
-      }
-
-      const handleDragEnd = (event: React.DragEvent<HTMLDivElement>) => {
-          globalThis.document.getElementsByClassName('drag-ghost-parent')[0].removeChild(ghost)
+          FileDragManager.handleDragStart(document.directoryInfo.document)
       }
 
       // TODO: 백그라운드 고치기
       return (
           <>
               <ListItem
+                  id={`document-${document.meta.id}`}
                   button
                   ref={divRef}
                   style={{
@@ -79,20 +57,20 @@ export const DocumentComponent: React.FC<{
                   }}
                   draggable={!document.directoryInfo.isChangingName}
                   onClick={(event) => {
+                      router.replace('http://localhost:3000?id=' + document.meta.id)
                       EventManager.issueEvent(Event.OpenDocument, { document: document.directoryInfo.document })
                   }}
                   onDragStart={(event) => handleDragStart(event)}
-                  onDragEnd={(event) => handleDragEnd(event)}
-                  onDragOver={(event) => handleDragOver(event)}
-                  onDragLeave={() => FileSystemManager.handleDragLeave(document)}
-                  onDrop={() => FileSystemManager.handleDrop(document)}
+                  onDragEnd={(event) => FileDragManager.handleDragEnd(ghost)}
+                  onDragOver={(event) => FileDragManager.newHandleDragOver(event, document)}
+                  onDragLeave={() => FileDragManager.handleDragLeave(document)}
                   onContextMenu={(event) => FileSystemManager.handleRightClick(event, document)}>
                   <DocumentChildOpenButton document={document}/>
                   <DocumentIcon document={document}/>
                   <DocumentTitle document={document}/>
               </ListItem>
               <Collapse in={document.directoryInfo.isChildrenOpen} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
+                  <List id={`document-child-list-${document.meta.id}`} component="div" disablePadding>
                       {
                           document.directoryInfo.children.map(child => {
                               return <DocumentComponent key={Math.random()} document={child} depth={depth + 1}/>

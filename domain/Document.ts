@@ -1,12 +1,12 @@
 import { makeAutoObservable } from 'mobx'
-import DocumentAPI from '../../api/renew/DocumentAPI'
-import { CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, SetDocumentVisibilityDTO } from '../../DTO/DocumentDto'
-import EventManager, { Event } from '../../manager/home/EventManager'
-import DocumentManager from '../../manager/renew/DocumentManager'
-import FileSystemManager from '../../manager/renew/FileSystemManager'
-import UserManager from '../../manager/UserManager'
-import { TextCategory } from '../../utils/slate'
-import DocumentAuthority from '../DocumentAuthority'
+import DocumentAPI from '../api/renew/DocumentAPI'
+import { CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, SetDocumentVisibilityDTO } from '../DTO/DocumentDto'
+import EventManager, { Event } from '../manager/EventManager'
+import DocumentManager from '../manager/DocumentManager'
+import FileSystemManager from '../manager/FileSystemManager'
+import UserManager from '../manager/UserManager'
+import { TextCategory } from '../utils/slate'
+import DocumentAuthority from './DocumentAuthority'
 import DocumentDirectoryInfo from './DocumentDirectoryInfo'
 import DocumentMeta from './DocumentMeta'
 
@@ -30,9 +30,9 @@ export default class Document {
     }
 
     async delete () {
+        this.directoryInfo.delete()
         EventManager.issueEvent(Event.DelteDocument, { document: this })
         await DocumentAPI.deleteDocument(new DeleteDocumentDTO(this.meta.id, this.directoryInfo.parentId, this.directoryInfo.order, this.contentId))
-        this.directoryInfo.delete()
     }
 
     async changeDocumentVisibility (visibility: DocumentVisibility) {
@@ -64,7 +64,6 @@ export default class Document {
         DocumentManager.documentMap.set(id, document)
         // 부모에 새로운 문서 추가
         if (parent) {
-            console.log(parent)
             parent.directoryInfo.children.splice(order, 0, document)
             // 부모가 있으면 자식에 부모 연결
             document.directoryInfo.parent = parent

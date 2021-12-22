@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx'
-import ContentAPI from '../../api/renew/ContentAPI'
-import DocumentAPI from '../../api/renew/DocumentAPI'
-import { UpdateContentDTO } from '../../DTO/ContentDTO'
-import { SetDocumentTitleDTO } from '../../DTO/DocumentDto'
+import ContentAPI from '../api/renew/ContentAPI'
+import DocumentAPI from '../api/renew/DocumentAPI'
+import { UpdateContentDTO } from '../DTO/ContentDTO'
+import { SetDocumentTitleDTO } from '../DTO/DocumentDto'
 import ContentManager from './ContentManager'
 
 export enum ContentSaveStatus {

@@ -1,8 +1,8 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite'
-import EventManager, { Event } from '../../../../manager/home/EventManager'
+import EventManager, { Event } from '../../../../manager/EventManager'
 import { ArrowDropDown, ArrowRight } from '@material-ui/icons'
-import Document from '../../../../domain/renew/Document'
+import Document from '../../../../domain/Document'
 
 export const DocumentChildOpenButton: React.FC<{
     document: Document

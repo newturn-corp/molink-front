@@ -1,15 +1,15 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import Router from 'next/router'
-import DocumentAPI from '../../api/renew/DocumentAPI'
-import { DocumentNotExists } from '../../Errors/DocumentError'
+import DocumentAPI from '../api/renew/DocumentAPI'
+import { DocumentNotExists } from '../Errors/DocumentError'
 import { Editor } from 'slate'
-import DialogManager from '../DialogManager'
-import DocumentAuthority from '../../domain/DocumentAuthority'
-import UserManager from '../UserManager'
-import EventManager, { ChangeDocumentTitleInFileSystemParam, DeleteDocumentParam, Event, OpenDocumentParam } from '../home/EventManager'
+import DialogManager from './DialogManager'
+import DocumentAuthority from '../domain/DocumentAuthority'
+import UserManager from './UserManager'
+import EventManager, { ChangeDocumentTitleInFileSystemParam, DeleteDocumentParam, Event, OpenDocumentParam } from './EventManager'
 import FileSystemManager from './FileSystemManager'
-import Document, { DocumentVisibility } from '../../domain/renew/Document'
-import { DocumentInitialInfoDTO } from '../../DTO/DocumentDto'
+import Document, { DocumentVisibility } from '../domain/Document'
+import { DocumentInitialInfoDTO } from '../DTO/DocumentDto'
 import DocumentManager from './DocumentManager'
 import { MoveToInboxSharp } from '@material-ui/icons'
 
@@ -55,6 +55,9 @@ class ContentManager {
     }
 
     handleDeleteDocument (document: Document) {
+        if (!this.openedDocument) {
+            return
+        }
         if (this.openedDocument.equal(document) || this.openedDocument.isChildOf(document)) {
             Router.push('')
             this.exitDocument()
@@ -88,9 +91,9 @@ class ContentManager {
             if (!dto.authority.viewable) {
                 return DialogManager.openDialog('문서에 접근할 수 없습니다.', '이전 화면으로 돌아갑니다.', () => {
                     if (UserManager.isUserAuthorized) {
-                        Router.push('/')
+                        Router.push('http://localhost:3000')
                     } else {
-                        Router.push('/signin')
+                        Router.push('http://localhost:3000/signin')
                     }
                 })
             }
@@ -116,9 +119,9 @@ class ContentManager {
             if (err instanceof DocumentNotExists) {
                 DialogManager.openDialog('문서가 존재하지 않습니다.', '이전 화면으로 돌아갑니다.', () => {
                     if (UserManager.isUserAuthorized) {
-                        Router.push('/')
+                        Router.push('http://localhost:3000/')
                     } else {
-                        Router.push('/signin')
+                        Router.push('http://localhost:3000/signin')
                     }
                 })
             } else {

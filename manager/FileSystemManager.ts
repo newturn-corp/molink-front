@@ -1,9 +1,7 @@
 import React from 'react'
 import { makeAutoObservable, toJS } from 'mobx'
-import Document from '../../domain/renew/Document'
-import DocumentManager from './DocumentManager'
-import EventManager, { Event, OpenDocumentParam } from '../home/EventManager'
-import DocumentDirectoryInfo from '../../domain/renew/DocumentDirectoryInfo'
+import Document from '../domain/Document'
+import EventManager, { Event, OpenDocumentParam } from './EventManager'
 import Router from 'next/router'
 import ContentManager from './ContentManager'
 
@@ -71,7 +69,6 @@ class FileSystemManager {
     handleOpenDocument (document: Document) {
         document.directoryInfo.isOpen = true
         this.openedDocument = document
-        Router.push('?id=' + document.meta.id)
     }
 
     async createNewDocument () {
@@ -81,17 +78,19 @@ class FileSystemManager {
         this.selectedDocument = document
         this.openContextMenu = false
         document.directoryInfo.isChangingName = true
-        Router.push('?id=' + document.meta.id)
+        Router.push('http://localhost:3000?id=' + document.meta.id)
         await ContentManager.tryOpenDocumentByDocumentId(document.meta.id)
     }
 
     changeDocumentName () {
         this._selectedDocument.directoryInfo.isChangingName = true
+        this.selectedDocument = null
         this.openContextMenu = false
     }
 
     async deleteDocument () {
         await this._selectedDocument.delete()
+        this.selectedDocument = null
         this.openContextMenu = false
     }
 
@@ -114,6 +113,7 @@ class FileSystemManager {
     }
 
     handleDragOver (document: Document, dragLocation: DragLocation) {
+        console.log(document.meta.title + ' ' + dragLocation)
         if (!this.draggingDocument) {
             return
         }
@@ -136,7 +136,7 @@ class FileSystemManager {
             this.selectedDocument = document
             this._dragOverCount += 1
             if (this._dragOverCount > 30) {
-                document.directoryInfo.isChildrenOpen = true
+                document.directoryInfo.setIsChildrenOpen(true)
                 this._dragOverCount = 0
                 this.selectedDocument = null
             }
@@ -153,6 +153,7 @@ class FileSystemManager {
         this._dragOverCount = 0
         document.directoryInfo.tryingGetOlderSibling = false
         document.directoryInfo.tryingGetYoungerSibling = false
+        console.log('drag-leave' + document.meta.title)
     }
 
     async handleDrop (document: Document) {
@@ -175,6 +176,7 @@ class FileSystemManager {
 
         const newParent = !(document.directoryInfo.tryingGetOlderSibling || document.directoryInfo.tryingGetYoungerSibling) ? document : document.directoryInfo.parent
 
+        console.log(document)
         await this.draggingDocument.directoryInfo.setDocumentLocation(newParent, newOrder)
 
         this.draggingDocument = null
@@ -182,6 +184,7 @@ class FileSystemManager {
         this._dragOverCount = 0
         document.directoryInfo.tryingGetOlderSibling = false
         document.directoryInfo.tryingGetYoungerSibling = false
+        console.log(this.documents)
     }
 
     handleDragStart (document: Document) {

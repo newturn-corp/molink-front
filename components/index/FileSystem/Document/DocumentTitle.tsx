@@ -1,8 +1,8 @@
 import React, { useRef } from 'react'
 import { observer } from 'mobx-react'
-import FileSystemManager from '../../../../manager/renew/FileSystemManager'
-import Document from '../../../../domain/renew/Document'
-import EventManager, { Event } from '../../../../manager/home/EventManager'
+import FileSystemManager from '../../../../manager/FileSystemManager'
+import Document from '../../../../domain/Document'
+import EventManager, { Event } from '../../../../manager/EventManager'
 
 export const DocumentTitle: React.FC<{
     document: Document
@@ -12,6 +12,9 @@ export const DocumentTitle: React.FC<{
 
       if (document.directoryInfo.isChangingName && inputRef) {
           new Promise(resolve => setTimeout(resolve, 30)).then(() => {
+              if (!inputRef.current) {
+                  return
+              }
               inputRef.current.focus()
               const range = globalThis.document.createRange()
               if (!inputRef.current.firstChild) {
@@ -45,10 +48,12 @@ export const DocumentTitle: React.FC<{
                       return
                   }
                   event.preventDefault()
+                  document.meta.setDocumentTitle(inputRef.current.innerText)
                   EventManager.issueEvent(Event.ChangeDocumentTitleInFileSystem, { document, title: inputRef.current.innerText })
                   handleChangeNameEnd()
               }}
               onBlur={() => {
+                  document.meta.setDocumentTitle(inputRef.current.innerText)
                   EventManager.issueEvent(Event.ChangeDocumentTitleInFileSystem, { document, title: inputRef.current.innerText })
                   handleChangeNameEnd()
               }}

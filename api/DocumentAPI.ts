@@ -1,7 +1,6 @@
 import { BaseAPI } from './baseAPI'
 import { APIError } from './APIError'
 
-import Document from '../domain/Document'
 import { DocumentIsPrivate, DocumentNotExists, DocumentOnlyOpenedForFollower, UnauthorizedForDocument } from '../Errors/DocumentError'
 import { DocumentInitialInfoDTO, GetDocumentDto } from '../DTO/DocumentDto'
 

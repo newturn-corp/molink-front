@@ -3,8 +3,8 @@ import { observer } from 'mobx-react'
 import { Tooltip } from '@material-ui/core'
 import { WifiRounded, PermScanWifiRounded, CloudUpload } from '@material-ui/icons'
 import moment from 'moment'
-import SaveManager, { ContentSaveStatus } from '../../../manager/renew/SaveManager'
-import ContentManager from '../../../manager/renew/ContentManager'
+import SaveManager, { ContentSaveStatus } from '../../../manager/SaveManager'
+import ContentManager from '../../../manager/ContentManager'
 
 const getNetworkStatusTooltip = (status: ContentSaveStatus, diff: number) => {
     switch (status) {

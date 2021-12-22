@@ -1,7 +1,7 @@
 import { reaction } from 'mobx'
 import { observer } from 'mobx-react'
 import React from 'react'
-import FileSystemManager from '../../../manager/renew/FileSystemManager'
+import FileSystemManager from '../../../manager/FileSystemManager'
 
 let root: HTMLDivElement = null
 

@@ -1,5 +1,5 @@
 import DocumentAuthority from '../domain/DocumentAuthority'
-import { DocumentVisibility } from '../domain/NewDocument'
+import { DocumentVisibility } from '../domain/DocumentMeta'
 
 export class DocumentInitialInfoDTO {
     id: string
@@ -122,5 +122,15 @@ export class DeleteDocumentDTO {
         this.parentId = parentId
         this.order = order
         this.contentId = contentId
+    }
+}
+
+export class SetDocumentIconDTO {
+    id: string
+    icon: string
+
+    constructor (id: string, icon: string) {
+        this.id = id
+        this.icon = icon
     }
 }

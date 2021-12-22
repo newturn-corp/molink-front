@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx'
-import { DocumentInitialInfoDTO } from '../../DTO/DocumentDto'
+import DocumentAPI from '../api/renew/DocumentAPI'
+import { DocumentInitialInfoDTO, SetDocumentIconDTO, SetDocumentTitleDTO } from '../DTO/DocumentDto'
 
 export enum DocumentVisibility {
     Public = 'public',
@@ -21,5 +22,15 @@ export default class DocumentMeta {
         this.title = dto.title
         this.icon = dto.icon
         makeAutoObservable(this)
+    }
+
+    async setDocumentTitle (title: string) {
+        this.title = title
+        await DocumentAPI.setDocumentTitle(new SetDocumentTitleDTO(this.id, title))
+    }
+
+    async setDocumentIcon (icon: string) {
+        this.icon = icon
+        await DocumentAPI.setDocumentIcon(new SetDocumentIconDTO(this.id, icon))
     }
 }

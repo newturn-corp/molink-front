@@ -13,7 +13,7 @@ import { withHistory } from 'slate-history'
 
 import ContentManager from '../../manager/home/ContentManager'
 import MentionManager from '../../manager/home/MentionManager'
-import CommandManager from '../../manager/home/CommandManager'
+import CommandManager from '../../manager/CommandManager'
 
 import { CustomElementComponent } from '../SlateElement/CustomElementComponent'
 import { CustomLeafComponent } from '../SlateElement/CustomLeafComponent'

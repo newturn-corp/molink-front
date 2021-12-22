@@ -2,8 +2,8 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { IconButton, Menu, MenuItem } from '@material-ui/core'
 import { LockRounded, Public, EmojiPeople } from '@material-ui/icons'
-import { DocumentVisibility } from '../../../domain/renew/Document'
-import ContentManager from '../../../manager/renew/ContentManager'
+import { DocumentVisibility } from '../../../domain/Document'
+import ContentManager from '../../../manager/ContentManager'
 
 const VisibilityIcon: React.FC<{
     visibility: DocumentVisibility

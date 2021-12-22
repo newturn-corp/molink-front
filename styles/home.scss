@@ -77,6 +77,18 @@
     }
 }
 
+.drag-indicator {
+    position: absolute;
+    background-color: rgb(201, 201, 201);
+    height: 1.5px;
+    visibility: hidden;
+}
+
+.ant-tooltip {
+    z-index: 10000;
+    visibility: hidden;
+}
+
 .drawer-width-controller {
     position: absolute;
     z-index: 100;

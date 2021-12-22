@@ -1,6 +1,6 @@
 import { BaseAPI } from '../baseAPI'
 import { APIError } from '../APIError'
-import Document from '../../domain/renew/Document'
+import Document from '../../domain/Document'
 import { UpdateContentDTO } from '../../DTO/ContentDTO'
 
 class ContentAPI extends BaseAPI {

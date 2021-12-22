@@ -1,8 +1,8 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import React from 'react'
 import { BaseRange, Editor, Element, Range, Transforms } from 'slate'
-import Command from '../../domain/Command'
-import { TextCategory } from '../../utils/slate'
+import Command from '../domain/Command'
+import { TextCategory } from '../utils/slate'
 
 // /(슬래시)로 수행하는 명령을 맡아 처리하는 매니저
 class CommandManager {

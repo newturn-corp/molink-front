@@ -1,8 +1,6 @@
 import { BaseAPI } from './baseAPI'
 import { APIError } from './APIError'
 
-import Document from '../domain/Document'
-
 export enum SIGN_UP_FAIL_REASON {
     ALREADY_EXISTS,
     INVALID_EMAIL,

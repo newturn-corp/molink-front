@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react'
 import GlobalManager, { Browser } from '../../../manager/GlobalManager'
-import FileSystemManager from '../../../manager/renew/FileSystemManager'
+import FileSystemManager from '../../../manager/FileSystemManager'
 
 export const DrawerWidthController: React.FC<{
   }> = observer(() => {
       const [controllerPosition, setControllerPosition] = useState(236)
-      if (!FileSystemManager.directoryInfoList) {
+      if (!FileSystemManager.documents) {
           return <></>
       }
       return (
