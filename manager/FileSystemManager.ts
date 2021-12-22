@@ -4,6 +4,7 @@ import Document from '../domain/Document'
 import EventManager, { Event, OpenDocumentParam } from './EventManager'
 import Router from 'next/router'
 import ContentManager from './ContentManager'
+import { Editor } from 'slate'
 
 export enum DirectoryObjectType {
     Drawer,
@@ -110,85 +111,6 @@ class FileSystemManager {
         this.setAvailControlOptionsByDocument(document)
         this._clickPosition = { x: event.clientX, y: event.clientY }
         this.openContextMenu = true
-    }
-
-    handleDragOver (document: Document, dragLocation: DragLocation) {
-        console.log(document.meta.title + ' ' + dragLocation)
-        if (!this.draggingDocument) {
-            return
-        }
-        if (this.draggingDocument.meta.id === document.meta.id) {
-            return
-        }
-        if (dragLocation === DragLocation.Top) {
-            this.selectedDocument = null
-            document.directoryInfo.tryingGetOlderSibling = true
-            document.directoryInfo.tryingGetYoungerSibling = false
-            this._dragOverCount = 0
-        } else if (dragLocation === DragLocation.Bottom) {
-            this.selectedDocument = null
-            document.directoryInfo.tryingGetYoungerSibling = true
-            document.directoryInfo.tryingGetOlderSibling = false
-            this._dragOverCount = 0
-        } else {
-            document.directoryInfo.tryingGetOlderSibling = false
-            document.directoryInfo.tryingGetYoungerSibling = false
-            this.selectedDocument = document
-            this._dragOverCount += 1
-            if (this._dragOverCount > 30) {
-                document.directoryInfo.setIsChildrenOpen(true)
-                this._dragOverCount = 0
-                this.selectedDocument = null
-            }
-        }
-    }
-
-    handleDragLeave (document: Document) {
-        if (!this.draggingDocument) {
-            return
-        }
-        if (this.draggingDocument.meta.id === document.meta.id) {
-            return
-        }
-        this._dragOverCount = 0
-        document.directoryInfo.tryingGetOlderSibling = false
-        document.directoryInfo.tryingGetYoungerSibling = false
-        console.log('drag-leave' + document.meta.title)
-    }
-
-    async handleDrop (document: Document) {
-        if (!this.draggingDocument) {
-            return
-        }
-        if (this.draggingDocument.meta.id === document.meta.id) {
-            return
-        }
-
-        let newOrder
-        // order 갱신
-        if (document.directoryInfo.tryingGetOlderSibling) {
-            newOrder = document.directoryInfo.order
-        } else if (document.directoryInfo.tryingGetYoungerSibling) {
-            newOrder = document.directoryInfo.order + 1
-        } else {
-            newOrder = 0
-        }
-
-        const newParent = !(document.directoryInfo.tryingGetOlderSibling || document.directoryInfo.tryingGetYoungerSibling) ? document : document.directoryInfo.parent
-
-        console.log(document)
-        await this.draggingDocument.directoryInfo.setDocumentLocation(newParent, newOrder)
-
-        this.draggingDocument = null
-        this.selectedDocument = null
-        this._dragOverCount = 0
-        document.directoryInfo.tryingGetOlderSibling = false
-        document.directoryInfo.tryingGetYoungerSibling = false
-        console.log(this.documents)
-    }
-
-    handleDragStart (document: Document) {
-        this.draggingDocument = document
     }
 }
 export default new FileSystemManager()

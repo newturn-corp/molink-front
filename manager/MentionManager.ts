@@ -429,36 +429,39 @@ class MentionManager {
     }
 
     onChange (editor: Editor) {
-        const { selection } = editor
-        if (selection && Range.isCollapsed(selection)) {
-            const [start] = Range.edges(selection)
-            const wordBefore = Editor.before(editor, start, { unit: 'word' })
-            const before = wordBefore && Editor.before(editor, wordBefore)
-            const beforeRange = before && Editor.range(editor, before, start)
-            const beforeText = beforeRange && Editor.string(editor, beforeRange)
-            const beforeMatch = beforeText && beforeText.match(/^@/)
-            const after = Editor.after(editor, start)
-            const afterRange = Editor.range(editor, start, after)
-            const afterText = Editor.string(editor, afterRange)
-            const afterMatch = afterText.match(/^(\s|$)/)
+        try {
+            const { selection } = editor
+            if (selection && Range.isCollapsed(selection)) {
+                const [start] = Range.edges(selection)
+                const wordBefore = Editor.before(editor, start, { unit: 'word' })
+                const before = wordBefore && Editor.before(editor, wordBefore)
+                const beforeRange = before && Editor.range(editor, before, start)
+                const beforeText = beforeRange && Editor.string(editor, beforeRange)
+                const beforeMatch = beforeText && beforeText.match(/^@/)
+                const after = Editor.after(editor, start)
+                const afterRange = Editor.range(editor, start, after)
+                const afterText = Editor.string(editor, afterRange)
+                const afterMatch = afterText.match(/^(\s|$)/)
 
-            if (beforeMatch && afterMatch) {
-                this.target = beforeRange
-                const searchResult = beforeText.match(/^@(\w+)$/)
-                console.log(searchResult)
-                if (!searchResult) {
-                    this.search = ''
-                } else {
-                    this.search = searchResult[1]
+                if (beforeMatch && afterMatch) {
+                    this.target = beforeRange
+                    const searchResult = beforeText.match(/^@(\w+)$/)
+                    if (!searchResult) {
+                        this.search = ''
+                    } else {
+                        this.search = searchResult[1]
+                    }
+                    this.characters = CHARACTERS.filter(character =>
+                        character.toLowerCase().startsWith(this.search.toLowerCase())
+                    ).slice(0, 10)
+                    this.index = 0
+                    return
                 }
-                this.characters = CHARACTERS.filter(character =>
-                    character.toLowerCase().startsWith(this.search.toLowerCase())
-                ).slice(0, 10)
-                this.index = 0
-                return
             }
+            this.target = null
+        } catch (err) {
+
         }
-        this.target = null
     }
 
     onKeyDown (event: React.KeyboardEvent, editor: Editor) {
