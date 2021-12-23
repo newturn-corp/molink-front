@@ -6,6 +6,7 @@
         overflow-x: auto;
         overflow-y: auto;
         position: relative;
+        z-index: 900;
         height: calc(100vh - 60px);
         background-color: #F7F6F3;
         .MuiListItemIcon-root {

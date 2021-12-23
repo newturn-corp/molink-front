@@ -9,3 +9,11 @@ export class GetUserProfileDTO {
         this.nickname = nickname
     }
 }
+
+export class SaveSupportDTO {
+    content: string
+
+    constructor (content: string) {
+        this.content = content
+    }
+}

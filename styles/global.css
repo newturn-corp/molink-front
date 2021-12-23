@@ -34,6 +34,21 @@ body {
           flex-direction: row-reverse;
 }
 
+.header .MuiBadge-badge {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  border: 1px solid #999999;
+}
+
+.header .connected .MuiBadge-badge {
+  background-color: #6ae75a;
+}
+
+.header .disconnected .MuiBadge-badge {
+  background-color: #bc2323;
+}
+
 .header .logo {
   height: 40px;
   width: 40px;
@@ -103,6 +118,11 @@ body {
   height: 100%;
   margin: 0px;
   padding: 0px;
+}
+
+.header .user-container {
+  margin: 10px;
+  cursor: pointer;
 }
 
 .header .sign-out {
@@ -182,5 +202,13 @@ body {
   top: 0;
   right: 100px;
   z-index: -2;
+}
+
+.support-modal p {
+  margin: 0px;
+}
+
+.support-modal .ant-input-textarea {
+  margin-top: 20px;
 }
 /*# sourceMappingURL=global.css.map */

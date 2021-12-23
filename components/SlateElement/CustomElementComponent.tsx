@@ -24,6 +24,8 @@ export const CustomElementComponent: React.FC<{
           return <li {...attributes}>{children}</li>
       case 'heading':
           return <h1 {...attributes}>{children}</h1>
+      case 'block-quote':
+          return <blockquote {...attributes}>{children}</blockquote>
       default:
           return <p {...attributes}>{children}</p>
       }
