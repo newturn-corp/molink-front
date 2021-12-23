@@ -1,5 +1,5 @@
 import { Descendant, Editor, Node, Operation, Point, Range, Text, Transforms } from 'slate'
-import { TextCategory } from '../utils/slate'
+import { TextCategory, TextElement } from '../utils/slate'
 import { createDraft, finishDraft, isDraft } from 'immer'
 
 /**
@@ -55,7 +55,7 @@ export const HeadNextNormalTextPlugin = (editor: Editor) => {
                 newNode = {
                     ...(properties as Partial<Element>),
                     children: after
-                }
+                } as TextElement
                 newNode.category = TextCategory.Content3
             }
 

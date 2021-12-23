@@ -30,7 +30,7 @@ export const withHeadNextNormalText = (editor: Editor) => {
             const node = Node.get(editor, path)
             const parent = Node.parent(editor, path)
             const index = path[path.length - 1]
-            let newNode: Descendant
+            let newNode: any
 
             if (Text.isText(node)) {
                 const before = node.text.slice(0, position)

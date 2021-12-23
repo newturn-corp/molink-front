@@ -1,5 +1,5 @@
 import { Editor, Transforms } from 'slate'
-import { ImageElement } from '../slate'
+import { ImageElement } from '../utils/slate'
 import imageExtensions from 'image-extensions'
 import isUrl from 'is-url'
 

@@ -1,6 +1,7 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import React from 'react'
 import { BaseRange, Editor, Range, Transforms } from 'slate'
+import { MentionElement } from '../utils/slate'
 
 const CHARACTERS = [
     'Aayla Secura',
@@ -419,7 +420,7 @@ class MentionManager {
     }
 
     insertMention (editor, character) {
-        const mention = {
+        const mention: MentionElement = {
             type: 'mention',
             character,
             children: [{ text: '' }]

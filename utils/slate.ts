@@ -8,11 +8,6 @@ export type EmptyText = {
   text: string
 }
 
-export type ParagraphElement = {
-  type: string
-  children: CustomText[]
-}
-
 export enum TextCategory {
     Head1 = 'head1',
     Head2 = 'head2',
@@ -50,8 +45,13 @@ export type MentionElement = {
   children: CustomText[]
 }
 
+export type ListItemElement = {
+  type: 'list-item'
+  children: CustomText[]
+}
+
 export type CustomElement =
-ParagraphElement | TextElement | BulletedListElement | ImageElement | MentionElement
+TextElement | BulletedListElement | ImageElement | MentionElement | TitleElement |ListItemElement
 
 export type FormattedText = { text: string; bold?: true; codehighlight?: true }
 
