@@ -40,6 +40,12 @@ class ContentManager {
                 this.handleDeleteDocument(param.document)
             }, 1
         )
+        EventManager.addEventLinstener(
+            Event.MoveToAnotherPage,
+            () => {
+                this.openedDocument = null
+            }, 1
+        )
     }
 
     async exitDocument () {
@@ -89,6 +95,7 @@ class ContentManager {
             this.isLoadingContent = true
             const dto = await DocumentAPI.getDocument(documentId)
             if (!dto.authority.viewable) {
+                this.isLoadingContent = false
                 return DialogManager.openDialog('문서에 접근할 수 없습니다.', '이전 화면으로 돌아갑니다.', () => {
                     if (UserManager.isUserAuthorized) {
                         Router.push('http://localhost:3000')
@@ -107,6 +114,7 @@ class ContentManager {
             } else {
                 this.openedDocument = new Document(new DocumentInitialInfoDTO(dto.id, dto.userId, dto.title, dto.icon, null, 0, false))
             }
+            console.log(dto)
             this.openedDocument.authority = dto.authority
             this.openedDocument.meta.visibility = dto.visibility
             this.openedDocument.content = dto.content

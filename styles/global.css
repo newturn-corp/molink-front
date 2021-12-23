@@ -114,6 +114,10 @@ body {
   text-align: center;
 }
 
+.header .login-button-container {
+  margin: 10px;
+}
+
 .index-body {
   display: -webkit-box;
   display: -ms-flexbox;

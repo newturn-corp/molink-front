@@ -36,7 +36,6 @@ export abstract class BaseAPI {
         }
         if (res.status === 500) throw new ServiceError()
         if (res.status === 401) {
-            Router.push('/signin')
             throw new AuthError()
         }
         return res.json()
@@ -52,7 +51,6 @@ export abstract class BaseAPI {
                 credentials: 'include'
             })
         } catch (e) {
-            Router.push('/signin')
             throw new NetworkError()
         }
         if (res.status === 500) throw new ServiceError()
@@ -69,7 +67,6 @@ export abstract class BaseAPI {
                 credentials: 'include'
             })
         } catch (e) {
-            Router.push('/signin')
             throw new NetworkError()
         }
         if (res.status === 500) throw new ServiceError()

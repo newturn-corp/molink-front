@@ -72,7 +72,13 @@ const SignIn = observer(() => {
                 const result = await AuthManager.signin()
                 setLoading(false)
                 if (result.success) {
-                    router.replace('/')
+                    const documentBeforeLogin = localStorage.getItem('document-before-login')
+                    console.log(documentBeforeLogin)
+                    if (documentBeforeLogin) {
+                        router.replace('/?id=' + documentBeforeLogin)
+                    } else {
+                        router.replace('/')
+                    }
                 }
             }}>
         로그인

@@ -80,8 +80,8 @@ export const withShortcuts = editor => {
                     Transforms.wrapNodes(editor, list, {
                         match: n =>
                             !SlateEditor.isEditor(n) &&
-                SlateElement.isElement(n) &&
-                n.type === 'list-item'
+                            SlateElement.isElement(n) &&
+                        n.type === 'list-item'
                     })
                 }
 

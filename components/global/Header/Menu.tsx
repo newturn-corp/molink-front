@@ -3,11 +3,16 @@ import { observer } from 'mobx-react'
 import AuthManager from '../../../manager/AuthManager'
 import { IconButton, Menu, MenuItem } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
+import UserManager from '../../../manager/UserManager'
 
 export const MenuComponent: React.FC<{
   }> = observer(() => {
       const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
       const open = Boolean(anchorEl)
+
+      if (!UserManager.isUserAuthorized) {
+          return <></>
+      }
 
       const handleClick = (event: React.MouseEvent<HTMLElement>) => {
           setAnchorEl(event.currentTarget)

@@ -5,6 +5,10 @@
   margin-top: 100px;
 }
 
+.contents .MuiButton-root.Mui-disabled {
+  color: #000000;
+}
+
 .contents .icon {
   width: 90px;
   height: 90px;
@@ -44,8 +48,9 @@
 }
 
 .contents .head3 {
+  margin-top: 1em;
   font-weight: 600;
-  font-size: 1.5em;
+  font-size: 1.25em;
 }
 
 .contents .content1 {

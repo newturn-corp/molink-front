@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import FileSystemManager from '../manager/FileSystemManager'
 import EventManager, { Event } from '../manager/EventManager'
 import DocumentManager from '../manager/DocumentManager'
+import RoutingManager, { Page } from '../manager/RoutingManager'
 
 const openDocument = (documentId: string) => {
     const loadedDocument = DocumentManager.documentMap.get(documentId)
@@ -22,23 +23,24 @@ const openDocument = (documentId: string) => {
     }
 }
 
+const initDocumentMap = async () => {
+    if (DocumentManager.isDocumentMapInited) {
+        return
+    }
+    await DocumentManager.init()
+}
+
 const Index = () => {
     const router = useRouter()
-    console.log('index loading')
     UserManager.updateUserProfile()
+        .then(initDocumentMap)
         .then(() => {
             const documentId = new URLSearchParams(GlobalManager.window.location.search).get('id')
             if (documentId) {
-                if (!DocumentManager.isDocumentMapInited) {
-                    EventManager.addEventLinstener(Event.DocumentMapInited, () => {
-                        openDocument(documentId)
-                    }, 1)
-                } else {
-                    openDocument(documentId)
-                }
+                openDocument(documentId)
             } else {
                 if (!UserManager.isUserAuthorized) {
-                    router.push('http://localhost:3000/signin')
+                    RoutingManager.moveTo(Page.SignIn)
                 }
             }
         })

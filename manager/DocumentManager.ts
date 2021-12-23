@@ -3,6 +3,7 @@ import DocumentAPI from '../api/renew/DocumentAPI'
 import Document from '../domain/Document'
 import EventManager, { Event } from './EventManager'
 import FileSystemManager from './FileSystemManager'
+import UserManager from './UserManager'
 
 // 특정 Document의 대한 변화를 추적해서 서버로 반영하는 역할
 class DocumentManager {
@@ -10,14 +11,16 @@ class DocumentManager {
     documentMap: Map<string, Document> = new Map<string, Document>()
 
     constructor () {
-        EventManager.addEventLinstener(Event.UserProfileInited, () => this.init(), 2)
         makeAutoObservable(this)
     }
 
     async init () {
+        if (!UserManager.isUserAuthorized) {
+            return
+        }
         const initialInfoDTOList = await DocumentAPI.getDocumentInitialInfoList()
         const documents = initialInfoDTOList.map(infoDTO => new Document(infoDTO))
-        console.log(documents)
+
         const tempMap = new Map<string, Document>()
         documents.forEach(document => {
             tempMap.set(document.meta.id, document)

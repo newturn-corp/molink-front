@@ -13,7 +13,9 @@ export enum Event {
     ChangeDocumentTitleInFileSystem,
     DelteDocument,
     DocumentMapInited,
-    InitGlobalVariable
+    InitGlobalVariable,
+    MoveToSignInPage,
+    MoveToAnotherPage
 }
 
 type EventListener = (param: EventParam) => void
@@ -73,7 +75,9 @@ class EventManager {
             Event.ChangeDocumentTitleInFileSystem,
             Event.DelteDocument,
             Event.DocumentMapInited,
-            Event.InitGlobalVariable].forEach(event => this._eventListenerMap.set(event, []))
+            Event.InitGlobalVariable,
+            Event.MoveToSignInPage,
+            Event.MoveToAnotherPage].forEach(event => this._eventListenerMap.set(event, []))
         this.initGlobalVariableListener.push(() => this.addGlobalEventListener())
     }
 

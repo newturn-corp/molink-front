@@ -6,6 +6,7 @@ import ContentManager from '../../manager/ContentManager'
 import { Button } from '@material-ui/core'
 import { EmojiPicker } from '../global/EmojiPicker'
 import EventManager from '../../manager/EventManager'
+import UserManager from '../../manager/UserManager'
 
 export const ContentHeaderIcon: React.FC<{
   }> = observer(() => {
@@ -22,7 +23,7 @@ export const ContentHeaderIcon: React.FC<{
       if (!ContentManager.openedDocument) {
           return <></>
       }
-      return <><Button className={'icon'} onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
+      return <><Button className={'icon'} disabled={!ContentManager.openedDocument.authority.editable} onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
           {ContentManager.openedDocument.meta.icon}
       </Button>
       <EmojiPicker showEmojiPicker={showEmojiPicker} onEmojiPick={(event, emojiObject) => onEmojiClick(emojiObject)}></EmojiPicker>

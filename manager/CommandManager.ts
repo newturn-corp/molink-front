@@ -2,7 +2,7 @@ import { makeAutoObservable, toJS } from 'mobx'
 import React from 'react'
 import { BaseRange, Editor, Element, Range, Transforms } from 'slate'
 import Command from '../domain/Command'
-import { TextCategory } from '../utils/slate'
+import { BulletedListElement, TextCategory } from '../utils/slate'
 
 // /(슬래시)로 수행하는 명령을 맡아 처리하는 매니저
 class CommandManager {
@@ -14,10 +14,24 @@ class CommandManager {
         new Command('제목1', '큰 사이즈의 제목', './head-1.png'),
         new Command('제목2', '중간 사이즈의 제목', './head-2.png'),
         new Command('제목3', '작은 사이즈의 제목', './head-3.png')
+        // new Command('순서없는목록', '순서 없는 목록', './bullet-list.png')
     ]
 
     constructor () {
         makeAutoObservable(this)
+    }
+
+    isBlockActive (editor, format) {
+        const { selection } = editor
+        if (!selection) return false
+
+        const [match] = Editor.nodes(editor, {
+            at: Editor.unhangRange(editor, selection),
+            match: n =>
+                !Editor.isEditor(n) && Element.isElement(n) && n.type === format
+        })
+
+        return !!match
     }
 
     insertNodeByCommand (editor: Editor, command: Command) {
@@ -29,6 +43,7 @@ class CommandManager {
                 category: TextCategory.Head1,
                 children: [{ text: '' }]
             }
+            Transforms.insertNodes(editor, node)
             break
         case '제목2':
             node = {
@@ -36,12 +51,31 @@ class CommandManager {
                 category: TextCategory.Head2,
                 children: [{ text: '' }]
             }
+            Transforms.insertNodes(editor, node)
             break
         case '제목3':
             node = {
                 type: 'text',
                 category: TextCategory.Head3,
                 children: [{ text: '' }]
+            }
+            Transforms.insertNodes(editor, node)
+            break
+        case '순서없는목록':
+            const isActive = this.isBlockActive(editor, 'ul_list')
+
+            Transforms.unwrapNodes(editor, {
+                match: n =>
+                    !Editor.isEditor(n) &&
+                    Element.isElement(n) &&
+                    n.type === 'ul_list',
+                split: true
+            })
+            Transforms.setNodes<Element>(editor, { type: 'ul_list' })
+
+            if (!isActive) {
+                const block = { type: 'ul_list', children: [] }
+                Transforms.wrapNodes(editor, block)
             }
             break
         case '내용1':
@@ -66,7 +100,6 @@ class CommandManager {
             }
             break
         }
-        Transforms.insertNodes(editor, node)
         // Transforms.move(editor)
     }
 

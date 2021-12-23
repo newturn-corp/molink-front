@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx'
 import UserAPI from '../api/UserAPI'
 import EventManager, { Event } from './EventManager'
 
@@ -7,6 +8,10 @@ class UserManager {
     userId: number
     email: string
     nickname: string
+
+    constructor () {
+        makeAutoObservable(this)
+    }
 
     async updateUserProfile () {
         if (!this.isUserAuthorized) {
@@ -21,7 +26,7 @@ class UserManager {
                 EventManager.issueEvent(Event.UserAuthorization, { result: true })
                 this.isUserAuthorized = true
             } catch (err) {
-                EventManager.issueEvent(Event.UserAuthorization, { result: true })
+                EventManager.issueEvent(Event.UserAuthorization, { result: false })
                 this.isUserAuthorized = false
             } finally {
                 this.isAuthorizing = false
