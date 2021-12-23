@@ -24,6 +24,18 @@ body {
     display: flex;
     flex-direction: row-reverse;
 
+    .search {
+        margin: 14px;
+        height: 32px;
+        .ant-input-wrapper {
+            height: 100%;
+            width: 100%;
+            .ant-input {
+                height: 100%;
+            }
+        }
+    }
+
     .MuiBadge-badge {
         width: 10px;
         height: 10px;
@@ -48,8 +60,9 @@ body {
         width: 40px;
         margin: 10px;
     }
+
     .navigator {
-        width: fit-content
+        width: 930px
     }
     .visibility-container {
         height: 40px;

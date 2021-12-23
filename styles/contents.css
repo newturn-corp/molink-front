@@ -90,6 +90,15 @@
   font-size: 1.5rem;
 }
 
+.contents blockquote {
+  border-left: 2px solid #ddd;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 10px;
+  color: #aaa;
+  font-style: italic;
+}
+
 .contents ul {
   list-style: disc;
   margin-left: -20px;

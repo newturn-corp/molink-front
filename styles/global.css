@@ -34,6 +34,20 @@ body {
           flex-direction: row-reverse;
 }
 
+.header .search {
+  margin: 14px;
+  height: 32px;
+}
+
+.header .search .ant-input-wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.header .search .ant-input-wrapper .ant-input {
+  height: 100%;
+}
+
 .header .MuiBadge-badge {
   width: 10px;
   height: 10px;
@@ -56,9 +70,7 @@ body {
 }
 
 .header .navigator {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+  width: 930px;
 }
 
 .header .visibility-container {
