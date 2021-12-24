@@ -57,17 +57,18 @@ export default class Document {
             type: 'title',
             children: [{ text: '' }]
         }, { type: 'text', category: TextCategory.Content3, children: [{ text: '' }] }]
+        const defaultRepresentative = false
+        const defaultIsChildrenOpen = false
 
         const parentId = parent ? parent.meta.id : null
-        const id = await DocumentAPI.createDocument(new CreateDocumentDTO(defaultTitle, defaultIcon, parentId, order, defaultVisibility, defaultContent))
-        const document = new Document(new DocumentInitialInfoDTO(id, UserManager.userId, '', defaultIcon, parentId, order, false))
+        const id = await DocumentAPI.createDocument(new CreateDocumentDTO(defaultTitle, defaultIcon, parentId, order, defaultVisibility, defaultContent, defaultRepresentative, defaultIsChildrenOpen))
+        const document = new Document(new DocumentInitialInfoDTO(id, UserManager.userId, '', defaultIcon, parentId, order, false, false))
         DocumentManager.documentMap.set(id, document)
         // 부모에 새로운 문서 추가
         if (parent) {
             parent.directoryInfo.children.splice(order, 0, document)
             // 부모가 있으면 자식에 부모 연결
             document.directoryInfo.parent = parent
-            console.log(typeof parent.directoryInfo.setIsChildrenOpen)
             parent.directoryInfo.setIsChildrenOpen(true)
         } else {
             FileSystemManager.documents.splice(order, 0, document)

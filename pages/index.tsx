@@ -31,7 +31,6 @@ const initDocumentMap = async () => {
 }
 
 const Index = () => {
-    const router = useRouter()
     UserManager.updateUserProfile()
         .then(initDocumentMap)
         .then(() => {

@@ -7,20 +7,14 @@ import DialogManager from './DialogManager'
 import DocumentAuthority from '../domain/DocumentAuthority'
 import UserManager from './UserManager'
 import EventManager, { ChangeDocumentTitleInFileSystemParam, DeleteDocumentParam, Event, OpenDocumentParam } from './EventManager'
-import FileSystemManager from './FileSystemManager'
 import Document, { DocumentVisibility } from '../domain/Document'
 import { DocumentInitialInfoDTO } from '../DTO/DocumentDto'
 import DocumentManager from './DocumentManager'
-import { MoveToInboxSharp } from '@material-ui/icons'
 
 class ContentManager {
     editor: Editor = null
 
     openedDocument: Document = null
-
-    title: string
-    authority: DocumentAuthority = null
-    visibility: DocumentVisibility = DocumentVisibility.Private
     isLoadingContent: boolean = false
 
     constructor () {

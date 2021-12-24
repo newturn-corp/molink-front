@@ -34,9 +34,20 @@ body {
           flex-direction: row-reverse;
 }
 
+.header .logo {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+  background-color: #c2c2c2;
+  border-radius: 10px;
+}
+
 .header .search {
   margin: 14px;
   height: 32px;
+  width: 150px;
+  margin-left: 10px;
+  background-color: #dbfff3;
 }
 
 .header .search .ant-input-wrapper {
@@ -70,7 +81,18 @@ body {
 }
 
 .header .navigator {
-  width: 930px;
+  width: calc(100% - 438px);
+}
+
+.header .header-right {
+  width: 200px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
 }
 
 .header .visibility-container {

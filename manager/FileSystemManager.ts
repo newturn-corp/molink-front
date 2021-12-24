@@ -95,11 +95,22 @@ class FileSystemManager {
         this.openContextMenu = false
     }
 
+    setDocumentRepresentative (representative: boolean) {
+        this._selectedDocument.meta.setRepresentative(representative)
+        this.selectedDocument = null
+        this.openContextMenu = false
+    }
+
     setAvailControlOptionsByDocument (document: Document | null) {
         this.selectedDocument = document
         this._availControlOptions = []
         this._availControlOptions.push({ name: document ? '하위 문서 생성' : '문서 생성', callback: () => this.createNewDocument() })
         if (document) {
+            if (document.meta.representative) {
+                this._availControlOptions.push({ name: '대표 문서 해제', callback: () => this.setDocumentRepresentative(false) })
+            } else {
+                this._availControlOptions.push({ name: '대표 문서로 설정', callback: () => this.setDocumentRepresentative(true) })
+            }
             this._availControlOptions.push({ name: '이름 변경', callback: () => this.changeDocumentName() })
             this._availControlOptions.push({ name: '문서 삭제', callback: () => this.deleteDocument() })
         }

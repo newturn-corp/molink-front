@@ -24,9 +24,22 @@ body {
     display: flex;
     flex-direction: row-reverse;
 
+
+    .logo {
+        width: 40px;
+        height: 40px;
+        margin: 10px;
+        background-color: rgb(194, 194, 194);
+        border-radius: 10px;
+    }
+    // 60
+
     .search {
         margin: 14px;
         height: 32px;
+        width: 150px;
+        margin-left: 10px;
+        background-color: rgb(219, 255, 243);
         .ant-input-wrapper {
             height: 100%;
             width: 100%;
@@ -35,6 +48,7 @@ body {
             }
         }
     }
+    // 178
 
     .MuiBadge-badge {
         width: 10px;
@@ -62,7 +76,13 @@ body {
     }
 
     .navigator {
-        width: 930px
+        width: calc(100% - 438px)
+    }
+
+    .header-right {
+        width: 200px;
+        display: flex;
+        flex-direction: row-reverse;
     }
     .visibility-container {
         height: 40px;

@@ -1,0 +1,27 @@
+.search-page {
+    .core {
+        margin: 0 auto;
+        display: flex;
+        .search-meta {
+            width: 200px;
+            height: 100%;
+            margin-right: 25px;
+            .search-buttons {
+                width: 200px;
+                margin-top: 30px;
+                .MuiButton-label {
+                    justify-content: left;
+                }
+            }
+        }
+
+        .search-result {
+            width: 600px;
+            height: 100%;
+
+            .user-search-result {
+                cursor: pointer;
+            }
+        }
+    }
+}

@@ -8,11 +8,14 @@ import { SearchComponent } from './SearchComponent'
 export const Header: React.FC<{
   }> = observer(() => {
       return <div className='header'>
-          <User/>
-          <Visibility />
-          <LoginButton />
+          <div className='header-right'>
+              <User/>
+              <Visibility />
+              <LoginButton />
+          </div>
           <div className='navigator'>
           </div>
           <SearchComponent />
+          <div className='logo'></div>
       </div>
   })

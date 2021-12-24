@@ -1,7 +1,7 @@
 import { BaseAPI } from '../baseAPI'
 import { APIError } from '../APIError'
 
-import { CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, GetDocumentDto, SetDocumentIconDTO, SetDocumentIsChildrenOpenDTO, SetDocumentLocationDTO, SetDocumentTitleDTO, SetDocumentVisibilityDTO } from '../../DTO/DocumentDto'
+import { CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, GetDocumentDto, SetDocumentIconDTO, SetDocumentIsChildrenOpenDTO, SetDocumentLocationDTO, SetDocumentTitleDTO, SetDocumentVisibilityDTO, UpdateDocumentRepresentativeDTO } from '../../DTO/DocumentDto'
 import { DocumentNotExists } from '../../Errors/DocumentError'
 
 class DocumentAPI extends BaseAPI {
@@ -34,7 +34,7 @@ class DocumentAPI extends BaseAPI {
     async getDocumentInitialInfoList (): Promise<DocumentInitialInfoDTO[]> {
         const res = await this.get('/documents/initial-info-list')
         if (res.status !== 200) throw new APIError(res)
-        return res.arr.map(raw => new DocumentInitialInfoDTO(raw.id, raw.userId, raw.title, raw.icon, raw.parentId, raw.order, raw.isChildrenOpen))
+        return res.arr.map(raw => new DocumentInitialInfoDTO(raw.id, raw.userId, raw.title, raw.icon, raw.parentId, raw.order, raw.isChildrenOpen, raw.representative))
     }
 
     async getDocument (documentId: string): Promise<GetDocumentDto> {
@@ -53,6 +53,11 @@ class DocumentAPI extends BaseAPI {
 
     async setDocumentIcon (dto: SetDocumentIconDTO): Promise<void> {
         const res = await this.put('/documents/icon', dto)
+        if (res.status !== 200) throw new APIError(res)
+    }
+
+    async setDocumentRepresentative (dto: UpdateDocumentRepresentativeDTO): Promise<void> {
+        const res = await this.put('/documents/representative', dto)
         if (res.status !== 200) throw new APIError(res)
     }
 }

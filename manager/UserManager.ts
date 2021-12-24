@@ -8,6 +8,7 @@ class UserManager {
     userId: number
     email: string
     nickname: string
+    representativeDocumentId: string | null
 
     constructor () {
         makeAutoObservable(this)
@@ -21,6 +22,7 @@ class UserManager {
                 this.userId = dto.userId
                 this.email = dto.email
                 this.nickname = dto.nickname
+                this.representativeDocumentId = dto.representativeDocumentId
                 EventManager.issueEvent(Event.UserProfileInited, {})
 
                 EventManager.issueEvent(Event.UserAuthorization, { result: true })
