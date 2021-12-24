@@ -4,6 +4,7 @@ import DocumentAPI from '../api/renew/DocumentAPI'
 import { UpdateContentDTO } from '../DTO/ContentDTO'
 import { SetDocumentTitleDTO } from '../DTO/DocumentDto'
 import ContentManager from './ContentManager'
+import EventManager, { Event } from './EventManager'
 
 export enum ContentSaveStatus {
     Saved,
@@ -20,6 +21,18 @@ class SaveManager {
 
     constructor () {
         makeAutoObservable(this)
+        EventManager.addEventLinstener(Event.UnloadPage, () => {
+            console.log('삭제 저장')
+            if (ContentManager.openedDocument && ContentManager.openedDocument.authority.editable) {
+                this.saveContent(true, false)
+            }
+        }, 1)
+        EventManager.addEventLinstener(Event.MoveToAnotherPage, () => {
+            console.log('이동 저장')
+            if (ContentManager.openedDocument && ContentManager.openedDocument.authority.editable) {
+                this.saveContent(true, false)
+            }
+        }, 1)
     }
 
     async saveContent (force: boolean = false, isAutoSaving: boolean = false) {

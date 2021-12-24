@@ -18,8 +18,6 @@ export const SlateImageElement: React.FC<{
   }> = ({ attributes, children, element }) => {
       const selected = useSelected()
       const focused = useFocused()
-      console.log(focused && selected)
-      console.log(element)
       return (
           <div {...attributes}>
               {children}
@@ -48,9 +46,6 @@ export const SlateImageElement: React.FC<{
                           const heightStr = ref.style.height
                           const width = Number(widthStr.slice(0, widthStr.length - 2))
                           const height = Number(heightStr.slice(0, heightStr.length - 2))
-                          console.log(width)
-                          console.log(height)
-                          console.log(ContentManager.editor.children[ContentManager.editor.selection.anchor.path[0]])
                           Transforms.setNodes(ContentManager.editor, {
                               width,
                               height

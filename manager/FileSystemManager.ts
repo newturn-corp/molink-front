@@ -2,11 +2,10 @@ import React from 'react'
 import { makeAutoObservable, toJS } from 'mobx'
 import Document from '../domain/Document'
 import EventManager, { Event, OpenDocumentParam } from './EventManager'
-import Router from 'next/router'
 import ContentManager from './ContentManager'
-import { Editor } from 'slate'
 import { DocumentVisibility } from '../domain/DocumentMeta'
 import UserManager from './UserManager'
+import RoutingManager, { Page } from './RoutingManager'
 
 export enum DirectoryObjectType {
     Drawer,
@@ -81,7 +80,7 @@ class FileSystemManager {
         this.selectedDocument = document
         this.openContextMenu = false
         document.directoryInfo.isChangingName = true
-        Router.push('http://localhost:3000?id=' + document.meta.id)
+        RoutingManager.moveTo(Page.Index, `?id=${document.meta.id}`)
         await ContentManager.tryOpenDocumentByDocumentId(document.meta.id)
     }
 

@@ -1,7 +1,7 @@
 import { makeAutoObservable, observable } from 'mobx'
-import Router from 'next/router'
 import AuthAPI, { PASSWORD_CHANGE_FAIL_REASON, SIGN_IN_FAIL_REASON, SIGN_UP_FAIL_REASON, START_PASSWORD_CHANGE_FAIL_REASON } from '../api/AuthAPI'
 import NotificationManager, { NOTIFICATION_TYPE } from './NotificationManager'
+import RoutingManager, { Page } from './RoutingManager'
 
 export enum SignupError {
     NOT_EMAIL,
@@ -132,7 +132,7 @@ class AuthManager {
 
     async signOut () {
         await AuthAPI.signOut()
-        Router.push('/signin')
+        RoutingManager.moveTo(Page.SignIn)
     }
 
     verifyEmail (hash: string) {

@@ -1,5 +1,4 @@
 import { makeAutoObservable, toJS } from 'mobx'
-import Router from 'next/router'
 import UserAPI from '../api/UserAPI'
 import { GetUserRepresentativeDocumentURLDTO, SearchUserDTO } from '../DTO/UserDTO'
 import { RepresentativeDocumentNotExists, UserNotExists } from '../Errors/UserError'

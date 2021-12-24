@@ -38,6 +38,9 @@ class GlobalManager {
             this.mousePositionX = event.screenX
             this.mousePositionY = event.screenY
         })
+        this.window.onbeforeunload = () => {
+            EventManager.issueEvent(Event.UnloadPage, {})
+        }
 
         EventManager.issueEvent(Event.InitGlobalVariable, {})
         EventManager.issueInitGlobalVariable()

@@ -1,4 +1,3 @@
-import Router from 'next/router'
 import { SERVER_BASE_URL } from '../infra/constants'
 import { AuthError, NetworkError, ServiceError } from './APIError'
 

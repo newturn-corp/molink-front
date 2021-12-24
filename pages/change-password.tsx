@@ -1,7 +1,7 @@
 import { Backdrop, Button, CircularProgress, TextField } from '@material-ui/core'
-import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import AuthManager, { PasswordState } from '../manager/AuthManager'
+import RoutingManager, { Page } from '../manager/RoutingManager'
 
 const getPasswordHelperText = (passwordState: PasswordState) => {
     if (passwordState === PasswordState.DEFAULT) {
@@ -12,12 +12,11 @@ const getPasswordHelperText = (passwordState: PasswordState) => {
 }
 
 const ChangePassword = () => {
-    const router = useRouter()
     const key = new URLSearchParams(window.location.search).get('key')
     useEffect(() => {
         AuthManager.checkPasswordChangeExist(new URLSearchParams(window.location.search).get('key')).then(res => {
             if (!res) {
-                router.replace('/signin')
+                RoutingManager.moveTo(Page.SignIn)
             }
         })
     })
@@ -76,7 +75,7 @@ const ChangePassword = () => {
                 setLoading(true)
                 const result = await AuthManager.endPasswordChange(key)
                 if (result.success || result.goToLogin) {
-                    router.replace('/signin')
+                    RoutingManager.moveTo(Page.SignIn)
                 }
                 setLoading(false)
             }}>

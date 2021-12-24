@@ -1,15 +1,13 @@
 import { makeAutoObservable, toJS } from 'mobx'
-import Router from 'next/router'
 import DocumentAPI from '../api/renew/DocumentAPI'
 import { DocumentNotExists } from '../Errors/DocumentError'
 import { Editor } from 'slate'
 import DialogManager from './DialogManager'
-import DocumentAuthority from '../domain/DocumentAuthority'
 import UserManager from './UserManager'
 import EventManager, { ChangeDocumentTitleInFileSystemParam, DeleteDocumentParam, Event, OpenDocumentParam } from './EventManager'
-import Document, { DocumentVisibility } from '../domain/Document'
-import { DocumentInitialInfoDTO } from '../DTO/DocumentDto'
+import Document from '../domain/Document'
 import DocumentManager from './DocumentManager'
+import RoutingManager, { Page } from './RoutingManager'
 
 class ContentManager {
     editor: Editor = null
@@ -49,8 +47,6 @@ class ContentManager {
     }
 
     async exitDocument () {
-        // await this.saveContent(true, false)
-        // this.openedDocument = null
         this.openedDocument.directoryInfo.isOpen = false
         this.openedDocument = null
         const deleteCount = this.editor.children.length
@@ -65,7 +61,7 @@ class ContentManager {
             return
         }
         if (this.openedDocument.equal(document) || this.openedDocument.isChildOf(document)) {
-            Router.push('')
+            RoutingManager.moveTo(Page.Index)
             this.exitDocument()
         }
     }
@@ -98,9 +94,9 @@ class ContentManager {
                 this.isLoadingContent = false
                 return DialogManager.openDialog('문서에 접근할 수 없습니다.', '이전 화면으로 돌아갑니다.', () => {
                     if (UserManager.isUserAuthorized) {
-                        Router.push('http://localhost:3000')
+                        RoutingManager.moveTo(Page.Index)
                     } else {
-                        Router.push('http://localhost:3000/signin')
+                        RoutingManager.moveTo(Page.SignIn)
                     }
                 })
             }
@@ -127,9 +123,9 @@ class ContentManager {
             if (err instanceof DocumentNotExists) {
                 DialogManager.openDialog('문서가 존재하지 않습니다.', '이전 화면으로 돌아갑니다.', () => {
                     if (UserManager.isUserAuthorized) {
-                        Router.push('http://localhost:3000/')
+                        RoutingManager.moveTo(Page.Index)
                     } else {
-                        Router.push('http://localhost:3000/signin')
+                        RoutingManager.moveTo(Page.SignIn)
                     }
                 })
             } else {
@@ -144,7 +140,6 @@ class ContentManager {
         if (this.openedDocument.meta.title === title) {
             return
         }
-        console.log(title)
         this.openedDocument.meta.title = title
         // EventManager.issueEvent(Event.ChangeDocumentTitleInEditor, { title })
     }

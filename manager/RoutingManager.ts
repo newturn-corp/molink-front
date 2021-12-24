@@ -3,7 +3,10 @@ import EventManager, { Event } from './EventManager'
 
 export enum Page {
     Index = '/',
-    SignIn = '/signin'
+    SignIn = '/signin',
+    Search = '/search',
+    changePasswordRequest = 'change-password-request',
+    SignUp = '/signup'
 }
 
 class RoutingManager {

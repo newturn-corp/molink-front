@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { observer } from 'mobx-react'
 import Document from '../../../../domain/Document'
 import List from '@material-ui/core/List'
@@ -10,9 +10,9 @@ import { DocumentChildOpenButton } from './DocumentChildOpenButton'
 
 import FileSystemManager from '../../../../manager/FileSystemManager'
 import EventManager, { Event } from '../../../../manager/EventManager'
-import { useRouter } from 'next/router'
 import FileDragManager from '../../../../manager/FileSystemManager/FileDragManager'
 import UserManager from '../../../../manager/UserManager'
+import RoutingManager, { Page } from '../../../../manager/RoutingManager'
 enum DragLocation {
     Top,
     Middle,
@@ -26,7 +26,6 @@ export const DocumentComponent: React.FC<{
   }> = observer(({ document, depth }) => {
       const divRef = useRef<HTMLDivElement>(null)
       const padding = 8 + depth * 12
-      const router = useRouter()
 
       const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
           ghost = divRef.current.cloneNode()
@@ -58,7 +57,7 @@ export const DocumentComponent: React.FC<{
                   }}
                   draggable={!document.directoryInfo.isChangingName && document.meta.userId === UserManager.userId}
                   onClick={(event) => {
-                      router.replace('http://localhost:3000?id=' + document.meta.id)
+                      RoutingManager.moveTo(Page.Index, `?id=${document.meta.id}`)
                       EventManager.issueEvent(Event.OpenDocument, { document: document.directoryInfo.document })
                   }}
                   onDragStart={(event) => handleDragStart(event)}
