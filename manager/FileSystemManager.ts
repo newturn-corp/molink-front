@@ -5,6 +5,8 @@ import EventManager, { Event, OpenDocumentParam } from './EventManager'
 import Router from 'next/router'
 import ContentManager from './ContentManager'
 import { Editor } from 'slate'
+import { DocumentVisibility } from '../domain/DocumentMeta'
+import UserManager from './UserManager'
 
 export enum DirectoryObjectType {
     Drawer,
@@ -108,7 +110,8 @@ class FileSystemManager {
         if (document) {
             if (document.meta.representative) {
                 this._availControlOptions.push({ name: '대표 문서 해제', callback: () => this.setDocumentRepresentative(false) })
-            } else {
+            }
+            if (!document.meta.representative && document.meta.visibility === DocumentVisibility.Public) {
                 this._availControlOptions.push({ name: '대표 문서로 설정', callback: () => this.setDocumentRepresentative(true) })
             }
             this._availControlOptions.push({ name: '이름 변경', callback: () => this.changeDocumentName() })
@@ -117,6 +120,9 @@ class FileSystemManager {
     }
 
     handleRightClick (event: React.MouseEvent<HTMLElement, MouseEvent>, document: Document | null) {
+        if (UserManager.userId !== ContentManager.currentContentUserId) {
+            return
+        }
         event.preventDefault()
         event.stopPropagation()
         this.setAvailControlOptionsByDocument(document)

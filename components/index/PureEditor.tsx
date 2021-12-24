@@ -92,8 +92,6 @@ export const PureEditor: React.FC<{
       if (!ContentManager.openedDocument) {
           return <></>
       }
-      console.log('PureEditor')
-      console.log(ContentManager.openedDocument)
       return <Slate editor={editor} value={[]} onChange={value => {
           if (!ContentManager.openedDocument.authority.editable) {
               return

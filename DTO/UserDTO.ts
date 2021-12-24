@@ -21,9 +21,11 @@ export class SaveSupportDTO {
 }
 
 export class UserSearchResultDTO {
+    id: number
     nickname: string
 
-    constructor (nickname: string) {
+    constructor (id: number, nickname: string) {
+        this.id = id
         this.nickname = nickname
     }
 }
@@ -41,5 +43,29 @@ export class SearchUserDTO {
 
     constructor (searchText: string) {
         this.searchText = searchText
+    }
+}
+
+export class GetUserRepresentativeDocumentURLDTO {
+    id: number
+
+    constructor (id: number) {
+        this.id = id
+    }
+}
+
+export class GetUserRepresentativeDocumentResponseDTO {
+    url: string
+
+    constructor (url: string) {
+        this.url = url
+    }
+}
+
+export class GetDocumentInitialInfoListDTO {
+    userId: number
+
+    constructor (userId: number) {
+        this.userId = userId
     }
 }

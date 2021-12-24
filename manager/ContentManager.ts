@@ -14,14 +14,19 @@ import DocumentManager from './DocumentManager'
 class ContentManager {
     editor: Editor = null
 
+    currentContentUserId: number | null = null
     openedDocument: Document = null
     isLoadingContent: boolean = false
 
     constructor () {
-        makeAutoObservable(this)
+        makeAutoObservable(this, {
+            editor: false
+        })
         EventManager.addEventLinstener(
             Event.OpenDocument,
-            (param: OpenDocumentParam) => this.tryOpenDocumentByDocumentId(param.document.meta.id), 1)
+            (param: OpenDocumentParam) => {
+                this.tryOpenDocumentByDocumentId(param.document.meta.id)
+            }, 1)
         EventManager.addEventLinstener(
             Event.ChangeDocumentTitleInFileSystem,
             (param: ChangeDocumentTitleInFileSystemParam) => {
@@ -37,6 +42,7 @@ class ContentManager {
         EventManager.addEventLinstener(
             Event.MoveToAnotherPage,
             () => {
+                this.openedDocument.directoryInfo.isOpen = false
                 this.openedDocument = null
             }, 1
         )
@@ -102,13 +108,13 @@ class ContentManager {
                 // 이미 열려있던 문서가 있는 경우
                 await this.exitDocument()
             }
-            const documentAlreadyLoaded = DocumentManager.documentMap.get(documentId)
-            if (documentAlreadyLoaded) {
-                this.openedDocument = documentAlreadyLoaded
-            } else {
-                this.openedDocument = new Document(new DocumentInitialInfoDTO(dto.id, dto.userId, dto.title, dto.icon, null, 0, false))
+
+            // 만약 기존의 ContentUserId랑 지금의 userId가 다른 경우
+            if (this.currentContentUserId !== dto.userId) {
+                await DocumentManager.init(dto.userId)
+                this.currentContentUserId = dto.userId
             }
-            console.log(dto)
+            this.openedDocument = DocumentManager.documentMap.get(documentId)
             this.openedDocument.authority = dto.authority
             this.openedDocument.meta.visibility = dto.visibility
             this.openedDocument.content = dto.content

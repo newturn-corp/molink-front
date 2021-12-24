@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx'
 import DocumentAPI from '../api/renew/DocumentAPI'
 import { DocumentInitialInfoDTO, SetDocumentIsChildrenOpenDTO, SetDocumentLocationDTO } from '../DTO/DocumentDto'
 import FileSystemManager from '../manager/FileSystemManager'
+import UserManager from '../manager/UserManager'
 import Document from './Document'
 import DocumentMeta from './DocumentMeta'
 
@@ -78,6 +79,8 @@ export default class DocumentDirectoryInfo {
 
     async setIsChildrenOpen (isChildrenOpen: boolean) {
         this.isChildrenOpen = isChildrenOpen
-        await DocumentAPI.setDocumentIsChildrenOpen(new SetDocumentIsChildrenOpenDTO(this.meta.id, this.isChildrenOpen))
+        if (UserManager.userId === this.meta.userId) {
+            await DocumentAPI.setDocumentIsChildrenOpen(new SetDocumentIsChildrenOpenDTO(this.meta.id, this.isChildrenOpen))
+        }
     }
 }

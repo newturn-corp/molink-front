@@ -12,7 +12,7 @@ const SearchResults: React.FC<{
         {
             results.map(result => {
                 return <>
-                    <UserSearchResult key={Math.random()} nickname={result.nickname} />
+                    <UserSearchResult key={Math.random()} nickname={result.nickname} id={result.id} />
                     <Divider variant="inset" component="li" />
                 </>
             })

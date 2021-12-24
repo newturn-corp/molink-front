@@ -3,6 +3,7 @@ import { APIError } from '../APIError'
 
 import { CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, GetDocumentDto, SetDocumentIconDTO, SetDocumentIsChildrenOpenDTO, SetDocumentLocationDTO, SetDocumentTitleDTO, SetDocumentVisibilityDTO, UpdateDocumentRepresentativeDTO } from '../../DTO/DocumentDto'
 import { DocumentNotExists } from '../../Errors/DocumentError'
+import { GetDocumentInitialInfoListDTO } from '../../DTO/UserDTO'
 
 class DocumentAPI extends BaseAPI {
     async createDocument (dto: CreateDocumentDTO): Promise<string> {
@@ -31,8 +32,8 @@ class DocumentAPI extends BaseAPI {
         if (res.status !== 200) throw new APIError(res)
     }
 
-    async getDocumentInitialInfoList (): Promise<DocumentInitialInfoDTO[]> {
-        const res = await this.get('/documents/initial-info-list')
+    async getDocumentInitialInfoList (dto: GetDocumentInitialInfoListDTO): Promise<DocumentInitialInfoDTO[]> {
+        const res = await this.get(`/documents/initial-info-list?id=${dto.userId}`)
         if (res.status !== 200) throw new APIError(res)
         return res.arr.map(raw => new DocumentInitialInfoDTO(raw.id, raw.userId, raw.title, raw.icon, raw.parentId, raw.order, raw.isChildrenOpen, raw.representative))
     }

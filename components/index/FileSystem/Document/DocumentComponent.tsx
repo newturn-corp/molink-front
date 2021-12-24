@@ -12,6 +12,7 @@ import FileSystemManager from '../../../../manager/FileSystemManager'
 import EventManager, { Event } from '../../../../manager/EventManager'
 import { useRouter } from 'next/router'
 import FileDragManager from '../../../../manager/FileSystemManager/FileDragManager'
+import UserManager from '../../../../manager/UserManager'
 enum DragLocation {
     Top,
     Middle,
@@ -55,7 +56,7 @@ export const DocumentComponent: React.FC<{
                       paddingRight: 20,
                       backgroundColor: document.directoryInfo.isSelected || document.directoryInfo.isOpen ? '#e9e9e9' : undefined
                   }}
-                  draggable={!document.directoryInfo.isChangingName}
+                  draggable={!document.directoryInfo.isChangingName && document.meta.userId === UserManager.userId}
                   onClick={(event) => {
                       router.replace('http://localhost:3000?id=' + document.meta.id)
                       EventManager.issueEvent(Event.OpenDocument, { document: document.directoryInfo.document })

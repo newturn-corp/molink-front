@@ -16,6 +16,8 @@ export const Header: React.FC<{
           <div className='navigator'>
           </div>
           <SearchComponent />
-          <div className='logo'></div>
+          <div className='logo'>
+              <img src="./header-logo.png" alt="" />
+          </div>
       </div>
   })

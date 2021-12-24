@@ -2,6 +2,7 @@ import Router from 'next/router'
 import EventManager, { Event } from './EventManager'
 
 export enum Page {
+    Index = '/',
     SignIn = '/signin'
 }
 
