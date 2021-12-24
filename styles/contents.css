@@ -1,8 +1,8 @@
 @charset "UTF-8";
 .contents {
   width: 800px;
-  margin-left: 25vw;
-  margin-top: 100px;
+  margin-left: 40vw;
+  margin-top: 160px;
 }
 
 .contents .MuiButton-root.Mui-disabled {

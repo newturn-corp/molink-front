@@ -1,4 +1,6 @@
 .drawer {
+  position: fixed;
+  top: 60px;
   -ms-flex-negative: 0;
       flex-shrink: 0;
   overflow-x: hidden;

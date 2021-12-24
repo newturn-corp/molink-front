@@ -20,6 +20,7 @@ body {
 }
 
 .header {
+  position: fixed;
   background-color: #f8f5ec;
   border-bottom: 1px solid #dfdfdf;
   width: 100%;

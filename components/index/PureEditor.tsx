@@ -27,13 +27,14 @@ import HotKeyManager from '../../manager/HotKeyManager'
 import MentionManager from '../../manager/MentionManager'
 import CommandManager from '../../manager/CommandManager'
 import SaveManager from '../../manager/SaveManager'
+import { withCorrectVoidBehavior } from '../../plugin/withCorrectVoidBehavior'
 
 const [
     withEditList,
     onKeyDown
 ] = EditListPlugin({})
 
-const plugins = [withReact, withShortcuts, withHistory, withImages, withShortcuts, withLayout, withMentions, HeadNextNormalTextPlugin, withEditList]
+const plugins = [withReact, withShortcuts, withHistory, withImages, withShortcuts, withLayout, withMentions, HeadNextNormalTextPlugin, withEditList, withCorrectVoidBehavior]
 const setPlugin = (editor: SlateEditor): SlateEditor => {
     return plugins.reduce((prev, current) => {
         return current(prev)
