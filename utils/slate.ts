@@ -28,11 +28,18 @@ export type BulletedListElement = {
   children: Descendant[]
 }
 
+export enum ImageFloatOption {
+  Left,
+  Center,
+  Right
+}
+
 export type ImageElement = {
   type: 'image'
   url: string
   width: number
   height: number
+  floatOption: ImageFloatOption
   children: EmptyText[]
 }
 

@@ -8,13 +8,14 @@ import { css } from '@emotion/css'
 import { Rnd } from 'react-rnd'
 import ContentManager from '../../manager/ContentManager'
 import { Node, Transforms } from 'slate'
-import { Height } from '@material-ui/icons'
+import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight, Height } from '@material-ui/icons'
 import { red } from '@material-ui/core/colors'
+import { ImageElement, ImageFloatOption } from '../../utils/slate'
 
 export const SlateImageElement: React.FC<{
     attributes,
     children,
-    element
+    element: ImageElement
   }> = ({ attributes, children, element }) => {
       const selected = useSelected()
       const focused = useFocused()
@@ -26,6 +27,8 @@ export const SlateImageElement: React.FC<{
                   className={css`
                     position: relative;
                     margin: 10px;
+                    width: ${800}px;
+                    height: ${element.height}px;
                     `}
               >
                   <Rnd
@@ -39,7 +42,10 @@ export const SlateImageElement: React.FC<{
                       enableResizing={selected && focused}
                       lockAspectRatio
                       style={{
-                          position: 'relative'
+                          position: 'relative',
+                          float: element.floatOption === ImageFloatOption.Right ? 'right' : undefined,
+                          marginLeft: element.floatOption === ImageFloatOption.Center ? (800 - element.width) / 2 : undefined,
+                          transform: 'none !important'
                       }}
                       onResizeStop={(e, direction, ref, delta, position) => {
                           const widthStr = ref.style.width
@@ -67,6 +73,48 @@ export const SlateImageElement: React.FC<{
                       {
                           selected && focused
                               ? <>
+                                  <div
+                                      className='image-adjust-button'
+                                      style={{
+                                          left: (element.width - 100) / 2
+                                      }}>
+                                      <div
+                                          className={'button'}
+                                          onClick={event => {
+                                              Transforms.setNodes(ContentManager.editor, {
+                                                  floatOption: ImageFloatOption.Left
+                                              }, {
+                                                  at: ContentManager.editor.selection
+                                              })
+                                          }}
+                                      >
+                                          <FormatAlignLeft />
+                                      </div>
+                                      <div
+                                          className={'button'}
+                                          onClick={event => {
+                                              Transforms.setNodes(ContentManager.editor, {
+                                                  floatOption: ImageFloatOption.Center
+                                              }, {
+                                                  at: ContentManager.editor.selection
+                                              })
+                                          }}
+                                      >
+                                          <FormatAlignCenter />
+                                      </div>
+                                      <div
+                                          className={'button'}
+                                          onClick={event => {
+                                              Transforms.setNodes(ContentManager.editor, {
+                                                  floatOption: ImageFloatOption.Right
+                                              }, {
+                                                  at: ContentManager.editor.selection
+                                              })
+                                          }}
+                                      >
+                                          <FormatAlignRight />
+                                      </div>
+                                  </div>
                                   <div
                                       className='image-resize-dot'
                                       style={{

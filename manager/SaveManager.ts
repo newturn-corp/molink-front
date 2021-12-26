@@ -34,6 +34,7 @@ class SaveManager {
     }
 
     async saveContent (force: boolean = false, isAutoSaving: boolean = false) {
+        console.log('saveContent')
         if (!force && this.preventSaving) {
             return
         }

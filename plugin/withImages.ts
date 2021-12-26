@@ -1,11 +1,11 @@
 import { Editor, Node, Transforms } from 'slate'
-import { ImageElement } from '../utils/slate'
+import { ImageElement, ImageFloatOption } from '../utils/slate'
 import imageExtensions from 'image-extensions'
 import isUrl from 'is-url'
 
 const insertImage = (editor: Editor, url: string, width: number, height: number) => {
     const text = { text: '' }
-    const image: ImageElement = { type: 'image', url, children: [text], width, height }
+    const image: ImageElement = { type: 'image', url, floatOption: ImageFloatOption.Left, children: [text], width, height }
     Transforms.insertNodes(editor, image)
 }
 
@@ -38,15 +38,19 @@ export const withImages = (editor: Editor) => {
                         image.src = e.target.result as string
                         image.onload = () => {
                             const url = reader.result as string
-                            insertImage(editor, url, image.width, image.height)
+                            let width = image.width
+                            let height = image.height
+                            if (image.width > 800) {
+                                height *= 800 / width
+                                width = 800
+                            }
+                            insertImage(editor, url, width, height)
                         }
                     })
 
                     reader.readAsDataURL(file)
                 }
             }
-        // } else if (isImageUrl(text)) {
-        //     insertImage(editor, text)
         } else {
             insertData(data)
         }

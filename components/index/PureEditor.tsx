@@ -38,7 +38,20 @@ const [
     onKeyDown
 ] = EditListPlugin({})
 
-const plugins = [withReact, withShortcuts, withHistory, withImages, withShortcuts, withLayout, withMentions, HeadNextNormalTextPlugin, withEditList, withCorrectVoidBehavior, HoveringToolbarPlugin]
+const plugins = [
+    withReact,
+    withShortcuts,
+    withHistory,
+    withImages,
+    withShortcuts,
+    withLayout,
+    withMentions,
+    HeadNextNormalTextPlugin,
+    withEditList,
+    withCorrectVoidBehavior,
+    HoveringToolbarPlugin
+]
+
 const setPlugin = (editor: SlateEditor): SlateEditor => {
     return plugins.reduce((prev, current) => {
         return current(prev)
