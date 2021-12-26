@@ -1,5 +1,6 @@
 .search-page .core {
   margin: 0 auto;
+  margin-top: 150px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -23,7 +24,7 @@
 }
 
 .search-page .core .search-result {
-  width: 600px;
+  width: 700px;
   height: 100%;
 }
 

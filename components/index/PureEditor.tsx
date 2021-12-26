@@ -6,7 +6,9 @@ import { Editable, Slate, withReact } from 'slate-react'
 import {
     Editor as SlateEditor,
     Text,
-    createEditor
+    createEditor,
+    Transforms,
+    Editor
 } from 'slate'
 import { withHistory } from 'slate-history'
 
@@ -28,6 +30,7 @@ import MentionManager from '../../manager/MentionManager'
 import CommandManager from '../../manager/CommandManager'
 import SaveManager from '../../manager/SaveManager'
 import { withCorrectVoidBehavior } from '../../plugin/withCorrectVoidBehavior'
+import { HoveringToolbar } from '../home/HoveringToolbar'
 
 const [
     withEditList,
@@ -39,6 +42,23 @@ const setPlugin = (editor: SlateEditor): SlateEditor => {
     return plugins.reduce((prev, current) => {
         return current(prev)
     }, editor)
+}
+
+const isFormatActive = (editor, format) => {
+    const [match] = Editor.nodes(editor, {
+        match: n => n[format] === true,
+        mode: 'all'
+    })
+    return !!match
+}
+
+const toggleFormat = (editor, format) => {
+    const isActive = isFormatActive(editor, format)
+    Transforms.setNodes(
+        editor,
+        { [format]: isActive ? null : true },
+        { match: Text.isText, split: true }
+    )
 }
 
 export const PureEditor: React.FC<{
@@ -102,6 +122,7 @@ export const PureEditor: React.FC<{
           CommandManager.onChange(editor)
           SaveManager.handleOnChange()
       }}>
+          <HoveringToolbar/>
           <Editable
               decorate={decorate}
               renderElement={renderElement}
@@ -117,6 +138,19 @@ export const PureEditor: React.FC<{
                   MentionManager.onKeyDown(e, editor)
                   CommandManager.onKeyDown(e, editor)
                   onKeyDown(editor)(e)
+              }}
+              onDOMBeforeInput={(event: InputEvent) => {
+                  switch (event.inputType) {
+                  case 'formatBold':
+                      event.preventDefault()
+                      return toggleFormat(editor, 'bold')
+                  case 'formatItalic':
+                      event.preventDefault()
+                      return toggleFormat(editor, 'italic')
+                  case 'formatUnderline':
+                      event.preventDefault()
+                      return toggleFormat(editor, 'underlined')
+                  }
               }}
           />
           <MentionListComponent editor={editor} />

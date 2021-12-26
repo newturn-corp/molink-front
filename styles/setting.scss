@@ -1,0 +1,69 @@
+.setting-page {
+    height: 100%;
+    .core {
+        margin: 0 auto;
+        margin-top: 150px;
+        display: flex;
+        .setting-meta {
+            width: 200px;
+            height: 100%;
+            .search-buttons {
+                width: 200px;
+                .MuiButton-label {
+                    justify-content: left;
+                }
+            }
+        }
+
+        .setting-list {
+            width: 600px;
+            height: 100%;
+            .profile {
+                .text {
+                    margin-bottom: 10px;
+                    font-size: 15px;
+                    font-weight: 600;
+                }
+                // display: flex;
+                .profile-image {
+                    position: relative;
+                    margin: 25px;
+                    margin-top: 0px;
+                    .image {
+                        width: 200px;
+                        height: 200px;
+                        font-size: 100px;
+                        cursor: pointer;
+                    }
+                    .edit {
+                        position: absolute;
+                        display: inline;
+                        font-size: 14px;
+                        background-color: rgba(55, 53, 47, 0.7);
+                        color: rgb(241, 241, 241);
+                        padding: 4px;
+                        bottom: 30px;
+                        border-radius: 4px;
+                        width: 120px;
+                        text-align: center;
+                        left: 40px;
+                        margin: 0 auto;
+                        cursor: pointer;
+                        pointer-events: none;
+                    }
+                }
+                .biography {
+                    margin: 25px;
+                    .ant-input-textarea {
+                        height: 30px;
+                    }
+                }
+            }
+
+
+            .user-search-result {
+                cursor: pointer;
+            }
+        }
+    }
+}

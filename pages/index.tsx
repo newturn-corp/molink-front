@@ -13,6 +13,7 @@ import DocumentManager from '../manager/DocumentManager'
 const Index = () => {
     UserManager.updateUserProfile()
         .then(() => {
+            console.log(UserManager.isUserAuthorized)
             const documentId = new URLSearchParams(GlobalManager.window.location.search).get('id')
             if (documentId) {
                 ContentManager.tryOpenDocumentByDocumentId(documentId)

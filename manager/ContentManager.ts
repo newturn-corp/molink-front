@@ -40,8 +40,10 @@ class ContentManager {
         EventManager.addEventLinstener(
             Event.MoveToAnotherPage,
             () => {
-                this.openedDocument.directoryInfo.isOpen = false
-                this.openedDocument = null
+                if (this.openedDocument) {
+                    this.openedDocument.directoryInfo.isOpen = false
+                    this.openedDocument = null
+                }
             }, 1
         )
     }

@@ -19,7 +19,7 @@ export const HeadNextNormalTextPlugin = (editor: Editor) => {
         const { path, position, properties } = op
 
         const node: any = Node.get(editor, path)
-
+        console.log(node)
         if (![TextCategory.Head1, TextCategory.Head2, TextCategory.Head3].includes(node.category)) {
             return transform(editor, op)
         }

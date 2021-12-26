@@ -22,13 +22,11 @@ class SaveManager {
     constructor () {
         makeAutoObservable(this)
         EventManager.addEventLinstener(Event.UnloadPage, () => {
-            console.log('삭제 저장')
             if (ContentManager.openedDocument && ContentManager.openedDocument.authority.editable) {
                 this.saveContent(true, false)
             }
         }, 1)
         EventManager.addEventLinstener(Event.MoveToAnotherPage, () => {
-            console.log('이동 저장')
             if (ContentManager.openedDocument && ContentManager.openedDocument.authority.editable) {
                 this.saveContent(true, false)
             }

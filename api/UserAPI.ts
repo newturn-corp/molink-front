@@ -2,7 +2,7 @@ import { BaseAPI } from './baseAPI'
 import { APIError } from './APIError'
 
 import Document from '../domain/Document'
-import { GetUserProfileDTO, SearchUserDTO, SearchResponseDTO, GetUserRepresentativeDocumentResponseDTO, GetUserRepresentativeDocumentURLDTO } from '../DTO/UserDTO'
+import { GetUserProfileDTO, SearchUserDTO, SearchResponseDTO, GetUserRepresentativeDocumentResponseDTO, GetUserRepresentativeDocumentURLDTO, UpdateUserProfileImageDto, UpdateUserBiographyDTO } from '../DTO/UserDTO'
 import { RepresentativeDocumentNotExists, UserNotExists } from '../Errors/UserError'
 
 class UserAPI extends BaseAPI {
@@ -26,6 +26,16 @@ class UserAPI extends BaseAPI {
             throw new RepresentativeDocumentNotExists()
         }
         return new GetUserRepresentativeDocumentResponseDTO(res.data.url)
+    }
+
+    async updateUserProfileImage (dto: UpdateUserProfileImageDto): Promise<void> {
+        const res = await this.putFormData('/users/profile-image', dto)
+        if (res.status !== 200) throw new APIError(res)
+    }
+
+    async updateUserBiography (dto: UpdateUserBiographyDTO): Promise<void> {
+        const res = await this.put('/users/biography', dto)
+        if (res.status !== 200) throw new APIError(res)
     }
 }
 export default new UserAPI()

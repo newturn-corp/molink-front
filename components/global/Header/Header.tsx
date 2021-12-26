@@ -4,6 +4,7 @@ import { Visibility } from './Visibility'
 import { LoginButton } from './LoginButton'
 import { User } from './User'
 import { SearchComponent } from './SearchComponent'
+import RoutingManager, { Page } from '../../../manager/RoutingManager'
 
 export const Header: React.FC<{
   }> = observer(() => {
@@ -17,7 +18,7 @@ export const Header: React.FC<{
           </div>
           <SearchComponent />
           <div className='logo'>
-              <img src="./header-logo.png" alt="" />
+              <img src="/header-logo.png" alt="" onClick={() => RoutingManager.moveTo(Page.Index)} />
           </div>
       </div>
   })

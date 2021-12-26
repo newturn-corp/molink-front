@@ -1,6 +1,7 @@
 .search-page {
     .core {
         margin: 0 auto;
+        margin-top: 150px;
         display: flex;
         .search-meta {
             width: 200px;
@@ -16,7 +17,7 @@
         }
 
         .search-result {
-            width: 600px;
+            width: 700px;
             height: 100%;
 
             .user-search-result {

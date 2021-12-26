@@ -23,12 +23,7 @@ class SearchManager {
         }
         this.isSearching = true
         const results = await UserAPI.searchUsers(new SearchUserDTO(text))
-        this._searchResults = results.userSearchResults.map(result => {
-            return {
-                id: result.id,
-                nickname: result.nickname
-            }
-        })
+        this._searchResults = results.userSearchResults
         this.isSearching = false
     }
 
