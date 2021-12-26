@@ -35,13 +35,6 @@ export const Button = React.forwardRef(
                 className,
                 css`
             cursor: pointer;
-            color: ${reversed
-            ? active
-                ? 'white'
-                : '#aaa'
-            : active
-                ? 'black'
-                : '#ccc'};
           `
             )}
         />
@@ -120,18 +113,17 @@ const FormatButton: React.FC<{
     icon: JSX.Element
 }> = ({ format, icon }) => {
     const editor = useSlate()
+    const isActive = isFormatActive(editor, format)
     return (
-        <Button
-            className='button'
-            reversed
-            active={isFormatActive(editor, format)}
-            onMouseDown={event => {
+        <div
+            className={'button' + (isActive ? '' : ' inactive')}
+            onClick={event => {
                 event.preventDefault()
                 toggleFormat(editor, format)
             }}
         >
             {icon}
-        </Button>
+        </div>
     )
 }
 

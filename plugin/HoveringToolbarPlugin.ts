@@ -9,27 +9,21 @@ import { createDraft, finishDraft, isDraft } from 'immer'
  * @param editor
  * @returns
  */
-export const HeadNextNormalTextPlugin = (editor: Editor) => {
+export const HoveringToolbarPlugin = (editor: Editor) => {
     const { transform } = Transforms
     Transforms.transform = (editor: Editor, op: Operation): void => {
         // 이 함수는 split_node 명령이 Head1, 2, 3일 때만 따로 수행함
         if (op.type !== 'split_node') {
             return transform(editor, op)
         }
-        const { path, position, properties } = op
+        const { path, position } = op
 
-        const node: any = Node.get(editor, path)
-        // if (node.italic) {
-        //     delete node.italic
-        // }
-        // if (node.bold) {
-        //     delete node.bold
-        // }
-        // if (node.underlined) {
-        //     delete node.underlined
-        // }
+        const node: Text = Node.get(editor, path) as Text
 
-        if (![TextCategory.Head1, TextCategory.Head2, TextCategory.Head3].includes(node.category)) {
+        if (!Text.isText(node)) {
+            return transform(editor, op)
+        }
+        if (!node.bold && !node.italic && !node.underlined) {
             return transform(editor, op)
         }
 
@@ -43,29 +37,15 @@ export const HeadNextNormalTextPlugin = (editor: Editor) => {
                 )
             }
 
-            const node = Node.get(editor, path)
             const parent = Node.parent(editor, path)
             const index = path[path.length - 1]
-            let newNode: Descendant
 
-            if (Text.isText(node)) {
-                const before = node.text.slice(0, position)
-                const after = node.text.slice(position)
-                node.text = before
-                newNode = {
-                    ...(properties as Partial<Text>),
-                    text: after
-                }
-            } else {
-                const before = node.children.slice(0, position)
-                const after = node.children.slice(position)
-                node.children = before
-
-                newNode = {
-                    ...(properties as Partial<Element>),
-                    children: after
-                } as TextElement
-                newNode.category = TextCategory.Content3
+            const node = Node.get(editor, path) as Text
+            const before = node.text.slice(0, position)
+            const after = node.text.slice(position)
+            node.text = before
+            const newNode = {
+                text: after
             }
 
             parent.children.splice(index + 1, 0, newNode)
@@ -88,9 +68,5 @@ export const HeadNextNormalTextPlugin = (editor: Editor) => {
         }
     }
 
-    // editor.apply = (operation) => {
-    //     console.log(operation)
-    //     return apply(operation)
-    // }
     return editor
 }

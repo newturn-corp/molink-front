@@ -19,7 +19,7 @@ export const CustomLeafComponent: React.FC<{
           children = <em>{children}</em>
       }
 
-      if (leaf.underline) {
+      if (leaf.underlined) {
           children = <u>{children}</u>
       }
 

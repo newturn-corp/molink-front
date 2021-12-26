@@ -55,9 +55,15 @@ export type ListItemElement = {
 export type CustomElement =
 TextElement | BulletedListElement | ImageElement | MentionElement | TitleElement |ListItemElement
 
-export type FormattedText = { text: string; bold?: true; codehighlight?: true }
+export type FormattedText = {
+  bold?: boolean
+  italic?: boolean
+  code?: boolean
+  underlined?: boolean
+  text: string
+}
 
-export type CustomText = FormattedText | EmptyText
+export type CustomText = FormattedText & EmptyText
 
 declare module 'slate' {
     interface CustomTypes {

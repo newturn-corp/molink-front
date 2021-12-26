@@ -118,10 +118,14 @@
         color: inherit;
         width: 24px;
         height: 24px;
+        cursor: pointer;
         .MuiSvgIcon-root {
             width: 100%;
             height: 100%;
         }
+    }
+    .inactive {
+        color: rgb(161, 161, 161);
     }
 }
 .command-list {
