@@ -59,8 +59,16 @@ export type ListItemElement = {
   children: CustomText[]
 }
 
+export type LinkElement = { type: 'link'; url: string; children: Descendant[] }
+
 export type CustomElement =
-TextElement | BulletedListElement | ImageElement | MentionElement | TitleElement |ListItemElement
+TextElement |
+BulletedListElement |
+ImageElement |
+MentionElement |
+TitleElement |
+ListItemElement |
+LinkElement
 
 export type FormattedText = {
   bold?: boolean

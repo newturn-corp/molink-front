@@ -38,7 +38,7 @@ export const User: React.FC<{
       }
 
       return <div className='user-container'>
-          <Badge className={SaveManager.contentSaveStatus === ContentSaveStatus.SaveFailed ? 'disconnected' : 'connected' } variant="dot" overlap='circle'>
+          <Badge className={SaveManager.contentSaveStatus === ContentSaveStatus.SaveFailed ? 'disconnected' : 'connected' } variant="dot" overlap={'circular'}>
               <Avatar onClick={(event) => handleClick(event)} sizes='40' src={profileImageSrc}>{profileInnerText}</Avatar>
           </Badge>
           <Menu

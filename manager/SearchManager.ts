@@ -6,7 +6,7 @@ import NotificationManager, { NOTIFICATION_TYPE } from './NotificationManager'
 import RoutingManager, { Page } from './RoutingManager'
 
 class SearchManager {
-    _searchResults = []
+    _searchResults = null
     isSearching = false
 
     get searchResults () {

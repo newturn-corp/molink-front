@@ -8,9 +8,11 @@ import {
     Text,
     createEditor,
     Transforms,
-    Editor
+    Editor,
+    Range
 } from 'slate'
 import { withHistory } from 'slate-history'
+import { isKeyHotkey } from 'is-hotkey'
 
 import { CustomElementComponent } from '../SlateElement/CustomElementComponent'
 import { CustomLeafComponent } from '../SlateElement/CustomLeafComponent'
@@ -32,10 +34,11 @@ import SaveManager from '../../manager/SaveManager'
 import { withCorrectVoidBehavior } from '../../plugin/withCorrectVoidBehavior'
 import { HoveringToolbar } from '../home/HoveringToolbar'
 import { HoveringToolbarPlugin } from '../../plugin/HoveringToolbarPlugin'
+import InlinePlugin from '../../plugin/InlinePlugin'
 
 const [
     withEditList,
-    onKeyDown
+    onEditListKeyDown
 ] = EditListPlugin({})
 
 const plugins = [
@@ -49,7 +52,8 @@ const plugins = [
     HeadNextNormalTextPlugin,
     withEditList,
     withCorrectVoidBehavior,
-    HoveringToolbarPlugin
+    HoveringToolbarPlugin,
+    InlinePlugin
 ]
 
 const setPlugin = (editor: SlateEditor): SlateEditor => {
@@ -124,9 +128,33 @@ export const PureEditor: React.FC<{
           ['html']
       )
 
+      const onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = event => {
+          const { selection } = editor
+
+          // Default left/right behavior is unit:'character'.
+          // This fails to distinguish between two cursor positions, such as
+          // <inline>foo<cursor/></inline> vs <inline>foo</inline><cursor/>.
+          // Here we modify the behavior to unit:'offset'.
+          // This lets the user step into and out of the inline without stepping over characters.
+          // You may wish to customize this further to only use unit:'offset' in specific cases.
+          if (selection && Range.isCollapsed(selection)) {
+              const { nativeEvent } = event
+              if (isKeyHotkey('left', nativeEvent)) {
+                  event.preventDefault()
+                  Transforms.move(editor, { unit: 'offset', reverse: true })
+                  return
+              }
+              if (isKeyHotkey('right', nativeEvent)) {
+                  event.preventDefault()
+                  Transforms.move(editor, { unit: 'offset' })
+              }
+          }
+      }
+
       if (!ContentManager.openedDocument) {
           return <></>
       }
+
       return <Slate editor={editor} value={[]} onChange={value => {
           if (!ContentManager.openedDocument || !ContentManager.openedDocument.authority.editable) {
               return
@@ -151,7 +179,8 @@ export const PureEditor: React.FC<{
                   HotKeyManager.handleKeyDown(editor, e)
                   MentionManager.onKeyDown(e, editor)
                   CommandManager.onKeyDown(e, editor)
-                  onKeyDown(editor)(e)
+                  onEditListKeyDown(editor)(e)
+                  onKeyDown(e)
               }}
               onDOMBeforeInput={(event: InputEvent) => {
                   switch (event.inputType) {

@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
-import ContentAPI from '../api/renew/ContentAPI'
-import DocumentAPI from '../api/renew/DocumentAPI'
+import ContentAPI from '../api/ContentAPI'
+import DocumentAPI from '../api/DocumentAPI'
 import { UpdateContentDTO } from '../DTO/ContentDTO'
 import { SetDocumentTitleDTO } from '../DTO/DocumentDto'
 import ContentManager from './ContentManager'
@@ -21,20 +21,19 @@ class SaveManager {
 
     constructor () {
         makeAutoObservable(this)
-        EventManager.addEventLinstener(Event.UnloadPage, () => {
+        EventManager.addEventLinstener(Event.UnloadPage, async () => {
             if (ContentManager.openedDocument && ContentManager.openedDocument.authority.editable) {
-                this.saveContent(true, false)
+                await this.saveContent(true, false)
             }
         }, 1)
-        EventManager.addEventLinstener(Event.MoveToAnotherPage, () => {
+        EventManager.addEventLinstener(Event.MoveToAnotherPage, async () => {
             if (ContentManager.openedDocument && ContentManager.openedDocument.authority.editable) {
-                this.saveContent(true, false)
+                await this.saveContent(true, false)
             }
         }, 1)
     }
 
     async saveContent (force: boolean = false, isAutoSaving: boolean = false) {
-        console.log('saveContent')
         if (!force && this.preventSaving) {
             return
         }

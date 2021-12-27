@@ -1,5 +1,5 @@
 import { makeAutoObservable, toJS } from 'mobx'
-import DocumentAPI from '../api/renew/DocumentAPI'
+import DocumentAPI from '../api/DocumentAPI'
 import { DocumentNotExists } from '../Errors/DocumentError'
 import { Editor } from 'slate'
 import DialogManager from './DialogManager'
@@ -14,17 +14,13 @@ class ContentManager {
 
     currentContentUserId: number | null = null
     openedDocument: Document = null
+
     isLoadingContent: boolean = false
 
     constructor () {
         makeAutoObservable(this, {
             editor: false
         })
-        EventManager.addEventLinstener(
-            Event.OpenDocument,
-            (param: OpenDocumentParam) => {
-                this.tryOpenDocumentByDocumentId(param.document.meta.id)
-            }, 1)
         EventManager.addEventLinstener(
             Event.ChangeDocumentTitleInFileSystem,
             (param: ChangeDocumentTitleInFileSystemParam) => {
@@ -39,12 +35,11 @@ class ContentManager {
         )
         EventManager.addEventLinstener(
             Event.MoveToAnotherPage,
-            () => {
+            async () => {
                 if (this.openedDocument) {
-                    this.openedDocument.directoryInfo.isOpen = false
-                    this.openedDocument = null
+                    await this.exitDocument()
                 }
-            }, 1
+            }, 100
         )
     }
 
@@ -94,42 +89,43 @@ class ContentManager {
             const dto = await DocumentAPI.getDocument(documentId)
             if (!dto.authority.viewable) {
                 this.isLoadingContent = false
-                return DialogManager.openDialog('문서에 접근할 수 없습니다.', '이전 화면으로 돌아갑니다.', () => {
-                    if (UserManager.isUserAuthorized) {
-                        RoutingManager.moveTo(Page.Index)
-                    } else {
-                        RoutingManager.moveTo(Page.SignIn)
-                    }
-                })
+                await DialogManager.openDialog('문서에 접근할 수 없습니다.', '이전 화면으로 돌아갑니다.', ['이전'])
+                if (UserManager.isUserAuthorized) {
+                    RoutingManager.moveTo(Page.Index)
+                } else {
+                    RoutingManager.moveTo(Page.SignIn)
+                }
             }
             if (this.openedDocument) {
                 // 이미 열려있던 문서가 있는 경우
                 await this.exitDocument()
             }
-
             // 만약 기존의 ContentUserId랑 지금의 userId가 다른 경우
             if (this.currentContentUserId !== dto.userId) {
                 await DocumentManager.init(dto.userId)
                 this.currentContentUserId = dto.userId
             }
-            this.openedDocument = DocumentManager.documentMap.get(documentId)
-            this.openedDocument.authority = dto.authority
-            this.openedDocument.meta.visibility = dto.visibility
-            this.openedDocument.content = dto.content
-            this.openedDocument.directoryInfo.isOpen = true
-            this.openedDocument.contentId = dto.contentId
+            const document = DocumentManager.documentMap.get(documentId)
+
+            document.directoryInfo.isOpen = true
+            document.authority = dto.authority
+            document.meta.visibility = dto.visibility
+            document.content = dto.content
+            document.contentId = dto.contentId
+
+            this.openedDocument = document
+            const rawDocument = toJS(this.openedDocument)
             for (let i = 0; i < this.openedDocument.content.length; i++) {
-                this.editor.apply({ type: 'insert_node', path: [i], node: toJS(this.openedDocument).content[i] })
+                this.editor.apply({ type: 'insert_node', path: [i], node: rawDocument.content[i] })
             }
         } catch (err) {
             if (err instanceof DocumentNotExists) {
-                DialogManager.openDialog('문서가 존재하지 않습니다.', '이전 화면으로 돌아갑니다.', () => {
-                    if (UserManager.isUserAuthorized) {
-                        RoutingManager.moveTo(Page.Index)
-                    } else {
-                        RoutingManager.moveTo(Page.SignIn)
-                    }
-                })
+                await DialogManager.openDialog('문서가 존재하지 않습니다.', '이전 화면으로 돌아갑니다.', ['이전'])
+                if (UserManager.isUserAuthorized) {
+                    RoutingManager.moveTo(Page.Index)
+                } else {
+                    RoutingManager.moveTo(Page.SignIn)
+                }
             } else {
                 throw err
             }

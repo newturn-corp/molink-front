@@ -4,7 +4,7 @@ import { OverridableComponent } from '@material-ui/core/OverridableComponent'
 import { FormatBold, FormatItalic, FormatUnderlined } from '@material-ui/icons'
 import React, { useRef, PropsWithChildren, Ref, useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import { Editor, Range, Text, Transforms } from 'slate'
+import { Editor, Node, Range, Text, Transforms } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
 
 interface BaseProps {
@@ -92,11 +92,15 @@ export const Portal = ({ children }) => {
 }
 
 const isFormatActive = (editor, format) => {
-    const [match] = Editor.nodes(editor, {
-        match: n => n[format] === true,
-        mode: 'all'
-    })
-    return !!match
+    try {
+        const [match] = Editor.nodes(editor, {
+            match: n => n[format] === true,
+            mode: 'all'
+        })
+        return !!match
+    } finally {
+        return false
+    }
 }
 
 const toggleFormat = (editor, format) => {
@@ -147,6 +151,17 @@ export const HoveringToolbar: React.FC<{
             el.removeAttribute('style')
             return
         }
+        // 한 줄이 아닌 경우 return
+        if (selection.anchor.path[0] !== selection.focus.path[0]) {
+            el.removeAttribute('style')
+            return
+        }
+
+        // const node = Node.get(editor, selection.anchor.path)
+        // if (node.type === 'link') {
+
+        // }
+
         const domSelection = window.getSelection()
         const domRange = domSelection.getRangeAt(0)
         const rect = domRange.getBoundingClientRect()

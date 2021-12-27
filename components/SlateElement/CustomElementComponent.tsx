@@ -2,6 +2,7 @@ import React from 'react'
 import { SlateImageElement } from './SlateImageElement'
 import { SlateTextElement } from './SlateTextElement'
 import { SlateTitleElement } from './SlateTitleElement'
+import { SlateLinkElement } from './SlateLinkElement'
 
 export const CustomElementComponent: React.FC<{
     attributes,
@@ -26,6 +27,8 @@ export const CustomElementComponent: React.FC<{
           return <h1 {...attributes}>{children}</h1>
       case 'block-quote':
           return <blockquote {...attributes}>{children}</blockquote>
+      case 'link':
+          return <SlateLinkElement {...props} />
       default:
           return <p {...attributes}>{children}</p>
       }

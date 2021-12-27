@@ -10,8 +10,9 @@ export class DocumentInitialInfoDTO {
     order: number
     isChildrenOpen: boolean
     representative: boolean
+    visibility: DocumentVisibility
 
-    constructor (id: string, userId: number, title: string, icon: string, parentId: string | null, order: number, isChildrenOpen: boolean, representative: boolean) {
+    constructor (id: string, userId: number, title: string, icon: string, parentId: string | null, order: number, isChildrenOpen: boolean, representative: boolean, visibility: DocumentVisibility) {
         this.id = id
         this.userId = userId
         this.title = title
@@ -20,6 +21,7 @@ export class DocumentInitialInfoDTO {
         this.order = order
         this.isChildrenOpen = isChildrenOpen
         this.representative = representative
+        this.visibility = visibility
     }
 }
 

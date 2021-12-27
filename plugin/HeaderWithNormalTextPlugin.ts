@@ -87,10 +87,5 @@ export const HeadNextNormalTextPlugin = (editor: Editor) => {
             }
         }
     }
-
-    // editor.apply = (operation) => {
-    //     console.log(operation)
-    //     return apply(operation)
-    // }
     return editor
 }

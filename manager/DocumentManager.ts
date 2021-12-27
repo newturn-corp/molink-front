@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx'
-import DocumentAPI from '../api/renew/DocumentAPI'
+import DocumentAPI from '../api/DocumentAPI'
 import Document from '../domain/Document'
 import { GetDocumentInitialInfoListDTO } from '../DTO/UserDTO'
 import EventManager, { Event } from './EventManager'

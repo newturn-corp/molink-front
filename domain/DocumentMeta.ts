@@ -1,13 +1,13 @@
 import { makeAutoObservable } from 'mobx'
-import DocumentAPI from '../api/renew/DocumentAPI'
+import DocumentAPI from '../api/DocumentAPI'
 import { DocumentInitialInfoDTO, SetDocumentIconDTO, SetDocumentTitleDTO, UpdateDocumentRepresentativeDTO } from '../DTO/DocumentDto'
 import DocumentManager from '../manager/DocumentManager'
 import UserManager from '../manager/UserManager'
 
 export enum DocumentVisibility {
-    Public = 'public',
-    Private = 'private',
-    OnlyFriend = 'only_friend'
+    Private = 0,
+    OnlyFriend = 1,
+    Public = 2
 }
 
 export default class DocumentMeta {
@@ -25,6 +25,7 @@ export default class DocumentMeta {
         this.title = dto.title
         this.icon = dto.icon
         this.representative = dto.representative
+        this.visibility = dto.visibility
         makeAutoObservable(this)
     }
 

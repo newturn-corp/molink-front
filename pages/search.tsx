@@ -1,34 +1,17 @@
 import React from 'react'
-import { observer } from 'mobx-react'
 import { Header } from '../components/global/Header/Header'
-import { ButtonGroup, Button, List, Divider } from '@material-ui/core'
-import { UserSearchResult } from '../components/search/UserSearchResult'
+import { ButtonGroup, Button } from '@material-ui/core'
 import SearchManager from '../manager/SearchManager'
 import UserManager from '../manager/UserManager'
-import RoutingManager, { Page } from '../manager/RoutingManager'
+import GlobalManager from '../manager/GlobalManager'
+import { SearchResults } from '../components/search/SearchResult'
 
-const SearchResults: React.FC<{
-    results: any
-}> = ({ results }) => {
-    return <List>
-        {
-            results.map(result => {
-                console.log(result)
-                return <>
-                    <UserSearchResult key={Math.random()} nickname={result.nickname} id={result.id} profileImageUrl={result.profileImageUrl} biography={result.biography} />
-                    <Divider variant="inset" component="li" />
-                </>
-            })
-        }
-    </List>
-}
-
-const Search = observer(() => {
+const Search = () => {
     UserManager.updateUserProfile()
         .then(() => {
-            if (!UserManager.isUserAuthorized) {
-                RoutingManager.moveTo(Page.SignIn)
-            }
+            const window = globalThis.window || GlobalManager.window
+            const query = new URLSearchParams(window.location.search).get('q')
+            SearchManager.search(query)
         })
 
     return <div className='search-page' onClick={() => {
@@ -46,14 +29,10 @@ const Search = observer(() => {
                         <Button disabled={true}>문서</Button>
                     </ButtonGroup>
                 </div>
-                <div className='search-result'>
-                    <List>
-                        <SearchResults results={SearchManager.searchResults}/>
-                    </List>
-                </div>
+                <SearchResults/>
             </div>
         </div>
     </div>
-})
+}
 
 export default Search

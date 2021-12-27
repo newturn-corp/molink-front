@@ -63,14 +63,6 @@ class FileSystemManager {
 
     constructor () {
         makeAutoObservable(this)
-        EventManager.addEventLinstener(
-            Event.OpenDocument,
-            (param: OpenDocumentParam) => this.handleOpenDocument(param.document), 10)
-    }
-
-    handleOpenDocument (document: Document) {
-        document.directoryInfo.isOpen = true
-        this.openedDocument = document
     }
 
     async createNewDocument () {

@@ -1,7 +1,7 @@
-import { BaseAPI } from '../baseAPI'
-import { APIError } from '../APIError'
-import Document from '../../domain/Document'
-import { UpdateContentDTO } from '../../DTO/ContentDTO'
+import { BaseAPI } from './baseAPI'
+import { APIError } from './APIError'
+import Document from '../domain/Document'
+import { UpdateContentDTO } from '../DTO/ContentDTO'
 
 class ContentAPI extends BaseAPI {
     async updateContent (dto: UpdateContentDTO): Promise<any> {

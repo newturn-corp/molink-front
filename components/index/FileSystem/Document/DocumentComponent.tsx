@@ -57,8 +57,9 @@ export const DocumentComponent: React.FC<{
                   }}
                   draggable={!document.directoryInfo.isChangingName && document.meta.userId === UserManager.userId}
                   onClick={(event) => {
-                      RoutingManager.moveTo(Page.Index, `?id=${document.meta.id}`)
-                      EventManager.issueEvent(Event.OpenDocument, { document: document.directoryInfo.document })
+                      if (!document.directoryInfo.isOpen) {
+                          RoutingManager.moveTo(Page.Index, `?id=${document.meta.id}`)
+                      }
                   }}
                   onDragStart={(event) => handleDragStart(event)}
                   onDragEnd={(event) => FileDragManager.handleDragEnd(ghost)}
