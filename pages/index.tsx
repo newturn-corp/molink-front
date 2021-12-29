@@ -9,6 +9,7 @@ import GlobalManager from '../manager/GlobalManager'
 import FileSystemManager from '../manager/FileSystemManager'
 import RoutingManager, { Page } from '../manager/RoutingManager'
 import DocumentManager from '../manager/DocumentManager'
+import { CollectButton } from '../components/index/CollectButton'
 
 const Index = () => {
     UserManager.updateUserProfile()
@@ -34,6 +35,7 @@ const Index = () => {
             <FileSystem />
             <DrawerWidthController/>
             <ContentComponent/>
+            <CollectButton />
         </div>
         <div className={'drag-ghost-parent'}/>
     </div>

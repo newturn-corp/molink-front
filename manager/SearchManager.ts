@@ -1,12 +1,12 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import UserAPI from '../api/UserAPI'
-import { GetUserRepresentativeDocumentURLDTO, SearchUserDTO } from '../DTO/UserDTO'
+import { GetUserRepresentativeDocumentURLDTO, SearchUserDTO, UserSearchResultDTO } from '../DTO/UserDTO'
 import { RepresentativeDocumentNotExists, UserNotExists } from '../Errors/UserError'
 import NotificationManager, { NOTIFICATION_TYPE } from './NotificationManager'
 import RoutingManager, { Page } from './RoutingManager'
 
 class SearchManager {
-    _searchResults = null
+    _searchResults: UserSearchResultDTO[] = null
     isSearching = false
 
     get searchResults () {

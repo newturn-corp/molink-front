@@ -8,7 +8,8 @@ export enum Page {
     Search = '/search',
     changePasswordRequest = 'change-password-request',
     SignUp = '/signup',
-    SettingProfile = '/setting/profile'
+    SettingProfile = '/setting/profile',
+    SettingFollow = '/setting/follow'
 }
 
 class RoutingManager {

@@ -1,8 +1,8 @@
-import { ThreeDRotationSharp } from '@material-ui/icons'
 import { makeAutoObservable } from 'mobx'
 import React from 'react'
 import UserAPI from '../api/UserAPI'
-import { UpdateUserBiographyDTO, UpdateUserProfileImageDto } from '../DTO/UserDTO'
+import UserSetting from '../domain/UserSetting'
+import { FollowRequestDTO, UpdateUserBiographyDTO, UpdateUserProfileImageDto } from '../DTO/UserDTO'
 import EventManager, { Event } from './EventManager'
 
 class UserManager {
@@ -14,6 +14,7 @@ class UserManager {
     biography: string = ''
     profileImageUrl: string = null
     representativeDocumentId: string | null
+    setting: UserSetting
 
     constructor () {
         makeAutoObservable(this)
@@ -30,9 +31,9 @@ class UserManager {
                 this.representativeDocumentId = dto.representativeDocumentId
                 this.profileImageUrl = dto.profileImageUrl
                 this.biography = dto.biography
-                EventManager.issueEvent(Event.UserProfileInited, {})
-
-                EventManager.issueEvent(Event.UserAuthorization, { result: true })
+                this.setting = await UserAPI.getUserSetting()
+                await EventManager.issueEvent(Event.UserProfileInited, {})
+                await EventManager.issueEvent(Event.UserAuthorization, { result: true })
                 this.isUserAuthorized = true
             } catch (err) {
                 EventManager.issueEvent(Event.UserAuthorization, { result: false })
@@ -56,6 +57,11 @@ class UserManager {
 
     async updateUserBiography () {
         await UserAPI.updateUserBiography(new UpdateUserBiographyDTO(this.biography))
+    }
+
+    async follow (userId: number) {
+        const result = await UserAPI.follow(new FollowRequestDTO(userId))
+        return result.followResult
     }
 }
 export default new UserManager()

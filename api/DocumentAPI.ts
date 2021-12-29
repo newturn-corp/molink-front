@@ -1,7 +1,7 @@
 import { BaseAPI } from './baseAPI'
 import { APIError } from './APIError'
 
-import { CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, GetDocumentDto, SetDocumentIconDTO, SetDocumentIsChildrenOpenDTO, SetDocumentLocationDTO, SetDocumentTitleDTO, SetDocumentVisibilityDTO, UpdateDocumentRepresentativeDTO } from '../DTO/DocumentDto'
+import { CollectDocumentDTO, CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, GetDocumentDto, SearchDocumentLinkResultDTO, SetDocumentIconDTO, SetDocumentIsChildrenOpenDTO, SetDocumentLocationDTO, SetDocumentTitleDTO, SetDocumentVisibilityDTO, UpdateDocumentRepresentativeDTO } from '../DTO/DocumentDto'
 import { DocumentNotExists } from '../Errors/DocumentError'
 import { GetDocumentInitialInfoListDTO } from '../DTO/UserDTO'
 
@@ -59,6 +59,16 @@ class DocumentAPI extends BaseAPI {
 
     async setDocumentRepresentative (dto: UpdateDocumentRepresentativeDTO): Promise<void> {
         const res = await this.put('/documents/representative', dto)
+        if (res.status !== 200) throw new APIError(res)
+    }
+
+    async searchDocumentsLinkList (query: string): Promise<SearchDocumentLinkResultDTO[]> {
+        const res = await this.get(`/documents/search/link?q=${query}`)
+        return res.arr.map(raw => new SearchDocumentLinkResultDTO(raw.id, raw.title, raw.icon, raw.userId))
+    }
+
+    async collectDocument (dto: CollectDocumentDTO): Promise<void> {
+        const res = await this.post('/documents/collect', dto)
         if (res.status !== 200) throw new APIError(res)
     }
 }

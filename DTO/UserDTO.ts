@@ -28,12 +28,14 @@ export class UserSearchResultDTO {
     nickname: string
     profileImageUrl: string | null
     biography: string
+    isFollowing: boolean
 
-    constructor (id: number, nickname: string, profileImageUrl: string | null, biography: string) {
+    constructor (id: number, nickname: string, profileImageUrl: string | null, biography: string, isFollowing: boolean) {
         this.id = id
         this.nickname = nickname
         this.profileImageUrl = profileImageUrl
         this.biography = biography
+        this.isFollowing = isFollowing
     }
 }
 
@@ -90,5 +92,26 @@ export class UpdateUserBiographyDTO {
 
     constructor (biography: string) {
         this.biography = biography
+    }
+}
+
+export class FollowRequestDTO {
+    targetId: number
+
+    constructor (targetId: number) {
+        this.targetId = targetId
+    }
+}
+
+export enum FollowResult {
+    Succeeded = 'succeeded',
+    Requested = 'requested'
+}
+
+export class FollowResponseDTO {
+    followResult: FollowResult
+
+    constructor (followResult: FollowResult) {
+        this.followResult = followResult
     }
 }

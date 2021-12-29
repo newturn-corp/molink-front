@@ -20,20 +20,13 @@ export const SlateLinkElement: React.FC<{
     children,
     element: LinkElement
   }> = ({ attributes, children, element }) => {
-      const selected = useSelected()
       return (
           <a
               {...attributes}
               onClick={() => {
                   RoutingManager.rawMoveTo(element.url)
               }}
-              className={
-                  selected
-                      ? css`
-                box-shadow: 0 0 0 3px #ddd;
-              `
-                      : ''
-              }
+              className='link'
           >
               <InlineChromiumBugfix />
               {children}

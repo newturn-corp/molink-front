@@ -1,12 +1,15 @@
 import { cx, css } from '@emotion/css'
 import { IconButton, SvgIconTypeMap } from '@material-ui/core'
 import { OverridableComponent } from '@material-ui/core/OverridableComponent'
-import { FormatBold, FormatItalic, FormatUnderlined } from '@material-ui/icons'
+import { FormatBold, FormatItalic, FormatUnderlined, Link } from '@material-ui/icons'
 import React, { useRef, PropsWithChildren, Ref, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { Editor, Node, Range, Text, Transforms } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
-
+import HoveringToolbarManager from '../../manager/HoveringToolbarManager'
+import LinkManager from '../../manager/LinkManager'
+import { Portal } from '../utils/Portal'
+import { LinkInput } from './LinkInput'
 interface BaseProps {
     className: string
     [key: string]: unknown
@@ -85,12 +88,6 @@ export const Menu = React.forwardRef(
     )
 )
 
-export const Portal = ({ children }) => {
-    return typeof document === 'object'
-        ? ReactDOM.createPortal(children, document.body)
-        : null
-}
-
 const isFormatActive = (editor, format) => {
     try {
         const [match] = Editor.nodes(editor, {
@@ -99,6 +96,7 @@ const isFormatActive = (editor, format) => {
         })
         return !!match
     } finally {
+        // eslint-disable-next-line no-unsafe-finally
         return false
     }
 }
@@ -131,10 +129,28 @@ const FormatButton: React.FC<{
     )
 }
 
+const LinkButton: React.FC<{
+}> = () => {
+    const editor = useSlate()
+    return (
+        <div
+            className={'link-button'}
+            onClick={event => {
+                event.preventDefault()
+                LinkManager.showLinkInput(editor.selection)
+            }}
+        >
+            <Link/>
+            <span className='text'>링크</span>
+        </div>
+    )
+}
+
 export const HoveringToolbar: React.FC<{
 }> = () => {
     const ref = useRef<HTMLDivElement | null>(null)
     const editor = useSlate()
+    let selectionRect = null
     useEffect(() => {
         const el = ref.current
         const { selection } = editor
@@ -164,13 +180,14 @@ export const HoveringToolbar: React.FC<{
 
         const domSelection = window.getSelection()
         const domRange = domSelection.getRangeAt(0)
-        const rect = domRange.getBoundingClientRect()
+        selectionRect = domRange.getBoundingClientRect()
         el.style.opacity = '1'
-        el.style.top = `${rect.top + window.pageYOffset - el.offsetHeight}px`
-        el.style.left = `${rect.left +
+        el.style.top = `${selectionRect.top + window.pageYOffset - el.offsetHeight}px`
+        el.style.left = `${selectionRect.left +
           window.pageXOffset -
           el.offsetWidth / 2 +
-          rect.width / 2}px`
+          selectionRect.width / 2}px`
+        LinkManager.selectionRect = selectionRect
     })
 
     return (
@@ -182,7 +199,10 @@ export const HoveringToolbar: React.FC<{
                 <FormatButton format="bold" icon={<FormatBold/>} />
                 <FormatButton format="italic" icon={<FormatItalic/>} />
                 <FormatButton format="underlined" icon={<FormatUnderlined/>} />
+                <div className={'divider'}></div>
+                <LinkButton />
             </Menu>
+            <LinkInput />
         </Portal>
     )
 }

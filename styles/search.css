@@ -31,4 +31,12 @@
 .search-page .core .search-result .user-search-result {
   cursor: pointer;
 }
+
+.search-page .core .search-result .follow-button {
+  background: #e2e2e2;
+  padding: 7px;
+  border-radius: 5px;
+  font-size: 15px;
+  line-height: 15px;
+}
 /*# sourceMappingURL=search.css.map */

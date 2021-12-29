@@ -152,3 +152,25 @@ export class UpdateDocumentRepresentativeDTO {
         this.representative = representative
     }
 }
+
+export class SearchDocumentLinkResultDTO {
+    id: string
+    title: string
+    icon: string
+    userId: number
+
+    constructor (id: string, title: string, icon: string, userId: number) {
+        this.id = id
+        this.title = title
+        this.icon = icon
+        this.userId = userId
+    }
+}
+
+export class CollectDocumentDTO {
+    documentId: string
+
+    constructor (documentId: string) {
+        this.documentId = documentId
+    }
+}

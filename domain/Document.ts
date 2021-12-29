@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import DocumentAPI from '../api/DocumentAPI'
-import { CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, SetDocumentVisibilityDTO } from '../DTO/DocumentDto'
+import { CollectDocumentDTO, CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, SetDocumentVisibilityDTO } from '../DTO/DocumentDto'
 import EventManager, { Event } from '../manager/EventManager'
 import DocumentManager from '../manager/DocumentManager'
 import FileSystemManager from '../manager/FileSystemManager'
@@ -114,6 +114,10 @@ export default class Document {
 
     isChildOf (document: Document) {
         return document.directoryInfo.children.filter(doc => doc.equal(this)).length > 0
+    }
+
+    async collect () {
+        await DocumentAPI.collectDocument(new CollectDocumentDTO(this.meta.id))
     }
 
     static async create (parent: Document | null, order: number) {

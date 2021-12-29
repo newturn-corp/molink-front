@@ -6,6 +6,7 @@ import { UserSearchResult } from '../../components/search/UserSearchResult'
 import UserManager from '../../manager/UserManager'
 import RoutingManager, { Page } from '../../manager/RoutingManager'
 import { Input } from 'antd'
+import { SettingButtonList } from '../../components/setting/SettingButtonList'
 
 const SettingProfile = observer(() => {
     UserManager.updateUserProfile()
@@ -26,22 +27,12 @@ const SettingProfile = observer(() => {
         <div className={'index-body'}>
             <div className='core'>
                 <div className='setting-meta'>
-                    <ButtonGroup
-                        orientation="vertical"
-                        className='search-buttons'
-                        aria-label="vertical outlined primary button group"
-                    >
-                        <Button>프로필</Button>
-                        <Button disabled>친구</Button>
-                        <Button disabled>문서</Button>
-                        <Button disabled>구독</Button>
-                        <Button disabled>위키</Button>
-                    </ButtonGroup>
+                    <SettingButtonList/>
                 </div>
                 <div className='setting-list'>
                     <div className='profile'>
                         <div className='profile-image'>
-                            <p className='text'>프로필 이미지</p>
+                            <p className='setting-name'>프로필 이미지</p>
                             <input
                                 accept='image/jpg,impge/png,image/jpeg'
                                 style={{ display: 'none' }}
@@ -58,7 +49,7 @@ const SettingProfile = observer(() => {
                             </div>
                         </div>
                         <div className='biography'>
-                            <p className='text'>한 줄 소개</p>
+                            <p className='setting-name'>한 줄 소개</p>
                             <Input
                                 maxLength={37}
                                 onChange={(e) => {

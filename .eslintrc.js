@@ -30,6 +30,7 @@ module.exports = {
         'react/display-name': 'off'
     },
     globals: {
-        JSX: true
+        JSX: true,
+        NodeJS: true
     }
 }
