@@ -28,9 +28,18 @@ export type BulletedListElement = {
   children: Descendant[]
 }
 
+export enum ImageFloatOption {
+  Left,
+  Center,
+  Right
+}
+
 export type ImageElement = {
   type: 'image'
   url: string
+  width: number
+  height: number
+  floatOption: ImageFloatOption
   children: EmptyText[]
 }
 
@@ -50,12 +59,26 @@ export type ListItemElement = {
   children: CustomText[]
 }
 
+export type LinkElement = { type: 'link'; url: string; children: Descendant[] }
+
 export type CustomElement =
-TextElement | BulletedListElement | ImageElement | MentionElement | TitleElement |ListItemElement
+TextElement |
+BulletedListElement |
+ImageElement |
+MentionElement |
+TitleElement |
+ListItemElement |
+LinkElement
 
-export type FormattedText = { text: string; bold?: true; codehighlight?: true }
+export type FormattedText = {
+  bold?: boolean
+  italic?: boolean
+  code?: boolean
+  underlined?: boolean
+  text: string
+}
 
-export type CustomText = FormattedText | EmptyText
+export type CustomText = FormattedText & EmptyText
 
 declare module 'slate' {
     interface CustomTypes {

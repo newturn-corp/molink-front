@@ -2,13 +2,11 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import UserManager from '../../../manager/UserManager'
 import { Button } from '@material-ui/core'
-import { useRouter } from 'next/router'
 import GlobalManager from '../../../manager/GlobalManager'
 import RoutingManager, { Page } from '../../../manager/RoutingManager'
 
 export const LoginButton: React.FC<{
   }> = observer(() => {
-      const router = useRouter()
       if (UserManager.isUserAuthorized) {
           return <></>
       }

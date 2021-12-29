@@ -6,41 +6,23 @@ import { Header } from '../components/global/Header/Header'
 import UserManager from '../manager/UserManager'
 import { ContentComponent } from '../components/home/ContentComponent'
 import GlobalManager from '../manager/GlobalManager'
-import { useRouter } from 'next/router'
 import FileSystemManager from '../manager/FileSystemManager'
-import EventManager, { Event } from '../manager/EventManager'
-import DocumentManager from '../manager/DocumentManager'
 import RoutingManager, { Page } from '../manager/RoutingManager'
-
-const openDocument = (documentId: string) => {
-    const loadedDocument = DocumentManager.documentMap.get(documentId)
-    if (loadedDocument) {
-        EventManager.issueEvent(Event.OpenDocument, {
-            document: loadedDocument
-        })
-    } else {
-        ContentManager.tryOpenDocumentByDocumentId(documentId)
-    }
-}
-
-const initDocumentMap = async () => {
-    if (DocumentManager.isDocumentMapInited) {
-        return
-    }
-    await DocumentManager.init()
-}
+import DocumentManager from '../manager/DocumentManager'
+import { CollectButton } from '../components/index/CollectButton'
 
 const Index = () => {
-    const router = useRouter()
     UserManager.updateUserProfile()
-        .then(initDocumentMap)
         .then(() => {
             const documentId = new URLSearchParams(GlobalManager.window.location.search).get('id')
             if (documentId) {
-                openDocument(documentId)
+                ContentManager.tryOpenDocumentByDocumentId(documentId)
             } else {
                 if (!UserManager.isUserAuthorized) {
                     RoutingManager.moveTo(Page.SignIn)
+                } else {
+                    DocumentManager.init(UserManager.userId)
+                    ContentManager.currentContentUserId = UserManager.userId
                 }
             }
         })
@@ -53,6 +35,7 @@ const Index = () => {
             <FileSystem />
             <DrawerWidthController/>
             <ContentComponent/>
+            <CollectButton />
         </div>
         <div className={'drag-ghost-parent'}/>
     </div>

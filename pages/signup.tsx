@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Backdrop, Button, CircularProgress, TextField } from '@material-ui/core'
-import AuthManager, { EmailState, NicknameState, PasswordState, SignupError } from '../manager/AuthManager'
+import AuthManager, { EmailState, NicknameState, PasswordState } from '../manager/AuthManager'
 import { observer } from 'mobx-react-lite'
-import { useRouter } from 'next/router'
+import RoutingManager, { Page } from '../manager/RoutingManager'
 
 const getEmailHelperText = (emailState: EmailState) => {
     if (emailState === EmailState.DEFAULT) {
@@ -29,7 +29,6 @@ const getPasswordHelperText = (passwordState: PasswordState) => {
 }
 
 const Signup = observer(() => {
-    const router = useRouter()
     const [loading, setLoading] = useState(false)
     AuthManager.emailState = EmailState.DEFAULT
     AuthManager.passwordState = PasswordState.DEFAULT
@@ -118,7 +117,7 @@ const Signup = observer(() => {
                 const result = await AuthManager.signup()
                 setLoading(false)
                 if (result.success) {
-                    router.replace('/signin')
+                    RoutingManager.moveTo(Page.SignIn)
                 }
             }}
         >

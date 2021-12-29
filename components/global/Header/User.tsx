@@ -6,11 +6,14 @@ import AuthManager from '../../../manager/AuthManager'
 import { SupportModal } from '../SupportModal'
 import SupportManager from '../../../manager/SupportManager'
 import SaveManager, { ContentSaveStatus } from '../../../manager/SaveManager'
+import RoutingManager, { Page } from '../../../manager/RoutingManager'
 
 export const User: React.FC<{
   }> = observer(() => {
       const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
       const open = Boolean(anchorEl)
+      const profileImageSrc = UserManager.profileImageUrl ? UserManager.profileImageUrl : undefined
+      const profileInnerText = UserManager.profileImageUrl ? undefined : UserManager.nickname[0]
 
       if (!UserManager.isUserAuthorized) {
           return <></>
@@ -28,13 +31,15 @@ export const User: React.FC<{
           case 'support':
               SupportManager.showSupportModal = true
               break
+          case 'setting':
+              RoutingManager.moveTo(Page.SettingProfile)
           }
           setAnchorEl(null)
       }
 
       return <div className='user-container'>
-          <Badge className={SaveManager.contentSaveStatus === ContentSaveStatus.SaveFailed ? 'disconnected' : 'connected' } variant="dot" overlap='circle'>
-              <Avatar onClick={(event) => handleClick(event)}>{UserManager.nickname[0]}</Avatar>
+          <Badge className={SaveManager.contentSaveStatus === ContentSaveStatus.SaveFailed ? 'disconnected' : 'connected' } variant="dot" overlap={'circular'}>
+              <Avatar onClick={(event) => handleClick(event)} sizes='40' src={profileImageSrc}>{profileInnerText}</Avatar>
           </Badge>
           <Menu
               id="long-menu"

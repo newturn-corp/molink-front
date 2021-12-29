@@ -16,13 +16,44 @@ body {
     color: rgb(55, 53, 47);
 }
 .header {
+    position: fixed;
     background-color: #f8f5ec;;
     border-bottom: 1px solid #dfdfdf;
     width: 100%;
     height: 60px;
-    z-index: 25000;
+    z-index: 1200;
     display: flex;
     flex-direction: row-reverse;
+
+
+    .logo {
+        height: 50px;
+        width: 50px;
+        margin: 5px;
+        margin-left: 10px;
+        cursor: pointer;
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    // 60
+
+    .search {
+        margin: 14px;
+        height: 32px;
+        width: 150px;
+        margin-left: 10px;
+        background-color: rgb(219, 255, 243);
+        .ant-input-wrapper {
+            height: 100%;
+            width: 100%;
+            .ant-input {
+                height: 100%;
+            }
+        }
+    }
+    // 178
 
     .MuiBadge-badge {
         width: 10px;
@@ -44,12 +75,17 @@ body {
     }
 
     .logo {
-        height: 40px;
-        width: 40px;
-        margin: 10px;
+
     }
+
     .navigator {
-        width: fit-content
+        width: calc(100% - 438px)
+    }
+
+    .header-right {
+        width: 200px;
+        display: flex;
+        flex-direction: row-reverse;
     }
     .visibility-container {
         height: 40px;

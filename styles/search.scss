@@ -1,0 +1,35 @@
+.search-page {
+    .core {
+        margin: 0 auto;
+        margin-top: 150px;
+        display: flex;
+        .search-meta {
+            width: 200px;
+            height: 100%;
+            margin-right: 25px;
+            .search-buttons {
+                width: 200px;
+                margin-top: 30px;
+                .MuiButton-label {
+                    justify-content: left;
+                }
+            }
+        }
+
+        .search-result {
+            width: 700px;
+            height: 100%;
+
+            .user-search-result {
+                cursor: pointer;
+            }
+            .follow-button {
+                background: rgb(226, 226, 226);
+                padding: 7px;
+                border-radius: 5px;
+                font-size: 15px;
+                line-height: 15px;
+            }
+        }
+    }
+}

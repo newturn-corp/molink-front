@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
 import { Backdrop, Button, CircularProgress, TextField } from '@material-ui/core'
-import { useRouter } from 'next/router'
 import AuthManager, { EmailState, PasswordState } from '../manager/AuthManager'
 import { observer } from 'mobx-react'
+import RoutingManager, { Page } from '../manager/RoutingManager'
 
 const getEmailHelperText = (emailState: EmailState) => {
     if (emailState === EmailState.DEFAULT) {
@@ -20,7 +20,6 @@ const getEmailHelperText = (emailState: EmailState) => {
 }
 
 const SignIn = observer(() => {
-    const router = useRouter()
     const [loading, setLoading] = useState(false)
     return <div className='auth-page sign-in-page'>
         <Backdrop open={loading} onClick={() => setLoading(false)}>
@@ -61,7 +60,7 @@ const SignIn = observer(() => {
             />
         </div>
         <div className='reset-password-container'>
-            <Button className={'reset-password'} onClick={() => router.replace('/change-password-request')}>비밀번호를 잊으셨나요?</Button>
+            <Button className={'reset-password'} onClick={() => RoutingManager.moveTo(Page.changePasswordRequest)}>비밀번호를 잊으셨나요?</Button>
         </div>
         <Button
             className={'login-button'}
@@ -73,11 +72,10 @@ const SignIn = observer(() => {
                 setLoading(false)
                 if (result.success) {
                     const documentBeforeLogin = localStorage.getItem('document-before-login')
-                    console.log(documentBeforeLogin)
                     if (documentBeforeLogin) {
-                        router.replace('/?id=' + documentBeforeLogin)
+                        RoutingManager.moveTo(Page.Index, `?id=${documentBeforeLogin}`)
                     } else {
-                        router.replace('/')
+                        RoutingManager.moveTo(Page.Index)
                     }
                 }
             }}>
@@ -87,7 +85,7 @@ const SignIn = observer(() => {
             className={'sign-up-button'}
             color="primary"
             variant="contained"
-            onClick={() => router.replace('/signup')}>
+            onClick={() => RoutingManager.moveTo(Page.SignUp)}>
         계정 생성
         </Button>
     </div>

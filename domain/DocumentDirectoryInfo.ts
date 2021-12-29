@@ -1,15 +1,11 @@
 import { makeAutoObservable } from 'mobx'
-import DocumentAPI from '../api/renew/DocumentAPI'
+import DocumentAPI from '../api/DocumentAPI'
 import { DocumentInitialInfoDTO, SetDocumentIsChildrenOpenDTO, SetDocumentLocationDTO } from '../DTO/DocumentDto'
+import DialogManager from '../manager/DialogManager'
 import FileSystemManager from '../manager/FileSystemManager'
+import UserManager from '../manager/UserManager'
 import Document from './Document'
 import DocumentMeta from './DocumentMeta'
-
-export enum DocumentVisibility {
-    Public = 'public',
-    Private = 'private',
-    OnlyFriend = 'only_friend'
-}
 
 export default class DocumentDirectoryInfo {
     document: Document
@@ -50,6 +46,19 @@ export default class DocumentDirectoryInfo {
     }
 
     async setDocumentLocation (parent: Document | null, order: number): Promise<void> {
+        // 만약 새로 추가된 부모가 이 문서보다 공개범위가 좁은 경우
+        if (parent && parent.meta.visibility < this.meta.visibility) {
+            const index = await DialogManager.openDialog('공개 범위 주의', `새로운 상위 문서의 공개 범위가 현재 공개 범위인 '${Document.visibilityToText(this.meta.visibility)}'보다 좁습니다.`, ['상위 문서의 공개 범위 넓히기', '이 문서와 하위 문서의 공개 범위 좁히기'])
+            if (index === -1) {
+                return
+            }
+            if (index === 0) {
+                await parent.changeDocumentVisibility(this.meta.visibility, true)
+            }
+            if (index === 1) {
+                await this.document.changeDocumentVisibility(parent.meta.visibility, true)
+            }
+        }
         // 기존 부모에게서 삭제
         if (this.parent === null) {
             FileSystemManager.documents.filter(info => info.directoryInfo.order > this.order).forEach(info => { info.directoryInfo.order -= 1 })
@@ -72,12 +81,17 @@ export default class DocumentDirectoryInfo {
         } else {
             this.parent.directoryInfo.children.filter(info => info.directoryInfo.order >= this.order).forEach(info => { info.directoryInfo.order += 1 })
             this.parent.directoryInfo.children.splice(this.order, 0, this.document)
+            if (this.isOpen) {
+                this.parent.directoryInfo.isChildrenOpen = true
+            }
         }
         await DocumentAPI.setDocumentLocation(new SetDocumentLocationDTO(this.meta.id, parentIdBefore, parentId, orderBefore, order))
     }
 
     async setIsChildrenOpen (isChildrenOpen: boolean) {
         this.isChildrenOpen = isChildrenOpen
-        await DocumentAPI.setDocumentIsChildrenOpen(new SetDocumentIsChildrenOpenDTO(this.meta.id, this.isChildrenOpen))
+        if (UserManager.userId === this.meta.userId) {
+            await DocumentAPI.setDocumentIsChildrenOpen(new SetDocumentIsChildrenOpenDTO(this.meta.id, this.isChildrenOpen))
+        }
     }
 }

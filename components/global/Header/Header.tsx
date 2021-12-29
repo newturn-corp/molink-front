@@ -3,14 +3,22 @@ import { observer } from 'mobx-react'
 import { Visibility } from './Visibility'
 import { LoginButton } from './LoginButton'
 import { User } from './User'
+import { SearchComponent } from './SearchComponent'
+import RoutingManager, { Page } from '../../../manager/RoutingManager'
 
 export const Header: React.FC<{
   }> = observer(() => {
       return <div className='header'>
-          <User/>
-          <Visibility />
-          <LoginButton />
+          <div className='header-right'>
+              <User/>
+              <Visibility />
+              <LoginButton />
+          </div>
           <div className='navigator'>
+          </div>
+          <SearchComponent />
+          <div className='logo'>
+              <img src="/header-logo.png" alt="" onClick={() => RoutingManager.moveTo(Page.Index)} />
           </div>
       </div>
   })

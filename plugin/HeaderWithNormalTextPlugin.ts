@@ -19,6 +19,15 @@ export const HeadNextNormalTextPlugin = (editor: Editor) => {
         const { path, position, properties } = op
 
         const node: any = Node.get(editor, path)
+        // if (node.italic) {
+        //     delete node.italic
+        // }
+        // if (node.bold) {
+        //     delete node.bold
+        // }
+        // if (node.underlined) {
+        //     delete node.underlined
+        // }
 
         if (![TextCategory.Head1, TextCategory.Head2, TextCategory.Head3].includes(node.category)) {
             return transform(editor, op)
@@ -78,10 +87,5 @@ export const HeadNextNormalTextPlugin = (editor: Editor) => {
             }
         }
     }
-
-    // editor.apply = (operation) => {
-    //     console.log(operation)
-    //     return apply(operation)
-    // }
     return editor
 }

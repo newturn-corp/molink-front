@@ -5,17 +5,24 @@ class DialogManager {
 
     title: string
     description: string
-    onClose: Function
+    buttenTexts: string[] =[]
+    onClose: (index: number) => void
 
     constructor () {
         makeAutoObservable(this)
     }
 
-    openDialog (title: string, description: string, onClose: Function) {
+    openDialog (title: string, description: string, buttonTexts: string[]) {
         this.title = title
         this.description = description
-        this.onClose = onClose
+        this.buttenTexts = buttonTexts
         this.showDialog = true
+        return new Promise<number>(resolve => {
+            this.onClose = (index) => {
+                this.showDialog = false
+                resolve(index)
+            }
+        })
     }
 }
 export default new DialogManager()

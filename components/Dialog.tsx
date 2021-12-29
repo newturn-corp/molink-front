@@ -5,14 +5,9 @@ import DialogManager from '../manager/DialogManager'
 
 export const DialogComponent: React.FC<{
   }> = observer(() => {
-      const handleClose = () => {
-          DialogManager.showDialog = false
-          DialogManager.onClose()
-      }
-
       return <Dialog
           open={DialogManager.showDialog}
-          onClose={handleClose}
+          onClose={() => DialogManager.onClose(-1)}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
       >
@@ -23,9 +18,12 @@ export const DialogComponent: React.FC<{
               </DialogContentText>
           </DialogContent>
           <DialogActions>
-              <Button onClick={handleClose} color="primary">
-          이전
-              </Button>
+              {
+                  DialogManager.buttenTexts.map((text, index) =>
+                      <Button key={Math.random()} onClick={() => DialogManager.onClose(index)} color="primary">
+                          {text}
+                      </Button>)
+              }
           </DialogActions>
       </Dialog>
   })
