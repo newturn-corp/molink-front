@@ -15,7 +15,8 @@ export enum Event {
     DocumentMapInited,
     InitGlobalVariable,
     MoveToSignInPage,
-    MoveToAnotherPage
+    MoveToAnotherPage,
+    UnloadPage
 }
 
 type EventListener = (param: EventParam) => void
@@ -77,7 +78,8 @@ class EventManager {
             Event.DocumentMapInited,
             Event.InitGlobalVariable,
             Event.MoveToSignInPage,
-            Event.MoveToAnotherPage].forEach(event => this._eventListenerMap.set(event, []))
+            Event.MoveToAnotherPage,
+            Event.UnloadPage].forEach(event => this._eventListenerMap.set(event, []))
         this.initGlobalVariableListener.push(() => this.addGlobalEventListener())
     }
 

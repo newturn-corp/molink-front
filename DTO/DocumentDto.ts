@@ -9,8 +9,10 @@ export class DocumentInitialInfoDTO {
     parentId: string | null
     order: number
     isChildrenOpen: boolean
+    representative: boolean
+    visibility: DocumentVisibility
 
-    constructor (id: string, userId: number, title: string, icon: string, parentId: string | null, order: number, isChildrenOpen: boolean) {
+    constructor (id: string, userId: number, title: string, icon: string, parentId: string | null, order: number, isChildrenOpen: boolean, representative: boolean, visibility: DocumentVisibility) {
         this.id = id
         this.userId = userId
         this.title = title
@@ -18,6 +20,8 @@ export class DocumentInitialInfoDTO {
         this.parentId = parentId
         this.order = order
         this.isChildrenOpen = isChildrenOpen
+        this.representative = representative
+        this.visibility = visibility
     }
 }
 
@@ -54,14 +58,18 @@ export class CreateDocumentDTO {
     parentId: string | null
     visibility: DocumentVisibility
     content: any
+    representative: false
+    isChildrenOpen: false
 
-    constructor (title: string, icon: string, parentId: string | null, order: number, visibility: DocumentVisibility, content: any) {
+    constructor (title: string, icon: string, parentId: string | null, order: number, visibility: DocumentVisibility, content: any, representative: false, isChildrenOpen: false) {
         this.title = title
         this.icon = icon
         this.parentId = parentId
         this.order = order
         this.visibility = visibility
         this.content = content
+        this.representative = representative
+        this.isChildrenOpen = isChildrenOpen
     }
 }
 
@@ -132,5 +140,37 @@ export class SetDocumentIconDTO {
     constructor (id: string, icon: string) {
         this.id = id
         this.icon = icon
+    }
+}
+
+export class UpdateDocumentRepresentativeDTO {
+    id: string
+    representative: boolean
+
+    constructor (id: string, representative: boolean) {
+        this.id = id
+        this.representative = representative
+    }
+}
+
+export class SearchDocumentLinkResultDTO {
+    id: string
+    title: string
+    icon: string
+    userId: number
+
+    constructor (id: string, title: string, icon: string, userId: number) {
+        this.id = id
+        this.title = title
+        this.icon = icon
+        this.userId = userId
+    }
+}
+
+export class CollectDocumentDTO {
+    documentId: string
+
+    constructor (documentId: string) {
+        this.documentId = documentId
     }
 }

@@ -1,9 +1,10 @@
 import { makeAutoObservable } from 'mobx'
-import ContentAPI from '../api/renew/ContentAPI'
-import DocumentAPI from '../api/renew/DocumentAPI'
+import ContentAPI from '../api/ContentAPI'
+import DocumentAPI from '../api/DocumentAPI'
 import { UpdateContentDTO } from '../DTO/ContentDTO'
 import { SetDocumentTitleDTO } from '../DTO/DocumentDto'
 import ContentManager from './ContentManager'
+import EventManager, { Event } from './EventManager'
 
 export enum ContentSaveStatus {
     Saved,
@@ -20,6 +21,16 @@ class SaveManager {
 
     constructor () {
         makeAutoObservable(this)
+        EventManager.addEventLinstener(Event.UnloadPage, async () => {
+            if (ContentManager.openedDocument && ContentManager.openedDocument.authority.editable) {
+                await this.saveContent(true, false)
+            }
+        }, 1)
+        EventManager.addEventLinstener(Event.MoveToAnotherPage, async () => {
+            if (ContentManager.openedDocument && ContentManager.openedDocument.authority.editable) {
+                await this.saveContent(true, false)
+            }
+        }, 1)
     }
 
     async saveContent (force: boolean = false, isAutoSaving: boolean = false) {

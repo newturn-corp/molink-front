@@ -467,7 +467,6 @@ class MentionManager {
 
     onKeyDown (event: React.KeyboardEvent, editor: Editor) {
         if (this.target) {
-            console.log(event.key)
             switch (event.key) {
             case 'ArrowDown':
                 event.preventDefault()

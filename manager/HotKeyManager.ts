@@ -1,5 +1,5 @@
 import { KeyboardEvent } from 'react'
-import { BaseEditor } from 'slate'
+import { BaseEditor, Range, Transforms } from 'slate'
 import { HistoryEditor } from 'slate-history'
 import { ReactEditor } from 'slate-react'
 import SaveManager from './SaveManager'
@@ -21,6 +21,13 @@ class HotKeyManager {
         case 'shift+Enter':
             e.preventDefault()
             editor.insertText('\n')
+            // const endPoint = Range.end(editor.selection)
+            // Transforms.setSelection(editor, {
+            //     anchor: endPoint,
+            //     focus: endPoint
+            // })
+            // editor.insertBreak()
+            // Transforms.move(editor, { distance: 1, unit: 'character' })
             break
         // case 'Enter':
         //     if (editor.selection && editor.children[editor.selection.anchor.path[0]].type === 'code') {

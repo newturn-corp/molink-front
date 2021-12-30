@@ -1,0 +1,77 @@
+.setting-page {
+    height: 100%;
+    .core {
+        margin: 0 auto;
+        margin-top: 150px;
+        display: flex;
+        .setting-meta {
+            width: 200px;
+            height: 100%;
+            .search-buttons {
+                width: 200px;
+                .MuiButton-label {
+                    justify-content: left;
+                }
+            }
+            .selected-setting-button {
+                background-color: rgb(231, 231, 231);
+            }
+        }
+
+        .setting-list {
+            width: 600px;
+            height: 100%;
+            margin-left: 25px;
+            .setting-name {
+                margin-bottom: 0px;
+                font-size: 20px;
+                font-weight: 600;
+            }
+            .MuiCheckbox-colorSecondary.Mui-checked {
+                color: #37352f;
+            }
+            
+            .profile {
+                // display: flex;
+                .profile-image {
+                    position: relative;
+                    margin: 0px;
+                    margin-bottom: 25px;
+                    .image {
+                        width: 200px;
+                        height: 200px;
+                        font-size: 100px;
+                        cursor: pointer;
+                    }
+                    .edit {
+                        position: absolute;
+                        display: inline;
+                        font-size: 14px;
+                        background-color: rgba(55, 53, 47, 0.7);
+                        color: rgb(241, 241, 241);
+                        padding: 4px;
+                        bottom: 30px;
+                        border-radius: 4px;
+                        width: 120px;
+                        text-align: center;
+                        left: 40px;
+                        margin: 0 auto;
+                        cursor: pointer;
+                        pointer-events: none;
+                    }
+                }
+                .biography {
+                    margin-bottom: 25px;
+                    .ant-input-textarea {
+                        height: 30px;
+                    }
+                }
+            }
+
+
+            .user-search-result {
+                cursor: pointer;
+            }
+        }
+    }
+}

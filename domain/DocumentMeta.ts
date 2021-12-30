@@ -1,11 +1,13 @@
 import { makeAutoObservable } from 'mobx'
-import DocumentAPI from '../api/renew/DocumentAPI'
-import { DocumentInitialInfoDTO, SetDocumentIconDTO, SetDocumentTitleDTO } from '../DTO/DocumentDto'
+import DocumentAPI from '../api/DocumentAPI'
+import { DocumentInitialInfoDTO, SetDocumentIconDTO, SetDocumentTitleDTO, UpdateDocumentRepresentativeDTO } from '../DTO/DocumentDto'
+import DocumentManager from '../manager/DocumentManager'
+import UserManager from '../manager/UserManager'
 
 export enum DocumentVisibility {
-    Public = 'public',
-    Private = 'private',
-    OnlyFriend = 'only_friend'
+    Private = 0,
+    OnlyFriend = 1,
+    Public = 2
 }
 
 export default class DocumentMeta {
@@ -14,6 +16,7 @@ export default class DocumentMeta {
     title: string
     icon: string
     visibility: DocumentVisibility = DocumentVisibility.Private
+    representative: boolean = false
 
     constructor (dto: DocumentInitialInfoDTO) {
         // makeAutoObservable(this)
@@ -21,6 +24,8 @@ export default class DocumentMeta {
         this.userId = dto.userId
         this.title = dto.title
         this.icon = dto.icon
+        this.representative = dto.representative
+        this.visibility = dto.visibility
         makeAutoObservable(this)
     }
 
@@ -32,5 +37,14 @@ export default class DocumentMeta {
     async setDocumentIcon (icon: string) {
         this.icon = icon
         await DocumentAPI.setDocumentIcon(new SetDocumentIconDTO(this.id, icon))
+    }
+
+    async setRepresentative (representative: boolean) {
+        this.representative = representative
+        if (representative && UserManager.representativeDocumentId) {
+            DocumentManager.documentMap.get(UserManager.representativeDocumentId).meta.representative = false
+            UserManager.representativeDocumentId = this.id
+        }
+        await DocumentAPI.setDocumentRepresentative(new UpdateDocumentRepresentativeDTO(this.id, representative))
     }
 }

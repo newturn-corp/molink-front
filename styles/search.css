@@ -1,0 +1,42 @@
+.search-page .core {
+  margin: 0 auto;
+  margin-top: 150px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.search-page .core .search-meta {
+  width: 200px;
+  height: 100%;
+  margin-right: 25px;
+}
+
+.search-page .core .search-meta .search-buttons {
+  width: 200px;
+  margin-top: 30px;
+}
+
+.search-page .core .search-meta .search-buttons .MuiButton-label {
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+}
+
+.search-page .core .search-result {
+  width: 700px;
+  height: 100%;
+}
+
+.search-page .core .search-result .user-search-result {
+  cursor: pointer;
+}
+
+.search-page .core .search-result .follow-button {
+  background: #e2e2e2;
+  padding: 7px;
+  border-radius: 5px;
+  font-size: 15px;
+  line-height: 15px;
+}
+/*# sourceMappingURL=search.css.map */

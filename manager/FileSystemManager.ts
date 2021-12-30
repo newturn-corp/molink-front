@@ -2,9 +2,10 @@ import React from 'react'
 import { makeAutoObservable, toJS } from 'mobx'
 import Document from '../domain/Document'
 import EventManager, { Event, OpenDocumentParam } from './EventManager'
-import Router from 'next/router'
 import ContentManager from './ContentManager'
-import { Editor } from 'slate'
+import { DocumentVisibility } from '../domain/DocumentMeta'
+import UserManager from './UserManager'
+import RoutingManager, { Page } from './RoutingManager'
 
 export enum DirectoryObjectType {
     Drawer,
@@ -62,14 +63,6 @@ class FileSystemManager {
 
     constructor () {
         makeAutoObservable(this)
-        EventManager.addEventLinstener(
-            Event.OpenDocument,
-            (param: OpenDocumentParam) => this.handleOpenDocument(param.document), 10)
-    }
-
-    handleOpenDocument (document: Document) {
-        document.directoryInfo.isOpen = true
-        this.openedDocument = document
     }
 
     async createNewDocument () {
@@ -79,7 +72,7 @@ class FileSystemManager {
         this.selectedDocument = document
         this.openContextMenu = false
         document.directoryInfo.isChangingName = true
-        Router.push('http://localhost:3000?id=' + document.meta.id)
+        RoutingManager.moveTo(Page.Index, `?id=${document.meta.id}`)
         await ContentManager.tryOpenDocumentByDocumentId(document.meta.id)
     }
 
@@ -95,17 +88,32 @@ class FileSystemManager {
         this.openContextMenu = false
     }
 
+    setDocumentRepresentative (representative: boolean) {
+        this._selectedDocument.meta.setRepresentative(representative)
+        this.selectedDocument = null
+        this.openContextMenu = false
+    }
+
     setAvailControlOptionsByDocument (document: Document | null) {
         this.selectedDocument = document
         this._availControlOptions = []
         this._availControlOptions.push({ name: document ? '하위 문서 생성' : '문서 생성', callback: () => this.createNewDocument() })
         if (document) {
+            if (document.meta.representative) {
+                this._availControlOptions.push({ name: '대표 문서 해제', callback: () => this.setDocumentRepresentative(false) })
+            }
+            if (!document.meta.representative && document.meta.visibility === DocumentVisibility.Public) {
+                this._availControlOptions.push({ name: '대표 문서로 설정', callback: () => this.setDocumentRepresentative(true) })
+            }
             this._availControlOptions.push({ name: '이름 변경', callback: () => this.changeDocumentName() })
             this._availControlOptions.push({ name: '문서 삭제', callback: () => this.deleteDocument() })
         }
     }
 
     handleRightClick (event: React.MouseEvent<HTMLElement, MouseEvent>, document: Document | null) {
+        if (UserManager.userId !== ContentManager.currentContentUserId) {
+            return
+        }
         event.preventDefault()
         event.stopPropagation()
         this.setAvailControlOptionsByDocument(document)

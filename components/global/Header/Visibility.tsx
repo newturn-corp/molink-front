@@ -34,12 +34,11 @@ export const Visibility: React.FC<{
       }
 
       const handleClose = (key: DocumentVisibility) => {
-          if (key !== ContentManager.openedDocument.meta.visibility) {
+          if (key !== null) {
               ContentManager.openedDocument.changeDocumentVisibility(key)
           }
           setAnchorEl(null)
       }
-
       return <div className='visibility-container'>
           <IconButton
               aria-label="more"
@@ -65,8 +64,8 @@ export const Visibility: React.FC<{
               <MenuItem key={'public'} onClick={(event) => handleClose(DocumentVisibility.Public)}>
                   {'전체 공개'}
               </MenuItem>
-              <MenuItem key={'only_friend'} onClick={(event) => handleClose(DocumentVisibility.OnlyFriend)}>
-                  {'친구만'}
+              <MenuItem key={'only_follower'} onClick={(event) => handleClose(DocumentVisibility.OnlyFriend)}>
+                  {'팔로워만'}
               </MenuItem>
               <MenuItem key={'private'} onClick={(event) => handleClose(DocumentVisibility.Private)}>
                   {'비공개'}
