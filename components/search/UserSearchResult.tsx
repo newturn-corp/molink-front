@@ -18,7 +18,6 @@ export const UserSearchResult: React.FC<{
 
     const handleFollowButtonClick = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation()
-        console.log(result)
         setFollowResult(await UserManager.follow(result.id))
     }
 
