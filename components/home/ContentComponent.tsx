@@ -11,5 +11,6 @@ export const ContentComponent: React.FC<{
           <ContentForEmptyDocument />
           <ContentHeaderIcon/>
           <PureEditor/>
+          <div className='content-footer'></div>
       </div>
   })
