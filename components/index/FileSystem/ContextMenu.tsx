@@ -1,3 +1,4 @@
+import { Portal } from '@material-ui/core'
 import { reaction } from 'mobx'
 import { observer } from 'mobx-react'
 import React from 'react'
@@ -12,14 +13,16 @@ export const DrawerContextMenu: React.FC = observer(() => {
         root.style.left = `${clickX + 5}px`
         root.style.top = `${clickY + 5}px`
     })
-    return <div ref={ref => { root = ref }} className="contextMenu" style={{
-        visibility: FileSystemManager.openContextMenu ? 'visible' : 'hidden'
-    }}>
-        {
-            FileSystemManager.availControlOptions.map(option =>
-                <div onClick={() => option.callback()} key={Math.random()} className="contextMenu--option">
-                    {option.name}
-                </div>)
-        }
-    </div>
+    return <Portal container={globalThis.document.body}>
+        <div ref={ref => { root = ref }} className="contextMenu" style={{
+            visibility: FileSystemManager.openContextMenu ? 'visible' : 'hidden'
+        }}>
+            {
+                FileSystemManager.availControlOptions.map(option =>
+                    <div onClick={() => option.callback()} key={Math.random()} className="contextMenu--option">
+                        {option.name}
+                    </div>)
+            }
+        </div>
+    </Portal>
 })
