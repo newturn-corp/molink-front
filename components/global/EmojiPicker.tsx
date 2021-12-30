@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic'
 import { IEmojiPickerProps, IEmojiData } from 'emoji-picker-react'
-import '../../utils/prism'
 import React from 'react'
 const EmojiPickerNoSSRWrapper = dynamic<IEmojiPickerProps>(
     () => import('emoji-picker-react'),

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 
 import { Backdrop, Button, CircularProgress, TextField } from '@material-ui/core'
-import AuthManager, { EmailState, PasswordState } from '../manager/AuthManager'
+import AuthManager, { EmailState, PasswordState } from '../../manager/AuthManager'
 import { observer } from 'mobx-react-lite'
-import RoutingManager, { Page } from '../manager/RoutingManager'
+import RoutingManager, { Page } from '../../manager/RoutingManager'
+import { AuthLogo } from '../../components/auth/logo'
 
 const getEmailHelperText = (emailState: EmailState) => {
     if (emailState === EmailState.DEFAULT) {
@@ -27,7 +28,7 @@ const ChangePasswordRequest = observer(() => {
         <Backdrop open={loading} onClick={() => setLoading(false)}>
             <CircularProgress color="inherit" />
         </Backdrop>
-        <img className='logo' src='./logo-black.png' alt='logo'/>
+        <AuthLogo />
         <p className='title'>비밀번호 변경</p>
         <p className='sub-title' style={{ wordBreak: 'break-all', wordWrap: 'break-word' }}>이 이메일 주소로 비밀번호를 변경할 수 있는 링크를 보냅니다.</p>
         <div className='auth-page-input'>

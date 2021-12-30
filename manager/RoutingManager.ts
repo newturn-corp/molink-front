@@ -4,10 +4,10 @@ import GlobalManager from './GlobalManager'
 
 export enum Page {
     Index = '/',
-    SignIn = '/signin',
+    SignIn = '/auth/signin',
     Search = '/search',
-    changePasswordRequest = 'change-password-request',
-    SignUp = '/signup',
+    changePasswordRequest = '/auth/change-password-request',
+    SignUp = '/auth/signup',
     SettingProfile = '/setting/profile',
     SettingFollow = '/setting/follow'
 }

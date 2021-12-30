@@ -1,7 +1,8 @@
 import { Backdrop, Button, CircularProgress, TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import AuthManager, { PasswordState } from '../manager/AuthManager'
-import RoutingManager, { Page } from '../manager/RoutingManager'
+import { AuthLogo } from '../../components/auth/logo'
+import AuthManager, { PasswordState } from '../../manager/AuthManager'
+import RoutingManager, { Page } from '../../manager/RoutingManager'
 
 const getPasswordHelperText = (passwordState: PasswordState) => {
     if (passwordState === PasswordState.DEFAULT) {
@@ -26,7 +27,7 @@ const ChangePassword = () => {
         <Backdrop open={loading} onClick={() => setLoading(false)}>
             <CircularProgress color="inherit" />
         </Backdrop>
-        <img className='logo' src='./logo-black.png' alt='logo'/>
+        <AuthLogo />
         <p className='title'>비밀번호 변경</p>
         <div className='auth-page-input'>
             <TextField

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 
 import { Backdrop, Button, CircularProgress, TextField } from '@material-ui/core'
-import AuthManager, { EmailState, PasswordState } from '../manager/AuthManager'
+import AuthManager, { EmailState, PasswordState } from '../../manager/AuthManager'
 import { observer } from 'mobx-react'
-import RoutingManager, { Page } from '../manager/RoutingManager'
+import RoutingManager, { Page } from '../../manager/RoutingManager'
+import { AuthLogo } from '../../components/auth/logo'
 
 const getEmailHelperText = (emailState: EmailState) => {
     if (emailState === EmailState.DEFAULT) {
@@ -25,7 +26,8 @@ const SignIn = observer(() => {
         <Backdrop open={loading} onClick={() => setLoading(false)}>
             <CircularProgress color="inherit" />
         </Backdrop>
-        <img className='logo' src='./logo-black.png' alt='logo'/>
+        <AuthLogo />
+        <p className='title'>로그인</p>
         <div className='auth-page-input'>
             <TextField
                 id="standard-email"
