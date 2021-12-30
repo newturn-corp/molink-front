@@ -14,7 +14,7 @@ import { CollectButton } from '../components/index/CollectButton'
 const Index = () => {
     UserManager.updateUserProfile()
         .then(() => {
-            const documentId = new URLSearchParams(GlobalManager.window.location.search).get('id')
+            const documentId = new URLSearchParams(globalThis.window.location.search).get('id')
             if (documentId) {
                 ContentManager.tryOpenDocumentByDocumentId(documentId)
             } else {

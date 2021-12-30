@@ -1,11 +1,13 @@
 html {
     font-size: 16px;
 }
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕',
     helvetica, 'Apple SD Gothic Neo', sans-serif !important;
     color: rgb(55, 53, 47);
     font-size: 16px;
+    
 }
 ::-moz-selection {
     background: rgb(243, 247, 197);
@@ -24,7 +26,6 @@ body {
     z-index: 1200;
     display: flex;
     flex-direction: row-reverse;
-
 
     .logo {
         height: 50px;
@@ -72,10 +73,6 @@ body {
         .MuiBadge-badge {
             background-color: #bc2323
         }
-    }
-
-    .logo {
-
     }
 
     .navigator {
@@ -154,9 +151,26 @@ body {
     }
 }
 .index-body {
+    position: fixed;
+    top: 60px;
+    width: 100%;
+    overflow-y: scroll;
     display: flex;
     height: calc(100vh - 60px);
 }
+.index-body::-webkit-scrollbar {
+    width: 10px;
+}
+.index-body::-webkit-scrollbar-track {
+    background: #e7e7e7;
+}
+.index-body::-webkit-scrollbar-thumb {
+    background: rgb(209, 209, 209);
+    border-radius: 5px;
+}
+
+
+
 
 .ant-notification {
     top: 80px !important
