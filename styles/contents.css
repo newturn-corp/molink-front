@@ -108,6 +108,10 @@
   color: #37352f;
 }
 
+.contents ul li p {
+  margin-bottom: 5px;
+}
+
 .contents ul ul {
   border-left: 1px solid #cccccc;
   margin-left: -12px;
