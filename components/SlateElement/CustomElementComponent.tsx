@@ -10,7 +10,6 @@ export const CustomElementComponent: React.FC<{
     element
   }> = (props) => {
       const { attributes, children, element } = props
-      console.log(element.type)
       switch (element.type) {
       case 'image':
           return <SlateImageElement { ...props } />
