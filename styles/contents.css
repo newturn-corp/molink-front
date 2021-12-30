@@ -38,17 +38,19 @@
 }
 
 .contents .head1 {
+  margin-top: 0.8em;
   font-size: 2em;
   font-weight: 600;
 }
 
 .contents .head2 {
+  margin-top: 0.8em;
   font-weight: 600;
   font-size: 1.75em;
 }
 
 .contents .head3 {
-  margin-top: 1em;
+  margin-top: 0.8em;
   font-weight: 600;
   font-size: 1.25em;
 }
