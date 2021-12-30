@@ -1,18 +1,14 @@
 import {
-    createEditor,
     Range,
-    Text,
     Element as SlateElement,
     Editor as SlateEditor,
     Transforms,
     Point
 } from 'slate'
-import { BulletedListElement } from '../utils/slate'
+import { BulletedListElement, OrderedListElement } from '../utils/slate'
 
 const SHORTCUTS = {
     '*': 'list-item',
-    '-': 'list-item',
-    '+': 'list-item',
     '>': 'block-quote',
     '#': 'heading-one',
     '##': 'heading-two',
@@ -20,7 +16,16 @@ const SHORTCUTS = {
     '####': 'heading-four',
     '#####': 'heading-five',
     '######': 'heading-six',
-    '```': 'code'
+    '```': 'code',
+    '1.': 'ordered-list-item',
+    '2.': 'ordered-list-item',
+    '3.': 'ordered-list-item',
+    '4.': 'ordered-list-item',
+    '5.': 'ordered-list-item',
+    '6.': 'ordered-list-item',
+    '7.': 'ordered-list-item',
+    '8.': 'ordered-list-item',
+    '9.': 'ordered-list-item'
 }
 
 export const withShortcuts = editor => {
@@ -74,7 +79,7 @@ export const withShortcuts = editor => {
 
                 if (type === 'list-item') {
                     const list: BulletedListElement = {
-                        type: 'ul_list',
+                        type: 'ul-list',
                         children: []
                     }
                     Transforms.wrapNodes(editor, list, {
@@ -82,6 +87,19 @@ export const withShortcuts = editor => {
                             !SlateEditor.isEditor(n) &&
                             SlateElement.isElement(n) &&
                         n.type === 'list-item'
+                    })
+                }
+
+                if (type === 'ordered-list-item') {
+                    const list: OrderedListElement = {
+                        type: 'ol-list',
+                        children: []
+                    }
+                    Transforms.wrapNodes(editor, list, {
+                        match: n =>
+                            !SlateEditor.isEditor(n) &&
+                            SlateElement.isElement(n) &&
+                        n.type === 'ordered-list-item'
                     })
                 }
 
@@ -118,7 +136,15 @@ export const withShortcuts = editor => {
                             match: n =>
                                 !SlateEditor.isEditor(n) &&
                                 SlateElement.isElement(n) &&
-                                n.type === 'ul_list',
+                                n.type === 'ul-list',
+                            split: true
+                        })
+                    } else if (block.type === 'ordered-list-item') {
+                        Transforms.unwrapNodes(editor, {
+                            match: n =>
+                                !SlateEditor.isEditor(n) &&
+                                SlateElement.isElement(n) &&
+                                n.type === 'ol-list',
                             split: true
                         })
                     }

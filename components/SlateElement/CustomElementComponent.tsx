@@ -10,6 +10,7 @@ export const CustomElementComponent: React.FC<{
     element
   }> = (props) => {
       const { attributes, children, element } = props
+      console.log(element.type)
       switch (element.type) {
       case 'image':
           return <SlateImageElement { ...props } />
@@ -17,11 +18,12 @@ export const CustomElementComponent: React.FC<{
           return <SlateTitleElement { ...props } />
       case 'text':
           return <SlateTextElement { ...props } />
-      case 'ul_list':
+      case 'ul-list':
           return <ul {...attributes}>{children}</ul>
-      case 'ol_list':
+      case 'ol-list':
           return <ol {...attributes}>{children}</ol>
-      case 'list_item':
+      case 'list-item':
+      case 'ordered-list-item':
           return <li {...attributes}>{children}</li>
       case 'heading':
           return <h1 {...attributes}>{children}</h1>

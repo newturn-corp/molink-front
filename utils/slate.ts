@@ -23,8 +23,13 @@ export type TextElement = {
   children: CustomText[]
 }
 
+export type OrderedListElement = {
+  type: 'ol-list'
+  children: Descendant[]
+}
+
 export type BulletedListElement = {
-  type: 'ul_list'
+  type: 'ul-list'
   children: Descendant[]
 }
 
@@ -59,6 +64,11 @@ export type ListItemElement = {
   children: CustomText[]
 }
 
+export type OrderedListItemElement = {
+  type: 'ordered-list-item'
+  children: CustomText[]
+}
+
 export type LinkElement = { type: 'link'; url: string; children: Descendant[] }
 
 export type CustomElement =
@@ -68,7 +78,9 @@ ImageElement |
 MentionElement |
 TitleElement |
 ListItemElement |
-LinkElement
+LinkElement |
+OrderedListElement |
+OrderedListItemElement
 
 export type FormattedText = {
   bold?: boolean
