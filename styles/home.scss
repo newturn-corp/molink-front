@@ -75,7 +75,7 @@
         background: #e7e7e7;
     }
     ::-webkit-scrollbar-thumb {
-        background: rgb(228, 228, 228);
+        background: rgb(209, 209, 209);
         border-radius: 5px;
     }
 }
@@ -93,7 +93,7 @@
 }
 
 .drawer-width-controller {
-    position: absolute;
+    position: fixed;
     z-index: 100;
     width: 10px;
     left: 236px;

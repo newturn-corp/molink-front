@@ -97,7 +97,7 @@
 }
 
 .drawer ::-webkit-scrollbar-thumb {
-  background: #e4e4e4;
+  background: #d1d1d1;
   border-radius: 5px;
 }
 
@@ -114,7 +114,7 @@
 }
 
 .drawer-width-controller {
-  position: absolute;
+  position: fixed;
   z-index: 100;
   width: 10px;
   left: 236px;
