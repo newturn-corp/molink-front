@@ -2,7 +2,7 @@ import { makeAutoObservable, toJS } from 'mobx'
 import React from 'react'
 import { BaseRange, Editor, Element, Range, Transforms } from 'slate'
 import Command from '../domain/Command'
-import { TextCategory } from '../utils/slate'
+import { DividerType, TextCategory } from '../utils/slate'
 
 // /(슬래시)로 수행하는 명령을 맡아 처리하는 매니저
 class CommandManager {
@@ -11,9 +11,14 @@ class CommandManager {
     index: number = 0
     searchedCommands: Command[] = []
     commandsList = [
-        new Command('제목1', '큰 사이즈의 제목', './head-1.png'),
-        new Command('제목2', '중간 사이즈의 제목', './head-2.png'),
-        new Command('제목3', '작은 사이즈의 제목', './head-3.png')
+        new Command('제목1', '큰 사이즈의 제목', '/command/head1.svg'),
+        new Command('제목2', '중간 사이즈의 제목', '/command/head2.svg'),
+        new Command('제목3', '작은 사이즈의 제목', '/command/head3.svg'),
+        new Command('구분선-기본', '기본 구분선', '/command/divider-default.svg'),
+        new Command('구분선-흐릿한', '흐릿한 구분선', '/command/divider-faint.svg'),
+        new Command('구분선-짦은', '짦은 구분선', '/command/divider-short.svg'),
+        new Command('구분선-짦고 흐릿한', '짦고 흐릿한 구분선', '/command/divider-faint-short.svg'),
+        new Command('구분선-점', '점 구분선', '/command/divider-dot.svg')
         // new Command('순서없는목록', '순서 없는 목록', './bullet-list.png')
     ]
 
@@ -61,46 +66,47 @@ class CommandManager {
             }
             Transforms.insertNodes(editor, node)
             break
-            // case '순서없는목록':
-            //     const isActive = this.isBlockActive(editor, 'ul_list')
-
-            //     Transforms.unwrapNodes(editor, {
-            //         match: n =>
-            //             !Editor.isEditor(n) &&
-            //             Element.isElement(n) &&
-            //             n.type === 'ul_list',
-            //         split: true
-            //     })
-            //     Transforms.setNodes<Element>(editor, { type: 'ul_list' })
-
-        //     if (!isActive) {
-        //         const block = { type: 'ul_list', children: [] }
-        //         Transforms.wrapNodes(editor, block)
-        //     }
-        //     break
-        case '내용1':
+        case '구분선-기본':
             node = {
-                type: 'text',
-                category: TextCategory.Content1,
+                type: 'divider',
+                dividerType: DividerType.LongLine,
                 children: [{ text: '' }]
             }
+            Transforms.insertNodes(editor, node)
             break
-        case '내용2':
+        case '구분선-흐릿한':
             node = {
-                type: 'text',
-                category: TextCategory.Content2,
+                type: 'divider',
+                dividerType: DividerType.FaintLongLine,
                 children: [{ text: '' }]
             }
+            Transforms.insertNodes(editor, node)
             break
-        case '내용3':
+        case '구분선-짦은':
             node = {
-                type: 'text',
-                category: TextCategory.Content3,
+                type: 'divider',
+                dividerType: DividerType.ShortLine,
                 children: [{ text: '' }]
             }
+            Transforms.insertNodes(editor, node)
+            break
+        case '구분선-짦고 흐릿한':
+            node = {
+                type: 'divider',
+                dividerType: DividerType.FaintShortLine,
+                children: [{ text: '' }]
+            }
+            Transforms.insertNodes(editor, node)
+            break
+        case '구분선-점':
+            node = {
+                type: 'divider',
+                dividerType: DividerType.Dot,
+                children: [{ text: '' }]
+            }
+            Transforms.insertNodes(editor, node)
             break
         }
-        // Transforms.move(editor)
     }
 
     onChange (editor: Editor) {

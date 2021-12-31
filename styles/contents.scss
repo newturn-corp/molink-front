@@ -141,6 +141,59 @@
         color: rgb(104, 104, 104);
         border-bottom: 1px solid rgb(104, 104, 104);
     }
+    .divider-container {
+        position: relative;
+        width: 100%;
+        height: 6em;
+        .divider {
+            position: absolute;
+        }
+        .line-divider {
+            margin-top: calc(3em - 0.5px);
+            margin-bottom: calc(3em - 0.5px);
+            height: 1px;
+        }
+        .long-line-divider {
+            background-color: rgb(55, 53, 47);
+            width: 90%;
+            margin-left: 5%;
+        }
+        .faint-long-line-divider {
+            background-color: rgb(180, 180, 180);
+            width: 90%;
+            margin-left: 5%;
+        }
+        .short-line-divider {
+            background-color: rgb(55, 53, 47);
+            width: 20%;
+            margin-left: 40%;
+        }
+        .faint-short-line-divider {
+            background-color: rgb(180, 180, 180);
+            width: 20%;
+            margin-left: 40%;
+        }
+        .dot-divider {
+            width: 10%;
+            margin-left: 45%;
+            margin-top: calc(3em - 2.5px);
+            margin-bottom: calc(3em - 2.5px);
+            height: 5px;
+            display: flex;
+            .dot {
+                background-color: rgb(55, 53, 47);
+                width: 5px;
+                height: 5px;
+                border-radius: 2.5px;
+            }
+            .dot-1 {
+                margin-right: calc(50% - 7.5px);
+            }
+            .dot-3 {
+                margin-left: calc(50% - 7.5px);
+            }
+        }
+    }
     .content-footer {
         width: 100%;
         height: 20vh;

@@ -2,6 +2,7 @@ import { KeyboardEvent } from 'react'
 import { BaseEditor, Range, Transforms } from 'slate'
 import { HistoryEditor } from 'slate-history'
 import { ReactEditor } from 'slate-react'
+import { DividerType } from '../utils/slate'
 import SaveManager from './SaveManager'
 
 // 단축키를 눌러 사용하는 명령을 담당하는 매니저
@@ -55,6 +56,11 @@ class HotKeyManager {
             break
         case 'ctrl+k':
             e.preventDefault()
+            Transforms.insertNodes(editor, {
+                type: 'divider',
+                dividerType: DividerType.Dot,
+                children: [{ text: '' }]
+            })
         }
     }
 }

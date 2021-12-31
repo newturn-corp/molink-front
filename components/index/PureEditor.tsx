@@ -35,6 +35,7 @@ import { withCorrectVoidBehavior } from '../../plugin/withCorrectVoidBehavior'
 import { HoveringToolbar } from '../home/HoveringToolbar'
 import { HoveringToolbarPlugin } from '../../plugin/HoveringToolbarPlugin'
 import InlinePlugin from '../../plugin/InlinePlugin'
+import { DividerPlugin } from '../../plugin/DividerPlugin'
 
 const [
     withEditList,
@@ -46,6 +47,7 @@ const plugins = [
     withShortcuts,
     withHistory,
     withImages,
+    DividerPlugin,
     withShortcuts,
     withLayout,
     withMentions,

@@ -3,6 +3,7 @@ import { SlateImageElement } from './SlateImageElement'
 import { SlateTextElement } from './SlateTextElement'
 import { SlateTitleElement } from './SlateTitleElement'
 import { SlateLinkElement } from './SlateLinkElement'
+import { SlateDividerElement } from './SlateDividerElement'
 
 export const CustomElementComponent: React.FC<{
     attributes,
@@ -30,6 +31,8 @@ export const CustomElementComponent: React.FC<{
           return <blockquote {...attributes}>{children}</blockquote>
       case 'link':
           return <SlateLinkElement {...props} />
+      case 'divider':
+          return <SlateDividerElement { ...props } />
       default:
           return <p {...attributes}>{children}</p>
       }

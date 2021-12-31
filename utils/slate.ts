@@ -49,6 +49,20 @@ export type ImageElement = {
   children: EmptyText[]
 }
 
+export enum DividerType {
+  Dot,
+  ShortLine,
+  FaintShortLine,
+  LongLine,
+  FaintLongLine
+}
+
+export type DividerElement = {
+  type: 'divider'
+  dividerType: DividerType
+  children: EmptyText[]
+}
+
 export type TitleElement = {
   type: 'title'
   children: Descendant[]
@@ -81,7 +95,8 @@ TitleElement |
 ListItemElement |
 LinkElement |
 OrderedListElement |
-OrderedListItemElement
+OrderedListItemElement |
+DividerElement
 
 export type FormattedText = {
   bold?: boolean

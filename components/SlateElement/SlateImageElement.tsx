@@ -1,15 +1,13 @@
 import React from 'react'
 import {
-    useSlateStatic,
     useSelected,
     useFocused
 } from 'slate-react'
 import { css } from '@emotion/css'
 import { Rnd } from 'react-rnd'
 import ContentManager from '../../manager/ContentManager'
-import { Node, Transforms } from 'slate'
+import { Transforms } from 'slate'
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight, Height } from '@material-ui/icons'
-import { red } from '@material-ui/core/colors'
 import { ImageElement, ImageFloatOption } from '../../utils/slate'
 
 export const SlateImageElement: React.FC<{

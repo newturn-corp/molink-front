@@ -171,9 +171,75 @@
   border-bottom: 1px solid #686868;
 }
 
+.contents .divider-container {
+  position: relative;
+  width: 100%;
+  height: 6em;
+}
+
+.contents .divider-container .divider {
+  position: absolute;
+}
+
+.contents .divider-container .line-divider {
+  margin-top: calc(3em - 0.5px);
+  margin-bottom: calc(3em - 0.5px);
+  height: 1px;
+}
+
+.contents .divider-container .long-line-divider {
+  background-color: #37352f;
+  width: 90%;
+  margin-left: 5%;
+}
+
+.contents .divider-container .faint-long-line-divider {
+  background-color: #b4b4b4;
+  width: 90%;
+  margin-left: 5%;
+}
+
+.contents .divider-container .short-line-divider {
+  background-color: #37352f;
+  width: 20%;
+  margin-left: 40%;
+}
+
+.contents .divider-container .faint-short-line-divider {
+  background-color: #b4b4b4;
+  width: 20%;
+  margin-left: 40%;
+}
+
+.contents .divider-container .dot-divider {
+  width: 10%;
+  margin-left: 45%;
+  margin-top: calc(3em - 2.5px);
+  margin-bottom: calc(3em - 2.5px);
+  height: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.contents .divider-container .dot-divider .dot {
+  background-color: #37352f;
+  width: 5px;
+  height: 5px;
+  border-radius: 2.5px;
+}
+
+.contents .divider-container .dot-divider .dot-1 {
+  margin-right: calc(50% - 7.5px);
+}
+
+.contents .divider-container .dot-divider .dot-3 {
+  margin-left: calc(50% - 7.5px);
+}
+
 .contents .content-footer {
   width: 100%;
-  height: 18vh;
+  height: 20vh;
 }
 
 .hovering-toolbar {
