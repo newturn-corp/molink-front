@@ -19,6 +19,9 @@ export const SlateImageElement: React.FC<{
   }> = ({ attributes, children, element }) => {
       const selected = useSelected()
       const focused = useFocused()
+      if (element.isUploading) {
+          <p>로딩 중..</p>
+      }
       return (
           <div {...attributes}>
               {children}
@@ -152,13 +155,3 @@ export const SlateImageElement: React.FC<{
           </div>
       )
   }
-
-//                    width: ${element.width}px;
-// height: ${element.height}px;
-// </div>
-// <Rnd
-//       disableDragging
-//   >
-
-//       />
-//   </Rnd>

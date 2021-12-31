@@ -7,3 +7,19 @@ export class UpdateContentDTO {
         this.content = content
     }
 }
+
+export class UploadContentImageDto {
+    image: File
+
+    constructor (image: File) {
+        this.image = image
+    }
+}
+
+export class UploadContentImageResponseDTO {
+    url: string
+
+    constructor (url: string) {
+        this.url = url
+    }
+}
