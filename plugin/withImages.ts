@@ -53,7 +53,6 @@ export const withImages = (editor: Editor) => {
                             insertImage(editor, url, width, height, true)
                             const selection = editor.selection
                             FileUploadManager.uploadContentImage(file).then((url) => {
-                                console.log(`로딩 완료 ${url}`)
                                 Transforms.setNodes(editor, { url }, {
                                     at: selection
                                 })
