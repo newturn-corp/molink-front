@@ -95,8 +95,10 @@
         font-style: italic;
     }
     ul {
+        margin-top: 5px;
         list-style: disc;
-        margin-left: -20px;
+        margin-left: -15px;
+        -moz-margin-left: -20px;
         li::marker {
             color: rgb(55, 53, 47);
         }
