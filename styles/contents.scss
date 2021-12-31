@@ -29,6 +29,16 @@
         margin: 0px;
         padding: 3px;
     }
+    .selected-empty-text {
+        position: relative;
+    }
+    .selected-empty-text:after {
+        content: "명령어 사용 /";
+        font-size: 1em;
+        color: #aaa;
+        position: absolute;
+        top: 3px;
+    }
     .head1 {
         margin-top: 0.8em;
         font-size: 2em;
