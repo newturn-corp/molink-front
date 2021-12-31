@@ -34,7 +34,7 @@ export const LinkInput: React.FC<{
                   options={LinkManager.options}
                   filterOptions={o => o}
                   groupBy={(option) => option.reference}
-                  getOptionLabel={(option) => option.text}
+                  getOptionLabel={(option) => option.text ? option.text : ''}
                   onInputChange={(e, value) => LinkManager.handleInputChange(value)}
                   onChange={(e, value: LinkOption) => LinkManager.handleChange(value)}
                   noOptionsText={isUrl(LinkManager.currentInputValue) ? '이 링크로 연결' : '선택된 문서가 없습니다.'}
@@ -43,7 +43,7 @@ export const LinkInput: React.FC<{
                       <TextField {...params}
                           placeholder='문서 제목 또는 링크 입력'
                           variant="outlined"
-                          onKeyPress={(event) => {
+                          onKeyDown={(event) => {
                               if (event.key === 'Enter') {
                                   LinkManager.handleEnter()
                               }

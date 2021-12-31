@@ -45,10 +45,10 @@ class LinkManager {
     }
 
     handleInputChange (value) {
-        this.currentInputValue = value
         if (value === '') {
             return
         }
+        this.currentInputValue = value
         this.isSearching = true
         if (this.searchOtherDocumentsTimeout) {
             clearTimeout(this.searchOtherDocumentsTimeout)
