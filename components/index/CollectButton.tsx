@@ -1,15 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { LibraryAdd } from '@material-ui/icons'
 import { observer } from 'mobx-react'
-import { Dialog, DialogTitle, IconButton } from '@material-ui/core'
-import { Portal } from '../utils/Portal'
+import { IconButton } from '@material-ui/core'
 import ContentManager from '../../manager/ContentManager'
 import UserManager from '../../manager/UserManager'
 
 export const CollectButton: React.FC<{
   }> = observer(() => {
       //   const [showDialog, setShowDialog] = useState(false)
-      if (!ContentManager.openedDocument || ContentManager.openedDocument.meta.userId === UserManager.userId) {
+      if (!UserManager.isUserAuthorized || !ContentManager.openedDocument || ContentManager.openedDocument.meta.userId === UserManager.userId) {
           return <></>
       }
 

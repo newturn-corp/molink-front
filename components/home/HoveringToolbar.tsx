@@ -137,7 +137,6 @@ const LinkButton: React.FC<{
             className={'link-button'}
             onClick={event => {
                 event.preventDefault()
-                console.log(editor.selection)
                 LinkManager.showLinkInput(editor.selection)
             }}
         >
