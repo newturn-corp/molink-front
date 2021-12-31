@@ -66,7 +66,10 @@ class LinkManager {
         }, 500)
     }
 
-    handleChange (value: LinkOption) {
+    handleChange (value: LinkOption | string) {
+        if (typeof value === 'string') {
+            return
+        }
         const url = IS_DEV ? `http://localhost:3000${value.url}` : `https://knowlink.io${value.url}`
         const link: LinkElement = {
             type: 'link',
