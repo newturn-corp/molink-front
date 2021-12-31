@@ -135,7 +135,7 @@ class ContentManager {
     }
 
     updateTitle (title: string) {
-        if (this.openedDocument.meta.title === title) {
+        if (!this.openedDocument || this.openedDocument.meta.title === title) {
             return
         }
         this.openedDocument.meta.title = title

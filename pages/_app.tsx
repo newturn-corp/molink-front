@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react'
-import Head from 'next/head'
 import 'antd/dist/antd.css'
 import '../styles/global.css'
 import '../styles/contents.css'
@@ -13,6 +12,7 @@ import { configure } from 'mobx'
 import GlobalManager from '../manager/GlobalManager'
 // import ContentManager from '../manager/home/ContentManager'
 import { DialogComponent } from '../components/Dialog'
+import { SiteHead } from '../components/global/SiteHead'
 
 configure(
     {
@@ -32,15 +32,10 @@ const App = ({ Component, pageProps }: AppProps) => {
     useEffect(() => {
         GlobalManager.init()
     }, [])
-
-    // const headText = ContentManager.openedDocument ? ContentManager.openedDocument.title : 'Knowlink'
     return (
         <>
             <SafeHydrate>
-                <Head>
-                    <title>{'Knowlink'}</title>
-                    <link rel='shortcut icon' href='/favicon.ico' />
-                </Head>
+                <SiteHead/>
                 <DialogComponent />
                 <Component {...pageProps} />
             </SafeHydrate>
