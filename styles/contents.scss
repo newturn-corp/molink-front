@@ -322,9 +322,14 @@
 }
 .command-list {
     width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
     top: -9999px;
     left: -9999px;
     position: absolute;
+    opacity: 0;
     z-index: 1;
     padding: 3px;
     background: white;
@@ -364,5 +369,15 @@
     .command-block.selected {
         background: rgb(238, 238, 238)
     }
+}
+.command-list::-webkit-scrollbar {
+    width: 10px;
+}
+.command-list::-webkit-scrollbar-track {
+    background: #e7e7e7;
+}
+.command-list::-webkit-scrollbar-thumb {
+    background: rgb(209, 209, 209);
+    border-radius: 5px;
 }
     

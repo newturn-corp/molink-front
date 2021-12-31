@@ -37,11 +37,13 @@ export const CommandListComponent: React.FC<{
       const ref = useRef<HTMLDivElement | null>()
 
       useEffect(() => {
-          if (CommandManager.target && CommandManager.commandsList.length > 0) {
-              const el = ref.current
+          const el = ref.current
+          if (CommandManager.target && CommandManager.searchedCommands.length > 0) {
               const domSelection = window.getSelection()
               const domRange = domSelection.getRangeAt(0)
               const rect = domRange.getBoundingClientRect()
+
+              el.style.opacity = '1'
               if (globalThis.document.body.clientHeight < rect.top + el.offsetHeight) {
                   el.style.top = `${rect.top - el.offsetHeight - 5}px`
                   el.style.left = `${rect.left + 5}px`
@@ -49,20 +51,20 @@ export const CommandListComponent: React.FC<{
                   el.style.top = `${rect.top + rect.height + 5}px`
                   el.style.left = `${rect.left + 5}px`
               }
+          } else {
+              el.removeAttribute('style')
           }
       }, [CommandManager.commandsList.length, editor, CommandManager.index, CommandManager.search, CommandManager.target])
 
-      return CommandManager.target
-          ? (<Portal>
-              <div
-                  ref={ref}
-                  className='command-list'
-                  data-cy="mentions-portal"
-              >
-                  {CommandManager.searchedCommands.map((command, i) => (
-                      <CommandBlock key={Math.random()} index={i} command={command} />
-                  ))}
-              </div>
-          </Portal>)
-          : <></>
+      return <Portal>
+          <div
+              ref={ref}
+              className='command-list'
+              data-cy="mentions-portal"
+          >
+              {CommandManager.searchedCommands.map((command, i) => (
+                  <CommandBlock key={Math.random()} index={i} command={command} />
+              ))}
+          </div>
+      </Portal>
   })

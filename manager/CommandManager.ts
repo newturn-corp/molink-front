@@ -126,7 +126,7 @@ class CommandManager {
 
                 if (beforeMatch && afterMatch) {
                     this.target = beforeRange
-                    const searchResult = beforeText.match(/^\/(\w+)$/)
+                    const searchResult = beforeText.match(/^\/((\w|\W)+)$/)
                     if (!searchResult) {
                         this.search = ''
                     } else {
@@ -146,7 +146,7 @@ class CommandManager {
     }
 
     onKeyDown (event: React.KeyboardEvent, editor: Editor) {
-        if (this.target) {
+        if (this.target && this.searchedCommands.length > 0) {
             switch (event.key) {
             case 'ArrowDown':
                 event.preventDefault()
