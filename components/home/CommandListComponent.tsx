@@ -43,12 +43,19 @@ export const CommandListComponent: React.FC<{
               const rect = domRange.getBoundingClientRect()
 
               el.style.opacity = '1'
-              if (globalThis.document.body.clientHeight < rect.top + el.offsetHeight) {
+              if (globalThis.document.body.clientHeight < rect.top + el.offsetHeight + 100) {
                   el.style.top = `${rect.top - el.offsetHeight - 5}px`
                   el.style.left = `${rect.left + 5}px`
               } else {
                   el.style.top = `${rect.top + rect.height + 5}px`
                   el.style.left = `${rect.left + 5}px`
+              }
+              // Command 이동에 따라 자동 스크롤 조정
+              const currentHeight = 58 * CommandManager.index
+              if (currentHeight < el.scrollTop) {
+                  el.scrollTop = currentHeight
+              } else if (currentHeight > el.scrollTop + 400) {
+                  el.scrollTop = currentHeight - 400 + 58
               }
           } else {
               el.removeAttribute('style')
