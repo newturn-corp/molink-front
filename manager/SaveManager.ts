@@ -21,16 +21,28 @@ class SaveManager {
 
     constructor () {
         makeAutoObservable(this)
+
+        // 페이지에서 나갈 때 자동 저장
         EventManager.addEventLinstener(Event.UnloadPage, async () => {
             if (ContentManager.openedDocument && ContentManager.openedDocument.authority.editable) {
                 await this.saveContent(true, false)
             }
         }, 1)
+
+        // 다른 페이지로 이동할 때 자동 저장
+        // TODO: 컨텐츠에 변화가 없다면 저장 않도록 하기
         EventManager.addEventLinstener(Event.MoveToAnotherPage, async () => {
             if (ContentManager.openedDocument && ContentManager.openedDocument.authority.editable) {
                 await this.saveContent(true, false)
             }
         }, 1)
+
+        // 에디터가 바뀔 때마다 변경 시도
+        EventManager.addEventLinstener(Event.EditorChange, async () => {
+            if (ContentManager.openedDocument && ContentManager.openedDocument.authority.editable) {
+                await this.saveContent()
+            }
+        }, 100)
     }
 
     async saveContent (force: boolean = false, isAutoSaving: boolean = false) {

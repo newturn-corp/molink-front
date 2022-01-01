@@ -1,8 +1,14 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import React from 'react'
 import { BaseRange, Editor, Element, Range, Transforms } from 'slate'
+import { ReactEditor } from 'slate-react'
 import Command from '../domain/Command'
-import { DividerType, TextCategory } from '../utils/slate'
+import Document from '../domain/Document'
+import { DividerType, TextCategory, TitleElement } from '../utils/slate'
+import ContentManager from './ContentManager'
+import EventManager, { EditorChangeParam, Event } from './EventManager'
+import FileSystemManager from './FileSystemManager'
+import RoutingManager, { Page } from './RoutingManager'
 
 // /(슬래시)로 수행하는 명령을 맡아 처리하는 매니저
 class CommandManager {
@@ -18,12 +24,20 @@ class CommandManager {
         new Command('구분선-흐릿한', '흐릿한 구분선', '/command/divider-faint.svg'),
         new Command('구분선-짦은', '짦은 구분선', '/command/divider-short.svg'),
         new Command('구분선-짦고 흐릿한', '짦고 흐릿한 구분선', '/command/divider-faint-short.svg'),
-        new Command('구분선-점', '점 구분선', '/command/divider-dot.svg')
+        new Command('구분선-점', '점 구분선', '/command/divider-dot.svg'),
+        new Command('새문서', '새로운 하위 문서를 만듭니다.', '/command/document.svg')
         // new Command('순서없는목록', '순서 없는 목록', './bullet-list.png')
     ]
 
     constructor () {
         makeAutoObservable(this)
+
+        // 에디터가 바뀔 때마다 변경 시도
+        EventManager.addEventLinstener(Event.EditorChange, async ({ editor }: EditorChangeParam) => {
+            if (ContentManager.openedDocument && ContentManager.openedDocument.authority.editable) {
+                await this.handleEditorChange(editor)
+            }
+        }, 10)
     }
 
     isBlockActive (editor, format) {
@@ -39,7 +53,7 @@ class CommandManager {
         return !!match
     }
 
-    insertNodeByCommand (editor: Editor, command: Command) {
+    async insertNodeByCommand (editor: Editor, command: Command) {
         let node: Element
         switch (command.name) {
         case '제목1':
@@ -106,10 +120,31 @@ class CommandManager {
             }
             Transforms.insertNodes(editor, node)
             break
+        case '새문서':
+            if (!ContentManager.openedDocument) {
+                return
+            }
+            const document = await Document.create(ContentManager.openedDocument, ContentManager.openedDocument.directoryInfo.children.length)
+            node = {
+                type: 'document',
+                documentId: document.meta.id,
+                children: [{ text: '' }]
+            }
+            EventManager.addDisposableEventListener(Event.LoadingContent, ({ editor }: { editor: Editor }) => {
+                Transforms.select(editor, [0, 0])
+            }, 1)
+            EventManager.addDisposableEventListener(Event.EditorChange, () => {
+                RoutingManager.moveTo(Page.Index, `?id=${document.meta.id}`)
+            }, 1)
+            Transforms.insertNodes(editor, node)
+            FileSystemManager.selectedDocument = document
+            break
+        default:
+            throw new Error('처리되지 않은 명령어:' + command.name)
         }
     }
 
-    onChange (editor: Editor) {
+    handleEditorChange (editor: Editor) {
         try {
             const { selection } = editor
             if (selection && Range.isCollapsed(selection)) {

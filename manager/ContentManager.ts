@@ -1,7 +1,7 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import DocumentAPI from '../api/DocumentAPI'
 import { DocumentNotExists } from '../Errors/DocumentError'
-import { Editor } from 'slate'
+import { Editor, Location, Transforms } from 'slate'
 import DialogManager from './DialogManager'
 import UserManager from './UserManager'
 import EventManager, { ChangeDocumentTitleInFileSystemParam, DeleteDocumentParam, Event, OpenDocumentParam } from './EventManager'
@@ -131,6 +131,7 @@ class ContentManager {
             }
         } finally {
             this.isLoadingContent = false
+            EventManager.issueEvent(Event.LoadingContent, { editor: this.editor })
         }
     }
 
@@ -140,6 +141,10 @@ class ContentManager {
         }
         this.openedDocument.meta.title = title
         // EventManager.issueEvent(Event.ChangeDocumentTitleInEditor, { title })
+    }
+
+    select (target: Location) {
+        Transforms.select(this.editor, target)
     }
 }
 export default new ContentManager()

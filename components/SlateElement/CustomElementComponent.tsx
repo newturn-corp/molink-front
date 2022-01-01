@@ -4,6 +4,7 @@ import { SlateTextElement } from './SlateTextElement'
 import { SlateTitleElement } from './SlateTitleElement'
 import { SlateLinkElement } from './SlateLinkElement'
 import { SlateDividerElement } from './SlateDividerElement'
+import { SlateDocumentElement } from './SlateDocumentElement'
 
 export const CustomElementComponent: React.FC<{
     attributes,
@@ -33,6 +34,8 @@ export const CustomElementComponent: React.FC<{
           return <SlateLinkElement {...props} />
       case 'divider':
           return <SlateDividerElement { ...props } />
+      case 'document':
+          return <SlateDocumentElement { ...props } />
       default:
           return <p {...attributes}>{children}</p>
       }

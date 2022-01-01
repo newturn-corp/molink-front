@@ -85,6 +85,12 @@ export type OrderedListItemElement = {
   children: CustomText[]
 }
 
+export type DocumentElement = {
+  type: 'document',
+  documentId: string,
+  children: EmptyText[]
+}
+
 export type EditorKeyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>, editor: Editor) => void
 
 export type LinkElement = { type: 'link'; url: string; children: Descendant[] }
@@ -99,7 +105,8 @@ ListItemElement |
 LinkElement |
 OrderedListElement |
 OrderedListItemElement |
-DividerElement
+DividerElement |
+DocumentElement
 
 export type FormattedText = {
   bold?: boolean

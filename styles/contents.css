@@ -255,6 +255,39 @@
   height: 20vh;
 }
 
+.contents .document {
+  position: relative;
+  margin: 10px;
+  width: 800px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.contents .document .icon {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 2.5px;
+  font-size: 1em;
+  margin: 0px;
+}
+
+.contents .document .text {
+  color: #686868;
+  text-decoration: underline;
+  font-size: 1em;
+}
+
+.contents .document:hover {
+  background: #ececec;
+}
+
 .hovering-toolbar {
   padding: 6px;
   position: absolute;

@@ -1,8 +1,10 @@
 import React from 'react'
-import { Editor } from 'slate'
+import { Descendant, Editor } from 'slate'
 import Document, { DocumentVisibility } from '../domain/Document'
 import GlobalManager from './GlobalManager'
 
+// Event 이름은 명사형으로 짓는다.
+// TODO: 모두 명사형으로 바꾸기
 export enum Event {
     EditorOnKeyDown,
     DocumentChildrenOpen,
@@ -16,15 +18,45 @@ export enum Event {
     InitGlobalVariable,
     MoveToSignInPage,
     MoveToAnotherPage,
-    UnloadPage
+    UnloadPage,
+    NewEditorOpen,
+    LoadingContent,
+    EditorChange
 }
+const eventList = [
+    Event.DocumentChildrenOpen,
+    Event.EditorOnKeyDown,
+    Event.UserProfileInited,
+    Event.OpenDocument,
+    Event.ChangeDocumentTitleInEditor,
+    Event.UserAuthorization,
+    Event.ChangeDocumentTitleInFileSystem,
+    Event.DelteDocument,
+    Event.DocumentMapInited,
+    Event.InitGlobalVariable,
+    Event.MoveToSignInPage,
+    Event.MoveToAnotherPage,
+    Event.UnloadPage,
+    Event.NewEditorOpen,
+    Event.LoadingContent,
+    Event.EditorChange
+]
 
 type EventListener = (param: EventParam) => void
 
-export type EventParam = OnEditorKeyDownParam | DocumentChildrenOpenParam | UserProfileInitedParam | OpenDocumentParam | ChangeDocumentTitleInEditorParam | UserAuthorizationParam | ChangeDocumentTitleInFileSystemParam | DeleteDocumentParam
+export type EventParam = OnEditorKeyDownParam | DocumentChildrenOpenParam | UserProfileInitedParam | OpenDocumentParam | ChangeDocumentTitleInEditorParam | UserAuthorizationParam | ChangeDocumentTitleInFileSystemParam | DeleteDocumentParam | NewEditorOpenParam | EditorChangeParam
 
 export type DeleteDocumentParam = {
     document: Document
+}
+
+export type NewEditorOpenParam = {
+    editor: Editor
+}
+
+export type EditorChangeParam = {
+    value: Descendant[],
+    editor: Editor
 }
 
 export type ChangeDocumentTitleInFileSystemParam = {
@@ -52,9 +84,13 @@ export type ChangeDocumentTitleInEditorParam = {
 export type UserAuthorizationParam = {
     result: boolean
 }
+export type LoadingContentParam = {
+    editor: Editor
+}
 
 class EventManager {
     private _eventListenerMap: Map<Event, { listener: EventListener, priority: number }[]> = new Map()
+    private _disposableEventListenerMap: Map<Event, { listener: EventListener, priority: number }[]> = new Map()
 
     initGlobalVariableListener: (() => void)[] = []
 
@@ -66,20 +102,10 @@ class EventManager {
     changeDocumentVisibilityListeners: ((document: Document, visibility: DocumentVisibility) => void)[] = []
 
     constructor () {
-        [
-            Event.DocumentChildrenOpen,
-            Event.EditorOnKeyDown,
-            Event.UserProfileInited,
-            Event.OpenDocument,
-            Event.ChangeDocumentTitleInEditor,
-            Event.UserAuthorization,
-            Event.ChangeDocumentTitleInFileSystem,
-            Event.DelteDocument,
-            Event.DocumentMapInited,
-            Event.InitGlobalVariable,
-            Event.MoveToSignInPage,
-            Event.MoveToAnotherPage,
-            Event.UnloadPage].forEach(event => this._eventListenerMap.set(event, []))
+        eventList.forEach(event => {
+            this._eventListenerMap.set(event, [])
+            this._disposableEventListenerMap.set(event, [])
+        })
         this.initGlobalVariableListener.push(() => this.addGlobalEventListener())
     }
 
@@ -88,11 +114,21 @@ class EventManager {
         for (const listener of listeners) {
             await listener.listener(param)
         }
+        const disposableListeners = this._disposableEventListenerMap.get(event)
+        for (const listener of disposableListeners) {
+            await listener.listener(param)
+        }
+        this._disposableEventListenerMap.set(event, [])
     }
 
     addEventLinstener (event: Event, listener: EventListener, priority: number) {
         this._eventListenerMap.get(event).push({ listener, priority })
         this._eventListenerMap.get(event).sort((a, b) => a.priority - b.priority)
+    }
+
+    addDisposableEventListener (event: Event, listener: EventListener, priority: number) {
+        this._disposableEventListenerMap.get(event).push({ listener, priority })
+        this._disposableEventListenerMap.get(event).sort((a, b) => a.priority - b.priority)
     }
 
     addGlobalEventListener () {

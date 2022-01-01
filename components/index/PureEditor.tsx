@@ -39,6 +39,8 @@ import InlinePlugin from '../../plugin/InlinePlugin'
 import { DividerPlugin } from '../../plugin/DividerPlugin'
 import { withEditList, onKeyDown as OnListKeyDown } from '../../plugin/ListPlugin'
 import { onKeyDown as pluginKeyDown } from '../../plugin/plugins'
+import { DocumentElementPlugin } from '../../plugin/DocumentElementPlugin'
+import EventManager, { Event } from '../../manager/EventManager'
 
 const plugins = [
     withReact,
@@ -53,7 +55,8 @@ const plugins = [
     withEditList,
     withCorrectVoidBehavior,
     HoveringToolbarPlugin,
-    InlinePlugin
+    InlinePlugin,
+    DocumentElementPlugin
 ]
 
 const setPlugin = (editor: SlateEditor): SlateEditor => {
@@ -84,10 +87,7 @@ export const PureEditor: React.FC<{
       const renderElement = useCallback(props => <CustomElementComponent {...props} />, [])
       const renderLeaf = useCallback(props => <CustomLeafComponent {...props} />, [])
       const editor = useMemo(() => setPlugin(createEditor()), [])
-
-      useEffect(() => {
-          ContentManager.editor = editor
-      }, [])
+      ContentManager.editor = editor
 
       const getLength = token => {
           if (typeof token === 'string') {
@@ -155,14 +155,14 @@ export const PureEditor: React.FC<{
           return <></>
       }
 
+      EventManager.issueEvent(Event.NewEditorOpen, { editor })
+
       return <Slate editor={editor} value={[]} onChange={value => {
           if (!ContentManager.openedDocument || !ContentManager.openedDocument.authority.editable) {
               return
           }
           ContentManager.openedDocument.content = value
-          MentionManager.onChange(editor)
-          CommandManager.onChange(editor)
-          SaveManager.handleOnChange()
+          EventManager.issueEvent(Event.EditorChange, { value, editor })
       }}>
           <HoveringToolbar/>
           <Editable
