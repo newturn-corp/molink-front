@@ -23,6 +23,7 @@ import { withLayout } from '../../plugin/withLayout'
 import { withMentions } from '../../plugin/withMentions'
 import { HeadNextNormalTextPlugin } from '../../plugin/HeaderWithNormalTextPlugin'
 
+// import { EditListPlugin } from '../../node_modules/@productboard/slate-edit-list/dist/index'
 import { EditListPlugin } from '@productboard/slate-edit-list'
 import ContentManager from '../../manager/ContentManager'
 import { MentionListComponent } from '../home/MentionListComponent'
@@ -36,11 +37,7 @@ import { HoveringToolbar } from '../home/HoveringToolbar'
 import { HoveringToolbarPlugin } from '../../plugin/HoveringToolbarPlugin'
 import InlinePlugin from '../../plugin/InlinePlugin'
 import { DividerPlugin } from '../../plugin/DividerPlugin'
-
-const [
-    withEditList,
-    onEditListKeyDown
-] = EditListPlugin({})
+import { withEditList, onKeyDown as OnListKeyDown } from '../../plugin/ListPlugin'
 
 const plugins = [
     withReact,
@@ -181,7 +178,7 @@ export const PureEditor: React.FC<{
                   HotKeyManager.handleKeyDown(editor, e)
                   MentionManager.onKeyDown(e, editor)
                   CommandManager.onKeyDown(e, editor)
-                  onEditListKeyDown(editor)(e)
+                  OnListKeyDown(e, editor)
                   onKeyDown(e)
               }}
               onDOMBeforeInput={(event: InputEvent) => {
