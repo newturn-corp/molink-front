@@ -1,8 +1,9 @@
 import { ReactEditor } from 'slate-react'
 import {
-    BaseEditor, Descendant
+    BaseEditor, Descendant, Editor
 } from 'slate'
 import { HistoryEditor } from 'slate-history'
+import React from 'react'
 
 export type EmptyText = {
   text: string
@@ -83,6 +84,8 @@ export type OrderedListItemElement = {
   type: 'ordered-list-item'
   children: CustomText[]
 }
+
+export type EditorKeyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>, editor: Editor) => void
 
 export type LinkElement = { type: 'link'; url: string; children: Descendant[] }
 

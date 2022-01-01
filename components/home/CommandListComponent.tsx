@@ -14,10 +14,9 @@ const Portal = ({ children }) => {
 }
 
 const CommandBlock: React.FC<{
-    key: string | number,
     index: number,
     command: Command
-}> = ({ key, index, command }) => {
+}> = ({ index, command }) => {
     const className = index === CommandManager.index ? 'command-block selected' : 'command-block'
     return <div
         key={`command-block-${command.name}`}
@@ -63,7 +62,7 @@ export const CommandListComponent: React.FC<{
               data-cy="mentions-portal"
           >
               {CommandManager.searchedCommands.map((command, i) => (
-                  <CommandBlock key={Math.random()} index={i} command={command} />
+                  <CommandBlock key={`command-block-parent-${command.name}`} index={i} command={command} />
               ))}
           </div>
       </Portal>

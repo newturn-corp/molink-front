@@ -38,6 +38,7 @@ import { HoveringToolbarPlugin } from '../../plugin/HoveringToolbarPlugin'
 import InlinePlugin from '../../plugin/InlinePlugin'
 import { DividerPlugin } from '../../plugin/DividerPlugin'
 import { withEditList, onKeyDown as OnListKeyDown } from '../../plugin/ListPlugin'
+import { onKeyDown as pluginKeyDown } from '../../plugin/plugins'
 
 const plugins = [
     withReact,
@@ -179,6 +180,7 @@ export const PureEditor: React.FC<{
                   MentionManager.onKeyDown(e, editor)
                   CommandManager.onKeyDown(e, editor)
                   OnListKeyDown(e, editor)
+                  pluginKeyDown(e, editor)
                   onKeyDown(e)
               }}
               onDOMBeforeInput={(event: InputEvent) => {
