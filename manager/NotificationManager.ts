@@ -3,11 +3,15 @@ import { notification } from 'antd'
 enum NOTIFICATION_TYPE { SUCCESS, ERROR }
 
 class NotificationManager {
-    showNotification (type: NOTIFICATION_TYPE, message: string, description: string, duration: number = 10) {
+    showNotification (type: NOTIFICATION_TYPE, message: string, description: string, duration: number = 10, width: number = 500) {
         notification[this._convertNotificationTypeToString(type)]({
             message,
             description,
-            duration
+            duration,
+            style: {
+                whiteSpace: 'pre-line',
+                width
+            }
         })
     }
 

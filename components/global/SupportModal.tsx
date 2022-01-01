@@ -19,6 +19,7 @@ export const SupportModal: React.FC<{
           <p>{'편하게 전달해주세요! 이메일을 통해 빠른 시일 내에 답변드리겠습니다!'}</p>
           <TextArea
               showCount
+              value={SupportManager.content}
               maxLength={300}
               style={{ height: 120 }}
               onChange={(e) => SupportManager.handleChange(e)}
