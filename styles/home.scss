@@ -36,24 +36,26 @@
                     transition: 0.3s;
                 }
             }
+            .icon {
+                display: inline;
+                height: 30px;
+                line-height: 30px;
+                font-size: 15px;
+                .MuiListItemText-primary {
+                    margin: 0px;
+                    font-size: 0.7rem;
+                }
+            }
             .document-title {
                 display: flex;
-                border-left: 0px;
-                border-right: 0px;
-                .icon {
-                    display: inline;
-                    margin-top: 4px;
-                    margin-bottom: 4px;
-                    .MuiListItemText-primary {
-                        margin: 0px;
-                        font-size: 0.7rem;
-                    }
-                }
+                border: 0px;
+                height: 100%;
                 .text {
                     display: inline;
-                    padding-top: 4px;
-                    padding-bottom: 4px;
-                    margin-left: 6px;
+                    height: 30px;
+                    margin-left: 5px;
+                    font-size: 0.95em;
+                    line-height: 30px;
                     white-space: nowrap;
                     background-color: transparent;
                     border:none;

@@ -52,30 +52,32 @@
   transition: 0.3s;
 }
 
-.drawer .MuiDrawer-paper .MuiListItem-root .document-title {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  border-left: 0px;
-  border-right: 0px;
-}
-
-.drawer .MuiDrawer-paper .MuiListItem-root .document-title .icon {
+.drawer .MuiDrawer-paper .MuiListItem-root .icon {
   display: inline;
-  margin-top: 4px;
-  margin-bottom: 4px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 15px;
 }
 
-.drawer .MuiDrawer-paper .MuiListItem-root .document-title .icon .MuiListItemText-primary {
+.drawer .MuiDrawer-paper .MuiListItem-root .icon .MuiListItemText-primary {
   margin: 0px;
   font-size: 0.7rem;
 }
 
+.drawer .MuiDrawer-paper .MuiListItem-root .document-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: 0px;
+  height: 100%;
+}
+
 .drawer .MuiDrawer-paper .MuiListItem-root .document-title .text {
   display: inline;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  margin-left: 6px;
+  height: 30px;
+  margin-left: 5px;
+  font-size: 0.95em;
+  line-height: 30px;
   white-space: nowrap;
   background-color: transparent;
   border: none;
