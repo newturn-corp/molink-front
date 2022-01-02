@@ -19,7 +19,11 @@ export const DrawerContextMenu: React.FC = observer(() => {
         }}>
             {
                 FileSystemManager.availControlOptions.map(option =>
-                    <div onClick={() => option.callback()} key={Math.random()} className="contextMenu--option">
+                    <div onClick={(e) => {
+                        e.stopPropagation()
+                        FileSystemManager.openContextMenu = false
+                        option.callback()
+                    }} key={Math.random()} className="contextMenu--option">
                         {option.name}
                     </div>)
             }

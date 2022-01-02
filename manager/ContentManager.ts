@@ -28,9 +28,9 @@ class ContentManager {
             }, 1
         )
         EventManager.addEventLinstener(
-            Event.DelteDocument,
-            (param: DeleteDocumentParam) => {
-                this.handleDeleteDocument(param.document)
+            Event.DeleteDocument,
+            async (param: DeleteDocumentParam) => {
+                await this.handleDeleteDocument(param.document)
             }, 1
         )
         EventManager.addEventLinstener(
@@ -53,13 +53,13 @@ class ContentManager {
         }
     }
 
-    handleDeleteDocument (document: Document) {
+    async handleDeleteDocument (document: Document) {
         if (!this.openedDocument) {
             return
         }
         if (this.openedDocument.equal(document) || this.openedDocument.isChildOf(document)) {
+            await this.exitDocument()
             RoutingManager.moveTo(Page.Index)
-            this.exitDocument()
         }
     }
 

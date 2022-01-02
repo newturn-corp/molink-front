@@ -6,6 +6,9 @@ import ContentManager from './ContentManager'
 import { DocumentVisibility } from '../domain/DocumentMeta'
 import UserManager from './UserManager'
 import RoutingManager, { Page } from './RoutingManager'
+import DialogManager from './DialogManager'
+import { Editor, Transforms } from 'slate'
+import { ReactEditor } from 'slate-react'
 
 export enum DirectoryObjectType {
     Drawer,
@@ -69,29 +72,33 @@ class FileSystemManager {
         const parent = this._selectedDocument || null
         const order = this._selectedDocument ? this._selectedDocument.directoryInfo.children.length : this.documents.length
         const document = await Document.create(parent, order)
+        EventManager.addDisposableEventListener(Event.LoadingContent, ({ editor }: { editor: Editor }) => {
+            ReactEditor.focus(editor)
+            Transforms.select(editor, [0, 0])
+        }, 1)
         this.selectedDocument = document
-        this.openContextMenu = false
-        document.directoryInfo.isChangingName = true
         RoutingManager.moveTo(Page.Index, `?id=${document.meta.id}`)
-        await ContentManager.tryOpenDocumentByDocumentId(document.meta.id)
     }
 
     changeDocumentName () {
         this._selectedDocument.directoryInfo.isChangingName = true
         this.selectedDocument = null
-        this.openContextMenu = false
     }
 
     async deleteDocument () {
+        const childrenCount = this._selectedDocument.directoryInfo.children.length
+        const msg = childrenCount > 0 ? `${this._selectedDocument.meta.title} 문서와 그 하위 문서 ${childrenCount}개를 모두 제거합니다.` : `${this._selectedDocument.meta.title} 문서를 제거합니다.`
+        const index = await DialogManager.openDialog('문서 삭제', msg, ['확인'])
+        if (index !== 0) {
+            return
+        }
         await this._selectedDocument.delete()
         this.selectedDocument = null
-        this.openContextMenu = false
     }
 
     setDocumentRepresentative (representative: boolean) {
         this._selectedDocument.meta.setRepresentative(representative)
         this.selectedDocument = null
-        this.openContextMenu = false
     }
 
     setAvailControlOptionsByDocument (document: Document | null) {

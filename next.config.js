@@ -9,5 +9,6 @@ module.exports = (phase, { defaultConfig }) => {
         FRONT_HOST_NAME: process.env.FRONT_HOST_NAME
     }
     defaultConfig.future = { webpack5: true }
+    defaultConfig.swcMinify = true
     return defaultConfig
 }

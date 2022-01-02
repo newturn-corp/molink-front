@@ -20,7 +20,10 @@ export const DialogComponent: React.FC<{
           <DialogActions>
               {
                   DialogManager.buttenTexts.map((text, index) =>
-                      <Button key={Math.random()} onClick={() => DialogManager.onClose(index)} color="primary">
+                      <Button key={Math.random()} onClick={(e) => {
+                          e.stopPropagation()
+                          DialogManager.onClose(index)
+                      }} color="primary">
                           {text}
                       </Button>)
               }

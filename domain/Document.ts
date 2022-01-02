@@ -31,9 +31,9 @@ export default class Document {
     }
 
     async delete () {
-        this.directoryInfo.delete()
-        EventManager.issueEvent(Event.DelteDocument, { document: this })
+        await EventManager.issueEvent(Event.DeleteDocument, { document: this })
         await DocumentAPI.deleteDocument(new DeleteDocumentDTO(this.meta.id, this.directoryInfo.parentId, this.directoryInfo.order, this.contentId))
+        this.directoryInfo.delete()
     }
 
     static visibilityToText (visibility: DocumentVisibility) {

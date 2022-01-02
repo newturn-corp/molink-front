@@ -13,11 +13,6 @@ import EventManager, { Event } from '../../../../manager/EventManager'
 import FileDragManager from '../../../../manager/FileSystemManager/FileDragManager'
 import UserManager from '../../../../manager/UserManager'
 import RoutingManager, { Page } from '../../../../manager/RoutingManager'
-enum DragLocation {
-    Top,
-    Middle,
-    Bottom
-}
 
 let ghost
 export const DocumentComponent: React.FC<{
