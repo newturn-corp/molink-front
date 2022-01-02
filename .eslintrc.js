@@ -25,7 +25,7 @@ module.exports = {
         'no-use-before-define': 'off',
         'no-unused-vars': 'off',
         'no-useless-escape': 'off',
-        'no-console': 'warn',
+        'no-console': 'error',
         'no-case-declarations': 'off',
         'react/display-name': 'off'
     },

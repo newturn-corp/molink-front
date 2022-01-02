@@ -22,7 +22,7 @@ import { withShortcuts } from '../../plugin/withShortcuts'
 import { withLayout } from '../../plugin/withLayout'
 import { withMentions } from '../../plugin/withMentions'
 import { HeadNextNormalTextPlugin } from '../../plugin/HeaderWithNormalTextPlugin'
-
+import '../../plugin/KnowlinkCustomSlatePlugin'
 // import { EditListPlugin } from '../../node_modules/@productboard/slate-edit-list/dist/index'
 import { EditListPlugin } from '@productboard/slate-edit-list'
 import ContentManager from '../../manager/ContentManager'
@@ -66,11 +66,16 @@ const setPlugin = (editor: SlateEditor): SlateEditor => {
 }
 
 const isFormatActive = (editor, format) => {
-    const [match] = Editor.nodes(editor, {
-        match: n => n[format] === true,
-        mode: 'all'
-    })
-    return !!match
+    try {
+        const [match] = Editor.nodes(editor, {
+            match: n => n[format] === true,
+            universal: true
+        })
+        return !!match
+    } catch {
+        // eslint-disable-next-line no-unsafe-finally
+        return false
+    }
 }
 
 const toggleFormat = (editor, format) => {

@@ -92,10 +92,10 @@ const isFormatActive = (editor, format) => {
     try {
         const [match] = Editor.nodes(editor, {
             match: n => n[format] === true,
-            mode: 'all'
+            universal: true
         })
         return !!match
-    } finally {
+    } catch {
         // eslint-disable-next-line no-unsafe-finally
         return false
     }
@@ -103,10 +103,19 @@ const isFormatActive = (editor, format) => {
 
 const toggleFormat = (editor, format) => {
     const isActive = isFormatActive(editor, format)
+    const [match] = Editor.nodes(editor, {
+        at: editor.selection,
+        match: Text.isText
+    })
     Transforms.setNodes(
         editor,
-        { [format]: isActive ? null : true },
-        { match: Text.isText, split: true }
+        {
+            [format]: isActive ? null : true
+        },
+        {
+            match: Text.isText,
+            split: true
+        }
     )
 }
 

@@ -11,21 +11,20 @@ import { createDraft, finishDraft, isDraft } from 'immer'
 export const HoveringToolbarPlugin = (editor: Editor) => {
     const { transform } = Transforms
     Transforms.transform = (editor: Editor, op: Operation): void => {
-        // 이 함수는 split_node 명령이 Head1, 2, 3일 때만 따로 수행함
         if (op.type !== 'split_node') {
             return transform(editor, op)
         }
         const { path, position } = op
-
         const node: Text = Node.get(editor, path) as Text
-
         if (!Text.isText(node)) {
             return transform(editor, op)
         }
         if (!node.bold && !node.italic && !node.underlined) {
             return transform(editor, op)
         }
-
+        if (!editor.selection || !Range.isCollapsed(editor.selection)) {
+            return transform(editor, op)
+        }
         editor.children = createDraft(editor.children)
         const selection = editor.selection && createDraft(editor.selection)
 
