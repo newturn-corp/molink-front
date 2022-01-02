@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import { observer } from 'mobx-react'
 import '../../utils/prism'
 import { Editor } from 'slate'
-import { ReactEditor } from 'slate-react'
 import CommandManager from '../../manager/CommandManager'
 import Command from '../../domain/Command'
 
@@ -54,8 +53,8 @@ export const CommandListComponent: React.FC<{
               const currentHeight = 58 * CommandManager.index
               if (currentHeight < el.scrollTop) {
                   el.scrollTop = currentHeight
-              } else if (currentHeight > el.scrollTop + 400) {
-                  el.scrollTop = currentHeight - 400 + 58
+              } else if (currentHeight > el.scrollTop + el.offsetHeight) {
+                  el.scrollTop = currentHeight - el.offsetHeight + 58
               }
           } else {
               el.removeAttribute('style')
