@@ -2,9 +2,8 @@ import { Editor, Node, Operation, Point, Range, Text, Transforms } from 'slate'
 import { createDraft, finishDraft, isDraft } from 'immer'
 
 /**
- * 이 플러그인은 Head로 선언된 ELement에서 Enter를 쳐서
- * 새로운 라인을 만들 때, 같은 HeadElement가 아닌
- * ContentElement를 만들도록 합니다.
+ * 이 플러그인은 새로운 라인을 만들 때, 기존 라인이 일반 노드가 아니었다면
+ * 새로운 라인을 일반 라인으로 만드는 플러그인입니다.
  * @param editor
  * @returns
  */

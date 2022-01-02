@@ -3,6 +3,7 @@ import { ImageElement, ImageFloatOption } from '../utils/slate'
 import imageExtensions from 'image-extensions'
 import isUrl from 'is-url'
 import FileUploadManager from '../manager/FileUploadManager'
+import StyleManager from '../manager/StyleManager'
 
 const insertImage = (editor: Editor, url: string, width: number, height: number, isUploading: boolean) => {
     const text = { text: '' }
@@ -46,9 +47,9 @@ export const withImages = (editor: Editor) => {
                             const url = reader.result as string
                             let width = image.width
                             let height = image.height
-                            if (image.width > 800) {
-                                height *= 800 / width
-                                width = 800
+                            if (image.width > StyleManager.contentStyle.content.width) {
+                                height *= StyleManager.contentStyle.content.width / width
+                                width = StyleManager.contentStyle.content.width
                             }
                             insertImage(editor, url, width, height, true)
                             const selection = editor.selection

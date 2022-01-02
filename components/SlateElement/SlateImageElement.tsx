@@ -7,8 +7,9 @@ import { css } from '@emotion/css'
 import { Rnd } from 'react-rnd'
 import ContentManager from '../../manager/ContentManager'
 import { Transforms } from 'slate'
-import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight, Height } from '@material-ui/icons'
+import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@material-ui/icons'
 import { ImageElement, ImageFloatOption } from '../../utils/slate'
+import StyleManager from '../../manager/StyleManager'
 
 export const SlateImageElement: React.FC<{
     attributes,
@@ -28,7 +29,7 @@ export const SlateImageElement: React.FC<{
                   className={css`
                     position: relative;
                     margin: 10px;
-                    width: ${800}px;
+                    width: ${StyleManager.contentStyle.content.width}px;
                     height: ${element.height}px;
                     `}
               >
@@ -45,7 +46,7 @@ export const SlateImageElement: React.FC<{
                       style={{
                           position: 'relative',
                           float: element.floatOption === ImageFloatOption.Right ? 'right' : undefined,
-                          marginLeft: element.floatOption === ImageFloatOption.Center ? (800 - element.width) / 2 : undefined,
+                          marginLeft: element.floatOption === ImageFloatOption.Center ? (StyleManager.contentStyle.content.width - element.width) / 2 : undefined,
                           transform: 'none !important'
                       }}
                       onResizeStop={(e, direction, ref, delta, position) => {

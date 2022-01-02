@@ -1,239 +1,241 @@
-.contents {
-    width: 800px;
-    margin-left: 30vw;
-    margin-top: 10vh;
-
-    .MuiButton-root.Mui-disabled {
-        color: #000000;
-    }
-    .icon {
-        width: 90px;
-        height: 90px;
-        margin-bottom: 20px;
-        .MuiButton-label {
-            padding: 10px;
-            font-size: 60px;
+.content-container {
+    position: fixed;
+    .contents {
+        margin-top: 10vh;
+    
+        .MuiButton-root.Mui-disabled {
+            color: #000000;
         }
-    }
-    aside.emoji-picker-react {
-        position: absolute;
-        margin-top: -20px;
-        z-index: 100;   
-    }
-    .title {
-        font-size: 40px;
-        font-weight: 800;
-        margin-bottom: 0.3em;
-    }
-    .text {
-        margin: 0px;
-        padding: 3px;
-    }
-    .selected-empty-text {
-        position: relative;
-    }
-    .selected-empty-text:after {
-        content: "명령어 사용 /";
-        font-size: 1em;
-        color: #aaa;
-        position: absolute;
-        top: 3px;
-    }
-    .head1 {
-        margin-top: 0.8em;
-        font-size: 2em;
-        font-weight: 600;
-    }
-    .head2 {
-        margin-top: 0.8em;
-        font-weight: 600;
-        font-size: 1.75em;
-    }
-    .head3 {
-        margin-top: 0.8em;
-        font-weight: 600;
-        font-size: 1.25em;
-    }
-    .content1 {
-        font-size: 1.25em;
-    }
-    .content2 {
-        font-size: 1.125em;
-    }
-    .content3 {
-        font-size: 1em;
-    }
-    .textline {
-        .MuiInputBase-input {
-            font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕',
-            helvetica, 'Apple SD Gothic Neo', sans-serif !important;
-            color: rgb(34, 36, 38);
-        }
-        .MuiInput-underline {
-            border-bottom: none !important
-        }
-        .MuiInput-underline::before {
-            border-bottom: none !important
-        }
-        .MuiInput-underline::after {
-            border-bottom: none !important
-        }
-    }
-    .normal-text {
-        font-size: 1.125rem;
-    }
-    .content-for-empty-document {
-        font-size: 1.5rem;
-    }
-    blockquote {
-        border-left: 2px
-        solid #ddd;
-        margin-left: 0;
-        margin-right: 0;
-        padding-left: 10px;
-        color: #aaa;
-        font-style: italic;
-    }
-    ul {
-        // margin-top: 5px;
-        list-style: disc;
-        margin-left: -15px;
-        -moz-margin-left: -20px;
-        li::marker {
-            color: rgb(55, 53, 47);
-        }
-        li {
-            p {
-                margin-bottom: 5px;
-            }
-        }
-        ul {
-            border-left: 1px solid rgb(204, 204, 204);
-            margin-left: -12px;
-        }
-    }
-    .react-draggable {
-        transform: none !important;
-    }
-    .image-adjust-button {
-        position: absolute;
-        top: -45px;
-        height: 36px;
-        background-color: rgb(255, 255, 255);
-        border: 1px solid rgb(214, 214, 214);
-        border-radius: 4px;
-        box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
-        display: flex;
-        padding: 6px;
-        .button {
-            color: inherit;
-            width: 24px;
-            height: 24px;
-            margin-left: 3px;
-            margin-right: 3px;
-            cursor: pointer;
-            .MuiSvgIcon-root {
-                width: 100%;
-                height: 100%;
-            }
-        }
-        .inactive {
-            color: rgb(161, 161, 161);
-        }
-    }
-    .image-resize-dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 6px;
-        background-color: #fcfcfc;
-        border: 1.5px solid black;
-        position: absolute;
-    }
-    .link {
-        color: rgb(104, 104, 104);
-        border-bottom: 1px solid rgb(104, 104, 104);
-    }
-    .divider-container {
-        position: relative;
-        width: 100%;
-        height: 6em;
-        .divider {
-            position: absolute;
-        }
-        .line-divider {
-            margin-top: calc(3em - 0.5px);
-            margin-bottom: calc(3em - 0.5px);
-            height: 1px;
-        }
-        .long-line-divider {
-            background-color: rgb(55, 53, 47);
-            width: 90%;
-            margin-left: 5%;
-        }
-        .faint-long-line-divider {
-            background-color: rgb(180, 180, 180);
-            width: 90%;
-            margin-left: 5%;
-        }
-        .short-line-divider {
-            background-color: rgb(55, 53, 47);
-            width: 20%;
-            margin-left: 40%;
-        }
-        .faint-short-line-divider {
-            background-color: rgb(180, 180, 180);
-            width: 20%;
-            margin-left: 40%;
-        }
-        .dot-divider {
-            width: 10%;
-            margin-left: 45%;
-            margin-top: calc(3em - 2.5px);
-            margin-bottom: calc(3em - 2.5px);
-            height: 5px;
-            display: flex;
-            .dot {
-                background-color: rgb(55, 53, 47);
-                width: 5px;
-                height: 5px;
-                border-radius: 2.5px;
-            }
-            .dot-1 {
-                margin-right: calc(50% - 7.5px);
-            }
-            .dot-3 {
-                margin-left: calc(50% - 7.5px);
-            }
-        }
-    }
-    .content-footer {
-        width: 100%;
-        height: 20vh;
-    }
-    .document {
-        position: relative;
-        margin: 10px;
-        width: 800px;
-        display: flex;
-        cursor: pointer;
-        border-radius: 3px;
         .icon {
-            width: fit-content;
-            height: fit-content;
-            padding: 2.5px;
-            font-size: 1em;
-            margin: 0px;
+            width: 90px;
+            height: 90px;
+            margin-bottom: 20px;
+            .MuiButton-label {
+                padding: 10px;
+                font-size: 60px;
+            }
+        }
+        aside.emoji-picker-react {
+            position: absolute;
+            margin-top: -20px;
+            z-index: 100;   
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 0.3em;
         }
         .text {
-            color: rgb(104, 104, 104);
-            text-decoration: underline;
+            margin: 0px;
+            padding: 3px;
+        }
+        .selected-empty-text {
+            position: relative;
+        }
+        .selected-empty-text:after {
+            content: "명령어 사용 /";
+            font-size: 1em;
+            color: #aaa;
+            position: absolute;
+            top: 3px;
+        }
+        .head1 {
+            margin-top: 0.8em;
+            font-size: 2em;
+            font-weight: 600;
+        }
+        .head2 {
+            margin-top: 0.8em;
+            font-weight: 600;
+            font-size: 1.75em;
+        }
+        .head3 {
+            margin-top: 0.8em;
+            font-weight: 600;
+            font-size: 1.25em;
+        }
+        .content1 {
+            font-size: 1.25em;
+        }
+        .content2 {
+            font-size: 1.125em;
+        }
+        .content3 {
             font-size: 1em;
         }
-    }
-    .document:hover {
-        background: rgb(236, 236, 236);
+        .textline {
+            .MuiInputBase-input {
+                font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕',
+                helvetica, 'Apple SD Gothic Neo', sans-serif !important;
+                color: rgb(34, 36, 38);
+            }
+            .MuiInput-underline {
+                border-bottom: none !important
+            }
+            .MuiInput-underline::before {
+                border-bottom: none !important
+            }
+            .MuiInput-underline::after {
+                border-bottom: none !important
+            }
+        }
+        .normal-text {
+            font-size: 1.125rem;
+        }
+        .content-for-empty-document {
+            font-size: 1.5rem;
+        }
+        blockquote {
+            border-left: 2px
+            solid #ddd;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 10px;
+            color: #aaa;
+            font-style: italic;
+        }
+        ul {
+            // margin-top: 5px;
+            list-style: disc;
+            margin-left: -15px;
+            -moz-margin-left: -20px;
+            li::marker {
+                color: rgb(55, 53, 47);
+            }
+            li {
+                p {
+                    margin-bottom: 5px;
+                }
+            }
+            ul {
+                border-left: 1px solid rgb(204, 204, 204);
+                margin-left: -12px;
+            }
+        }
+        .react-draggable {
+            transform: none !important;
+        }
+        .image-adjust-button {
+            position: absolute;
+            top: -45px;
+            height: 36px;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgb(214, 214, 214);
+            border-radius: 4px;
+            box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+            display: flex;
+            padding: 6px;
+            .button {
+                color: inherit;
+                width: 24px;
+                height: 24px;
+                margin-left: 3px;
+                margin-right: 3px;
+                cursor: pointer;
+                .MuiSvgIcon-root {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .inactive {
+                color: rgb(161, 161, 161);
+            }
+        }
+        .image-resize-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 6px;
+            background-color: #fcfcfc;
+            border: 1.5px solid black;
+            position: absolute;
+        }
+        .link {
+            color: rgb(104, 104, 104);
+            border-bottom: 1px solid rgb(104, 104, 104);
+        }
+        .divider-container {
+            position: relative;
+            width: 100%;
+            height: 6em;
+            .divider {
+                position: absolute;
+            }
+            .line-divider {
+                margin-top: calc(3em - 0.5px);
+                margin-bottom: calc(3em - 0.5px);
+                height: 1px;
+            }
+            .long-line-divider {
+                background-color: rgb(55, 53, 47);
+                width: 90%;
+                margin-left: 5%;
+            }
+            .faint-long-line-divider {
+                background-color: rgb(180, 180, 180);
+                width: 90%;
+                margin-left: 5%;
+            }
+            .short-line-divider {
+                background-color: rgb(55, 53, 47);
+                width: 20%;
+                margin-left: 40%;
+            }
+            .faint-short-line-divider {
+                background-color: rgb(180, 180, 180);
+                width: 20%;
+                margin-left: 40%;
+            }
+            .dot-divider {
+                width: 10%;
+                margin-left: 45%;
+                margin-top: calc(3em - 2.5px);
+                margin-bottom: calc(3em - 2.5px);
+                height: 5px;
+                display: flex;
+                .dot {
+                    background-color: rgb(55, 53, 47);
+                    width: 5px;
+                    height: 5px;
+                    border-radius: 2.5px;
+                }
+                .dot-1 {
+                    margin-right: calc(50% - 7.5px);
+                }
+                .dot-3 {
+                    margin-left: calc(50% - 7.5px);
+                }
+            }
+        }
+        .content-footer {
+            width: 100%;
+            height: 20vh;
+        }
+        .document {
+            position: relative;
+            margin: 10px;
+            width: 100%;
+            display: flex;
+            cursor: pointer;
+            border-radius: 3px;
+            .icon {
+                width: fit-content;
+                height: fit-content;
+                padding: 2.5px;
+                font-size: 1em;
+                margin: 0px;
+            }
+            .text {
+                color: rgb(104, 104, 104);
+                text-decoration: underline;
+                font-size: 1em;
+            }
+        }
+        .document:hover {
+            background: rgb(236, 236, 236);
+        }
     }
 }
+
 .hovering-toolbar {
     padding: 6px;
     position: absolute;
