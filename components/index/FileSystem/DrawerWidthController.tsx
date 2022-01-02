@@ -5,7 +5,7 @@ import FileSystemManager from '../../../manager/FileSystemManager'
 
 export const DrawerWidthController: React.FC<{
   }> = observer(() => {
-      const [controllerPosition, setControllerPosition] = useState(236)
+      const [controllerPosition, setControllerPosition] = useState(FileSystemManager.directoryDrawerWidth - 3)
       if (!FileSystemManager.documents) {
           return <></>
       }

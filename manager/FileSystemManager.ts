@@ -115,6 +115,7 @@ class FileSystemManager {
             this._availControlOptions.push({ name: '이름 변경', callback: () => this.changeDocumentName() })
             this._availControlOptions.push({ name: '문서 삭제', callback: () => this.deleteDocument() })
         }
+        this._availControlOptions.push({ name: '문서 목록 설정', callback: () => RoutingManager.moveTo(Page.SettingDocumentList) })
     }
 
     handleRightClick (event: React.MouseEvent<HTMLElement, MouseEvent>, document: Document | null) {

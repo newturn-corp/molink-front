@@ -1,6 +1,8 @@
 @charset "UTF-8";
 .content-container {
   position: fixed;
+  height: 100%;
+  overflow-y: scroll;
 }
 
 .content-container .contents {
@@ -288,6 +290,19 @@
 
 .content-container .contents .document:hover {
   background: #ececec;
+}
+
+.content-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.content-container::-webkit-scrollbar-track {
+  background: #e7e7e7;
+}
+
+.content-container::-webkit-scrollbar-thumb {
+  background: #d1d1d1;
+  border-radius: 5px;
 }
 
 .hovering-toolbar {
