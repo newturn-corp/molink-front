@@ -30,7 +30,7 @@
 }
 
 .setting-page .core .setting-list {
-  width: 600px;
+  width: 700px;
   height: 100%;
   margin-left: 25px;
 }
@@ -81,6 +81,21 @@
 
 .setting-page .core .setting-list .profile .biography .ant-input-textarea {
   height: 30px;
+}
+
+.setting-page .core .setting-list .show-sub-document-count .options {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.setting-page .core .setting-list .show-sub-document-count .options .option {
+  width: 330px;
+  margin: 10px;
+}
+
+.setting-page .core .setting-list .show-sub-document-count .options .option .MuiFormControlLabel-label {
+  font-size: 14px;
 }
 
 .setting-page .core .setting-list .user-search-result {

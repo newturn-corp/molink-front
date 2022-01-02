@@ -9,7 +9,8 @@ export enum Page {
     changePasswordRequest = '/auth/change-password-request',
     SignUp = '/auth/signup',
     SettingProfile = '/setting/profile',
-    SettingFollow = '/setting/follow'
+    SettingFollow = '/setting/follow',
+    SettingDocumentList = '/setting/document-list'
 }
 
 class RoutingManager {

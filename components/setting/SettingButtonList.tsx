@@ -6,7 +6,7 @@ import RoutingManager, { Page } from '../../manager/RoutingManager'
 enum SettingLocation {
     Profile = 'profile',
     Follow = 'follow',
-    Document = 'document',
+    DocumentList = 'document-list',
     Subscribe = 'subscribe',
     Wiki = 'wiki'
 }
@@ -26,6 +26,8 @@ const handleSettingButtonDown = (location: SettingLocation, selected: boolean) =
         return RoutingManager.moveTo(Page.SettingProfile)
     case SettingLocation.Follow:
         return RoutingManager.moveTo(Page.SettingFollow)
+    case SettingLocation.DocumentList:
+        return RoutingManager.moveTo(Page.SettingDocumentList)
     }
 }
 
@@ -53,9 +55,9 @@ const buttonPropsList: SettingButtonProps[] =
             isDisabled: false
         },
         {
-            buttonText: '문서',
-            location: SettingLocation.Document,
-            isDisabled: true
+            buttonText: '문서 목록',
+            location: SettingLocation.DocumentList,
+            isDisabled: false
         },
         {
             buttonText: '구독',

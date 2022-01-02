@@ -3,6 +3,15 @@ import { observer } from 'mobx-react'
 import FileSystemManager from '../../../../manager/FileSystemManager'
 import Document from '../../../../domain/Document'
 import EventManager, { Event } from '../../../../manager/EventManager'
+import UserManager from '../../../../manager/UserManager'
+
+const getTitle = (document: Document) => {
+    const childrenLength = document.directoryInfo.children.length
+    if (childrenLength > 0 && !document.directoryInfo.isChangingName && UserManager.setting.showSubDocumentCount) {
+        return `${document.meta.title} (${childrenLength})`
+    }
+    return document.meta.title
+}
 
 export const DocumentTitle: React.FC<{
     document: Document
@@ -43,20 +52,24 @@ export const DocumentTitle: React.FC<{
               ref={inputRef}
               className={textClassName}
               spellCheck={false}
-              onKeyDown={event => {
+              onKeyDown={async event => {
                   if (event.key !== 'Enter') {
                       return
                   }
                   event.preventDefault()
-                  document.meta.setDocumentTitle(inputRef.current.innerText)
-                  EventManager.issueEvent(Event.ChangeDocumentTitleInFileSystem, { document, title: inputRef.current.innerText })
-                  handleChangeNameEnd()
+                  if (document.directoryInfo.isChangingName) {
+                      await document.meta.setDocumentTitle(inputRef.current.innerText)
+                      await EventManager.issueEvent(Event.ChangeDocumentTitleInFileSystem, { document, title: inputRef.current.innerText })
+                      handleChangeNameEnd()
+                  }
               }}
-              onBlur={() => {
-                  document.meta.setDocumentTitle(inputRef.current.innerText)
-                  EventManager.issueEvent(Event.ChangeDocumentTitleInFileSystem, { document, title: inputRef.current.innerText })
-                  handleChangeNameEnd()
+              onBlur={async () => {
+                  if (document.directoryInfo.isChangingName) {
+                      await document.meta.setDocumentTitle(inputRef.current.innerText)
+                      await EventManager.issueEvent(Event.ChangeDocumentTitleInFileSystem, { document, title: inputRef.current.innerText })
+                      handleChangeNameEnd()
+                  }
               }}
-          >{document.meta.title}</div>
+          >{getTitle(document)}</div>
       </div>
   })

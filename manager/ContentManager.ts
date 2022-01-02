@@ -136,7 +136,7 @@ class ContentManager {
     }
 
     updateTitle (title: string) {
-        if (!this.openedDocument || this.openedDocument.meta.title === title) {
+        if (!this.openedDocument || this.openedDocument.meta.title === title || this.openedDocument.directoryInfo.isChangingName) {
             return
         }
         this.openedDocument.meta.title = title

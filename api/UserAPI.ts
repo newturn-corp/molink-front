@@ -39,18 +39,6 @@ class UserAPI extends BaseAPI {
         if (res.status !== 200) throw new APIError(res)
     }
 
-    async getUserSetting (): Promise<UserSetting> {
-        const res = await this.get('/users/setting')
-        if (res.status !== 200) throw new APIError(res)
-        const { data } = res
-        return new UserSetting(data.followWithoutApprove)
-    }
-
-    async setUserFollowWithoutApprove (value: boolean): Promise<void> {
-        const res = await this.put('/users/setting/follow-without-approve', { value })
-        if (res.status !== 200) throw new APIError(res)
-    }
-
     async follow (dto: FollowRequestDTO): Promise<FollowResponseDTO> {
         const res = await this.post('/users/follow', dto)
         if (res.status !== 200) throw new APIError(res)

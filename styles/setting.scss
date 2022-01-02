@@ -19,7 +19,7 @@
         }
 
         .setting-list {
-            width: 600px;
+            width: 700px;
             height: 100%;
             margin-left: 25px;
             .setting-name {
@@ -68,6 +68,18 @@
                 }
             }
 
+            .show-sub-document-count {
+                .options {
+                    display: flex;
+                    .option {
+                        width: 330px;
+                        margin: 10px;
+                        .MuiFormControlLabel-label {
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
 
             .user-search-result {
                 cursor: pointer;

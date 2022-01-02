@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import React from 'react'
+import SettingAPI from '../api/SettingAPI'
 import UserAPI from '../api/UserAPI'
 import UserSetting from '../domain/UserSetting'
 import { FollowRequestDTO, UpdateUserBiographyDTO, UpdateUserProfileImageDto } from '../DTO/UserDTO'
@@ -31,7 +32,7 @@ class UserManager {
                 this.representativeDocumentId = dto.representativeDocumentId
                 this.profileImageUrl = dto.profileImageUrl
                 this.biography = dto.biography
-                this.setting = await UserAPI.getUserSetting()
+                this.setting = await SettingAPI.getUserSetting()
                 await EventManager.issueEvent(Event.UserProfileInited, {})
                 await EventManager.issueEvent(Event.UserAuthorization, { result: true })
                 this.isUserAuthorized = true
