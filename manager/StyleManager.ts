@@ -1,4 +1,5 @@
 import { makeAutoObservable, reaction, toJS } from 'mobx'
+import { isBrowser, isMobile } from 'react-device-detect'
 import EventManager, { Event } from './EventManager'
 import FileSystemManager from './FileSystemManager'
 
@@ -16,7 +17,7 @@ interface ContentStyle {
 class StyleManager {
     _contentStyle: ContentStyle = {
         container: {
-            transform: `translateX(${FileSystemManager.directoryDrawerWidth}px)`,
+            transform: isBrowser ? `translateX(${FileSystemManager.directoryDrawerWidth}px)` : undefined,
             width: 1000
         },
         content: {
@@ -43,15 +44,15 @@ class StyleManager {
     }
 
     updateContentStyle () {
-        const containerSize = globalThis.window.innerWidth - FileSystemManager.directoryDrawerWidth
+        const containerSize = isBrowser ? globalThis.window.innerWidth - FileSystemManager.directoryDrawerWidth : globalThis.window.innerWidth
         const contentSize = Math.min(800, containerSize * 0.75)
         this._contentStyle = {
             container: {
-                transform: `translateX(${FileSystemManager.directoryDrawerWidth}px)`,
+                transform: isBrowser ? `translateX(${FileSystemManager.directoryDrawerWidth}px)` : undefined,
                 width: containerSize
             },
             content: {
-                marginLeft: Math.max((containerSize - contentSize) * 0.5, 100),
+                marginLeft: Math.max((containerSize - contentSize) * 0.5, isBrowser ? 100 : 20),
                 width: contentSize
             }
         }

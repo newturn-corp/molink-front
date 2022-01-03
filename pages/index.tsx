@@ -9,6 +9,7 @@ import FileSystemManager from '../manager/FileSystemManager'
 import RoutingManager, { Page } from '../manager/RoutingManager'
 import DocumentManager from '../manager/DocumentManager'
 import { CollectButton } from '../components/index/CollectButton'
+import { BrowserView, isMobile, MobileView } from 'react-device-detect'
 
 const Index = () => {
     UserManager.updateUserProfile()
@@ -31,10 +32,18 @@ const Index = () => {
     } } >
         <Header />
         <div className={'index-body'}>
-            <FileSystem />
-            <DrawerWidthController/>
-            <ContentComponent/>
-            <CollectButton />
+            <BrowserView>
+                <FileSystem />
+                <DrawerWidthController/>
+                <ContentComponent/>
+                <CollectButton />
+            </BrowserView>
+            <MobileView>
+                {/* <FileSystem />
+                <DrawerWidthController/> */}
+                <ContentComponent/>
+                {/* <CollectButton /> */}
+            </MobileView>
         </div>
         <div className={'drag-ghost-parent'}/>
     </div>
