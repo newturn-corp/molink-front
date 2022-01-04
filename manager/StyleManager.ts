@@ -17,7 +17,7 @@ interface ContentStyle {
 class StyleManager {
     _contentStyle: ContentStyle = {
         container: {
-            transform: isBrowser ? `translateX(${FileSystemManager.directoryDrawerWidth}px)` : undefined,
+            transform: isBrowser ? `translateX(${FileSystemManager.fileSystemWidth}px)` : undefined,
             width: 1000
         },
         content: {
@@ -32,7 +32,7 @@ class StyleManager {
 
     constructor () {
         makeAutoObservable(this)
-        reaction(() => FileSystemManager.directoryDrawerWidth, () => {
+        reaction(() => FileSystemManager.fileSystemWidth, () => {
             this.updateContentStyle()
         })
         EventManager.addDisposableEventListener(Event.InitGlobalVariable, () => {
@@ -44,11 +44,11 @@ class StyleManager {
     }
 
     updateContentStyle () {
-        const containerSize = isBrowser ? globalThis.window.innerWidth - FileSystemManager.directoryDrawerWidth : globalThis.window.innerWidth
+        const containerSize = isBrowser ? globalThis.window.innerWidth - FileSystemManager.fileSystemWidth : globalThis.window.innerWidth
         const contentSize = Math.min(800, containerSize * 0.75)
         this._contentStyle = {
             container: {
-                transform: isBrowser ? `translateX(${FileSystemManager.directoryDrawerWidth}px)` : undefined,
+                transform: isBrowser ? `translateX(${FileSystemManager.fileSystemWidth}px)` : undefined,
                 width: containerSize
             },
             content: {

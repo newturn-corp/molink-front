@@ -17,7 +17,7 @@ export const DragIndicator: React.FC<{
               visible={true}
           >
               <div className='drag-indicator' style={{
-                  width: FileSystemManager.directoryDrawerWidth
+                  width: FileSystemManager.fileSystemWidth
               }}>
               </div>
           </Tooltip>

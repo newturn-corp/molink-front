@@ -9,6 +9,7 @@ import RoutingManager, { Page } from './RoutingManager'
 import DialogManager from './DialogManager'
 import { Editor, Transforms } from 'slate'
 import { ReactEditor } from 'slate-react'
+import SettingAPI from '../api/SettingAPI'
 
 export enum DirectoryObjectType {
     Drawer,
@@ -32,7 +33,7 @@ class FileSystemManager {
     documents: Document[] = null
 
     openContextMenu: boolean = false
-    directoryDrawerWidth: number = 240
+    fileSystemWidth: number = 240
     private _clickPosition: { x: number, y: number } = { x: 0, y: 0 }
     get clickPosition () {
         return toJS(this._clickPosition)
@@ -60,12 +61,17 @@ class FileSystemManager {
 
     public draggingDocument: Document = null
 
-    private _dragOverCount = 0
-
     openedDocument: Document = null
 
     constructor () {
         makeAutoObservable(this)
+        EventManager.addEventLinstener(Event.UserProfileInited, () => {
+            this.fileSystemWidth = UserManager.setting.fileSystemWidth
+        }, 1)
+    }
+
+    updateFileSystemWidth () {
+        SettingAPI.updateFileSystemWidth(this.fileSystemWidth)
     }
 
     async createNewDocument () {

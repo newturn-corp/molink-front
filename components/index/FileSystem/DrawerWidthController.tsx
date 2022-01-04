@@ -1,15 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react'
 import GlobalManager, { Browser } from '../../../manager/GlobalManager'
 import FileSystemManager from '../../../manager/FileSystemManager'
 
 export const DrawerWidthController: React.FC<{
   }> = observer(() => {
-      //   const [controllerPosition, setControllerPosition] = useState(FileSystemManager.directoryDrawerWidth - 3)
       if (!FileSystemManager.documents) {
           return <></>
       }
-      const left = FileSystemManager.directoryDrawerWidth - 3
+      const left = FileSystemManager.fileSystemWidth - 3
       return (
           <>
               <div className={'drawer-width-controller'}
@@ -19,7 +18,10 @@ export const DrawerWidthController: React.FC<{
                       if (Math.round(value) % 5 !== 0) {
                           return
                       }
-                      FileSystemManager.directoryDrawerWidth = value
+                      FileSystemManager.fileSystemWidth = value
+                  }}
+                  onDragEnd={event => {
+                      FileSystemManager.updateFileSystemWidth()
                   }}
                   draggable='true'
               >

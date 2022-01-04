@@ -7,7 +7,7 @@ class SettingAPI extends BaseAPI {
         const res = await this.get('/settings')
         if (res.status !== 200) throw new APIError(res)
         const { data } = res
-        return new UserSetting(data.followWithoutApprove, data.showSubDocumentCount)
+        return new UserSetting(data.followWithoutApprove, data.showSubDocumentCount, data.fileSystemWidth)
     }
 
     async setFollowWithoutApprove (value: boolean): Promise<void> {
@@ -17,6 +17,11 @@ class SettingAPI extends BaseAPI {
 
     async setShowSubDocumentCount (value: boolean): Promise<void> {
         const res = await this.put('/settings/show-sub-document-count', { value })
+        if (res.status !== 200) throw new APIError(res)
+    }
+
+    async updateFileSystemWidth (value: number): Promise<void> {
+        const res = await this.put('/settings/file-system-width', { value })
         if (res.status !== 200) throw new APIError(res)
     }
 }

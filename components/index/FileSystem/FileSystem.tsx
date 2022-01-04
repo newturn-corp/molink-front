@@ -12,7 +12,7 @@ import FileSystemManager from '../../../manager/FileSystemManager'
 
 export const FileSystem: React.FC<{
   }> = observer(() => {
-      const width = FileSystemManager.directoryDrawerWidth + 1
+      const width = FileSystemManager.fileSystemWidth + 1
       const useStyles = makeStyles({
           root: {
           },

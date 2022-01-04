@@ -122,7 +122,7 @@
   left: 236px;
   cursor: ew-resize;
   height: calc(100vh - 60px);
-  top: 60px;
+  top: 56px;
 }
 
 .drawer-width-controller::after {
