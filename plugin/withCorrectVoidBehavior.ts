@@ -9,7 +9,6 @@ export const withCorrectVoidBehavior = editor => {
         if (!editor.selection || !Range.isCollapsed(editor.selection)) {
             return insertBreak()
         }
-
         const selectedNodePath = Path.parent(editor.selection.anchor.path)
         const selectedNode = Node.get(editor, selectedNodePath)
         if (Editor.isVoid(editor, selectedNode)) {

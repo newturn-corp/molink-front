@@ -4,7 +4,8 @@ import {
     Editor as SlateEditor,
     Transforms,
     Point,
-    Editor
+    Editor,
+    Node
 } from 'slate'
 import { BulletedListElement, OrderedListElement } from '../utils/slate'
 import { ListEditor, ListTransforms } from './ListPlugin'

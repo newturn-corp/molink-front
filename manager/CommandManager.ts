@@ -1,10 +1,9 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import React from 'react'
-import { BaseRange, Editor, Element, Range, Transforms } from 'slate'
-import { ReactEditor } from 'slate-react'
+import { BaseRange, Editor, Element, Node, Range, Transforms } from 'slate'
 import Command from '../domain/Command'
 import Document from '../domain/Document'
-import { DividerType, TextCategory, TitleElement } from '../utils/slate'
+import { DividerType, TextCategory } from '../utils/slate'
 import ContentManager from './ContentManager'
 import EventManager, { EditorChangeParam, Event } from './EventManager'
 import FileSystemManager from './FileSystemManager'
@@ -28,6 +27,8 @@ class CommandManager {
         new Command('새문서', '새로운 하위 문서를 만듭니다.', '/command/document.svg')
         // new Command('순서없는목록', '순서 없는 목록', './bullet-list.png')
     ]
+
+    isSiblingVoid: boolean = false
 
     constructor () {
         makeAutoObservable(this)
@@ -53,6 +54,19 @@ class CommandManager {
         return !!match
     }
 
+    // 바로 위 노드가 void인 경우, 현재 node를 set하고
+    // 일반적인 경우, insertNode를 함
+    insertNode (editor: Editor, node: Element) {
+        if (this.isSiblingVoid) {
+            Transforms.delete(editor)
+            Transforms.setNodes<Element>(editor, node, {
+                match: n => Editor.isBlock(editor, n)
+            })
+        } else {
+            Transforms.insertNodes(editor, node)
+        }
+    }
+
     async insertNodeByCommand (editor: Editor, command: Command) {
         let node: Element
         switch (command.name) {
@@ -62,7 +76,7 @@ class CommandManager {
                 category: TextCategory.Head1,
                 children: [{ text: '' }]
             }
-            Transforms.insertNodes(editor, node)
+            this.insertNode(editor, node)
             break
         case '제목2':
             node = {
@@ -70,7 +84,7 @@ class CommandManager {
                 category: TextCategory.Head2,
                 children: [{ text: '' }]
             }
-            Transforms.insertNodes(editor, node)
+            this.insertNode(editor, node)
             break
         case '제목3':
             node = {
@@ -78,7 +92,7 @@ class CommandManager {
                 category: TextCategory.Head3,
                 children: [{ text: '' }]
             }
-            Transforms.insertNodes(editor, node)
+            this.insertNode(editor, node)
             break
         case '구분선-기본':
             node = {
@@ -86,7 +100,7 @@ class CommandManager {
                 dividerType: DividerType.LongLine,
                 children: [{ text: '' }]
             }
-            Transforms.insertNodes(editor, node)
+            this.insertNode(editor, node)
             break
         case '구분선-흐릿한':
             node = {
@@ -94,7 +108,7 @@ class CommandManager {
                 dividerType: DividerType.FaintLongLine,
                 children: [{ text: '' }]
             }
-            Transforms.insertNodes(editor, node)
+            this.insertNode(editor, node)
             break
         case '구분선-짦은':
             node = {
@@ -102,7 +116,7 @@ class CommandManager {
                 dividerType: DividerType.ShortLine,
                 children: [{ text: '' }]
             }
-            Transforms.insertNodes(editor, node)
+            this.insertNode(editor, node)
             break
         case '구분선-짦고 흐릿한':
             node = {
@@ -110,7 +124,7 @@ class CommandManager {
                 dividerType: DividerType.FaintShortLine,
                 children: [{ text: '' }]
             }
-            Transforms.insertNodes(editor, node)
+            this.insertNode(editor, node)
             break
         case '구분선-점':
             node = {
@@ -118,7 +132,7 @@ class CommandManager {
                 dividerType: DividerType.Dot,
                 children: [{ text: '' }]
             }
-            Transforms.insertNodes(editor, node)
+            this.insertNode(editor, node)
             break
         case '새문서':
             if (!ContentManager.openedDocument) {
@@ -136,7 +150,7 @@ class CommandManager {
             EventManager.addDisposableEventListener(Event.EditorChange, () => {
                 RoutingManager.moveTo(Page.Index, `?id=${document.meta.id}`)
             }, 1)
-            Transforms.insertNodes(editor, node)
+            this.insertNode(editor, node)
             FileSystemManager.selectedDocument = document
             break
         default:
@@ -149,8 +163,12 @@ class CommandManager {
             const { selection } = editor
             if (selection && Range.isCollapsed(selection)) {
                 const [start] = Range.edges(selection)
+                // 시작점을 가져옴
                 const wordBefore = Editor.before(editor, start, { unit: 'word' })
-                const before = wordBefore && Editor.before(editor, wordBefore)
+                let before = wordBefore && Editor.before(editor, wordBefore)
+                const parent = Node.parent(editor, before.path) as Element
+                this.isSiblingVoid = editor.isVoid(parent)
+                before = this.isSiblingVoid ? wordBefore : before
                 const beforeRange = before && Editor.range(editor, before, start)
                 const beforeText = beforeRange && Editor.string(editor, beforeRange)
                 const beforeMatch = beforeText && beforeText.match(/^\//)
@@ -161,6 +179,7 @@ class CommandManager {
 
                 if (beforeMatch && afterMatch) {
                     this.target = beforeRange
+
                     const searchResult = beforeText.match(/^\/((\w|\W)+)$/)
                     if (!searchResult) {
                         this.search = ''

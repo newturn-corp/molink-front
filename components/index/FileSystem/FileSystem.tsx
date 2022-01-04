@@ -1,10 +1,8 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import Drawer from '@material-ui/core/Drawer'
-import List from '@material-ui/core/List'
 import { makeStyles } from '@material-ui/core/styles'
 import { DrawerContextMenu } from './ContextMenu'
-import { DocumentComponent } from './Document/DocumentComponent'
 import { DragIndicator } from './DragIndicator'
 import { FileList } from './FileList'
 
