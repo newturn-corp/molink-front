@@ -8,6 +8,7 @@ import EventManager, { ChangeDocumentTitleInFileSystemParam, DeleteDocumentParam
 import Document from '../domain/Document'
 import DocumentManager from './DocumentManager'
 import RoutingManager, { Page } from './RoutingManager'
+import { ReactEditor } from 'slate-react'
 
 class ContentManager {
     editor: Editor = null
@@ -117,6 +118,10 @@ class ContentManager {
             const rawDocument = toJS(this.openedDocument)
             for (let i = 0; i < this.openedDocument.content.length; i++) {
                 this.editor.apply({ type: 'insert_node', path: [i], node: rawDocument.content[i] })
+            }
+            if (dto.selection) {
+                ReactEditor.focus(this.editor)
+                Transforms.select(this.editor, dto.selection)
             }
         } catch (err) {
             if (err instanceof DocumentNotExists) {

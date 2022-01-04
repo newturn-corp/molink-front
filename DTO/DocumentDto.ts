@@ -36,8 +36,9 @@ export class GetDocumentDto {
     authority: DocumentAuthority
     contentId: string = ''
     content: any = null
+    selection: DocumentSelection | null = null
 
-    constructor (id: string, userId: number, title: string, icon: string, visibility: DocumentVisibility, createdAt: Date, updatedAt: Date, authority: DocumentAuthority, content: any, contentId: string) {
+    constructor (id: string, userId: number, title: string, icon: string, visibility: DocumentVisibility, createdAt: Date, updatedAt: Date, authority: DocumentAuthority, content: any, contentId: string, selection: DocumentSelection | null) {
         this.id = id
         this.userId = userId
         this.title = title
@@ -48,6 +49,7 @@ export class GetDocumentDto {
         this.authority = authority
         this.content = content
         this.contentId = contentId
+        this.selection = selection
     }
 }
 
@@ -172,5 +174,20 @@ export class CollectDocumentDTO {
 
     constructor (documentId: string) {
         this.documentId = documentId
+    }
+}
+
+export interface DocumentSelection {
+    path: number[],
+    offset: number
+}
+
+export class UpdateDocumentSelectionDTO {
+    documentId: string
+    selection: DocumentSelection
+
+    constructor (documentId: string, selection: DocumentSelection) {
+        this.documentId = documentId
+        this.selection = selection
     }
 }

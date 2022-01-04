@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx'
 import ContentAPI from '../api/ContentAPI'
 import DocumentAPI from '../api/DocumentAPI'
 import { UpdateContentDTO } from '../DTO/ContentDTO'
-import { SetDocumentTitleDTO } from '../DTO/DocumentDto'
+import { SetDocumentTitleDTO, UpdateDocumentSelectionDTO } from '../DTO/DocumentDto'
 import ContentManager from './ContentManager'
 import EventManager, { Event } from './EventManager'
 
@@ -60,9 +60,9 @@ class SaveManager {
 
         this.contentSaveStatus = ContentSaveStatus.Saving
         this.isSaving = true
-
         try {
             await ContentAPI.updateContent(new UpdateContentDTO(targetDocument.contentId, targetDocument.content))
+            await DocumentAPI.updateDocumentSelection(new UpdateDocumentSelectionDTO(targetDocument.meta.id, ContentManager.editor.selection.focus))
             await DocumentAPI.setDocumentTitle(new SetDocumentTitleDTO(targetDocument.meta.id, targetDocument.meta.title))
             this.contentSaveStatus = ContentSaveStatus.Saved
             this.lastSavedAt = new Date()

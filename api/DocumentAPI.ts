@@ -1,7 +1,7 @@
 import { BaseAPI } from './baseAPI'
 import { APIError } from './APIError'
 
-import { CollectDocumentDTO, CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, GetDocumentDto, SearchDocumentLinkResultDTO, SetDocumentIconDTO, SetDocumentIsChildrenOpenDTO, SetDocumentLocationDTO, SetDocumentTitleDTO, SetDocumentVisibilityDTO, UpdateDocumentRepresentativeDTO } from '../DTO/DocumentDto'
+import { CollectDocumentDTO, CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, GetDocumentDto, SearchDocumentLinkResultDTO, SetDocumentIconDTO, SetDocumentIsChildrenOpenDTO, SetDocumentLocationDTO, SetDocumentTitleDTO, SetDocumentVisibilityDTO, UpdateDocumentRepresentativeDTO, UpdateDocumentSelectionDTO } from '../DTO/DocumentDto'
 import { DocumentNotExists } from '../Errors/DocumentError'
 import { GetDocumentInitialInfoListDTO } from '../DTO/UserDTO'
 
@@ -44,7 +44,7 @@ class DocumentAPI extends BaseAPI {
             throw new DocumentNotExists()
         }
         const { data } = res
-        return new GetDocumentDto(data.id, data.userId, data.title, data.icon, data.visibility, data.createdAt, data.updatedAt, data.authority, data.content, data.contentId)
+        return new GetDocumentDto(data.id, data.userId, data.title, data.icon, data.visibility, data.createdAt, data.updatedAt, data.authority, data.content, data.contentId, data.selection)
     }
 
     async setDocumentIsChildrenOpen (dto: SetDocumentIsChildrenOpenDTO): Promise<void> {
@@ -69,6 +69,11 @@ class DocumentAPI extends BaseAPI {
 
     async collectDocument (dto: CollectDocumentDTO): Promise<void> {
         const res = await this.post('/documents/collect', dto)
+        if (res.status !== 200) throw new APIError(res)
+    }
+
+    async updateDocumentSelection (dto: UpdateDocumentSelectionDTO): Promise<void> {
+        const res = await this.put('/documents/selection', dto)
         if (res.status !== 200) throw new APIError(res)
     }
 }
