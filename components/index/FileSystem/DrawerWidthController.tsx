@@ -16,7 +16,7 @@ export const DrawerWidthController: React.FC<{
                   style={{ left }}
                   onDrag={event => {
                       const value = GlobalManager.browser !== Browser.Firefox ? event.pageX : GlobalManager.mousePositionX
-                      if (value % 10 !== 2) {
+                      if (Math.round(value) % 5 !== 0) {
                           return
                       }
                       FileSystemManager.directoryDrawerWidth = value
