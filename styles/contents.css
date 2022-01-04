@@ -5,8 +5,49 @@
   overflow-y: scroll;
 }
 
+.content-container .content-toolbar {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.content-container .content-toolbar .hierarchy {
+  margin: 10px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.content-container .content-toolbar .hierarchy .document-block {
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 3px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.content-container .content-toolbar .hierarchy .document-divider {
+  color: #cacaca;
+  font-size: 1rem;
+  padding: 2px;
+  padding-top: 2px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.content-container .content-toolbar .hierarchy .document-block:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
 .content-container .contents {
-  margin-top: 10vh;
+  margin-top: 8vh;
 }
 
 .content-container .contents .MuiButton-root.Mui-disabled {

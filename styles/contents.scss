@@ -2,8 +2,37 @@
     position: fixed;
     height: 100%;
     overflow-y: scroll;
+    .content-toolbar {
+        width: 100%;
+        display: flex;
+        .hierarchy {
+            margin: 10px;
+            margin-top: 5px;
+            margin-bottom: 0px;
+            display: flex;
+            .document-block {
+                cursor: pointer;
+                border-radius: 5px;
+                font-size: 0.85rem;
+                text-align: center;
+                padding: 3px;
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+            .document-divider {
+                color: rgb(202, 202, 202);
+                font-size: 1rem;
+                padding: 2px;
+                padding-top: 2px;
+                user-select: none;
+            }
+            .document-block:hover {
+                background-color: rgba($color: #000000, $alpha: 0.04);
+            }
+        }
+    }
     .contents {
-        margin-top: 10vh;
+        margin-top: 8vh;
     
         .MuiButton-root.Mui-disabled {
             color: #000000;
