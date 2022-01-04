@@ -5,30 +5,24 @@ import FileSystemManager from '../../../manager/FileSystemManager'
 
 export const DrawerWidthController: React.FC<{
   }> = observer(() => {
-      const [controllerPosition, setControllerPosition] = useState(FileSystemManager.directoryDrawerWidth - 3)
+      //   const [controllerPosition, setControllerPosition] = useState(FileSystemManager.directoryDrawerWidth - 3)
       if (!FileSystemManager.documents) {
           return <></>
       }
+      const left = FileSystemManager.directoryDrawerWidth - 3
       return (
           <>
               <div className={'drawer-width-controller'}
-                  style={{ left: controllerPosition }}
+                  style={{ left }}
                   onDrag={event => {
-                      if (GlobalManager.browser !== Browser.Firefox) {
-                          setControllerPosition(event.pageX - 3)
-                      } else {
-                          setControllerPosition(GlobalManager.mousePositionX - 3)
+                      const value = GlobalManager.browser !== Browser.Firefox ? event.pageX : GlobalManager.mousePositionX
+                      if (value % 10 !== 2) {
+                          return
                       }
+                      FileSystemManager.directoryDrawerWidth = value
                   }}
                   draggable='true'
-                  onDragEnd={event => {
-                      if (GlobalManager.browser !== Browser.Firefox) {
-                          setControllerPosition(event.pageX - 3)
-                      } else {
-                          setControllerPosition(GlobalManager.mousePositionX - 3)
-                      }
-                      FileSystemManager.directoryDrawerWidth = GlobalManager.browser !== Browser.Firefox ? event.pageX : GlobalManager.mousePositionX
-                  }}>
+              >
               </div>
           </>
 
