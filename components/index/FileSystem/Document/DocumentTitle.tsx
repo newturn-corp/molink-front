@@ -7,7 +7,7 @@ import UserManager from '../../../../manager/UserManager'
 
 const getTitle = (document: Document) => {
     const childrenLength = document.directoryInfo.children.length
-    if (childrenLength > 0 && !document.directoryInfo.isChangingName && UserManager.setting.showSubDocumentCount) {
+    if (childrenLength > 0 && !document.directoryInfo.isChangingName && UserManager.setting && UserManager.setting.showSubDocumentCount) {
         return `${document.meta.title} (${childrenLength})`
     }
     return document.meta.title

@@ -1,16 +1,17 @@
 .drawer {
     position: fixed;
-    top: 60px;
+    top: 56px;
     flex-shrink: 0;
     overflow-x: hidden;
     height: calc(100vh - 60px);
+    // box-shadow: 0 1px 5px rgba(0,0,0,.2);
     .MuiDrawer-paper {
         overflow-x: auto;
         overflow-y: auto;
         position: relative;
         z-index: 900;
         height: calc(100vh - 60px);
-        background-color: #F7F6F3;
+        background-color: #ffffff;
         .MuiListItemIcon-root {
             min-width: 25px;
         }

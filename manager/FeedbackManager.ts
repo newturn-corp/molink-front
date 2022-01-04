@@ -2,8 +2,8 @@ import { notification } from 'antd'
 
 enum NOTIFICATION_TYPE { SUCCESS, ERROR }
 
-class NotificationManager {
-    showNotification (type: NOTIFICATION_TYPE, message: string, description: string, duration: number = 10, width: number = 500) {
+class FeedbackManager {
+    public showFeedback (type: NOTIFICATION_TYPE, message: string, description: string, duration: number = 10, width: number = 500) {
         notification[this._convertNotificationTypeToString(type)]({
             message,
             description,
@@ -15,7 +15,7 @@ class NotificationManager {
         })
     }
 
-    _convertNotificationTypeToString (type: NOTIFICATION_TYPE) {
+    private _convertNotificationTypeToString (type: NOTIFICATION_TYPE) {
         if (type === NOTIFICATION_TYPE.SUCCESS) {
             return 'success'
         } else if (type === NOTIFICATION_TYPE.ERROR) {
@@ -24,4 +24,4 @@ class NotificationManager {
     }
 }
 export { NOTIFICATION_TYPE }
-export default new NotificationManager()
+export default new FeedbackManager()

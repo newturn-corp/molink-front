@@ -21,7 +21,8 @@ export enum Event {
     UnloadPage,
     NewEditorOpen,
     LoadingContent,
-    EditorChange
+    EditorChange,
+    SignOut
 }
 const eventList = [
     Event.DocumentChildrenOpen,
@@ -39,7 +40,8 @@ const eventList = [
     Event.UnloadPage,
     Event.NewEditorOpen,
     Event.LoadingContent,
-    Event.EditorChange
+    Event.EditorChange,
+    Event.SignOut
 ]
 
 type EventListener = (param: EventParam) => void

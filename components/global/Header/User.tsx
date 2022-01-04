@@ -23,7 +23,12 @@ export const User: React.FC<{
           setAnchorEl(event.currentTarget)
       }
 
-      const handleClose = (key: string) => {
+      const handleClose = (event: React.MouseEvent<HTMLLIElement, MouseEvent>, key: string) => {
+          if (event) {
+              event.stopPropagation()
+              event.preventDefault()
+          }
+
           switch (key) {
           case 'sign-out':
               AuthManager.signOut()
@@ -33,20 +38,34 @@ export const User: React.FC<{
               break
           case 'setting':
               RoutingManager.moveTo(Page.SettingProfile)
+              break
           }
           setAnchorEl(null)
       }
 
-      return <div className='user-container'>
-          <Badge className={SaveManager.contentSaveStatus === ContentSaveStatus.SaveFailed ? 'disconnected' : 'connected' } variant="dot" overlap={'circular'}>
-              <Avatar onClick={(event) => handleClick(event)} sizes='40' src={profileImageSrc}>{profileInnerText}</Avatar>
-          </Badge>
+      return <div>
+          <div className='user-container' onClick={(event) => handleClick(event)}>
+              <Badge className={SaveManager.contentSaveStatus === ContentSaveStatus.SaveFailed ? 'disconnected' : 'connected' } variant="dot" overlap={'circular'}>
+                  <Avatar className='profile' sizes='32' src={profileImageSrc}>{profileInnerText}</Avatar>
+              </Badge>
+              <div className='nickname'>
+                  {UserManager.nickname}
+              </div>
+          </div>
           <Menu
               id="long-menu"
               anchorEl={anchorEl}
               keepMounted
               open={open}
-              onClose={(event) => handleClose(null)}
+              onClose={(event) => handleClose(null, null)}
+              anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center'
+              }}
+              transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center'
+              }}
               PaperProps={{
                   style: {
                       maxHeight: 48 * 4.5,
@@ -54,13 +73,13 @@ export const User: React.FC<{
                   }
               }}
           >
-              <MenuItem key={'support'} onClick={(event) => handleClose('support')}>
+              <MenuItem key={'support'} onClick={(event) => handleClose(event, 'support')}>
                   {'문의 & 의견'}
               </MenuItem>
-              <MenuItem key={'setting'} onClick={(event) => handleClose('setting')}>
+              <MenuItem key={'setting'} onClick={(event) => handleClose(event, 'setting')}>
                   {'설정'}
               </MenuItem>
-              <MenuItem key={'sign-out'} onClick={(event) => handleClose('sign-out')}>
+              <MenuItem key={'sign-out'} onClick={(event) => handleClose(event, 'sign-out')}>
                   {'로그아웃'}
               </MenuItem>
           </Menu>

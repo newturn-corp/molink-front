@@ -18,19 +18,19 @@ body {
 }
 .header {
     position: fixed;
-    background-color: #f8f5ec;;
+    background-color: #ffffff;;
     border-bottom: 1px solid #dfdfdf;
     width: 100%;
-    height: 60px;
-    z-index: 1200;
+    height: 56px;
+    z-index: 900;
     display: flex;
     flex-direction: row-reverse;
 
     .logo {
-        height: 50px;
-        width: 50px;
-        margin: 5px;
-        margin-left: 10px;
+        height: 40px;
+        width: 40px;
+        margin: 8px;
+        margin-left: 8px;
         cursor: pointer;
         img {
             width: 100%;
@@ -55,24 +55,6 @@ body {
     }
     // 178
 
-    .MuiBadge-badge {
-        width: 10px;
-        height: 10px;
-        border-radius: 5px;
-        border: 1px solid rgb(153, 153, 153);
-    }
-
-    .connected {
-        .MuiBadge-badge {
-            background-color: rgb(106, 231, 90);
-        }
-    }
-
-    .disconnected {
-        .MuiBadge-badge {
-            background-color: #bc2323
-        }
-    }
 
     .navigator {
         width: calc(100% - 438px)
@@ -119,21 +101,62 @@ body {
             padding: 4px;
         }
     }
-    .menu-container {
-        height: 40px;
-        width: 40px;
-        margin: 10px;
+    .user-container {
         margin-left: 0px;
-        .MuiIconButton-root {
-            width: 100%;
-            height: 100%;
-            margin: 0px;
-            padding: 0px;
+        margin-right: 10px;
+        cursor: pointer;
+        display: flex;
+        .MuiBadge-badge {
+            top: 16px;
+            right: 10px;
+            width: 7px;
+            min-width: 7px;
+            height: 7px;
+            border-radius: 3.5px;
+            border: 1px solid rgb(153, 153, 153);
+        }
+        .connected {
+            .MuiBadge-badge {
+                background-color: rgb(106, 231, 90);
+            }
+        }
+
+        .disconnected {
+            .MuiBadge-badge {
+                background-color: #bc2323
+            }
+        }
+        .profile {
+            margin-top: 12px;
+            margin-right: 5px;
+            width: 32px;
+            height: 32px;
+        }
+        .nickname {
+            font-weight: 600;
+            line-height: 55px;
         }
     }
-    .user-container {
-        margin: 10px;
-        cursor: pointer;
+    .notification {
+        .button {
+            margin: 10px;
+            padding: 5px;
+            color: inherit;
+            .MuiSvgIcon-root {
+                width: 26px;
+                height: 26px;
+            }
+        }
+        .MuiBadge-badge {
+            top: 16px;
+            right: 20px;
+            width: 7px;
+            min-width: 7px;
+            height: 7px;
+            border-radius: 3.5px;
+            background-color: #f44336;
+            // border: 1px solid rgb(153, 153, 153);
+        }
     }
     .sign-out {
         width: 140px;
@@ -145,7 +168,94 @@ body {
     }
     .login-button-container {
         margin: 10px;
-        .login-button {
+    }
+}
+.notification-list {
+    .MuiPaper-root {
+        border: 1px solid rgb(226, 226, 226);
+        .MuiList-root {
+            width: 100%;
+            padding: 6px 0px;
+        }
+        .MuiMenuItem-root {
+            white-space: unset;
+        }
+        p {
+            margin: 0px;
+        }
+        .label {
+            margin: 5px 11px;
+            color: rgb(119, 119, 119);
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .notification-label-container {
+            display: flex;
+            width: 100%;
+            .check-all-notification-button {
+                cursor: pointer;
+                font-size: 0.8rem;
+                line-height: 0.8rem;
+                padding: 7px 8px;
+                border-radius: 5px;
+                margin: 5px;
+                margin-left: 220px;
+                background-color: transparent;
+                color: inherit;
+                border: 1px solid #bebebe;
+            }
+            .check-all-notification-button:hover {
+                background-color: rgba(0, 0, 0, 0.04);
+            }
+        }
+        .notification-block {
+            display: flex;
+            .avatar-part {
+                width: 40px;
+                height: 100%;
+            }
+            .view-part {
+                display: flex;
+                .msg-container {
+                    margin-left: 10px;
+                    .msg {
+                        font-size: 0.95rem;
+                        word-break: break-all;
+                    }
+                    .createdAt {
+                        font-size: 0.8rem;
+                    }
+                }
+            }
+            .interaction {
+                display: flex;
+                margin-left: 5px;
+                .button {
+                    cursor: pointer;
+                    font-size: 0.8rem;
+                    line-height: 0.8rem;
+                    padding: 7px 20px;
+                    border-radius: 5px;
+                    margin: 5px;
+                }
+                .accept {
+                    background: #0095f6;
+                    color: #ffffff;
+                    font-weight: 600;
+                    border: 1px solid transparent;
+                }
+                .reject {
+                    cursor: pointer;
+                    background-color: transparent;
+                    color: inherit;
+                    border: 1px solid #bebebe;
+                }
+            }
+        }
+        .notification-not-exists {
+            .text {
+                margin: 11px;
+            }
         }
     }
 }
@@ -228,4 +338,13 @@ body {
     .ant-input-textarea {
         margin-top: 20px;
     }
+}
+
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

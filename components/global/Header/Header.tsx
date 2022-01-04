@@ -2,6 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { Visibility } from './Visibility'
 import { LoginButton } from './LoginButton'
+import { NotificationButton } from './NotificationButton'
 import { User } from './User'
 import { SearchComponent } from './SearchComponent'
 import RoutingManager, { Page } from '../../../manager/RoutingManager'
@@ -11,6 +12,7 @@ export const Header: React.FC<{
       return <div className='header'>
           <div className='header-right'>
               <User/>
+              <NotificationButton/>
               <Visibility />
               <LoginButton />
           </div>

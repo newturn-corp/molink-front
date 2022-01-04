@@ -29,13 +29,15 @@ export class UserSearchResultDTO {
     profileImageUrl: string | null
     biography: string
     isFollowing: boolean
+    isFollowRequested: boolean
 
-    constructor (id: number, nickname: string, profileImageUrl: string | null, biography: string, isFollowing: boolean) {
+    constructor (id: number, nickname: string, profileImageUrl: string | null, biography: string, isFollowing: boolean, isFollowRequested: boolean) {
         this.id = id
         this.nickname = nickname
         this.profileImageUrl = profileImageUrl
         this.biography = biography
         this.isFollowing = isFollowing
+        this.isFollowRequested = isFollowRequested
     }
 }
 

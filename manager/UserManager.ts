@@ -19,6 +19,16 @@ class UserManager {
 
     constructor () {
         makeAutoObservable(this)
+        EventManager.addEventLinstener(Event.SignOut, () => {
+            this.isUserAuthorized = false
+            this.isAuthorizing = false
+            this.userId = null
+            this.email = null
+            this.nickname = ''
+            this.biography = ''
+            this.profileImageUrl = null
+            this.setting = null
+        }, 1)
     }
 
     async updateUserProfile () {

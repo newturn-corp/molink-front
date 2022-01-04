@@ -20,15 +20,26 @@
             width: 700px;
             height: 100%;
 
-            .user-search-result {
+            .avatar {
                 cursor: pointer;
             }
             .follow-button {
-                background: rgb(226, 226, 226);
-                padding: 7px;
+                background: #0095f6;
+                color: #ffffff;
+                font-weight: 600;
+                cursor: pointer;
+
+                padding: 7px 9px;
                 border-radius: 5px;
-                font-size: 15px;
-                line-height: 15px;
+                font-size: 0.8rem;
+                line-height: 0.8rem;
+                border: 1px solid transparent;
+            }
+            .requested {
+                cursor: default;
+                background-color: transparent;
+                color: inherit;
+                border: 1px solid #bebebe;
             }
         }
     }
