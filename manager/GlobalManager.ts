@@ -31,12 +31,12 @@ class GlobalManager {
             this.browser = Browser.Firefox
         }
         this.window.addEventListener('mousemove', (event) => {
-            this.mousePositionX = event.screenX
-            this.mousePositionY = event.screenY
+            this.mousePositionX = event.pageX
+            this.mousePositionY = event.pageY
         })
         this.window.addEventListener('dragover', (event) => {
-            this.mousePositionX = event.screenX
-            this.mousePositionY = event.screenY
+            this.mousePositionX = event.pageX
+            this.mousePositionY = event.pageY
         })
         this.window.onbeforeunload = () => {
             EventManager.issueEvent(Event.UnloadPage, {})
