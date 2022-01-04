@@ -7,7 +7,7 @@ const [
     onDefaultKeyDown,
     { Transforms: ListTransforms, Editor: ListEditor }
 ] = EditListPlugin({
-    types: ['ul-list', 'ol-list'],
+    types: ['ul-list', 'ol-list', 'check-list'],
     typeItem: 'list-item'
 })
 

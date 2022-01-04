@@ -27,7 +27,8 @@ const SHORTCUTS = {
     '6.': 'ol-list',
     '7.': 'ol-list',
     '8.': 'ol-list',
-    '9.': 'ol-list'
+    '9.': 'ol-list',
+    ㅁ: 'check-list'
 }
 
 export const withShortcuts = (editor: Editor) => {
@@ -77,6 +78,16 @@ export const withShortcuts = (editor: Editor) => {
                     return
                 } else if (type === 'ol-list') {
                     ListTransforms.wrapInList(editor, 'ol-list')
+                    return
+                } else if (type === 'check-list') {
+                    const newProperties: Partial<SlateElement> = {
+                        type: 'check-list-item',
+                        checked: false
+                    }
+                    Transforms.setNodes<SlateElement>(editor, newProperties, {
+                        match: n => SlateEditor.isBlock(editor, n)
+                    })
+                    ListTransforms.wrapInList(editor, 'check-list')
                     return
                 }
                 const newProperties: Partial<SlateElement> = {

@@ -91,6 +91,12 @@ export type DocumentElement = {
   children: EmptyText[]
 }
 
+export type CheckListItemElement = {
+  type: 'check-list-item',
+  checked: boolean,
+  children: CustomText[]
+}
+
 export type EditorKeyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>, editor: Editor) => void
 
 export type LinkElement = { type: 'link'; url: string; children: Descendant[] }
@@ -106,7 +112,8 @@ LinkElement |
 OrderedListElement |
 OrderedListItemElement |
 DividerElement |
-DocumentElement
+DocumentElement |
+CheckListItemElement
 
 export type FormattedText = {
   bold?: boolean

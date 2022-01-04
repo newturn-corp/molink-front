@@ -124,7 +124,7 @@
 }
 
 .content-container .contents ul li::marker {
-  color: #37352f;
+  color: inherit;
 }
 
 .content-container .contents ul li p {
@@ -134,6 +134,34 @@
 .content-container .contents ul ul {
   border-left: 1px solid #cccccc;
   margin-left: -12px;
+}
+
+.content-container .contents div > .check-list {
+  margin-left: -20px;
+  padding-left: 25px;
+}
+
+.content-container .contents .check-list {
+  list-style-type: none;
+}
+
+.content-container .contents .check-list ul {
+  border-left: unset;
+}
+
+.content-container .contents .check-list .box {
+  left: -5px;
+  width: 1rem;
+  height: 1rem;
+  margin: 0.25rem;
+  margin-left: -19px;
+  background-color: transparent;
+  border: 2px solid #aaaaaa;
+  cursor: pointer;
+}
+
+.content-container .contents .check-list .box:hover {
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 .content-container .contents .react-draggable {
