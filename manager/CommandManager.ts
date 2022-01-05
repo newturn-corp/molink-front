@@ -3,6 +3,7 @@ import React from 'react'
 import { BaseRange, Editor, Element, Node, Range, Transforms } from 'slate'
 import Command from '../domain/Command'
 import Document from '../domain/Document'
+import { ListTransforms } from '../plugin/ListPlugin'
 import { DividerType, TextCategory } from '../utils/slate'
 import ContentManager from './ContentManager'
 import EventManager, { EditorChangeParam, Event } from './EventManager'
@@ -24,8 +25,10 @@ class CommandManager {
         new Command('구분선-짦은', '짦은 구분선', '/command/divider-short.svg'),
         new Command('구분선-짦고 흐릿한', '짦고 흐릿한 구분선', '/command/divider-faint-short.svg'),
         new Command('구분선-점', '점 구분선', '/command/divider-dot.svg'),
-        new Command('새문서', '새로운 하위 문서를 만듭니다.', '/command/document.svg')
-        // new Command('순서없는목록', '순서 없는 목록', './bullet-list.png')
+        new Command('새문서', '새로운 하위 문서를 만듭니다.', '/command/document.svg'),
+        new Command('순서없는목록', '순서 없는 목록', '/command/bullet-list.svg'),
+        new Command('숫자목록', '숫자 목록', '/command/ordered-list.svg'),
+        new Command('체크목록', '체크 목록', '/command/check-list.svg')
     ]
 
     isSiblingVoid: boolean = false
@@ -134,6 +137,49 @@ class CommandManager {
             }
             this.insertNode(editor, node)
             break
+        case '순서없는목록':
+            const unorderedRange = {
+                anchor: {
+                    offset: 0,
+                    path: editor.selection.focus.path
+                },
+                focus: editor.selection.focus
+            }
+            Transforms.select(editor, unorderedRange)
+            Transforms.delete(editor)
+            ListTransforms.wrapInList(editor)
+            break
+        case '숫자목록':
+            const orderedRange = {
+                anchor: {
+                    offset: 0,
+                    path: editor.selection.focus.path
+                },
+                focus: editor.selection.focus
+            }
+            Transforms.select(editor, orderedRange)
+            Transforms.delete(editor)
+            ListTransforms.wrapInList(editor, 'ol-list')
+            break
+        case '체크목록':
+            const checklistRange = {
+                anchor: {
+                    offset: 0,
+                    path: editor.selection.focus.path
+                },
+                focus: editor.selection.focus
+            }
+            Transforms.select(editor, checklistRange)
+            Transforms.delete(editor)
+            const newProperties: Partial<Element> = {
+                type: 'check-list-item',
+                checked: false
+            }
+            Transforms.setNodes<Element>(editor, newProperties, {
+                match: n => Editor.isBlock(editor, n)
+            })
+            ListTransforms.wrapInList(editor, 'check-list')
+            break
         case '새문서':
             if (!ContentManager.openedDocument) {
                 return
@@ -188,7 +234,7 @@ class CommandManager {
                     }
                     this.searchedCommands = this.commandsList.filter(command =>
                         command.name.startsWith(this.search.toLowerCase())
-                    ).slice(0, 10)
+                    )
                     this.index = 0
                     return
                 }
@@ -199,7 +245,7 @@ class CommandManager {
         }
     }
 
-    onKeyDown (event: React.KeyboardEvent, editor: Editor) {
+    async onKeyDown (event: React.KeyboardEvent, editor: Editor) {
         if (this.target && this.searchedCommands.length > 0) {
             switch (event.key) {
             case 'ArrowDown':
@@ -214,7 +260,7 @@ class CommandManager {
             case 'Enter':
                 event.preventDefault()
                 Transforms.select(editor, toJS(this.target))
-                this.insertNodeByCommand(editor, this.searchedCommands[this.index])
+                await this.insertNodeByCommand(editor, this.searchedCommands[this.index])
                 this.target = null
                 break
             case 'Escape':

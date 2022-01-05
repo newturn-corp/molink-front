@@ -563,7 +563,7 @@
 
 .command-list {
   width: 300px;
-  max-height: 400px;
+  max-height: 40vh;
   overflow-y: auto;
   overflow-x: hidden;
   top: -9999px;

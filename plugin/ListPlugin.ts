@@ -1,6 +1,7 @@
-import { Editor, Node, Range } from 'slate'
+import { Editor, Node, Range, Transforms } from 'slate'
 import { EditListPlugin } from '@productboard/slate-edit-list'
 import React from 'react'
+import { TextCategory } from '../utils/slate'
 
 const [
     withEditList,
@@ -85,6 +86,10 @@ export const onBackspace = (editor: Editor, event: React.KeyboardEvent<HTMLDivEl
         ListTransforms.decreaseItemDepth(editor)
     }
     ListTransforms.unwrapList(editor)
+    Transforms.setNodes(editor, {
+        type: 'text',
+        category: TextCategory.Content3
+    })
 }
 
 const KEY_ENTER = 'Enter'

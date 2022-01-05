@@ -183,10 +183,10 @@ export const PureEditor: React.FC<{
                   }
                   HotKeyManager.handleKeyDown(editor, e)
                   MentionManager.onKeyDown(e, editor)
-                  CommandManager.onKeyDown(e, editor)
                   OnListKeyDown(e, editor)
                   pluginKeyDown(e, editor)
                   onKeyDown(e)
+                  CommandManager.onKeyDown(e, editor)
               }}
               onDOMBeforeInput={(event: InputEvent) => {
                   switch (event.inputType) {
