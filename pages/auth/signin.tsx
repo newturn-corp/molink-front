@@ -13,9 +13,9 @@ const getEmailHelperText = (emailState: EmailState) => {
     switch (emailState) {
     case EmailState.NOT_AUTHORIZED:
     case EmailState.WRONG_EMAIL_PASSWORD:
-        return <p className='email-helper-text' style={{ color: 'red' }}>{'이메일 혹은 비밀번호가 잘못 입력되었습니다.'}</p>
+        return <p className='helper-text' style={{ color: 'red' }}>{'이메일 혹은 비밀번호가 잘못 입력되었습니다.'}</p>
     case EmailState.TOO_MANY_REQUEST:
-        return <p className='email-helper-text' style={{ color: 'red' }}>{'요청을 너무 많이 보냈습니다. 잠시 뒤 다시 시도해주세요.'}</p>
+        return <p className='helper-text' style={{ color: 'red' }}>{'요청을 너무 많이 보냈습니다. 잠시 뒤 다시 시도해주세요.'}</p>
     }
     return <></>
 }
