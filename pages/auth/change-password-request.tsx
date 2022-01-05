@@ -12,11 +12,11 @@ const getEmailHelperText = (emailState: EmailState) => {
     }
     switch (emailState) {
     case EmailState.NOT_EMAIL:
-        return <p className='email-helper-text'>{'이메일 형식이 아닙니다.'}</p>
+        return <p className='helper-text'>{'이메일 형식이 아닙니다.'}</p>
     case EmailState.TOO_MANY_REQUEST:
-        return <p className='email-helper-text'>{'너무 많은 요청을 보냈습니다. 잠시 뒤 다시 시도해주세요.'}</p>
+        return <p className='helper-text'>{'너무 많은 요청을 보냈습니다. 잠시 뒤 다시 시도해주세요.'}</p>
     case EmailState.EMAIL_NOT_EXIST:
-        return <p className='email-helper-text'>{'계정이 존재하지 않습니다.'}</p>
+        return <p className='helper-text'>{'계정이 존재하지 않습니다.'}</p>
     }
 }
 

@@ -6,10 +6,10 @@ import RoutingManager, { Page } from '../../manager/RoutingManager'
 
 const getPasswordHelperText = (passwordState: PasswordState) => {
     if (passwordState === PasswordState.DEFAULT) {
-        return <p className='password-helper-text'>{'문자, 숫자, 특수문자 포함 최소 8글자'}</p>
+        return <p className='helper-text'>{'문자, 숫자, 특수문자 포함 최소 8글자'}</p>
     }
     const text = passwordState === PasswordState.PASSWORD_MISMATCH ? '비밀번호가 일치하지 않습니다.' : '문자, 숫자, 특수문자 포함 최소 8글자'
-    return <p className='password-helper-text' style={{ color: 'red' }}>{text}</p>
+    return <p className='helper-text' style={{ color: 'red' }}>{text}</p>
 }
 
 const ChangePassword = () => {
