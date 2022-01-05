@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import DocumentAPI from '../api/DocumentAPI'
-import { CollectDocumentDTO, CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, SetDocumentVisibilityDTO } from '../DTO/DocumentDto'
+import { CollectDocumentDTO, CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, SetDocumentVisibilityDTO, UpdateDocumentIsLockedDTO } from '../DTO/DocumentDto'
 import EventManager, { Event } from '../manager/EventManager'
 import DocumentManager from '../manager/DocumentManager'
 import FileSystemManager from '../manager/FileSystemManager'
@@ -23,6 +23,7 @@ export default class Document {
     content = []
     contentId: string = ''
     authority: DocumentAuthority = new DocumentAuthority(false, false)
+    isLocked: boolean = false
 
     constructor (dto: DocumentInitialInfoDTO) {
         makeAutoObservable(this)
@@ -118,6 +119,11 @@ export default class Document {
 
     async collect () {
         await DocumentAPI.collectDocument(new CollectDocumentDTO(this.meta.id))
+    }
+
+    async updateIsLocked (isLocked: boolean) {
+        this.isLocked = isLocked
+        await DocumentAPI.updateDocumentIsLocked(new UpdateDocumentIsLockedDTO(this.meta.id, isLocked))
     }
 
     static async create (parent: Document | null, order: number) {

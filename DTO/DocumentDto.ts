@@ -37,8 +37,9 @@ export class GetDocumentDto {
     contentId: string = ''
     content: any = null
     selection: DocumentSelection | null = null
+    isLocked: boolean = false
 
-    constructor (id: string, userId: number, title: string, icon: string, visibility: DocumentVisibility, createdAt: Date, updatedAt: Date, authority: DocumentAuthority, content: any, contentId: string, selection: DocumentSelection | null) {
+    constructor (id: string, userId: number, title: string, icon: string, visibility: DocumentVisibility, createdAt: Date, updatedAt: Date, authority: DocumentAuthority, content: any, contentId: string, selection: DocumentSelection | null, isLocked: boolean) {
         this.id = id
         this.userId = userId
         this.title = title
@@ -50,6 +51,7 @@ export class GetDocumentDto {
         this.content = content
         this.contentId = contentId
         this.selection = selection
+        this.isLocked = isLocked
     }
 }
 
@@ -189,5 +191,15 @@ export class UpdateDocumentSelectionDTO {
     constructor (documentId: string, selection: DocumentSelection) {
         this.documentId = documentId
         this.selection = selection
+    }
+}
+
+export class UpdateDocumentIsLockedDTO {
+    documentId: string
+    isLocked: boolean
+
+    constructor (documentId: string, isLocked: boolean) {
+        this.documentId = documentId
+        this.isLocked = isLocked
     }
 }

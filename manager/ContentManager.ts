@@ -113,6 +113,7 @@ class ContentManager {
             document.meta.visibility = dto.visibility
             document.content = dto.content
             document.contentId = dto.contentId
+            document.isLocked = dto.isLocked
 
             this.openedDocument = document
             const rawDocument = toJS(this.openedDocument)

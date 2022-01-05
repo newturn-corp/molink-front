@@ -132,18 +132,18 @@ const Caption: React.FC<{
       const inputRef = useRef<TextAreaRef>(null)
       const [captionFocused, setCaptionFocused] = useState(false)
       const editor = useSlateStatic()
+      const showCaption = selected || caption.length > 0
       if (!selected) {
           if (captionFocused) {
               setCaptionFocused(false)
           }
-          if (caption === '') {
-              return <></>
-          }
       }
-      if (caption === '' && !selected) {
-          return <></>
-      }
-      return <figcaption>
+      console.log(caption)
+      console.log(caption.length)
+      console.log(showCaption)
+      return <figcaption style={{
+          display: showCaption ? undefined : 'none'
+      }}>
           <TextArea
               ref={inputRef}
               className={'caption'}
@@ -161,9 +161,11 @@ const Caption: React.FC<{
               //   readOnly={!captionFocused}
               rows={1}
               onChange={(e) => {
-                  const inputText = inputRef.current.resizableTextArea.props.value as string
+                  //   console.log()
+                  //   const inputText = inputRef.current.resizableTextArea.props.value as string
+                  //   console.log(inputText)
                   Transforms.setNodes(ContentManager.editor, {
-                      caption: inputText
+                      caption: e.target.value
                   }, {
                       at: ContentManager.editor.selection
                   })
