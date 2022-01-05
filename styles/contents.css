@@ -16,6 +16,9 @@
   margin: 10px;
   margin-top: 5px;
   margin-bottom: 0px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -43,6 +46,43 @@
 }
 
 .content-container .content-toolbar .hierarchy .document-block:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.content-container .content-toolbar .right-content-toolbar {
+  position: absolute;
+  right: 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+}
+
+.content-container .content-toolbar .right-content-toolbar .lock-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 5px;
+  padding: 6px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.content-container .content-toolbar .right-content-toolbar .lock-button .MuiSvgIcon-root {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.content-container .content-toolbar .right-content-toolbar .lock-button .lock-text {
+  margin: 0px;
+  margin-left: 3px;
+  font-size: 0.9rem;
+}
+
+.content-container .content-toolbar .right-content-toolbar .lock-button:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
 

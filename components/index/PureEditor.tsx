@@ -174,7 +174,7 @@ export const PureEditor: React.FC<{
               decorate={decorate}
               renderElement={renderElement}
               renderLeaf={renderLeaf}
-              readOnly={!ContentManager.openedDocument.authority.editable}
+              readOnly={!ContentManager.openedDocument.authority.editable || ContentManager.openedDocument.isLocked}
               //   placeholder="Enter some rich text…"
               spellCheck={!ContentManager.openedDocument.authority.editable}
               onKeyDown={(e) => {
