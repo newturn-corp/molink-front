@@ -127,8 +127,9 @@ import TextArea, { TextAreaRef } from 'antd/lib/input/TextArea'
 
 const Caption: React.FC<{
     selected: boolean,
-    caption: string
-  }> = ({ selected, caption }) => {
+    caption: string,
+    floatOption: ImageFloatOption
+  }> = ({ selected, caption, floatOption }) => {
       const inputRef = useRef<TextAreaRef>(null)
       const [captionFocused, setCaptionFocused] = useState(false)
       const editor = useSlateStatic()
@@ -138,9 +139,6 @@ const Caption: React.FC<{
               setCaptionFocused(false)
           }
       }
-      console.log(caption)
-      console.log(caption.length)
-      console.log(showCaption)
       return <figcaption style={{
           display: showCaption ? undefined : 'none'
       }}>
@@ -148,7 +146,8 @@ const Caption: React.FC<{
               ref={inputRef}
               className={'caption'}
               style={{
-                  userSelect: captionFocused ? 'auto' : undefined
+                  userSelect: captionFocused ? 'auto' : undefined,
+                  textAlign: floatOption === ImageFloatOption.Left ? 'left' : floatOption === ImageFloatOption.Center ? 'center' : 'right'
               }}
               tabIndex={-1}
               onClick={() => {
@@ -349,7 +348,7 @@ export const SlateImageElement: React.FC<{
                               : <></>
                       }
                   </Rnd>
-                  <Caption selected={selected} caption={element.caption}/>
+                  <Caption selected={selected} caption={element.caption} floatOption={element.floatOption}/>
               </div>
           </div>
       )
