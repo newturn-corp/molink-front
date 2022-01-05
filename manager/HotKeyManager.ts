@@ -54,13 +54,6 @@ class HotKeyManager {
             e.preventDefault()
             await SaveManager.saveContent()
             break
-        case 'ctrl+k':
-            e.preventDefault()
-            Transforms.insertNodes(editor, {
-                type: 'divider',
-                dividerType: DividerType.Dot,
-                children: [{ text: '' }]
-            })
         }
     }
 }

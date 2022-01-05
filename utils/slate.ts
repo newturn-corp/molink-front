@@ -47,6 +47,8 @@ export type ImageElement = {
   height: number
   isUploading: boolean
   floatOption: ImageFloatOption
+  caption: string
+  captionHeight: number
   children: EmptyText[]
 }
 

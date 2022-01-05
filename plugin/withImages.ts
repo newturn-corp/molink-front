@@ -7,7 +7,7 @@ import StyleManager from '../manager/StyleManager'
 
 const insertImage = (editor: Editor, url: string, width: number, height: number, isUploading: boolean) => {
     const text = { text: '' }
-    const image: ImageElement = { type: 'image', url, floatOption: ImageFloatOption.Left, children: [text], width, height, isUploading }
+    const image: ImageElement = { type: 'image', url, floatOption: ImageFloatOption.Center, children: [text], width, height, isUploading, caption: '', captionHeight: 0 }
     Transforms.insertNodes(editor, image)
 }
 
