@@ -26,6 +26,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@productboard/slate-edit-list": "^0.21.5",
+    "@slate-collaborative/client": "^0.7.2",
     "@types/slate-plain-serializer": "^0.7.1",
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",

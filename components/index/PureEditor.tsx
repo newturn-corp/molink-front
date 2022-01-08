@@ -41,6 +41,7 @@ import { withEditList, onKeyDown as OnListKeyDown } from '../../plugin/ListPlugi
 import { onKeyDown as pluginKeyDown } from '../../plugin/plugins'
 import { DocumentElementPlugin } from '../../plugin/DocumentElementPlugin'
 import EventManager, { Event } from '../../manager/EventManager'
+import { OnlinePlugin } from '../../plugin/OnlinePlugin'
 
 const plugins = [
     withReact,
@@ -56,7 +57,8 @@ const plugins = [
     withCorrectVoidBehavior,
     HoveringToolbarPlugin,
     InlinePlugin,
-    DocumentElementPlugin
+    DocumentElementPlugin,
+    OnlinePlugin
 ]
 
 const setPlugin = (editor: SlateEditor): SlateEditor => {
@@ -91,7 +93,7 @@ export const PureEditor: React.FC<{
   }> = observer(() => {
       const renderElement = useCallback(props => <CustomElementComponent {...props} />, [])
       const renderLeaf = useCallback(props => <CustomLeafComponent {...props} />, [])
-      const editor = useMemo(() => setPlugin(createEditor()), [])
+      const editor = useMemo(() => setPlugin(createEditor()), [ContentManager.openedDocument])
       ContentManager.editor = editor
 
       const getLength = token => {
@@ -155,10 +157,10 @@ export const PureEditor: React.FC<{
               }
           }
       }
-
       if (!ContentManager.openedDocument) {
           return <></>
       }
+      editor.connect()
 
       EventManager.issueEvent(Event.NewEditorOpen, { editor })
 

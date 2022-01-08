@@ -7,7 +7,8 @@ module.exports = (phase, { defaultConfig }) => {
         IS_DEV: phase === PHASE_DEVELOPMENT_SERVER,
         SERVER_BASE_URL: process.env.SERVER_BASE_URL,
         FRONT_HOST_NAME: process.env.FRONT_HOST_NAME,
-        TZ: 'Asia/Seoul'
+        TZ: 'Asia/Seoul',
+        LIVE_CONTENT_SERVER_URL: process.env.LIVE_CONTENT_SERVER_URL
     }
     defaultConfig.future = { webpack5: true }
     defaultConfig.swcMinify = true

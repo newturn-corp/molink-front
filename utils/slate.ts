@@ -127,9 +127,13 @@ export type FormattedText = {
 
 export type CustomText = FormattedText & EmptyText
 
+type OnlineEditor = {
+  connect: Function
+}
+
 declare module 'slate' {
     interface CustomTypes {
-      Editor: BaseEditor & ReactEditor & HistoryEditor
+      Editor: BaseEditor & ReactEditor & HistoryEditor & OnlineEditor
       Element: CustomElement
       Text: CustomText
     }
