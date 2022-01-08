@@ -20,6 +20,7 @@ export const OnlinePlugin = (editor: Editor) => {
         }
     }
 
+    console.log(options)
     const newEditor = withIOCollaboration(editor as any, options)
     return newEditor
 }
