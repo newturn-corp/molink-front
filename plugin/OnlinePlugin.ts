@@ -16,11 +16,11 @@ export const OnlinePlugin = (editor: Editor) => {
             query: {
                 token: UserManager.userId,
                 slug: documentId
-            }
+            },
+            withCredentials: true
         }
     }
 
-    console.log(options)
     const newEditor = withIOCollaboration(editor as any, options)
     return newEditor
 }
