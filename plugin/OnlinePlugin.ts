@@ -17,7 +17,8 @@ export const OnlinePlugin = (editor: Editor) => {
                 token: UserManager.userId,
                 slug: documentId
             },
-            withCredentials: true
+            withCredentials: true,
+            transports: ['websocket']
         }
     }
 
