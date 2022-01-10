@@ -111,15 +111,15 @@ class ContentManager {
             document.directoryInfo.isOpen = true
             document.authority = dto.authority
             document.meta.visibility = dto.visibility
-            document.content = dto.content
+            // document.content = dto.content
             document.contentId = dto.contentId
             document.isLocked = dto.isLocked
 
             this.openedDocument = document
-            const rawDocument = toJS(this.openedDocument)
-            for (let i = 0; i < this.openedDocument.content.length; i++) {
-                this.editor.apply({ type: 'insert_node', path: [i], node: rawDocument.content[i] })
-            }
+            // const rawDocument = toJS(this.openedDocument)
+            // for (let i = 0; i < this.openedDocument.content.length; i++) {
+            //     this.editor.apply({ type: 'insert_node', path: [i], node: rawDocument.content[i] })
+            // }
             if (dto.selection) {
                 ReactEditor.focus(this.editor)
                 Transforms.select(this.editor, dto.selection)

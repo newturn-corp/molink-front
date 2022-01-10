@@ -4,6 +4,8 @@ import {
 } from 'slate'
 import { HistoryEditor } from 'slate-history'
 import React from 'react'
+import { WithSocketIOEditor } from '@slate-collaborative/client/lib/withSocketIO'
+import { AutomergeEditor } from '@slate-collaborative/client/lib/automerge-editor'
 
 export type EmptyText = {
   text: string
@@ -127,13 +129,9 @@ export type FormattedText = {
 
 export type CustomText = FormattedText & EmptyText
 
-type OnlineEditor = {
-  connect: Function
-}
-
 declare module 'slate' {
     interface CustomTypes {
-      Editor: BaseEditor & ReactEditor & HistoryEditor & OnlineEditor
+      Editor: BaseEditor & ReactEditor & HistoryEditor & WithSocketIOEditor & AutomergeEditor
       Element: CustomElement
       Text: CustomText
     }

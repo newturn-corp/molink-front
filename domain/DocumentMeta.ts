@@ -31,7 +31,7 @@ export default class DocumentMeta {
 
     async setDocumentTitle (title: string) {
         this.title = title
-        await DocumentAPI.setDocumentTitle(new SetDocumentTitleDTO(this.id, title))
+        // await DocumentAPI.setDocumentTitle(new SetDocumentTitleDTO(this.id, title))
     }
 
     async setDocumentIcon (icon: string) {

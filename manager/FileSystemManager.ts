@@ -79,8 +79,12 @@ class FileSystemManager {
         const order = this._selectedDocument ? this._selectedDocument.directoryInfo.children.length : this.documents.length
         const document = await Document.create(parent, order)
         EventManager.addDisposableEventListener(Event.LoadingContent, ({ editor }: { editor: Editor }) => {
-            ReactEditor.focus(editor)
-            Transforms.select(editor, [0, 0])
+            try {
+                ReactEditor.focus(editor)
+                Transforms.select(editor, [0, 0])
+            } catch (err) {
+                console.log(err)
+            }
         }, 1)
         this.selectedDocument = document
         RoutingManager.moveTo(Page.Index, `?id=${document.meta.id}`)

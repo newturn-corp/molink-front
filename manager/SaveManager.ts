@@ -46,29 +46,29 @@ class SaveManager {
     }
 
     async saveContent (force: boolean = false, isAutoSaving: boolean = false) {
-        if (!force && this.preventSaving) {
-            return
-        }
-        const targetDocument = ContentManager.openedDocument
-        if (!targetDocument) {
-            return
-        }
-        this.preventSaving = true
-        setTimeout(() => {
-            this.preventSaving = false
-        }, 10000)
+        // if (!force && this.preventSaving) {
+        //     return
+        // }
+        // const targetDocument = ContentManager.openedDocument
+        // if (!targetDocument) {
+        //     return
+        // }
+        // this.preventSaving = true
+        // setTimeout(() => {
+        //     this.preventSaving = false
+        // }, 10000)
 
-        this.contentSaveStatus = ContentSaveStatus.Saving
-        this.isSaving = true
-        try {
-            await ContentAPI.updateContent(new UpdateContentDTO(targetDocument.contentId, targetDocument.content))
-            await DocumentAPI.updateDocumentSelection(new UpdateDocumentSelectionDTO(targetDocument.meta.id, ContentManager.editor.selection.focus))
-            await DocumentAPI.setDocumentTitle(new SetDocumentTitleDTO(targetDocument.meta.id, targetDocument.meta.title))
-            this.contentSaveStatus = ContentSaveStatus.Saved
-            this.lastSavedAt = new Date()
-        } catch (err) {
-            this.contentSaveStatus = ContentSaveStatus.SaveFailed
-        }
+        // this.contentSaveStatus = ContentSaveStatus.Saving
+        // this.isSaving = true
+        // try {
+        //     await ContentAPI.updateContent(new UpdateContentDTO(targetDocument.contentId, targetDocument.content))
+        //     await DocumentAPI.updateDocumentSelection(new UpdateDocumentSelectionDTO(targetDocument.meta.id, ContentManager.editor.selection.focus))
+        //     await DocumentAPI.setDocumentTitle(new SetDocumentTitleDTO(targetDocument.meta.id, targetDocument.meta.title))
+        //     this.contentSaveStatus = ContentSaveStatus.Saved
+        //     this.lastSavedAt = new Date()
+        // } catch (err) {
+        //     this.contentSaveStatus = ContentSaveStatus.SaveFailed
+        // }
     }
 
     tryAutoSave () {
