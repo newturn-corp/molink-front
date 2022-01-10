@@ -18,7 +18,7 @@ export const DrawerWidthController: React.FC<{
                       if (Math.round(value) % 5 !== 0) {
                           return
                       }
-                      FileSystemManager.fileSystemWidth = value
+                      FileSystemManager.fileSystemWidth = Math.max(value, 180)
                   }}
                   onDragEnd={event => {
                       FileSystemManager.updateFileSystemWidth()
