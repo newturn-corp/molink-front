@@ -71,16 +71,18 @@ export const HeadNextNormalTextPlugin = (editor: Editor) => {
             parent.children.splice(index + 1, 0, newNode)
 
             if (selection) {
-                for (const [point, key] of Range.points(selection)) {
-                    selection[key] = Point.transform(point, op)!
-                }
+                // console.log('체크')
+                // Transforms.select(editor, Range.points(selection))
+                // for (const [point, key] of Range.points(selection)) {
+                //     selection[key] = Point.transform(point, op)!
+                // }
             }
         } finally {
             editor.children = finishDraft(editor.children)
 
             if (selection) {
                 editor.selection = isDraft(selection)
-                    ? (finishDraft(selection) as Range)
+                    ? (finishDraft(selection))
                     : selection
             } else {
                 editor.selection = null
