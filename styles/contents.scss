@@ -151,6 +151,7 @@
             color: #aaa;
             font-style: italic;
         }
+
         ul {
             // margin-top: 5px;
             list-style: disc;
@@ -169,6 +170,25 @@
                 margin-left: -12px;
             }
         }
+
+        ol {
+            // margin-top: 5px;
+            margin-left: -15px;
+            -moz-margin-left: -20px;
+            li::marker {
+                color: inherit;
+            }
+            li {
+                p {
+                    margin-bottom: 5px;
+                }
+            }
+            ol {
+                border-left: 1px solid rgb(204, 204, 204);
+                margin-left: -12px;
+            }
+        }
+
         div > .check-list {
             margin-left: -20px;
             padding-left: 25px;

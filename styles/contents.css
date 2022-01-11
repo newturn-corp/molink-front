@@ -217,6 +217,24 @@
   margin-left: -12px;
 }
 
+.content-container .contents ol {
+  margin-left: -15px;
+  -moz-margin-left: -20px;
+}
+
+.content-container .contents ol li::marker {
+  color: inherit;
+}
+
+.content-container .contents ol li p {
+  margin-bottom: 5px;
+}
+
+.content-container .contents ol ol {
+  border-left: 1px solid #cccccc;
+  margin-left: -12px;
+}
+
 .content-container .contents div > .check-list {
   margin-left: -20px;
   padding-left: 25px;
