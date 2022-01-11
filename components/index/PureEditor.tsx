@@ -20,26 +20,20 @@ import { CustomLeafComponent } from '../SlateElement/CustomLeafComponent'
 import { withImages } from '../../plugin/withImages'
 import { withShortcuts } from '../../plugin/withShortcuts'
 import { withLayout } from '../../plugin/withLayout'
-import { withMentions } from '../../plugin/withMentions'
 import { HeadNextNormalTextPlugin } from '../../plugin/HeaderWithNormalTextPlugin'
 import '../../plugin/KnowlinkCustomSlatePlugin'
-// import { EditListPlugin } from '../../node_modules/@productboard/slate-edit-list/dist/index'
-import { EditListPlugin } from '@productboard/slate-edit-list'
 import ContentManager from '../../manager/ContentManager'
 import { MentionListComponent } from '../home/MentionListComponent'
 import { CommandListComponent } from '../home/CommandListComponent'
 import HotKeyManager from '../../manager/HotKeyManager'
 import MentionManager from '../../manager/MentionManager'
 import CommandManager from '../../manager/CommandManager'
-import SaveManager from '../../manager/SaveManager'
 import { withCorrectVoidBehavior } from '../../plugin/withCorrectVoidBehavior'
 import { HoveringToolbar } from '../home/HoveringToolbar'
 import { HoveringToolbarPlugin } from '../../plugin/HoveringToolbarPlugin'
 import InlinePlugin from '../../plugin/InlinePlugin'
-import { DividerPlugin } from '../../plugin/DividerPlugin'
 import { withEditList, onKeyDown as OnListKeyDown } from '../../plugin/ListPlugin'
-import { onKeyDown as pluginKeyDown } from '../../plugin/plugins'
-import { DocumentElementPlugin } from '../../plugin/DocumentElementPlugin'
+import { onKeyDown as pluginKeyDown, plugin as TotlePlugin } from '../../plugin/plugins'
 import EventManager, { Event } from '../../manager/EventManager'
 import { OnlinePlugin } from '../../plugin/OnlinePlugin'
 
@@ -48,16 +42,14 @@ const plugins = [
     withShortcuts,
     withHistory,
     withImages,
-    DividerPlugin,
     withShortcuts,
     withLayout,
-    withMentions,
+    TotlePlugin,
     HeadNextNormalTextPlugin,
     withEditList,
     withCorrectVoidBehavior,
     HoveringToolbarPlugin,
     InlinePlugin,
-    DocumentElementPlugin,
     OnlinePlugin
 ]
 

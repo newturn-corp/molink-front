@@ -19,11 +19,7 @@ const isImageUrl = (url: string) => {
 }
 
 export const withImages = (editor: Editor) => {
-    const { insertData, isVoid } = editor
-
-    editor.isVoid = element => {
-        return element.type === 'image' ? true : isVoid(element)
-    }
+    const { insertData } = editor
 
     editor.insertData = data => {
         const text = data.getData('text/plain')
