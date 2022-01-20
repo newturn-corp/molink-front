@@ -4,7 +4,7 @@ import { observer } from 'mobx-react'
 import '../../utils/prism'
 import { Editor } from 'slate'
 import { ReactEditor } from 'slate-react'
-import MentionManager from '../../manager/MentionManager'
+import MentionManager from '../../manager/Editing/MentionManager'
 
 const Portal = ({ children }) => {
     return typeof document === 'object'

@@ -5,22 +5,24 @@ import Document from '../domain/Document'
 import { GetUserProfileDTO, SearchUserDTO, SearchResponseDTO, GetUserRepresentativeDocumentResponseDTO, GetUserRepresentativeDocumentURLDTO, UpdateUserProfileImageDto, UpdateUserBiographyDTO, FollowResponseDTO, FollowRequestDTO } from '../DTO/UserDTO'
 import { RepresentativeDocumentNotExists, UserNotExists } from '../Errors/UserError'
 import UserSetting from '../domain/UserSetting'
+import UserProfile from '../domain/User/UserProfile'
 
 class UserAPI extends BaseAPI {
-    async getUserProfile (): Promise<GetUserProfileDTO> {
-        const res = await this.get('/users/profile')
+    async getUserProfile (): Promise<UserProfile> {
+        const res = await this.get('/main/users/profile')
         if (res.status !== 200) throw new APIError(res)
-        return res.data
+        const { data } = res
+        return new UserProfile(data.userId, data.email, data.nickname, data.representativeDocumentId, data.biography, data.profileImageUrl)
     }
 
     async searchUsers (dto: SearchUserDTO): Promise<SearchResponseDTO> {
-        const res = await this.get(`/users/search?q=${dto.searchText}`)
+        const res = await this.get(`/main/users/search?q=${dto.searchText}`)
         if (res.status !== 200) throw new APIError(res)
         return res.data
     }
 
     async getUserRepresentativeDocumentUrl (dto: GetUserRepresentativeDocumentURLDTO): Promise<GetUserRepresentativeDocumentResponseDTO> {
-        const res = await this.get(`/users/representative-document-url?id=${dto.id}`)
+        const res = await this.get(`/main/users/representative-document-url?id=${dto.id}`)
         if (res.status === 404001) {
             throw new UserNotExists()
         } else if (res.status === 409001) {
@@ -30,7 +32,7 @@ class UserAPI extends BaseAPI {
     }
 
     async updateUserProfileImage (dto: UpdateUserProfileImageDto): Promise<void> {
-        const res = await this.putFormData('/users/profile-image', dto)
+        const res = await this.putFormData('/main/users/profile-image', dto)
         if (res.status !== 200) throw new APIError(res)
     }
 

@@ -1,5 +1,5 @@
 import { Descendant, Editor, Node, Operation, Point, Range, Text, Transforms } from 'slate'
-import { TextCategory, TextElement } from '../utils/slate'
+import { TextCategory, TextElement } from '../Types/slate/CustomElement'
 import { createDraft, finishDraft, isDraft } from 'immer'
 
 /**

@@ -1,8 +1,8 @@
 import { css } from '@emotion/css'
 import React from 'react'
 import { useSelected } from 'slate-react'
-import RoutingManager, { Page } from '../../manager/RoutingManager'
-import { LinkElement } from '../../utils/slate'
+import RoutingManager, { Page } from '../../manager/global/RoutingManager'
+import { LinkElement } from '../../Types/slate/CustomElement'
 
 const InlineChromiumBugfix = () => (
     <span

@@ -7,7 +7,7 @@ import {
     Editor,
     Node
 } from 'slate'
-import { BulletedListElement, OrderedListElement } from '../utils/slate'
+import { BulletedListElement, OrderedListElement } from '../Types/slate/CustomElement'
 import { ListEditor, ListTransforms } from './ListPlugin'
 
 const SHORTCUTS = {
@@ -38,27 +38,27 @@ export const withShortcuts = (editor: Editor) => {
     editor.insertText = text => {
         const { selection } = editor
 
-        // if (text === '`' && selection && Range.isCollapsed(selection)) {
-        //     const { anchor } = selection
-        //     const block = SlateEditor.above(editor, {
-        //         match: n => SlateEditor.isBlock(editor, n)
-        //     })
-        //     const path = block ? block[1] : []
-        //     const start = SlateEditor.start(editor, path)
-        //     const range = { anchor, focus: start }
-        //     const beforeText = SlateEditor.string(editor, range)
-        //     if (beforeText === '``') {
-        //         Transforms.select(editor, range)
-        //         Transforms.delete(editor)
-        //         const newProperties: Partial<SlateElement> = {
-        //             type: 'code'
-        //         }
-        //         Transforms.setNodes<SlateElement>(editor, newProperties, {
-        //             match: n => SlateEditor.isBlock(editor, n)
-        //         })
-        //         return
-        //     }
-        // }
+        if (text === '`' && selection && Range.isCollapsed(selection)) {
+            const { anchor } = selection
+            const block = SlateEditor.above(editor, {
+                match: n => SlateEditor.isBlock(editor, n)
+            })
+            const path = block ? block[1] : []
+            const start = SlateEditor.start(editor, path)
+            const range = { anchor, focus: start }
+            const beforeText = SlateEditor.string(editor, range)
+            if (beforeText === '``') {
+                Transforms.select(editor, range)
+                Transforms.delete(editor)
+                const newProperties: Partial<SlateElement> = {
+                    type: 'code'
+                }
+                Transforms.setNodes<SlateElement>(editor, newProperties, {
+                    match: n => SlateEditor.isBlock(editor, n)
+                })
+                return
+            }
+        }
 
         if (text === ' ' && selection && Range.isCollapsed(selection)) {
             const { anchor } = selection

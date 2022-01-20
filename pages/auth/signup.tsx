@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Backdrop, Button, CircularProgress, TextField } from '@material-ui/core'
-import AuthManager, { EmailState, NicknameState, PasswordState } from '../../manager/AuthManager'
+import AuthManager, { EmailState, NicknameState, PasswordState } from '../../manager/Auth/AuthManager'
 import { observer } from 'mobx-react-lite'
-import RoutingManager, { Page } from '../../manager/RoutingManager'
+import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 import { AuthLogo } from '../../components/auth/logo'
 
 const getEmailHelperText = (emailState: EmailState) => {

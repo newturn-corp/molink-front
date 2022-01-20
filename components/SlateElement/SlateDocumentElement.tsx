@@ -1,6 +1,6 @@
 import React from 'react'
-import { DocumentElement } from '../../utils/slate'
-import RoutingManager, { Page } from '../../manager/RoutingManager'
+import { DocumentElement } from '../../Types/slate/CustomElement'
+import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 import DocumentManager from '../../manager/DocumentManager'
 
 export const SlateDocumentElement: React.FC<{

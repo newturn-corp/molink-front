@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react'
 import React from 'react'
 import { Divider, List } from '@material-ui/core'
-import SearchManager from '../../manager/SearchManager'
+import SearchManager from '../../manager/global/SearchManager'
 import { UserSearchResult } from './UserSearchResult'
 
 export const SearchResults: React.FC<{

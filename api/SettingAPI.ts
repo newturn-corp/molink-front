@@ -4,24 +4,24 @@ import UserSetting from '../domain/UserSetting'
 
 class SettingAPI extends BaseAPI {
     async getUserSetting (): Promise<UserSetting> {
-        const res = await this.get('/settings')
+        const res = await this.get('/main/settings')
         if (res.status !== 200) throw new APIError(res)
         const { data } = res
         return new UserSetting(data.followWithoutApprove, data.showSubDocumentCount, data.fileSystemWidth)
     }
 
     async setFollowWithoutApprove (value: boolean): Promise<void> {
-        const res = await this.put('/settings/follow-without-approve', { value })
+        const res = await this.put('/main/settings/follow-without-approve', { value })
         if (res.status !== 200) throw new APIError(res)
     }
 
     async setShowSubDocumentCount (value: boolean): Promise<void> {
-        const res = await this.put('/settings/show-sub-document-count', { value })
+        const res = await this.put('/main/settings/show-sub-document-count', { value })
         if (res.status !== 200) throw new APIError(res)
     }
 
     async updateFileSystemWidth (value: number): Promise<void> {
-        const res = await this.put('/settings/file-system-width', { value })
+        const res = await this.put('/main/settings/file-system-width', { value })
         if (res.status !== 200) throw new APIError(res)
     }
 }

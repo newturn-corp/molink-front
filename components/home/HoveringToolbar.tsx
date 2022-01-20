@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom'
 import { Editor, Node, Range, Text, Transforms } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
 import HoveringToolbarManager from '../../manager/HoveringToolbarManager'
-import LinkManager from '../../manager/LinkManager'
+import LinkManager from '../../manager/Editing/LinkManager'
 import { Portal } from '../utils/Portal'
 import { LinkInput } from './LinkInput'
 interface BaseProps {

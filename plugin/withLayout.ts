@@ -3,7 +3,7 @@ import {
     Node,
     Element as SlateElement
 } from 'slate'
-import { TextCategory } from '../utils/slate'
+import { TextCategory } from '../Types/slate/CustomElement'
 
 export const withLayout = editor => {
     const { normalizeNode } = editor

@@ -2,26 +2,26 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import Drawer from '@material-ui/core/Drawer'
 import { makeStyles } from '@material-ui/core/styles'
-import { DrawerContextMenu } from './ContextMenu'
-import { DragIndicator } from './DragIndicator'
+import { HierarchyContextMenu } from '../../home/Hierarchy/HierarchyContextMenu'
+import { DragIndicator } from '../../home/Hierarchy/DragIndicator'
 import { FileList } from './FileList'
 
-import FileSystemManager from '../../../manager/FileSystemManager'
+import FileSystemManager from '../../../manager/Home/DocumentHierarchyManager/DocumentHierarchyManager'
 
 export const FileSystem: React.FC<{
   }> = observer(() => {
-      const width = FileSystemManager.fileSystemWidth + 1
-      const useStyles = makeStyles({
-          root: {
-          },
-          paper: {
-              width
-          }
-      })
-      const classes = useStyles()
-      if (!FileSystemManager.documents) {
-          return <></>
-      }
+      //   const width = FileSystemManager.fileSystemWidth + 1
+      //   const useStyles = makeStyles({
+      //       root: {
+      //       },
+      //       paper: {
+      //           width
+      //       }
+      //   })
+      //   const classes = useStyles()
+      //   if (!FileSystemManager.documents) {
+      //       return <></>
+      //   }
       return (
           <>
               <Drawer
@@ -30,12 +30,12 @@ export const FileSystem: React.FC<{
                   variant="permanent"
                   anchor="left"
                   onContextMenu={(event) => FileSystemManager.handleRightClick(event, null)}
-                  style={{
-                      width
-                  }}
-                  classes={classes}
+                  //   style={{
+                  //       width
+                  //   }}
+                  //   classes={classes}
               >
-                  <DrawerContextMenu/>
+                  {/* <DrawerContextMenu/> */}
                   <FileList/>
                   <DragIndicator></DragIndicator>
               </Drawer>

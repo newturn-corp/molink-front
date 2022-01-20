@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react'
 import React from 'react'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@material-ui/core'
-import DialogManager from '../manager/DialogManager'
+import DialogManager from '../manager/global/DialogManager'
 
 export const DialogComponent: React.FC<{
   }> = observer(() => {

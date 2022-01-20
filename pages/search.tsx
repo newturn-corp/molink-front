@@ -1,9 +1,9 @@
 import React from 'react'
 import { Header } from '../components/global/Header/Header'
 import { ButtonGroup, Button } from '@material-ui/core'
-import SearchManager from '../manager/SearchManager'
-import UserManager from '../manager/UserManager'
-import GlobalManager from '../manager/GlobalManager'
+import SearchManager from '../manager/global/SearchManager'
+import UserManager from '../manager/global/UserManager'
+import GlobalManager from '../manager/global/GlobalManager'
 import { SearchResults } from '../components/search/SearchResult'
 
 const Search = () => {

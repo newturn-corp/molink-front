@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { observer } from 'mobx-react'
 import '../../utils/prism'
 import { Editor } from 'slate'
-import CommandManager from '../../manager/CommandManager'
+import CommandManager from '../../manager/Editing/CommandManager'
 import Command from '../../domain/Command'
 
 const Portal = ({ children }) => {

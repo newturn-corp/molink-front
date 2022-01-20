@@ -5,7 +5,7 @@ import { LoginButton } from './LoginButton'
 import { NotificationButton } from './NotificationButton'
 import { User } from './User'
 import { SearchComponent } from './SearchComponent'
-import RoutingManager, { Page } from '../../../manager/RoutingManager'
+import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 
 export const Header: React.FC<{
   }> = observer(() => {

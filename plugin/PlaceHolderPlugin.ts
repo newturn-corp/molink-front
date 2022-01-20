@@ -1,8 +1,7 @@
 import { Node, Range, Text } from 'slate'
 import EditorManager from '../manager/EditorManager'
-import { EditorKeyDownHandler } from '../utils/slate'
 
-const onKeyDown: EditorKeyDownHandler = (event, editor) => {
+const onKeyDown = (event, editor) => {
     const { selection } = editor
     if (!Range.isCollapsed(selection)) {
         return

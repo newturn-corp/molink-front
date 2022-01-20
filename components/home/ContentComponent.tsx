@@ -4,7 +4,7 @@ import React from 'react'
 import { PureEditor } from '../index/PureEditor'
 import { ContentForEmptyDocument } from './ContentForEmptyDocument'
 import { ContentHeaderIcon } from './ContentHeaderIcon'
-import StyleManager from '../../manager/StyleManager'
+import StyleManager from '../../manager/global/StyleManager'
 import { ContentToolbar } from './ContentToolbar'
 
 export const ContentComponent: React.FC<{

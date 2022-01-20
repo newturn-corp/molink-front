@@ -1,5 +1,5 @@
 import DocumentAuthority from '../domain/DocumentAuthority'
-import { DocumentVisibility } from '../domain/DocumentMeta'
+import { DocumentVisibility } from '../domain/Document/DocumentMeta'
 
 export class DocumentInitialInfoDTO {
     id: string
@@ -55,25 +55,55 @@ export class GetDocumentDto {
     }
 }
 
-export class CreateDocumentDTO {
+export class GetDocumentResponseDTO {
     title: string
-    order: number
     icon: string
-    parentId: string | null
     visibility: DocumentVisibility
-    content: any
-    representative: false
-    isChildrenOpen: false
+    createdAt: Date
+    updatedAt: Date
+    representative: boolean
+    authority: DocumentAuthority
+    selection: DocumentSelection | null
+    isLocked: boolean
+    contentId: string
+    content: any = {}
 
-    constructor (title: string, icon: string, parentId: string | null, order: number, visibility: DocumentVisibility, content: any, representative: false, isChildrenOpen: false) {
+    constructor (title: string, icon: string, visibility: DocumentVisibility, createdAt: Date, updatedAt: Date, representative: boolean, authority: DocumentAuthority, selection: DocumentSelection | null, isLocked: boolean, contentId: string, content: any) {
         this.title = title
         this.icon = icon
-        this.parentId = parentId
-        this.order = order
         this.visibility = visibility
-        this.content = content
+        this.createdAt = createdAt
+        this.updatedAt = updatedAt
         this.representative = representative
-        this.isChildrenOpen = isChildrenOpen
+        this.authority = authority
+        this.selection = selection
+        this.isLocked = isLocked
+        this.contentId = contentId
+        this.content = content
+    }
+}
+
+export class GetDocumentViewInfoResponseDTO {
+    id: string = ''
+    title: string = ''
+    icon: string = ''
+    userId: number = 0
+    visibility: DocumentVisibility = DocumentVisibility.Private
+    createdAt: Date = new Date()
+    updatedAt: Date = new Date()
+    authority: DocumentAuthority
+    content: any = null
+
+    constructor (id: string, title: string, icon: string, userId: number, visibility: DocumentVisibility, createdAt: Date, updatedAt: Date, authority: DocumentAuthority, content: any = null) {
+        this.id = id
+        this.title = title
+        this.icon = icon
+        this.userId = userId
+        this.visibility = visibility
+        this.createdAt = createdAt
+        this.updatedAt = updatedAt
+        this.authority = authority
+        this.content = content
     }
 }
 
@@ -201,5 +231,23 @@ export class UpdateDocumentIsLockedDTO {
     constructor (documentId: string, isLocked: boolean) {
         this.documentId = documentId
         this.isLocked = isLocked
+    }
+}
+
+export class DocumentHierarchyInfoDTO {
+    id: string
+    title: string
+    icon: string
+    order: number
+    parentId: string | null
+    isChildrenOpen: boolean
+
+    constructor (id: string, title: string, icon: string, order: number, parentId: string | null, isChildrenOpen: boolean) {
+        this.id = id
+        this.title = title
+        this.icon = icon
+        this.order = order
+        this.parentId = parentId
+        this.isChildrenOpen = isChildrenOpen
     }
 }

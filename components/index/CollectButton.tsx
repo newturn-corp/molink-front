@@ -3,7 +3,7 @@ import { LibraryAdd } from '@material-ui/icons'
 import { observer } from 'mobx-react'
 import { IconButton } from '@material-ui/core'
 import ContentManager from '../../manager/ContentManager'
-import UserManager from '../../manager/UserManager'
+import UserManager from '../../manager/global/UserManager'
 
 export const CollectButton: React.FC<{
   }> = observer(() => {

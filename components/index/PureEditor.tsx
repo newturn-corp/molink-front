@@ -22,12 +22,11 @@ import { withShortcuts } from '../../plugin/withShortcuts'
 import { withLayout } from '../../plugin/withLayout'
 import { HeadNextNormalTextPlugin } from '../../plugin/HeaderWithNormalTextPlugin'
 import '../../plugin/KnowlinkCustomSlatePlugin'
-import ContentManager from '../../manager/ContentManager'
 import { MentionListComponent } from '../home/MentionListComponent'
 import { CommandListComponent } from '../home/CommandListComponent'
-import HotKeyManager from '../../manager/HotKeyManager'
-import MentionManager from '../../manager/MentionManager'
-import CommandManager from '../../manager/CommandManager'
+import HotKeyManager from '../../manager/Editing/HotKeyManager'
+import MentionManager from '../../manager/Editing/MentionManager'
+import CommandManager from '../../manager/Editing/CommandManager'
 import { withCorrectVoidBehavior } from '../../plugin/withCorrectVoidBehavior'
 import { HoveringToolbar } from '../home/HoveringToolbar'
 import { HoveringToolbarPlugin } from '../../plugin/HoveringToolbarPlugin'
@@ -36,6 +35,7 @@ import { withEditList, onKeyDown as OnListKeyDown } from '../../plugin/ListPlugi
 import { onKeyDown as pluginKeyDown, plugin as TotlePlugin } from '../../plugin/plugins'
 import EventManager, { Event } from '../../manager/EventManager'
 import { OnlinePlugin } from '../../plugin/OnlinePlugin'
+import OnlineManager from '../../manager/Editing/Online/OnlineManager'
 
 const plugins = [
     withReact,
@@ -85,9 +85,10 @@ export const PureEditor: React.FC<{
   }> = observer(() => {
       const renderElement = useCallback(props => <CustomElementComponent {...props} />, [])
       const renderLeaf = useCallback(props => <CustomLeafComponent {...props} />, [])
-      const editor = useMemo(() => setPlugin(createEditor()), [ContentManager.openedDocument])
-      ContentManager.editor = editor
-
+      const editor = useMemo(() => setPlugin(createEditor()), [])
+      //   useEffect(() => {
+      //       OnlineManager.editor = editor
+      //   }, [])
       const getLength = token => {
           if (typeof token === 'string') {
               return token.length
@@ -149,30 +150,30 @@ export const PureEditor: React.FC<{
               }
           }
       }
-      if (!ContentManager.openedDocument) {
+
+      if (!OnlineManager.openedDocument) {
           return <></>
       }
-      editor.connect()
 
       EventManager.issueEvent(Event.NewEditorOpen, { editor })
 
       return <Slate editor={editor} value={[]} onChange={value => {
-          if (!ContentManager.openedDocument || !ContentManager.openedDocument.authority.editable) {
-              return
-          }
-          ContentManager.openedDocument.content = value
-          EventManager.issueEvent(Event.EditorChange, { value, editor })
+          //   if (!ContentManager.openedDocument || !ContentManager.openedDocument.authority.editable) {
+          //       return
+          //   }
+          //   ContentManager.openedDocument.content = value
+          //   EventManager.issueEvent(Event.EditorChange, { value, editor })
       }}>
           <HoveringToolbar/>
           <Editable
               decorate={decorate}
               renderElement={renderElement}
               renderLeaf={renderLeaf}
-              readOnly={!ContentManager.openedDocument.authority.editable || ContentManager.openedDocument.isLocked}
-              //   placeholder="Enter some rich text…"
-              spellCheck={!ContentManager.openedDocument.authority.editable}
+              readOnly={!OnlineManager.openedDocument.authority.editable || OnlineManager.openedDocument.isLocked}
+              placeholder="Enter some rich text…"
+              spellCheck={!OnlineManager.openedDocument.authority.editable}
               onKeyDown={(e) => {
-                  if (!ContentManager.openedDocument.authority.editable) {
+                  if (!OnlineManager.openedDocument.authority.editable) {
                       return
                   }
                   HotKeyManager.handleKeyDown(editor, e)

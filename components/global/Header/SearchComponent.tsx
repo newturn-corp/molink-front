@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 
 import { Input } from 'antd'
-import RoutingManager, { Page } from '../../../manager/RoutingManager'
+import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 
 const { Search } = Input
 

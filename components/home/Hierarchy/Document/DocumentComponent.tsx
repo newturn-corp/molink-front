@@ -1,0 +1,84 @@
+import React, { useRef } from 'react'
+import { observer } from 'mobx-react'
+import ListItem from '@material-ui/core/ListItem'
+import { DocumentTitle } from './DocumentTitle'
+import { DocumentIcon } from './DocumentIcon'
+import { HierarchyComponentBlockInterface } from '@newturn-develop/types-molink'
+
+import DocumentHierarchyManager from '../../../../manager/Home/DocumentHierarchyManager/DocumentHierarchyManager'
+import DocumentDragManager from '../../../../manager/Home/DocumentHierarchyManager/DocumentDragManager'
+import UserManager from '../../../../manager/global/UserManager'
+import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
+
+let ghost
+export const DocumentComponent: React.FC<{
+    documentHierarchyBlock: HierarchyComponentBlockInterface,
+    depth: number
+  }> = observer(({ documentHierarchyBlock, depth }) => {
+      const divRef = useRef<HTMLDivElement>(null)
+      const padding = 8 + depth * 12
+
+      const document = DocumentHierarchyManager.hierarchy.getMap()[documentHierarchyBlock.id]
+      const isSelected = DocumentHierarchyManager.hierarchy.checkIsDocumentSelected(document.id)
+      const isChangingName = DocumentHierarchyManager.hierarchy.checkIsDocumentChangingName(document.id)
+      const isOpen = DocumentHierarchyManager.hierarchy.checkIsDocumentOpened(document.id)
+
+      const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
+          ghost = divRef.current.cloneNode()
+          ghost.style.backgroundColor = '#e9e9e9'
+          ghost.style.color = '#333333'
+          ghost.style.width = '240px'
+          ghost.style.height = '33px'
+          ghost.innerHTML = document.title
+          ghost.style.position = 'absolute'
+          ghost.style.top = '0px'
+          ghost.style.right = '0px'
+          globalThis.document.getElementsByClassName('drag-ghost-parent')[0].appendChild(ghost)
+          event.dataTransfer.setDragImage(ghost, event.clientX, event.clientY - divRef.current.getBoundingClientRect().y)
+          //   DocumentDragManager.handleDragStart(document)
+      }
+
+      // TODO: 백그라운드 고치기
+      return (
+          <>
+              <ListItem
+                  id={`document-${document.id}`}
+                  button
+                  ref={divRef}
+                  style={{
+                      padding: 0,
+                      paddingLeft: padding,
+                      paddingRight: 20,
+                      backgroundColor: isSelected || isOpen ? '#e9e9e9' : undefined
+                  }}
+                  draggable={!isChangingName && document.userId === UserManager.userId}
+                  onClick={(event) => {
+                      if (!isOpen) {
+                          RoutingManager.moveTo(Page.Index, `?id=${document.id}`)
+                      }
+                  }}
+                  onDragStart={(event) => handleDragStart(event)}
+                  onDragEnd={(event) => DocumentDragManager.handleDragEnd(ghost)}
+                  //   onDragOver={(event) => DocumentDragManager.newHandleDragOver(event, document)}
+                  //   onDragLeave={() => DocumentDragManager.handleDragLeave(document)}
+                  //   onContextMenu={(event) => DocumentHierarchyManager.handleRightClick(event, document)}
+              >
+                  {/* <DocumentChildOpenButton document={document}/> */}
+                  <DocumentIcon document={document}/>
+                  <DocumentTitle
+                      document={document}
+                      documentHierarchyBlock={documentHierarchyBlock}
+                  />
+              </ListItem>
+              {/* <Collapse in={true || document.hierarchyInfo.isChildrenOpen} timeout="auto" unmountOnExit>
+                  <List id={`document-child-list-${document.id}`} component="div" disablePadding>
+                      {
+                          documentHierarchyBlock.children.map(child => {
+                              return <DocumentComponent key={Math.random()} documentHierarchyBlock={child} depth={depth + 1}/>
+                          })
+                      }
+                  </List>
+              </Collapse> */}
+          </>
+      )
+  })

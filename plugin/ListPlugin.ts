@@ -1,7 +1,7 @@
 import { Editor, Node, Range, Transforms } from 'slate'
 import { EditListPlugin } from '@productboard/slate-edit-list'
 import React from 'react'
-import { TextCategory } from '../utils/slate'
+import { TextCategory } from '../Types/slate/CustomElement'
 
 const [
     withEditList,

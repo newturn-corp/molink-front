@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 
 import { Backdrop, Button, CircularProgress, TextField } from '@material-ui/core'
-import AuthManager, { EmailState, PasswordState } from '../../manager/AuthManager'
+import AuthManager, { EmailState, PasswordState } from '../../manager/Auth/AuthManager'
 import { observer } from 'mobx-react'
-import RoutingManager, { Page } from '../../manager/RoutingManager'
+import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 import { AuthLogo } from '../../components/auth/logo'
+import UserManager from '../../manager/global/UserManager'
 
 const getEmailHelperText = (emailState: EmailState) => {
     if (emailState === EmailState.DEFAULT) {
@@ -75,11 +76,12 @@ const SignIn = observer(() => {
                 const result = await AuthManager.signin()
                 setLoading(false)
                 if (result.success) {
+                    await UserManager.refresh()
                     const documentBeforeLogin = localStorage.getItem('document-before-login')
                     if (documentBeforeLogin) {
-                        RoutingManager.moveTo(Page.Index, `?id=${documentBeforeLogin}`)
+                        RoutingManager.moveTo(Page.Home, `?id=${documentBeforeLogin}`)
                     } else {
-                        RoutingManager.moveTo(Page.Index)
+                        RoutingManager.moveTo(Page.Home)
                     }
                 }
             }}>

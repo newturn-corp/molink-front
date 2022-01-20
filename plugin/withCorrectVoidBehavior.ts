@@ -1,5 +1,5 @@
 import { Editor, Node, Path, Range, Transforms } from 'slate'
-import { TextCategory } from '../utils/slate'
+import { TextCategory } from '../Types/slate/CustomElement'
 
 export const withCorrectVoidBehavior = editor => {
     const { deleteBackward, insertBreak } = editor

@@ -2,8 +2,8 @@ import { observer } from 'mobx-react'
 import React from 'react'
 import Document from '../../domain/Document'
 import ContentManager from '../../manager/ContentManager'
-import RoutingManager, { Page } from '../../manager/RoutingManager'
-import StyleManager from '../../manager/StyleManager'
+import RoutingManager, { Page } from '../../manager/global/RoutingManager'
+import StyleManager from '../../manager/global/StyleManager'
 
 const getHierarchy = (document: Document, arr: Document[]) => {
     arr.unshift(document)

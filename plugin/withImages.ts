@@ -1,9 +1,9 @@
 import { Editor, Node, Transforms } from 'slate'
-import { ImageElement, ImageFloatOption } from '../utils/slate'
+import { ImageElement, ImageFloatOption } from '../Types/slate/CustomElement'
 import imageExtensions from 'image-extensions'
 import isUrl from 'is-url'
-import FileUploadManager from '../manager/FileUploadManager'
-import StyleManager from '../manager/StyleManager'
+import FileUploadManager from '../manager/Editing/FileUploadManager'
+import StyleManager from '../manager/global/StyleManager'
 
 const insertImage = (editor: Editor, url: string, width: number, height: number, isUploading: boolean) => {
     const text = { text: '' }

@@ -1,8 +1,8 @@
 import { Backdrop, Button, CircularProgress, TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { AuthLogo } from '../../components/auth/logo'
-import AuthManager, { PasswordState } from '../../manager/AuthManager'
-import RoutingManager, { Page } from '../../manager/RoutingManager'
+import AuthManager, { PasswordState } from '../../manager/Auth/AuthManager'
+import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 
 const getPasswordHelperText = (passwordState: PasswordState) => {
     if (passwordState === PasswordState.DEFAULT) {

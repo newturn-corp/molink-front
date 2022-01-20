@@ -3,7 +3,7 @@ import React from 'react'
 import { Range } from 'slate'
 import { useSelected, useSlate } from 'slate-react'
 import EditorManager from '../../manager/EditorManager'
-import { TextCategory } from '../../utils/slate'
+import { TextCategory } from '../../Types/slate/CustomElement'
 
 export const SlateTextElement: React.FC<{
     attributes,

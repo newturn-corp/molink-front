@@ -3,7 +3,7 @@ import {
     useSelected,
     useFocused
 } from 'slate-react'
-import { DividerElement, DividerType } from '../../utils/slate'
+import { DividerElement, DividerType } from '../../Types/slate/CustomElement'
 
 const DotDivider = () => {
     return <div className='divider dot-divider'>

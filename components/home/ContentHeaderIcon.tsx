@@ -6,7 +6,7 @@ import ContentManager from '../../manager/ContentManager'
 import { Button } from '@material-ui/core'
 import { EmojiPicker } from '../global/EmojiPicker'
 import EventManager from '../../manager/EventManager'
-import UserManager from '../../manager/UserManager'
+import UserManager from '../../manager/global/UserManager'
 
 export const ContentHeaderIcon: React.FC<{
   }> = observer(() => {

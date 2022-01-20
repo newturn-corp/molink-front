@@ -1,7 +1,7 @@
 import { Editor } from 'slate'
 
 import { withIOCollaboration } from '@slate-collaborative/client'
-import UserManager from '../manager/UserManager'
+import UserManager from '../manager/global/UserManager'
 import ContentManager from '../manager/ContentManager'
 
 export const OnlinePlugin = (editor: Editor) => {

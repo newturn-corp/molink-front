@@ -1,17 +1,16 @@
 import { Editor } from 'slate'
-import { EditorKeyDownHandler } from '../utils/slate'
 import { maintainBottomMargin } from './BottomMarginPlugin'
 import { onKeyDown as PlaceHolderOnKeyDown } from './PlaceHolderPlugin'
 
 export type InsertBreakHandler = (editor: Editor) => void
 
-const onKeyDownHandlers: EditorKeyDownHandler[] = [PlaceHolderOnKeyDown]
+const onKeyDownHandlers: any[] = [PlaceHolderOnKeyDown]
 const voidTypeList: string[] = ['divider', 'image', 'document', 'mention']
 const inlineTyleList: string[] = ['mention']
 const beforeInsertBreakHandlers: InsertBreakHandler[] = [maintainBottomMargin]
 const afterInsertBreakHandlers: InsertBreakHandler[] = []
 
-export const onKeyDown: EditorKeyDownHandler = (event, editor) => {
+export const onKeyDown = (event, editor) => {
     onKeyDownHandlers.forEach(handler => {
         handler(event, editor)
     })

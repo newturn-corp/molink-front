@@ -1,6 +1,6 @@
 import isUrl from 'is-url'
 import { Editor, Transforms, Element, Range } from 'slate'
-import { LinkElement } from '../utils/slate'
+import { LinkElement } from '../Types/slate/CustomElement'
 
 const unwrapLink = editor => {
     Transforms.unwrapNodes(editor, {

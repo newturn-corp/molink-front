@@ -8,9 +8,9 @@ class FollowManager {
     }
 
     constructor () {
-        FollowAPI.getFollowRequests().then(arr => {
-            this.followRequests = arr
-        })
+        // FollowAPI.getFollowRequests().then(arr => {
+        //     this.followRequests = arr
+        // })
     }
 
     async checkFollowRequestsViewed () {

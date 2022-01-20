@@ -1,7 +1,7 @@
 import { ButtonGroup, Button } from '@material-ui/core'
 import React from 'react'
-import GlobalManager from '../../manager/GlobalManager'
-import RoutingManager, { Page } from '../../manager/RoutingManager'
+import GlobalManager from '../../manager/global/GlobalManager'
+import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 
 enum SettingLocation {
     Profile = 'profile',

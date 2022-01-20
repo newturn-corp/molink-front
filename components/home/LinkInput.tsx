@@ -4,7 +4,7 @@ import React from 'react'
 import HoveringToolbarManager from '../../manager/HoveringToolbarManager'
 import { CircularProgress, TextField } from '@material-ui/core'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import LinkManager, { LinkOption } from '../../manager/LinkManager'
+import LinkManager, { LinkOption } from '../../manager/Editing/LinkManager'
 import isUrl from 'is-url'
 
 export const LinkInput: React.FC<{
