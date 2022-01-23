@@ -5,7 +5,8 @@ import { SidebarLayout } from '../components/SideBarLayout'
 
 const Index = () => {
     return <>
-        <SidebarLayout />
+        Newturn Corporations
+        {/*<SidebarLayout />*/}
         {/* <Content/> */}
     </>
 }
