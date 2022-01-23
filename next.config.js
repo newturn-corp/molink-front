@@ -9,7 +9,8 @@ module.exports = (phase, { defaultConfig }) => {
         FRONT_HOST_NAME: process.env.FRONT_HOST_NAME,
         TZ: 'Asia/Seoul',
         CONTENT_SERVER_URL: process.env.CONTENT_SERVER_URL,
-        HIERARCHY_LIVE_SERVER_URL: process.env.HIERARCHY_LIVE_SERVER_URL
+        HIERARCHY_LIVE_SERVER_URL: process.env.HIERARCHY_LIVE_SERVER_URL,
+        HIERARCHY_CHILDREN_OPEN_SERVER_URL: process.env.HIERARCHY_CHILDREN_OPEN_SERVER_URL
     }
     defaultConfig.future = { webpack5: true }
     defaultConfig.swcMinify = true

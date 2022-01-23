@@ -57,7 +57,7 @@ class LinkManager {
             const documents = await DocumentAPI.searchDocumentsLinkList(value)
             this._options = documents.map(document => {
                 return {
-                    reference: document.userId === UserManager.userId ? '내 문서' : '검색 결과',
+                    reference: document.userId === UserManager.profile?.userId ? '내 문서' : '검색 결과',
                     text: document.title,
                     url: `?id=${document.id}`
                 }

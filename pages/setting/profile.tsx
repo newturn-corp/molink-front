@@ -1,15 +1,28 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Header } from '../../components/global/Header/Header'
-import { ButtonGroup, Button, List, Divider, Avatar } from '@material-ui/core'
-import { UserSearchResult } from '../../components/search/UserSearchResult'
+import { Avatar } from '@material-ui/core'
 import UserManager from '../../manager/global/UserManager'
 import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 import { Input } from 'antd'
 import { SettingButtonList } from '../../components/setting/SettingButtonList'
 
+const getProfileImageSrc = () => {
+    if (UserManager.profile.profileImageUrl) {
+        return UserManager.profile.profileImageUrl
+    }
+    return undefined
+}
+
+const getProfileInnerText = () => {
+    if (UserManager.profile.profileImageUrl) {
+        return undefined
+    }
+    return UserManager.profile.nickname[0]
+}
+
 const SettingProfile = observer(() => {
-    UserManager.updateUserProfile()
+    UserManager.refresh()
         .then(() => {
             if (!UserManager.isUserAuthorized) {
                 RoutingManager.moveTo(Page.SignIn)
@@ -19,8 +32,6 @@ const SettingProfile = observer(() => {
         return <></>
     }
 
-    const profileImageSrc = UserManager.profileImageUrl ? UserManager.profileImageUrl : undefined
-    const profileInnerText = UserManager.profileImageUrl ? undefined : UserManager.nickname[0]
     return <div className='setting-page' onClick={() => {
     } } >
         <Header />
@@ -42,7 +53,7 @@ const SettingProfile = observer(() => {
                                 type="file"/
                             >
                             <label htmlFor="profile-image-button">
-                                <Avatar className='image' sizes='200' src={profileImageSrc}>{profileInnerText}</Avatar>
+                                <Avatar className='image' sizes='200' src={getProfileImageSrc()}>{getProfileInnerText()}</Avatar>
                             </label>
                             <div className='edit'>
                                 눌러서 변경하기
@@ -53,9 +64,9 @@ const SettingProfile = observer(() => {
                             <Input
                                 maxLength={37}
                                 onChange={(e) => {
-                                    UserManager.biography = e.target.value
+                                    UserManager.profile.biography = e.target.value
                                 }}
-                                value={UserManager.biography}
+                                value={UserManager.profile.biography}
                                 onBlur={() => UserManager.updateUserBiography()}
                             />
                         </div>

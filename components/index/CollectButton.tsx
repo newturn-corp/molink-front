@@ -8,7 +8,7 @@ import UserManager from '../../manager/global/UserManager'
 export const CollectButton: React.FC<{
   }> = observer(() => {
       //   const [showDialog, setShowDialog] = useState(false)
-      if (!UserManager.isUserAuthorized || !ContentManager.openedDocument || ContentManager.openedDocument.meta.userId === UserManager.userId) {
+      if (!UserManager.isUserAuthorized || !ContentManager.openedDocument || ContentManager.openedDocument.meta.userId === UserManager.profile.userId) {
           return <></>
       }
 

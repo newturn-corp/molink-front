@@ -20,8 +20,8 @@ export const DocumentTitle: React.FC<{
     documentHierarchyBlock: HierarchyComponentBlockInterface
   }> = observer(({ document, documentHierarchyBlock }) => {
       const inputRef = useRef<HTMLDivElement>(null)
-      const isChangingName = DocumentHierarchyManager.hierarchy.checkIsDocumentChangingName(document.id)
-      const isDocumentOpen = DocumentManager.checkIsDocumentOpen(document.id)
+      const isChangingName = DocumentHierarchyManager.hierarchy.nameChangingDocumentId === document.id
+      const isDocumentOpen = DocumentHierarchyManager.hierarchy.openedDocumentId === document.id
       const textClassName = isDocumentOpen ? 'text text-opened' : 'text'
 
       if (isChangingName && inputRef) {
@@ -43,7 +43,7 @@ export const DocumentTitle: React.FC<{
           })
       }
 
-      const handleChangeNameEnd = async () => {
+      const handleChangeNameEnd = () => {
           DocumentHierarchyManager.hierarchy.setSelectedDocumentId(null)
           DocumentHierarchyManager.hierarchy.setNameChangingDocumentId(null)
       }

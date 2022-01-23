@@ -87,11 +87,4 @@ export default class DocumentDirectoryInfo {
         // }
         // await DocumentAPI.setDocumentLocation(new SetDocumentLocationDTO(this.meta.id, parentIdBefore, parentId, orderBefore, order))
     }
-
-    async setIsChildrenOpen (isChildrenOpen: boolean) {
-        this.isChildrenOpen = isChildrenOpen
-        if (UserManager.userId === this.meta.userId) {
-            await DocumentAPI.setDocumentIsChildrenOpen(new SetDocumentIsChildrenOpenDTO(this.meta.id, this.isChildrenOpen))
-        }
-    }
 }

@@ -7,6 +7,7 @@ import { HierarchyContainer } from '../components/home/Hierarchy/HierarchyContai
 import DocumentHierarchyManager from '../manager/Home/DocumentHierarchyManager/DocumentHierarchyManager'
 
 const Home = () => {
+    console.log('home render')
     const router = useRouter()
     const nickname = router.query.nickname as string
     HomeManager.handleEnterHomePage(nickname)

@@ -4,6 +4,7 @@ import Automerge from 'automerge'
 import { DocumentHierarchyInfoDTO, GetDocumentViewInfoResponseDTO } from '../DTO/DocumentDto'
 import { DocumentNotExists, UnauthorizedForDocument, UnexpectedError } from '../Errors/DocumentError'
 import { UserNotExists } from '../Errors/UserError'
+import { GetHierarchyChildrenOpenDTO } from '@newturn-develop/types-molink'
 
 export enum ViewerAPIFailReason {
     UserNotExists,
@@ -29,16 +30,14 @@ class ViewerAPI extends BaseAPI {
         return res.data.serializedHierarchy
     }
 
-    async getDocumentHierarchyInfo (documentId: string): Promise<DocumentHierarchyInfoDTO> {
-        const res = await this.get(`/viewer/hierarchy/documents/${documentId}`)
+    async getDocumentHierarchyChildrenOpenMap (nickname: string): Promise<GetHierarchyChildrenOpenDTO> {
+        const res = await this.get(`/viewer/hierarchy/children-open-map/${nickname}`)
         if (res.status === 404001) {
-            throw new DocumentNotExists()
+            throw new UserNotExists()
         } else if (res.status === 400001) {
             throw new UnexpectedError()
-        } else if (res.status === 403001) {
-            throw new UnauthorizedForDocument()
         }
-        return res.data
+        return new GetHierarchyChildrenOpenDTO(res.data.serializedValue)
     }
 }
 export default new ViewerAPI()

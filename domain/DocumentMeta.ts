@@ -41,9 +41,9 @@ export default class DocumentMeta {
 
     async setRepresentative (representative: boolean) {
         this.representative = representative
-        if (representative && UserManager.representativeDocumentId) {
-            DocumentManager.documentMap.get(UserManager.representativeDocumentId).meta.representative = false
-            UserManager.representativeDocumentId = this.id
+        if (representative && UserManager.profile.representativeDocumentId) {
+            DocumentManager.documentMap.get(UserManager.profile.representativeDocumentId).meta.representative = false
+            UserManager.profile.representativeDocumentId = this.id
         }
         await DocumentAPI.setDocumentRepresentative(new UpdateDocumentRepresentativeDTO(this.id, representative))
     }

@@ -20,7 +20,7 @@ export const HierarchyContainer: React.FC<{
           }
       })
       const classes = useStyles()
-      console.log(DocumentHierarchyManager.hierarchy)
+
       if (!DocumentHierarchyManager.hierarchy) {
           return <></>
       }

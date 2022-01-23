@@ -5,6 +5,7 @@ import Hierarchy from './Hierarchy'
 import React from 'react'
 import UserManager from '../../global/UserManager'
 import HierarchyLiveServer from '../../../LiveServer/HierarchyLiveServer'
+import HierarchyChildrenOpenServer from '../../../LiveServer/HierarchyChildrenOpenServer'
 
 // 전반적인 FileSystem의 변화를 담당하는 매니저
 class DocumentHierarchyManager {
@@ -29,9 +30,12 @@ class DocumentHierarchyManager {
 
     async loadHierarchy (nickname: string) {
         const serializedHierarchy = await ViewerAPI.getDocumentsHierarchy(nickname) as any
-        this.hierarchy = new Hierarchy(serializedHierarchy)
+        const serializedChildrenOpenMap = (await ViewerAPI.getDocumentHierarchyChildrenOpenMap(nickname)).serializedValue
+        this.hierarchy = new Hierarchy(serializedHierarchy, serializedChildrenOpenMap)
         this.editable = UserManager.profile && UserManager.profile.nickname === nickname
-        console.log(this.editable)
+        if (UserManager.isUserAuthorized) {
+            await HierarchyChildrenOpenServer.connect(nickname)
+        }
         if (this.editable) {
             await HierarchyLiveServer.connect(nickname)
         }

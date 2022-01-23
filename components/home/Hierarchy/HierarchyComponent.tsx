@@ -7,18 +7,25 @@ import DocumentHierarchyManager from '../../../manager/Home/DocumentHierarchyMan
 
 export const HierarchyComponent: React.FC<{
   }> = observer(() => {
+      console.log('render HierarchyComponent')
       return (
           <List
               component="nav"
               aria-labelledby="nested-list-subheader"
           >
               {
-                  DocumentHierarchyManager.hierarchy.getList().map(info => {
+                  DocumentHierarchyManager.hierarchy.list.map(info => {
                       return <DocumentComponent key={Math.random()} documentHierarchyBlock={info} depth={0}/>
                   })
               }
-              <div id='moved-location-viewer' className='MuiListItem-root' style={{ backgroundColor: '#333333', visibility: 'hidden' }} ></div>
-              <div style={{ width: '100%', height: 200 }} ></div>
+              <div id="moved-location-viewer" className="MuiListItem-root" style={{
+                  backgroundColor: '#333333',
+                  visibility: 'hidden'
+              }} />
+              <div style={{
+                  width: '100%',
+                  height: 200
+              }} />
           </List>
       )
   })

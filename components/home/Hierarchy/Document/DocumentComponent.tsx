@@ -9,6 +9,8 @@ import DocumentHierarchyManager from '../../../../manager/Home/DocumentHierarchy
 import DocumentDragManager from '../../../../manager/Home/DocumentHierarchyManager/DocumentDragManager'
 import UserManager from '../../../../manager/global/UserManager'
 import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
+import { Collapse, List } from '@material-ui/core'
+import { DocumentChildrenOpenButton } from './DocumentChildrenOpenButton'
 
 let ghost
 export const DocumentComponent: React.FC<{
@@ -18,10 +20,11 @@ export const DocumentComponent: React.FC<{
       const divRef = useRef<HTMLDivElement>(null)
       const padding = 8 + depth * 12
 
-      const document = DocumentHierarchyManager.hierarchy.getMap()[documentHierarchyBlock.id]
-      const isSelected = DocumentHierarchyManager.hierarchy.checkIsDocumentSelected(document.id)
-      const isChangingName = DocumentHierarchyManager.hierarchy.checkIsDocumentChangingName(document.id)
-      const isOpen = DocumentHierarchyManager.hierarchy.checkIsDocumentOpened(document.id)
+      const document = DocumentHierarchyManager.hierarchy.map[documentHierarchyBlock.id]
+      const isSelected = DocumentHierarchyManager.hierarchy.selectedDocumentId === document.id
+      const isChangingName = DocumentHierarchyManager.hierarchy.nameChangingDocumentId === document.id
+      const isOpen = DocumentHierarchyManager.hierarchy.openedDocumentId === document.id
+      const isChildrenOpen = !!DocumentHierarchyManager.hierarchy.childrenOpenMap[document.id]
 
       const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
           ghost = divRef.current.cloneNode()
@@ -51,7 +54,7 @@ export const DocumentComponent: React.FC<{
                       paddingRight: 20,
                       backgroundColor: isSelected || isOpen ? '#e9e9e9' : undefined
                   }}
-                  draggable={!isChangingName && document.userId === UserManager.userId}
+                  draggable={!isChangingName && document.userId === UserManager.profile.userId}
                   onClick={(event) => {
                       if (!isOpen) {
                           RoutingManager.moveTo(Page.Index, `?id=${document.id}`)
@@ -61,16 +64,16 @@ export const DocumentComponent: React.FC<{
                   onDragEnd={(event) => DocumentDragManager.handleDragEnd(ghost)}
                   //   onDragOver={(event) => DocumentDragManager.newHandleDragOver(event, document)}
                   //   onDragLeave={() => DocumentDragManager.handleDragLeave(document)}
-                  //   onContextMenu={(event) => DocumentHierarchyManager.handleRightClick(event, document)}
+                  onContextMenu={(event) => DocumentHierarchyManager.handleRightClick(event, document.id)}
               >
-                  {/* <DocumentChildOpenButton document={document}/> */}
+                  <DocumentChildrenOpenButton hierarchyComponentBlock={documentHierarchyBlock}/>
                   <DocumentIcon document={document}/>
                   <DocumentTitle
                       document={document}
                       documentHierarchyBlock={documentHierarchyBlock}
                   />
               </ListItem>
-              {/* <Collapse in={true || document.hierarchyInfo.isChildrenOpen} timeout="auto" unmountOnExit>
+              <Collapse in={isChildrenOpen} timeout="auto" unmountOnExit>
                   <List id={`document-child-list-${document.id}`} component="div" disablePadding>
                       {
                           documentHierarchyBlock.children.map(child => {
@@ -78,7 +81,7 @@ export const DocumentComponent: React.FC<{
                           })
                       }
                   </List>
-              </Collapse> */}
+              </Collapse>
           </>
       )
   })

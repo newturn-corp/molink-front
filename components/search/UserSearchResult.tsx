@@ -10,7 +10,7 @@ const FollowButton: React.FC<{
 }> = ({ searchResult }) => {
     const [followResult, setFollowResult] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
-    if (UserManager.userId === searchResult.id) {
+    if (UserManager.profile.userId === searchResult.id) {
         return <></>
     }
     if (searchResult.isFollowing) {

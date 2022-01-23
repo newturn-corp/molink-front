@@ -1,78 +1,80 @@
-import { HierarchyChangeEventDTO, HierarchyInfoInterface } from '@newturn-develop/types-molink'
+import {
+    HierarchyChangeEventDTO, HierarchyChildrenOpenInfoInterface,
+    HierarchyComponentBlockInterface,
+    HierarchyInfoInterface,
+    HierarchyDocumentInfoInterface
+} from '@newturn-develop/types-molink'
 import Automerge from 'automerge'
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, observable } from 'mobx'
 import EventManager, { Event } from '../../EventManager'
+import { getAutomergeDocumentThroughRestAPI } from '../../../utils/AutomeregeConverter'
+import { AutomergeChangeEventDTO } from '@newturn-develop/types-molink/dist/DTO'
 
 export default class Hierarchy {
-    _automergeHierarchy: Automerge.FreezeObject<HierarchyInfoInterface> = null
-    // eslint-disable-next-line accessor-pairs
+    value: Automerge.FreezeObject<HierarchyInfoInterface> = null
     set automergeHierarchy (value: Automerge.FreezeObject<HierarchyInfoInterface>) {
-        this._automergeHierarchy = value
-        this.object = JSON.parse(JSON.stringify(this._automergeHierarchy))
+        this.value = value
+        this.list = value.list
+        this.map = value.map
     }
 
-    private nameChangingDocumentId: string | null = null
-    private selectedDocumentId: string | null = null
-    private openedDocumentId: string | null = null
+    list: HierarchyComponentBlockInterface[] = []
+    map: {
+        [index: string]: HierarchyDocumentInfoInterface
+    }
+
+    childrenOpenMapValue: Automerge.FreezeObject<HierarchyChildrenOpenInfoInterface> = null
+    set automergeChildrenOpenMap (value: Automerge.FreezeObject<HierarchyChildrenOpenInfoInterface>) {
+        this.childrenOpenMapValue = value
+        this.childrenOpenMap = value.map
+    }
+
+    childrenOpenMap: {
+        [index: string]: boolean
+    }
+
+    nameChangingDocumentId: string | null = null
+    selectedDocumentId: string | null = null
+    openedDocumentId: string | null = null
     object: HierarchyInfoInterface = null
 
-    constructor (serializedAutomergeDocument: number[]) {
+    constructor (serializedAutomergeDocument: number[], serializedChildrenOpenMap: number[]) {
         makeAutoObservable(this, {
-            _automergeHierarchy: false
+            value: false,
+            childrenOpenMapValue: false
         })
-        const arr = Uint8Array.from(serializedAutomergeDocument) as any
-        arr.__binaryDocument = true
-        this.automergeHierarchy = Automerge.load(arr)
+        this.automergeHierarchy = getAutomergeDocumentThroughRestAPI(serializedAutomergeDocument)
+        this.automergeChildrenOpenMap = getAutomergeDocumentThroughRestAPI(serializedChildrenOpenMap)
     }
 
     update (dto: HierarchyChangeEventDTO) {
-        const [newHierarchy] = Automerge.applyChanges(this._automergeHierarchy, dto.changes)
+        const [newHierarchy] = Automerge.applyChanges(this.value, dto.changes)
         this.automergeHierarchy = newHierarchy
-        EventManager.issueEvent(Event.UpdateHierarchy, {})
     }
 
-    checkIsDocumentChangingName (documentId: string) {
-        return this.nameChangingDocumentId === documentId
+    updateChildrenOpenMap (dto: AutomergeChangeEventDTO) {
+        const [newMap] = Automerge.applyChanges(this.childrenOpenMapValue, dto.changes)
+        this.automergeChildrenOpenMap = newMap
     }
 
     setNameChangingDocumentId (documentId: string) {
         this.nameChangingDocumentId = documentId
     }
 
-    checkIsDocumentSelected (documentId: string) {
-        return this.selectedDocumentId === documentId
-    }
-
     setSelectedDocumentId (documentId: string) {
         this.selectedDocumentId = documentId
-    }
-
-    checkIsDocumentOpened (documentId: string) {
-        return this.openedDocumentId === documentId
     }
 
     setOpenedDocumentId (documentId: string) {
         this.openedDocumentId = documentId
     }
 
-    getDocument (documentId: string) {
-        return this._automergeHierarchy.map[documentId]
-    }
-
     getDocumentHierarchyBlockById (documentId: string) {
-        const document = this._automergeHierarchy.map[documentId]
+        const document = this.map[documentId]
         const location = document.location.split(',').map(index => Number(index))
-        const block = this._automergeHierarchy.list[location.shift()]
+        const block = this.list[location.shift()]
         return location.reduce((prev, current) => {
             return prev.children[current]
         }, block)
-    }
-
-    getList () {
-        return this._automergeHierarchy.list
-    }
-
-    getMap () {
-        return this._automergeHierarchy.map
     }
 }

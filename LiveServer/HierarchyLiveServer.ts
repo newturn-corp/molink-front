@@ -11,7 +11,6 @@ class HierarchyLiveServer {
     socket: Socket | undefined
 
     connect (nickname: string) {
-        console.log(process.env.HIERARCHY_LIVE_SERVER_URL)
         this.socket = io(`${process.env.HIERARCHY_LIVE_SERVER_URL}/${nickname}`, {
             transports: ['websocket'],
             withCredentials: true
@@ -38,13 +37,15 @@ class HierarchyLiveServer {
     }
 
     private async handleChange (data: HierarchyChangeEventDTO) {
-        DocumentHierarchyManager.hierarchy.update(data)
+        const changes = data.changes.map(change => new Uint8Array(change)) as any
+        DocumentHierarchyManager.hierarchy.update(new HierarchyChangeEventDTO(data.id, changes))
         this.socket.emit(`change-${data.id}-handled`)
     }
 
     createDocument (dto: CreateDocumentDTO) {
         return new Promise<CreateDocumentResponseDTO>((resolve, reject) => {
             this.socket.once('create-document-response', (data: CreateDocumentResponseDTO) => {
+                console.log('create-document-response')
                 resolve(data)
             })
             this.socket.emit('createDocument', dto)

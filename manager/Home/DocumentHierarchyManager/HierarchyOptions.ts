@@ -25,13 +25,13 @@ export class CreateNewDocumentOption extends HierarchyControlOption {
             const block = DocumentHierarchyManager.hierarchy.getDocumentHierarchyBlockById(this.documentId)
             return block.children.length
         } else {
-            return DocumentHierarchyManager.hierarchy.getList().length
+            return DocumentHierarchyManager.hierarchy.list.length
         }
     }
 
     getLocation (order: number) {
         if (this.documentId) {
-            const document = DocumentHierarchyManager.hierarchy.getDocument(this.documentId)
+            const document = DocumentHierarchyManager.hierarchy.map[this.documentId]
             return document.location + ',' + order
         } else {
             return order.toString()
