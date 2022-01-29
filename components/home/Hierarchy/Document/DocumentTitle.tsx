@@ -1,14 +1,12 @@
 import React, { useRef } from 'react'
 import { observer } from 'mobx-react'
-import Document from '../../../../domain/Document/Document'
 import EventManager, { Event } from '../../../../manager/EventManager'
 import UserManager from '../../../../manager/global/UserManager'
-import DocumentHierarchyManager from '../../../../manager/Home/DocumentHierarchyManager/DocumentHierarchyManager'
-import DocumentManager from '../../../../manager/Home/DocumentManager'
-import { HierarchyComponentBlockInterface, HierarchyDocumentInfoInterface } from '@newturn-develop/types-molink'
+import { HierarchyDocumentInfoInterface } from '@newturn-develop/types-molink'
+import HierarchyManager from '../../../../manager/Home/HierarchyManager/HierarchyManager'
 
-const getTitle = (document: HierarchyDocumentInfoInterface, documentHierarchyBlock: HierarchyComponentBlockInterface, isChangingName: boolean) => {
-    const childrenLength = documentHierarchyBlock.children.length
+const getTitle = (document: HierarchyDocumentInfoInterface, isChangingName: boolean) => {
+    const childrenLength = document.children.length
     if (childrenLength > 0 && !isChangingName && UserManager.setting && UserManager.setting.showSubDocumentCount) {
         return `${document.title} (${childrenLength})`
     }
@@ -16,12 +14,12 @@ const getTitle = (document: HierarchyDocumentInfoInterface, documentHierarchyBlo
 }
 
 export const DocumentTitle: React.FC<{
-    document: HierarchyDocumentInfoInterface,
-    documentHierarchyBlock: HierarchyComponentBlockInterface
-  }> = observer(({ document, documentHierarchyBlock }) => {
+    documentId: string
+  }> = observer(({ documentId }) => {
       const inputRef = useRef<HTMLDivElement>(null)
-      const isChangingName = DocumentHierarchyManager.hierarchy.nameChangingDocumentId === document.id
-      const isDocumentOpen = DocumentHierarchyManager.hierarchy.openedDocumentId === document.id
+      const document = HierarchyManager.hierarchy.map[documentId]
+      const isChangingName = HierarchyManager.hierarchy.nameChangingDocumentId === document.id
+      const isDocumentOpen = HierarchyManager.hierarchy.openedDocumentId === document.id
       const textClassName = isDocumentOpen ? 'text text-opened' : 'text'
 
       if (isChangingName && inputRef) {
@@ -43,14 +41,10 @@ export const DocumentTitle: React.FC<{
           })
       }
 
-      const handleChangeNameEnd = () => {
-          DocumentHierarchyManager.hierarchy.setSelectedDocumentId(null)
-          DocumentHierarchyManager.hierarchy.setNameChangingDocumentId(null)
-      }
-
       return <div className={'document-title'} >
           <div
               contentEditable={isChangingName}
+              suppressContentEditableWarning={true}
               ref={inputRef}
               className={textClassName}
               spellCheck={false}
@@ -60,18 +54,16 @@ export const DocumentTitle: React.FC<{
                   }
                   event.preventDefault()
                   if (isChangingName) {
-                      //   await document.setDocumentTitle(inputRef.current.innerText)
                       await EventManager.issueEvent(Event.ChangeDocumentTitleInFileSystem, { document, title: inputRef.current.innerText })
-                      handleChangeNameEnd()
+                      await HierarchyManager.hierarchy.updateDocumentTitle(document.id, inputRef.current.innerText)
                   }
               }}
               onBlur={async () => {
                   if (isChangingName) {
-                      //   await document.setDocumentTitle(inputRef.current.innerText)
                       await EventManager.issueEvent(Event.ChangeDocumentTitleInFileSystem, { document, title: inputRef.current.innerText })
-                      handleChangeNameEnd()
+                      await HierarchyManager.hierarchy.updateDocumentTitle(document.id, inputRef.current.innerText)
                   }
               }}
-          >{getTitle(document, documentHierarchyBlock, isChangingName)}</div>
+          >{getTitle(document, isChangingName)}</div>
       </div>
   })

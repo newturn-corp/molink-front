@@ -1208,12 +1208,20 @@
   "resolved" "https://registry.npmjs.org/@napi-rs/triples/-/triples-1.0.3.tgz"
   "version" "1.0.3"
 
-"@newturn-develop/types-molink@^0.0.20":
-  "integrity" "sha512-qQ9NK8LmpI0FrykOkPa3DjbY90DXIwP/wMFxPANHs8BO+LNafXKSPvA6SPzoEhBRiYMZIfAC+8gdSt5sVm9CLw=="
-  "resolved" "https://registry.npmjs.org/@newturn-develop/types-molink/-/types-molink-0.0.20.tgz"
-  "version" "0.0.20"
+"@newturn-develop/molink-automerge-wrapper@^0.0.5":
+  "integrity" "sha512-zxycp/i5o47wlls0sKkZ4i03wm423814BLZv5+A0kJ9OFkASiO5mY6rVhbliP2FvtsnCcN6uUSpsMZFHSXaqVA=="
+  "resolved" "https://registry.npmjs.org/@newturn-develop/molink-automerge-wrapper/-/molink-automerge-wrapper-0.0.5.tgz"
+  "version" "0.0.5"
   dependencies:
     "automerge" "^1.0.1-preview.6"
+
+"@newturn-develop/types-molink@^0.0.32":
+  "integrity" "sha512-VYNAqSdhYJFJgeQB8ANme56jOntJ5IKRTU1l3FDRQxvvibYaZlElg8ZhErCpxTjDMMSTAOHdwxrp7RUfD4l15Q=="
+  "resolved" "https://registry.npmjs.org/@newturn-develop/types-molink/-/types-molink-0.0.32.tgz"
+  "version" "0.0.32"
+  dependencies:
+    "automerge" "^1.0.1-preview.6"
+    "class-validator" "^0.13.2"
 
 "@next/env@12.0.7":
   "integrity" "sha512-TNDqBV37wd95SiNdZsSUq8gnnrTwr+aN9wqy4Zxrxw4bC/jCHNsbK94DxjkG99VL30VCRXXDBTA1/Wa2jIpF9Q=="
@@ -1360,6 +1368,11 @@
   dependencies:
     "@types/react" "*"
     "immutable" "^3.8.2"
+
+"@types/uuid@^8.3.4":
+  "integrity" "sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw=="
+  "resolved" "https://registry.npmjs.org/@types/uuid/-/uuid-8.3.4.tgz"
+  "version" "8.3.4"
 
 "@typescript-eslint/eslint-plugin@^5.6.0":
   "integrity" "sha512-MIbeMy5qfLqtgs1hWd088k1hOuRsN9JrHUPwVVKCD99EOUqScd7SrwoZl4Gso05EAP9w1kvLWUVGJOVpRPkDPA=="
@@ -1959,6 +1972,14 @@
   "integrity" "sha512-SQa1Ws6hUbfC98vKGxZH3KFY0Y1lm5Zm0SY8XX9zbK7FJCyVEac3ATW0RIpwzW+oOfmHE5PMPufDG9hCfoEOMw=="
   "resolved" "https://registry.npmjs.org/class-transformer/-/class-transformer-0.5.1.tgz"
   "version" "0.5.1"
+
+"class-validator@^0.13.2":
+  "integrity" "sha512-yBUcQy07FPlGzUjoLuUfIOXzgynnQPPruyK1Ge2B74k9ROwnle1E+NxLWnUv5OLU8hA/qL5leAE9XnXq3byaBw=="
+  "resolved" "https://registry.npmjs.org/class-validator/-/class-validator-0.13.2.tgz"
+  "version" "0.13.2"
+  dependencies:
+    "libphonenumber-js" "^1.9.43"
+    "validator" "^13.7.0"
 
 "classnames@^2.2.1", "classnames@^2.2.3", "classnames@^2.2.5", "classnames@^2.2.6", "classnames@2.2.6", "classnames@2.x":
   "integrity" "sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q=="
@@ -3454,6 +3475,11 @@
   dependencies:
     "prelude-ls" "^1.2.1"
     "type-check" "~0.4.0"
+
+"libphonenumber-js@^1.9.43":
+  "integrity" "sha512-zhw8nUMJuQf7jG1dZfEOKKOS6M3QYIv3HnvB/vGohNd0QfxIQcObH3a6Y6s350H+9xgBeOXClOJkS0hJ0yvS3g=="
+  "resolved" "https://registry.npmjs.org/libphonenumber-js/-/libphonenumber-js-1.9.44.tgz"
+  "version" "1.9.44"
 
 "lilconfig@2.0.4":
   "integrity" "sha512-bfTIN7lEsiooCocSISTWXkiWJkRqtL9wYtYy+8EK3Y41qh3mpwPU0ycTOgjdY9ErwXCc8QyrQp82bdL0Xkm9yA=="
@@ -5387,10 +5413,20 @@
   "resolved" "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz"
   "version" "3.4.0"
 
+"uuid@^8.3.2":
+  "integrity" "sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg=="
+  "resolved" "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz"
+  "version" "8.3.2"
+
 "v8-compile-cache@^2.0.3":
   "integrity" "sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA=="
   "resolved" "https://registry.npmjs.org/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz"
   "version" "2.3.0"
+
+"validator@^13.7.0":
+  "integrity" "sha512-nYXQLCBkpJ8X6ltALua9dRrZDHVYxjJ1wgskNt1lH9fzGjs3tgojGSCBjmEPwkWS1y29+DrizMTW19Pr9uB2nw=="
+  "resolved" "https://registry.npmjs.org/validator/-/validator-13.7.0.tgz"
+  "version" "13.7.0"
 
 "vm-browserify@1.1.2":
   "integrity" "sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ=="

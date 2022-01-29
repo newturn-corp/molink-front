@@ -4,7 +4,7 @@ import DocumentManager from './DocumentManager'
 import DialogManager from '../global/DialogManager'
 import RoutingManager, { Page } from '../global/RoutingManager'
 import UserManager from '../global/UserManager'
-import DocumentHierarchyManager from './DocumentHierarchyManager/DocumentHierarchyManager'
+import DocumentHierarchyManager from './HierarchyManager/HierarchyManager'
 
 class HomeManager {
     async handleEnterHomePage (nickname: string) {
@@ -22,7 +22,7 @@ class HomeManager {
             if (!documentId) {
                 return
             }
-            await DocumentManager.loadDocument(documentId)
+            // await DocumentManager.loadDocument(documentId)
         } catch (err) {
             if (err instanceof UserNotExists) {
                 await DialogManager.openDialog('사용자가 존재하지 않습니다.', '메인 화면으로 돌아갑니다.', ['확인'])

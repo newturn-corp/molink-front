@@ -3,10 +3,9 @@ import { observer } from 'mobx-react'
 import ListItem from '@material-ui/core/ListItem'
 import { DocumentTitle } from './DocumentTitle'
 import { DocumentIcon } from './DocumentIcon'
-import { HierarchyComponentBlockInterface } from '@newturn-develop/types-molink'
 
-import DocumentHierarchyManager from '../../../../manager/Home/DocumentHierarchyManager/DocumentHierarchyManager'
-import DocumentDragManager from '../../../../manager/Home/DocumentHierarchyManager/DocumentDragManager'
+import DocumentHierarchyManager from '../../../../manager/Home/HierarchyManager/HierarchyManager'
+import HierarchyDragManager from '../../../../manager/Home/HierarchyManager/HierarchyDragManager'
 import UserManager from '../../../../manager/global/UserManager'
 import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
 import { Collapse, List } from '@material-ui/core'
@@ -14,13 +13,13 @@ import { DocumentChildrenOpenButton } from './DocumentChildrenOpenButton'
 
 let ghost
 export const DocumentComponent: React.FC<{
-    documentHierarchyBlock: HierarchyComponentBlockInterface,
+    documentId: string,
     depth: number
-  }> = observer(({ documentHierarchyBlock, depth }) => {
+  }> = observer(({ documentId, depth }) => {
       const divRef = useRef<HTMLDivElement>(null)
       const padding = 8 + depth * 12
 
-      const document = DocumentHierarchyManager.hierarchy.map[documentHierarchyBlock.id]
+      const document = DocumentHierarchyManager.hierarchy.map[documentId]
       const isSelected = DocumentHierarchyManager.hierarchy.selectedDocumentId === document.id
       const isChangingName = DocumentHierarchyManager.hierarchy.nameChangingDocumentId === document.id
       const isOpen = DocumentHierarchyManager.hierarchy.openedDocumentId === document.id
@@ -38,7 +37,7 @@ export const DocumentComponent: React.FC<{
           ghost.style.right = '0px'
           globalThis.document.getElementsByClassName('drag-ghost-parent')[0].appendChild(ghost)
           event.dataTransfer.setDragImage(ghost, event.clientX, event.clientY - divRef.current.getBoundingClientRect().y)
-          //   DocumentDragManager.handleDragStart(document)
+          HierarchyDragManager.handleDragStart(document.id)
       }
 
       // TODO: 백그라운드 고치기
@@ -61,23 +60,22 @@ export const DocumentComponent: React.FC<{
                       }
                   }}
                   onDragStart={(event) => handleDragStart(event)}
-                  onDragEnd={(event) => DocumentDragManager.handleDragEnd(ghost)}
-                  //   onDragOver={(event) => DocumentDragManager.newHandleDragOver(event, document)}
-                  //   onDragLeave={() => DocumentDragManager.handleDragLeave(document)}
+                  onDragOver={(event) => HierarchyDragManager.handleDragOver(event, document.id)}
+                  onDragEnd={(event) => HierarchyDragManager.handleDragEnd(ghost)}
+                  onDragLeave={() => HierarchyDragManager.handleDragLeave(document.id)}
                   onContextMenu={(event) => DocumentHierarchyManager.handleRightClick(event, document.id)}
               >
-                  <DocumentChildrenOpenButton hierarchyComponentBlock={documentHierarchyBlock}/>
+                  <DocumentChildrenOpenButton documentId={documentId}/>
                   <DocumentIcon document={document}/>
                   <DocumentTitle
-                      document={document}
-                      documentHierarchyBlock={documentHierarchyBlock}
+                      documentId={documentId}
                   />
               </ListItem>
               <Collapse in={isChildrenOpen} timeout="auto" unmountOnExit>
                   <List id={`document-child-list-${document.id}`} component="div" disablePadding>
                       {
-                          documentHierarchyBlock.children.map(child => {
-                              return <DocumentComponent key={Math.random()} documentHierarchyBlock={child} depth={depth + 1}/>
+                          document.children.map(childDocumentId => {
+                              return <DocumentComponent key={Math.random()} documentId={childDocumentId} depth={depth + 1}/>
                           })
                       }
                   </List>

@@ -3,7 +3,7 @@ import DocumentAPI from '../api/DocumentAPI'
 import Document from '../domain/Document'
 import { GetDocumentInitialInfoListDTO } from '../DTO/UserDTO'
 import EventManager, { Event } from './EventManager'
-import FileSystemManager from './Home/DocumentHierarchyManager/DocumentHierarchyManager'
+import FileSystemManager from './Home/HierarchyManager/HierarchyManager'
 
 // 특정 Document의 대한 변화를 추적해서 서버로 반영하는 역할
 class DocumentManager {

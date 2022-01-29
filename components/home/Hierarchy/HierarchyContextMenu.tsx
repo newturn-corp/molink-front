@@ -2,7 +2,7 @@ import { Portal } from '@material-ui/core'
 import { reaction } from 'mobx'
 import { observer } from 'mobx-react'
 import React from 'react'
-import DocumentHierarchyManager from '../../../manager/Home/DocumentHierarchyManager/DocumentHierarchyManager'
+import DocumentHierarchyManager from '../../../manager/Home/HierarchyManager/HierarchyManager'
 
 let root: HTMLDivElement = null
 

@@ -6,7 +6,7 @@ import { HierarchyContextMenu } from '../../home/Hierarchy/HierarchyContextMenu'
 import { DragIndicator } from '../../home/Hierarchy/DragIndicator'
 import { FileList } from './FileList'
 
-import FileSystemManager from '../../../manager/Home/DocumentHierarchyManager/DocumentHierarchyManager'
+import FileSystemManager from '../../../manager/Home/HierarchyManager/HierarchyManager'
 
 export const FileSystem: React.FC<{
   }> = observer(() => {

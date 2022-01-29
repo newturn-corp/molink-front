@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 import List from '@material-ui/core/List'
 import { DocumentComponent } from './Document/DocumentComponent'
 
-import DocumentHierarchyManager from '../../../manager/Home/DocumentHierarchyManager/DocumentHierarchyManager'
+import HierarchyManager from '../../../manager/Home/HierarchyManager/HierarchyManager'
 
 export const HierarchyComponent: React.FC<{
   }> = observer(() => {
@@ -14,8 +14,8 @@ export const HierarchyComponent: React.FC<{
               aria-labelledby="nested-list-subheader"
           >
               {
-                  DocumentHierarchyManager.hierarchy.list.map(info => {
-                      return <DocumentComponent key={Math.random()} documentHierarchyBlock={info} depth={0}/>
+                  HierarchyManager.hierarchy.topLevelDocumentIdList.map(documentId => {
+                      return <DocumentComponent key={Math.random()} documentId={documentId} depth={0}/>
                   })
               }
               <div id="moved-location-viewer" className="MuiListItem-root" style={{

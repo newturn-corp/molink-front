@@ -1,18 +1,15 @@
 import React from 'react'
-import { observer } from 'mobx-react-lite'
+import { observer } from 'mobx-react'
 import { ArrowDropDown, ArrowRight } from '@material-ui/icons'
-import { HierarchyComponentBlockInterface } from '@newturn-develop/types-molink'
-import DocumentHierarchyManager from '../../../../manager/Home/DocumentHierarchyManager/DocumentHierarchyManager'
-import DocumentManager from '../../../../manager/Home/DocumentManager'
+import HierarchyManager from '../../../../manager/Home/HierarchyManager/HierarchyManager'
 
 export const DocumentChildrenOpenButton: React.FC<{
-    hierarchyComponentBlock: HierarchyComponentBlockInterface
-  }> = observer(({ hierarchyComponentBlock }) => {
-      const isChildrenOpen = !!DocumentHierarchyManager.hierarchy.childrenOpenMap[hierarchyComponentBlock.id]
-
+    documentId: string
+  }> = observer(({ documentId }) => {
+      const isChildrenOpen = !!HierarchyManager.hierarchy.childrenOpenMap[documentId]
       const handleClick = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
           event.stopPropagation()
-          await DocumentManager.updateDocumentChildrenOpen(hierarchyComponentBlock.id, !isChildrenOpen)
+          await HierarchyManager.hierarchy.updateHierarchyChildrenOpen(documentId, !isChildrenOpen)
       }
 
       return <div className='child-open-button' onClick={(event) => handleClick(event)}>

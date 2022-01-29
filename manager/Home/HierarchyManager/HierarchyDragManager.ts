@@ -1,14 +1,18 @@
 import { makeAutoObservable } from 'mobx'
 import React from 'react'
 import Document from '../../../domain/Document/Document'
-import EventManager, { Event } from '../../EventManager'
+import EventManager, { Event, NewPageLoadingParam } from '../../EventManager'
 import GlobalManager from '../../global/GlobalManager'
+import HierarchyManager from './HierarchyManager'
+import { Page } from '../../global/RoutingManager'
 
-class FileDragManager {
+class HierarchyDragManager {
     public draggingDocument: Document = null
+    public draggingDocumentId: string = null
 
     public newOrder: number = 0
     public newParent: Document | null = null
+    public newParentId: string | null = null
 
     public fileSystemElement: HTMLElement
 
@@ -23,15 +27,17 @@ class FileDragManager {
 
     constructor () {
         makeAutoObservable(this)
-        EventManager.addEventLinstener(Event.DocumentMapInited, () => {
-            this.fileSystemElement = GlobalManager.document.getElementsByClassName('MuiList-root MuiList-padding')[0] as HTMLElement
-            this.indicatorTooptip = GlobalManager.document.getElementsByClassName('ant-tooltip')[0] as HTMLElement
-            this.dragIndicator = GlobalManager.document.getElementsByClassName('drag-indicator')[0] as HTMLElement
+        EventManager.addEventLinstener(Event.UpdateHierarchy, () => {
+            this.fileSystemElement = document.getElementsByClassName('MuiList-root MuiList-padding')[0] as HTMLElement
+            this.indicatorTooptip = document.getElementsByClassName('ant-tooltip')[0] as HTMLElement
+            this.dragIndicator = document.getElementsByClassName('drag-indicator')[0] as HTMLElement
+            console.log(this.fileSystemElement)
+            console.log(this.dragIndicator)
         }, 1)
     }
 
-    handleDragStart (document: Document) {
-        this.draggingDocument = document
+    handleDragStart (documentId: string) {
+        this.draggingDocumentId = documentId
     }
 
     setIndicatorVisible (visible: boolean) {
@@ -63,16 +69,18 @@ class FileDragManager {
         this.dragIndicator.style.top = (position - 60) + 'px'
     }
 
-    newHandleDragOver (event: React.DragEvent<HTMLDivElement>, document: Document) {
-        if (!this.draggingDocument) {
+    handleDragOver (event: React.DragEvent<HTMLDivElement>, documentId: string) {
+        if (!this.draggingDocumentId) {
             return
         }
-        if (this.draggingDocument.equal(document)) {
+        if (this.draggingDocumentId === documentId) {
             return
         }
         event.preventDefault()
+        const document = HierarchyManager.hierarchy.map[documentId]
+        const isChildrenOpen = !!HierarchyManager.hierarchy.childrenOpenMap[documentId]
 
-        const documentElement = globalThis.document.getElementById('document-' + document.meta.id)
+        const documentElement = globalThis.document.getElementById('document-' + document.id)
         const mouseY = event.pageY
         const y = documentElement.getBoundingClientRect().y
         const height = documentElement.offsetHeight
@@ -83,50 +91,50 @@ class FileDragManager {
         if (mouseY < topStandard) {
             this.setViewerPosition(y)
             this.setIndicatorVisible(true)
-            this.newOrder = document.hierarchyInfo.order
-            this.newParent = document.hierarchyInfo.parent
+            this.newOrder = document.order
+            this.newParentId = document.parentId
 
-            if (document.hierarchyInfo.order === 0) {
-                this.viewerText = `${document.meta.title} 위로 이동`
+            if (document.order === 0) {
+                this.viewerText = `${document.title} 위로 이동`
             } else {
-                const documentOnTop = document.getSibling()[document.hierarchyInfo.order - 1]
-                this.viewerText = `${documentOnTop.meta.title} 아래로 이동`
+                const documentOnTop = HierarchyManager.hierarchy.getSibling(document.id, document.order - 1)
+                this.viewerText = `${documentOnTop.title} 아래로 이동`
             }
 
             this._dragOverCount = 0
         } else if (mouseY > bottomStandard) {
             this.setViewerPosition(y + height)
             this.setIndicatorVisible(true)
-            this.newOrder = document.hierarchyInfo.order + 1
-            this.newParent = document.hierarchyInfo.parent
+            this.newOrder = document.order + 1
+            this.newParentId = document.parentId
 
-            this.viewerText = `${document.meta.title} 아래로 이동`
+            this.viewerText = `${document.title} 아래로 이동`
             this._dragOverCount = 0
         } else {
             this.setViewerPosition(y + height * 0.5)
             this.setIndicatorVisible(false)
-            this.newOrder = document.hierarchyInfo.children.length
-            this.newParent = document
+            this.newOrder = document.children.length
+            this.newParentId = document.id
 
-            if (!document.hierarchyInfo.isChildrenOpen && document.hierarchyInfo.children.length > 0) {
+            if (!isChildrenOpen && document.children.length > 0) {
                 this._dragOverCount += 1
                 if (this._dragOverCount < 30) {
-                    this.viewerText = `${document.meta.title}의 하위 문서로 추가 또는 이 문서 열기 (${30 - this._dragOverCount})`
+                    this.viewerText = `${document.title}의 하위 문서로 추가 또는 이 문서 열기 (${30 - this._dragOverCount})`
                 } else if (this._dragOverCount === 30) {
-                    document.setIsChildrenOpen(true)
+                    HierarchyManager.hierarchy.updateHierarchyChildrenOpen(documentId, true)
                     this._dragOverCount = 0
                 }
             } else {
-                this.viewerText = `${document.meta.title}의 하위 문서로 추가`
+                this.viewerText = `${document.title}의 하위 문서로 추가`
             }
         }
     }
 
-    handleDragLeave (document: Document) {
-        if (!this.draggingDocument) {
+    handleDragLeave (documentId: string) {
+        if (!this.draggingDocumentId) {
             return
         }
-        if (this.draggingDocument.meta.id === document.meta.id) {
+        if (this.draggingDocumentId === documentId) {
             return
         }
         this._dragOverCount = 0
@@ -139,20 +147,21 @@ class FileDragManager {
         this.setIndicatorTooltipVisible(false)
 
         // 만약 전혀 변하지 않았다면 따로 처리하지 않는다.
-        if (this.draggingDocument.hierarchyInfo.order === this.newOrder) {
-            if (!this.newParent) {
-                if (!this.draggingDocument.hierarchyInfo.parent) {
+        const document = HierarchyManager.hierarchy.map[this.draggingDocumentId]
+        if (document.order === this.newOrder) {
+            if (!this.newParentId) {
+                if (!document.parentId) {
                     return
                 }
             } else {
-                if (this.newParent.equal(this.draggingDocument.hierarchyInfo.parent)) {
+                if (this.newParentId === document.parentId) {
                     return
                 }
             }
         }
 
-        await this.draggingDocument.setDocumentLocation(this.newParent, this.newOrder)
+        await HierarchyManager.hierarchy.updateDocumentLocation(this.draggingDocumentId, this.newParentId, this.newOrder)
         this._dragOverCount = 0
     }
 }
-export default new FileDragManager()
+export default new HierarchyDragManager()

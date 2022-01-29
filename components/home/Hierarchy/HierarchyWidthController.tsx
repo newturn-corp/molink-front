@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import GlobalManager, { Browser } from '../../../manager/global/GlobalManager'
-import DocumentHierarchyManager from '../../../manager/Home/DocumentHierarchyManager/DocumentHierarchyManager'
+import DocumentHierarchyManager from '../../../manager/Home/HierarchyManager/HierarchyManager'
 
 export const HierarchyWidthController: React.FC<{
   }> = observer(() => {
@@ -18,10 +18,10 @@ export const HierarchyWidthController: React.FC<{
                       //   if (Math.round(value) % 5 !== 0) {
                       //       return
                       //   }
-                      //   DocumentHierarchyManager.hierarchy.width = Math.max(value, 180)
+                      //   HierarchyManager.hierarchy.width = Math.max(value, 180)
                   }}
                   onDragEnd={event => {
-                      //   DocumentHierarchyManager.hierarchy.updateWidth()
+                      //   HierarchyManager.hierarchy.updateWidth()
                   }}
                   draggable='true'
               >

@@ -2,6 +2,7 @@ import React from 'react'
 import { Descendant, Editor } from 'slate'
 import Document, { DocumentVisibility } from '../domain/Document'
 import GlobalManager from './global/GlobalManager'
+import { Page } from './global/RoutingManager'
 
 // Event 이름은 명사형으로 짓는다.
 // TODO: 모두 명사형으로 바꾸기
@@ -23,7 +24,8 @@ export enum Event {
     LoadingContent,
     EditorChange,
     SignOut,
-    UpdateHierarchy
+    UpdateHierarchy,
+    NewPageLoading
 }
 const eventList = [
     Event.DocumentChildrenOpen,
@@ -43,7 +45,8 @@ const eventList = [
     Event.LoadingContent,
     Event.EditorChange,
     Event.SignOut,
-    Event.UpdateHierarchy
+    Event.UpdateHierarchy,
+    Event.NewPageLoading
 ]
 
 type EventListener = (param: EventParam) => void
@@ -90,6 +93,9 @@ export type UserAuthorizationParam = {
 }
 export type LoadingContentParam = {
     editor: Editor
+}
+export type NewPageLoadingParam = {
+    page: Page
 }
 
 class EventManager {

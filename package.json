@@ -25,7 +25,8 @@
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
-    "@newturn-develop/types-molink": "^0.0.20",
+    "@newturn-develop/molink-automerge-wrapper": "^0.0.5",
+    "@newturn-develop/types-molink": "^0.0.32",
     "@productboard/slate-edit-list": "^0.21.5",
     "@types/slate-plain-serializer": "^0.7.1",
     "@typescript-eslint/eslint-plugin": "^5.6.0",
@@ -57,12 +58,14 @@
     "slate": "^0.72.0",
     "slate-history": "^0.66.0",
     "slate-react": "^0.72.1",
-    "socket.io-client": "^4.4.1"
+    "socket.io-client": "^4.4.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.16.5",
     "@next/eslint-plugin-next": "^12.0.7",
     "@types/react": "^17.0.37",
+    "@types/uuid": "^8.3.4",
     "lint-staged": "^12.1.4",
     "typescript": "^4.5.2"
   }

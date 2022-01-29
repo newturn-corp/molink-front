@@ -32,6 +32,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     useEffect(() => {
         GlobalManager.init()
     }, [])
+    if (process.env.NODE_ENV === 'production') { console.log = () => {} }
     return (
         <>
             <SafeHydrate>

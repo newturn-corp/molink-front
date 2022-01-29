@@ -7,7 +7,7 @@ import { ListTransforms } from '../../plugin/ListPlugin'
 import { DividerType, TextCategory } from '../../Types/slate/CustomElement'
 import ContentManager from '../ContentManager'
 import EventManager, { EditorChangeParam, Event } from '../EventManager'
-import FileSystemManager from '../Home/DocumentHierarchyManager/DocumentHierarchyManager'
+import FileSystemManager from '../Home/HierarchyManager/HierarchyManager'
 import RoutingManager, { Page } from '../global/RoutingManager'
 
 // /(슬래시)로 수행하는 명령을 맡아 처리하는 매니저

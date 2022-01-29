@@ -4,6 +4,7 @@ import { APIError } from './APIError'
 import { CollectDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, GetDocumentViewInfoResponseDTO, SearchDocumentLinkResultDTO, SetDocumentIconDTO, SetDocumentIsChildrenOpenDTO, SetDocumentLocationDTO, SetDocumentTitleDTO, SetDocumentVisibilityDTO, UpdateDocumentIsLockedDTO, UpdateDocumentRepresentativeDTO, UpdateDocumentSelectionDTO } from '../DTO/DocumentDto'
 import { DocumentNotExists } from '../Errors/DocumentError'
 import { GetDocumentInitialInfoListDTO } from '../DTO/UserDTO'
+import { CreateDocumentDTO } from '@newturn-develop/types-molink/dist/DTO'
 
 class DocumentAPI extends BaseAPI {
     async getDocumentViewInfo (documentId: string): Promise<GetDocumentViewInfoResponseDTO> {
@@ -17,6 +18,11 @@ class DocumentAPI extends BaseAPI {
     async setDocumentLocation (dto: SetDocumentLocationDTO): Promise<void> {
         const res = await this.put('/documents/location', dto)
         if (res.status !== 200) throw new APIError(res)
+    }
+
+    async createDocument (dto: CreateDocumentDTO): Promise<void> {
+        const res = await this.post('/documents', dto)
+        if (res.status !== 201) throw new APIError(res)
     }
 
     async deleteDocument (dto: DeleteDocumentDTO): Promise<void> {

@@ -1,8 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Tooltip } from 'antd'
-import DocumentDragManager from '../../../manager/Home/DocumentHierarchyManager/DocumentDragManager'
-import DocumentHierarchyManager from '../../../manager/Home/DocumentHierarchyManager/DocumentHierarchyManager'
+import DocumentDragManager from '../../../manager/Home/HierarchyManager/HierarchyDragManager'
 
 export const DragIndicator: React.FC<{
   }> = observer(() => {

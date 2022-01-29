@@ -6,11 +6,11 @@ import { HierarchyContextMenu } from './HierarchyContextMenu'
 import { DragIndicator } from './DragIndicator'
 import { HierarchyComponent } from './HierarchyComponent'
 
-import DocumentHierarchyManager from '../../../manager/Home/DocumentHierarchyManager/DocumentHierarchyManager'
+import DocumentHierarchyManager from '../../../manager/Home/HierarchyManager/HierarchyManager'
 
 export const HierarchyContainer: React.FC<{
   }> = observer(() => {
-      //   const width = DocumentHierarchyManager.hierarchy ? DocumentHierarchyManager.hierarchy.width + 1 : 241
+      //   const width = HierarchyManager.hierarchy ? HierarchyManager.hierarchy.width + 1 : 241
       const width = 240
       const useStyles = makeStyles({
           root: {
@@ -40,7 +40,7 @@ export const HierarchyContainer: React.FC<{
               >
                   <HierarchyContextMenu/>
                   <HierarchyComponent/>
-                  <DragIndicator></DragIndicator>
+                  <DragIndicator/>
               </Drawer>
           </>
       )
