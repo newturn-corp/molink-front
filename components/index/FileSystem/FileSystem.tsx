@@ -2,11 +2,11 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import Drawer from '@material-ui/core/Drawer'
 import { makeStyles } from '@material-ui/core/styles'
-import { HierarchyContextMenu } from '../../home/Hierarchy/HierarchyContextMenu'
-import { DragIndicator } from '../../home/Hierarchy/DragIndicator'
+import { HierarchyContextMenu } from '../../Home/Hierarchy/HierarchyContextMenu'
+import { DragIndicator } from '../../Home/Hierarchy/DragIndicator'
 import { FileList } from './FileList'
 
-import FileSystemManager from '../../../manager/Home/HierarchyManager/HierarchyManager'
+import FileSystemManager from '../../../manager/Home/Hierarchy/HierarchyManager'
 
 export const FileSystem: React.FC<{
   }> = observer(() => {

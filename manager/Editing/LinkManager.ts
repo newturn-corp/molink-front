@@ -70,7 +70,7 @@ class LinkManager {
         if (typeof value === 'string') {
             return
         }
-        const url = IS_DEV ? `http://localhost:3000${value.url}` : `https://knowlink.io${value.url}`
+        const url = IS_DEV ? `http://localhost:3000${value.url}` : `https://molink.life${value.url}`
         const link: LinkElement = {
             type: 'link',
             url,

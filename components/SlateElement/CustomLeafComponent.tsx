@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { css } from '@emotion/css'
+import { CursorComponent } from '../Home/Content/CursorComponent'
 
 export const CustomLeafComponent: React.FC<{
     attributes,
@@ -74,5 +75,16 @@ export const CustomLeafComponent: React.FC<{
           </span>
       }
 
-      return <span {...attributes}>{children}</span>
+      const data = leaf.data as any
+
+      return <span {...attributes}
+          style={
+          {
+              position: 'relative',
+              backgroundColor: data?.alphaColor
+          } as any
+          }>
+          {leaf.isCaret ? <CursorComponent {...(leaf as any)} /> : null}
+          {children}
+      </span>
   }

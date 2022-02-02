@@ -1,9 +1,9 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import List from '@material-ui/core/List'
-import { DocumentComponent } from '../../home/Hierarchy/Document/DocumentComponent'
+import { DocumentComponent } from '../../Home/Hierarchy/Document/DocumentComponent'
 
-import FileSystemManager from '../../../manager/Home/HierarchyManager/HierarchyManager'
+import FileSystemManager from '../../../manager/Home/Hierarchy/HierarchyManager'
 
 export const FileList: React.FC<{
   }> = observer(() => {

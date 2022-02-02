@@ -1,5 +1,4 @@
 import Router from 'next/router'
-import ContentManager from '../ContentManager'
 import EventManager, { Event } from '../EventManager'
 import GlobalManager from './GlobalManager'
 import UserManager from './UserManager'
@@ -18,24 +17,21 @@ export enum Page {
 
 class RoutingManager {
     async moveTo (page: Page, extra: string = '') {
-        if (ContentManager.editor) {
-            if (ContentManager.editor.destroy) {
-                ContentManager.editor.destroy()
-            }
-        }
+        // if (ContentManager.editor) {
+        //     if (ContentManager.editor.destroy) {
+        //         ContentManager.editor.destroy()
+        //     }
+        // }
         await EventManager.issueEvent(Event.MoveToAnotherPage, {})
-        if (page === Page.Home) {
-            return Router.push(`${page}/${UserManager.profile.nickname}${extra}`)
-        }
-        Router.push(page + extra)
+        await Router.push(page + extra)
     }
 
     async rawMoveTo (url: string) {
-        if (ContentManager.editor) {
-            if (ContentManager.editor.destroy) {
-                ContentManager.editor.destroy()
-            }
-        }
+        // if (ContentManager.editor) {
+        //     if (ContentManager.editor.destroy) {
+        //         ContentManager.editor.destroy()
+        //     }
+        // }
         const domain = new URL(url)
         // 외부 주소일 경우 새 창에서, 내부 주소일 경우 페이지 이동
         if (domain.hostname.replace('www.', '') !== process.env.FRONT_HOST_NAME) {

@@ -465,7 +465,7 @@ class MentionManager {
         }
     }
 
-    onKeyDown (event: React.KeyboardEvent, editor: Editor) {
+    handleKeyDown (event: React.KeyboardEvent, editor: Editor) {
         if (this.target) {
             switch (event.key) {
             case 'ArrowDown':

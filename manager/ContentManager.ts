@@ -1,23 +1,13 @@
-import { makeAutoObservable, toJS } from 'mobx'
-import DocumentAPI from '../api/DocumentAPI'
-import { DocumentNotExists } from '../Errors/DocumentError'
+import { makeAutoObservable } from 'mobx'
 import { Editor, Location, Transforms } from 'slate'
-import DialogManager from './global/DialogManager'
-import UserManager from './global/UserManager'
-import EventManager, { ChangeDocumentTitleInFileSystemParam, DeleteDocumentParam, Event, OpenDocumentParam } from './EventManager'
+import EventManager, { ChangeDocumentTitleInFileSystemParam, DeleteDocumentParam, Event } from './EventManager'
 import Document from '../domain/Document'
-import DocumentManager from './DocumentManager'
 import RoutingManager, { Page } from './global/RoutingManager'
-import { ReactEditor } from 'slate-react'
-import OnlineManager from './Editing/Online/OnlineManager'
+// import RoutingManager, { Page } from '/manager/global/'
 
 class ContentManager {
     editor: Editor = null
-
-    currentContentUserId: number | null = null
     openedDocument: Document = null
-
-    isLoadingContent: boolean = false
 
     constructor () {
         makeAutoObservable(this, {

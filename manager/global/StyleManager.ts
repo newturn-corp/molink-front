@@ -1,7 +1,7 @@
 import { makeAutoObservable, reaction, toJS } from 'mobx'
 import { isBrowser, isMobile } from 'react-device-detect'
 import EventManager, { Event } from '../EventManager'
-import DocumentHierarchyManager from '../Home/HierarchyManager/HierarchyManager'
+import DocumentHierarchyManager from '../Home/Hierarchy/HierarchyManager'
 
 interface ContentStyle {
     container: {
@@ -34,7 +34,7 @@ class StyleManager {
 
     constructor () {
         makeAutoObservable(this)
-        // reaction(() => HierarchyManager.hierarchy.width, () => {
+        // reaction(() => Hierarchy.hierarchy.width, () => {
         //     this.updateContentStyle()
         // })
         EventManager.addDisposableEventListener(Event.InitGlobalVariable, () => {

@@ -4,7 +4,10 @@ import DocumentManager from './DocumentManager'
 import DialogManager from '../global/DialogManager'
 import RoutingManager, { Page } from '../global/RoutingManager'
 import UserManager from '../global/UserManager'
-import DocumentHierarchyManager from './HierarchyManager/HierarchyManager'
+import DocumentHierarchyManager from './Hierarchy/HierarchyManager'
+import ContentManager from './ContentManager/ContentManager'
+import { ContentNotExists, ContentUserNotExists, UnauthorizedForContent } from '../../Errors/ContentError'
+import EditorManager from '../EditorManager'
 
 class HomeManager {
     async handleEnterHomePage (nickname: string) {
@@ -22,8 +25,10 @@ class HomeManager {
             if (!documentId) {
                 return
             }
-            // await DocumentManager.loadDocument(documentId)
+            // await ContentManager.loadContent(documentId)
+            EditorManager.init(documentId)
         } catch (err) {
+            console.log(err)
             if (err instanceof UserNotExists) {
                 await DialogManager.openDialog('사용자가 존재하지 않습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
                 await RoutingManager.moveTo(Page.Index)
@@ -35,6 +40,15 @@ class HomeManager {
                 await RoutingManager.moveTo(Page.Index)
             } else if (err instanceof UnauthorizedForDocument) {
                 await DialogManager.openDialog('문서를 찾을 수 없습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
+                await RoutingManager.moveTo(Page.Index)
+            } else if (err instanceof ContentNotExists) {
+                await DialogManager.openDialog('문서를 찾을 수 없습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
+                await RoutingManager.moveTo(Page.Index)
+            } else if (err instanceof UnauthorizedForContent) {
+                await DialogManager.openDialog('문서를 찾을 수 없습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
+                await RoutingManager.moveTo(Page.Index)
+            } else if (err instanceof ContentUserNotExists) {
+                await DialogManager.openDialog('문서를 `찾을 수 없습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
                 await RoutingManager.moveTo(Page.Index)
             } else {
                 throw err

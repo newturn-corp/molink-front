@@ -1,13 +1,10 @@
 import { KeyboardEvent } from 'react'
-import { BaseEditor, Range, Transforms } from 'slate'
-import { HistoryEditor } from 'slate-history'
-import { ReactEditor } from 'slate-react'
-import { DividerType } from '../../Types/slate/CustomElement'
-import SaveManager from '../SaveManager'
+import { Editor, Transforms } from 'slate'
+import ContentManager from '../Home/ContentManager/ContentManager'
 
 // 단축키를 눌러 사용하는 명령을 담당하는 매니저
 class HotKeyManager {
-    async handleKeyDown (editor: BaseEditor & ReactEditor & HistoryEditor, e: KeyboardEvent<HTMLDivElement>) {
+    async handleKeyDown (e: KeyboardEvent<HTMLDivElement>, editor: Editor) {
         const keys = []
         if (e.shiftKey) {
             keys.push('shift')
@@ -19,6 +16,16 @@ class HotKeyManager {
         keys.push(e.key)
 
         switch (keys.join('+')) {
+        case 'ArrowLeft':
+            e.preventDefault()
+            Transforms.move(ContentManager.editor, {
+                unit: 'offset',
+                reverse: true
+            })
+            break
+        case 'ArrowRight':
+            e.preventDefault()
+            Transforms.move(ContentManager.editor, { unit: 'offset' })
         case 'shift+Enter':
             e.preventDefault()
             editor.insertText('\n')
@@ -30,12 +37,12 @@ class HotKeyManager {
             // editor.insertBreak()
             // Transforms.move(editor, { distance: 1, unit: 'character' })
             break
-        // case 'Enter':
-        //     if (editor.selection && editor.children[editor.selection.anchor.path[0]].type === 'code') {
-        //         e.preventDefault()
-        //         editor.insertText('\n')
-        //     }
-        //     break
+            // case 'Enter':
+            //     if (editor.selection && editor.children[editor.selection.anchor.path[0]].type === 'code') {
+            //         e.preventDefault()
+            //         editor.insertText('\n')
+            //     }
+            //     break
         case 'ctrl+O':
         case 'ctrl+o':
             e.preventDefault()
@@ -48,11 +55,6 @@ class HotKeyManager {
         case 'ctrl+y':
             e.preventDefault()
             editor.redo()
-            break
-        case 'ctrl+s':
-        case 'ctrl+S':
-            e.preventDefault()
-            await SaveManager.saveContent()
             break
         }
     }

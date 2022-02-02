@@ -2,13 +2,10 @@ import { makeAutoObservable, toJS } from 'mobx'
 import React from 'react'
 import { BaseRange, Editor, Element, Node, Range, Transforms } from 'slate'
 import Command from '../../domain/Command'
-import Document from '../../domain/Document'
-import { ListTransforms } from '../../plugin/ListPlugin'
 import { DividerType, TextCategory } from '../../Types/slate/CustomElement'
 import ContentManager from '../ContentManager'
 import EventManager, { EditorChangeParam, Event } from '../EventManager'
-import FileSystemManager from '../Home/HierarchyManager/HierarchyManager'
-import RoutingManager, { Page } from '../global/RoutingManager'
+import { ListTransforms } from '../../plugin/GlobalPlugins/ListPlugin'
 
 // /(슬래시)로 수행하는 명령을 맡아 처리하는 매니저
 class CommandManager {
@@ -25,7 +22,7 @@ class CommandManager {
         new Command('구분선-짦은', '짦은 구분선', '/command/divider-short.svg'),
         new Command('구분선-짦고 흐릿한', '짦고 흐릿한 구분선', '/command/divider-faint-short.svg'),
         new Command('구분선-점', '점 구분선', '/command/divider-dot.svg'),
-        new Command('새문서', '새로운 하위 문서를 만듭니다.', '/command/document.svg'),
+        // new Command('새문서', '새로운 하위 문서를 만듭니다.', '/command/document.svg'),
         new Command('순서없는목록', '순서 없는 목록', '/command/bullet-list.svg'),
         new Command('숫자목록', '숫자 목록', '/command/ordered-list.svg'),
         new Command('체크목록', '체크 목록', '/command/check-list.svg')
@@ -35,13 +32,6 @@ class CommandManager {
 
     constructor () {
         makeAutoObservable(this)
-
-        // 에디터가 바뀔 때마다 변경 시도
-        EventManager.addEventLinstener(Event.EditorChange, async ({ editor }: EditorChangeParam) => {
-            if (ContentManager.openedDocument && ContentManager.openedDocument.authority.editable) {
-                await this.handleEditorChange(editor)
-            }
-        }, 10)
     }
 
     isBlockActive (editor, format) {
@@ -71,115 +61,115 @@ class CommandManager {
     }
 
     async insertNodeByCommand (editor: Editor, command: Command) {
-        // let node: Element
-        // switch (command.name) {
-        // case '제목1':
-        //     node = {
-        //         type: 'text',
-        //         category: TextCategory.Head1,
-        //         children: [{ text: '' }]
-        //     }
-        //     this.insertNode(editor, node)
-        //     break
-        // case '제목2':
-        //     node = {
-        //         type: 'text',
-        //         category: TextCategory.Head2,
-        //         children: [{ text: '' }]
-        //     }
-        //     this.insertNode(editor, node)
-        //     break
-        // case '제목3':
-        //     node = {
-        //         type: 'text',
-        //         category: TextCategory.Head3,
-        //         children: [{ text: '' }]
-        //     }
-        //     this.insertNode(editor, node)
-        //     break
-        // case '구분선-기본':
-        //     node = {
-        //         type: 'divider',
-        //         dividerType: DividerType.LongLine,
-        //         children: [{ text: '' }]
-        //     }
-        //     this.insertNode(editor, node)
-        //     break
-        // case '구분선-흐릿한':
-        //     node = {
-        //         type: 'divider',
-        //         dividerType: DividerType.FaintLongLine,
-        //         children: [{ text: '' }]
-        //     }
-        //     this.insertNode(editor, node)
-        //     break
-        // case '구분선-짦은':
-        //     node = {
-        //         type: 'divider',
-        //         dividerType: DividerType.ShortLine,
-        //         children: [{ text: '' }]
-        //     }
-        //     this.insertNode(editor, node)
-        //     break
-        // case '구분선-짦고 흐릿한':
-        //     node = {
-        //         type: 'divider',
-        //         dividerType: DividerType.FaintShortLine,
-        //         children: [{ text: '' }]
-        //     }
-        //     this.insertNode(editor, node)
-        //     break
-        // case '구분선-점':
-        //     node = {
-        //         type: 'divider',
-        //         dividerType: DividerType.Dot,
-        //         children: [{ text: '' }]
-        //     }
-        //     this.insertNode(editor, node)
-        //     break
-        // case '순서없는목록':
-        //     const unorderedRange = {
-        //         anchor: {
-        //             offset: 0,
-        //             path: editor.selection.focus.path
-        //         },
-        //         focus: editor.selection.focus
-        //     }
-        //     Transforms.select(editor, unorderedRange)
-        //     Transforms.delete(editor)
-        //     ListTransforms.wrapInList(editor)
-        //     break
-        // case '숫자목록':
-        //     const orderedRange = {
-        //         anchor: {
-        //             offset: 0,
-        //             path: editor.selection.focus.path
-        //         },
-        //         focus: editor.selection.focus
-        //     }
-        //     Transforms.select(editor, orderedRange)
-        //     Transforms.delete(editor)
-        //     ListTransforms.wrapInList(editor, 'ol-list')
-        //     break
-        // case '체크목록':
-        //     const checklistRange = {
-        //         anchor: {
-        //             offset: 0,
-        //             path: editor.selection.focus.path
-        //         },
-        //         focus: editor.selection.focus
-        //     }
-        //     Transforms.select(editor, checklistRange)
-        //     Transforms.delete(editor)
-        //     const newProperties: Partial<Element> = {
-        //         type: 'check-list-item',
-        //         checked: false
-        //     }
-        //     Transforms.setNodes<Element>(editor, newProperties, {
-        //         match: n => Editor.isBlock(editor, n)
-        //     })
-        //     ListTransforms.wrapInList(editor, 'check-list')
-        //     break
+        let node: Element
+        switch (command.name) {
+        case '제목1':
+            node = {
+                type: 'text',
+                category: TextCategory.Head1,
+                children: [{ text: '' }]
+            }
+            this.insertNode(editor, node)
+            break
+        case '제목2':
+            node = {
+                type: 'text',
+                category: TextCategory.Head2,
+                children: [{ text: '' }]
+            }
+            this.insertNode(editor, node)
+            break
+        case '제목3':
+            node = {
+                type: 'text',
+                category: TextCategory.Head3,
+                children: [{ text: '' }]
+            }
+            this.insertNode(editor, node)
+            break
+        case '구분선-기본':
+            node = {
+                type: 'divider',
+                dividerType: DividerType.LongLine,
+                children: [{ text: '' }]
+            }
+            this.insertNode(editor, node)
+            break
+        case '구분선-흐릿한':
+            node = {
+                type: 'divider',
+                dividerType: DividerType.FaintLongLine,
+                children: [{ text: '' }]
+            }
+            this.insertNode(editor, node)
+            break
+        case '구분선-짦은':
+            node = {
+                type: 'divider',
+                dividerType: DividerType.ShortLine,
+                children: [{ text: '' }]
+            }
+            this.insertNode(editor, node)
+            break
+        case '구분선-짦고 흐릿한':
+            node = {
+                type: 'divider',
+                dividerType: DividerType.FaintShortLine,
+                children: [{ text: '' }]
+            }
+            this.insertNode(editor, node)
+            break
+        case '구분선-점':
+            node = {
+                type: 'divider',
+                dividerType: DividerType.Dot,
+                children: [{ text: '' }]
+            }
+            this.insertNode(editor, node)
+            break
+        case '순서없는목록':
+            const unorderedRange = {
+                anchor: {
+                    offset: 0,
+                    path: editor.selection.focus.path
+                },
+                focus: editor.selection.focus
+            }
+            Transforms.select(editor, unorderedRange)
+            Transforms.delete(editor)
+            ListTransforms.wrapInList(editor)
+            break
+        case '숫자목록':
+            const orderedRange = {
+                anchor: {
+                    offset: 0,
+                    path: editor.selection.focus.path
+                },
+                focus: editor.selection.focus
+            }
+            Transforms.select(editor, orderedRange)
+            Transforms.delete(editor)
+            ListTransforms.wrapInList(editor, 'ol-list')
+            break
+        case '체크목록':
+            const checklistRange = {
+                anchor: {
+                    offset: 0,
+                    path: editor.selection.focus.path
+                },
+                focus: editor.selection.focus
+            }
+            Transforms.select(editor, checklistRange)
+            Transforms.delete(editor)
+            const newProperties: Partial<Element> = {
+                type: 'check-list-item',
+                checked: false
+            }
+            Transforms.setNodes<Element>(editor, newProperties, {
+                match: n => Editor.isBlock(editor, n)
+            })
+            ListTransforms.wrapInList(editor, 'check-list')
+            break
         // case '새문서':
         //     if (!ContentManager.openedDocument) {
         //         return
@@ -199,12 +189,13 @@ class CommandManager {
         //     this.insertNode(editor, node)
         //     FileSystemManager.selectedDocument = document
         //     break
-        // default:
-        //     throw new Error('처리되지 않은 명령어:' + command.name)
-        // }
+        default:
+            throw new Error('처리되지 않은 명령어:' + command.name)
+        }
     }
 
     handleEditorChange (editor: Editor) {
+        console.log('editor change')
         try {
             const { selection } = editor
             if (selection && Range.isCollapsed(selection)) {
@@ -245,7 +236,7 @@ class CommandManager {
         }
     }
 
-    async onKeyDown (event: React.KeyboardEvent, editor: Editor) {
+    async handleKeyDown (event: React.KeyboardEvent, editor: Editor) {
         if (this.target && this.searchedCommands.length > 0) {
             switch (event.key) {
             case 'ArrowDown':

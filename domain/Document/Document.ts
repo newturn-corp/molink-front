@@ -3,7 +3,7 @@ import DocumentAPI from '../../api/DocumentAPI'
 import ViewerAPI from '../../api/ViewerAPI'
 import { SetDocumentIconDTO, SetDocumentIsChildrenOpenDTO, SetDocumentLocationDTO, SetDocumentTitleDTO, SetDocumentVisibilityDTO } from '../../DTO/DocumentDto'
 import DialogManager from '../../manager/global/DialogManager'
-import DocumentHierarchyManager from '../../manager/Home/HierarchyManager/HierarchyManager'
+import DocumentHierarchyManager from '../../manager/Home/Hierarchy/HierarchyManager'
 import DocumentHierarchyInfo from './DocumentHierarchyInfo'
 import DocumentMeta, { DocumentVisibility } from './DocumentMeta'
 
@@ -62,7 +62,7 @@ export default class Document {
     }
 
     getSibling () {
-        // return this.hierarchyInfo.parent ? this.hierarchyInfo.parent.hierarchyInfo.children : HierarchyManager.hierarchy.documents
+        // return this.hierarchyInfo.parent ? this.hierarchyInfo.parent.hierarchyInfo.children : Hierarchy.hierarchy.documents
     }
 
     async changeDocumentVisibility (visibility: DocumentVisibility, force: boolean = false) {
@@ -142,8 +142,8 @@ export default class Document {
         // }
         // // 기존 부모에게서 삭제
         // if (this.hierarchyInfo.parent === null) {
-        //     HierarchyManager.hierarchy.documents.filter(info => info.hierarchyInfo.order > this.hierarchyInfo.order).forEach(info => { info.hierarchyInfo.order -= 1 })
-        //     HierarchyManager.hierarchy.documents.splice(this.hierarchyInfo.order, 1)
+        //     Hierarchy.hierarchy.documents.filter(info => info.hierarchyInfo.order > this.hierarchyInfo.order).forEach(info => { info.hierarchyInfo.order -= 1 })
+        //     Hierarchy.hierarchy.documents.splice(this.hierarchyInfo.order, 1)
         // } else {
         //     this.hierarchyInfo.parent.hierarchyInfo.children.filter(doc => doc.hierarchyInfo.order > this.hierarchyInfo.order).forEach(info => { info.hierarchyInfo.order -= 1 })
         //     this.hierarchyInfo.parent.hierarchyInfo.children.splice(this.hierarchyInfo.order, 1)
@@ -157,8 +157,8 @@ export default class Document {
 
         // // 새 부모에게 추가
         // if (this.hierarchyInfo.parent === null) {
-        //     HierarchyManager.hierarchy.documents.filter(info => info.hierarchyInfo.order >= this.hierarchyInfo.order).forEach(info => { info.hierarchyInfo.order += 1 })
-        //     HierarchyManager.hierarchy.documents.splice(this.hierarchyInfo.order, 0, this)
+        //     Hierarchy.hierarchy.documents.filter(info => info.hierarchyInfo.order >= this.hierarchyInfo.order).forEach(info => { info.hierarchyInfo.order += 1 })
+        //     Hierarchy.hierarchy.documents.splice(this.hierarchyInfo.order, 0, this)
         // } else {
         //     this.hierarchyInfo.parent.hierarchyInfo.children.filter(info => info.hierarchyInfo.order >= this.hierarchyInfo.order).forEach(info => { info.hierarchyInfo.order += 1 })
         //     this.hierarchyInfo.parent.hierarchyInfo.children.splice(this.hierarchyInfo.order, 0, this)

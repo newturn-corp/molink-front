@@ -5,7 +5,6 @@ import { Avatar, Menu, MenuItem, Badge } from '@material-ui/core'
 import AuthManager from '../../../manager/Auth/AuthManager'
 import { SupportModal } from '../SupportModal'
 import SupportManager from '../../../manager/SupportManager'
-import SaveManager, { ContentSaveStatus } from '../../../manager/SaveManager'
 import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 
 export const User: React.FC<{
@@ -46,7 +45,7 @@ export const User: React.FC<{
 
       return <div>
           <div className='user-container' onClick={(event) => handleClick(event)}>
-              <Badge className={SaveManager.contentSaveStatus === ContentSaveStatus.SaveFailed ? 'disconnected' : 'connected' } variant="dot" overlap={'circular'}>
+              <Badge className={'connected'} variant="dot" overlap={'circular'}>
                   <Avatar className='profile' sizes='32' src={profileImageSrc}>{profileInnerText}</Avatar>
               </Badge>
               <div className='nickname'>
