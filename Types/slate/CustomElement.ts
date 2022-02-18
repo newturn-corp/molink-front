@@ -102,6 +102,12 @@ export type CodeElement = {
 
 export type LinkElement = { type: 'link'; url: string; children: Descendant[] }
 
+export type YoutubeElement = {
+    type: 'youtube'
+    videoId: string
+    children: Descendant[]
+}
+
 export type CustomElement =
 TextElement |
 BulletedListElement |
@@ -115,4 +121,4 @@ OrderedListItemElement |
 DividerElement |
 DocumentElement |
 CheckListItemElement |
-CodeElement
+CodeElement | YoutubeElement

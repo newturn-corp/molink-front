@@ -1,15 +1,11 @@
 import { cx, css } from '@emotion/css'
-import { IconButton, SvgIconTypeMap } from '@material-ui/core'
-import { OverridableComponent } from '@material-ui/core/OverridableComponent'
 import { FormatBold, FormatItalic, FormatUnderlined, Link } from '@material-ui/icons'
 import React, { useRef, PropsWithChildren, Ref, useEffect } from 'react'
-import ReactDOM from 'react-dom'
 import { Editor, Node, Range, Text, Transforms } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
-import HoveringToolbarManager from '../../manager/HoveringToolbarManager'
-import LinkManager from '../../manager/Editing/LinkManager'
-import { Portal } from '../utils/Portal'
 import { LinkInput } from './LinkInput'
+import LinkManager from '../../../../manager/Editing/LinkManager'
+import { Portal } from '../../../utils/Portal'
 interface BaseProps {
     className: string
     [key: string]: unknown

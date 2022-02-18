@@ -75,8 +75,8 @@ class HierarchyDragManager {
             return
         }
         event.preventDefault()
-        const document = HierarchyManager.hierarchy.map[documentId]
-        const isChildrenOpen = !!HierarchyManager.hierarchy.childrenOpenMap[documentId]
+        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
+        const document = currentHierarchy.map[documentId]
 
         const documentElement = globalThis.document.getElementById('document-' + document.id)
         const mouseY = event.pageY
@@ -95,7 +95,7 @@ class HierarchyDragManager {
             if (document.order === 0) {
                 this.viewerText = `${document.title} 위로 이동`
             } else {
-                const documentOnTop = HierarchyManager.hierarchy.getSibling(document.id, document.order - 1)
+                const documentOnTop = currentHierarchy.getSibling(document.id, document.order - 1)
                 this.viewerText = `${documentOnTop.title} 아래로 이동`
             }
 
@@ -114,12 +114,12 @@ class HierarchyDragManager {
             this.newOrder = document.children.length
             this.newParentId = document.id
 
-            if (!isChildrenOpen && document.children.length > 0) {
+            if (!document.childrenOpen && document.children.length > 0) {
                 this._dragOverCount += 1
                 if (this._dragOverCount < 30) {
                     this.viewerText = `${document.title}의 하위 문서로 추가 또는 이 문서 열기 (${30 - this._dragOverCount})`
                 } else if (this._dragOverCount === 30) {
-                    HierarchyManager.hierarchy.updateHierarchyChildrenOpen(documentId, true)
+                    currentHierarchy.updateHierarchyChildrenOpen(documentId, true)
                     this._dragOverCount = 0
                 }
             } else {
@@ -145,7 +145,7 @@ class HierarchyDragManager {
         this.setIndicatorTooltipVisible(false)
 
         // 만약 전혀 변하지 않았다면 따로 처리하지 않는다.
-        const document = HierarchyManager.hierarchy.map[this.draggingDocumentId]
+        const document = HierarchyManager.hierarchy.yMap.get(this.draggingDocumentId)
         if (document.order === this.newOrder) {
             if (!this.newParentId) {
                 if (!document.parentId) {

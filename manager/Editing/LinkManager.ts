@@ -1,12 +1,11 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import { Range, Transforms } from 'slate'
-import ContentManager from '../ContentManager'
-import DocumentManager from '../DocumentManager'
 import { LinkElement } from '../../Types/slate/CustomElement'
 import { IS_DEV } from '../../infra/constants'
 import isUrl from 'is-url'
 import DocumentAPI from '../../api/DocumentAPI'
 import UserManager from '../global/UserManager'
+import EditorManager from '../Home/EditorManager'
 
 export interface LinkOption {
     reference: string
@@ -77,11 +76,11 @@ class LinkManager {
             children: []
         }
 
-        Transforms.wrapNodes(ContentManager.editor, link, {
+        Transforms.wrapNodes(EditorManager.editor, link, {
             at: this.selectionRange,
             split: true
         })
-        Transforms.collapse(ContentManager.editor, { edge: 'end' })
+        Transforms.collapse(EditorManager.editor, { edge: 'end' })
         this.closeLinkInput()
     }
 
@@ -95,11 +94,11 @@ class LinkManager {
             children: []
         }
 
-        Transforms.wrapNodes(ContentManager.editor, link, {
+        Transforms.wrapNodes(EditorManager.editor, link, {
             at: this.selectionRange,
             split: true
         })
-        Transforms.collapse(ContentManager.editor, { edge: 'end' })
+        Transforms.collapse(EditorManager.editor, { edge: 'end' })
         this.closeLinkInput()
     }
 }

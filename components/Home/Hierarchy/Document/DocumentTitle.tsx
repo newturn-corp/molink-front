@@ -17,9 +17,10 @@ export const DocumentTitle: React.FC<{
     documentId: string
   }> = observer(({ documentId }) => {
       const inputRef = useRef<HTMLDivElement>(null)
-      const document = HierarchyManager.hierarchy.map[documentId]
-      const isChangingName = HierarchyManager.hierarchy.nameChangingDocumentId === document.id
-      const isDocumentOpen = HierarchyManager.hierarchy.openedDocumentId === document.id
+      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
+      const document = currentHierarchy.map[documentId]
+      const isChangingName = currentHierarchy.nameChangingDocumentId === document.id
+      const isDocumentOpen = currentHierarchy.openedDocumentId === document.id
       const textClassName = isDocumentOpen ? 'text text-opened' : 'text'
 
       if (isChangingName && inputRef) {
@@ -55,13 +56,13 @@ export const DocumentTitle: React.FC<{
                   event.preventDefault()
                   if (isChangingName) {
                       await EventManager.issueEvent(Event.ChangeDocumentTitleInFileSystem, { document, title: inputRef.current.innerText })
-                      await HierarchyManager.hierarchy.updateDocumentTitle(document.id, inputRef.current.innerText)
+                      await currentHierarchy.updateDocumentTitle(document.id, inputRef.current.innerText)
                   }
               }}
               onBlur={async () => {
                   if (isChangingName) {
                       await EventManager.issueEvent(Event.ChangeDocumentTitleInFileSystem, { document, title: inputRef.current.innerText })
-                      await HierarchyManager.hierarchy.updateDocumentTitle(document.id, inputRef.current.innerText)
+                      await currentHierarchy.updateDocumentTitle(document.id, inputRef.current.innerText)
                   }
               }}
           >{getTitle(document, isChangingName)}</div>

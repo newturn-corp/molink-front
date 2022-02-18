@@ -77,12 +77,7 @@ const SignIn = observer(() => {
                 setLoading(false)
                 if (result.success) {
                     await UserManager.refresh()
-                    const documentBeforeLogin = localStorage.getItem('document-before-login')
-                    if (documentBeforeLogin) {
-                        RoutingManager.moveTo(Page.Home, `?id=${documentBeforeLogin}`)
-                    } else {
-                        RoutingManager.moveTo(Page.Home)
-                    }
+                    await RoutingManager.moveTo(Page.Home, `/${UserManager.profile.nickname}`)
                 }
             }}>
         로그인

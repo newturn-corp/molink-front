@@ -1,12 +1,14 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import ContentManager from '../../../../manager/ContentManager'
 import { DocumentHierarchyList } from './DocumentHierarchyList'
 import { LockButton } from './LockButton'
+import HierarchyManager from '../../../../manager/Home/Hierarchy/HierarchyManager'
+import EditorManager from '../../../../manager/Home/EditorManager'
 
 export const ContentHeader: React.FC<{
   }> = observer(() => {
-      if (!ContentManager.openedDocument) {
+      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
+      if (!currentHierarchy) {
           return <></>
       }
       return <div className={'content-toolbar'}>

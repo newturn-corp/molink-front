@@ -59,7 +59,7 @@ export const CommandListComponent: React.FC<{
               el.removeAttribute('style')
           }
       }, [CommandManager.commandsList.length, editor, CommandManager.index, CommandManager.search, CommandManager.target])
-
+      console.log(CommandManager.searchedCommands)
       return <Portal>
           <div
               ref={ref}

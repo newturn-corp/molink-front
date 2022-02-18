@@ -20,7 +20,7 @@ export const Header: React.FC<{
           </div>
           <SearchComponent />
           <div className='logo'>
-              <img src="/header-logo.png" alt="" onClick={() => RoutingManager.moveTo(Page.Index)} />
+              <img src="/header-logo.jpg" alt="" onClick={() => RoutingManager.moveTo(Page.Index)} />
           </div>
       </div>
   })

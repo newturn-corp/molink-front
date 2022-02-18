@@ -6,6 +6,7 @@ import { SlateLinkElement } from './SlateLinkElement'
 import { SlateDividerElement } from './SlateDividerElement'
 import { SlateDocumentElement } from './SlateDocumentElement'
 import { SlateCheckListItemElement } from './SlateCheckListItemElement'
+import { SlateYoutubeElement } from './SlateYoutubeElement'
 
 export const CustomElementComponent: React.FC<{
     attributes,
@@ -41,6 +42,8 @@ export const CustomElementComponent: React.FC<{
           return <SlateDividerElement { ...props } />
       case 'document':
           return <SlateDocumentElement { ...props } />
+      case 'youtube':
+          return <SlateYoutubeElement { ...props } />
       default:
           return <p {...attributes}>{children}</p>
       }

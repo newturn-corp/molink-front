@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { observer } from 'mobx-react'
 import { Editor } from 'slate'
 import { ReactEditor } from 'slate-react'
-import MentionManager from '../../../manager/Editing/MentionManager'
+import MentionManager from '../../../../manager/Editing/MentionManager'
 
 const Portal = ({ children }) => {
     return typeof document === 'object'

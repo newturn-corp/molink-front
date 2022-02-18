@@ -6,8 +6,16 @@ import { GetUserProfileDTO, SearchUserDTO, SearchResponseDTO, GetUserRepresentat
 import { RepresentativeDocumentNotExists, UserNotExists } from '../Errors/UserError'
 import UserSetting from '../domain/UserSetting'
 import UserProfile from '../domain/User/UserProfile'
+import { GetUserIDDTO } from '@newturn-develop/types-molink'
 
 class UserAPI extends BaseAPI {
+    async getUserID (): Promise<number> {
+        const res = await this.get('/main/users/id')
+        if (res.status !== 200) throw new APIError(res)
+        const data = res.data as GetUserIDDTO
+        return data.id
+    }
+
     async getUserProfile (): Promise<UserProfile> {
         const res = await this.get('/main/users/profile')
         if (res.status !== 200) throw new APIError(res)

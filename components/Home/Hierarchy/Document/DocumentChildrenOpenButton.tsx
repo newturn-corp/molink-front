@@ -6,15 +6,16 @@ import HierarchyManager from '../../../../manager/Home/Hierarchy/HierarchyManage
 export const DocumentChildrenOpenButton: React.FC<{
     documentId: string
   }> = observer(({ documentId }) => {
-      const isChildrenOpen = !!HierarchyManager.hierarchy.childrenOpenMap[documentId]
+      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
+      const document = currentHierarchy.map[documentId]
       const handleClick = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
           event.stopPropagation()
-          await HierarchyManager.hierarchy.updateHierarchyChildrenOpen(documentId, !isChildrenOpen)
+          await currentHierarchy.updateHierarchyChildrenOpen(documentId, !document.childrenOpen)
       }
 
       return <div className='child-open-button' onClick={(event) => handleClick(event)}>
           {
-              isChildrenOpen
+              document.childrenOpen
                   ? <ArrowDropDown />
                   : <ArrowRight />
           }

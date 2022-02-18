@@ -4,14 +4,14 @@ import UserManager from '../../../manager/global/UserManager'
 import { Avatar, Menu, MenuItem, Badge } from '@material-ui/core'
 import AuthManager from '../../../manager/Auth/AuthManager'
 import { SupportModal } from '../SupportModal'
-import SupportManager from '../../../manager/SupportManager'
 import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
+import SupportManager from '../../../manager/global/SupportManager'
 
 export const User: React.FC<{
   }> = observer(() => {
       const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
-      if (!UserManager.isUserAuthorized) {
+      if (!UserManager.isUserAuthorized || !UserManager.profile) {
           return <></>
       }
 

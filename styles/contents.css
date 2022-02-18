@@ -4,26 +4,17 @@
   height: 100%;
   overflow-y: scroll;
 }
-
 .content-container .content-toolbar {
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
-
 .content-container .content-toolbar .hierarchy {
   margin: 10px;
   margin-top: 5px;
   margin-bottom: 0px;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
   height: fit-content;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
-
 .content-container .content-toolbar .hierarchy .document-block {
   cursor: pointer;
   border-radius: 5px;
@@ -33,99 +24,76 @@
   padding-left: 8px;
   padding-right: 8px;
 }
-
 .content-container .content-toolbar .hierarchy .document-divider {
   color: #cacaca;
   font-size: 1rem;
   padding: 2px;
   padding-top: 2px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
-
 .content-container .content-toolbar .hierarchy .document-block:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
-
 .content-container .content-toolbar .right-content-toolbar {
   position: absolute;
   right: 0px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: reverse;
-      -ms-flex-direction: row-reverse;
-          flex-direction: row-reverse;
+  flex-direction: row-reverse;
 }
-
 .content-container .content-toolbar .right-content-toolbar .lock-button {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   border-radius: 5px;
   padding: 6px;
   margin: 5px;
   cursor: pointer;
 }
-
 .content-container .content-toolbar .right-content-toolbar .lock-button .MuiSvgIcon-root {
   width: 1.35rem;
   height: 1.35rem;
 }
-
 .content-container .content-toolbar .right-content-toolbar .lock-button .lock-text {
   margin: 0px;
   margin-left: 3px;
   font-size: 0.9rem;
 }
-
 .content-container .content-toolbar .right-content-toolbar .lock-button:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
-
 .content-container .contents {
   margin-top: 8vh;
 }
-
 .content-container .contents .MuiButton-root.Mui-disabled {
   color: #000000;
 }
-
 .content-container .contents .icon {
   width: 90px;
   height: 90px;
   margin-bottom: 20px;
 }
-
 .content-container .contents .icon .MuiButton-label {
   padding: 10px;
   font-size: 60px;
 }
-
 .content-container .contents aside.emoji-picker-react {
   position: absolute;
   margin-top: -20px;
   z-index: 100;
 }
-
 .content-container .contents .title {
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 0.3rem;
 }
-
 .content-container .contents .text {
   margin: 0px;
   padding: 3px;
 }
-
+.content-container .contents .youtube-element .video {
+  width: -webkit-fill-available;
+}
 .content-container .contents .selected-empty-text {
   position: relative;
 }
-
 .content-container .contents .selected-empty-text:after {
   content: "명령어 사용 /";
   font-size: 1em;
@@ -133,62 +101,49 @@
   position: absolute;
   top: 3px;
 }
-
 .content-container .contents .head1 {
   margin-top: 0.8rem;
   font-size: 2em;
   font-weight: 600;
 }
-
 .content-container .contents .head2 {
   margin-top: 0.8rem;
   font-weight: 600;
   font-size: 1.75rem;
 }
-
 .content-container .contents .head3 {
   margin-top: 0.8rem;
   font-weight: 600;
   font-size: 1.25rem;
 }
-
 .content-container .contents .content1 {
   font-size: 1.25rem;
 }
-
 .content-container .contents .content2 {
   font-size: 1.125rem;
 }
-
 .content-container .contents .content3 {
   font-size: 1rem;
 }
-
 .content-container .contents .textline .MuiInputBase-input {
-  font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', helvetica, 'Apple SD Gothic Neo', sans-serif !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", helvetica, "Apple SD Gothic Neo", sans-serif !important;
   color: #222426;
 }
-
 .content-container .contents .textline .MuiInput-underline {
   border-bottom: none !important;
 }
-
 .content-container .contents .textline .MuiInput-underline::before {
   border-bottom: none !important;
 }
-
 .content-container .contents .textline .MuiInput-underline::after {
   border-bottom: none !important;
 }
-
 .content-container .contents .normal-text {
   font-size: 1.125rem;
 }
-
 .content-container .contents .content-for-empty-document {
   font-size: 1.5rem;
 }
-
 .content-container .contents blockquote {
   border-left: 2px solid #ddd;
   margin-left: 0;
@@ -197,57 +152,45 @@
   color: #aaa;
   font-style: italic;
 }
-
 .content-container .contents ul {
   list-style: disc;
   margin-left: -15px;
   -moz-margin-left: -20px;
 }
-
 .content-container .contents ul li::marker {
   color: inherit;
 }
-
 .content-container .contents ul li p {
   margin-bottom: 5px;
 }
-
 .content-container .contents ul ul {
   border-left: 1px solid #cccccc;
   margin-left: -12px;
 }
-
 .content-container .contents ol {
   margin-left: -15px;
   -moz-margin-left: -20px;
 }
-
 .content-container .contents ol li::marker {
   color: inherit;
 }
-
 .content-container .contents ol li p {
   margin-bottom: 5px;
 }
-
 .content-container .contents ol ol {
   border-left: 1px solid #cccccc;
   margin-left: -12px;
 }
-
 .content-container .contents div > .check-list {
   margin-left: -20px;
   padding-left: 25px;
 }
-
 .content-container .contents .check-list {
   list-style-type: none;
 }
-
 .content-container .contents .check-list ul {
   border-left: unset;
 }
-
 .content-container .contents .check-list .box {
   left: -5px;
   width: 1rem;
@@ -258,16 +201,12 @@
   border: 2px solid #aaaaaa;
   cursor: pointer;
 }
-
 .content-container .contents .check-list .box:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
-
 .content-container .contents .react-draggable {
-  -webkit-transform: none !important;
-          transform: none !important;
+  transform: none !important;
 }
-
 .content-container .contents .image-adjust-button {
   position: absolute;
   top: -45px;
@@ -275,14 +214,10 @@
   background-color: white;
   border: 1px solid #d6d6d6;
   border-radius: 4px;
-  -webkit-box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
-          box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
   display: flex;
   padding: 6px;
 }
-
 .content-container .contents .image-adjust-button .button {
   color: inherit;
   width: 24px;
@@ -291,16 +226,13 @@
   margin-right: 3px;
   cursor: pointer;
 }
-
 .content-container .contents .image-adjust-button .button .MuiSvgIcon-root {
   width: 100%;
   height: 100%;
 }
-
 .content-container .contents .image-adjust-button .inactive {
   color: #a1a1a1;
 }
-
 .content-container .contents .image-resize-dot {
   width: 12px;
   height: 12px;
@@ -309,7 +241,6 @@
   border: 1.5px solid black;
   position: absolute;
 }
-
 .content-container .contents .image-element .caption {
   margin-top: 2px;
   text-align: center;
@@ -317,128 +248,95 @@
   font-size: 14px;
   padding: 0px;
   color: #a1a1a1;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
-
 .content-container .contents .image-element .caption:focus {
   border: auto;
 }
-
 .content-container .contents .image-element .caption:hover {
-  -webkit-user-select: auto;
-     -moz-user-select: auto;
-      -ms-user-select: auto;
-          user-select: auto;
+  user-select: auto;
 }
-
 .content-container .contents .link {
   color: #686868;
   border-bottom: 1px solid #686868;
 }
-
 .content-container .contents .divider-container {
   position: relative;
   width: 100%;
   height: 6em;
 }
-
 .content-container .contents .divider-container .divider {
   position: absolute;
 }
-
 .content-container .contents .divider-container .line-divider {
   margin-top: calc(3em - 0.5px);
   margin-bottom: calc(3em - 0.5px);
   height: 1px;
 }
-
 .content-container .contents .divider-container .long-line-divider {
   background-color: #37352f;
   width: 90%;
   margin-left: 5%;
 }
-
 .content-container .contents .divider-container .faint-long-line-divider {
   background-color: #b4b4b4;
   width: 90%;
   margin-left: 5%;
 }
-
 .content-container .contents .divider-container .short-line-divider {
   background-color: #37352f;
   width: 20%;
   margin-left: 40%;
 }
-
 .content-container .contents .divider-container .faint-short-line-divider {
   background-color: #b4b4b4;
   width: 20%;
   margin-left: 40%;
 }
-
 .content-container .contents .divider-container .dot-divider {
   width: 10%;
   margin-left: 45%;
   margin-top: calc(3em - 2.5px);
   margin-bottom: calc(3em - 2.5px);
   height: 5px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
-
 .content-container .contents .divider-container .dot-divider .dot {
   background-color: #37352f;
   width: 5px;
   height: 5px;
   border-radius: 2.5px;
 }
-
 .content-container .contents .divider-container .dot-divider .dot-1 {
   margin-right: calc(50% - 7.5px);
 }
-
 .content-container .contents .divider-container .dot-divider .dot-3 {
   margin-left: calc(50% - 7.5px);
 }
-
 .content-container .contents .content-footer {
   width: 100%;
   height: 20vh;
 }
-
 .content-container .contents .document {
   position: relative;
   margin: 10px;
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   cursor: pointer;
   border-radius: 3px;
 }
-
 .content-container .contents .document .icon {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
   width: fit-content;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
   height: fit-content;
   padding: 2.5px;
   font-size: 1em;
   margin: 0px;
 }
-
 .content-container .contents .document .text {
   color: #686868;
   text-decoration: underline;
   font-size: 1em;
 }
-
 .content-container .contents .document:hover {
   background: #ececec;
 }
@@ -466,25 +364,20 @@
   opacity: 0;
   background-color: #fafafa;
   border-radius: 4px;
-  -webkit-transition: opacity 0.75s;
   transition: opacity 0.75s;
   height: 36px;
-  -webkit-box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
-          box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+  box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
 }
-
 .hovering-toolbar .button {
   color: #37352f;
   width: 24px;
   height: 24px;
   cursor: pointer;
 }
-
 .hovering-toolbar .button .MuiSvgIcon-root {
   width: 100%;
   height: 100%;
 }
-
 .hovering-toolbar .divider {
   width: 1px;
   height: 100%;
@@ -493,11 +386,9 @@
   margin-right: 6px;
   background-color: #bebebe;
 }
-
 .hovering-toolbar .inactive {
   color: #a1a1a1;
 }
-
 .hovering-toolbar .link-button {
   display: inline-block;
   height: 24px;
@@ -505,24 +396,18 @@
   cursor: pointer;
   margin: 0px;
 }
-
 .hovering-toolbar .link-button .MuiSvgIcon-root {
   width: 24px;
   height: 24px;
   margin-right: 5px;
 }
-
 .hovering-toolbar .link-button .text {
   display: inline-block;
   position: relative;
   line-height: 24px;
   margin: 0px;
-  -webkit-transform: translateY(-6px);
-          transform: translateY(-6px);
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  transform: translateY(-6px);
+  user-select: none;
 }
 
 .link-input-background {
@@ -532,13 +417,9 @@
   top: 0px;
   left: 0px;
   z-index: 800;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   background-color: transparent;
 }
-
 .link-input-background .link-input {
   padding: 10px;
   position: absolute;
@@ -549,32 +430,25 @@
   opacity: 0;
   background-color: #fafafa;
   border-radius: 4px;
-  -webkit-transition: opacity 0.75s;
   transition: opacity 0.75s;
   width: 300px;
   height: 54.2px;
-  -webkit-box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
-          box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+  box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
 }
-
 .link-input-background .link-input .MuiAutocomplete-root {
   border-color: #00000000;
 }
-
 .link-input-background .link-input .MuiAutocomplete-endAdornment .MuiSvgIcon-root {
   color: #00000000;
 }
-
 .link-input-background .link-input .MuiInputBase-root {
   padding: 0px;
   padding-right: 15px;
   font-size: 0.8rem;
 }
-
-.link-input-background .link-input .MuiAutocomplete-hasPopupIcon .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] {
+.link-input-background .link-input .MuiAutocomplete-hasPopupIcon .MuiAutocomplete-inputRoot[class*=MuiOutlinedInput-root] {
   padding: 0px;
 }
-
 .link-input-background .link-input .MuiFormControl-root {
   margin: 0px;
 }
@@ -592,18 +466,13 @@
   padding: 3px;
   background: white;
   border-radius: 4px;
-  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
-
 .command-list .command-block {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   padding: 1px 3px;
   border-radius: 3px;
 }
-
 .command-list .command-block .command-img {
   margin: 3px;
   margin-left: 6px;
@@ -612,20 +481,17 @@
   border-radius: 5px;
   border: 1px solid #c4c4c4;
 }
-
 .command-list .command-block .text-container {
   margin-left: 4px;
   margin-top: 3px;
   margin-bottom: 3px;
 }
-
 .command-list .command-block .text-container .name {
   color: inherit;
   font-size: 15px;
   margin: 0px;
   height: 25px;
 }
-
 .command-list .command-block .text-container .description {
   color: #646464;
   width: 250px;
@@ -633,7 +499,6 @@
   font-size: 13px;
   margin: 0px;
 }
-
 .command-list .command-block.selected {
   background: #eeeeee;
 }
@@ -650,4 +515,5 @@
   background: #d1d1d1;
   border-radius: 5px;
 }
+
 /*# sourceMappingURL=contents.css.map */

@@ -11,6 +11,7 @@ class UserManager {
     isUserAuthorized: boolean = false
     isAuthorizing: boolean = false
 
+    userId: number = null
     profile: UserProfile = null
     setting: UserSetting = null
 
@@ -24,6 +25,7 @@ class UserManager {
     async refresh () {
         try {
             this.isAuthorizing = true
+            this.userId = await UserAPI.getUserID()
             this.profile = await UserAPI.getUserProfile()
             this.setting = await SettingAPI.getUserSetting()
 

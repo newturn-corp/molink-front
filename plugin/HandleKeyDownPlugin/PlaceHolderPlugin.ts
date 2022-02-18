@@ -1,5 +1,5 @@
 import { Node, Range, Text } from 'slate'
-import EditorManager from '../../manager/EditorManager'
+import EditorManager from '../../manager/Home/EditorManager'
 
 const onKeyDown = (event, editor) => {
     const { selection } = editor

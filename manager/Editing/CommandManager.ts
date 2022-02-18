@@ -3,8 +3,6 @@ import React from 'react'
 import { BaseRange, Editor, Element, Node, Range, Transforms } from 'slate'
 import Command from '../../domain/Command'
 import { DividerType, TextCategory } from '../../Types/slate/CustomElement'
-import ContentManager from '../ContentManager'
-import EventManager, { EditorChangeParam, Event } from '../EventManager'
 import { ListTransforms } from '../../plugin/GlobalPlugins/ListPlugin'
 
 // /(슬래시)로 수행하는 명령을 맡아 처리하는 매니저
@@ -12,7 +10,11 @@ class CommandManager {
     target: BaseRange = null
     search: string = ''
     index: number = 0
-    searchedCommands: Command[] = []
+    _searchedCommands: Command[] = []
+    get searchedCommands () {
+        return toJS(this._searchedCommands)
+    }
+
     commandsList = [
         new Command('제목1', '큰 사이즈의 제목', '/command/head1.svg'),
         new Command('제목2', '중간 사이즈의 제목', '/command/head2.svg'),
@@ -32,6 +34,7 @@ class CommandManager {
 
     constructor () {
         makeAutoObservable(this)
+        this._searchedCommands = this.commandsList
     }
 
     isBlockActive (editor, format) {
@@ -180,7 +183,7 @@ class CommandManager {
         //         documentId: document.meta.id,
         //         children: [{ text: '' }]
         //     }
-        //     EventManager.addDisposableEventListener(Event.LoadingContent, ({ editor }: { editor: Editor }) => {
+        //     EventManager.addDisposableEventListener(Event.LoadingContent, ({ editor }: { editor: EditorManager }) => {
         //         Transforms.select(editor, [0, 0])
         //     }, 1)
         //     EventManager.addDisposableEventListener(Event.EditorChange, () => {
@@ -195,7 +198,6 @@ class CommandManager {
     }
 
     handleEditorChange (editor: Editor) {
-        console.log('editor change')
         try {
             const { selection } = editor
             if (selection && Range.isCollapsed(selection)) {
@@ -223,7 +225,7 @@ class CommandManager {
                     } else {
                         this.search = searchResult[1]
                     }
-                    this.searchedCommands = this.commandsList.filter(command =>
+                    this._searchedCommands = this.commandsList.filter(command =>
                         command.name.startsWith(this.search.toLowerCase())
                     )
                     this.index = 0
@@ -237,21 +239,21 @@ class CommandManager {
     }
 
     async handleKeyDown (event: React.KeyboardEvent, editor: Editor) {
-        if (this.target && this.searchedCommands.length > 0) {
+        if (this.target && this._searchedCommands.length > 0) {
             switch (event.key) {
             case 'ArrowDown':
                 event.preventDefault()
-                this.index = this.index >= this.searchedCommands.length - 1 ? 0 : this.index + 1
+                this.index = this.index >= this._searchedCommands.length - 1 ? 0 : this.index + 1
                 break
             case 'ArrowUp':
                 event.preventDefault()
-                this.index = this.index <= 0 ? this.searchedCommands.length - 1 : this.index - 1
+                this.index = this.index <= 0 ? this._searchedCommands.length - 1 : this.index - 1
                 break
             case 'Tab':
             case 'Enter':
                 event.preventDefault()
                 Transforms.select(editor, toJS(this.target))
-                await this.insertNodeByCommand(editor, this.searchedCommands[this.index])
+                await this.insertNodeByCommand(editor, this._searchedCommands[this.index])
                 this.target = null
                 break
             case 'Escape':

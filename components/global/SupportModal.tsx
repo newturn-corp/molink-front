@@ -1,8 +1,8 @@
 import React from 'react'
 import Modal from 'antd/lib/modal/Modal'
 import TextArea from 'antd/lib/input/TextArea'
-import SupportManager from '../../manager/SupportManager'
 import { observer } from 'mobx-react'
+import SupportManager from '../../manager/global/SupportManager'
 
 export const SupportModal: React.FC<{
   }> = observer(() => {

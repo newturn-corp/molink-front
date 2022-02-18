@@ -7,13 +7,14 @@ import HierarchyManager from '../../../manager/Home/Hierarchy/HierarchyManager'
 
 export const HierarchyComponent: React.FC<{
   }> = observer(() => {
+      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
       return (
           <List
               component="nav"
               aria-labelledby="nested-list-subheader"
           >
               {
-                  HierarchyManager.hierarchy.topLevelDocumentIdList.map(documentId => {
+                  currentHierarchy.topLevelDocumentIdList.map(documentId => {
                       return <DocumentComponent key={Math.random()} documentId={documentId} depth={0}/>
                   })
               }

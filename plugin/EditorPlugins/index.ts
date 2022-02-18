@@ -13,11 +13,12 @@ import { InsertImageWhenInsertData } from './ImagePlugin'
 import { maintainBottomMargin } from './BottomMarginPlugin'
 import { ShortcutWhenDeleteBackward, ShortcutWhenInsertText } from './ShortcutPlugin'
 import CommandManager from '../../manager/Editing/CommandManager'
+import { insertYoutubeWhenInsertData } from './YoutubePlugin'
 
 export const EditorPlugin = (editor: Editor) => {
     const { isVoid, isInline, insertBreak, deleteBackward, normalizeNode, insertText, insertData, onChange } = editor
 
-    const voidTypeList: string[] = ['divider', 'image', 'document', 'mention']
+    const voidTypeList: string[] = ['divider', 'image', 'document', 'mention', 'youtube']
     editor.isVoid = element => {
         return voidTypeList.includes(element.type) || isVoid(element)
     }
@@ -49,18 +50,21 @@ export const EditorPlugin = (editor: Editor) => {
         insertBreak()
     }
 
-    const normalizeNodeHandlers: NormalizeNodeHandler[] = [FixLayoutWhenNormalizeNode]
-    editor.normalizeNode = (entry: NodeEntry<Node>) => {
-        for (const handler of normalizeNodeHandlers) {
-            const handled = handler(editor, entry)
-            if (handled) {
-                return
-            }
-        }
-        normalizeNode(entry)
-    }
+    // const normalizeNodeHandlers: NormalizeNodeHandler[] = [FixLayoutWhenNormalizeNode]
+    // editor.normalizeNode = (entry: NodeEntry<Node>) => {
+    //     for (const handler of normalizeNodeHandlers) {
+    //         const handled = handler(editor, entry)
+    //         if (handled) {
+    //             return
+    //         }
+    //     }
+    //     normalizeNode(entry)
+    // }
 
-    const insertTextHandlers: InsertTextHandler[] = [WrapLinkWhenInsertText, ShortcutWhenInsertText]
+    const insertTextHandlers: InsertTextHandler[] = [
+        WrapLinkWhenInsertText,
+        ShortcutWhenInsertText
+    ]
     editor.insertText = (text: string) => {
         for (const handler of insertTextHandlers) {
             const handled = handler(editor, text)
@@ -71,7 +75,11 @@ export const EditorPlugin = (editor: Editor) => {
         insertText(text)
     }
 
-    const insertDataHandlers: InsertDataHandler[] = [WrapLinkWhenInsertData, InsertImageWhenInsertData]
+    const insertDataHandlers: InsertDataHandler[] = [
+        insertYoutubeWhenInsertData,
+        WrapLinkWhenInsertData,
+        InsertImageWhenInsertData
+    ]
     editor.insertData = (data: DataTransfer) => {
         for (const handler of insertDataHandlers) {
             const handled = handler(editor, data)

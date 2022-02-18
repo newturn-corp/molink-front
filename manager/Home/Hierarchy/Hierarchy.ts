@@ -1,149 +1,146 @@
 import {
-    GetHierarcyResponseDTO,
-    HierarchyChildrenOpenInfoInterface,
-    HierarchyDocumentInfoInterface,
-    HierarchyInfoInterface
+    HierarchyDocumentInfoInterface
 } from '@newturn-develop/types-molink'
-import Automerge from 'automerge'
 import { makeAutoObservable } from 'mobx'
-import { AutomergeChangeEventDTO } from '@newturn-develop/types-molink/dist/DTO'
-import HierarchySynchronizer, { HierarchyChangeType } from './HierarchySynchronizer'
-import { v4 as uuidv4 } from 'uuid'
-import {
-    convertAutomergeChangesThroughNetwork,
-    getAutomergeDocumentThroughNetwork
-} from '@newturn-develop/molink-automerge-wrapper'
+import * as Y from 'yjs'
+import UserManager from '../../global/UserManager'
+import { WebsocketProvider } from 'y-websocket'
+import ViewerAPI from '../../../api/ViewerAPI'
+import { HierarchyNotExists } from '../../../Errors/HierarchyError'
 
 export default class Hierarchy {
-    hierarchyValue: Automerge.FreezeObject<HierarchyInfoInterface> = null
-    set automergeHierarchy (value: Automerge.FreezeObject<HierarchyInfoInterface>) {
-        this.hierarchyValue = value
-        this.topLevelDocumentIdList = value.topLevelDocumentIdList
-        this.map = value.map
-    }
-
-    topLevelDocumentIdList: string[] = []
-    map: {
+    public nickname: string
+    public websocketProvider: WebsocketProvider = null
+    public editable: boolean = false
+    public yjsDocument: Y.Doc
+    public yMap: Y.Map<HierarchyDocumentInfoInterface>
+    public map: {
         [index: string]: HierarchyDocumentInfoInterface
-    }
-
-    childrenOpenMapValue: Automerge.FreezeObject<HierarchyChildrenOpenInfoInterface> = null
-
-    set automergeChildrenOpenMap (value: Automerge.FreezeObject<HierarchyChildrenOpenInfoInterface>) {
-        this.childrenOpenMapValue = value
-        this.childrenOpenMap = value.map
-    }
-
-    childrenOpenMap: {
-        [index: string]: boolean
     } = {}
 
-    nameChangingDocumentId: string | null = null
-    selectedDocumentId: string | null = null
-    openedDocumentId: string | null = null
-    object: HierarchyInfoInterface = null
+    public yTopLevelDocumentIdList: Y.Array<string>
+    public topLevelDocumentIdList: string[] = []
 
-    constructor (dto: GetHierarcyResponseDTO) {
+    public nameChangingDocumentId: string | null = null
+    public selectedDocumentId: string | null = null
+    public openedDocumentId: string | null = null
+
+    constructor (nickname: string) {
+        this.nickname = nickname
+        this.yjsDocument = new Y.Doc()
+        this.yMap = this.yjsDocument.getMap('documentHierarchyInfoMap')
+        this.yMap.observeDeep(() => {
+            this.map = this.yMap.toJSON()
+        })
+        this.yTopLevelDocumentIdList = this.yjsDocument.getArray('topLevelDocumentIdList')
+        this.yTopLevelDocumentIdList.observeDeep(() => {
+            this.topLevelDocumentIdList = this.yTopLevelDocumentIdList.toArray()
+        })
         makeAutoObservable(this, {
-            hierarchyValue: false,
-            childrenOpenMapValue: false
+            yTopLevelDocumentIdList: false,
+            yMap: false
         })
-        this.automergeHierarchy = getAutomergeDocumentThroughNetwork(dto.hierarchy)
-        this.automergeChildrenOpenMap = getAutomergeDocumentThroughNetwork(dto.hierarchyChildrenOpen)
     }
 
-    public update (changes: Automerge.BinaryChange[]) {
-        const [newHierarchy] = Automerge.applyChanges(this.hierarchyValue, changes)
-        this.automergeHierarchy = newHierarchy
+    async init () {
+        this.editable = UserManager.isUserAuthorized && UserManager.profile.nickname === this.nickname
+        if (!this.editable) {
+            const dto = await ViewerAPI.getDocumentsHierarchy(this.nickname)
+            Y.applyUpdate(this.yjsDocument, Uint8Array.from(dto.hierarchy))
+        } else {
+            this.websocketProvider = new WebsocketProvider(process.env.HIERARCHY_LIVE_SERVER_URL, UserManager.profile.userId.toString(), this.yjsDocument, {
+                connect: false
+            })
+            this.websocketProvider.connect()
+
+            this.websocketProvider.on('status', ({ status }: { status: string }) => {
+                console.log('hierarchy')
+                console.log(status)
+            })
+            return new Promise<void>((resolve, reject) => {
+                let isResolved = false
+                this.websocketProvider.on('sync', (isSynced: boolean) => {
+                    console.log('hierarchy')
+                    console.log('sync')
+                    isResolved = true
+                    resolve()
+                })
+                setTimeout(() => {
+                    if (!isResolved) {
+                        reject(new HierarchyNotExists())
+                    }
+                }, 5000)
+            })
+        }
     }
 
-    public updateChildrenOpenMap (changes: Automerge.BinaryChange[]) {
-        const [newMap] = Automerge.applyChanges(this.childrenOpenMapValue, changes)
-        this.automergeChildrenOpenMap = newMap
+    public updateHierarchyChildrenOpen (documentId: string, isOpen: boolean) {
+        console.log(documentId)
+        console.log(isOpen)
+        const document = this.yMap.get(documentId)
+        document.childrenOpen = isOpen
+        this.yMap.set(documentId, document)
     }
 
-    public updateHierarchyChildrenOpen (id: string, isOpen: boolean) {
-        const newChildrenOpenMap = Automerge.change(this.childrenOpenMapValue, (childrenOpenMap) => {
-            if (isOpen) {
-                childrenOpenMap.map[id] = isOpen
-            } else {
-                delete childrenOpenMap.map[id]
-            }
-            childrenOpenMap.lastUsedAt = new Date()
-        })
-        const changes = Automerge.getChanges(this.childrenOpenMapValue, newChildrenOpenMap)
-        this.automergeChildrenOpenMap = newChildrenOpenMap
-        HierarchySynchronizer.sendChange(HierarchyChangeType.HierarchyChildrenOpen, new AutomergeChangeEventDTO(uuidv4(), convertAutomergeChangesThroughNetwork(changes)))
-    }
-
-    public updateDocumentTitle (id: string, title: string) {
-        const newHierarchy = Automerge.change(this.hierarchyValue, hierarchy => {
-            hierarchy.map[id].title = title
-        })
-        const changes = Automerge.getChanges(this.hierarchyValue, newHierarchy)
-        this.automergeHierarchy = newHierarchy
-        HierarchySynchronizer.sendChange(HierarchyChangeType.Hierarchy, new AutomergeChangeEventDTO(uuidv4(), convertAutomergeChangesThroughNetwork(changes)))
+    public updateDocumentTitle (documentId: string, title: string) {
+        const document = this.yMap.get(documentId)
+        document.title = title
+        this.yMap.set(documentId, document)
         this.selectedDocumentId = null
         this.nameChangingDocumentId = null
     }
 
-    public updateDocumentLocation (id: string, parentId: string | null, order: number) {
-        const newHierarchy = Automerge.change(this.hierarchyValue, hierarchy => {
-            const document = hierarchy.map[id]
-
+    public updateDocumentLocation (documentId: string, parentId: string | null, order: number) {
+        this.yjsDocument.transact(() => {
+            const document = this.yMap.get(documentId)
             // 기존 부모에서 제거하고 order 조정
             if (!document.parentId) {
-                hierarchy.topLevelDocumentIdList.splice(document.order, 1)
-                for (const [index, documentId] of hierarchy.topLevelDocumentIdList.entries()) {
-                    const siblingDocument = hierarchy.map[documentId]
+                this.yTopLevelDocumentIdList.delete(document.order, 1)
+                for (const [index, documentId] of this.yTopLevelDocumentIdList.toArray().entries()) {
+                    const siblingDocument = this.yMap.get(documentId)
                     siblingDocument.order = index
+                    this.yMap.set(siblingDocument.id, siblingDocument)
                 }
             } else {
-                const parent = hierarchy.map[document.parentId]
+                const parent = this.yMap.get(document.parentId)
                 parent.children.splice(document.order, 1)
                 for (const [index, documentId] of parent.children.entries()) {
-                    const siblingDocument = hierarchy.map[documentId]
+                    const siblingDocument = this.yMap.get(documentId)
                     siblingDocument.order = index
+                    this.yMap.set(documentId, siblingDocument)
                 }
+                this.yMap.set(parent.id, parent)
             }
             // 새로운 부모에 추가하고 order 조정
             if (!parentId) {
-                hierarchy.topLevelDocumentIdList.splice(order, 0, id)
-                for (const [index, documentId] of hierarchy.topLevelDocumentIdList.entries()) {
-                    const siblingDocument = hierarchy.map[documentId]
+                this.yTopLevelDocumentIdList.insert(order, [documentId])
+                for (const [index, documentId] of this.yTopLevelDocumentIdList.toArray().entries()) {
+                    const siblingDocument = this.yMap.get(documentId)
                     siblingDocument.order = index
+                    this.yMap.set(documentId, siblingDocument)
                 }
             } else {
-                const parent = hierarchy.map[parentId]
-                parent.children.splice(order, 0, id)
+                const parent = this.yMap.get(parentId)
+                parent.children.splice(order, 0, documentId)
                 for (const [index, documentId] of parent.children.entries()) {
-                    const siblingDocument = hierarchy.map[documentId]
+                    const siblingDocument = this.yMap.get(documentId)
                     siblingDocument.order = index
+                    this.yMap.set(documentId, siblingDocument)
                 }
             }
             document.parentId = parentId
             document.order = order
-            hierarchy.lastUsedAt = new Date()
+            this.yMap.set(documentId, document)
         })
-        const changes = Automerge.getChanges(this.hierarchyValue, newHierarchy)
-        this.automergeHierarchy = newHierarchy
-        HierarchySynchronizer.sendChange(HierarchyChangeType.Hierarchy, new AutomergeChangeEventDTO(uuidv4(), convertAutomergeChangesThroughNetwork(changes)))
     }
 
     public getSibling (documentId: string, order: number) {
-        const document = this.map[documentId]
+        const document = this.yMap.get(documentId)
         if (!document.parentId) {
-            return this.map[this.topLevelDocumentIdList[order]]
+            return this.yMap.get(this.yTopLevelDocumentIdList.get(order))
         } else {
-            return this.map[this.map[document.parentId].children[order]]
+            const parent = this.yMap.get(document.parentId)
+            return this.yMap.get(parent.children[order])
         }
-    }
-
-    setSelectedDocumentId (documentId: string) {
-        this.selectedDocumentId = documentId
-    }
-
-    setOpenedDocumentId (documentId: string) {
-        this.openedDocumentId = documentId
     }
 }

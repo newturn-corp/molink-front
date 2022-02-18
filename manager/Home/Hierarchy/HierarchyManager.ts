@@ -1,5 +1,4 @@
 import { makeAutoObservable, toJS } from 'mobx'
-import ViewerAPI from '../../../api/ViewerAPI'
 import {
     ChangeDocumentNameOption,
     CreateNewDocumentOption,
@@ -8,15 +7,12 @@ import {
 } from './HierarchyOptions'
 import Hierarchy from './Hierarchy'
 import React from 'react'
-import UserManager from '../../global/UserManager'
-import HierarchySynchronizer from './HierarchySynchronizer'
 import EventManager, { Event } from '../../EventManager'
 
 class HierarchyManager {
+    hierarchyMap: Map<string, Hierarchy> = new Map()
     hierarchy: Hierarchy = null
-    nickname: string = ''
-
-    editable: boolean = false
+    currentHierarchyNickname: string = ''
     openHierarchyContextMenu: boolean = false
 
     private _clickPosition: { x: number, y: number } = { x: 0, y: 0 }
@@ -34,26 +30,29 @@ class HierarchyManager {
     }
 
     async loadHierarchy (nickname: string) {
-        const dto = await ViewerAPI.getDocumentsHierarchy(nickname)
-        this.nickname = nickname
-        this.hierarchy = new Hierarchy(dto)
-        this.editable = UserManager.profile && UserManager.profile.nickname === nickname
-        if (UserManager.isUserAuthorized) {
-            await HierarchySynchronizer.connect(nickname)
+        this.currentHierarchyNickname = nickname
+        const exist = this.hierarchyMap.get(nickname)
+        // 만약 실시간 동기화된 하이어라키면 로드하지 않는다.
+        if (exist && exist.websocketProvider) {
+            return
         }
+        const hierarchy = new Hierarchy(nickname)
+        await hierarchy.init()
+        this.hierarchyMap.set(nickname, hierarchy)
         await EventManager.issueEvent(Event.UpdateHierarchy, {})
     }
 
     handleRightClick (event: React.MouseEvent<HTMLElement, MouseEvent>, documentId: string | null) {
-        if (!this.editable) {
+        const currentHierarchy = this.hierarchyMap.get(this.currentHierarchyNickname)
+        if (!currentHierarchy.editable) {
             return
         }
         event.preventDefault()
         event.stopPropagation()
-        this.hierarchy.setSelectedDocumentId(documentId)
+        currentHierarchy.selectedDocumentId = documentId
 
         this._availControlOptions = []
-        if (this.editable) {
+        if (currentHierarchy.editable) {
             this._availControlOptions.push(new CreateNewDocumentOption(documentId))
             if (document) {
                 this._availControlOptions.push(new ChangeDocumentNameOption(documentId))
@@ -68,7 +67,7 @@ class HierarchyManager {
 
     closeContextMenu () {
         if (this.hierarchy) {
-            this.hierarchy.setSelectedDocumentId(null)
+            this.hierarchy.selectedDocumentId = null
         }
         this.openHierarchyContextMenu = false
     }

@@ -2,6 +2,7 @@ import Router from 'next/router'
 import EventManager, { Event } from '../EventManager'
 import GlobalManager from './GlobalManager'
 import UserManager from './UserManager'
+import EditorManager from '../Home/EditorManager'
 
 export enum Page {
     Index = '/',
@@ -17,21 +18,13 @@ export enum Page {
 
 class RoutingManager {
     async moveTo (page: Page, extra: string = '') {
-        // if (ContentManager.editor) {
-        //     if (ContentManager.editor.destroy) {
-        //         ContentManager.editor.destroy()
-        //     }
-        // }
+        EditorManager.disconnect()
         await EventManager.issueEvent(Event.MoveToAnotherPage, {})
         await Router.push(page + extra)
     }
 
     async rawMoveTo (url: string) {
-        // if (ContentManager.editor) {
-        //     if (ContentManager.editor.destroy) {
-        //         ContentManager.editor.destroy()
-        //     }
-        // }
+        EditorManager.disconnect()
         const domain = new URL(url)
         // 외부 주소일 경우 새 창에서, 내부 주소일 경우 페이지 이동
         if (domain.hostname.replace('www.', '') !== process.env.FRONT_HOST_NAME) {

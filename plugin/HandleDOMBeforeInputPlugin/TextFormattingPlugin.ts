@@ -1,5 +1,5 @@
 import { Editor, Text, Transforms } from 'slate'
-import ContentManager from '../../manager/Home/ContentManager/ContentManager'
+import EditorManager from '../../manager/Home/EditorManager'
 
 const isFormatActive = (editor, format) => {
     try {
@@ -27,12 +27,12 @@ export default (event: InputEvent) => {
     switch (event.inputType) {
     case 'formatBold':
         event.preventDefault()
-        return toggleFormat(ContentManager.editor, 'bold')
+        return toggleFormat(EditorManager.slateEditor, 'bold')
     case 'formatItalic':
         event.preventDefault()
-        return toggleFormat(ContentManager.editor, 'italic')
+        return toggleFormat(EditorManager.slateEditor, 'italic')
     case 'formatUnderline':
         event.preventDefault()
-        return toggleFormat(ContentManager.editor, 'underlined')
+        return toggleFormat(EditorManager.slateEditor, 'underlined')
     }
 }

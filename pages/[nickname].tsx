@@ -7,7 +7,8 @@ import { HierarchyContainer } from '../components/Home/Hierarchy/HierarchyContai
 import DocumentHierarchyManager from '../manager/Home/Hierarchy/HierarchyManager'
 import EventManager, { Event } from '../manager/EventManager'
 import { Page } from '../manager/global/RoutingManager'
-import { ContentComponent } from '../components/Home/HomeMainComponent'
+import { HomeMainComponent } from '../components/Home/Main/HomeMainComponent'
+import { HierarchyWidthController } from '../components/Home/Hierarchy/HierarchyWidthController'
 
 const Home = () => {
     const router = useRouter()
@@ -25,8 +26,8 @@ const Home = () => {
         <div className={'index-body'}>
             <BrowserView>
                 <HierarchyContainer />
-                {/* <DrawerWidthController /> */}
-                <ContentComponent />
+                <HierarchyWidthController/>
+                <HomeMainComponent/>
                 {/* <CollectButton /> */}
             </BrowserView>
             <MobileView>

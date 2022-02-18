@@ -2,8 +2,8 @@ import { observer } from 'mobx-react'
 import React from 'react'
 import { Range } from 'slate'
 import { useSelected, useSlate } from 'slate-react'
-import EditorManager from '../../manager/EditorManager'
 import { TextCategory } from '../../Types/slate/CustomElement'
+import EditorManager from '../../manager/Home/EditorManager'
 
 export const SlateTextElement: React.FC<{
     attributes,

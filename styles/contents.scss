@@ -59,7 +59,7 @@
     }
     .contents {
         margin-top: 8vh;
-    
+
         .MuiButton-root.Mui-disabled {
             color: #000000;
         }
@@ -75,7 +75,7 @@
         aside.emoji-picker-react {
             position: absolute;
             margin-top: -20px;
-            z-index: 100;   
+            z-index: 100;
         }
         .title {
             font-size: 2.5rem;
@@ -85,6 +85,11 @@
         .text {
             margin: 0px;
             padding: 3px;
+        }
+        .youtube-element {
+            .video {
+                width: -webkit-fill-available;
+            }
         }
         .selected-empty-text {
             position: relative;
@@ -451,7 +456,7 @@
 
         .MuiAutocomplete-root {
             // height: 44px;
-            border-color: #00000000;  
+            border-color: #00000000;
         }
         .MuiAutocomplete-endAdornment {
             .MuiSvgIcon-root {
@@ -471,10 +476,10 @@
         .MuiFormControl-root {
             margin: 0px;
             // .MuiAutocomplete-inputFocused {
-            //     border-color: #00000000;   
+            //     border-color: #00000000;
             // }
             // .MuiOutlinedInput-notchedOutline {
-            //     border-color: #00000000; 
+            //     border-color: #00000000;
             // }
             // .MuiInput-underline:before {
             //     border-bottom-color: #00000000;
@@ -551,4 +556,3 @@
     background: rgb(209, 209, 209);
     border-radius: 5px;
 }
-    

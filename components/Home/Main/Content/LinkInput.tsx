@@ -1,11 +1,9 @@
 import { observer } from 'mobx-react'
-import '../../utils/prism'
 import React from 'react'
-import HoveringToolbarManager from '../../manager/HoveringToolbarManager'
 import { CircularProgress, TextField } from '@material-ui/core'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import LinkManager, { LinkOption } from '../../manager/Editing/LinkManager'
 import isUrl from 'is-url'
+import LinkManager, { LinkOption } from '../../../../manager/Editing/LinkManager'
 
 export const LinkInput: React.FC<{
   }> = observer(() => {

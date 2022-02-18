@@ -6,7 +6,10 @@ import UnknownPlugin from './UnknownPlugin'
 
 const { transform, setNodes } = Transforms
 
-const transformsTransformHandler: TransformsTransformHandler[] = [FixHeadNextNormalText, HoveringToolbar]
+const transformsTransformHandler: TransformsTransformHandler[] = [
+    FixHeadNextNormalText,
+    HoveringToolbar
+]
 Transforms.transform = (editor, operation) => {
     for (const handler of transformsTransformHandler) {
         const handled = handler(editor, operation)
@@ -17,7 +20,9 @@ Transforms.transform = (editor, operation) => {
     transform(editor, operation)
 }
 
-const transformsSetNodeHandler: TransformsSetNodeHandler<Node>[] = [UnknownPlugin]
+const transformsSetNodeHandler: TransformsSetNodeHandler<Node>[] = [
+    UnknownPlugin
+]
 Transforms.setNodes = (editor,
     props: Partial<Node>,
     options: {

@@ -6,12 +6,12 @@ import { HierarchyContextMenu } from './HierarchyContextMenu'
 import { DragIndicator } from './DragIndicator'
 import { HierarchyComponent } from './HierarchyComponent'
 
-import DocumentHierarchyManager from '../../../manager/Home/Hierarchy/HierarchyManager'
+import HierarchyManager from '../../../manager/Home/Hierarchy/HierarchyManager'
+import NewUserManager from '../../../manager/global/NewUserManager'
 
 export const HierarchyContainer: React.FC<{
   }> = observer(() => {
-      //   const width = Hierarchy.hierarchy ? Hierarchy.hierarchy.width + 1 : 241
-      const width = 240
+      const width = NewUserManager.setting ? NewUserManager.setting.hierarchyWidth : '10vw'
       const useStyles = makeStyles({
           root: {
           },
@@ -20,8 +20,8 @@ export const HierarchyContainer: React.FC<{
           }
       })
       const classes = useStyles()
-
-      if (!DocumentHierarchyManager.hierarchy) {
+      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
+      if (!currentHierarchy) {
           return <></>
       }
 
@@ -29,10 +29,10 @@ export const HierarchyContainer: React.FC<{
           <>
               <Drawer
                   id='filesystem'
-                  className='drawer'
+                  className='hierarchy'
                   variant="permanent"
                   anchor="left"
-                  onContextMenu={(event) => DocumentHierarchyManager.handleRightClick(event, null)}
+                  onContextMenu={(event) => HierarchyManager.handleRightClick(event, null)}
                   style={{
                       width
                   }}

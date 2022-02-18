@@ -7,13 +7,12 @@ import {
 } from 'slate-react'
 import { css } from '@emotion/css'
 import { Rnd } from 'react-rnd'
-import ContentManager from '../../manager/ContentManager'
 import { Editor, Transforms } from 'slate'
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@material-ui/icons'
 import { ImageElement, ImageFloatOption, TextCategory } from '../../Types/slate/CustomElement'
 import StyleManager from '../../manager/global/StyleManager'
-import { Input } from 'antd'
 import TextArea, { TextAreaRef } from 'antd/lib/input/TextArea'
+import EditorManager from '../../manager/Home/EditorManager'
 
 // const Caption: React.FC<{
 //     selected: boolean,
@@ -163,10 +162,10 @@ const Caption: React.FC<{
                   //   console.log()
                   //   const inputText = inputRef.current.resizableTextArea.props.value as string
                   //   console.log(inputText)
-                  Transforms.setNodes(ContentManager.editor, {
+                  Transforms.setNodes(EditorManager.slateEditor, {
                       caption: e.target.value
                   }, {
-                      at: ContentManager.editor.selection
+                      at: EditorManager.slateEditor.selection
                   })
               }}
               onBlur={(e) => {
@@ -248,11 +247,11 @@ export const SlateImageElement: React.FC<{
                           const heightStr = ref.style.height
                           const width = Number(widthStr.slice(0, widthStr.length - 2))
                           const height = Number(heightStr.slice(0, heightStr.length - 2))
-                          Transforms.setNodes(ContentManager.editor, {
+                          Transforms.setNodes(EditorManager.slateEditor, {
                               width,
                               height
                           }, {
-                              at: ContentManager.editor.selection
+                              at: EditorManager.slateEditor.selection
                           })
                       }}
                   >
@@ -282,10 +281,10 @@ export const SlateImageElement: React.FC<{
                                       <div
                                           className={'button'}
                                           onClick={event => {
-                                              Transforms.setNodes(ContentManager.editor, {
+                                              Transforms.setNodes(EditorManager.slateEditor, {
                                                   floatOption: ImageFloatOption.Left
                                               }, {
-                                                  at: ContentManager.editor.selection
+                                                  at: EditorManager.slateEditor.selection
                                               })
                                           }}
                                       >
@@ -294,10 +293,10 @@ export const SlateImageElement: React.FC<{
                                       <div
                                           className={'button'}
                                           onClick={event => {
-                                              Transforms.setNodes(ContentManager.editor, {
+                                              Transforms.setNodes(EditorManager.slateEditor, {
                                                   floatOption: ImageFloatOption.Center
                                               }, {
-                                                  at: ContentManager.editor.selection
+                                                  at: EditorManager.slateEditor.selection
                                               })
                                           }}
                                       >
@@ -306,10 +305,10 @@ export const SlateImageElement: React.FC<{
                                       <div
                                           className={'button'}
                                           onClick={event => {
-                                              Transforms.setNodes(ContentManager.editor, {
+                                              Transforms.setNodes(EditorManager.slateEditor, {
                                                   floatOption: ImageFloatOption.Right
                                               }, {
-                                                  at: ContentManager.editor.selection
+                                                  at: EditorManager.slateEditor.selection
                                               })
                                           }}
                                       >

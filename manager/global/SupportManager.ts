@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx'
 import { ChangeEvent } from 'react'
-import MainAPI from '../api/MainAPI'
-import { SaveSupportDTO } from '../DTO/UserDTO'
-import FeedbackManager, { NOTIFICATION_TYPE } from './global/FeedbackManager'
+import MainAPI from '../../api/MainAPI'
+import { SaveSupportDTO } from '../../DTO/UserDTO'
+import FeedbackManager, { NOTIFICATION_TYPE } from './FeedbackManager'
 
 class SupportManager {
     showSupportModal: boolean = false

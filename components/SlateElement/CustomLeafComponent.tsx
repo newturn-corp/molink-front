@@ -1,7 +1,6 @@
 import React from 'react'
-
 import { css } from '@emotion/css'
-import { CursorComponent } from '../Home/Content/CursorComponent'
+import { CursorComponent } from '../Home/Main/Content/CursorComponent'
 
 export const CustomLeafComponent: React.FC<{
     attributes,

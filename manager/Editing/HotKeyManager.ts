@@ -1,6 +1,6 @@
 import { KeyboardEvent } from 'react'
 import { Editor, Transforms } from 'slate'
-import ContentManager from '../Home/ContentManager/ContentManager'
+import EditorManager from '../Home/EditorManager'
 
 // 단축키를 눌러 사용하는 명령을 담당하는 매니저
 class HotKeyManager {
@@ -18,14 +18,15 @@ class HotKeyManager {
         switch (keys.join('+')) {
         case 'ArrowLeft':
             e.preventDefault()
-            Transforms.move(ContentManager.editor, {
+            Transforms.move(EditorManager.slateEditor, {
                 unit: 'offset',
                 reverse: true
             })
             break
         case 'ArrowRight':
             e.preventDefault()
-            Transforms.move(ContentManager.editor, { unit: 'offset' })
+            Transforms.move(EditorManager.slateEditor, { unit: 'offset' })
+            break
         case 'shift+Enter':
             e.preventDefault()
             editor.insertText('\n')

@@ -19,7 +19,7 @@ const defaultHierarchyWidth = 240
 class StyleManager {
     _contentStyle: ContentStyle = {
         container: {
-            transform: isBrowser ? `translateX(${DocumentHierarchyManager.hierarchy ? defaultHierarchyWidth : defaultHierarchyWidth}px)` : undefined,
+            transform: isBrowser ? `translateX(${defaultHierarchyWidth}px)` : undefined,
             width: 1000
         },
         content: {
