@@ -4,18 +4,18 @@ import { Editable, Slate } from 'slate-react'
 
 import { MentionListComponent } from './MentionListComponent'
 import { CommandListComponent } from './CommandListComponent'
-import { CursorEditor, useCursors } from 'slate-yjs'
 import { CustomElementComponent } from '../../../SlateElement/CustomElementComponent'
 import { CustomLeafComponent } from '../../../SlateElement/CustomLeafComponent'
 import { HoveringToolbar } from './HoveringToolbar'
 import { handleDOMBeforeInput, handleKeyDown } from '../../../../plugin'
 import EditorManager from '../../../../manager/Home/EditorManager'
+import { decorate as decorateFunc } from '../../../../plugin/Decorate'
 
 export const EditorComponent: React.FC<{
   }> = observer(() => {
       const renderElement = useCallback(props => <CustomElementComponent {...props} />, [])
       const renderLeaf = useCallback(props => <CustomLeafComponent {...props} />, [])
-      const { decorate } = useCursors(EditorManager.slateEditor as CursorEditor)
+      const decorate = useCallback(([node, path]) => decorateFunc([node, path]), [EditorManager.cursors])
 
       return <Slate editor={EditorManager.slateEditor} value={[]} onChange={value => {
       }}>

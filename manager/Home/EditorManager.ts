@@ -13,6 +13,9 @@ import { DocumentNotExists } from '../../Errors/DocumentError'
 import { withCursor } from '../../plugin/EditorPlugins/CursorPlugin'
 import NewUserManager from '../global/NewUserManager'
 import EventManager, { Event } from '../EventManager'
+import { Awareness } from 'y-protocols/awareness'
+import { Cursor } from 'slate-yjs/dist/main/model'
+import { relativePositionToAbsolutePosition } from '../../utils/relativePositionToAbsolutePosition'
 
 class EditorManager {
     public editable: boolean = false
@@ -23,7 +26,9 @@ class EditorManager {
     yInfo: Y.Map<any> = null
     info: any
     websocketProvider: WebsocketProvider = null
+    awareness: Awareness
     isConnected: boolean = false
+    cursors: Cursor[] = []
 
     isLocked: boolean = false
 
@@ -80,10 +85,43 @@ class EditorManager {
                 this.isConnected = status === 'connected'
             })
 
-            this.websocketProvider.awareness.setLocalState({
+            this.awareness = this.websocketProvider.awareness
+
+            this.awareness.setLocalState({
                 alphaColor: color.slice(0, -2) + '0.2)',
                 color,
                 name: NewUserManager.profile.nickname
+            })
+
+            this.awareness.on('update', () => {
+                const newCursorData = Array.from(this.awareness.getStates())
+                    .filter(([clientId]) => clientId !== this.sharedType.doc?.clientID)
+                    .map(([, awareness]) => {
+                        let anchor = null
+                        let focus = null
+
+                        if (awareness.anchor) {
+                            anchor = relativePositionToAbsolutePosition(
+                                this.sharedType,
+                                awareness.anchor
+                            )
+                        }
+
+                        if (awareness.focus) {
+                            focus = relativePositionToAbsolutePosition(
+                                this.sharedType,
+                                awareness.focus
+                            )
+                        }
+
+                        return {
+                            anchor,
+                            focus,
+                            data: awareness
+                        }
+                    })
+                    .filter((cursor) => cursor.anchor && cursor.focus)
+                this.cursors = newCursorData
             })
 
             this.websocketProvider.connect()
