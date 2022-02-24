@@ -5,7 +5,7 @@ import HierarchyManager from '../../manager/Home/Hierarchy/HierarchyManager'
 
 export const SiteHead: React.FC<{
   }> = observer(() => {
-      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
+      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
       const headText = currentHierarchy && currentHierarchy.openedDocumentId ? currentHierarchy.map[currentHierarchy.openedDocumentId].title : 'Molink'
       return <Head>
           <title>{headText}</title>

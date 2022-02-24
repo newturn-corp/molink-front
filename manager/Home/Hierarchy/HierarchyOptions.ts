@@ -8,6 +8,7 @@ import DialogManager from '../../global/DialogManager'
 import RoutingManager, { Page } from '../../global/RoutingManager'
 import Hierarchy from './Hierarchy'
 import { getUUID } from '../../../utils/getUUID'
+import ContentAPI from '../../../api/ContentAPI'
 
 export abstract class HierarchyControlOption {
     name: string = ''
@@ -36,49 +37,10 @@ export class CreateNewDocumentOption extends HierarchyControlOption {
     }
 
     async handleOnClick () {
-        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
+        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
         const order = this.getOrder(currentHierarchy)
         const parentId = this.documentId
-        const newDocumentId = getUUID()
-        const newDocument: HierarchyDocumentInfoInterface = {
-            id: newDocumentId,
-            title: '',
-            icon: '📄',
-            userId: UserManager.profile.userId,
-            visibility: DocumentVisibility.Private,
-            order,
-            parentId,
-            childrenOpen: false,
-            children: []
-        }
-
-        currentHierarchy.yjsDocument.transact(() => {
-            currentHierarchy.yMap.set(newDocument.id, newDocument)
-            if (parentId === null) {
-                currentHierarchy.yTopLevelDocumentIdList.insert(order, [newDocument.id])
-
-                for (const [index, documentId] of currentHierarchy.yTopLevelDocumentIdList.toArray().entries()) {
-                    const document = currentHierarchy.yMap.get(documentId)
-                    document.order = index
-                    currentHierarchy.yMap.set(documentId, document)
-                }
-            } else {
-                const parent = currentHierarchy.yMap.get(parentId)
-                parent.children.splice(order, 0, newDocument.id)
-                for (const [index, documentId] of parent.children.entries()) {
-                    const document = currentHierarchy.yMap.get(documentId)
-                    document.order = index
-                    currentHierarchy.yMap.set(documentId, document)
-                }
-                parent.childrenOpen = true
-                currentHierarchy.yMap.set(parentId, parent)
-            }
-        })
-        currentHierarchy.selectedDocumentId = null
-        await RoutingManager.moveTo(Page.Home, `/${currentHierarchy.nickname}?id=${newDocumentId}`)
-        // currentHierarchy.nameChangingDocumentId = newDocumentId
-        // ReactEditor.focus(editor)
-        // Transforms.select(editor, [0, 0])
+        await currentHierarchy.createDocument(order, parentId)
     }
 }
 
@@ -86,7 +48,7 @@ export class ChangeDocumentNameOption extends HierarchyControlOption {
     name = '문서 이름 변경'
 
     handleOnClick () {
-        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
+        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
         currentHierarchy.nameChangingDocumentId = this.documentId
     }
 }
@@ -102,7 +64,7 @@ export class DeleteDocumentOption extends HierarchyControlOption {
     }
 
     async handleOnClick () {
-        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
+        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
         const document = currentHierarchy.yMap.get(this.documentId)
         const childrenCount = this.getChildrenCount(currentHierarchy, document.id)
         const msg = childrenCount > 0 ? `${document.title} 문서와 그 하위 문서 ${childrenCount}개를 모두 제거합니다.` : `${document.title} 문서를 제거합니다.`
@@ -140,7 +102,7 @@ export class SettingDocumentListOption extends HierarchyControlOption {
     name = '문서 목록 설정'
 
     handleOnClick () {
-        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
+        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
         currentHierarchy.selectedDocumentId = null
         RoutingManager.moveTo(Page.SettingDocumentList)
     }

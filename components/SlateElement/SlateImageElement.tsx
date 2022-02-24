@@ -9,7 +9,7 @@ import { css } from '@emotion/css'
 import { Rnd } from 'react-rnd'
 import { Editor, Transforms } from 'slate'
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@material-ui/icons'
-import { ImageElement, ImageFloatOption, TextCategory } from '../../Types/slate/CustomElement'
+import { SlateImageElement, ImageFloatOption, TextCategory } from '../../Types/slate/CustomElement'
 import StyleManager from '../../manager/global/StyleManager'
 import TextArea, { TextAreaRef } from 'antd/lib/input/TextArea'
 import EditorManager from '../../manager/Home/EditorManager'
@@ -204,7 +204,7 @@ const Caption: React.FC<{
 export const SlateImageElement: React.FC<{
     attributes,
     children,
-    element: ImageElement
+    element: SlateImageElement
   }> = ({ attributes, children, element }) => {
       const selected = useSelected()
       const focused = useFocused()

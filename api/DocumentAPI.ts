@@ -7,24 +7,6 @@ import { GetDocumentInitialInfoListDTO } from '../DTO/UserDTO'
 import { CreateDocumentDTO } from '@newturn-develop/types-molink/dist/DTO'
 
 class DocumentAPI extends BaseAPI {
-    async getDocumentViewInfo (documentId: string): Promise<GetDocumentViewInfoResponseDTO> {
-        const res = await this.get(`/documents/${documentId}`)
-        if (res.status === 404001) {
-            throw new DocumentNotExists()
-        }
-        return res.data
-    }
-
-    async setDocumentLocation (dto: SetDocumentLocationDTO): Promise<void> {
-        const res = await this.put('/documents/location', dto)
-        if (res.status !== 200) throw new APIError(res)
-    }
-
-    async createDocument (dto: CreateDocumentDTO): Promise<void> {
-        const res = await this.post('/documents', dto)
-        if (res.status !== 201) throw new APIError(res)
-    }
-
     async deleteDocument (dto: DeleteDocumentDTO): Promise<void> {
         const res = await this.delete('/documents', dto)
         if (res.status !== 200) throw new APIError(res)
@@ -38,12 +20,6 @@ class DocumentAPI extends BaseAPI {
     async setDocumentTitle (dto: SetDocumentTitleDTO): Promise<void> {
         const res = await this.put('/documents/title', dto)
         if (res.status !== 200) throw new APIError(res)
-    }
-
-    async getDocumentInitialInfoList (dto: GetDocumentInitialInfoListDTO): Promise<DocumentInitialInfoDTO[]> {
-        const res = await this.get(`/documents/initial-info-list?id=${dto.userId}`)
-        if (res.status !== 200) throw new APIError(res)
-        return res.arr.map(raw => new DocumentInitialInfoDTO(raw.id, raw.userId, raw.title, raw.icon, raw.parentId, raw.order, raw.isChildrenOpen, raw.representative, raw.visibility))
     }
 
     async setDocumentIsChildrenOpen (dto: SetDocumentIsChildrenOpenDTO): Promise<void> {

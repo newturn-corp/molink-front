@@ -5,7 +5,10 @@ import { UserSettingInterface } from '@newturn-develop/types-molink'
 export class UserSetting {
     ySetting: Y.Map<any> = null
     setting: UserSettingInterface = null
-    hierarchyWidth: string = '10vw'
+    hierarchyWidth: number = 240
+
+    hierarchyBackgroundColor: string = '#FAFAFB'
+    hierarchySelectedDocumentBackgroundColor: string = '#ECEEF0'
 
     constructor (ySetting: Y.Map<any>) {
         this.ySetting = ySetting
@@ -18,7 +21,7 @@ export class UserSetting {
         })
     }
 
-    updateHierarchyWidth (width: string) {
+    updateHierarchyWidth (width: number) {
         this.ySetting.set('hierarchyWidth', width)
     }
 }

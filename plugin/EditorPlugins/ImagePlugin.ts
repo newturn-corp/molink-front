@@ -1,14 +1,30 @@
-import { Editor, Node, Transforms } from 'slate'
-import { ImageElement, ImageFloatOption } from '../../Types/slate/CustomElement'
+import { Editor, Transforms } from 'slate'
+import { SlateImageElement, ImageFloatOption } from '../../Types/slate/CustomElement'
 import imageExtensions from 'image-extensions'
 import isUrl from 'is-url'
 import FileUploadManager from '../../manager/Editing/FileUploadManager'
 import StyleManager from '../../manager/global/StyleManager'
 
-const insertImage = (editor: Editor, url: string, width: number, height: number, isUploading: boolean) => {
+const insertImage = (editor: Editor, image: HTMLImageElement) => {
+    let width = image.width
+    let height = image.height
+    if (image.width > StyleManager.contentStyle.content.width) {
+        height *= StyleManager.contentStyle.content.width / width
+        width = StyleManager.contentStyle.content.width
+    }
     const text = { text: '' }
-    const image: ImageElement = { type: 'image', url, floatOption: ImageFloatOption.Center, children: [text], width, height, isUploading, caption: '', captionHeight: 0 }
-    Transforms.insertNodes(editor, image)
+    const slateImageElement: SlateImageElement = {
+        type: 'image',
+        url: image.src,
+        floatOption: ImageFloatOption.Center,
+        children: [text],
+        width,
+        height,
+        isUploading: true,
+        caption: '',
+        captionHeight: 0
+    }
+    Transforms.insertNodes(editor, slateImageElement)
 }
 
 const isImageUrl = (url: string) => {
@@ -19,6 +35,7 @@ const isImageUrl = (url: string) => {
 }
 
 export const InsertImageWhenInsertData = (editor: Editor, data) => {
+    const text = data.getData('text/plain')
     const { files } = data
 
     if (files && files.length > 0) {
@@ -36,25 +53,39 @@ export const InsertImageWhenInsertData = (editor: Editor, data) => {
                     const image = new Image()
                     image.src = event.target.result as string
                     image.onload = () => {
-                        const url = reader.result as string
-                        let width = image.width
-                        let height = image.height
-                        if (image.width > StyleManager.contentStyle.content.width) {
-                            height *= StyleManager.contentStyle.content.width / width
-                            width = StyleManager.contentStyle.content.width
-                        }
-                        insertImage(editor, url, width, height, true)
+                        insertImage(editor, image)
                         const selection = editor.selection
-                        FileUploadManager.uploadContentImage(file).then((url) => {
-                            Transforms.setNodes(editor, { url }, {
-                                at: selection
-                            })
+                        FileUploadManager.uploadImage(file).then((url) => {
+                            Transforms.setNodes(editor,
+                                {
+                                    url,
+                                    isUploading: false
+                                }, {
+                                    at: selection
+                                })
                         })
                     }
                 })
 
                 reader.readAsDataURL(file)
             }
+        }
+        return true
+    } else if (isImageUrl(text)) {
+        const image = new Image()
+        image.src = text
+        image.onload = () => {
+            insertImage(editor, image)
+            const selection = editor.selection
+            FileUploadManager.uploadImageFromURL(image.src).then((url) => {
+                Transforms.setNodes(editor,
+                    {
+                        url,
+                        isUploading: false
+                    }, {
+                        at: selection
+                    })
+            })
         }
         return true
     }

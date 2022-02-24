@@ -9,7 +9,7 @@ import { ContentTitleComponent } from './ContentTitleComponent'
 
 export const ContentComponent: React.FC<{
 }> = observer(() => {
-    const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
+    const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
     if (!currentHierarchy || !currentHierarchy.openedDocumentId) {
         return <div className={'contents'}
             style={StyleManager.contentStyle.content}>
@@ -17,7 +17,8 @@ export const ContentComponent: React.FC<{
         </div>
     }
     return <div className={'contents'}
-        style={StyleManager.contentStyle.content}>
+        style={StyleManager.contentStyle.content}
+    >
         <ContentHeaderIcon/>
         <ContentTitleComponent/>
         <EditorContainer/>

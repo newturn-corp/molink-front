@@ -5,6 +5,12 @@ import AuthManager, { EmailState, PasswordState } from '../../manager/Auth/AuthM
 import { observer } from 'mobx-react-lite'
 import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 import { AuthLogo } from '../../components/auth/logo'
+import { AuthHeader } from '../../components/auth/AuthHeader'
+import { AuthTitle } from '../../components/auth/AuthTitle'
+import { AuthInput } from '../../components/auth/AuthInput'
+import NewUserManager from '../../manager/global/NewUserManager'
+import UserManager from '../../manager/global/UserManager'
+import { AuthButton } from '../../components/auth/AuthButton'
 
 const getEmailHelperText = (emailState: EmailState) => {
     if (emailState === EmailState.DEFAULT) {
@@ -28,17 +34,16 @@ const ChangePasswordRequest = observer(() => {
         <Backdrop open={loading} onClick={() => setLoading(false)}>
             <CircularProgress color="inherit" />
         </Backdrop>
-        <AuthLogo />
-        <p className='title'>비밀번호 변경</p>
-        <p className='sub-title' style={{ wordBreak: 'break-all', wordWrap: 'break-word' }}>이 이메일 주소로 비밀번호를 변경할 수 있는 링크를 보냅니다.</p>
-        <div className='auth-page-input'>
-            <TextField
+        <AuthHeader/>
+        <div
+            className={'auth-container'}
+        >
+            <AuthTitle text={'비밀번호 변경'}/>
+            <AuthInput
                 id="standard-email"
-                className={'input-field'}
                 label="이메일"
                 type="email"
-                variant='filled'
-                autoComplete='off'
+                variant={'outlined'}
                 error={AuthManager.emailState !== EmailState.DEFAULT}
                 onChange={(e) => {
                     const { value } = e.target
@@ -47,23 +52,35 @@ const ChangePasswordRequest = observer(() => {
                 }}
             />
             {getEmailHelperText(AuthManager.emailState)}
-        </div>
-
-        <Button
-            className={'login-button'}
-            color="secondary"
-            variant="contained"
-            disabled={loading || AuthManager.email.length === 0}
-            onClick={async (e) => {
-                setLoading(true)
-                const result = await AuthManager.startPasswordChange()
-                if (result.success) {
-                    RoutingManager.moveTo(Page.SignIn)
+            <pre
+                className='change-password-description'
+                style={{
+                    wordBreak: 'break-all',
+                    wordWrap: 'break-word'
+                }}
+            >
+                {
+                    'Molink 가입 시 사용하신 이메일을 입력하시면\n새 비밀번호를 생성할 수 있는 링크를 보내드립니다. '
                 }
-                setLoading(false)
-            }}>
-        비밀번호 초기화 이메일 전송
-        </Button>
+            </pre>
+            <AuthButton
+                text={'비밀번호 초기화 이메일 받기'}
+                textColor={'#FFFFFF'}
+                backgroundColor={'#3A7BBF'}
+                style={{
+                    marginTop: 44
+                }}
+                onClick={async (e) => {
+                    setLoading(true)
+                    const result = await AuthManager.signin()
+                    setLoading(false)
+                    if (result.success) {
+                        await NewUserManager.load()
+                        await RoutingManager.moveTo(Page.Home, `/${UserManager.profile.nickname}`)
+                    }
+                }}
+            />
+        </div>
     </div>
 })
 

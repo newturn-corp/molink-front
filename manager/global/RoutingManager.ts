@@ -6,14 +6,15 @@ import EditorManager from '../Home/EditorManager'
 
 export enum Page {
     Index = '/',
-    SignIn = '/auth/signin',
+    SignIn = '/auth/sign-in',
     Search = '/search',
     changePasswordRequest = '/auth/change-password-request',
     SignUp = '/auth/signup',
     SettingProfile = '/setting/profile',
     SettingFollow = '/setting/follow',
     SettingDocumentList = '/setting/document-list',
-    Home = ''
+    Home = '',
+    Blog = '/blog'
 }
 
 class RoutingManager {

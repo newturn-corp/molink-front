@@ -12,8 +12,8 @@ import { WrapLinkWhenInsertData, WrapLinkWhenInsertText } from './LinkPlugin'
 import { InsertImageWhenInsertData } from './ImagePlugin'
 import { maintainBottomMargin } from './BottomMarginPlugin'
 import { ShortcutWhenDeleteBackward, ShortcutWhenInsertText } from './ShortcutPlugin'
-import CommandManager from '../../manager/Editing/CommandManager'
 import { insertYoutubeWhenInsertData } from './YoutubePlugin'
+import CommandManager from '../../manager/Editing/Command/CommandManager'
 
 export const EditorPlugin = (editor: Editor) => {
     const { isVoid, isInline, insertBreak, deleteBackward, normalizeNode, insertText, insertData, onChange } = editor
@@ -77,8 +77,8 @@ export const EditorPlugin = (editor: Editor) => {
 
     const insertDataHandlers: InsertDataHandler[] = [
         insertYoutubeWhenInsertData,
-        WrapLinkWhenInsertData,
-        InsertImageWhenInsertData
+        InsertImageWhenInsertData,
+        WrapLinkWhenInsertData
     ]
     editor.insertData = (data: DataTransfer) => {
         for (const handler of insertDataHandlers) {

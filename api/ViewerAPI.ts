@@ -1,12 +1,39 @@
 import { BaseAPI } from './baseAPI'
-import { UnauthorizedForDocument, UnexpectedError } from '../Errors/DocumentError'
+import { DocumentNotExists, UnauthorizedForDocument, UnexpectedError } from '../Errors/DocumentError'
 import { UserNotExists } from '../Errors/UserError'
-import { GetHierarcyResponseDTO, GetContentResponseDTO } from '@newturn-develop/types-molink'
+import {
+    GetHierarcyResponseDTO,
+    GetContentResponseDTO,
+    GetDocumentAuthorityDTO,
+    GetUserIDDTO
+} from '@newturn-develop/types-molink'
 import { ContentNotExists, ContentUserNotExists } from '../Errors/ContentError'
 
 class ViewerAPI extends BaseAPI {
-    async getDocumentsHierarchy (nickname: string): Promise<GetHierarcyResponseDTO> {
-        const res = await this.get(`/viewer/hierarchy/${nickname}`)
+    async getUserIDByNickname (nickname: string) {
+        const res = await this.get(`/viewer/users/${nickname}/id`)
+        if (res.status === 404001) {
+            throw new UserNotExists()
+        }
+        return res.data as GetUserIDDTO
+    }
+
+    async getDocumentAuthority (documentId: string) {
+        const res = await this.get(`/viewer/documents/${documentId}/authority`)
+        if (res.status === 404001) {
+            throw new DocumentNotExists()
+        } else if (res.status === 404002) {
+            throw new UserNotExists()
+        } else if (res.status === 404003) {
+            throw new UserNotExists()
+        } else if (res.status === 400001) {
+            throw new UnexpectedError()
+        }
+        return res.data as GetDocumentAuthorityDTO
+    }
+
+    async getDocumentsHierarchy (userId: number): Promise<GetHierarcyResponseDTO> {
+        const res = await this.get(`/viewer/hierarchy/${userId}`)
         if (res.status === 404001) {
             throw new UserNotExists()
         } else if (res.status === 400001) {

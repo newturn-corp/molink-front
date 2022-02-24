@@ -2,7 +2,7 @@ import { onKeyDown as PlaceHolderOnKeyDown } from './PlaceHolderPlugin'
 import { handleKeyDown as ListKeyDownHandler } from './ListPlugin'
 import HotKeyManager from '../../manager/Editing/HotKeyManager'
 import MentionManager from '../../manager/Editing/MentionManager'
-import CommandManager from '../../manager/Editing/CommandManager'
+import CommandManager from '../../manager/Editing/Command/CommandManager'
 
 const keyDownHandlers = [
     PlaceHolderOnKeyDown,

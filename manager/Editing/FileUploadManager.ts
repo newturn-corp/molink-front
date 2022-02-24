@@ -1,9 +1,14 @@
-import ContentAPI from '../../api/ContentAPI'
-import { UploadContentImageDto } from '../../DTO/ContentDTO'
+import MainAPI from '../../api/MainAPI'
+import { UploadImageDTO, UploadImageFromURLDTO } from '@newturn-develop/types-molink'
 
 class FileUploadManager {
-    async uploadContentImage (image: File) {
-        const { url } = await ContentAPI.uploadContentImage(new UploadContentImageDto(image))
+    async uploadImage (image: File) {
+        const { url } = await MainAPI.uploadImage(new UploadImageDTO(image))
+        return url
+    }
+
+    async uploadImageFromURL (imageUrl: string) {
+        const { url } = await MainAPI.uploadImageFromURL(new UploadImageFromURLDTO(imageUrl))
         return url
     }
 }

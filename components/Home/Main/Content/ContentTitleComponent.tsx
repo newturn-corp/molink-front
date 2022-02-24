@@ -8,7 +8,7 @@ import { observer } from 'mobx-react'
 export const ContentTitleComponent: React.FC<{
 }> = observer(() => {
     const titleRef = useRef()
-    const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
+    const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
     const title = currentHierarchy.map[currentHierarchy.openedDocumentId].title
     return (
         <div
@@ -22,7 +22,7 @@ export const ContentTitleComponent: React.FC<{
                 currentHierarchy.updateDocumentTitle(currentHierarchy.openedDocumentId, e.currentTarget.textContent)
             }}
             onKeyDown={(e) => {
-                if (e.key === 'ArrowDown') {
+                if (e.key === 'ArrowDown' || e.key === 'Enter') {
                     e.preventDefault()
                     ReactEditor.focus(EditorManager.slateEditor)
                     Transforms.select(EditorManager.slateEditor, {
@@ -35,6 +35,7 @@ export const ContentTitleComponent: React.FC<{
                             offset: 0
                         }
                     })
+                    currentHierarchy.updateDocumentTitle(currentHierarchy.openedDocumentId, e.currentTarget.textContent)
                 }
             }}
         >

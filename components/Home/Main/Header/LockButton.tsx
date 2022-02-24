@@ -13,14 +13,14 @@ export const LockButton: React.FC<{
       >
           {
               EditorManager.isLocked
-                  ? <LockOutlined/>
-                  : <LockOpenOutlined/>
+                  ? <img className='icon' src={'/image/editor/lock-button.svg'}/>
+                  : <img className='icon' src={'/image/editor/unlock-button.svg'}/>
           }
           <p className='lock-text'>
               {
                   EditorManager.isLocked
-                      ? '잠금됨'
-                      : '잠금 해제 상태'
+                      ? '잠금'
+                      : '잠금 해제'
               }
           </p>
       </div>

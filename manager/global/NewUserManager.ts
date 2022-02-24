@@ -29,7 +29,7 @@ class NewUserManager {
     }
 
     async load () {
-        if (this.isLoading) {
+        if (this.isLoading || this.isUserAuthorized) {
             return
         }
         try {

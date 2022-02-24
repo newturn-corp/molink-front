@@ -10,7 +10,6 @@ import '../styles/setting.css'
 import { AppProps } from 'next/dist/shared/lib/router/router'
 import { configure } from 'mobx'
 import GlobalManager from '../manager/global/GlobalManager'
-// import ContentManager from '../manager/Home/ContentManager'
 import { DialogComponent } from '../components/Dialog'
 import { SiteHead } from '../components/global/SiteHead'
 
@@ -22,7 +21,9 @@ configure(
 
 function SafeHydrate ({ children }: { children: JSX.Element[] }) {
     return (
-        <div suppressHydrationWarning>
+        <div
+            suppressHydrationWarning
+        >
             {typeof window === 'undefined' ? null : children}
         </div>
     )

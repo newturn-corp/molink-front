@@ -8,12 +8,15 @@ import {
 import Hierarchy from './Hierarchy'
 import React from 'react'
 import EventManager, { Event } from '../../EventManager'
+import GlobalManager from '../../global/GlobalManager'
+import NewUserManager from '../../global/NewUserManager'
 
 class HierarchyManager {
-    hierarchyMap: Map<string, Hierarchy> = new Map()
+    hierarchyMap: Map<number, Hierarchy> = new Map()
     hierarchy: Hierarchy = null
-    currentHierarchyNickname: string = ''
+    currentHierarchyUserId: number = 0
     openHierarchyContextMenu: boolean = false
+    isHierarchyOpen: boolean = true
 
     private _clickPosition: { x: number, y: number } = { x: 0, y: 0 }
     get clickPosition () {
@@ -29,26 +32,24 @@ class HierarchyManager {
         makeAutoObservable(this)
     }
 
-    async loadHierarchy (nickname: string) {
-        this.currentHierarchyNickname = nickname
-        const exist = this.hierarchyMap.get(nickname)
+    async loadHierarchy (userId: number, nickname: string) {
+        this.currentHierarchyUserId = userId
+        const exist = this.hierarchyMap.get(userId)
         // 만약 실시간 동기화된 하이어라키면 로드하지 않는다.
         if (exist && exist.websocketProvider) {
             return
         }
-        const hierarchy = new Hierarchy(nickname)
+        const hierarchy = new Hierarchy(userId, nickname)
         await hierarchy.init()
-        this.hierarchyMap.set(nickname, hierarchy)
+        this.hierarchyMap.set(userId, hierarchy)
         await EventManager.issueEvent(Event.UpdateHierarchy, {})
     }
 
-    handleRightClick (event: React.MouseEvent<HTMLElement, MouseEvent>, documentId: string | null) {
-        const currentHierarchy = this.hierarchyMap.get(this.currentHierarchyNickname)
+    openContextMenu (documentId: string | null) {
+        const currentHierarchy = this.hierarchyMap.get(this.currentHierarchyUserId)
         if (!currentHierarchy.editable) {
             return
         }
-        event.preventDefault()
-        event.stopPropagation()
         currentHierarchy.selectedDocumentId = documentId
 
         this._availControlOptions = []
@@ -62,14 +63,25 @@ class HierarchyManager {
         this._availControlOptions.push(new SettingDocumentListOption(documentId))
 
         this.openHierarchyContextMenu = true
-        this._clickPosition = { x: event.clientX, y: event.clientY }
+        this._clickPosition = {
+            x: GlobalManager.mousePositionX,
+            y: GlobalManager.mousePositionY
+        }
     }
 
     closeContextMenu () {
-        if (this.hierarchy) {
-            this.hierarchy.selectedDocumentId = null
+        const currentHierarchy = this.hierarchyMap.get(this.currentHierarchyUserId)
+        if (currentHierarchy) {
+            currentHierarchy.selectedDocumentId = null
         }
         this.openHierarchyContextMenu = false
+    }
+
+    getHierarchyWidth () {
+        if (!this.isHierarchyOpen) {
+            return 30
+        }
+        return NewUserManager.setting ? NewUserManager.setting.hierarchyWidth : 240
     }
 }
 export default new HierarchyManager()

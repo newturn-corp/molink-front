@@ -19,10 +19,5 @@ class SettingAPI extends BaseAPI {
         const res = await this.put('/main/settings/show-sub-document-count', { value })
         if (res.status !== 200) throw new APIError(res)
     }
-
-    async updateFileSystemWidth (value: number): Promise<void> {
-        const res = await this.put('/main/settings/file-system-width', { value })
-        if (res.status !== 200) throw new APIError(res)
-    }
 }
 export default new SettingAPI()

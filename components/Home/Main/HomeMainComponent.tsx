@@ -6,8 +6,18 @@ import { ContentComponent } from './Content/ContentComponent'
 
 export const HomeMainComponent: React.FC<{
   }> = observer(() => {
-      return <div className={'content-container'} style={StyleManager.contentStyle.container}>
-          <ContentHeader/>
-          <ContentComponent/>
-      </div>
+      return <>
+          <div
+              className={'content-container'}
+              style={StyleManager.contentStyle.container}
+          >
+              <ContentHeader/>
+              <div
+                  className={'content-body'}
+                  style={StyleManager.contentStyle.contentBody}
+              >
+                  <ContentComponent/>
+              </div>
+          </div>
+      </>
   })

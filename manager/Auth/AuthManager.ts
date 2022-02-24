@@ -63,10 +63,11 @@ class AuthManager {
     private validateNickname (nickname: string) {
         if (nickname.length < 2) {
             return false
-        } else if (nickname.length > 20) {
+        } else if (nickname.length > 27) {
             return false
         }
-        return true
+        const nicknameReg = /^([ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_-](?:(?:[ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_-]|(?:\.(?!\.))){0,28}(?:[ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_-]))?)$/
+        return nicknameReg.test((nickname))
     }
 
     async signin () {

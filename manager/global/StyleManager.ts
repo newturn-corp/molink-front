@@ -1,13 +1,17 @@
 import { makeAutoObservable, reaction, toJS } from 'mobx'
 import { isBrowser, isMobile } from 'react-device-detect'
 import EventManager, { Event } from '../EventManager'
-import DocumentHierarchyManager from '../Home/Hierarchy/HierarchyManager'
+import NewUserManager from './NewUserManager'
+import HierarchyManager from '../Home/Hierarchy/HierarchyManager'
 
 interface ContentStyle {
     container: {
         transform: string,
         width: number
     },
+    contentBody: {
+        width: number
+    }
     content: {
         marginLeft: number,
         width: number
@@ -22,6 +26,9 @@ class StyleManager {
             transform: isBrowser ? `translateX(${defaultHierarchyWidth}px)` : undefined,
             width: 1000
         },
+        contentBody: {
+            width: 1000
+        },
         content: {
             marginLeft: 800,
             width: 800
@@ -34,10 +41,14 @@ class StyleManager {
 
     constructor () {
         makeAutoObservable(this)
-        // reaction(() => Hierarchy.hierarchy.width, () => {
-        //     this.updateContentStyle()
-        // })
         EventManager.addDisposableEventListener(Event.InitGlobalVariable, () => {
+            reaction(() => ({
+                isHierarchyOpen: HierarchyManager.isHierarchyOpen,
+                hierarchyWidth: NewUserManager.setting ? NewUserManager.setting.hierarchyWidth : 240
+            }), () => {
+                console.log('여기 호출')
+                this.updateContentStyle()
+            })
             this.updateContentStyle()
             globalThis.window.onresize = () => {
                 this.updateContentStyle()
@@ -46,11 +57,15 @@ class StyleManager {
     }
 
     updateContentStyle () {
-        const containerSize = isBrowser ? globalThis.window.innerWidth - (DocumentHierarchyManager.hierarchy ? defaultHierarchyWidth : defaultHierarchyWidth) : globalThis.window.innerWidth
+        console.log(HierarchyManager.getHierarchyWidth())
+        const containerSize = isBrowser ? globalThis.window.innerWidth - HierarchyManager.getHierarchyWidth() : globalThis.window.innerWidth
         const contentSize = Math.min(800, containerSize * 0.75)
         this._contentStyle = {
             container: {
-                transform: isBrowser ? `translateX(${DocumentHierarchyManager.hierarchy ? defaultHierarchyWidth : defaultHierarchyWidth}px)` : undefined,
+                transform: isBrowser ? `translateX(${HierarchyManager.getHierarchyWidth()}px)` : undefined,
+                width: containerSize
+            },
+            contentBody: {
                 width: containerSize
             },
             content: {

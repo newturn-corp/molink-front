@@ -10,7 +10,7 @@ export const ContentHeaderIcon: React.FC<{
   }> = observer(() => {
       const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
-      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
+      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
       const document = currentHierarchy.map[currentHierarchy.openedDocumentId]
       const onEmojiClick = (emojiObject: IEmojiData) => {
           const document = currentHierarchy.yMap.get(currentHierarchy.openedDocumentId)

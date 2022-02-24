@@ -8,10 +8,11 @@ import { withHistory } from 'slate-history'
 import { withReact } from 'slate-react'
 import HierarchyManager from './Hierarchy/HierarchyManager'
 import { EditorPlugin } from '../../plugin'
-import UserManager from '../global/UserManager'
 import ViewerAPI from '../../api/ViewerAPI'
 import { DocumentNotExists } from '../../Errors/DocumentError'
 import { withCursor } from '../../plugin/EditorPlugins/CursorPlugin'
+import NewUserManager from '../global/NewUserManager'
+import EventManager, { Event } from '../EventManager'
 
 class EditorManager {
     public editable: boolean = false
@@ -34,18 +35,23 @@ class EditorManager {
             yInfo: false,
             websocketProvider: false
         })
+        EventManager.addEventLinstener(Event.MoveToAnotherPage, () => {
+            this.reset()
+        }, 1)
     }
 
     async load (documentId: string) {
         this.yjsDocument = new Y.Doc()
         this.sharedType = this.yjsDocument.getArray<SyncElement>('content')
+        this.sharedType.observeDeep(() => {
+            console.log(this.sharedType.toJSON())
+        })
         this.yInfo = this.yjsDocument.getMap('info')
         this.yInfo.observeDeep(() => {
             this.info = this.yInfo.toJSON()
             this.isLocked = this.yInfo.get('isLocked')
-            console.log(this.info)
         })
-        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
+        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
         if (!currentHierarchy) {
             throw new DocumentNotExists()
         }
@@ -53,11 +59,13 @@ class EditorManager {
         if (!document) {
             throw new DocumentNotExists()
         }
-        this.editable = UserManager.isUserAuthorized && currentHierarchy.editable && !!document
+        this.editable = NewUserManager.isUserAuthorized && currentHierarchy.editable && !!document
 
         if (!this.editable) {
             const dto = await ViewerAPI.getContent(documentId)
             Y.applyUpdate(this.yjsDocument, Uint8Array.from(dto.content))
+            this.slateEditor = EditorPlugin(
+                withYjs(withReact(withHistory(createEditor())), this.sharedType))
         } else {
             this.websocketProvider = new WebsocketProvider(process.env.CONTENT_SERVER_URL, documentId, this.yjsDocument, {
                 connect: false
@@ -69,23 +77,38 @@ class EditorManager {
             })
 
             this.websocketProvider.on('status', ({ status }: { status: string }) => {
-                console.log(status)
                 this.isConnected = status === 'connected'
             })
 
             this.websocketProvider.awareness.setLocalState({
                 alphaColor: color.slice(0, -2) + '0.2)',
                 color,
-                name: UserManager.profile.nickname
+                name: NewUserManager.profile.nickname
             })
 
             this.websocketProvider.connect()
+            this.slateEditor = EditorPlugin(withCursor(
+                withYjs(withReact(withHistory(createEditor())), this.sharedType),
+                this.websocketProvider.awareness
+            ))
         }
-        this.slateEditor = EditorPlugin(withCursor(
-            withYjs(withReact(withHistory(createEditor())), this.sharedType),
-            this.websocketProvider.awareness
-        ))
         currentHierarchy.openedDocumentId = documentId
+    }
+
+    reset () {
+        this.editable = false
+        this.showPlaceholder = false
+        this.yjsDocument = null
+        this.slateEditor = null
+        this.sharedType = null
+        this.yInfo = null
+        this.info = null
+        this.websocketProvider = null
+        this.isConnected = false
+        this.isLocked = false
+        if (this.websocketProvider) {
+            this.websocketProvider.disconnect()
+        }
     }
 
     disconnect () {

@@ -75,7 +75,7 @@ class HierarchyDragManager {
             return
         }
         event.preventDefault()
-        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyNickname)
+        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
         const document = currentHierarchy.map[documentId]
 
         const documentElement = globalThis.document.getElementById('document-' + document.id)
