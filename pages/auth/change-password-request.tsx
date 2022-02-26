@@ -72,7 +72,7 @@ const ChangePasswordRequest = observer(() => {
                 }}
                 onClick={async (e) => {
                     setLoading(true)
-                    const result = await AuthManager.signin()
+                    const result = await AuthManager.startPasswordChange()
                     setLoading(false)
                     if (result.success) {
                         await NewUserManager.load()

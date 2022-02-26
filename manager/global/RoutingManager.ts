@@ -9,7 +9,7 @@ export enum Page {
     SignIn = '/auth/sign-in',
     Search = '/search',
     changePasswordRequest = '/auth/change-password-request',
-    SignUp = '/auth/signup',
+    SignUp = '/auth/sign-up',
     SettingProfile = '/setting/profile',
     SettingFollow = '/setting/follow',
     SettingDocumentList = '/setting/document-list',
