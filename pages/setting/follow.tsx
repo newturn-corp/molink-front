@@ -9,20 +9,20 @@ import { Input } from 'antd'
 import { SettingButtonList } from '../../components/setting/SettingButtonList'
 
 const SettingProfile = observer(() => {
-    const [value, setValue] = React.useState('female')
-
-    const handleChange = (event) => {
-        setValue(event.target.value)
-    }
-    UserManager.updateUserProfile()
-        .then(() => {
-            if (!UserManager.isUserAuthorized) {
-                RoutingManager.moveTo(Page.SignIn)
-            }
-        })
-    if (!UserManager.isUserAuthorized) {
-        return <></>
-    }
+    // const [value, setValue] = React.useState('female')
+    //
+    // const handleChange = (event) => {
+    //     setValue(event.target.value)
+    // }
+    // UserManager.updateUserProfile()
+    //     .then(() => {
+    //         if (!UserManager.isUserAuthorized) {
+    //             RoutingManager.moveTo(Page.SignIn)
+    //         }
+    //     })
+    // if (!UserManager.isUserAuthorized) {
+    //     return <></>
+    // }
 
     return <div className='setting-page' onClick={() => {
     } } >

@@ -1,5 +1,5 @@
 import { Editor, Transforms } from 'slate'
-import { SlateImageElement, ImageFloatOption } from '../../Types/slate/CustomElement'
+import { ImageFloatOption, SlateImageElementType } from '../../Types/slate/CustomElement'
 import imageExtensions from 'image-extensions'
 import isUrl from 'is-url'
 import FileUploadManager from '../../manager/Editing/FileUploadManager'
@@ -13,7 +13,7 @@ const insertImage = (editor: Editor, image: HTMLImageElement) => {
         width = StyleManager.contentStyle.content.width
     }
     const text = { text: '' }
-    const slateImageElement: SlateImageElement = {
+    const slateImageElement: SlateImageElementType = {
         type: 'image',
         url: image.src,
         floatOption: ImageFloatOption.Center,

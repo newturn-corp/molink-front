@@ -44,62 +44,62 @@ class LinkManager {
     }
 
     handleInputChange (value) {
-        if (value === '') {
-            return
-        }
-        this.currentInputValue = value
-        this.isSearching = true
-        if (this.searchOtherDocumentsTimeout) {
-            clearTimeout(this.searchOtherDocumentsTimeout)
-        }
-        this.searchOtherDocumentsTimeout = setTimeout(async () => {
-            const documents = await DocumentAPI.searchDocumentsLinkList(value)
-            this._options = documents.map(document => {
-                return {
-                    reference: document.userId === UserManager.profile?.userId ? '내 문서' : '검색 결과',
-                    text: document.title,
-                    url: `?id=${document.id}`
-                }
-            })
-            this.isSearching = false
-        }, 500)
+        // if (value === '') {
+        //     return
+        // }
+        // this.currentInputValue = value
+        // this.isSearching = true
+        // if (this.searchOtherDocumentsTimeout) {
+        //     clearTimeout(this.searchOtherDocumentsTimeout)
+        // }
+        // this.searchOtherDocumentsTimeout = setTimeout(async () => {
+        //     const documents = await DocumentAPI.searchDocumentsLinkList(value)
+        //     this._options = documents.map(document => {
+        //         return {
+        //             reference: document.userId === UserManager.profile?.userId ? '내 문서' : '검색 결과',
+        //             text: document.title,
+        //             url: `?id=${document.id}`
+        //         }
+        //     })
+        //     this.isSearching = false
+        // }, 500)
     }
 
     handleChange (value: LinkOption | string) {
-        if (typeof value === 'string') {
-            return
-        }
-        const url = IS_DEV ? `http://localhost:3000${value.url}` : `https://molink.life${value.url}`
-        const link: LinkElement = {
-            type: 'link',
-            url,
-            children: []
-        }
-
-        Transforms.wrapNodes(EditorManager.editor, link, {
-            at: this.selectionRange,
-            split: true
-        })
-        Transforms.collapse(EditorManager.editor, { edge: 'end' })
-        this.closeLinkInput()
+        // if (typeof value === 'string') {
+        //     return
+        // }
+        // const url = IS_DEV ? `http://localhost:3000${value.url}` : `https://molink.life${value.url}`
+        // const link: LinkElement = {
+        //     type: 'link',
+        //     url,
+        //     children: []
+        // }
+        //
+        // Transforms.wrapNodes(EditorManager.editor, link, {
+        //     at: this.selectionRange,
+        //     split: true
+        // })
+        // Transforms.collapse(EditorManager.editor, { edge: 'end' })
+        // this.closeLinkInput()
     }
 
     handleEnter () {
-        if (!isUrl(this.currentInputValue)) {
-            return
-        }
-        const link: LinkElement = {
-            type: 'link',
-            url: this.currentInputValue,
-            children: []
-        }
-
-        Transforms.wrapNodes(EditorManager.editor, link, {
-            at: this.selectionRange,
-            split: true
-        })
-        Transforms.collapse(EditorManager.editor, { edge: 'end' })
-        this.closeLinkInput()
+        // if (!isUrl(this.currentInputValue)) {
+        //     return
+        // }
+        // const link: LinkElement = {
+        //     type: 'link',
+        //     url: this.currentInputValue,
+        //     children: []
+        // }
+        //
+        // Transforms.wrapNodes(EditorManager.editor, link, {
+        //     at: this.selectionRange,
+        //     split: true
+        // })
+        // Transforms.collapse(EditorManager.editor, { edge: 'end' })
+        // this.closeLinkInput()
     }
 }
 export default new LinkManager()
