@@ -1,18 +1,15 @@
 import React from 'react'
 import { Header } from '../components/global/Header/Header'
 import { ButtonGroup, Button } from '@material-ui/core'
-import SearchManager from '../manager/SearchManager'
-import UserManager from '../manager/UserManager'
-import GlobalManager from '../manager/GlobalManager'
 import { SearchResults } from '../components/search/SearchResult'
 
 const Search = () => {
-    UserManager.updateUserProfile()
-        .then(() => {
-            const window = globalThis.window || GlobalManager.window
-            const query = new URLSearchParams(window.location.search).get('q')
-            SearchManager.search(query)
-        })
+    // UserManager.updateUserProfile()
+    //     .then(() => {
+    //         const window = globalThis.window || GlobalManager.window
+    //         const query = new URLSearchParams(window.location.search).get('q')
+    //         SearchManager.search(query)
+    //     })
 
     return <div className='search-page' onClick={() => {
     } } >

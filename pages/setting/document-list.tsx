@@ -3,26 +3,26 @@ import { observer } from 'mobx-react'
 import { Header } from '../../components/global/Header/Header'
 import { ButtonGroup, Button, List, Divider, Avatar, RadioGroup, Radio, FormControlLabel, FormGroup, Checkbox } from '@material-ui/core'
 import { UserSearchResult } from '../../components/search/UserSearchResult'
-import UserManager from '../../manager/UserManager'
-import RoutingManager, { Page } from '../../manager/RoutingManager'
+import UserManager from '../../manager/global/UserManager'
+import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 import { Input } from 'antd'
 import { SettingButtonList } from '../../components/setting/SettingButtonList'
 
 const SettingDocumentList = observer(() => {
-    const [value, setValue] = React.useState('female')
-
-    const handleChange = (event) => {
-        setValue(event.target.value)
-    }
-    UserManager.updateUserProfile()
-        .then(() => {
-            if (!UserManager.isUserAuthorized) {
-                RoutingManager.moveTo(Page.SignIn)
-            }
-        })
-    if (!UserManager.isUserAuthorized) {
-        return <></>
-    }
+    // const [value, setValue] = React.useState('female')
+    //
+    // const handleChange = (event) => {
+    //     setValue(event.target.value)
+    // }
+    // UserManager.updateUserProfile()
+    //     .then(() => {
+    //         if (!UserManager.isUserAuthorized) {
+    //             RoutingManager.moveTo(Page.SignIn)
+    //         }
+    //     })
+    // if (!UserManager.isUserAuthorized) {
+    //     return <></>
+    // }
 
     return <div className='setting-page' onClick={() => {
     } } >

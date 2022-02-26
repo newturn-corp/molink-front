@@ -1,15 +1,10 @@
 import { makeAutoObservable } from 'mobx'
 import DocumentAPI from '../api/DocumentAPI'
-import { CollectDocumentDTO, CreateDocumentDTO, DeleteDocumentDTO, DocumentInitialInfoDTO, SetDocumentVisibilityDTO, UpdateDocumentIsLockedDTO } from '../DTO/DocumentDto'
-import EventManager, { Event } from '../manager/EventManager'
-import DocumentManager from '../manager/DocumentManager'
-import FileSystemManager from '../manager/FileSystemManager'
-import UserManager from '../manager/UserManager'
-import { TextCategory } from '../utils/slate'
+import { CollectDocumentDTO, DocumentInitialInfoDTO } from '../DTO/DocumentDto'
 import DocumentAuthority from './DocumentAuthority'
 import DocumentDirectoryInfo from './DocumentDirectoryInfo'
 import DocumentMeta from './DocumentMeta'
-import DialogManager from '../manager/DialogManager'
+import DialogManager from '../manager/global/DialogManager'
 
 export enum DocumentVisibility {
     Private = 0,
@@ -29,12 +24,6 @@ export default class Document {
         makeAutoObservable(this)
         this.meta = new DocumentMeta(dto)
         this.directoryInfo = new DocumentDirectoryInfo(this, this.meta, dto)
-    }
-
-    async delete () {
-        await EventManager.issueEvent(Event.DeleteDocument, { document: this })
-        await DocumentAPI.deleteDocument(new DeleteDocumentDTO(this.meta.id, this.directoryInfo.parentId, this.directoryInfo.order, this.contentId))
-        this.directoryInfo.delete()
     }
 
     static visibilityToText (visibility: DocumentVisibility) {
@@ -85,7 +74,7 @@ export default class Document {
             }
         }
         this.meta.visibility = visibility
-        await DocumentAPI.setDocumentVisibility(new SetDocumentVisibilityDTO(this.meta.id, visibility))
+        // await DocumentAPI.setDocumentVisibility(new SetDocumentVisibilityDTO(this.meta.id, visibility))
     }
 
     static topDownUpdateVisibility (document: Document, visibility: DocumentVisibility) {
@@ -113,45 +102,7 @@ export default class Document {
         return document.meta.id === this.meta.id
     }
 
-    isChildOf (document: Document) {
-        return document.directoryInfo.children.filter(doc => doc.equal(this)).length > 0
-    }
-
     async collect () {
         await DocumentAPI.collectDocument(new CollectDocumentDTO(this.meta.id))
-    }
-
-    async updateIsLocked (isLocked: boolean) {
-        this.isLocked = isLocked
-        await DocumentAPI.updateDocumentIsLocked(new UpdateDocumentIsLockedDTO(this.meta.id, isLocked))
-    }
-
-    static async create (parent: Document | null, order: number) {
-        // 문서 신규 생성시 기본 값들
-        const defaultTitle = ''
-        const defaultIcon = '📄'
-        const defaultVisibility: DocumentVisibility = DocumentVisibility.Private
-        const defaultContent = [{
-            type: 'title',
-            children: [{ text: '' }]
-        }, { type: 'text', category: TextCategory.Content3, children: [{ text: '' }] }]
-        const defaultRepresentative = false
-        const defaultIsChildrenOpen = false
-
-        const parentId = parent ? parent.meta.id : null
-        const id = await DocumentAPI.createDocument(new CreateDocumentDTO(defaultTitle, defaultIcon, parentId, order, defaultVisibility, defaultContent, defaultRepresentative, defaultIsChildrenOpen))
-        const document = new Document(new DocumentInitialInfoDTO(id, UserManager.userId, '', defaultIcon, parentId, order, false, false, defaultVisibility))
-        DocumentManager.documentMap.set(id, document)
-        // 부모에 새로운 문서 추가
-        if (parent) {
-            parent.directoryInfo.children.splice(order, 0, document)
-            // 부모가 있으면 자식에 부모 연결
-            document.directoryInfo.parent = parent
-            parent.directoryInfo.setIsChildrenOpen(true)
-        } else {
-            FileSystemManager.documents.splice(order, 0, document)
-        }
-        document.content = defaultContent
-        return document
     }
 }

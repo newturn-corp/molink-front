@@ -1,16 +1,16 @@
 import { observer } from 'mobx-react'
 import React, { useState } from 'react'
 import { ListItem, ListItemAvatar, Avatar, ListItemText, CircularProgress } from '@material-ui/core'
-import SearchManager from '../../manager/SearchManager'
+import SearchManager from '../../manager/global/SearchManager'
 import { FollowResult, UserSearchResultDTO } from '../../DTO/UserDTO'
-import UserManager from '../../manager/UserManager'
+import UserManager from '../../manager/global/UserManager'
 
 const FollowButton: React.FC<{
     searchResult: UserSearchResultDTO
 }> = ({ searchResult }) => {
     const [followResult, setFollowResult] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
-    if (UserManager.userId === searchResult.id) {
+    if (UserManager.profile.userId === searchResult.id) {
         return <></>
     }
     if (searchResult.isFollowing) {

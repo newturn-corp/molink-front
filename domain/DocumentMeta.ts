@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx'
 import DocumentAPI from '../api/DocumentAPI'
 import { DocumentInitialInfoDTO, SetDocumentIconDTO, SetDocumentTitleDTO, UpdateDocumentRepresentativeDTO } from '../DTO/DocumentDto'
 import DocumentManager from '../manager/DocumentManager'
-import UserManager from '../manager/UserManager'
+import UserManager from '../manager/global/UserManager'
 
 export enum DocumentVisibility {
     Private = 0,
@@ -25,7 +25,7 @@ export default class DocumentMeta {
         this.title = dto.title
         this.icon = dto.icon
         this.representative = dto.representative
-        this.visibility = dto.visibility
+        // this.visibility = dto.visibility
         makeAutoObservable(this)
     }
 
@@ -41,9 +41,9 @@ export default class DocumentMeta {
 
     async setRepresentative (representative: boolean) {
         this.representative = representative
-        if (representative && UserManager.representativeDocumentId) {
-            DocumentManager.documentMap.get(UserManager.representativeDocumentId).meta.representative = false
-            UserManager.representativeDocumentId = this.id
+        if (representative && UserManager.profile.representativeDocumentId) {
+            DocumentManager.documentMap.get(UserManager.profile.representativeDocumentId).meta.representative = false
+            UserManager.profile.representativeDocumentId = this.id
         }
         await DocumentAPI.setDocumentRepresentative(new UpdateDocumentRepresentativeDTO(this.id, representative))
     }

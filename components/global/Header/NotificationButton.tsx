@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react'
-import UserManager from '../../../manager/UserManager'
+import UserManager from '../../../manager/global/UserManager'
 import { Menu, Badge, IconButton } from '@material-ui/core'
 import NotificationsOutlinedIcon from '@material-ui/icons/NotificationsOutlined'
 import { NotificationBlock } from './NotificationBlock'

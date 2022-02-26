@@ -15,9 +15,9 @@ class NotificationManager {
 
     constructor () {
         makeAutoObservable(this)
-        NotificationAPI.getNotifications().then(arr => {
-            this._notifications = arr
-        })
+        // NotificationAPI.getNotifications().then(arr => {
+        //     this._notifications = arr
+        // })
     }
 
     async checkNotificationsViewed () {

@@ -1,13 +1,14 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import UserManager from '../../../manager/UserManager'
+import UserManager from '../../../manager/global/UserManager'
 import { Button } from '@material-ui/core'
-import GlobalManager from '../../../manager/GlobalManager'
-import RoutingManager, { Page } from '../../../manager/RoutingManager'
+import GlobalManager from '../../../manager/global/GlobalManager'
+import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
+import NewUserManager from '../../../manager/global/NewUserManager'
 
 export const LoginButton: React.FC<{
   }> = observer(() => {
-      if (UserManager.isUserAuthorized) {
+      if (NewUserManager.isUserAuthorized) {
           return <></>
       }
 

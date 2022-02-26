@@ -1,8 +1,12 @@
 import { Backdrop, Button, CircularProgress, TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { AuthLogo } from '../../components/auth/logo'
-import AuthManager, { PasswordState } from '../../manager/AuthManager'
-import RoutingManager, { Page } from '../../manager/RoutingManager'
+import AuthManager, { PasswordState } from '../../manager/Auth/AuthManager'
+import RoutingManager, { Page } from '../../manager/global/RoutingManager'
+import { AuthHeader } from '../../components/auth/AuthHeader'
+import { AuthTitle } from '../../components/auth/AuthTitle'
+import { AuthInput } from '../../components/auth/AuthInput'
+import { AuthButton } from '../../components/auth/AuthButton'
 
 const getPasswordHelperText = (passwordState: PasswordState) => {
     if (passwordState === PasswordState.DEFAULT) {
@@ -12,7 +16,7 @@ const getPasswordHelperText = (passwordState: PasswordState) => {
     return <p className='helper-text' style={{ color: 'red' }}>{text}</p>
 }
 
-const ChangePassword = () => {
+const AuthChangePasswordPage = () => {
     const key = new URLSearchParams(window.location.search).get('key')
     useEffect(() => {
         AuthManager.checkPasswordChangeExist(new URLSearchParams(window.location.search).get('key')).then(res => {
@@ -27,16 +31,17 @@ const ChangePassword = () => {
         <Backdrop open={loading} onClick={() => setLoading(false)}>
             <CircularProgress color="inherit" />
         </Backdrop>
-        <AuthLogo />
-        <p className='title'>비밀번호 변경</p>
-        <div className='auth-page-input'>
-            <TextField
+        <AuthHeader/>
+        <div
+            className={'auth-container'}
+        >
+            <AuthTitle text={'비밀번호 변경'}/>
+            <AuthInput
                 id="standard-password-input"
-                className={'input-field'}
                 label="비밀번호"
                 type="password"
                 autoComplete="current-password"
-                variant='filled'
+                variant='outlined'
                 error={AuthManager.passwordState !== PasswordState.DEFAULT}
                 onChange={(e) => {
                     const { value } = e.target
@@ -48,15 +53,12 @@ const ChangePassword = () => {
                 }}
             />
             {getPasswordHelperText(AuthManager.passwordState)}
-        </div>
-        <div className='auth-page-input'>
-            <TextField
+            <AuthInput
                 id="standard-password-input"
-                className={'input-field'}
                 label="비밀번호 확인"
                 type="password"
                 autoComplete="current-password"
-                variant='filled'
+                variant='outlined'
                 error={AuthManager.passwordState !== PasswordState.DEFAULT}
                 onChange={(e) => {
                     AuthManager.passwordState = PasswordState.DEFAULT
@@ -66,23 +68,24 @@ const ChangePassword = () => {
                     e.preventDefault()
                 }}
             />
+            <AuthButton
+                text={'비밀번호 변경'}
+                textColor={'#FFFFFF'}
+                backgroundColor={'#3A7BBF'}
+                style={{
+                    marginTop: 44
+                }}
+                onClick={async (e) => {
+                    setLoading(true)
+                    const result = await AuthManager.endPasswordChange(key)
+                    if (result.success || result.goToLogin) {
+                        await RoutingManager.moveTo(Page.SignIn)
+                    }
+                    setLoading(false)
+                }}
+            />
         </div>
-        <Button
-            className={'login-button'}
-            color="secondary"
-            variant="contained"
-            disabled={loading}
-            onClick={async (e) => {
-                setLoading(true)
-                const result = await AuthManager.endPasswordChange(key)
-                if (result.success || result.goToLogin) {
-                    RoutingManager.moveTo(Page.SignIn)
-                }
-                setLoading(false)
-            }}>
-        비밀번호 변경
-        </Button>
     </div>
 }
 
-export default ChangePassword
+export default AuthChangePasswordPage

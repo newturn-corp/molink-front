@@ -1,23 +1,33 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react'
-import UserManager from '../../../manager/UserManager'
+import UserManager from '../../../manager/global/UserManager'
 import { Avatar, Menu, MenuItem, Badge } from '@material-ui/core'
-import AuthManager from '../../../manager/AuthManager'
+import AuthManager from '../../../manager/Auth/AuthManager'
 import { SupportModal } from '../SupportModal'
-import SupportManager from '../../../manager/SupportManager'
-import SaveManager, { ContentSaveStatus } from '../../../manager/SaveManager'
-import RoutingManager, { Page } from '../../../manager/RoutingManager'
+import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
+import SupportManager from '../../../manager/global/SupportManager'
+import NewUserManager from '../../../manager/global/NewUserManager'
+import Identicon from 'identicon.js'
+import crypto from 'crypto'
 
 export const User: React.FC<{
   }> = observer(() => {
       const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-      const open = Boolean(anchorEl)
-      const profileImageSrc = UserManager.profileImageUrl ? UserManager.profileImageUrl : undefined
-      const profileInnerText = UserManager.profileImageUrl ? undefined : UserManager.nickname[0]
 
-      if (!UserManager.isUserAuthorized) {
+      if (!NewUserManager.isUserAuthorized || !NewUserManager.profile) {
           return <></>
       }
+
+      const open = Boolean(anchorEl)
+      const profileImageSrc = NewUserManager.profile.profileImageUrl || `data:image/png;base64,${
+          new Identicon(
+              crypto.createHash('sha512')
+                  .update(NewUserManager.profile.nickname)
+                  .digest('base64'), {
+                  size: 64,
+                  foreground: [58, 123, 191, 255]
+              }).toString()}`
+      // const profileInnerText = NewUserManager.profile.profileImageUrl ? undefined : NewUserManager.profile.nickname[0]
 
       const handleClick = (event: React.MouseEvent<HTMLElement>) => {
           setAnchorEl(event.currentTarget)
@@ -43,13 +53,13 @@ export const User: React.FC<{
           setAnchorEl(null)
       }
 
-      return <div>
+      return <>
           <div className='user-container' onClick={(event) => handleClick(event)}>
-              <Badge className={SaveManager.contentSaveStatus === ContentSaveStatus.SaveFailed ? 'disconnected' : 'connected' } variant="dot" overlap={'circular'}>
-                  <Avatar className='profile' sizes='32' src={profileImageSrc}>{profileInnerText}</Avatar>
-              </Badge>
+              <Avatar className='profile' sizes='32' src={profileImageSrc}>
+                  {/* {profileInnerText} */}
+              </Avatar>
               <div className='nickname'>
-                  {UserManager.nickname}
+                  {NewUserManager.profile.nickname}
               </div>
           </div>
           <Menu
@@ -84,5 +94,5 @@ export const User: React.FC<{
               </MenuItem>
           </Menu>
           <SupportModal/>
-      </div>
+      </>
   })

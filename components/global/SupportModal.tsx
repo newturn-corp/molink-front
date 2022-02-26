@@ -1,8 +1,8 @@
 import React from 'react'
 import Modal from 'antd/lib/modal/Modal'
 import TextArea from 'antd/lib/input/TextArea'
-import SupportManager from '../../manager/SupportManager'
 import { observer } from 'mobx-react'
+import SupportManager from '../../manager/global/SupportManager'
 
 export const SupportModal: React.FC<{
   }> = observer(() => {
@@ -15,7 +15,7 @@ export const SupportModal: React.FC<{
           okText={'전송'}
           cancelText
       >
-          <p>{'Knowlink 서비스에 대해 문의 사항이나 의견이 있으시다면'}</p>
+          <p>{'Molink 서비스에 대해 문의 사항이나 의견이 있으시다면'}</p>
           <p>{'편하게 전달해주세요! 이메일을 통해 빠른 시일 내에 답변드리겠습니다!'}</p>
           <TextArea
               showCount

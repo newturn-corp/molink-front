@@ -5,7 +5,7 @@ import { LoginButton } from './LoginButton'
 import { NotificationButton } from './NotificationButton'
 import { User } from './User'
 import { SearchComponent } from './SearchComponent'
-import RoutingManager, { Page } from '../../../manager/RoutingManager'
+import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 
 export const Header: React.FC<{
   }> = observer(() => {
@@ -18,9 +18,9 @@ export const Header: React.FC<{
           </div>
           <div className='navigator'>
           </div>
-          <SearchComponent />
+          {/* <SearchComponent /> */}
           <div className='logo'>
-              <img src="/header-logo.png" alt="" onClick={() => RoutingManager.moveTo(Page.Index)} />
+              <img src="/image/global/header/logo.png" alt="" onClick={() => RoutingManager.moveTo(Page.Index)} />
           </div>
       </div>
   })

@@ -26,7 +26,9 @@ module.exports = {
         'no-unused-vars': 'off',
         'no-useless-escape': 'off',
         'no-case-declarations': 'off',
-        'react/display-name': 'off'
+        'react/display-name': 'off',
+        'accessor-pairs': 'off',
+        'import/no-absolute-path': 'off'
     },
     globals: {
         JSX: true,
