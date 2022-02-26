@@ -3,12 +3,10 @@ import React from 'react'
 import { TextCategory } from '../../Types/slate/CustomElement'
 import { ListEditor, ListTransforms } from '../GlobalPlugins/ListPlugin'
 
-const onEnter = (editor: Editor, event: React.KeyboardEvent<HTMLDivElement>) => {
-    const isShiftPressed = event.shiftKey
+export const handleEnterInList = (event: React.KeyboardEvent<HTMLDivElement>, editor: Editor) => {
     const currentItem = ListEditor.getCurrentItem(editor)
-
-    if (isShiftPressed || !currentItem) {
-        return
+    if (!currentItem) {
+        return false
     }
 
     const [currentItemNode] = currentItem
@@ -32,33 +30,41 @@ const onEnter = (editor: Editor, event: React.KeyboardEvent<HTMLDivElement>) => 
         // Split list item
         ListTransforms.splitListItem(editor)
     }
+    return true
 }
 
-const onTab = (editor: Editor, event: React.KeyboardEvent<HTMLDivElement>): void => {
+export const handleTabInList = (event: React.KeyboardEvent<HTMLDivElement>, editor: Editor) => {
     if (
         Range.isExpanded(editor.selection) ||
         !ListEditor.getCurrentItem(editor)
     ) {
-        return
+        return false
     }
 
     event.preventDefault()
-
-    // Shift+tab reduce depth
-    if (event.shiftKey) {
-        ListTransforms.decreaseItemDepth(editor)
-    } else {
-        // Tab increases depth
-        ListTransforms.increaseItemDepth(editor)
-    }
+    ListTransforms.increaseItemDepth(editor)
+    return true
 }
 
-export const onBackspace = (editor: Editor, event: React.KeyboardEvent<HTMLDivElement>): void => {
+export const handleShiftTabInList = (event: React.KeyboardEvent<HTMLDivElement>, editor: Editor) => {
+    if (
+        Range.isExpanded(editor.selection) ||
+        !ListEditor.getCurrentItem(editor)
+    ) {
+        return false
+    }
+
+    event.preventDefault()
+    ListTransforms.decreaseItemDepth(editor)
+    return true
+}
+
+export const handleBackspaceInList = (event: React.KeyboardEvent<HTMLDivElement>, editor: Editor) => {
     const { selection } = editor
 
     // skip if selection is not collapsed
     if (!Range.isCollapsed(selection)) {
-        return
+        return false
     }
 
     const currentItem = ListEditor.getCurrentItem(editor)
@@ -68,7 +74,7 @@ export const onBackspace = (editor: Editor, event: React.KeyboardEvent<HTMLDivEl
         !currentItem ||
         !Editor.isStart(editor, Range.start(selection), currentItem[1])
     ) {
-        return
+        return false
     }
 
     event.preventDefault()
@@ -81,24 +87,5 @@ export const onBackspace = (editor: Editor, event: React.KeyboardEvent<HTMLDivEl
         type: 'text',
         category: TextCategory.Content3
     })
-}
-
-const KEY_ENTER = 'Enter'
-const KEY_TAB = 'Tab'
-const KEY_BACKSPACE = 'Backspace'
-
-export const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>, editor: Editor) => {
-    switch (event.key) {
-    case KEY_ENTER:
-        onEnter(editor, event)
-        break
-    case KEY_TAB:
-        onTab(editor, event)
-        break
-    case KEY_BACKSPACE:
-        onBackspace(editor, event)
-        break
-    default:
-        break
-    }
+    return true
 }

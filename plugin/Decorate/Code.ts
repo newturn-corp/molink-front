@@ -1,4 +1,9 @@
 import Prism from 'prismjs'
+import 'prismjs/components/prism-python'
+import 'prismjs/components/prism-php'
+import 'prismjs/components/prism-sql'
+import 'prismjs/components/prism-java'
+import { BaseRange, Node, Path, Range, Text } from 'slate'
 
 Prism.languages.python = Prism.languages.extend('python', {})
 Prism.languages.insertBefore('python', 'prolog', {
@@ -78,4 +83,38 @@ Prism.languages.markdown.italic.inside.url = Prism.util.clone(
 Prism.languages.markdown.bold.inside.italic = Prism.util.clone(
     Prism.languages.markdown.italic
 )
-Prism.languages.markdown.italic.inside.bold = Prism.util.clone(Prism.languages.markdown.bold) // prettier-ignore
+Prism.languages.markdown.italic.inside.bold = Prism.util.clone(Prism.languages.markdown.bold)
+
+const getLength = token => {
+    if (typeof token === 'string') {
+        return token.length
+    } else if (typeof token.content === 'string') {
+        return token.content.length
+    } else {
+        return token.content.reduce((l, t) => l + getLength(t), 0)
+    }
+}
+
+export const decorateCode = (node: Node, path: Path, ranges: BaseRange[]) => {
+    if (!Text.isText(node)) {
+        return ranges
+    }
+    const tokens = Prism.tokenize(node.text, Prism.languages.html)
+    let start = 0
+
+    for (const token of tokens) {
+        const length = getLength(token)
+        const end = start + length
+
+        if (typeof token !== 'string') {
+            ranges.push({
+                [token.type]: true,
+                anchor: { path, offset: start },
+                focus: { path, offset: end }
+            })
+        }
+
+        start = end
+    }
+    return ranges
+}

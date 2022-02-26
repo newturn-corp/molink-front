@@ -45,6 +45,7 @@ export const ShortcutWhenInsertText = (editor: Editor, text: string) => {
         const range = { anchor, focus: start }
         const beforeText = SlateEditor.string(editor, range)
         if (beforeText === '``') {
+            console.log('나 호출')
             Transforms.select(editor, range)
             Transforms.delete(editor)
             const newProperties: Partial<SlateElement> = {
@@ -52,6 +53,10 @@ export const ShortcutWhenInsertText = (editor: Editor, text: string) => {
             }
             Transforms.setNodes<SlateElement>(editor, newProperties, {
                 match: n => SlateEditor.isBlock(editor, n)
+            })
+            Transforms.insertNodes(editor, {
+                text: '',
+                codehighlight: true
             })
             return true
         }

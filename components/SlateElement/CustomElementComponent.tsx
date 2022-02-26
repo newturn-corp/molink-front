@@ -1,12 +1,13 @@
 import React from 'react'
-import { SlateImageElement } from './SlateImageElement'
-import { SlateTextElement } from './SlateTextElement'
-import { SlateTitleElement } from './SlateTitleElement'
-import { SlateLinkElement } from './SlateLinkElement'
-import { SlateDividerElement } from './SlateDividerElement'
-import { SlateDocumentElement } from './SlateDocumentElement'
-import { SlateCheckListItemElement } from './SlateCheckListItemElement'
-import { SlateYoutubeElement } from './SlateYoutubeElement'
+import { SlateImageElement } from './Element/SlateImageElement'
+import { SlateTextElement } from './Element/SlateTextElement'
+import { SlateTitleElement } from './Element/SlateTitleElement'
+import { SlateLinkElement } from './Element/SlateLinkElement'
+import { SlateDividerElement } from './Element/SlateDividerElement'
+import { SlateDocumentElement } from './Element/SlateDocumentElement'
+import { SlateCheckListItemElement } from './Element/SlateCheckListItemElement'
+import { SlateYoutubeElement } from './Element/SlateYoutubeElement'
+import { SlateCodeElement } from './Element/SlateCodeElement'
 
 export const CustomElementComponent: React.FC<{
     attributes,
@@ -44,6 +45,8 @@ export const CustomElementComponent: React.FC<{
           return <SlateDocumentElement { ...props } />
       case 'youtube':
           return <SlateYoutubeElement { ...props } />
+      case 'code':
+          return <SlateCodeElement { ...props } />
       default:
           return <p {...attributes}>{children}</p>
       }

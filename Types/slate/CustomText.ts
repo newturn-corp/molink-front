@@ -7,6 +7,7 @@ export type FormattedText = {
     italic?: boolean
     code?: boolean
     underlined?: boolean
+    codehighlight?: boolean
     text: string
 }
 

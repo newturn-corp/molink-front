@@ -6,7 +6,7 @@ import {
     InsertTextHandler,
     NormalizeNodeHandler
 } from './types'
-import { CorrectVoidBehaviorWhenDeleteBackword, CorrectVoidBehaviorWhenInsertBreak } from './CorrectVoidBehavior'
+import { CorrectVoidBehaviorWhenDeleteBackward, CorrectVoidBehaviorWhenInsertBreak } from './CorrectVoidBehavior'
 import { FixLayoutWhenNormalizeNode } from './LayoutPlugin'
 import { WrapLinkWhenInsertData, WrapLinkWhenInsertText } from './LinkPlugin'
 import { InsertImageWhenInsertData } from './ImagePlugin'
@@ -14,6 +14,7 @@ import { maintainBottomMargin } from './BottomMarginPlugin'
 import { ShortcutWhenDeleteBackward, ShortcutWhenInsertText } from './ShortcutPlugin'
 import { insertYoutubeWhenInsertData } from './YoutubePlugin'
 import CommandManager from '../../manager/Editing/Command/CommandManager'
+import { insertCodeWhenInsertData } from './CodeEditorPlugin'
 
 export const EditorPlugin = (editor: Editor) => {
     const { isVoid, isInline, insertBreak, deleteBackward, normalizeNode, insertText, insertData, onChange } = editor
@@ -28,7 +29,7 @@ export const EditorPlugin = (editor: Editor) => {
         return inlineStyleList.includes(element.type) || isInline(element)
     }
 
-    const deleteBackwardHandlers: DeleteBackwardHandler[] = [CorrectVoidBehaviorWhenDeleteBackword, ShortcutWhenDeleteBackward]
+    const deleteBackwardHandlers: DeleteBackwardHandler[] = [CorrectVoidBehaviorWhenDeleteBackward, ShortcutWhenDeleteBackward]
     editor.deleteBackward = unit => {
         for (const handler of deleteBackwardHandlers) {
             const handled = handler(editor, unit)
@@ -76,6 +77,7 @@ export const EditorPlugin = (editor: Editor) => {
     }
 
     const insertDataHandlers: InsertDataHandler[] = [
+        insertCodeWhenInsertData,
         insertYoutubeWhenInsertData,
         InsertImageWhenInsertData,
         WrapLinkWhenInsertData

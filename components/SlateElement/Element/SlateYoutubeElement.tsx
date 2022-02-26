@@ -1,10 +1,6 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import { Range } from 'slate'
-import { useSelected, useSlate } from 'slate-react'
-import { TextCategory } from '../../Types/slate/CustomElement'
-import EditorManager from '../../manager/Home/EditorManager'
-import StyleManager from '../../manager/global/StyleManager'
+import StyleManager from '../../../manager/global/StyleManager'
 
 export const SlateYoutubeElement: React.FC<{
     attributes,

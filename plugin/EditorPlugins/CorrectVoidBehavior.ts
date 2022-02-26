@@ -1,7 +1,7 @@
 import { Editor, Node, Path, Range, Transforms } from 'slate'
 import { TextCategory } from '../../Types/slate/CustomElement'
 
-export const CorrectVoidBehaviorWhenDeleteBackword = (editor: Editor, unit: 'character' | 'word' | 'line' | 'block') => {
+export const CorrectVoidBehaviorWhenDeleteBackward = (editor: Editor, unit: 'character' | 'word' | 'line' | 'block') => {
     if (
         !editor.selection ||
         !Range.isCollapsed(editor.selection) ||

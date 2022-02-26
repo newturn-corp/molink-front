@@ -491,12 +491,6 @@ body {
   top: 80px !important;
 }
 
-.code {
-  padding: 20px;
-  border-radius: 5px;
-  background: #999999;
-}
-
 .contextMenu {
   position: fixed;
   background: white;

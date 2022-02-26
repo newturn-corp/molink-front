@@ -284,30 +284,46 @@ class CommandManager {
         }
     }
 
-    async handleKeyDown (event: React.KeyboardEvent, editor: Editor) {
-        if (this.target && this._searchedCommands.length > 0) {
-            switch (event.key) {
-            case 'ArrowDown':
-                event.preventDefault()
-                this.index = this.index >= this._searchedCommands.length - 1 ? 0 : this.index + 1
-                break
-            case 'ArrowUp':
-                event.preventDefault()
-                this.index = this.index <= 0 ? this._searchedCommands.length - 1 : this.index - 1
-                break
-            case 'Tab':
-            case 'Enter':
-                event.preventDefault()
-                Transforms.select(editor, toJS(this.target))
-                await this.insertNodeByCommand(editor, this._searchedCommands[this.index])
-                this.target = null
-                break
-            case 'Escape':
-                event.preventDefault()
-                this.target = null
-                break
-            }
+    checkIsCommandListOpen () {
+        return this.target && this._searchedCommands.length > 0
+    }
+
+    handleArrowDown (event: React.KeyboardEvent, editor: Editor) {
+        if (!this.checkIsCommandListOpen()) {
+            return false
         }
+        event.preventDefault()
+        this.index = this.index >= this._searchedCommands.length - 1 ? 0 : this.index + 1
+        return true
+    }
+
+    handleArrowUp (event: React.KeyboardEvent, editor: Editor) {
+        if (!this.checkIsCommandListOpen()) {
+            return false
+        }
+        event.preventDefault()
+        this.index = this.index <= 0 ? this._searchedCommands.length - 1 : this.index - 1
+        return true
+    }
+
+    async handleEnterAndTab (event: React.KeyboardEvent, editor: Editor) {
+        if (!this.checkIsCommandListOpen()) {
+            return false
+        }
+        event.preventDefault()
+        Transforms.select(editor, toJS(this.target))
+        await this.insertNodeByCommand(editor, this._searchedCommands[this.index])
+        this.target = null
+        return true
+    }
+
+    handleEscape (event: React.KeyboardEvent, editor: Editor) {
+        if (!this.checkIsCommandListOpen()) {
+            return false
+        }
+        event.preventDefault()
+        this.target = null
+        return true
     }
 }
 

@@ -9,120 +9,11 @@ import { css } from '@emotion/css'
 import { Rnd } from 'react-rnd'
 import { Editor, Transforms } from 'slate'
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@material-ui/icons'
-import { SlateImageElement, ImageFloatOption, TextCategory } from '../../Types/slate/CustomElement'
-import StyleManager from '../../manager/global/StyleManager'
+
+import StyleManager from '../../../manager/global/StyleManager'
 import TextArea, { TextAreaRef } from 'antd/lib/input/TextArea'
-import EditorManager from '../../manager/Home/EditorManager'
-
-// const Caption: React.FC<{
-//     selected: boolean,
-//     caption: string
-//   }> = ({ selected, caption }) => {
-//       const inputRef = useRef<TextAreaRef>(null)
-//       const [captionFocused, setCaptionFocused] = useState(false)
-//       if (!selected) {
-//           if (captionFocused) {
-//               setCaptionFocused(false)
-//           }
-//           if (caption === '') {
-//               return <></>
-//           }
-//       }
-//       if (caption === '' && !selected) {
-//           return <></>
-//       }
-//       if (captionFocused) {
-//           setTimeout(() => {
-//               console.log('나 호출')
-//               console.log(inputRef.current)
-//               inputRef.current.focus()
-//           }, 500)
-//       }
-//       return <div onClick={() => {
-//           console.log('눌림')
-//           setCaptionFocused(true)
-//       }}>
-//           <TextArea
-//               ref={inputRef}
-//               className={'caption'}
-//               style={{
-//                   userSelect: captionFocused ? undefined : 'none'
-//               }}
-//               autoFocus={captionFocused}
-//               tabIndex={-1}
-//               //   onClick={() => {
-//               //       console.log('눌림')
-//               //       setCaptionFocused(true)
-//               //   }}
-//               autoSize={true}
-//               placeholder='이미지 설명'
-//               bordered={false}
-//               defaultValue={caption}
-//               readOnly={!captionFocused}
-//               rows={1}
-//               onChange={(e) => {
-//                   const inputText = inputRef.current.resizableTextArea.props.value as string
-//                   //   console.log(inputText)
-//                   //   console.log(inputRef.current.resizableTextArea.textArea.style.height)
-//                   const height = Number(inputRef.current.resizableTextArea.textArea.style.height.replace('px', ''))
-//                   //   setCaptionFocused(false)
-//                   Transforms.setNodes(ContentManager.editor, {
-//                       caption: inputText,
-//                       captionHeight: height
-//                   }, {
-//                       at: ContentManager.editor.selection
-//                   })
-//               }}
-//               onBlur={(e) => {
-//                   //   const inputText = inputRef.current.resizableTextArea.props.value as string
-//                   //   Transforms.setNodes(ContentManager.editor, {
-//                   //       caption: inputText
-//                   //   }, {
-//                   //       at: ContentManager.editor.selection
-//                   //   })
-//                   console.log(inputRef.current.resizableTextArea.textArea.style.height)
-//                   setCaptionFocused(false)
-//               }}
-//               onKeyDown={(e) => console.log(e.key)}
-//           />
-//       </div>
-//       //   return <figcaption
-//       //       //   style={{ width }}
-//       //       //   css={styles.figcaption?.css}
-//       //       //   className={styles.figcaption?.className}
-//       //   >
-//       //       {
-//       //           captionFocused
-//       //               ? <TextArea
-//       //                   ref={inputRef}
-//       //                   className={'caption'}
-//       //                   autoFocus={selected}
-//       //                   tabIndex={-1}
-//       //                   onClick={() => { setCaptionFocused(true) }}
-//       //                   onFocus={() => { console.log('나 포커스') }}
-//       //                   autoSize={true}
-//       //                   placeholder='이미지 설명'
-//       //                   bordered={false}
-//       //                   defaultValue={caption}
-//       //                   disabled={!captionFocused}
-//       //                   readOnly={!captionFocused}
-//       //                   onBlur={(e) => {
-//       //                       const inputText = inputRef.current.resizableTextArea.props.value as string
-//       //                       Transforms.setNodes(ContentManager.editor, {
-//       //                           caption: inputText
-//       //                       }, {
-//       //                           at: ContentManager.editor.selection
-//       //                       })
-//       //                       setCaptionFocused(false)
-//       //                   }}
-//       //               />
-//       //               : <p className='caption' onClick={() => setCaptionFocused(true)}>
-//       //                   {caption === '' ? '이미지 설명' : caption}
-//       //               </p>
-//       //       }
-
-//       //   </figcaption>
-//   }
+import EditorManager from '../../../manager/Home/EditorManager'
+import { ImageFloatOption, SlateImageElementType, TextCategory } from '../../../Types/slate/CustomElement'
 
 const Caption: React.FC<{
     selected: boolean,
@@ -204,7 +95,7 @@ const Caption: React.FC<{
 export const SlateImageElement: React.FC<{
     attributes,
     children,
-    element: SlateImageElement
+    element: SlateImageElementType
   }> = ({ attributes, children, element }) => {
       const selected = useSelected()
       const focused = useFocused()

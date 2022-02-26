@@ -1,19 +1,85 @@
 import { onKeyDown as PlaceHolderOnKeyDown } from './PlaceHolderPlugin'
-import { handleKeyDown as ListKeyDownHandler } from './ListPlugin'
-import HotKeyManager from '../../manager/Editing/HotKeyManager'
-import MentionManager from '../../manager/Editing/MentionManager'
+import {
+    handleBackspaceInList, handleEnterInList,
+    handleShiftTabInList,
+    handleTabInList
+} from './ListPlugin'
+import { handleEnterInCode, handleShiftEnterInCode, handleTabInCode } from './CodeHandleKeyDownPlugin'
 import CommandManager from '../../manager/Editing/Command/CommandManager'
+import { moveSelectionWhenArrowLeftDown, moveSelectionWhenArrowRightDown } from './ArrowKeyMovementPlugin'
+import { redoWhenControlYKeyDown, undoWhenControlZKeyDown } from './UndoPlugin'
+import { insertNewLineWhenShiftEnterKeyDown } from './InsertNewLinePlugin'
 
-const keyDownHandlers = [
-    PlaceHolderOnKeyDown,
-    ListKeyDownHandler,
-    (event, editor) => HotKeyManager.handleKeyDown(event, editor),
-    (event, editor) => MentionManager.handleKeyDown(event, editor),
-    (event, editor) => CommandManager.handleKeyDown(event, editor)
+const handlerMap = new Map()
+handlerMap.set('ArrowLeft', [
+    moveSelectionWhenArrowLeftDown
+])
+handlerMap.set('ArrowRight', [
+    moveSelectionWhenArrowRightDown
+])
+handlerMap.set('ArrowUp', [
+    (event, editor) => CommandManager.handleArrowUp(event, editor)
+])
+handlerMap.set('ArrowDown', [
+    (event, editor) => CommandManager.handleArrowDown(event, editor)
+])
+handlerMap.set('ctrl+z', [
+    undoWhenControlZKeyDown
+])
+handlerMap.set('ctrl+y', [
+    redoWhenControlYKeyDown
+])
+handlerMap.set('Backspace', [
+    (event, editor) => CommandManager.handleEnterAndTab(event, editor),
+    handleBackspaceInList
+])
+handlerMap.set('Tab', [
+    handleTabInCode,
+    handleTabInList
+])
+handlerMap.set('shift+Tab', [
+    handleShiftTabInList
+])
+handlerMap.set('Enter', [
+    (event, editor) => CommandManager.handleEnterAndTab(event, editor),
+    handleEnterInList,
+    handleEnterInCode
+])
+handlerMap.set('shift+Enter', [
+    handleShiftEnterInCode,
+    insertNewLineWhenShiftEnterKeyDown
+])
+handlerMap.set('Escape', [
+    (event, editor) => CommandManager.handleEscape(event, editor)
+])
+
+const generalKeyDownHandlers = [
+    PlaceHolderOnKeyDown
 ]
 
-export const handleKeyDown = (event, editor) => {
-    keyDownHandlers.forEach(handler => {
+export const handleKeyDown = async (event, editor) => {
+    for (const handler of generalKeyDownHandlers) {
         handler(event, editor)
-    })
+    }
+
+    const keys = []
+    if (event.shiftKey) {
+        keys.push('shift')
+    } else if (event.altKey) {
+        keys.push('alt')
+    } else if (event.ctrlKey) {
+        keys.push('ctrl')
+    }
+    keys.push(event.key)
+    const eventKey = keys.join('+')
+    const handlers = handlerMap.get(eventKey)
+    if (!handlers) {
+        return
+    }
+    for (const handler of handlers) {
+        const isHandled = await handler(event, editor)
+        if (isHandled) {
+            return
+        }
+    }
 }

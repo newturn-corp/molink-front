@@ -6,6 +6,7 @@ import { EditorContainer } from './EditorContainer'
 import StyleManager from '../../../../manager/global/StyleManager'
 import HierarchyManager from '../../../../manager/Home/Hierarchy/HierarchyManager'
 import { ContentTitleComponent } from './ContentTitleComponent'
+import { ContentFooter } from './ContentFooter'
 
 export const ContentComponent: React.FC<{
 }> = observer(() => {
@@ -22,6 +23,6 @@ export const ContentComponent: React.FC<{
         <ContentHeaderIcon/>
         <ContentTitleComponent/>
         <EditorContainer/>
-        <div className='content-footer'></div>
+        <ContentFooter/>
     </div>
 })

@@ -301,6 +301,11 @@
   color: #686868;
   border-bottom: 1px solid #686868;
 }
+.content-container .content-body .contents .code {
+  padding: 20px;
+  border-radius: 5px;
+  background: #ebf0fc;
+}
 .content-container .content-body .contents .divider-container {
   position: relative;
   width: 100%;

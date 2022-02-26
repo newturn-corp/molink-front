@@ -36,7 +36,7 @@ export enum ImageFloatOption {
     Right
 }
 
-export type SlateImageElement = {
+export type SlateImageElementType = {
     type: 'image'
     url: string
     width: number
@@ -111,7 +111,7 @@ export type YoutubeElement = {
 export type CustomElement =
 TextElement |
 BulletedListElement |
-SlateImageElement |
+    SlateImageElementType |
 MentionElement |
 TitleElement |
 ListItemElement |

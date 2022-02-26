@@ -1,5 +1,5 @@
 import { makeAutoObservable, observable } from 'mobx'
-import { createEditor, Editor as SlateEditor } from 'slate'
+import { createEditor, Editor, Editor as SlateEditor } from 'slate'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { SyncElement, withYjs } from 'slate-yjs'
@@ -16,6 +16,7 @@ import EventManager, { Event } from '../EventManager'
 import { Awareness } from 'y-protocols/awareness'
 import { Cursor } from 'slate-yjs/dist/main/model'
 import { relativePositionToAbsolutePosition } from '../../utils/relativePositionToAbsolutePosition'
+import { TextCategory } from '../../Types/slate/CustomElement'
 
 class EditorManager {
     public editable: boolean = false
@@ -94,6 +95,9 @@ class EditorManager {
             })
 
             this.awareness.on('update', () => {
+                if (!this.sharedType) {
+                    return
+                }
                 const newCursorData = Array.from(this.awareness.getStates())
                     .filter(([clientId]) => clientId !== this.sharedType.doc?.clientID)
                     .map(([, awareness]) => {
@@ -134,6 +138,9 @@ class EditorManager {
     }
 
     reset () {
+        if (this.websocketProvider) {
+            this.websocketProvider.disconnect()
+        }
         this.editable = false
         this.showPlaceholder = false
         this.yjsDocument = null
@@ -144,19 +151,18 @@ class EditorManager {
         this.websocketProvider = null
         this.isConnected = false
         this.isLocked = false
-        if (this.websocketProvider) {
-            this.websocketProvider.disconnect()
-        }
-    }
-
-    disconnect () {
-        if (this.websocketProvider) {
-            this.websocketProvider.disconnect()
-        }
     }
 
     updateIsLocked (isLocked: boolean) {
         this.yInfo.set('isLocked', isLocked)
+    }
+
+    insertTextEndOfPage () {
+        Editor.insertNode(this.slateEditor, {
+            type: 'text',
+            category: TextCategory.Content3,
+            children: [{ text: '' }]
+        })
     }
 }
 export default new EditorManager()
