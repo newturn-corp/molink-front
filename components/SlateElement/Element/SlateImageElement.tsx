@@ -109,7 +109,7 @@ export const SlateImageElement: React.FC<{
                   className={css`
                     position: relative;
                     margin: 10px;
-                    width: ${StyleManager.contentStyle.content.width}px;
+                    width: ${StyleManager.contentStyle.main.width}px;
                     `}
               >
                   <Rnd
@@ -126,7 +126,7 @@ export const SlateImageElement: React.FC<{
                       style={{
                           position: 'relative',
                           float: element.floatOption === ImageFloatOption.Right ? 'right' : undefined,
-                          marginLeft: element.floatOption === ImageFloatOption.Center ? (StyleManager.contentStyle.content.width - element.width) / 2 : undefined,
+                          marginLeft: element.floatOption === ImageFloatOption.Center ? (StyleManager.contentStyle.main.width - element.width) / 2 : undefined,
                           transform: 'none !important',
                           display: 'block'
                       }}

@@ -17,8 +17,8 @@ export const SlateYoutubeElement: React.FC<{
             aria-label="Youtube video"
             className={'video'}
             style={{
-                width: StyleManager.contentStyle.content.width,
-                height: StyleManager.contentStyle.content.width / 16 * 9
+                width: StyleManager.contentStyle.main.width,
+                height: StyleManager.contentStyle.main.width / 16 * 9
             }}
             frameBorder="0"
         />

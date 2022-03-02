@@ -8,9 +8,9 @@ import StyleManager from '../../manager/global/Style/StyleManager'
 const insertImage = (editor: Editor, image: HTMLImageElement) => {
     let width = image.width
     let height = image.height
-    if (image.width > StyleManager.contentStyle.content.width) {
-        height *= StyleManager.contentStyle.content.width / width
-        width = StyleManager.contentStyle.content.width
+    if (image.width > StyleManager.contentStyle.main.width) {
+        height *= StyleManager.contentStyle.main.width / width
+        width = StyleManager.contentStyle.main.width
     }
     const text = { text: '' }
     const slateImageElement: SlateImageElementType = {

@@ -14,7 +14,7 @@ export const SearchResults: React.FC<{
               {
                   SearchManager.searchResults.map(result => {
                       return <>
-                          <UserSearchResult key={`user-search-result-${result.id}`} result={result} />
+                          {/* <UserSearchResult key={`user-search-result-${result.id}`} result={result} /> */}
                           <Divider key={`user-search-divider-${result.id}`} variant="inset" component="li" />
                       </>
                   })

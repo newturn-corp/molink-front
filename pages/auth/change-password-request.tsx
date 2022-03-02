@@ -1,28 +1,26 @@
 import React, { useState } from 'react'
 
-import { Backdrop, Button, CircularProgress, TextField } from '@material-ui/core'
+import { Backdrop, CircularProgress } from '@material-ui/core'
 import AuthManager, { EmailState, PasswordState } from '../../manager/Auth/AuthManager'
 import { observer } from 'mobx-react-lite'
 import RoutingManager, { Page } from '../../manager/global/RoutingManager'
-import { AuthLogo } from '../../components/auth/logo'
 import { AuthHeader } from '../../components/auth/AuthHeader'
 import { AuthTitle } from '../../components/auth/AuthTitle'
 import { AuthInput } from '../../components/auth/AuthInput'
-import NewUserManager from '../../manager/global/UserManager'
-import UserManager from '../../manager/global/UserManager'
 import { AuthButton } from '../../components/auth/AuthButton'
+import UserManager from '../../manager/global/User/UserManager'
 
 const getEmailHelperText = (emailState: EmailState) => {
     if (emailState === EmailState.DEFAULT) {
-        return <></>
+        return undefined
     }
     switch (emailState) {
     case EmailState.NOT_EMAIL:
-        return <p className='helper-text'>{'이메일 형식이 아닙니다.'}</p>
+        return '이메일 형식이 아닙니다.'
     case EmailState.TOO_MANY_REQUEST:
-        return <p className='helper-text'>{'너무 많은 요청을 보냈습니다. 잠시 뒤 다시 시도해주세요.'}</p>
+        return '너무 많은 요청을 보냈습니다. 잠시 뒤 다시 시도해주세요.'
     case EmailState.EMAIL_NOT_EXIST:
-        return <p className='helper-text'>{'계정이 존재하지 않습니다.'}</p>
+        return '계정이 존재하지 않습니다.'
     }
 }
 
@@ -40,18 +38,18 @@ const ChangePasswordRequest = observer(() => {
         >
             <AuthTitle text={'비밀번호 변경'}/>
             <AuthInput
-                id="standard-email"
                 label="이메일"
                 type="email"
                 variant={'outlined'}
+                autoComplete={'on'}
                 error={AuthManager.emailState !== EmailState.DEFAULT}
                 onChange={(e) => {
                     const { value } = e.target
                     AuthManager.emailState = EmailState.DEFAULT
                     AuthManager.email = value
                 }}
+                helperText={getEmailHelperText(AuthManager.emailState)}
             />
-            {getEmailHelperText(AuthManager.emailState)}
             <pre
                 className='change-password-description'
                 style={{
@@ -75,7 +73,7 @@ const ChangePasswordRequest = observer(() => {
                     const result = await AuthManager.startPasswordChange()
                     setLoading(false)
                     if (result.success) {
-                        await NewUserManager.load()
+                        await UserManager.load()
                         await RoutingManager.moveTo(Page.Home, `/${UserManager.profile.nickname}`)
                     }
                 }}
