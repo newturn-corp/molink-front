@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx'
-import EventManager, { Event } from '../EventManager'
+import { Event } from './Event/Event'
+import EventManager from './Event/EventManager'
 
 export enum Browser {
     Chrome,
@@ -16,7 +17,7 @@ class GlobalManager {
     mousePositionX = 0
     mousePositionY = 0
 
-    init () {
+    async init () {
         this.navigator = navigator
         this.document = document
         this.window = window
@@ -38,12 +39,14 @@ class GlobalManager {
             this.mousePositionX = event.pageX
             this.mousePositionY = event.pageY
         })
-        this.window.onbeforeunload = () => {
-            EventManager.issueEvent(Event.UnloadPage, {})
+        this.window.onbeforeunload = async () => {
+            await EventManager.issueEvent(Event.UnloadPage, {})
+        }
+        this.window.onresize = async () => {
+            await EventManager.issueEvent(Event.WindowResize, {})
         }
 
-        EventManager.issueEvent(Event.InitGlobalVariable, {})
-        EventManager.issueInitGlobalVariable()
+        await EventManager.issueEvent(Event.InitGlobalVariable, {})
     }
 
     constructor () {

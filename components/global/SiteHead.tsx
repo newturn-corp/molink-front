@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import Head from 'next/head'
-import HierarchyManager from '../../manager/Home/Hierarchy/HierarchyManager'
+import HierarchyManager from '../../manager/global/Hierarchy/HierarchyManager'
 
 export const SiteHead: React.FC<{
   }> = observer(() => {

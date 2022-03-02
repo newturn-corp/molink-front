@@ -1,41 +1,65 @@
-import React, { useState } from 'react'
-import { Backdrop, Button, CircularProgress, TextField } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import { Backdrop, CircularProgress } from '@material-ui/core'
 import AuthManager, { EmailState, NicknameState, PasswordState } from '../../manager/Auth/AuthManager'
 import { observer } from 'mobx-react-lite'
 import RoutingManager, { Page } from '../../manager/global/RoutingManager'
-import { AuthLogo } from '../../components/auth/logo'
 import { AuthHeader } from '../../components/auth/AuthHeader'
 import { AuthTitle } from '../../components/auth/AuthTitle'
 import { AuthButton } from '../../components/auth/AuthButton'
+import { AuthInput } from '../../components/auth/AuthInput'
+import FeedbackManager, { NOTIFICATION_TYPE } from '../../manager/global/FeedbackManager'
+import UserManager from '../../manager/global/User/UserManager'
 
 const getEmailHelperText = (emailState: EmailState) => {
-    if (emailState === EmailState.DEFAULT) {
-        return <></>
+    switch (emailState) {
+    case EmailState.DEFAULT:
+        return undefined
+    case EmailState.EmptyEmail:
+        return '이메일을 입력해주세요.'
+    case EmailState.NOT_EMAIL:
+        return '이메일 형식이 아닙니다.'
+    case EmailState.SAME_EMAIL:
+        return '이미 존재하는 이메일입니다.'
+    default:
+        throw new Error('Unhandled Email State')
     }
-    const text = emailState === EmailState.NOT_EMAIL ? '이메일 형식이 아닙니다.' : '이미 존재하는 이메일입니다.'
-    return <p className='helper-text' style={{ color: 'red' }}>{text}</p>
 }
 
 const getNicknameHelperText = (nicknameState: NicknameState) => {
-    if (nicknameState === NicknameState.Default) {
-        return <p className='helper-text'>{'2~15글자'}</p>
+    switch (nicknameState) {
+    case NicknameState.Default:
+        return '최대 2~27글자, 특수문자는 -,_,.(마침표) 사용 가능'
+    case NicknameState.NicknameConditionNotSatisfied:
+        return '2~15글자 내로 닉네임을 정해주세요.'
+    case NicknameState.NicknameAlreadyExists:
+        return '이미 존재하는 닉네임입니다.'
+    default:
+        throw new Error('Unhandled Password State')
     }
-    const text = nicknameState === NicknameState.NicknameConditionNotSatisfied ? '2~15글자 내로 닉네임을 정해주세요.' : '이미 존재하는 닉네임입니다.'
-    return <p className='helper-text' style={{ color: 'red' }}>{text}</p>
 }
 
 const getPasswordHelperText = (passwordState: PasswordState) => {
-    if (passwordState === PasswordState.DEFAULT) {
-        return <p className='helper-text'>{'문자, 숫자, 특수문자 포함 최소 8글자'}</p>
+    switch (passwordState) {
+    case PasswordState.DEFAULT:
+    case PasswordState.PASSWORD_CONDITION_NOT_SATISFIED:
+        return '문자, 숫자 포함 최소 8글자'
+    case PasswordState.PASSWORD_MISMATCH:
+        return '비밀번호가 일치하지 않습니다.'
+    default:
+        throw new Error('Unhandled Password State')
     }
-    const text = passwordState === PasswordState.PASSWORD_MISMATCH ? '비밀번호가 일치하지 않습니다.' : '문자, 숫자, 특수문자 포함 최소 8글자'
-    return <p className='helper-text' style={{ color: 'red' }}>{text}</p>
 }
 
 const SignUp = observer(() => {
     const [loading, setLoading] = useState(false)
-    AuthManager.emailState = EmailState.DEFAULT
-    AuthManager.passwordState = PasswordState.DEFAULT
+    useEffect(() => {
+        UserManager.load()
+            .then(() => {
+                if (UserManager.isUserAuthorized) {
+                    RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.nickname}`)
+                }
+            })
+    }, [])
     return <div className='auth-page'>
         <Backdrop open={loading} onClick={() => setLoading(false)}>
             <CircularProgress color="inherit" />
@@ -45,76 +69,71 @@ const SignUp = observer(() => {
             className={'auth-container'}
         >
             <AuthTitle text={'계정 생성'}/>
-            <div className='auth-page-input'>
-                <TextField
-                    className={'input-field'}
-                    label="이메일"
-                    type="email"
-                    variant='filled'
-                    autoComplete='off'
-                    error={AuthManager.emailState !== EmailState.DEFAULT}
-                    onChange={(e) => {
-                        const { value } = e.target
-                        AuthManager.emailState = EmailState.DEFAULT
-                        AuthManager.email = value
-                    }}
-                />
-                {getEmailHelperText(AuthManager.emailState)}
-            </div>
-            <div className='auth-page-input'>
-                <TextField
-                    id="standard-password-input"
-                    className={'input-field'}
-                    label="비밀번호"
-                    type="password"
-                    autoComplete="current-password"
-                    variant='filled'
-                    error={AuthManager.passwordState !== PasswordState.DEFAULT}
-                    onChange={(e) => {
-                        const { value } = e.target
-                        AuthManager.passwordState = PasswordState.DEFAULT
-                        AuthManager.pwd = value
-                    }}
-                    onPaste={(e) => {
-                        e.preventDefault()
-                    }}
-                />
-                {getPasswordHelperText(AuthManager.passwordState)}
-            </div>
-            <div className='auth-page-input'>
-                <TextField
-                    id="standard-password-input"
-                    className={'input-field'}
-                    label="비밀번호 확인"
-                    type="password"
-                    autoComplete="current-password"
-                    variant='filled'
-                    error={AuthManager.passwordState !== PasswordState.DEFAULT}
-                    onChange={(e) => {
-                        AuthManager.passwordState = PasswordState.DEFAULT
-                        AuthManager.pwdCheck = e.target.value
-                    }}
-                    onPaste={(e) => {
-                        e.preventDefault()
-                    }}
-                />
-            </div>
-            <div className='auth-page-input'>
-                <TextField
-                    className={'input-field'}
-                    label="닉네임"
-                    type="text"
-                    variant='filled'
-                    autoComplete='off'
-                    error={AuthManager.nicknameState !== NicknameState.Default}
-                    onChange={(e) => {
-                        const { value } = e.target
-                        AuthManager.nicknameState = NicknameState.Default
-                        AuthManager.nickname = value
-                    }}
-                />
-                {getNicknameHelperText(AuthManager.nicknameState)}
-            </div>
+            <AuthInput
+                label="이메일"
+                type="email"
+                variant="outlined"
+                autoComplete='off'
+                error={AuthManager.emailState !== EmailState.DEFAULT}
+                onChange={(e) => {
+                    const { value } = e.target
+                    AuthManager.emailState = EmailState.DEFAULT
+                    AuthManager.email = value
+                }}
+                onFocus={(e) => {
+                    AuthManager.emailState = EmailState.DEFAULT
+                }}
+                helperText={getEmailHelperText(AuthManager.emailState)}
+            />
+            <AuthInput
+                label="비밀번호"
+                type="password"
+                autoComplete="current-password"
+                variant="outlined"
+                error={AuthManager.passwordState !== PasswordState.DEFAULT}
+                onChange={(e) => {
+                    const { value } = e.target
+                    AuthManager.passwordState = PasswordState.DEFAULT
+                    AuthManager.pwd = value
+                }}
+                onFocus={(e) => {
+                    AuthManager.passwordState = PasswordState.DEFAULT
+                }}
+                onPaste={(e) => {
+                    e.preventDefault()
+                }}
+                helperText={getPasswordHelperText(AuthManager.passwordState)}
+            />
+            <AuthInput
+                label="비밀번호 확인"
+                type="password"
+                autoComplete="current-password"
+                variant="outlined"
+                error={AuthManager.passwordState !== PasswordState.DEFAULT}
+                onChange={(e) => {
+                    AuthManager.passwordState = PasswordState.DEFAULT
+                    AuthManager.pwdCheck = e.target.value
+                }}
+                onFocus={(e) => {
+                    AuthManager.passwordState = PasswordState.DEFAULT
+                }}
+                onPaste={(e) => {
+                    e.preventDefault()
+                }}
+            />
+            <AuthInput
+                label="닉네임"
+                type="text"
+                autoComplete='off'
+                variant='outlined'
+                error={AuthManager.nicknameState !== NicknameState.Default}
+                onChange={(e) => {
+                    const { value } = e.target
+                    AuthManager.nicknameState = NicknameState.Default
+                    AuthManager.nickname = value
+                }}
+                helperText={getNicknameHelperText(AuthManager.nicknameState)}
+            />
             <AuthButton
                 text={'계정 생성'}
                 backgroundColor={'#FFFFFF'}
@@ -124,7 +143,8 @@ const SignUp = observer(() => {
                     const result = await AuthManager.signup()
                     setLoading(false)
                     if (result.success) {
-                        RoutingManager.moveTo(Page.SignIn)
+                        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '회원가입 성공', '', 5)
+                        await RoutingManager.moveTo(Page.SignIn)
                     }
                 }}
             />

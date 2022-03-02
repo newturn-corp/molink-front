@@ -3,16 +3,14 @@ import { observer } from 'mobx-react'
 import ListItem from '@material-ui/core/ListItem'
 import { DocumentTitle } from './DocumentTitle'
 import { DocumentIcon } from './DocumentIcon'
-
-import HierarchyManager from '../../../../manager/Home/Hierarchy/HierarchyManager'
-import HierarchyDragManager from '../../../../manager/Home/Hierarchy/HierarchyDragManager'
-import UserManager from '../../../../manager/global/UserManager'
 import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
 import { Collapse, List } from '@material-ui/core'
 import { DocumentChildrenOpenButton } from './DocumentChildrenOpenButton'
-import NewUserManager from '../../../../manager/global/NewUserManager'
 import { DocumentAddChildButton } from './DocumentAddChildButton'
 import { DocumentMenuButton } from './DocumentMenuButton'
+import UserManager from '../../../../manager/global/User/UserManager'
+import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
+import PageDragManager from '../../../../manager/global/Hierarchy/PageDragManager'
 
 let ghost
 export const DocumentComponent: React.FC<{
@@ -28,7 +26,7 @@ export const DocumentComponent: React.FC<{
       const isSelected = currentHierarchy.selectedDocumentId === document.id
       const isChangingName = currentHierarchy.nameChangingDocumentId === document.id
       const isOpen = currentHierarchy.openedDocumentId === document.id
-      const hierarchySelectedDocumentBackgroundColor = NewUserManager.setting ? NewUserManager.setting.hierarchySelectedDocumentBackgroundColor : '#ECEEF0'
+      const hierarchySelectedDocumentBackgroundColor = UserManager.setting ? UserManager.setting.hierarchySelectedDocumentBackgroundColor : '#ECEEF0'
 
       const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
           ghost = divRef.current.cloneNode()
@@ -42,7 +40,7 @@ export const DocumentComponent: React.FC<{
           ghost.style.right = '0px'
           globalThis.document.getElementsByClassName('drag-ghost-parent')[0].appendChild(ghost)
           event.dataTransfer.setDragImage(ghost, event.clientX, event.clientY - divRef.current.getBoundingClientRect().y)
-          HierarchyDragManager.handleDragStart(document.id)
+          PageDragManager.handleDragStart(document.id)
       }
       // TODO: 백그라운드 고치기
       return (
@@ -68,9 +66,9 @@ export const DocumentComponent: React.FC<{
                       }
                   }}
                   onDragStart={(event) => handleDragStart(event)}
-                  onDragOver={(event) => HierarchyDragManager.handleDragOver(event, document.id)}
-                  onDragEnd={(event) => HierarchyDragManager.handleDragEnd(ghost)}
-                  onDragLeave={() => HierarchyDragManager.handleDragLeave(document.id)}
+                  onDragOver={(event) => PageDragManager.handleDragOver(event, document.id)}
+                  onDragEnd={(event) => PageDragManager.handleDragEnd(ghost)}
+                  onDragLeave={() => PageDragManager.handleDragLeave(document.id)}
                   onContextMenu={(event) => {
                       event.preventDefault()
                       event.stopPropagation()

@@ -30,10 +30,10 @@ handlerMap.set('ctrl+y', [
     redoWhenControlYKeyDown
 ])
 handlerMap.set('Backspace', [
-    (event, editor) => CommandManager.handleEnterAndTab(event, editor),
     handleBackspaceInList
 ])
 handlerMap.set('Tab', [
+    (event, editor) => CommandManager.handleEnterAndTab(event, editor),
     handleTabInCode,
     handleTabInList
 ])

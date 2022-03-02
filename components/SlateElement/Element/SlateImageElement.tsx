@@ -10,10 +10,10 @@ import { Rnd } from 'react-rnd'
 import { Editor, Transforms } from 'slate'
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@material-ui/icons'
 
-import StyleManager from '../../../manager/global/StyleManager'
 import TextArea, { TextAreaRef } from 'antd/lib/input/TextArea'
-import EditorManager from '../../../manager/Home/EditorManager'
 import { ImageFloatOption, SlateImageElementType, TextCategory } from '../../../Types/slate/CustomElement'
+import EditorManager from '../../../manager/Blog/EditorManager'
+import StyleManager from '../../../manager/global/Style/StyleManager'
 
 const Caption: React.FC<{
     selected: boolean,
@@ -50,9 +50,6 @@ const Caption: React.FC<{
               //   readOnly={!captionFocused}
               rows={1}
               onChange={(e) => {
-                  //   console.log()
-                  //   const inputText = inputRef.current.resizableTextArea.props.value as string
-                  //   console.log(inputText)
                   Transforms.setNodes(EditorManager.slateEditor, {
                       caption: e.target.value
                   }, {

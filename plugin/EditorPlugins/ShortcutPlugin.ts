@@ -5,10 +5,11 @@ import {
     Transforms,
     Point,
     Editor,
-    Node
+    Node, Element
 } from 'slate'
 import { ListTransforms } from '../GlobalPlugins/ListPlugin'
 import { DeleteBackwardHandler } from './types'
+import { DividerType } from '../../Types/slate/CustomElement'
 
 const SHORTCUTS = {
     '*': 'unordered-list',
@@ -35,7 +36,44 @@ const SHORTCUTS = {
 export const ShortcutWhenInsertText = (editor: Editor, text: string) => {
     const { selection } = editor
 
-    if (text === '`' && selection && Range.isCollapsed(selection)) {
+    const currentNode = editor.children[editor.selection.anchor.path[0]]
+
+    // 만약 Code 엘리먼트 내부이면 무시한다.
+    if (Element.isElement(currentNode) && currentNode.type === 'code') {
+        return false
+    }
+
+    // 만약 Selection 이 중첩되어있지 않으면 무시한다.
+    if (!(selection && Range.isCollapsed(selection))) {
+        return false
+    }
+
+    // divider
+    if (text === '-') {
+        const { anchor } = selection
+        const block = SlateEditor.above(editor, {
+            match: n => SlateEditor.isBlock(editor, n)
+        })
+        const path = block ? block[1] : []
+        const start = SlateEditor.start(editor, path)
+        const range = { anchor, focus: start }
+        const beforeText = SlateEditor.string(editor, range)
+        if (beforeText === '--') {
+            Transforms.select(editor, range)
+            Transforms.delete(editor)
+            const newProperties: Partial<SlateElement> = {
+                type: 'divider',
+                dividerType: DividerType.FaintLongLine
+            }
+            Transforms.setNodes<SlateElement>(editor, newProperties, {
+                match: n => SlateEditor.isBlock(editor, n)
+            })
+            return true
+        }
+    }
+
+    // code
+    if (text === '`') {
         const { anchor } = selection
         const block = SlateEditor.above(editor, {
             match: n => SlateEditor.isBlock(editor, n)
@@ -45,7 +83,6 @@ export const ShortcutWhenInsertText = (editor: Editor, text: string) => {
         const range = { anchor, focus: start }
         const beforeText = SlateEditor.string(editor, range)
         if (beforeText === '``') {
-            console.log('나 호출')
             Transforms.select(editor, range)
             Transforms.delete(editor)
             const newProperties: Partial<SlateElement> = {
@@ -62,7 +99,7 @@ export const ShortcutWhenInsertText = (editor: Editor, text: string) => {
         }
     }
 
-    if (text === ' ' && selection && Range.isCollapsed(selection)) {
+    if (text === ' ') {
         const { anchor } = selection
         const block = SlateEditor.above(editor, {
             match: n => SlateEditor.isBlock(editor, n)
@@ -107,6 +144,12 @@ export const ShortcutWhenInsertText = (editor: Editor, text: string) => {
 
 export const ShortcutWhenDeleteBackward: DeleteBackwardHandler = (editor: Editor, unit) => {
     const { selection } = editor
+
+    const currentNode = editor.children[editor.selection.anchor.path[0]]
+    if (Element.isElement(currentNode) && currentNode.type === 'code') {
+        return false
+    }
+
     if (selection && Range.isCollapsed(selection)) {
         const match = SlateEditor.above(editor, {
             match: n => SlateEditor.isBlock(editor, n)

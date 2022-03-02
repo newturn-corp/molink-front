@@ -9,11 +9,15 @@ import { AuthInput } from '../../components/auth/AuthInput'
 import { AuthButton } from '../../components/auth/AuthButton'
 
 const getPasswordHelperText = (passwordState: PasswordState) => {
-    if (passwordState === PasswordState.DEFAULT) {
-        return <p className='helper-text'>{'문자, 숫자, 특수문자 포함 최소 8글자'}</p>
+    switch (passwordState) {
+    case PasswordState.DEFAULT:
+    case PasswordState.PASSWORD_CONDITION_NOT_SATISFIED:
+        return '문자, 숫자 포함 최소 8글자'
+    case PasswordState.PASSWORD_MISMATCH:
+        return '비밀번호가 일치하지 않습니다.'
+    default:
+        throw new Error('Unhandled Password State')
     }
-    const text = passwordState === PasswordState.PASSWORD_MISMATCH ? '비밀번호가 일치하지 않습니다.' : '문자, 숫자, 특수문자 포함 최소 8글자'
-    return <p className='helper-text' style={{ color: 'red' }}>{text}</p>
 }
 
 const AuthChangePasswordPage = () => {
@@ -37,7 +41,6 @@ const AuthChangePasswordPage = () => {
         >
             <AuthTitle text={'비밀번호 변경'}/>
             <AuthInput
-                id="standard-password-input"
                 label="비밀번호"
                 type="password"
                 autoComplete="current-password"
@@ -48,13 +51,15 @@ const AuthChangePasswordPage = () => {
                     AuthManager.passwordState = PasswordState.DEFAULT
                     AuthManager.pwd = value
                 }}
+                onFocus={(e) => {
+                    AuthManager.passwordState = PasswordState.DEFAULT
+                }}
                 onPaste={(e) => {
                     e.preventDefault()
                 }}
+                helperText={getPasswordHelperText(AuthManager.passwordState)}
             />
-            {getPasswordHelperText(AuthManager.passwordState)}
             <AuthInput
-                id="standard-password-input"
                 label="비밀번호 확인"
                 type="password"
                 autoComplete="current-password"
@@ -63,6 +68,9 @@ const AuthChangePasswordPage = () => {
                 onChange={(e) => {
                     AuthManager.passwordState = PasswordState.DEFAULT
                     AuthManager.pwdCheck = e.target.value
+                }}
+                onFocus={(e) => {
+                    AuthManager.passwordState = PasswordState.DEFAULT
                 }}
                 onPaste={(e) => {
                     e.preventDefault()

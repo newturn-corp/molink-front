@@ -1,15 +1,9 @@
 import React, { useEffect, useRef } from 'react'
-import ReactDOM from 'react-dom'
 import { observer } from 'mobx-react'
 import { Editor } from 'slate'
 import CommandManager from '../../../../manager/Editing/Command/CommandManager'
 import Command from '../../../../manager/Editing/Command/Command'
-
-const Portal = ({ children }) => {
-    return typeof document === 'object'
-        ? ReactDOM.createPortal(children, document.body)
-        : null
-}
+import { Portal } from '../../../utils/Portal'
 
 const CommandBlock: React.FC<{
     index: number,

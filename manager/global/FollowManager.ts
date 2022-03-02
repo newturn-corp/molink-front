@@ -7,11 +7,11 @@ class FollowManager {
         return this.followRequests.filter(req => !req.isViewed).length
     }
 
-    constructor () {
-        // FollowAPI.getFollowRequests().then(arr => {
-        //     this.followRequests = arr
-        // })
-    }
+    // constructor () {
+    //     // FollowAPI.getFollowRequests().then(arr => {
+    //     //     this.followRequests = arr
+    //     // })
+    // }
 
     async checkFollowRequestsViewed () {
         await FollowAPI.setFollowRequestsViewedAt()

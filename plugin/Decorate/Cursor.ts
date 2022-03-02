@@ -1,5 +1,5 @@
 import { BaseRange, Node, Path, Range, Text } from 'slate'
-import EditorManager from '../../manager/Home/EditorManager'
+import EditorManager from '../../manager/Blog/EditorManager'
 
 export const decorateCursor = (node: Node, path: Path, ranges: BaseRange[]) => {
     if (!Text.isText(node)) {

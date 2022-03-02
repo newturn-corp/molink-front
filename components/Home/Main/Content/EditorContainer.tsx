@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react'
 import React from 'react'
 import { EditorComponent } from './EditorComponent'
-import EditorManager from '../../../../manager/Home/EditorManager'
+import EditorManager from '../../../../manager/Blog/EditorManager'
 
 export const EditorContainer: React.FC<{
 }> = observer(() => {

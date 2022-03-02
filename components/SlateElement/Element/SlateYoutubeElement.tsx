@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import StyleManager from '../../../manager/global/StyleManager'
+import StyleManager from '../../../manager/global/Style/StyleManager'
 
 export const SlateYoutubeElement: React.FC<{
     attributes,

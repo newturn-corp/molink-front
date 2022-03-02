@@ -1,8 +1,8 @@
 import Router from 'next/router'
-import EventManager, { Event } from '../EventManager'
 import GlobalManager from './GlobalManager'
-import UserManager from './UserManager'
-import EditorManager from '../Home/EditorManager'
+import { Event } from './Event/Event'
+import EditorManager from '../Blog/EditorManager'
+import EventManager from './Event/EventManager'
 
 export enum Page {
     Index = '/',
@@ -20,7 +20,7 @@ export enum Page {
 class RoutingManager {
     async moveTo (page: Page, extra: string = '') {
         EditorManager.reset()
-        await EventManager.issueEvent(Event.MoveToAnotherPage, {})
+        await EventManager.issueEvent(Event.MoveToAnotherPage)
         await Router.push(page + extra)
     }
 
@@ -31,8 +31,8 @@ class RoutingManager {
         if (domain.hostname.replace('www.', '') !== process.env.FRONT_HOST_NAME) {
             GlobalManager.window.open(url)
         } else {
-            await EventManager.issueEvent(Event.MoveToAnotherPage, {})
-            Router.push(url)
+            await EventManager.issueEvent(Event.MoveToAnotherPage)
+            await Router.push(url)
         }
     }
 }

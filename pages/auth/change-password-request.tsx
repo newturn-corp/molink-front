@@ -8,7 +8,7 @@ import { AuthLogo } from '../../components/auth/logo'
 import { AuthHeader } from '../../components/auth/AuthHeader'
 import { AuthTitle } from '../../components/auth/AuthTitle'
 import { AuthInput } from '../../components/auth/AuthInput'
-import NewUserManager from '../../manager/global/NewUserManager'
+import NewUserManager from '../../manager/global/UserManager'
 import UserManager from '../../manager/global/UserManager'
 import { AuthButton } from '../../components/auth/AuthButton'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { ArrowDropDown, ArrowRight } from '@material-ui/icons'
-import HierarchyManager from '../../../../manager/Home/Hierarchy/HierarchyManager'
+import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
 
 export const DocumentChildrenOpenButton: React.FC<{
     documentId: string

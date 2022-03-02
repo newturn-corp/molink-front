@@ -1,39 +1,37 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react'
-import UserManager from '../../../manager/global/UserManager'
 import { Avatar, Menu, MenuItem, Badge } from '@material-ui/core'
 import AuthManager from '../../../manager/Auth/AuthManager'
 import { SupportModal } from '../SupportModal'
 import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 import SupportManager from '../../../manager/global/SupportManager'
-import NewUserManager from '../../../manager/global/NewUserManager'
 import Identicon from 'identicon.js'
 import crypto from 'crypto'
+import UserManager from '../../../manager/global/User/UserManager'
 
 export const User: React.FC<{
   }> = observer(() => {
       const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
-      if (!NewUserManager.isUserAuthorized || !NewUserManager.profile) {
+      if (!UserManager.isUserAuthorized || !UserManager.profile) {
           return <></>
       }
 
       const open = Boolean(anchorEl)
-      const profileImageSrc = NewUserManager.profile.profileImageUrl || `data:image/png;base64,${
+      const profileImageSrc = UserManager.profile.profileImageUrl || `data:image/png;base64,${
           new Identicon(
               crypto.createHash('sha512')
-                  .update(NewUserManager.profile.nickname)
+                  .update(UserManager.profile.nickname)
                   .digest('base64'), {
                   size: 64,
                   foreground: [58, 123, 191, 255]
               }).toString()}`
-      // const profileInnerText = NewUserManager.profile.profileImageUrl ? undefined : NewUserManager.profile.nickname[0]
 
       const handleClick = (event: React.MouseEvent<HTMLElement>) => {
           setAnchorEl(event.currentTarget)
       }
 
-      const handleClose = (event: React.MouseEvent<HTMLLIElement, MouseEvent>, key: string) => {
+      const handleClose = async (event: React.MouseEvent<HTMLLIElement, MouseEvent>, key: string) => {
           if (event) {
               event.stopPropagation()
               event.preventDefault()
@@ -41,13 +39,13 @@ export const User: React.FC<{
 
           switch (key) {
           case 'sign-out':
-              AuthManager.signOut()
+              await AuthManager.signOut()
               break
           case 'support':
               SupportManager.showSupportModal = true
               break
           case 'setting':
-              RoutingManager.moveTo(Page.SettingProfile)
+              await RoutingManager.moveTo(Page.SettingProfile)
               break
           }
           setAnchorEl(null)
@@ -59,7 +57,7 @@ export const User: React.FC<{
                   {/* {profileInnerText} */}
               </Avatar>
               <div className='nickname'>
-                  {NewUserManager.profile.nickname}
+                  {UserManager.profile.nickname}
               </div>
           </div>
           <Menu

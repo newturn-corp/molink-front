@@ -1,5 +1,5 @@
 import { Transforms } from 'slate'
-import EditorManager from '../../manager/Home/EditorManager'
+import EditorManager from '../../manager/Blog/EditorManager'
 
 export const moveSelectionWhenArrowLeftDown = (event) => {
     event.preventDefault()

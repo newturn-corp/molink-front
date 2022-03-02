@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Backdrop, CircularProgress } from '@material-ui/core'
 import AuthManager, { EmailState, PasswordState } from '../../manager/Auth/AuthManager'
@@ -8,9 +8,10 @@ import { AuthInput } from '../../components/auth/AuthInput'
 import { AuthTitle } from '../../components/auth/AuthTitle'
 import { AuthHeader } from '../../components/auth/AuthHeader'
 import { AuthButton } from '../../components/auth/AuthButton'
-import NewUserManager from '../../manager/global/NewUserManager'
+import UserManager from '../../manager/global/User/UserManager'
 
 const getEmailHelperText = (emailState: EmailState) => {
+    console.log(emailState)
     if (emailState === EmailState.DEFAULT) {
         return <></>
     }
@@ -27,6 +28,15 @@ const getEmailHelperText = (emailState: EmailState) => {
 }
 
 const SignIn = observer(() => {
+    useEffect(() => {
+        UserManager.load()
+            .then(() => {
+                if (UserManager.isUserAuthorized) {
+                    RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.nickname}`)
+                }
+            })
+    }, [])
+
     const [loading, setLoading] = useState(false)
     return <div className='auth-page sign-in-page'>
         <Backdrop open={loading} onClick={() => setLoading(false)}>
@@ -38,7 +48,6 @@ const SignIn = observer(() => {
         >
             <AuthTitle text={'로그인'}/>
             <AuthInput
-                id="standard-email"
                 label="이메일"
                 type="email"
                 variant="outlined"
@@ -55,7 +64,6 @@ const SignIn = observer(() => {
             />
             {getEmailHelperText(AuthManager.emailState)}
             <AuthInput
-                id="standard-password-input"
                 label="비밀번호"
                 type="password"
                 autoComplete="current-password"
@@ -76,11 +84,12 @@ const SignIn = observer(() => {
                 }}
                 onClick={async (e) => {
                     setLoading(true)
-                    const result = await AuthManager.signin()
+                    const result = await AuthManager.signIn()
                     setLoading(false)
                     if (result.success) {
-                        await NewUserManager.load()
-                        await RoutingManager.moveTo(Page.Blog, `/${NewUserManager.profile.nickname}`)
+                        await UserManager.load()
+                        console.log(UserManager)
+                        await RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.nickname}`)
                     }
                 }}
             />

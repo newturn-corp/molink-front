@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { ListItem, ListItemAvatar, Avatar, ListItemText, CircularProgress } from '@material-ui/core'
 import SearchManager from '../../manager/global/SearchManager'
 import { FollowResult, UserSearchResultDTO } from '../../DTO/UserDTO'
-import UserManager from '../../manager/global/UserManager'
 
 const FollowButton: React.FC<{
     searchResult: UserSearchResultDTO

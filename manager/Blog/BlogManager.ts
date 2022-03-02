@@ -6,9 +6,9 @@ import { ContentNotExists, ContentUserNotExists, UnauthorizedForContent } from '
 import { HierarchyNotExists } from '../../Errors/HierarchyError'
 import ViewerAPI from '../../api/ViewerAPI'
 import { InvalidParam } from '../../Errors/Common'
-import HierarchyManager from '../Home/Hierarchy/HierarchyManager'
-import EditorManager from '../Home/EditorManager'
-import NewUserManager from '../global/NewUserManager'
+import HierarchyManager from '../global/Hierarchy/HierarchyManager'
+import EditorManager from './EditorManager'
+import UserManager from '../global/User/UserManager'
 
 enum HomeURLType {
     OnlyDocumentURL,
@@ -41,7 +41,7 @@ class BlogManager {
 
     async handleEnterBlogPage (info: string[]) {
         try {
-            await NewUserManager.load()
+            await UserManager.load()
             const { type, nickname, documentId, documentName } = this.interpretURLInfo(info)
             if (type === HomeURLType.OnlyDocumentURL) {
                 const authority = await ViewerAPI.getDocumentAuthority(documentId)

@@ -1,27 +1,22 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import EditorManager from '../../../../manager/Home/EditorManager'
-import { LockOpenOutlined, LockOutlined } from '@material-ui/icons'
+import { ContentHeaderSettingButton } from './ContentHeaderSettingButton'
+import EditorManager from '../../../../manager/Blog/EditorManager'
 
 export const LockButton: React.FC<{
   }> = observer(() => {
-      return <div
-          className='lock-button'
+      return <ContentHeaderSettingButton
           onClick={() => {
               EditorManager.updateIsLocked(!EditorManager.isLocked)
           }}
-      >
-          {
+          iconSrc={
               EditorManager.isLocked
-                  ? <img className='icon' src={'/image/editor/lock-button.svg'}/>
-                  : <img className='icon' src={'/image/editor/unlock-button.svg'}/>
+                  ? '/image/editor/lock-button.svg'
+                  : '/image/editor/unlock-button.svg'}
+          text={
+              EditorManager.isLocked
+                  ? '잠금'
+                  : '작성'
           }
-          <p className='lock-text'>
-              {
-                  EditorManager.isLocked
-                      ? '잠금'
-                      : '잠금 해제'
-              }
-          </p>
-      </div>
+      />
   })

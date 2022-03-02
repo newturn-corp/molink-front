@@ -3,7 +3,7 @@ import { ImageFloatOption, SlateImageElementType } from '../../Types/slate/Custo
 import imageExtensions from 'image-extensions'
 import isUrl from 'is-url'
 import FileUploadManager from '../../manager/Editing/FileUploadManager'
-import StyleManager from '../../manager/global/StyleManager'
+import StyleManager from '../../manager/global/Style/StyleManager'
 
 const insertImage = (editor: Editor, image: HTMLImageElement) => {
     let width = image.width

@@ -5,55 +5,120 @@
   overflow: hidden;
   overflow-y: hidden;
 }
+.content-container .toolbar-control-button {
+  position: fixed;
+  right: 18.5px;
+  top: 8px;
+  cursor: pointer;
+  z-index: 10;
+}
+.content-container .toolbar-control-button .close {
+  width: 40px;
+  height: 40px;
+  padding: 12px;
+  border-radius: 5px;
+}
+.content-container .toolbar-control-button .close:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.content-container .toolbar-control-button .close img {
+  vertical-align: top;
+  user-select: none;
+}
+.content-container .toolbar-control-button .open {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px;
+  height: 40px;
+  background: #FFFFFF;
+  border: 1px solid #ECEFF2;
+  box-sizing: border-box;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+}
+.content-container .toolbar-control-button .open .text {
+  position: static;
+  height: 16px;
+  left: 16.67%;
+  right: 48.61%;
+  top: calc(50% - 8px);
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 16px;
+  color: #26282B;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 3px;
+}
+.content-container .toolbar-control-button .open .icon {
+  margin-left: 4.5px;
+  width: 16px;
+  height: 16px;
+  transform: rotate(-180deg);
+}
+.content-container .toolbar-control-button .open .icon img {
+  vertical-align: top;
+  user-select: none;
+}
 .content-container .content-toolbar {
   position: fixed;
   width: 100%;
   display: flex;
   flex-direction: row;
-  height: 45px;
+  height: 56px;
   overflow: hidden;
+  box-shadow: 0px 1px 0px #ECEFF2;
+  padding: 8px;
 }
-.content-container .content-toolbar .page-hierarchy-list {
-  margin: 14px 10px 0px;
-  margin-left: 30px;
-  height: fit-content;
+.content-container .content-toolbar .editing-button-group {
   display: flex;
+  flex-direction: row;
+  margin-left: 25px;
+  height: 100%;
+  width: 560px;
 }
-.content-container .content-toolbar .page-hierarchy-list .document-block {
+.content-container .content-toolbar .editing-button-group .button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 2px 2px;
   cursor: pointer;
-  border-radius: 5px;
-  font-size: 0.85rem;
+  width: 40px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+.content-container .content-toolbar .editing-button-group .button .icon {
+  margin: 0 auto 3px;
+}
+.content-container .content-toolbar .editing-button-group .button .text {
+  font-size: 12px;
+  line-height: 16px;
+  color: #72787F;
   text-align: center;
-  padding: 3px;
-  padding-left: 8px;
-  padding-right: 8px;
+  margin-bottom: 0px;
 }
-.content-container .content-toolbar .page-hierarchy-list .document-divider {
-  font-size: 1rem;
-  padding: 2px;
-  padding-top: 0px;
-  user-select: none;
-}
-.content-container .content-toolbar .page-hierarchy-list .document-block:hover {
+.content-container .content-toolbar .editing-button-group .button:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
 .content-container .content-toolbar .right-content-toolbar {
   position: absolute;
-  right: 0px;
+  right: 60px;
   display: flex;
   flex-direction: row-reverse;
 }
-.content-container .content-toolbar .right-content-toolbar .lock-button {
+.content-container .content-toolbar .right-content-toolbar .setting-button {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 6px 12px 6px 12px;
   position: static;
-  width: 96px;
-  height: 32px;
+  width: 59px;
+  height: 40px;
   left: 103px;
-  top: 12px;
   background: #F7F8F9;
   border: 1px solid #ECEFF2;
   box-sizing: border-box;
@@ -61,11 +126,10 @@
   flex: none;
   order: 1;
   flex-grow: 0;
-  margin: 0px 10px;
-  margin-top: 14px;
+  margin-right: 8px;
   cursor: pointer;
 }
-.content-container .content-toolbar .right-content-toolbar .lock-button .MuiSvgIcon-root {
+.content-container .content-toolbar .right-content-toolbar .setting-button .MuiSvgIcon-root {
   position: absolute;
   left: 20.83%;
   right: 18.49%;
@@ -74,29 +138,58 @@
   /* Gray/80 */
   background: #26282B;
 }
-.content-container .content-toolbar .right-content-toolbar .lock-button .lock-text {
+.content-container .content-toolbar .right-content-toolbar .setting-button .text {
   position: static;
-  height: 16px;
-  left: 33.33%;
-  right: 12.5%;
-  top: calc(50% - 8px);
+  height: 14px;
+  left: 32.2%;
+  right: 32.2%;
+  top: calc(50% - 7px + 8px);
   font-family: Pretendard;
   font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 16px;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
   color: #26282B;
   flex: none;
   order: 1;
   flex-grow: 0;
-  margin: 0px 4px;
+  margin: 0px 0px;
 }
-.content-container .content-toolbar .right-content-toolbar .lock-button:hover {
+.content-container .content-toolbar .right-content-toolbar .setting-button:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.content-container .page-hierarchy-list {
+  position: fixed;
+  top: 81px;
+  left: 36px;
+  height: fit-content;
+  display: flex;
+}
+.content-container .page-hierarchy-list .document-block {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 5px 5px;
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 16px;
+  height: 24px;
+  color: #454C53;
+}
+.content-container .page-hierarchy-list .document-divider {
+  padding: 4px 5px 5px;
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 16px;
+}
+.content-container .page-hierarchy-list .document-block:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
 .content-container .content-body {
   position: fixed;
-  top: 60px;
   overflow-y: scroll;
   height: 100%;
 }
@@ -403,6 +496,116 @@
 .content-body::-webkit-scrollbar-thumb {
   background: #d1d1d1;
   border-radius: 5px;
+}
+
+.visibility-menu {
+  position: absolute;
+  top: 112px;
+  right: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px;
+  background: #FFFFFF;
+  border: 1px solid #ECEFF2;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+.visibility-menu .title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px 12px 4px 4px;
+  position: static;
+  width: 200px;
+  height: 24px;
+  left: 0px;
+  top: 0px;
+  /* Gray/00 */
+  background: #FFFFFF;
+  border-radius: 4px;
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 0px 8px;
+}
+.visibility-menu .title-container .menu-title {
+  position: static;
+  height: 16px;
+  left: 2%;
+  right: 59.5%;
+  top: calc(50% - 8px);
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #72787F;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 0px 0px 0px;
+}
+.visibility-menu .visibility-menu-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 6px 4px;
+  border-radius: 4px;
+  width: 100%;
+  cursor: pointer;
+}
+.visibility-menu .visibility-menu-item .text-container {
+  display: flex;
+  flex-direction: column;
+}
+.visibility-menu .visibility-menu-item .text-container .name {
+  position: static;
+  left: 0px;
+  top: 0%;
+  bottom: 55.56%;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 16px;
+  color: #454C53;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 4px 0px;
+}
+.visibility-menu .visibility-menu-item .text-container .desc {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  color: #72787F;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin: 0px;
+}
+.visibility-menu .visibility-menu-item .icon {
+  display: flex;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: #FFFFFF;
+  border: 1px solid #ECEFF2;
+  box-sizing: border-box;
+  border-radius: 4px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 10px;
+  margin-left: 0px;
+}
+.visibility-menu .visibility-menu-item .icon img {
+  margin: 0 auto;
+}
+.visibility-menu .visibility-menu-item:hover {
+  background: #F2F3F5;
 }
 
 .hovering-toolbar {

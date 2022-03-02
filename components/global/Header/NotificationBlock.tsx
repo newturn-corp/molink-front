@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react'
-import UserManager from '../../../manager/global/UserManager'
-import { Avatar, Menu, MenuItem, Badge, IconButton } from '@material-ui/core'
-import { Notification, NotificationType } from '../../../domain/Notification'
+import { Avatar, MenuItem } from '@material-ui/core'
+import { Notification } from '../../../domain/Notification'
 import { getRelativeTime } from '../../../utils/getRelativeTime'
 
 export const NotificationBlock: React.FC<{

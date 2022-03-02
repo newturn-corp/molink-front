@@ -5,7 +5,7 @@ class DialogManager {
 
     title: string
     description: string
-    buttenTexts: string[] =[]
+    buttonTexts: string[] =[]
     onClose: (index: number) => void
 
     constructor () {
@@ -15,7 +15,7 @@ class DialogManager {
     openDialog (title: string, description: string, buttonTexts: string[]) {
         this.title = title
         this.description = description
-        this.buttenTexts = buttonTexts
+        this.buttonTexts = buttonTexts
         this.showDialog = true
         return new Promise<number>(resolve => {
             this.onClose = (index) => {

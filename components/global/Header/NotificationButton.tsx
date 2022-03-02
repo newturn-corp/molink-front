@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react'
-import UserManager from '../../../manager/global/UserManager'
 import { Menu, Badge, IconButton } from '@material-ui/core'
 import NotificationsOutlinedIcon from '@material-ui/icons/NotificationsOutlined'
 import { NotificationBlock } from './NotificationBlock'
@@ -9,6 +8,7 @@ import FollowManager from '../../../manager/global/FollowManager'
 import { FollowRequestComponent } from './FollowRequestComponent'
 import { Notification } from '../../../domain/Notification'
 import { FollowRequest } from '../../../domain/FollowRequest'
+import UserManager from '../../../manager/global/User/UserManager'
 
 const FollowRequests: React.FC<{
     requests: FollowRequest[]

@@ -1,9 +1,9 @@
 import React, { useRef } from 'react'
-import HierarchyManager from '../../../../manager/Home/Hierarchy/HierarchyManager'
-import EditorManager from '../../../../manager/Home/EditorManager'
 import { ReactEditor } from 'slate-react'
 import { Transforms } from 'slate'
 import { observer } from 'mobx-react'
+import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
+import EditorManager from '../../../../manager/Blog/EditorManager'
 
 export const ContentTitleComponent: React.FC<{
 }> = observer(() => {
@@ -19,7 +19,7 @@ export const ContentTitleComponent: React.FC<{
                 outline: '0px solid transparent'
             }}
             onBlur={(e) => {
-                currentHierarchy.updateDocumentTitle(currentHierarchy.openedDocumentId, e.currentTarget.textContent)
+                currentHierarchy.updatePageTitle(currentHierarchy.openedDocumentId, e.currentTarget.textContent)
             }}
             onKeyDown={(e) => {
                 if (e.key === 'ArrowDown' || e.key === 'Enter') {
@@ -35,7 +35,7 @@ export const ContentTitleComponent: React.FC<{
                             offset: 0
                         }
                     })
-                    currentHierarchy.updateDocumentTitle(currentHierarchy.openedDocumentId, e.currentTarget.textContent)
+                    currentHierarchy.updatePageTitle(currentHierarchy.openedDocumentId, e.currentTarget.textContent)
                 }
             }}
         >

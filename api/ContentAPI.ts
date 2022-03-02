@@ -1,6 +1,4 @@
 import { BaseAPI } from './baseAPI'
-import { APIError } from './APIError'
-import { UpdateContentDTO, UploadContentImageDto, UploadContentImageResponseDTO } from '../DTO/ContentDTO'
 import { CreateDocumentDTO } from '@newturn-develop/types-molink/dist/DTO'
 
 class ContentAPI extends BaseAPI {

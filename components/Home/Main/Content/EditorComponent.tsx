@@ -8,8 +8,8 @@ import { CustomElementComponent } from '../../../SlateElement/CustomElementCompo
 import { CustomLeafComponent } from '../../../SlateElement/CustomLeafComponent'
 import { HoveringToolbar } from './HoveringToolbar'
 import { handleDOMBeforeInput, handleKeyDown } from '../../../../plugin'
-import EditorManager from '../../../../manager/Home/EditorManager'
 import { decorate as decorateFunc } from '../../../../plugin/Decorate'
+import EditorManager from '../../../../manager/Blog/EditorManager'
 
 export const EditorComponent: React.FC<{
   }> = observer(() => {
@@ -26,8 +26,8 @@ export const EditorComponent: React.FC<{
               decorate={decorate}
               readOnly={!EditorManager.editable || EditorManager.isLocked}
               spellCheck={!EditorManager.editable || EditorManager.isLocked}
-              onKeyDown={(event) => {
-                  handleKeyDown(event, EditorManager.slateEditor)
+              onKeyDown={async (event) => {
+                  await handleKeyDown(event, EditorManager.slateEditor)
               }}
               onDOMBeforeInput={(event: InputEvent) => {
                   handleDOMBeforeInput(event)

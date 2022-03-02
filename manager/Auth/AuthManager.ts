@@ -1,8 +1,9 @@
 import { makeAutoObservable, observable } from 'mobx'
 import AuthAPI, { PASSWORD_CHANGE_FAIL_REASON, SIGN_IN_FAIL_REASON, SIGN_UP_FAIL_REASON, START_PASSWORD_CHANGE_FAIL_REASON } from '../../api/AuthAPI'
-import EventManager, { Event } from '../EventManager'
 import FeedbackManager, { NOTIFICATION_TYPE } from '../global/FeedbackManager'
 import RoutingManager, { Page } from '../global/RoutingManager'
+import EventManager from '../global/Event/EventManager'
+import { Event } from '../global/Event/Event'
 
 export enum SignupError {
     NOT_EMAIL,
@@ -16,7 +17,8 @@ export enum EmailState {
     TOO_MANY_REQUEST,
     EMAIL_NOT_EXIST,
     NOT_AUTHORIZED,
-    WRONG_EMAIL_PASSWORD
+    WRONG_EMAIL_PASSWORD,
+    EmptyEmail
 }
 
 export enum PasswordState {
@@ -30,6 +32,8 @@ export enum NicknameState {
     NicknameAlreadyExists,
     NicknameConditionNotSatisfied
 }
+
+const MAX_NICKNAME_LENGTH = 15
 
 class AuthManager {
     email: string = ''
@@ -56,7 +60,7 @@ class AuthManager {
 
     validatePassword (pwd: string) {
         // eslint-disable-next-line prefer-regex-literals
-        const pwdReg = new RegExp(/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/)
+        const pwdReg = new RegExp(/^.*(?=^.{8,300}$)(?=.*\d)(?=.*[a-zA-Z]).*$/)
         return pwdReg.test(pwd)
     }
 
@@ -70,7 +74,7 @@ class AuthManager {
         return nicknameReg.test((nickname))
     }
 
-    async signin () {
+    async signIn () {
         if (!this.validateEmail(this.email)) {
             this.emailState = EmailState.NOT_EMAIL
             return { success: false }
@@ -92,6 +96,10 @@ class AuthManager {
 
     async signup () {
         // 사전 이메일 확인
+        if (this.email.length === 0) {
+            this.emailState = EmailState.EmptyEmail
+            return { success: false }
+        }
         if (!this.validateEmail(this.email)) {
             this.emailState = EmailState.NOT_EMAIL
             return { success: false }
@@ -135,7 +143,7 @@ class AuthManager {
     async signOut () {
         await AuthAPI.signOut()
         await EventManager.issueEvent(Event.SignOut, {})
-        RoutingManager.moveTo(Page.SignIn)
+        await RoutingManager.moveTo(Page.SignIn)
     }
 
     verifyEmail (hash: string) {

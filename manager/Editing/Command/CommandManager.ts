@@ -11,25 +11,7 @@ class CommandManager {
     target: BaseRange = null
     search: string = ''
     index: number = 0
-    _searchedCommands: Command[] = []
-    get searchedCommands () {
-        return toJS(this._searchedCommands)
-    }
-
-    commandsList = [
-        new Command('제목1', '상위 레벨 제목에 사용', '/image/editor/command/head1.png'),
-        new Command('제목2', '핵심 세션에 사용', '/image/editor/command/head2.png'),
-        new Command('제목3', '하위 세션에 사용', '/image/editor/command/head3.png'),
-        new Command('구분선-기본', '콘텐츠 구분선', '/image/editor/command/divider-default.png'),
-        new Command('구분선-흐릿한', '콘텐츠 구분선', '/image/editor/command/divider-faint.png'),
-        new Command('구분선-짦은', '콘텐츠 구분선', '/image/editor/command/divider-short.png'),
-        new Command('구분선-짦고 흐릿한', '콘텐츠 구분선', '/image/editor/command/divider-faint-short.png'),
-        new Command('구분선-점', '콘텐츠 구분선', '/image/editor/command/divider-dot.png'),
-        new Command('페이지', '새로운 하위 페이지를 만듭니다.', '/image/editor/command/document.png'),
-        new Command('순서없는목록', '순서 없는 목록', '/image/editor/command/bullet-list.png'),
-        new Command('숫자목록', '숫자 목록', '/image/editor/command/ordered-list.png'),
-        new Command('체크목록', '체크 목록', '/image/editor/command/check-list.png')
-    ]
+    _searchedCommandCount: number = 0
 
     _searchedCommandGroupList: CommandGroup[] = []
     get searchedCommandGroupList () {
@@ -73,7 +55,6 @@ class CommandManager {
 
     constructor () {
         makeAutoObservable(this)
-        this._searchedCommands = this.commandsList
     }
 
     isBlockActive (editor, format) {
@@ -212,7 +193,7 @@ class CommandManager {
             })
             ListTransforms.wrapInList(editor, 'check-list')
             break
-        // case '새문서':
+        // case '페이지':
         //     if (!ContentManager.openedDocument) {
         //         return
         //     }
@@ -238,6 +219,11 @@ class CommandManager {
 
     handleEditorChange (editor: Editor) {
         try {
+            const currentNode = editor.children[editor.selection.anchor.path[0]]
+            if (Element.isElement(currentNode) && currentNode.type === 'code') {
+                return false
+            }
+
             const { selection } = editor
             if (selection && Range.isCollapsed(selection)) {
                 const [start] = Range.edges(selection)
@@ -267,12 +253,14 @@ class CommandManager {
                         this.search = searchResult[1]
                     }
                     this._searchedCommandGroupList = []
+                    this._searchedCommandCount = 0
                     for (const commandGroup of this.commandGroupList) {
                         const searchedGroup = commandGroup.search(this.search)
                         if (searchedGroup.commands.length === 0) {
                             continue
                         }
                         this._searchedCommandGroupList.push(searchedGroup)
+                        this._searchedCommandCount += searchedGroup.commands.length
                     }
                     this.index = 0
                     return
@@ -285,7 +273,17 @@ class CommandManager {
     }
 
     checkIsCommandListOpen () {
-        return this.target && this._searchedCommands.length > 0
+        return this.target && this._searchedCommandGroupList.length > 0
+    }
+
+    getSearchedCommandByIndex (index: number) {
+        for (const commandGroup of this._searchedCommandGroupList) {
+            if (commandGroup.commands.length < index) {
+                index -= commandGroup.commands.length
+                continue
+            }
+            return commandGroup.commands[index]
+        }
     }
 
     handleArrowDown (event: React.KeyboardEvent, editor: Editor) {
@@ -293,7 +291,7 @@ class CommandManager {
             return false
         }
         event.preventDefault()
-        this.index = this.index >= this._searchedCommands.length - 1 ? 0 : this.index + 1
+        this.index = this.index >= this._searchedCommandCount - 1 ? 0 : this.index + 1
         return true
     }
 
@@ -302,7 +300,7 @@ class CommandManager {
             return false
         }
         event.preventDefault()
-        this.index = this.index <= 0 ? this._searchedCommands.length - 1 : this.index - 1
+        this.index = this.index <= 0 ? this._searchedCommandCount - 1 : this.index - 1
         return true
     }
 
@@ -312,7 +310,7 @@ class CommandManager {
         }
         event.preventDefault()
         Transforms.select(editor, toJS(this.target))
-        await this.insertNodeByCommand(editor, this._searchedCommands[this.index])
+        await this.insertNodeByCommand(editor, this.getSearchedCommandByIndex(this.index))
         this.target = null
         return true
     }

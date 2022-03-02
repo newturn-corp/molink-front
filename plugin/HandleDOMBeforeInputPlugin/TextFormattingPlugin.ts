@@ -1,5 +1,5 @@
 import { Editor, Text, Transforms } from 'slate'
-import EditorManager from '../../manager/Home/EditorManager'
+import EditorManager from '../../manager/Blog/EditorManager'
 
 const isFormatActive = (editor, format) => {
     try {

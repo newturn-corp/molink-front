@@ -1,8 +1,10 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import StyleManager from '../../../manager/global/StyleManager'
-import { ContentHeader } from './Header/ContentHeader'
+import { ContentToolbar } from './Header/ContentToolbar'
 import { ContentComponent } from './Content/ContentComponent'
+import { PageHierarchyList } from './Header/PageHierarchyList'
+import { ToolbarControlButton } from './ToolbarControlButton'
+import StyleManager from '../../../manager/global/Style/StyleManager'
 
 export const HomeMainComponent: React.FC<{
   }> = observer(() => {
@@ -11,10 +13,12 @@ export const HomeMainComponent: React.FC<{
               className={'content-container'}
               style={StyleManager.contentStyle.container}
           >
-              <ContentHeader/>
+              <ToolbarControlButton/>
+              <ContentToolbar/>
+              <PageHierarchyList/>
               <div
                   className={'content-body'}
-                  style={StyleManager.contentStyle.contentBody}
+                  style={StyleManager.contentStyle.body}
               >
                   <ContentComponent/>
               </div>

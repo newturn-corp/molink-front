@@ -1,11 +1,5 @@
 import { makeAutoObservable, toJS } from 'mobx'
-import { Range, Transforms } from 'slate'
-import { LinkElement } from '../../Types/slate/CustomElement'
-import { IS_DEV } from '../../infra/constants'
-import isUrl from 'is-url'
-import DocumentAPI from '../../api/DocumentAPI'
-import UserManager from '../global/UserManager'
-import EditorManager from '../Home/EditorManager'
+import { Range } from 'slate'
 
 export interface LinkOption {
     reference: string

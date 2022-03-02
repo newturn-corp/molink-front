@@ -5,23 +5,20 @@ import { makeStyles } from '@material-ui/core/styles'
 import { HierarchyContextMenu } from './HierarchyContextMenu'
 import { DragIndicator } from './DragIndicator'
 import { HierarchyComponent } from './HierarchyComponent'
-
-import HierarchyManager from '../../../manager/Home/Hierarchy/HierarchyManager'
-import NewUserManager from '../../../manager/global/NewUserManager'
 import { HierarchyName } from './HierarchyName'
 import { HierarchyOnOffButton } from './HierarchyOnOffButton'
+import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
+import UserManager from '../../../manager/global/User/UserManager'
+import StyleManager from '../../../manager/global/Style/StyleManager'
 
 export const HierarchyContainer: React.FC<{
   }> = observer(() => {
-      const width = HierarchyManager.getHierarchyWidth()
-      const backgroundColor = NewUserManager.setting ? NewUserManager.setting.hierarchyBackgroundColor : '#FAFAFB'
+      const backgroundColor = UserManager.setting.hierarchyBackgroundColor
       const useStyles = makeStyles({
           root: {
               backgroundColor
           },
-          paper: {
-              width
-          }
+          paper: StyleManager.hierarchyStyle.containerStyle as any
       })
       const classes = useStyles()
       const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
@@ -42,9 +39,7 @@ export const HierarchyContainer: React.FC<{
                       event.stopPropagation()
                       HierarchyManager.openContextMenu(null)
                   }}
-                  style={{
-                      width
-                  }}
+                  style={StyleManager.hierarchyStyle.containerStyle}
                   classes={classes}
               >
                   {

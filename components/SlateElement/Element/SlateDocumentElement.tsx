@@ -1,7 +1,6 @@
 import React from 'react'
 import { DocumentElement } from '../../../Types/slate/CustomElement'
 import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
-import DocumentManager from '../../../manager/DocumentManager'
 
 export const SlateDocumentElement: React.FC<{
     attributes,
@@ -14,16 +13,16 @@ export const SlateDocumentElement: React.FC<{
               <div
                   contentEditable={false}
                   className={'document'}
-                  onClick={() => {
-                      RoutingManager.moveTo(Page.Index, '?id=' + element.documentId)
+                  onClick={async () => {
+                      await RoutingManager.moveTo(Page.Index, '?id=' + element.documentId)
                   }}
               >
-                  <div className='icon'>
-                      {DocumentManager.documentMap.get(element.documentId).meta.icon}
-                  </div>
-                  <div className='text'>
-                      {DocumentManager.documentMap.get(element.documentId).meta.title}
-                  </div>
+                  {/* <div className='icon'> */}
+                  {/*     {DocumentManager.documentMap.get(element.documentId).meta.icon} */}
+                  {/* </div> */}
+                  {/* <div className='text'> */}
+                  {/*     {DocumentManager.documentMap.get(element.documentId).meta.title} */}
+                  {/* </div> */}
               </div>
           </div>
       )

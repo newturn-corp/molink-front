@@ -29,11 +29,19 @@ function SafeHydrate ({ children }: { children: JSX.Element[] }) {
     )
 }
 
+const removeConsoleLogOnProduction = () => {
+    // 콘솔 제거
+    if (process.env.NODE_ENV === 'production') {
+        console.log = () => {}
+    }
+}
+
 const App = ({ Component, pageProps }: AppProps) => {
     useEffect(() => {
         GlobalManager.init()
+        removeConsoleLogOnProduction()
     }, [])
-    if (process.env.NODE_ENV === 'production') { console.log = () => {} }
+
     return (
         <>
             <SafeHydrate>

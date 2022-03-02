@@ -1,25 +1,31 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import GlobalManager, { Browser } from '../../../manager/global/GlobalManager'
-import NewUserManager from '../../../manager/global/NewUserManager'
-import HierarchyManager from '../../../manager/Home/Hierarchy/HierarchyManager'
+import GlobalManager from '../../../manager/global/GlobalManager'
+import UserManager from '../../../manager/global/User/UserManager'
+import StyleManager from '../../../manager/global/Style/StyleManager'
+import EventManager from '../../../manager/global/Event/EventManager'
+import { Event } from '../../../manager/global/Event/Event'
 
 export const HierarchyWidthController: React.FC<{
   }> = observer(() => {
-      const left = HierarchyManager.getHierarchyWidth()
       return (
           <>
-              <div className={'hierarchy-width-controller'}
-                  style={{ left }}
-                  onDrag={event => {
+              <div
+                  className={'hierarchy-width-controller'}
+                  style={StyleManager.hierarchyStyle.widthControllerStyle}
+                  onDrag={async event => {
                       const value = GlobalManager.mousePositionX
                       if (Math.round(value) % 3 !== 0) {
                           return
                       }
-                      NewUserManager.setting.hierarchyWidth = value
+                      UserManager.setting.hierarchyWidth = value
+                      await EventManager.issueEvent(
+                          Event.HierarchyWidthChange,
+                          { width: value }
+                      )
                   }}
                   onDragEnd={event => {
-                      NewUserManager.setting.updateHierarchyWidth(NewUserManager.setting.hierarchyWidth)
+                      UserManager.setting.updateHierarchyWidth(UserManager.setting.hierarchyWidth)
                   }}
                   draggable='true'
               >

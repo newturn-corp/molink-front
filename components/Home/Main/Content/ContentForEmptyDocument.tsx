@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import EditorManager from '../../../../manager/Home/EditorManager'
 
 export const ContentForEmptyDocument: React.FC<{
   }> = observer(() => {

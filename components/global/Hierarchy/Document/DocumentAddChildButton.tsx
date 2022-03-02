@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import { Add, ArrowDropDown, ArrowRight } from '@material-ui/icons'
-import HierarchyManager from '../../../../manager/Home/Hierarchy/HierarchyManager'
+import { Add } from '@material-ui/icons'
+import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
 
 export const DocumentAddChildButton: React.FC<{
     documentId: string
@@ -13,7 +13,10 @@ export const DocumentAddChildButton: React.FC<{
         await currentHierarchy.createDocument(document.children.length, documentId)
     }
 
-    return <div className='add-page-button' onClick={(event) => handleClick(event)}>
+    return <div
+        className='add-page-button'
+        onClick={(event) => handleClick(event)}
+    >
         <Add />
     </div>
 })

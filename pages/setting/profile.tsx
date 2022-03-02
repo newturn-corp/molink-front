@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { Header } from '../../components/global/Header/Header'
 import { Avatar } from '@material-ui/core'
-import UserManager from '../../manager/global/UserManager'
+// import UserManager from '../../manager/global/UserManager'
 import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 import { Input } from 'antd'
 import { SettingButtonList } from '../../components/setting/SettingButtonList'
@@ -24,7 +24,7 @@ const getProfileInnerText = () => {
 const SettingProfile = observer(() => {
     UserManager.refresh()
         .then(() => {
-            if (!UserManager.isUserAuthorized) {
+            if (!NewUserManager.isUserAuthorized) {
                 RoutingManager.moveTo(Page.SignIn)
             }
         })

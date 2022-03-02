@@ -96,11 +96,12 @@
         width: 100%;
     }
     .helper-text {
-        margin: 0 auto;
         width: 300px;
         display: block;
-        font-size: 12px;
-        margin-bottom: 4px;
+        font-size: 14px;
+        line-height: 20px;
+        height: 20px;
+        margin: 8px auto 4px 10px;
         color: rgb(66, 66, 66);
     }
     .auth-page-input {

@@ -491,6 +491,16 @@ body {
   top: 80px !important;
 }
 
+.ant-notification-notice-message {
+  margin-bottom: 0px !important;
+  line-height: 40px;
+  margin-left: 64px !important;
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+}
+
 .contextMenu {
   position: fixed;
   background: white;
@@ -546,6 +556,15 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.dialog .dialog-title .MuiTypography-root {
+  font-family: Pretendard;
+}
+.dialog .dialog-content pre {
+  font-family: Pretendard;
+  overflow: hidden;
+  color: #72787F;
 }
 
 /*# sourceMappingURL=global.css.map */

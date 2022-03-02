@@ -513,7 +513,15 @@ body {
 .ant-notification {
     top: 80px !important
 }
-
+.ant-notification-notice-message {
+    margin-bottom: 0px !important;
+    line-height: 40px;
+    margin-left: 64px !important;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+}
 
 .contextMenu {
     position: fixed;
@@ -576,3 +584,19 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
+
+.dialog {
+    .dialog-title {
+        .MuiTypography-root {
+            font-family: Pretendard;
+        }
+    }
+    .dialog-content {
+        pre {
+            font-family: Pretendard;
+            overflow: hidden;
+            color: #72787F;
+        }
+    }
+}
+
