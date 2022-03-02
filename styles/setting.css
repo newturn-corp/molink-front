@@ -1,0 +1,104 @@
+.setting-page {
+  height: 100%;
+}
+
+.setting-page .core {
+  margin: 0 auto;
+  margin-top: 150px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.setting-page .core .setting-meta {
+  width: 200px;
+  height: 100%;
+}
+
+.setting-page .core .setting-meta .search-buttons {
+  width: 200px;
+}
+
+.setting-page .core .setting-meta .search-buttons .MuiButton-label {
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+}
+
+.setting-page .core .setting-meta .selected-setting-button {
+  background-color: #e7e7e7;
+}
+
+.setting-page .core .setting-list {
+  width: 700px;
+  height: 100%;
+  margin-left: 25px;
+}
+
+.setting-page .core .setting-list .setting-name {
+  margin-bottom: 0px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.setting-page .core .setting-list .MuiCheckbox-colorSecondary.Mui-checked {
+  color: #37352f;
+}
+
+.setting-page .core .setting-list .profile .profile-image {
+  position: relative;
+  margin: 0px;
+  margin-bottom: 25px;
+}
+
+.setting-page .core .setting-list .profile .profile-image .image {
+  width: 200px;
+  height: 200px;
+  font-size: 100px;
+  cursor: pointer;
+}
+
+.setting-page .core .setting-list .profile .profile-image .edit {
+  position: absolute;
+  display: inline;
+  font-size: 14px;
+  background-color: rgba(55, 53, 47, 0.7);
+  color: #f1f1f1;
+  padding: 4px;
+  bottom: 30px;
+  border-radius: 4px;
+  width: 120px;
+  text-align: center;
+  left: 40px;
+  margin: 0 auto;
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.setting-page .core .setting-list .profile .biography {
+  margin-bottom: 25px;
+}
+
+.setting-page .core .setting-list .profile .biography .ant-input-textarea {
+  height: 30px;
+}
+
+.setting-page .core .setting-list .show-sub-document-count .options {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.setting-page .core .setting-list .show-sub-document-count .options .option {
+  width: 330px;
+  margin: 10px;
+}
+
+.setting-page .core .setting-list .show-sub-document-count .options .option .MuiFormControlLabel-label {
+  font-size: 14px;
+}
+
+.setting-page .core .setting-list .user-search-result {
+  cursor: pointer;
+}
+/*# sourceMappingURL=setting.css.map */

@@ -1,0 +1,13 @@
+diff --git a/node_modules/slate-yjs/dist/main/plugin/cursorEditor.js b/node_modules/slate-yjs/dist/main/plugin/cursorEditor.js
+index 90b5a61..c08c1d3 100644
+--- a/node_modules/slate-yjs/dist/main/plugin/cursorEditor.js
++++ b/node_modules/slate-yjs/dist/main/plugin/cursorEditor.js
+@@ -31,7 +31,7 @@ function withCursor(editor, awareness) {
+     e.awareness = awareness;
+     const { onChange } = editor;
+     e.onChange = () => {
+-        setTimeout(() => exports.CursorEditor.updateCursor(e), 0);
++        setTimeout(() => exports.CursorEditor.updateCursor(e), 200);
+         if (onChange) {
+             onChange();
+         }

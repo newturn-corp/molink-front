@@ -22,6 +22,16 @@ module.exports = {
     rules: {
         indent: [2, 4],
         semi: [2, 'never'],
-        'no-use-before-define': 'off'
+        'no-use-before-define': 'off',
+        'no-unused-vars': 'off',
+        'no-useless-escape': 'off',
+        'no-case-declarations': 'off',
+        'react/display-name': 'off',
+        'accessor-pairs': 'off',
+        'import/no-absolute-path': 'off'
+    },
+    globals: {
+        JSX: true,
+        NodeJS: true
     }
 }

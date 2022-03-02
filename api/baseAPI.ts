@@ -1,11 +1,6 @@
 import { SERVER_BASE_URL } from '../infra/constants'
 import { AuthError, NetworkError, ServiceError } from './APIError'
 
-let franchiseeId = null
-export const setFranchiseeId = (id: number | null) => {
-    franchiseeId = id
-}
-
 export interface NetworkMessage {
   status: number
   data?: any
@@ -24,21 +19,19 @@ export abstract class BaseAPI {
             Accept: 'application/json',
             'Content-Type': 'application/json'
         }
-        if (franchiseeId) {
-            headers['x-hq-franchisee-id'] = franchiseeId
-        }
         return headers
     }
 
     protected async get (path: string): Promise<NetworkMessage> {
         let res
         try {
-            res = await fetch(`${SERVER_BASE_URL}/api${path}`, {
+            res = await fetch(`${SERVER_BASE_URL}${path}`, {
                 method: 'GET',
                 headers: this.commonHeaders,
                 credentials: 'include'
             })
         } catch (e) {
+            console.log(res)
             throw new NetworkError()
         }
         if (res.status === 500) throw new ServiceError()
@@ -51,7 +44,7 @@ export abstract class BaseAPI {
     protected async post (path: string, body?: object): Promise<NetworkMessage> {
         let res
         try {
-            res = await fetch(`${SERVER_BASE_URL}/api${path}`, {
+            res = await fetch(`${SERVER_BASE_URL}${path}`, {
                 method: 'POST',
                 headers: this.commonHeaders,
                 body: JSON.stringify(body),
@@ -65,9 +58,9 @@ export abstract class BaseAPI {
     }
 
     protected async put (path: string, body: object): Promise<NetworkMessage> {
-        let res
+        let res: Response
         try {
-            res = await fetch(`${SERVER_BASE_URL}/api${path}`, {
+            res = await fetch(`${SERVER_BASE_URL}${path}`, {
                 method: 'PUT',
                 headers: this.commonHeaders,
                 body: JSON.stringify(body),
@@ -98,7 +91,7 @@ export abstract class BaseAPI {
         delete headers['Content-Type']
         let res
         try {
-            res = await fetch(`${SERVER_BASE_URL}/api${path}`, {
+            res = await fetch(`${SERVER_BASE_URL}${path}`, {
                 method,
                 headers,
                 body: formData,
@@ -131,7 +124,7 @@ export abstract class BaseAPI {
     ): Promise<NetworkMessage> {
         let res
         try {
-            res = await fetch(`${SERVER_BASE_URL}/api${path}`, {
+            res = await fetch(`${SERVER_BASE_URL}${path}`, {
                 method: 'DELETE',
                 headers: this.commonHeaders,
                 body: JSON.stringify(body),
