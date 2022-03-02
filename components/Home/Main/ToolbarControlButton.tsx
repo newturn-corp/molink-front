@@ -1,9 +1,14 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import EditorManager from '../../../manager/Blog/EditorManager'
+import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
 
 export const ToolbarControlButton: React.FC<{
 }> = observer(() => {
+    const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
+    if (!currentHierarchy || !currentHierarchy.openedDocumentId) {
+        return <></>
+    }
     return <div
         className={'toolbar-control-button'}
     >

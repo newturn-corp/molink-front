@@ -1,4 +1,6 @@
 import Hierarchy from './Hierarchy'
+import DialogManager from '../DialogManager'
+import { visibilityToText } from './HierarchyUtils'
 
 export class LocationController {
     private readonly hierarchy: Hierarchy
@@ -7,31 +9,48 @@ export class LocationController {
         this.hierarchy = hierarchy
     }
 
-    public updatePageLocation (pageId: string, parentId: string | null, order: number) {
+    public async updatePageLocation (pageId: string, parentId: string | null, order: number) {
         const {
             yDocument,
             yMap,
             yTopLevelDocumentIdList,
-            editable
+            editable,
+            visibilityController
         } = this.hierarchy
 
         if (!editable) {
             return
         }
 
+        if (parentId) {
+            const parent = yMap.get(parentId)
+            const page = yMap.get(parentId)
+
+            // 만약 부모보다 자식의 공개 범위가 넓으면
+            if (visibilityController.checkVisibilityWide(page.visibility, parent.visibility) === 1) {
+                const action = await DialogManager.openDialog(
+                    '페이지 공개 범위 변경',
+                    `'이 페이지의 공개 범위인 '${visibilityToText(page.visibility)}'가\n새로운 상위 페이지의 공개 범위인 '${visibilityToText(parent.visibility)}'보다 넓습니다.\n이 페이지의 공개 범위가 '${parent.visibility}'로 변경됩니다.`, ['변경'])
+                if (action === -1) {
+                    return
+                }
+                await visibilityController.updatePageVisibility(pageId, parent.visibility)
+            }
+        }
+
         yDocument.transact(() => {
-            const document = yMap.get(pageId)
+            const page = yMap.get(pageId)
             // 기존 부모에서 제거하고 order 조정
-            if (!document.parentId) {
-                yTopLevelDocumentIdList.delete(document.order, 1)
+            if (!page.parentId) {
+                yTopLevelDocumentIdList.delete(page.order, 1)
                 for (const [index, documentId] of yTopLevelDocumentIdList.toArray().entries()) {
                     const siblingDocument = yMap.get(documentId)
                     siblingDocument.order = index
                     yMap.set(siblingDocument.id, siblingDocument)
                 }
             } else {
-                const parent = yMap.get(document.parentId)
-                parent.children.splice(document.order, 1)
+                const parent = yMap.get(page.parentId)
+                parent.children.splice(page.order, 1)
                 for (const [index, documentId] of parent.children.entries()) {
                     const siblingDocument = yMap.get(documentId)
                     siblingDocument.order = index
@@ -56,9 +75,9 @@ export class LocationController {
                     yMap.set(documentId, siblingDocument)
                 }
             }
-            document.parentId = parentId
-            document.order = order
-            yMap.set(pageId, document)
+            page.parentId = parentId
+            page.order = order
+            yMap.set(pageId, page)
         })
     }
 }

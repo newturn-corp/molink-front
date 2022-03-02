@@ -1,0 +1,159 @@
+.header {
+  position: fixed;
+  background-color: #ffffff;;
+  box-shadow: 0px 3px 4px rgba(145, 158, 171, 0.12);
+  width: 100%;
+  height: 56px;
+  z-index: 900;
+  display: flex;
+  flex-direction: row-reverse;
+
+  .logo {
+    position: absolute;
+    left: 0px;
+    width: 103px;
+    height: 28px;
+    margin: 12px;
+    cursor: pointer;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  // 60
+
+  .search {
+    margin: 14px;
+    height: 32px;
+    width: 150px;
+    margin-left: 10px;
+    background-color: rgb(219, 255, 243);
+    .ant-input-wrapper {
+      height: 100%;
+      width: 100%;
+      .ant-input {
+        height: 100%;
+      }
+    }
+  }
+  // 178
+
+
+  .navigator {
+    width: calc(100% - 438px)
+  }
+
+  .header-right {
+    width: 200px;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  .visibility-container {
+    height: 40px;
+    width: 40px;
+    margin: 10px 0px;
+
+    .MuiIconButton-root {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+    .public-icon {
+      color: rgb(48, 175, 31);
+    }
+    .private-icon {
+      color: rgb(201, 198, 25);
+    }
+    .only-friend-icon {
+      color: #23a3bc;
+    }
+  }
+  .network-status-container {
+    height: 40px;
+    width: 40px;
+    margin: 10px 0px;
+    display: flex;
+    .MuiSvgIcon-root {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      padding: 4px;
+    }
+  }
+  .user-container {
+    cursor: pointer;
+    /* Frame 242 */
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 2px 12px 2px 2px;
+
+    position: absolute;
+    min-width: 105px;
+    height: 40px;
+    right: 16px;
+    top: 8px;
+
+    /* Primary/Lighter */
+
+    background: #D6E6F6;
+    border-radius: 20px;
+    .profile {
+      width: 36px;
+      height: 36px;
+    }
+    .nickname {
+      height: 16px;
+      right: 11.21%;
+      top: calc(50% - 16px/2);
+
+      min-width: 49px;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 16px;
+
+      color: #2E639A;
+
+      text-align: center;
+      flex: none;
+      order: 1;
+      flex-grow: 0;
+      margin: 0px 0px 0px 6px;
+    }
+  }
+  .notification {
+    .button {
+      margin: 10px;
+      padding: 5px;
+      color: inherit;
+      .MuiSvgIcon-root {
+        width: 26px;
+        height: 26px;
+      }
+    }
+    .MuiBadge-badge {
+      top: 16px;
+      right: 20px;
+      width: 7px;
+      min-width: 7px;
+      height: 7px;
+      border-radius: 3.5px;
+      background-color: #f44336;
+      // border: 1px solid rgb(153, 153, 153);
+    }
+  }
+  .sign-out {
+    width: 140px;
+    right: 0px;
+    color: white;
+    padding: 13px;
+    font-size: 20px;
+    text-align: center;
+  }
+  .login-button-container {
+    margin: 10px;
+  }
+}

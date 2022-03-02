@@ -11,6 +11,7 @@ import { UserProfile } from './UserProfile'
 class UserManager {
     isUserAuthorized: boolean = false
     isLoading: boolean = false
+    isUserMenuOpen: boolean = false
     userId: number = null
 
     yjsDocument: Y.Doc = null
@@ -56,9 +57,6 @@ class UserManager {
 
                 this.websocketProvider.on('sync', async (isSynced: boolean) => {
                     if (isSynced) {
-                        setTimeout(() => {
-                            console.log(this)
-                        }, 10000)
                         isResolved = true
                         await EventManager.issueEvent(Event.UserAuthorization, { result: true })
                         this.isUserAuthorized = true
@@ -76,6 +74,7 @@ class UserManager {
                 }, 10000)
             })
         } catch (err) {
+            console.log(err)
             await EventManager.issueEvent(Event.UserAuthorization, { result: false })
             this.isUserAuthorized = false
             this.isLoading = false
@@ -95,7 +94,7 @@ class UserManager {
 
     reset () {
         if (this.websocketProvider) {
-            this.websocketProvider.disconnect()
+            this.websocketProvider.destroy()
         }
         this.userId = null
         this.isUserAuthorized = false

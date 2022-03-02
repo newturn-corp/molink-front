@@ -3,10 +3,15 @@ import { APIError } from './APIError'
 import { SearchUserDTO, SearchResponseDTO, GetUserRepresentativeDocumentResponseDTO, GetUserRepresentativeDocumentURLDTO, UpdateUserProfileImageDto, UpdateUserBiographyDTO, FollowResponseDTO, FollowRequestDTO } from '../DTO/UserDTO'
 import { RepresentativeDocumentNotExists, UserNotExists } from '../Errors/UserError'
 import { GetUserIDDTO } from '@newturn-develop/types-molink'
+import { Unauthorized } from '../Errors/Common'
 
 class UserAPI extends BaseAPI {
     async getUserID (): Promise<number> {
         const res = await this.get('/main/users/id')
+        console.log(res)
+        if (res.status === 401) {
+            throw new Unauthorized()
+        }
         if (res.status !== 200) throw new APIError(res)
         const data = res.data as GetUserIDDTO
         return data.id

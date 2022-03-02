@@ -1,14 +1,13 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import { NotificationButton } from './NotificationButton'
-import { User } from './User'
+import { UserContainer } from './User/UserContainer'
 import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 
 export const Header: React.FC<{
   }> = observer(() => {
       return <div className='header'>
           <div className='header-right'>
-              <User/>
+              <UserContainer/>
               {/* <NotificationButton/> */}
           </div>
           <div className='navigator'>

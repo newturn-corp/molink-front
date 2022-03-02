@@ -6,8 +6,17 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             width: '100%',
+            '& .MuiInputBase-root': {
+                fontFamily: 'Pretendard',
+                fontStyle: 'normal',
+                fontWeight: 'normal'
+            },
+            '& .MuiInputBase-input': {
+                fontStyle: 'normal',
+                fontWeight: '500'
+            },
             '& label.Mui-focused': {
-                color: '#5F6871'
+                color: '#3A7BBF'
             },
             '& .MuiInput-underline:after': {
                 borderBottomColor: '#DDE3E9'
@@ -18,10 +27,10 @@ const useStyles = makeStyles(() =>
                     borderColor: '#DDE3E9'
                 },
                 '&:hover fieldset': {
-                    borderColor: '#5F6871'
+                    borderColor: '#3A7BBF'
                 },
                 '&.Mui-focused fieldset': {
-                    borderColor: '#5F6871',
+                    borderColor: '#3A7BBF',
                     borderWidth: 1
                 },
                 '&.Mui-error fieldset': {
@@ -31,7 +40,11 @@ const useStyles = makeStyles(() =>
             '& .MuiInputLabel-outlined': {
                 fontFamily: 'Pretendard',
                 fontWeight: 'normal',
-                color: '#5F6871'
+                color: '#9DA7B0'
+                // fontSize: 13
+            },
+            '&:hover .MuiInputLabel-outlined': {
+                color: '#3A7BBF'
             },
             '& .MuiInputLabel-outlined.Mui-error': {
                 color: 'rgba(248, 67, 67, 1)'

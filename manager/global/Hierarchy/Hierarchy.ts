@@ -10,6 +10,8 @@ import RoutingManager, { Page } from '../../global/RoutingManager'
 import UserManager from '../User/UserManager'
 import { VisibilityController } from './VisibilityController'
 import { LocationController } from './LocationController'
+import EventManager from '../Event/EventManager'
+import { Event } from '../Event/Event'
 
 export default class Hierarchy {
     public visibilityController: VisibilityController
@@ -48,6 +50,11 @@ export default class Hierarchy {
         this.yTopLevelDocumentIdList.observeDeep(() => {
             this.topLevelDocumentIdList = this.yTopLevelDocumentIdList.toArray()
         })
+        EventManager.addEventListeners(
+            [Event.UnloadPage
+            ], () => {
+                this.reset()
+            }, 1)
         makeAutoObservable(this, {
             yTopLevelDocumentIdList: false,
             yMap: false
@@ -82,6 +89,12 @@ export default class Hierarchy {
                     }
                 }, 10000)
             })
+        }
+    }
+
+    public reset () {
+        if (this.websocketProvider) {
+            this.websocketProvider.destroy()
         }
     }
 

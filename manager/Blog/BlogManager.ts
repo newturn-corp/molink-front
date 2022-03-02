@@ -11,9 +11,9 @@ import EditorManager from './EditorManager'
 import UserManager from '../global/User/UserManager'
 
 enum HomeURLType {
-    OnlyDocumentURL,
-    UserMainURL,
-    StandardDocumentURL
+    OnlyDocumentURL = 'only-document-url',
+    UserMainURL = 'user-main-url',
+    StandardDocumentURL = 'standard-document-url'
 }
 
 class BlogManager {

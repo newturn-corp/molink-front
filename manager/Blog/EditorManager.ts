@@ -143,7 +143,7 @@ class EditorManager {
 
     reset () {
         if (this.websocketProvider) {
-            this.websocketProvider.disconnect()
+            this.websocketProvider.destroy()
         }
         this.editable = false
         this.showPlaceholder = false

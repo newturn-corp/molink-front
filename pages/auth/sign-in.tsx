@@ -80,7 +80,7 @@ const SignIn = observer(() => {
                 textColor={'#FFFFFF'}
                 backgroundColor={'#3A7BBF'}
                 style={{
-                    marginTop: 44
+                    marginTop: 22
                 }}
                 onClick={async (e) => {
                     setLoading(true)
@@ -89,7 +89,7 @@ const SignIn = observer(() => {
                     if (result.success) {
                         await UserManager.load()
                         console.log(UserManager)
-                        await RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.nickname}`)
+                        // await RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.nickname}`)
                     }
                 }}
             />

@@ -1,0 +1,143 @@
+.header {
+  position: fixed;
+  background-color: #ffffff;
+  box-shadow: 0px 3px 4px rgba(145, 158, 171, 0.12);
+  width: 100%;
+  height: 56px;
+  z-index: 900;
+  display: flex;
+  flex-direction: row-reverse;
+}
+.header .logo {
+  position: absolute;
+  left: 0px;
+  width: 103px;
+  height: 28px;
+  margin: 12px;
+  cursor: pointer;
+}
+.header .logo img {
+  width: 100%;
+  height: 100%;
+}
+.header .search {
+  margin: 14px;
+  height: 32px;
+  width: 150px;
+  margin-left: 10px;
+  background-color: #dbfff3;
+}
+.header .search .ant-input-wrapper {
+  height: 100%;
+  width: 100%;
+}
+.header .search .ant-input-wrapper .ant-input {
+  height: 100%;
+}
+.header .navigator {
+  width: calc(100% - 438px);
+}
+.header .header-right {
+  width: 200px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+.header .visibility-container {
+  height: 40px;
+  width: 40px;
+  margin: 10px 0px;
+}
+.header .visibility-container .MuiIconButton-root {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+.header .visibility-container .public-icon {
+  color: #30af1f;
+}
+.header .visibility-container .private-icon {
+  color: #c9c619;
+}
+.header .visibility-container .only-friend-icon {
+  color: #23a3bc;
+}
+.header .network-status-container {
+  height: 40px;
+  width: 40px;
+  margin: 10px 0px;
+  display: flex;
+}
+.header .network-status-container .MuiSvgIcon-root {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 4px;
+}
+.header .user-container {
+  cursor: pointer;
+  /* Frame 242 */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 2px 12px 2px 2px;
+  position: absolute;
+  min-width: 105px;
+  height: 40px;
+  right: 16px;
+  top: 8px;
+  /* Primary/Lighter */
+  background: #D6E6F6;
+  border-radius: 20px;
+}
+.header .user-container .profile {
+  width: 36px;
+  height: 36px;
+}
+.header .user-container .nickname {
+  height: 16px;
+  right: 11.21%;
+  top: calc(50% - 8px);
+  min-width: 49px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+  color: #2E639A;
+  text-align: center;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin: 0px 0px 0px 6px;
+}
+.header .notification .button {
+  margin: 10px;
+  padding: 5px;
+  color: inherit;
+}
+.header .notification .button .MuiSvgIcon-root {
+  width: 26px;
+  height: 26px;
+}
+.header .notification .MuiBadge-badge {
+  top: 16px;
+  right: 20px;
+  width: 7px;
+  min-width: 7px;
+  height: 7px;
+  border-radius: 3.5px;
+  background-color: #f44336;
+}
+.header .sign-out {
+  width: 140px;
+  right: 0px;
+  color: white;
+  padding: 13px;
+  font-size: 20px;
+  text-align: center;
+}
+.header .login-button-container {
+  margin: 10px;
+}
+
+/*# sourceMappingURL=header.css.map */
