@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2757422b-8cd9-4505-bdd6-8ab884c5a67c" name="변경" comment="" />
+    <list default="true" id="2757422b-8cd9-4505-bdd6-8ab884c5a67c" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manager/Editing/FileUploadManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/manager/Editing/FileUploadManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manager/global/SupportManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/manager/global/SupportManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/search.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/search.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/search.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/styles/search.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/setting.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/setting.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/setting.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/styles/setting.css.map" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,15 +39,11 @@
                 <list>
                   <RecentBranch>
                     <option name="branchName" value="master" />
-                    <option name="lastUsedInstant" value="1642948762" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="refac" />
-                    <option name="lastUsedInstant" value="1642948650" />
+                    <option name="lastUsedInstant" value="1646215844" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="develop" />
-                    <option name="lastUsedInstant" value="1642948448" />
+                    <option name="lastUsedInstant" value="1646215540" />
                   </RecentBranch>
                 </list>
               </option>
@@ -71,7 +75,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2021.3.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="ts.external.directory.path" value="C:\Users\huseo\Documents\molink-front\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
@@ -89,7 +93,7 @@
       <workItem from="1642898958019" duration="7040000" />
       <workItem from="1642948638863" duration="58000" />
       <workItem from="1642948732883" duration="1039000" />
-      <workItem from="1646215209747" duration="455000" />
+      <workItem from="1646215209747" duration="1118000" />
     </task>
     <servers />
   </component>

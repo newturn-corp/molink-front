@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import { ChangeEvent } from 'react'
-import MainAPI from '../../api/MainAPI'
+import MainAPI from '../../api/mainAPI'
 import { SaveSupportDTO } from '../../DTO/UserDTO'
 import FeedbackManager, { NOTIFICATION_TYPE } from './FeedbackManager'
 

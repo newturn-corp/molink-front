@@ -1,4 +1,4 @@
-import MainAPI from '../../api/MainAPI'
+import MainAPI from '../../api/mainAPI'
 import { UploadImageDTO, UploadImageFromURLDTO } from '@newturn-develop/types-molink'
 
 class FileUploadManager {
