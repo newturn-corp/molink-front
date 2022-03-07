@@ -90,6 +90,7 @@ const SignUp = observer(() => {
                             onFocus={(e) => {
                                 AuthManager.emailState = EmailState.DEFAULT
                             }}
+                            defaultValue={AuthManager.email}
                             helperText={getEmailHelperText(AuthManager.emailState)}
                         />
                         <AuthInput
@@ -111,6 +112,7 @@ const SignUp = observer(() => {
                             onPaste={(e) => {
                                 e.preventDefault()
                             }}
+                            defaultValue={AuthManager.pwd}
                             helperText={getPasswordHelperText(AuthManager.passwordState)}
                         />
                         <AuthInput
@@ -131,6 +133,7 @@ const SignUp = observer(() => {
                             onPaste={(e) => {
                                 e.preventDefault()
                             }}
+                            defaultValue={AuthManager.pwdCheck}
                         />
                         <AuthInput
                             name={Math.random().toString()}
@@ -144,6 +147,7 @@ const SignUp = observer(() => {
                                 AuthManager.nicknameState = NicknameState.Default
                                 AuthManager.nickname = value
                             }}
+                            defaultValue={AuthManager.nickname}
                             helperText={getNicknameHelperText(AuthManager.nicknameState)}
                         />
                         <AuthButton
