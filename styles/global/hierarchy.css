@@ -180,9 +180,14 @@
   display: flex;
   cursor: pointer;
 }
-.hierarchy-on-off-button .icon {
+.hierarchy-on-off-button svg {
   margin: auto auto;
-  user-select: none;
+  width: 16px;
+  fill: #3A3C3F;
+}
+.hierarchy-on-off-button svg:hover {
+  fill: #0094FF;
+  transition: fill 0.5s;
 }
 
 .hierarchy-width-controller {

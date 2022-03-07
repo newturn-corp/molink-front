@@ -204,8 +204,8 @@ export const HoveringToolbar: React.FC<{
                 <FormatButton format="bold" icon={<FormatBold/>} />
                 <FormatButton format="italic" icon={<FormatItalic/>} />
                 <FormatButton format="underlined" icon={<FormatUnderlined/>} />
-                <div className={'divider'}></div>
-                <LinkButton />
+                {/* <div className={'divider'}></div> */}
+                {/* <LinkButton /> */}
             </Menu>
             <LinkInput />
         </Portal>

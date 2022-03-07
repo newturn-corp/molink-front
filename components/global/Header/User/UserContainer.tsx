@@ -8,9 +8,10 @@ import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
 
 export const UserContainer: React.FC<{
 }> = observer(() => {
-    const handleClick = async () => {
+    const handleClick = async (event) => {
+        event.stopPropagation()
         if (UserManager.isUserAuthorized) {
-            UserManager.isUserMenuOpen = true
+            UserManager.isUserMenuOpen = !UserManager.isUserMenuOpen
         } else {
             await RoutingManager.moveTo(Page.SignIn)
         }
@@ -22,11 +23,15 @@ export const UserContainer: React.FC<{
             style={{
                 backgroundColor: UserManager.isUserAuthorized ? '#D6E6F6' : '#ECEEF0'
             }}
-            onClick={(event) => handleClick()}
+            onClick={(event) => handleClick(event)}
         >
             <UserProfile/>
         </div>
-        <UserMenu/>
+        {
+            UserManager.isUserMenuOpen
+                ? <UserMenu/>
+                : <></>
+        }
         <SupportModal/>
     </>
 })

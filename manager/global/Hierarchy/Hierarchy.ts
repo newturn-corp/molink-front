@@ -12,10 +12,12 @@ import { VisibilityController } from './VisibilityController'
 import { LocationController } from './LocationController'
 import EventManager from '../Event/EventManager'
 import { Event } from '../Event/Event'
+import { PageDragManager } from './PageDragManager'
 
 export default class Hierarchy {
     public visibilityController: VisibilityController
     public locationController: LocationController
+    public pageDragManager: PageDragManager
 
     public userId: number
     public nickname: string
@@ -45,6 +47,7 @@ export default class Hierarchy {
 
         this.visibilityController = new VisibilityController(this)
         this.locationController = new LocationController(this)
+        this.pageDragManager = new PageDragManager(this)
 
         this.yTopLevelDocumentIdList = this.yDocument.getArray('topLevelDocumentIdList')
         this.yTopLevelDocumentIdList.observeDeep(() => {

@@ -10,7 +10,6 @@ import { DocumentAddChildButton } from './DocumentAddChildButton'
 import { DocumentMenuButton } from './DocumentMenuButton'
 import UserManager from '../../../../manager/global/User/UserManager'
 import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
-import PageDragManager from '../../../../manager/global/Hierarchy/PageDragManager'
 
 let ghost
 export const DocumentComponent: React.FC<{
@@ -22,6 +21,7 @@ export const DocumentComponent: React.FC<{
       const padding = 4 + depth * 12
 
       const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
+      const pageDragManager = currentHierarchy.pageDragManager
       const document = currentHierarchy.map[documentId]
       const isSelected = currentHierarchy.selectedDocumentId === document.id
       const isChangingName = currentHierarchy.nameChangingDocumentId === document.id
@@ -40,7 +40,7 @@ export const DocumentComponent: React.FC<{
           ghost.style.right = '0px'
           globalThis.document.getElementsByClassName('drag-ghost-parent')[0].appendChild(ghost)
           event.dataTransfer.setDragImage(ghost, event.clientX, event.clientY - divRef.current.getBoundingClientRect().y)
-          PageDragManager.handleDragStart(document.id)
+          pageDragManager.handleDragStart(document.id)
       }
       // TODO: 백그라운드 고치기
       return (
@@ -60,15 +60,15 @@ export const DocumentComponent: React.FC<{
                       width: 'inherit'
                   }}
                   draggable={!isChangingName && currentHierarchy.editable}
-                  onClick={(event) => {
+                  onClick={async (event) => {
                       if (!isOpen) {
-                          RoutingManager.moveTo(Page.Blog, `/${documentId}`)
+                          await RoutingManager.moveTo(Page.Blog, `/${documentId}`)
                       }
                   }}
                   onDragStart={(event) => handleDragStart(event)}
-                  onDragOver={(event) => PageDragManager.handleDragOver(event, document.id)}
-                  onDragEnd={(event) => PageDragManager.handleDragEnd(ghost)}
-                  onDragLeave={() => PageDragManager.handleDragLeave(document.id)}
+                  onDragOver={(event) => pageDragManager.handleDragOver(event, document.id)}
+                  onDragEnd={(event) => pageDragManager.handleDragEnd(ghost)}
+                  onDragLeave={() => pageDragManager.handleDragLeave(document.id)}
                   onContextMenu={(event) => {
                       event.preventDefault()
                       event.stopPropagation()

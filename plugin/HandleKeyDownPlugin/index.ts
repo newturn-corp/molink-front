@@ -6,7 +6,10 @@ import {
 } from './ListPlugin'
 import { handleEnterInCode, handleShiftEnterInCode, handleTabInCode } from './CodeHandleKeyDownPlugin'
 import CommandManager from '../../manager/Editing/Command/CommandManager'
-import { moveSelectionWhenArrowLeftDown, moveSelectionWhenArrowRightDown } from './ArrowKeyMovementPlugin'
+import {
+    moveSelectionWhenArrowLeftDown,
+    moveSelectionWhenArrowRightDown
+} from './ArrowKeyMovementPlugin'
 import { redoWhenControlYKeyDown, undoWhenControlZKeyDown } from './UndoPlugin'
 import { insertNewLineWhenShiftEnterKeyDown } from './InsertNewLinePlugin'
 
@@ -19,9 +22,13 @@ handlerMap.set('ArrowRight', [
 ])
 handlerMap.set('ArrowUp', [
     (event, editor) => CommandManager.handleArrowUp(event, editor)
+    // maintainScreenMargin,
+    // moveSelectionWhenArrowUpDown
 ])
 handlerMap.set('ArrowDown', [
     (event, editor) => CommandManager.handleArrowDown(event, editor)
+    // maintainScreenMargin
+    // moveSelectionWhenArrowDownDown
 ])
 handlerMap.set('ctrl+z', [
     undoWhenControlZKeyDown
@@ -74,12 +81,13 @@ export const handleKeyDown = async (event, editor) => {
     const eventKey = keys.join('+')
     const handlers = handlerMap.get(eventKey)
     if (!handlers) {
-        return
+        return false
     }
     for (const handler of handlers) {
         const isHandled = await handler(event, editor)
         if (isHandled) {
-            return
+            return true
         }
     }
+    return false
 }

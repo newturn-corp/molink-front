@@ -1,0 +1,67 @@
+.content-header {
+  position: fixed;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  transition: top 0.25s;
+}
+.content-header .page-hierarchy-list {
+  height: fit-content;
+  display: flex;
+  margin-top: 13px;
+  margin-left: 12px;
+}
+.content-header .page-hierarchy-list .document-block {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 5px 5px;
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 16px;
+  height: 24px;
+  color: #454C53;
+}
+.content-header .page-hierarchy-list .document-divider {
+  padding: 4px 5px 5px;
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 16px;
+}
+.content-header .page-hierarchy-list .document-block:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.content-header .content-control-button-group {
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  right: 12px;
+  margin-top: 13px;
+}
+.content-header .content-control-button-group .setting-button {
+  width: 26px;
+  height: 26px;
+  padding: 3px;
+  border-radius: 4px;
+  transition: top 0.25s;
+  cursor: pointer;
+  margin: 0 3px;
+}
+.content-header .content-control-button-group .setting-button svg {
+  width: 100%;
+  height: 100%;
+  transition: fill 0.25s;
+}
+.content-header .content-control-button-group .setting-button:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.control-button-tooltip {
+  font-size: 12px;
+}
+
+/*# sourceMappingURL=header.css.map */

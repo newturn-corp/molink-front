@@ -3,6 +3,9 @@ import invariant from 'tiny-invariant'
 import { Awareness } from 'y-protocols/awareness'
 import { SharedType, SyncElement, SyncNode, toSlateDoc, YjsEditor } from 'slate-yjs'
 import * as Y from 'yjs'
+import * as time from 'lib0/time'
+import * as f from 'lib0/function'
+import EditorManager from '../../manager/Blog/EditorManager'
 const AWARENESS: WeakMap<Editor, Awareness> = new WeakMap()
 
 const isTree = (node: SyncNode): boolean => !!SyncNode.getChildren(node)
@@ -59,6 +62,7 @@ export const CursorEditor = {
             absolutePositionToRelativePosition(sharedType, selection.focus)
 
         const awareness = CursorEditor.awareness(editor)
+        // setLocalState(awareness, { ...awareness.getLocalState(), anchor, focus })
         awareness.setLocalState({ ...awareness.getLocalState(), anchor, focus })
     }
 }
@@ -75,11 +79,10 @@ export function withCursor<T extends YjsEditor> (
     const { onChange } = editor
 
     e.onChange = () => {
-        setTimeout(() => CursorEditor.updateCursor(e), 200)
-
         if (onChange) {
             onChange()
         }
+        CursorEditor.updateCursor(e)
     }
 
     return e

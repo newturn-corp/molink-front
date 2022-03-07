@@ -5,7 +5,7 @@
   visibility: hidden;
 }
 
-.ant-tooltip {
+.drag-indicator-tooltip {
   z-index: 10000;
   visibility: hidden;
 }

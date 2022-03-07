@@ -31,6 +31,9 @@ class UserManager {
         EventManager.addEventListener(Event.SignOut, () => {
             this.reset()
         }, 1)
+        EventManager.addEventListener(Event.PageBodyClick, () => {
+            this.isUserMenuOpen = false
+        }, 1)
     }
 
     async load () {
@@ -51,11 +54,15 @@ class UserManager {
                 this.yjsDocument, {
                     connect: false
                 })
-
             return new Promise<void>((resolve, reject) => {
                 let isResolved = false
 
+                this.websocketProvider.on('status', (event) => {
+                    console.log(event)
+                })
+
                 this.websocketProvider.on('sync', async (isSynced: boolean) => {
+                    console.log(isSynced)
                     if (isSynced) {
                         isResolved = true
                         await EventManager.issueEvent(Event.UserAuthorization, { result: true })
@@ -65,7 +72,7 @@ class UserManager {
                     }
                 })
                 this.websocketProvider.connect()
-
+                console.log('요청 보냄')
                 setTimeout(() => {
                     if (!isResolved) {
                         this.isLoading = false

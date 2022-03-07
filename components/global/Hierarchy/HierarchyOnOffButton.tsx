@@ -4,6 +4,8 @@ import { Event } from '../../../manager/global/Event/Event'
 import StyleManager from '../../../manager/global/Style/StyleManager'
 import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
 import EventManager from '../../../manager/global/Event/EventManager'
+import ArrowLeft from '/public/image/icon/arrow-left.svg'
+import ArrowRight from '/public/image/icon/arrow-right.svg'
 
 export const HierarchyOnOffButton: React.FC<{
 }> = observer(() => {
@@ -19,14 +21,11 @@ export const HierarchyOnOffButton: React.FC<{
                 })
             }}
         >
-            <img
-                className={'icon'}
-                src={
-                    HierarchyManager.isHierarchyOpen
-                        ? '/image/global/hierarchy/hierarchy-close-button.png'
-                        : '/image/global/hierarchy/hierarchy-open-button.png'
-                }
-            />
+            {
+                HierarchyManager.isHierarchyOpen
+                    ? <ArrowLeft/>
+                    : <ArrowRight/>
+            }
         </div>
     )
 })

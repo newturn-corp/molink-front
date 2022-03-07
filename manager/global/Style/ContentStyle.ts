@@ -4,36 +4,19 @@ import HierarchyManager from '../Hierarchy/HierarchyManager'
 import { Event } from '../Event/Event'
 import EventManager from '../Event/EventManager'
 import { ToolbarOnOffChangeParam } from '../Event/EventParams'
-
-export interface ContentContainerStyleInterface {
-    transform: string,
-    width: number
-}
-
-export interface ContentBodyStyleInterface {
-    width: number
-    top: number
-}
-
-export interface ContentMainStyleInterface {
-    width: number
-    marginLeft: number
-}
-
-const defaultContentContainerStyle = {
-    transform: isBrowser ? 'translateX(240px)' : undefined,
-    width: 1000
-}
-
-const defaultContentBodyStyle = {
-    width: 1000,
-    top: 106
-}
-
-const defaultContentMainStyle = {
-    marginLeft: 800,
-    width: 800
-}
+import {
+    ContentBodyStyleInterface,
+    ContentContainerStyleInterface,
+    ContentHeaderStyleInterface, ContentMainStyleInterface,
+    ContentToolbarStyleInterface, ToolbarOnOffButtonStyleInterface, VisibilityMenuStyleInterface
+} from './ContentStyle/interface'
+import {
+    closeStateContentToolbarStyle,
+    closeStateToolbarOnOffButtonStyle,
+    defaultContentBodyStyle,
+    defaultContentContainerStyle, defaultContentHeaderStyle,
+    defaultContentMainStyle, defaultContentToolbarStyle, defaultToolbarOnOffButtonStyle, defaultVisibilityMenuStyle
+} from './ContentStyle/constants'
 
 export class ContentStyle {
     _container: ContentContainerStyleInterface = defaultContentContainerStyle
@@ -51,17 +34,58 @@ export class ContentStyle {
         return toJS(this._main)
     }
 
+    _header: ContentHeaderStyleInterface = defaultContentHeaderStyle
+    get header () {
+        return toJS(this._header)
+    }
+
+    _toolbar: ContentToolbarStyleInterface = defaultContentToolbarStyle
+    get toolbar () {
+        return toJS(this._toolbar)
+    }
+
+    _toolbarOnOffButton: ToolbarOnOffButtonStyleInterface = defaultToolbarOnOffButtonStyle
+    get toolbarOnOffButton () {
+        return toJS(this._toolbarOnOffButton)
+    }
+
+    _visibilityMenu: VisibilityMenuStyleInterface = defaultVisibilityMenuStyle
+    get visibilityMenu () {
+        return toJS(this._visibilityMenu)
+    }
+
     constructor () {
         makeAutoObservable(this)
         EventManager.addDisposableEventListener(Event.InitGlobalVariable, () => {
-            this.refresh()
+            this.handleInitGlobalVariable()
         }, 1)
         EventManager.addEventListeners([Event.HierarchyOnOffChange, Event.WindowResize, Event.HierarchyWidthChange], () => {
             this.refresh()
         }, 1)
-        EventManager.addEventListener(Event.ToolbarOnOffChange, ({ isToolbarOpen }: ToolbarOnOffChangeParam) => {
-            this._body.top = isToolbarOpen ? 106 : 50
-        }, 1)
+        EventManager.addEventListener(Event.ToolbarOnOffChange, ({ isToolbarOpen }: ToolbarOnOffChangeParam) => this.handleToolbarOnOffChange(isToolbarOpen), 1)
+    }
+
+    handleInitGlobalVariable () {
+        this._body.top = this._header.height + this._toolbar.height
+        this._body.height = window.innerHeight - this._body.top - 56
+        this._visibilityMenu.top = this._header.top + this._header.height + 56
+        this.refresh()
+    }
+
+    handleToolbarOnOffChange (isToolbarOpen: boolean) {
+        if (isToolbarOpen) {
+            this._toolbar = defaultContentToolbarStyle
+            this._toolbarOnOffButton = defaultToolbarOnOffButtonStyle
+            this._header.top = this._toolbar.height
+            this._visibilityMenu.top = this._header.top + this._header.height + 56
+        } else {
+            this._toolbar = closeStateContentToolbarStyle
+            this._toolbarOnOffButton = closeStateToolbarOnOffButtonStyle
+            this._header.top = this._toolbar.height
+            this._visibilityMenu.top = this._header.top + this._header.height + 56
+        }
+        this._body.top = this._header.height + this._toolbar.height
+        this._body.height = window.innerHeight - this._body.top - 56
     }
 
     refresh () {

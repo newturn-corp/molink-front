@@ -1,0 +1,100 @@
+.hovering-toolbar {
+  padding: 6px;
+  position: absolute;
+  z-index: 1;
+  top: -10000px;
+  left: -10000px;
+  margin-top: -6px;
+  opacity: 0;
+  background-color: #fafafa;
+  border-radius: 4px;
+  transition: opacity 0.75s;
+  height: 36px;
+  box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+}
+.hovering-toolbar .button {
+  color: #37352f;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+.hovering-toolbar .button .MuiSvgIcon-root {
+  width: 100%;
+  height: 100%;
+}
+.hovering-toolbar .divider {
+  width: 1px;
+  height: 100%;
+  margin: 0px;
+  margin-left: 6px;
+  margin-right: 6px;
+  background-color: #bebebe;
+}
+.hovering-toolbar .inactive {
+  color: #a1a1a1;
+}
+.hovering-toolbar .link-button {
+  display: inline-block;
+  height: 24px;
+  color: inherit;
+  cursor: pointer;
+  margin: 0px;
+}
+.hovering-toolbar .link-button .MuiSvgIcon-root {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+}
+.hovering-toolbar .link-button .text {
+  display: inline-block;
+  position: relative;
+  line-height: 24px;
+  margin: 0px;
+  transform: translateY(-6px);
+  user-select: none;
+}
+
+.link-input-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 800;
+  user-select: none;
+  background-color: transparent;
+}
+.link-input-background .link-input {
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  top: -10000px;
+  left: -10000px;
+  margin-top: -6px;
+  opacity: 0;
+  background-color: #fafafa;
+  border-radius: 4px;
+  transition: opacity 0.75s;
+  width: 300px;
+  height: 54.2px;
+  box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+}
+.link-input-background .link-input .MuiAutocomplete-root {
+  border-color: #00000000;
+}
+.link-input-background .link-input .MuiAutocomplete-endAdornment .MuiSvgIcon-root {
+  color: #00000000;
+}
+.link-input-background .link-input .MuiInputBase-root {
+  padding: 0px;
+  padding-right: 15px;
+  font-size: 0.8rem;
+}
+.link-input-background .link-input .MuiAutocomplete-hasPopupIcon .MuiAutocomplete-inputRoot[class*=MuiOutlinedInput-root] {
+  padding: 0px;
+}
+.link-input-background .link-input .MuiFormControl-root {
+  margin: 0px;
+}
+
+/*# sourceMappingURL=hovering-toolbar.css.map */
