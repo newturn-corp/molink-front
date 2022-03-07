@@ -76,6 +76,7 @@ const SignUp = observer(() => {
                     : <>
                         <AuthTitle text={'계정 생성'}/>
                         <AuthInput
+                            name={Math.random().toString()}
                             type={'text'}
                             label="이메일"
                             variant="outlined"
@@ -92,6 +93,7 @@ const SignUp = observer(() => {
                             helperText={getEmailHelperText(AuthManager.emailState)}
                         />
                         <AuthInput
+                            name={Math.random().toString()}
                             type={'password'}
                             label="비밀번호"
                             isPassword={true}
@@ -112,6 +114,7 @@ const SignUp = observer(() => {
                             helperText={getPasswordHelperText(AuthManager.passwordState)}
                         />
                         <AuthInput
+                            name={Math.random().toString()}
                             type={'password'}
                             label="비밀번호 확인"
                             isPassword={true}
@@ -130,6 +133,7 @@ const SignUp = observer(() => {
                             }}
                         />
                         <AuthInput
+                            name={Math.random().toString()}
                             type={'text'}
                             label="닉네임"
                             autoComplete='off'

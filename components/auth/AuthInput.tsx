@@ -58,6 +58,7 @@ const useStyles = makeStyles(() =>
 )
 
 type AuthInputProps = {
+    name?: string,
     label: string,
     type: string,
     variant: 'outlined',
