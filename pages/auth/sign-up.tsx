@@ -76,8 +76,8 @@ const SignUp = observer(() => {
                     : <>
                         <AuthTitle text={'계정 생성'}/>
                         <AuthInput
+                            type={'text'}
                             label="이메일"
-                            type="email"
                             variant="outlined"
                             autoComplete='off'
                             error={AuthManager.emailState !== EmailState.DEFAULT}
@@ -92,8 +92,9 @@ const SignUp = observer(() => {
                             helperText={getEmailHelperText(AuthManager.emailState)}
                         />
                         <AuthInput
+                            type={'password'}
                             label="비밀번호"
-                            type="password"
+                            isPassword={true}
                             autoComplete='off'
                             variant="outlined"
                             error={AuthManager.passwordState !== PasswordState.DEFAULT}
@@ -111,8 +112,9 @@ const SignUp = observer(() => {
                             helperText={getPasswordHelperText(AuthManager.passwordState)}
                         />
                         <AuthInput
+                            type={'password'}
                             label="비밀번호 확인"
-                            type="password"
+                            isPassword={true}
                             autoComplete='off'
                             variant="outlined"
                             error={AuthManager.passwordState !== PasswordState.DEFAULT}
@@ -128,8 +130,8 @@ const SignUp = observer(() => {
                             }}
                         />
                         <AuthInput
+                            type={'text'}
                             label="닉네임"
-                            type="text"
                             autoComplete='off'
                             variant='outlined'
                             error={AuthManager.nicknameState !== NicknameState.Default}

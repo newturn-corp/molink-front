@@ -68,7 +68,8 @@ type AuthInputProps = {
     onPaste?: ClipboardEventHandler<HTMLDivElement>,
     style?: any,
     helperText?: string,
-    defaultValue?: string
+    defaultValue?: string,
+    isPassword?: boolean
 }
 
 export const AuthInput: React.FC<AuthInputProps> = (props: AuthInputProps) => {
