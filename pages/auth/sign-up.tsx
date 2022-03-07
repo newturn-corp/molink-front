@@ -97,7 +97,7 @@ const SignUp = observer(() => {
                             type={'password'}
                             label="비밀번호"
                             isPassword={true}
-                            autoComplete='new-street-address'
+                            autoComplete='new-password'
                             variant="outlined"
                             error={AuthManager.passwordState !== PasswordState.DEFAULT}
                             onChange={(e) => {
@@ -118,7 +118,7 @@ const SignUp = observer(() => {
                             type={'password'}
                             label="비밀번호 확인"
                             isPassword={true}
-                            autoComplete='new-street-address'
+                            autoComplete='new-password'
                             variant="outlined"
                             error={AuthManager.passwordState !== PasswordState.DEFAULT}
                             onChange={(e) => {
