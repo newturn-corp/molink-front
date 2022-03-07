@@ -40,7 +40,7 @@ const SignIn = observer(() => {
     return <div className='auth-page sign-in-page'>
         <AuthHeader/>
         <div
-            className={'auth-container'}
+            className={'auth-container' + (loading ? ' loading' : '')}
         >
             {
                 loading
@@ -88,8 +88,7 @@ const SignIn = observer(() => {
                                 setLoading(false)
                                 if (result.success) {
                                     await UserManager.load()
-                                    console.log(UserManager)
-                                // await RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.nickname}`)
+                                    await RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.nickname}`)
                                 }
                             }}
                         />

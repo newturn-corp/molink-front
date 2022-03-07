@@ -36,6 +36,15 @@ export class UserSetting {
         })
     }
 
+    reset () {
+        this.ySetting = null
+        this.setting = null
+        this.hierarchyWidth = 240
+        this.showSubDocumentCount = false
+        this.hierarchyBackgroundColor = '#FAFAFB'
+        this.hierarchySelectedDocumentBackgroundColor = '#ECEEF0'
+    }
+
     updateHierarchyWidth (width: number) {
         this.ySetting.set('hierarchyWidth', width)
     }

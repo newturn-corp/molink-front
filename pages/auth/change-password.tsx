@@ -33,7 +33,7 @@ const AuthChangePasswordPage = () => {
     return <div className='auth-page change-password-page'>
         <AuthHeader/>
         <div
-            className={'auth-container'}
+            className={'auth-container' + (loading ? ' loading' : '')}
         >
             {
                 loading
