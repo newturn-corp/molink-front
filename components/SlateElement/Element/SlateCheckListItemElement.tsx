@@ -44,7 +44,7 @@ export const SlateCheckListItemElement: React.FC<{
               </span>
               <span
                   contentEditable={!readOnly}
-                  suppressContentEditableWarning
+                  suppressContentEditableWarning={true}
                   className={css`
           flex: 1;
           opacity: ${checked ? 0.666 : 1};

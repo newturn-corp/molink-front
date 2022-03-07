@@ -15,6 +15,7 @@ export const ContentTitleComponent: React.FC<{
             ref={titleRef}
             className='title'
             contentEditable={EditorManager.editable}
+            suppressContentEditableWarning={true}
             style={{
                 outline: '0px solid transparent'
             }}

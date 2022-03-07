@@ -62,7 +62,6 @@ class UserManager {
                 })
 
                 this.websocketProvider.on('sync', async (isSynced: boolean) => {
-                    console.log(isSynced)
                     if (isSynced) {
                         isResolved = true
                         await EventManager.issueEvent(Event.UserAuthorization, { result: true })

@@ -8,7 +8,6 @@ import { Unauthorized } from '../Errors/Common'
 class UserAPI extends BaseAPI {
     async getUserID (): Promise<number> {
         const res = await this.get('/main/users/id')
-        console.log(res)
         if (res.status === 401) {
             throw new Unauthorized()
         }

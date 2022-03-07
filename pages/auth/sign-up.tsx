@@ -94,7 +94,7 @@ const SignUp = observer(() => {
                         <AuthInput
                             label="비밀번호"
                             type="password"
-                            autoComplete="current-password"
+                            autoComplete='off'
                             variant="outlined"
                             error={AuthManager.passwordState !== PasswordState.DEFAULT}
                             onChange={(e) => {
