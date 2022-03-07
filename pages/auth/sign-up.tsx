@@ -60,11 +60,6 @@ const SignUp = observer(() => {
                 }
             })
     }, [])
-    if (loading) {
-        return <div className='auth-page'>
-            <CircularProgress color="inherit" />
-        </div>
-    }
     return <div className='auth-page'>
         <AuthHeader/>
         <div
