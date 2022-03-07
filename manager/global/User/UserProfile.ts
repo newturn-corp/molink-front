@@ -23,6 +23,13 @@ export class UserProfile {
         })
     }
 
+    reset () {
+        this.yProfile = null
+        this.profileImageUrl = ''
+        this.biography = ''
+        this.nickname = ''
+    }
+
     // async updateUserProfileImage (event: React.ChangeEvent<HTMLInputElement>) {
     //     event.preventDefault()
     //     const reader = new FileReader()

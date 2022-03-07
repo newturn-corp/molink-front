@@ -72,7 +72,6 @@ class UserManager {
                     }
                 })
                 this.websocketProvider.connect()
-                console.log('요청 보냄')
                 setTimeout(() => {
                     if (!isResolved) {
                         this.isLoading = false
@@ -103,12 +102,12 @@ class UserManager {
         if (this.websocketProvider) {
             this.websocketProvider.destroy()
         }
+        this.profile.reset()
+        this.setting.reset()
         this.userId = null
         this.isUserAuthorized = false
         this.yjsDocument = null
         this.websocketProvider = null
-        this.profile = null
-        this.setting = null
     }
 }
 export default new UserManager()
