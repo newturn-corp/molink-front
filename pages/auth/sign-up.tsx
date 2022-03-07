@@ -80,7 +80,7 @@ const SignUp = observer(() => {
                             type={'text'}
                             label="이메일"
                             variant="outlined"
-                            autoComplete='off'
+                            autoComplete='new-street-address'
                             error={AuthManager.emailState !== EmailState.DEFAULT}
                             onChange={(e) => {
                                 const { value } = e.target
@@ -97,7 +97,7 @@ const SignUp = observer(() => {
                             type={'password'}
                             label="비밀번호"
                             isPassword={true}
-                            autoComplete='off'
+                            autoComplete='new-street-address'
                             variant="outlined"
                             error={AuthManager.passwordState !== PasswordState.DEFAULT}
                             onChange={(e) => {
@@ -118,7 +118,7 @@ const SignUp = observer(() => {
                             type={'password'}
                             label="비밀번호 확인"
                             isPassword={true}
-                            autoComplete='off'
+                            autoComplete='new-street-address'
                             variant="outlined"
                             error={AuthManager.passwordState !== PasswordState.DEFAULT}
                             onChange={(e) => {
