@@ -47,7 +47,7 @@ const AuthChangePasswordPage = () => {
                         <AuthInput
                             label="비밀번호"
                             type="password"
-                            autoComplete="current-password"
+                            autoComplete="new-password"
                             variant='outlined'
                             error={AuthManager.passwordState !== PasswordState.DEFAULT}
                             onChange={(e) => {
@@ -66,7 +66,7 @@ const AuthChangePasswordPage = () => {
                         <AuthInput
                             label="비밀번호 확인"
                             type="password"
-                            autoComplete="current-password"
+                            autoComplete="new-password"
                             variant='outlined'
                             error={AuthManager.passwordState !== PasswordState.DEFAULT}
                             onChange={(e) => {

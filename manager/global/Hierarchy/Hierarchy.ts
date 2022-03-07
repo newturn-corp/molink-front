@@ -41,7 +41,11 @@ export default class Hierarchy {
         this.nickname = nickname
         this.yDocument = new Y.Doc()
         this.yMap = this.yDocument.getMap('documentHierarchyInfoMap')
-        this.yMap.observeDeep(() => {
+        this.yMap.observeDeep(async () => {
+            if (this.openedDocumentId && !this.yMap.get(this.openedDocumentId)) {
+                this.openedDocumentId = null
+                await RoutingManager.moveTo(Page.Blog, `/${this.nickname}`)
+            }
             this.map = this.yMap.toJSON()
         })
 

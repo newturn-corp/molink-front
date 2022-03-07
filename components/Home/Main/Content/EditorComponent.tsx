@@ -17,9 +17,6 @@ export const EditorComponent: React.FC<{
       const decorate = useCallback(([node, path]) => decorateFunc([node, path]), [EditorManager.cursors])
       useEffect(() => {
           EditorManager.editableElement = document.getElementById('editable')
-          window.document.addEventListener('selectionchange', () => {
-              console.log('selection change')
-          })
       }, [])
 
       return <Slate editor={EditorManager.slateEditor} value={[]} onChange={value => {
@@ -37,7 +34,6 @@ export const EditorComponent: React.FC<{
                   await handleKeyDown(event, EditorManager.slateEditor)
               }}
               onDOMBeforeInput={(event: InputEvent) => {
-                  console.log(event)
                   handleDOMBeforeInput(event)
               }}
           />

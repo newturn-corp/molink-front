@@ -15,8 +15,7 @@ export const getParents = (
     return getParents(pageMap, page.parentId, accumulatedValue)
 }
 
-// 현재 자식이 아닌 최초 요청한 pageID도 들어가는 버그가 있음
-export const getChildren = (
+const _getChildren = (
     pageMap: {
         [index: string]: any
     },
@@ -26,9 +25,17 @@ export const getChildren = (
         return [pageId]
     }
     return page.children.reduce((prev: string[], current: string) => {
-        prev.push(...getChildren(pageMap, current))
+        prev.push(..._getChildren(pageMap, current))
         return prev
-    }, [pageId])
+    }, [pageId]).filter(id => id !== pageId)
+}
+
+export const getChildren = (
+    pageMap: {
+        [index: string]: any
+    },
+    pageId: string) => {
+    return _getChildren(pageMap, pageId).filter(id => id !== pageId)
 }
 
 export const visibilityToText = (visibility: PageVisibility) => {

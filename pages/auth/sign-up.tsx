@@ -60,11 +60,6 @@ const SignUp = observer(() => {
                 }
             })
     }, [])
-    if (loading) {
-        return <div className='auth-page'>
-            <CircularProgress color="inherit" />
-        </div>
-    }
     return <div className='auth-page'>
         <AuthHeader/>
         <div
@@ -76,10 +71,11 @@ const SignUp = observer(() => {
                     : <>
                         <AuthTitle text={'계정 생성'}/>
                         <AuthInput
+                            name={Math.random().toString()}
+                            type={'text'}
                             label="이메일"
-                            type="email"
                             variant="outlined"
-                            autoComplete='off'
+                            autoComplete='new-street-address'
                             error={AuthManager.emailState !== EmailState.DEFAULT}
                             onChange={(e) => {
                                 const { value } = e.target
@@ -89,12 +85,15 @@ const SignUp = observer(() => {
                             onFocus={(e) => {
                                 AuthManager.emailState = EmailState.DEFAULT
                             }}
+                            defaultValue={AuthManager.email}
                             helperText={getEmailHelperText(AuthManager.emailState)}
                         />
                         <AuthInput
+                            name={Math.random().toString()}
+                            type={'password'}
                             label="비밀번호"
-                            type="password"
-                            autoComplete="current-password"
+                            isPassword={true}
+                            autoComplete='new-password'
                             variant="outlined"
                             error={AuthManager.passwordState !== PasswordState.DEFAULT}
                             onChange={(e) => {
@@ -108,12 +107,15 @@ const SignUp = observer(() => {
                             onPaste={(e) => {
                                 e.preventDefault()
                             }}
+                            defaultValue={AuthManager.pwd}
                             helperText={getPasswordHelperText(AuthManager.passwordState)}
                         />
                         <AuthInput
+                            name={Math.random().toString()}
+                            type={'password'}
                             label="비밀번호 확인"
-                            type="password"
-                            autoComplete="current-password"
+                            isPassword={true}
+                            autoComplete='new-password'
                             variant="outlined"
                             error={AuthManager.passwordState !== PasswordState.DEFAULT}
                             onChange={(e) => {
@@ -126,10 +128,12 @@ const SignUp = observer(() => {
                             onPaste={(e) => {
                                 e.preventDefault()
                             }}
+                            defaultValue={AuthManager.pwdCheck}
                         />
                         <AuthInput
+                            name={Math.random().toString()}
+                            type={'text'}
                             label="닉네임"
-                            type="text"
                             autoComplete='off'
                             variant='outlined'
                             error={AuthManager.nicknameState !== NicknameState.Default}
@@ -138,6 +142,7 @@ const SignUp = observer(() => {
                                 AuthManager.nicknameState = NicknameState.Default
                                 AuthManager.nickname = value
                             }}
+                            defaultValue={AuthManager.nickname}
                             helperText={getNicknameHelperText(AuthManager.nicknameState)}
                         />
                         <AuthButton
@@ -149,7 +154,6 @@ const SignUp = observer(() => {
                                 const result = await AuthManager.signup()
                                 setLoading(false)
                                 if (result.success) {
-                                    FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '회원가입 성공', '', 5)
                                     await RoutingManager.moveTo(Page.SignIn)
                                 }
                             }}
