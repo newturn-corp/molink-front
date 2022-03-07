@@ -154,7 +154,6 @@ const SignUp = observer(() => {
                                 const result = await AuthManager.signup()
                                 setLoading(false)
                                 if (result.success) {
-                                    FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '회원가입 성공', '', 5)
                                     await RoutingManager.moveTo(Page.SignIn)
                                 }
                             }}

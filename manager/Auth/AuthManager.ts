@@ -137,7 +137,7 @@ class AuthManager {
                 }
                 return { success: false }
             }
-            FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '이메일 인증 전송', '입력하신 이메일로 인증 링크가 전송되었습니다. 링크를 눌러 가입을 완료하시기 바랍니다.')
+            FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '인증 메일이 발송되었습니다!', '')
             return { success: true }
         }
     }
@@ -157,10 +157,10 @@ class AuthManager {
     }
 
     async startPasswordChange () {
-        // if (!this.validateEmail(this.email)) {
-        //     this.emailState = EmailState.NOT_EMAIL
-        //     return { success: false }
-        // }
+        if (!this.validateEmail(this.email)) {
+            this.emailState = EmailState.NOT_EMAIL
+            return { success: false }
+        }
         const result = await AuthAPI.startPasswordChange(this.email)
         if (result.success === false) {
             if (result.failReason === START_PASSWORD_CHANGE_FAIL_REASON.INVALID_EMAIL) {
@@ -172,7 +172,7 @@ class AuthManager {
             }
             return { success: false }
         }
-        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '메일 전송 성공', '메일 전송이 완료되었습니다.\n인증 메일은 15분 동안 유효하니 가능한 빨리 메일함을 확인하고 비밀번호 변경을 완료해주시기 바랍니다.')
+        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '비밀번호 변경 메일이 전송되었습니다!', '')
         return { success: true }
     }
 
@@ -194,7 +194,7 @@ class AuthManager {
             }
             return { success: false }
         }
-        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '비밀번호 변경 성공', '비밀번호 변경이 완료되었습니다.')
+        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '비밀번호 변경이 완료되었습니다!', '')
         return { success: true }
     }
 }
