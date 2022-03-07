@@ -22,10 +22,10 @@ export const DocumentComponent: React.FC<{
 
       const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
       const pageDragManager = currentHierarchy.pageDragManager
-      const document = currentHierarchy.map[documentId]
-      const isSelected = currentHierarchy.selectedDocumentId === document.id
-      const isChangingName = currentHierarchy.nameChangingDocumentId === document.id
-      const isOpen = currentHierarchy.openedDocumentId === document.id
+      const page = currentHierarchy.map[documentId]
+      const isSelected = currentHierarchy.selectedDocumentId === page.id
+      const isChangingName = currentHierarchy.nameChangingDocumentId === page.id
+      const isOpen = currentHierarchy.openedDocumentId === page.id
       const hierarchySelectedDocumentBackgroundColor = UserManager.setting ? UserManager.setting.hierarchySelectedDocumentBackgroundColor : '#ECEEF0'
 
       const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
@@ -34,20 +34,20 @@ export const DocumentComponent: React.FC<{
           ghost.style.color = '#333333'
           ghost.style.width = '240px'
           ghost.style.height = '33px'
-          ghost.innerHTML = document.title
+          ghost.innerHTML = page.title
           ghost.style.position = 'absolute'
           ghost.style.top = '0px'
           ghost.style.right = '0px'
           globalThis.document.getElementsByClassName('drag-ghost-parent')[0].appendChild(ghost)
           event.dataTransfer.setDragImage(ghost, event.clientX, event.clientY - divRef.current.getBoundingClientRect().y)
-          pageDragManager.handleDragStart(document.id)
+          pageDragManager.handleDragStart(page.id)
       }
       // TODO: 백그라운드 고치기
       return (
           <>
               <ListItem
-                  id={`document-${document.id}`}
-                  key={`page-${document.id}`}
+                  id={`document-${page.id}`}
+                  key={`page-${page.id}`}
                   button
                   ref={divRef}
                   style={{
@@ -66,28 +66,28 @@ export const DocumentComponent: React.FC<{
                       }
                   }}
                   onDragStart={(event) => handleDragStart(event)}
-                  onDragOver={(event) => pageDragManager.handleDragOver(event, document.id)}
+                  onDragOver={(event) => pageDragManager.handleDragOver(event, page.id)}
                   onDragEnd={(event) => pageDragManager.handleDragEnd(ghost)}
-                  onDragLeave={() => pageDragManager.handleDragLeave(document.id)}
+                  onDragLeave={() => pageDragManager.handleDragLeave(page.id)}
                   onContextMenu={(event) => {
                       event.preventDefault()
                       event.stopPropagation()
-                      HierarchyManager.openContextMenu(document.id)
+                      HierarchyManager.openContextMenu(page.id)
                   }}
                   onMouseOver={() => setIsMouseOver(true)}
                   onMouseLeave={() => setIsMouseOver(false)}
               >
                   <DocumentChildrenOpenButton
                       documentId={documentId}
-                      key={`page-children-open-${document.id}`}
+                      key={`page-children-open-${page.id}`}
                   />
                   <DocumentIcon
-                      document={document}
-                      key={`page-icon-${document.id}`}
+                      document={page}
+                      key={`page-icon-${page.id}`}
                   />
                   <DocumentTitle
                       documentId={documentId}
-                      key={`page-title-${document.id}`}
+                      key={`page-title-${page.id}`}
                   />
                   {
                       isMouseOver
@@ -99,10 +99,10 @@ export const DocumentComponent: React.FC<{
                           </>
                   }
               </ListItem>
-              <Collapse in={document.childrenOpen} timeout="auto" unmountOnExit>
-                  <List id={`document-child-list-${document.id}`} component="div" disablePadding>
+              <Collapse in={page.childrenOpen} timeout="auto" unmountOnExit>
+                  <List id={`document-child-list-${page.id}`} component="div" disablePadding>
                       {
-                          document.children.map(childDocumentId => {
+                          page.children.map(childDocumentId => {
                               return <DocumentComponent key={Math.random()} documentId={childDocumentId} depth={depth + 1}/>
                           })
                       }

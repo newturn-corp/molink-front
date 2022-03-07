@@ -2,6 +2,9 @@ import HierarchyManager from './HierarchyManager'
 import DialogManager from '../../global/DialogManager'
 import RoutingManager, { Page } from '../../global/RoutingManager'
 import Hierarchy from './Hierarchy'
+import { getChildren } from './HierarchyUtils'
+import ContentAPI from '../../../api/ContentAPI'
+import { DeleteContentsDTO } from '@newturn-develop/types-molink'
 
 export abstract class HierarchyControlOption {
     name: string = ''
@@ -58,12 +61,16 @@ export class DeleteDocumentOption extends HierarchyControlOption {
 
     async handleOnClick () {
         const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-        const document = currentHierarchy.yMap.get(this.documentId)
-        const childrenCount = this.getChildrenCount(currentHierarchy, document.id)
-        const msg = childrenCount > 0 ? `${document.title} 문서와 그 하위 문서 ${childrenCount}개를 모두 제거합니다.` : `${document.title} 문서를 제거합니다.`
+        const page = currentHierarchy.yMap.get(this.documentId)
+        const childIDList = getChildren(currentHierarchy.map, page.id)
+        const msg = childIDList.length > 0 ? `${page.title} 문서와 그 하위 문서 ${childIDList.length}개를 모두 제거합니다.` : `${page.title} 문서를 제거합니다.`
         const index = await DialogManager.openDialog('문서 삭제', msg, ['확인'])
         if (index !== 0) {
             return
+        }
+        const isOpenedDocumentIncludes = currentHierarchy.openedDocumentId === page.id || childIDList.includes(currentHierarchy.openedDocumentId)
+        if (isOpenedDocumentIncludes) {
+            currentHierarchy.openedDocumentId = null
         }
 
         currentHierarchy.yDocument.transact(() => {
@@ -86,8 +93,16 @@ export class DeleteDocumentOption extends HierarchyControlOption {
                 }
                 currentHierarchy.yMap.set(targetDocument.parentId, parent)
             }
+            for (const childID of childIDList) {
+                currentHierarchy.yMap.delete(childID)
+            }
+            currentHierarchy.yMap.delete(page.id)
         })
+        await ContentAPI.deleteContents(new DeleteContentsDTO(childIDList))
         currentHierarchy.selectedDocumentId = null
+        if (isOpenedDocumentIncludes) {
+            await RoutingManager.moveTo(Page.Blog, `/${currentHierarchy.nickname}`)
+        }
     }
 }
 

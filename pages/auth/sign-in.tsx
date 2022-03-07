@@ -11,20 +11,19 @@ import { AuthButton } from '../../components/auth/AuthButton'
 import UserManager from '../../manager/global/User/UserManager'
 
 const getEmailHelperText = (emailState: EmailState) => {
-    console.log(emailState)
     if (emailState === EmailState.DEFAULT) {
-        return <></>
+        return undefined
     }
     switch (emailState) {
     case EmailState.NOT_EMAIL:
-        return <p className='helper-text' style={{ color: 'red' }}>{'이메일 형식이 아닙니다.'}</p>
+        return '이메일 형식이 아닙니다.'
     case EmailState.NOT_AUTHORIZED:
     case EmailState.WRONG_EMAIL_PASSWORD:
-        return <p className='helper-text' style={{ color: 'red' }}>{'이메일 혹은 비밀번호가 잘못 입력되었습니다.'}</p>
+        return '이메일 혹은 비밀번호가 잘못 입력되었습니다.'
     case EmailState.TOO_MANY_REQUEST:
-        return <p className='helper-text' style={{ color: 'red' }}>{'요청을 너무 많이 보냈습니다. 잠시 뒤 다시 시도해주세요.'}</p>
+        return '요청을 너무 많이 보냈습니다. 잠시 뒤 다시 시도해주세요.'
     }
-    return <></>
+    return undefined
 }
 
 const SignIn = observer(() => {
@@ -61,8 +60,8 @@ const SignIn = observer(() => {
                                 AuthManager.emailState = EmailState.DEFAULT
                                 AuthManager.email = value
                             }}
+                            helperText={getEmailHelperText(AuthManager.emailState)}
                         />
-                        {getEmailHelperText(AuthManager.emailState)}
                         <AuthInput
                             label="비밀번호"
                             type="password"
