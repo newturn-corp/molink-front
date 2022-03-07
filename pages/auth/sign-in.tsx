@@ -97,7 +97,11 @@ const SignIn = observer(() => {
                             textColor={'#3A7BBF'}
                             backgroundColor={'#FFFFFF'}
                             border={'1px solid #3A7BBF'}
-                            onClick={() => RoutingManager.moveTo(Page.SignUp)}
+                            onClick={async () => {
+                                setLoading(true)
+                                await RoutingManager.moveTo(Page.SignUp)
+                                setLoading(false)
+                            }}
                         />
                         <div
                             className={'reset-password-button'}
