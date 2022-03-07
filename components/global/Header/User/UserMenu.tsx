@@ -6,6 +6,7 @@ import SupportManager from '../../../../manager/global/SupportManager'
 import { Portal } from '../../../utils/Portal'
 import { UserMenuItem } from './UserMenuItem'
 import UserManager from '../../../../manager/global/User/UserManager'
+import SettingManager from '../../../../manager/global/Setting/SettingManager'
 
 export const UserMenu: React.FC<{
 }> = observer(() => {
@@ -20,13 +21,13 @@ export const UserMenu: React.FC<{
                     SupportManager.showSupportModal = true
                 }}
             />
-            <UserMenuItem
-                text={'설정'}
-                onClick={async () => {
-                    UserManager.isUserMenuOpen = false
-                    await RoutingManager.moveTo(Page.SettingProfile)
-                }}
-            />
+            {/* <UserMenuItem */}
+            {/*     text={'설정'} */}
+            {/*     onClick={async () => { */}
+            {/*         UserManager.isUserMenuOpen = false */}
+            {/*         SettingManager.openSettingModal() */}
+            {/*     }} */}
+            {/* /> */}
             <UserMenuItem
                 text={'로그아웃'}
                 onClick={async () => {
