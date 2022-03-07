@@ -9,7 +9,7 @@ import { ToolbarOnOffButton } from './ToolbarOnOffButton'
 export const ContentToolbar: React.FC<{
   }> = observer(() => {
       const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-      if (!currentHierarchy || !currentHierarchy.openedDocumentId) {
+      if (!currentHierarchy || !currentHierarchy.openedDocumentId || !currentHierarchy.editable) {
           return <></>
       }
       return <div
@@ -25,9 +25,5 @@ export const ContentToolbar: React.FC<{
                   </>
           }
           <ToolbarOnOffButton/>
-          {/* <div className={'right-content-toolbar'}> */}
-          {/*     <LockButton/> */}
-          {/*     <VisibilityButton/> */}
-          {/* </div> */}
       </div>
   })

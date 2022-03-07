@@ -145,6 +145,7 @@ class EditorManager {
                     this.awareness
                 ))
         }
+        await EventManager.issueEvent(Event.LoadContent)
         currentHierarchy.openedDocumentId = documentId
     }
 

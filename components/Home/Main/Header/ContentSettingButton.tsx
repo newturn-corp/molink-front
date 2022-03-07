@@ -6,6 +6,7 @@ export interface ContentHeaderSettingButtonProp {
     onClick: MouseEventHandler<HTMLDivElement>
     icon: ReactNode
     tooltip: string
+    active: boolean
 }
 
 export const ContentSettingButton: React.FC<ContentHeaderSettingButtonProp> = observer((props) => {
@@ -15,8 +16,13 @@ export const ContentSettingButton: React.FC<ContentHeaderSettingButtonProp> = ob
         overlayClassName={'control-button-tooltip'}
     >
         <div
-            className='setting-button'
-            onClick={(event) => props.onClick(event)}
+            className={'setting-button' + (props.active ? ' active' : '')}
+            onClick={(event) => {
+                if (!props.active) {
+                    return
+                }
+                props.onClick(event)
+            }}
         >
             {props.icon}
         </div>

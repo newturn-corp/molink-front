@@ -18,6 +18,11 @@ export const ContentHeader: React.FC<{
         style={StyleManager.contentStyle.header}
     >
         <PageHierarchyList/>
-        <ContentControlButtonGroup/>
+        {
+            currentHierarchy.editable
+                ? <ContentControlButtonGroup/>
+                : <></>
+        }
+
     </div>
 })

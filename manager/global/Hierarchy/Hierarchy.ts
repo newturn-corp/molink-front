@@ -46,6 +46,7 @@ export default class Hierarchy {
                 this.openedDocumentId = null
                 await RoutingManager.moveTo(Page.Blog, `/${this.nickname}`)
             }
+            console.log(this.yMap.toJSON())
             this.map = this.yMap.toJSON()
         })
 
@@ -147,12 +148,9 @@ export default class Hierarchy {
     }
 
     public updateHierarchyChildrenOpen (pageId: string, isOpen: boolean) {
-        if (!this.editable) {
-            return
-        }
-        const document = this.yMap.get(pageId)
-        document.childrenOpen = isOpen
-        this.yMap.set(pageId, document)
+        const page = this.yMap.get(pageId)
+        page.childrenOpen = isOpen
+        this.yMap.set(pageId, page)
     }
 
     public updatePageTitle (pageId: string, title: string) {
