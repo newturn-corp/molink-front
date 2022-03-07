@@ -17,6 +17,7 @@ import {
     defaultContentContainerStyle, defaultContentHeaderStyle,
     defaultContentMainStyle, defaultContentToolbarStyle, defaultToolbarOnOffButtonStyle, defaultVisibilityMenuStyle
 } from './ContentStyle/constants'
+import EditorManager from '../../Blog/EditorManager'
 
 export class ContentStyle {
     _container: ContentContainerStyleInterface = defaultContentContainerStyle
@@ -63,6 +64,9 @@ export class ContentStyle {
             this.refresh()
         }, 1)
         EventManager.addEventListener(Event.ToolbarOnOffChange, ({ isToolbarOpen }: ToolbarOnOffChangeParam) => this.handleToolbarOnOffChange(isToolbarOpen), 1)
+        EventManager.addEventListener(Event.LoadContent, () => {
+            this.handleLoadContent()
+        }, 1)
     }
 
     handleInitGlobalVariable () {
@@ -86,6 +90,14 @@ export class ContentStyle {
         }
         this._body.top = this._header.height + this._toolbar.height
         this._body.height = window.innerHeight - this._body.top - 56
+    }
+
+    handleLoadContent () {
+        if (!EditorManager.editable) {
+            this._header.top = 0
+            this._body.top = this._header.height
+            this._body.height = window.innerHeight - this._body.top - 56
+        }
     }
 
     refresh () {

@@ -13,7 +13,9 @@ export const DocumentChildrenOpenButton: React.FC<{
           await currentHierarchy.updateHierarchyChildrenOpen(documentId, !document.childrenOpen)
       }
 
-      return <div className='child-open-button' onClick={(event) => handleClick(event)}>
+      return <div
+          className='child-open-button'
+          onClick={(event) => handleClick(event)}>
           {
               document.childrenOpen
                   ? <ArrowDropDown />

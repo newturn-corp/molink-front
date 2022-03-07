@@ -7,7 +7,7 @@ export enum Event {
     InitGlobalVariable,
 
     NewEditorOpen,
-    LoadingContent,
+    LoadContent,
     EditorChange,
     SignOut,
     UpdateHierarchy,
@@ -40,7 +40,7 @@ export const eventList = [
     Event.MoveToAnotherPage,
 
     Event.NewEditorOpen,
-    Event.LoadingContent,
+    Event.LoadContent,
     Event.EditorChange,
     Event.SignOut,
     Event.UpdateHierarchy,

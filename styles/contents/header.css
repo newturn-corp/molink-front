@@ -48,7 +48,6 @@
   padding: 3px;
   border-radius: 4px;
   transition: top 0.25s;
-  cursor: pointer;
   margin: 0 3px;
 }
 .content-header .content-control-button-group .setting-button svg {
@@ -56,7 +55,11 @@
   height: 100%;
   transition: fill 0.25s;
 }
-.content-header .content-control-button-group .setting-button:hover {
+.content-header .content-control-button-group .setting-button.active {
+  transition: top 0.25s;
+  cursor: pointer;
+}
+.content-header .content-control-button-group .setting-button.active:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
 
