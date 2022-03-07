@@ -29,69 +29,77 @@ const AuthChangePasswordPage = () => {
             }
         })
     })
-    AuthManager.passwordState = PasswordState.DEFAULT
     const [loading, setLoading] = useState(false)
     return <div className='auth-page change-password-page'>
-        <Backdrop open={loading} onClick={() => setLoading(false)}>
-            <CircularProgress color="inherit" />
-        </Backdrop>
         <AuthHeader/>
         <div
             className={'auth-container'}
         >
-            <AuthTitle text={'비밀번호 변경'}/>
-            <AuthInput
-                label="비밀번호"
-                type="password"
-                autoComplete="current-password"
-                variant='outlined'
-                error={AuthManager.passwordState !== PasswordState.DEFAULT}
-                onChange={(e) => {
-                    const { value } = e.target
-                    AuthManager.passwordState = PasswordState.DEFAULT
-                    AuthManager.pwd = value
-                }}
-                onFocus={(e) => {
-                    AuthManager.passwordState = PasswordState.DEFAULT
-                }}
-                onPaste={(e) => {
-                    e.preventDefault()
-                }}
-                helperText={getPasswordHelperText(AuthManager.passwordState)}
-            />
-            <AuthInput
-                label="비밀번호 확인"
-                type="password"
-                autoComplete="current-password"
-                variant='outlined'
-                error={AuthManager.passwordState !== PasswordState.DEFAULT}
-                onChange={(e) => {
-                    AuthManager.passwordState = PasswordState.DEFAULT
-                    AuthManager.pwdCheck = e.target.value
-                }}
-                onFocus={(e) => {
-                    AuthManager.passwordState = PasswordState.DEFAULT
-                }}
-                onPaste={(e) => {
-                    e.preventDefault()
-                }}
-            />
-            <AuthButton
-                text={'비밀번호 변경'}
-                textColor={'#FFFFFF'}
-                backgroundColor={'#3A7BBF'}
-                style={{
-                    marginTop: 44
-                }}
-                onClick={async (e) => {
-                    setLoading(true)
-                    const result = await AuthManager.endPasswordChange(key)
-                    if (result.success || result.goToLogin) {
-                        await RoutingManager.moveTo(Page.SignIn)
-                    }
-                    setLoading(false)
-                }}
-            />
+            {
+                loading
+                    ? <>
+                        <CircularProgress
+                            color="inherit"
+                        />
+                    </>
+                    : <>
+                        <AuthTitle text={'비밀번호 변경'}/>
+                        <AuthInput
+                            label="비밀번호"
+                            type="password"
+                            autoComplete="current-password"
+                            variant='outlined'
+                            error={AuthManager.passwordState !== PasswordState.DEFAULT}
+                            onChange={(e) => {
+                                const { value } = e.target
+                                AuthManager.passwordState = PasswordState.DEFAULT
+                                AuthManager.pwd = value
+                            }}
+                            onFocus={(e) => {
+                                AuthManager.passwordState = PasswordState.DEFAULT
+                            }}
+                            onPaste={(e) => {
+                                e.preventDefault()
+                            }}
+                            helperText={getPasswordHelperText(AuthManager.passwordState)}
+                        />
+                        <AuthInput
+                            label="비밀번호 확인"
+                            type="password"
+                            autoComplete="current-password"
+                            variant='outlined'
+                            error={AuthManager.passwordState !== PasswordState.DEFAULT}
+                            onChange={(e) => {
+                                AuthManager.passwordState = PasswordState.DEFAULT
+                                AuthManager.pwdCheck = e.target.value
+                            }}
+                            onFocus={(e) => {
+                                AuthManager.passwordState = PasswordState.DEFAULT
+                            }}
+                            onPaste={(e) => {
+                                e.preventDefault()
+                            }}
+                        />
+                        <AuthButton
+                            text={'비밀번호 변경'}
+                            textColor={'#FFFFFF'}
+                            backgroundColor={'#3A7BBF'}
+                            style={{
+                                marginTop: 44
+                            }}
+                            onClick={async (e) => {
+                                setLoading(true)
+                                const result = await AuthManager.endPasswordChange(key)
+                                if (result.success || result.goToLogin) {
+                                    await RoutingManager.moveTo(Page.SignIn)
+                                }
+                                setLoading(false)
+                            }}
+                        />
+                    </>
+
+            }
+
         </div>
     </div>
 }

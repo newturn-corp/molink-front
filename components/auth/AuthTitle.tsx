@@ -10,6 +10,7 @@ const Title = styled.div`
   text-align: center;
   color: #131415;
   margin-bottom: 40px;
+  user-select: none;
 `
 
 export const AuthTitle: React.FC<{

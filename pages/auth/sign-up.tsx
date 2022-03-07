@@ -60,94 +60,102 @@ const SignUp = observer(() => {
                 }
             })
     }, [])
-    return <div className='auth-page'>
-        <Backdrop open={loading} onClick={() => setLoading(false)}>
+    if (loading) {
+        return <div className='auth-page'>
             <CircularProgress color="inherit" />
-        </Backdrop>
+        </div>
+    }
+    return <div className='auth-page'>
         <AuthHeader/>
         <div
             className={'auth-container'}
         >
-            <AuthTitle text={'계정 생성'}/>
-            <AuthInput
-                label="이메일"
-                type="email"
-                variant="outlined"
-                autoComplete='off'
-                error={AuthManager.emailState !== EmailState.DEFAULT}
-                onChange={(e) => {
-                    const { value } = e.target
-                    AuthManager.emailState = EmailState.DEFAULT
-                    AuthManager.email = value
-                }}
-                onFocus={(e) => {
-                    AuthManager.emailState = EmailState.DEFAULT
-                }}
-                helperText={getEmailHelperText(AuthManager.emailState)}
-            />
-            <AuthInput
-                label="비밀번호"
-                type="password"
-                autoComplete="current-password"
-                variant="outlined"
-                error={AuthManager.passwordState !== PasswordState.DEFAULT}
-                onChange={(e) => {
-                    const { value } = e.target
-                    AuthManager.passwordState = PasswordState.DEFAULT
-                    AuthManager.pwd = value
-                }}
-                onFocus={(e) => {
-                    AuthManager.passwordState = PasswordState.DEFAULT
-                }}
-                onPaste={(e) => {
-                    e.preventDefault()
-                }}
-                helperText={getPasswordHelperText(AuthManager.passwordState)}
-            />
-            <AuthInput
-                label="비밀번호 확인"
-                type="password"
-                autoComplete="current-password"
-                variant="outlined"
-                error={AuthManager.passwordState !== PasswordState.DEFAULT}
-                onChange={(e) => {
-                    AuthManager.passwordState = PasswordState.DEFAULT
-                    AuthManager.pwdCheck = e.target.value
-                }}
-                onFocus={(e) => {
-                    AuthManager.passwordState = PasswordState.DEFAULT
-                }}
-                onPaste={(e) => {
-                    e.preventDefault()
-                }}
-            />
-            <AuthInput
-                label="닉네임"
-                type="text"
-                autoComplete='off'
-                variant='outlined'
-                error={AuthManager.nicknameState !== NicknameState.Default}
-                onChange={(e) => {
-                    const { value } = e.target
-                    AuthManager.nicknameState = NicknameState.Default
-                    AuthManager.nickname = value
-                }}
-                helperText={getNicknameHelperText(AuthManager.nicknameState)}
-            />
-            <AuthButton
-                text={'계정 생성'}
-                backgroundColor={'#FFFFFF'}
-                textColor={'#3A7BBF'}
-                onClick={async () => {
-                    setLoading(true)
-                    const result = await AuthManager.signup()
-                    setLoading(false)
-                    if (result.success) {
-                        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '회원가입 성공', '', 5)
-                        await RoutingManager.moveTo(Page.SignIn)
-                    }
-                }}
-            />
+            {
+                loading
+                    ? <CircularProgress color="inherit" />
+                    : <>
+                        <AuthTitle text={'계정 생성'}/>
+                        <AuthInput
+                            label="이메일"
+                            type="email"
+                            variant="outlined"
+                            autoComplete='off'
+                            error={AuthManager.emailState !== EmailState.DEFAULT}
+                            onChange={(e) => {
+                                const { value } = e.target
+                                AuthManager.emailState = EmailState.DEFAULT
+                                AuthManager.email = value
+                            }}
+                            onFocus={(e) => {
+                                AuthManager.emailState = EmailState.DEFAULT
+                            }}
+                            helperText={getEmailHelperText(AuthManager.emailState)}
+                        />
+                        <AuthInput
+                            label="비밀번호"
+                            type="password"
+                            autoComplete="current-password"
+                            variant="outlined"
+                            error={AuthManager.passwordState !== PasswordState.DEFAULT}
+                            onChange={(e) => {
+                                const { value } = e.target
+                                AuthManager.passwordState = PasswordState.DEFAULT
+                                AuthManager.pwd = value
+                            }}
+                            onFocus={(e) => {
+                                AuthManager.passwordState = PasswordState.DEFAULT
+                            }}
+                            onPaste={(e) => {
+                                e.preventDefault()
+                            }}
+                            helperText={getPasswordHelperText(AuthManager.passwordState)}
+                        />
+                        <AuthInput
+                            label="비밀번호 확인"
+                            type="password"
+                            autoComplete="current-password"
+                            variant="outlined"
+                            error={AuthManager.passwordState !== PasswordState.DEFAULT}
+                            onChange={(e) => {
+                                AuthManager.passwordState = PasswordState.DEFAULT
+                                AuthManager.pwdCheck = e.target.value
+                            }}
+                            onFocus={(e) => {
+                                AuthManager.passwordState = PasswordState.DEFAULT
+                            }}
+                            onPaste={(e) => {
+                                e.preventDefault()
+                            }}
+                        />
+                        <AuthInput
+                            label="닉네임"
+                            type="text"
+                            autoComplete='off'
+                            variant='outlined'
+                            error={AuthManager.nicknameState !== NicknameState.Default}
+                            onChange={(e) => {
+                                const { value } = e.target
+                                AuthManager.nicknameState = NicknameState.Default
+                                AuthManager.nickname = value
+                            }}
+                            helperText={getNicknameHelperText(AuthManager.nicknameState)}
+                        />
+                        <AuthButton
+                            text={'계정 생성'}
+                            backgroundColor={'#FFFFFF'}
+                            textColor={'#3A7BBF'}
+                            onClick={async () => {
+                                setLoading(true)
+                                const result = await AuthManager.signup()
+                                setLoading(false)
+                                if (result.success) {
+                                    FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '회원가입 성공', '', 5)
+                                    await RoutingManager.moveTo(Page.SignIn)
+                                }
+                            }}
+                        />
+                    </>
+            }
         </div>
     </div>
 })

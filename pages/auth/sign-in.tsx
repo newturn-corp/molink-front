@@ -36,76 +36,78 @@ const SignIn = observer(() => {
                 }
             })
     }, [])
-
     const [loading, setLoading] = useState(false)
     return <div className='auth-page sign-in-page'>
-        <Backdrop open={loading} onClick={() => setLoading(false)}>
-            <CircularProgress color="inherit" />
-        </Backdrop>
         <AuthHeader/>
         <div
             className={'auth-container'}
         >
-            <AuthTitle text={'로그인'}/>
-            <AuthInput
-                label="이메일"
-                type="email"
-                variant="outlined"
-                autoComplete='off'
-                style={{
-                    marginBottom: 12
-                }}
-                error={AuthManager.emailState !== EmailState.DEFAULT}
-                onChange={(e) => {
-                    const { value } = e.target
-                    AuthManager.emailState = EmailState.DEFAULT
-                    AuthManager.email = value
-                }}
-            />
-            {getEmailHelperText(AuthManager.emailState)}
-            <AuthInput
-                label="비밀번호"
-                type="password"
-                autoComplete="current-password"
-                variant="outlined"
-                error={AuthManager.passwordState !== PasswordState.DEFAULT}
-                onChange={(e) => {
-                    const { value } = e.target
-                    AuthManager.passwordState = PasswordState.DEFAULT
-                    AuthManager.pwd = value
-                }}
-            />
-            <AuthButton
-                text={'로그인'}
-                textColor={'#FFFFFF'}
-                backgroundColor={'#3A7BBF'}
-                style={{
-                    marginTop: 22
-                }}
-                onClick={async (e) => {
-                    setLoading(true)
-                    const result = await AuthManager.signIn()
-                    setLoading(false)
-                    if (result.success) {
-                        await UserManager.load()
-                        console.log(UserManager)
-                        // await RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.nickname}`)
-                    }
-                }}
-            />
-            <AuthButton
-                text={'계정 생성'}
-                textColor={'#3A7BBF'}
-                backgroundColor={'#FFFFFF'}
-                border={'1px solid #3A7BBF'}
-                onClick={() => RoutingManager.moveTo(Page.SignUp)}
-            />
-            <div
-                className={'reset-password-button'}
-                onClick={() => RoutingManager.moveTo(Page.changePasswordRequest)}
-            >
-                {'비밀번호를 잊으셨나요?'}
-            </div>
+            {
+                loading
+                    ? <CircularProgress color="inherit" />
+                    : <>
+                        <AuthTitle text={'로그인'}/>
+                        <AuthInput
+                            label="이메일"
+                            type="email"
+                            variant="outlined"
+                            autoComplete='off'
+                            style={{
+                                marginBottom: 12
+                            }}
+                            error={AuthManager.emailState !== EmailState.DEFAULT}
+                            onChange={(e) => {
+                                const { value } = e.target
+                                AuthManager.emailState = EmailState.DEFAULT
+                                AuthManager.email = value
+                            }}
+                        />
+                        {getEmailHelperText(AuthManager.emailState)}
+                        <AuthInput
+                            label="비밀번호"
+                            type="password"
+                            autoComplete="current-password"
+                            variant="outlined"
+                            error={AuthManager.passwordState !== PasswordState.DEFAULT}
+                            onChange={(e) => {
+                                const { value } = e.target
+                                AuthManager.passwordState = PasswordState.DEFAULT
+                                AuthManager.pwd = value
+                            }}
+                        />
+                        <AuthButton
+                            text={'로그인'}
+                            textColor={'#FFFFFF'}
+                            backgroundColor={'#3A7BBF'}
+                            style={{
+                                marginTop: 22
+                            }}
+                            onClick={async (e) => {
+                                setLoading(true)
+                                const result = await AuthManager.signIn()
+                                setLoading(false)
+                                if (result.success) {
+                                    await UserManager.load()
+                                    console.log(UserManager)
+                                // await RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.nickname}`)
+                                }
+                            }}
+                        />
+                        <AuthButton
+                            text={'계정 생성'}
+                            textColor={'#3A7BBF'}
+                            backgroundColor={'#FFFFFF'}
+                            border={'1px solid #3A7BBF'}
+                            onClick={() => RoutingManager.moveTo(Page.SignUp)}
+                        />
+                        <div
+                            className={'reset-password-button'}
+                            onClick={() => RoutingManager.moveTo(Page.changePasswordRequest)}
+                        >
+                            {'비밀번호를 잊으셨나요?'}
+                        </div>
+                    </>
+            }
         </div>
     </div>
 })
