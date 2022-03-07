@@ -5,6 +5,7 @@
   height: 56px;
   background: #FFFFFF;
   box-shadow: 0px 3px 4px rgba(145, 158, 171, 0.12);
+  user-select: none;
 }
 .auth-header .logo {
   display: block;
@@ -35,6 +36,7 @@
   text-align: center;
   color: #131415;
   margin-bottom: 40px;
+  user-select: none;
 }
 .auth-container .change-password-description {
   font-family: Pretendard;
@@ -56,6 +58,7 @@
   margin-bottom: 20px;
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.25s;
 }
 .auth-button .text {
   font-family: Pretendard;
@@ -98,6 +101,12 @@
   width: 300px;
   display: block;
   margin: 0 auto;
+}
+.auth-page .auth-container.loading {
+  padding: 180px;
+}
+.auth-page .auth-container.loading .MuiCircularProgress-svg {
+  color: #0094FF;
 }
 
 .sign-in-page .reset-password-button {

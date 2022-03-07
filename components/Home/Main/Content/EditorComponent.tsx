@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react'
-import React, { useCallback } from 'react'
-import { Editable, Slate } from 'slate-react'
-
+import React, { useCallback, useEffect } from 'react'
+import { Slate, Editable } from 'slate-react'
 import { MentionListComponent } from './MentionListComponent'
 import { CommandListComponent } from './CommandListComponent'
 import { CustomElementComponent } from '../../../SlateElement/CustomElementComponent'
@@ -16,20 +15,29 @@ export const EditorComponent: React.FC<{
       const renderElement = useCallback(props => <CustomElementComponent {...props} />, [])
       const renderLeaf = useCallback(props => <CustomLeafComponent {...props} />, [])
       const decorate = useCallback(([node, path]) => decorateFunc([node, path]), [EditorManager.cursors])
+      useEffect(() => {
+          EditorManager.editableElement = document.getElementById('editable')
+          window.document.addEventListener('selectionchange', () => {
+              console.log('selection change')
+          })
+      }, [])
 
       return <Slate editor={EditorManager.slateEditor} value={[]} onChange={value => {
       }}>
           <HoveringToolbar/>
           <Editable
+              id={'editable'}
               renderElement={renderElement}
               renderLeaf={renderLeaf}
               decorate={decorate}
               readOnly={!EditorManager.editable || EditorManager.isLocked}
               spellCheck={!EditorManager.editable || EditorManager.isLocked}
+              suppressContentEditableWarning={true}
               onKeyDown={async (event) => {
                   await handleKeyDown(event, EditorManager.slateEditor)
               }}
               onDOMBeforeInput={(event: InputEvent) => {
+                  console.log(event)
                   handleDOMBeforeInput(event)
               }}
           />

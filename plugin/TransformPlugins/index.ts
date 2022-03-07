@@ -1,10 +1,10 @@
 import { Transforms, Node, Location, NodeMatch } from 'slate'
 import FixHeadNextNormalText from './FixHeadNextNormalTextPlugin'
 import HoveringToolbar from './HoveringToolbarPlugin'
-import { TransformsSetNodeHandler, TransformsTransformHandler } from './types'
+import { TransformsSelectHandler, TransformsSetNodeHandler, TransformsTransformHandler } from './types'
 import UnknownPlugin from './UnknownPlugin'
 
-const { transform, setNodes } = Transforms
+const { transform, setNodes, select } = Transforms
 
 const transformsTransformHandler: TransformsTransformHandler[] = [
     FixHeadNextNormalText,
@@ -40,4 +40,17 @@ Transforms.setNodes = (editor,
         }
     }
     setNodes(editor, props, options)
+}
+
+const transformsSelectHandler: TransformsSelectHandler[] = [
+    // maintainScreenMargin
+]
+Transforms.select = (editor, location) => {
+    for (const handler of transformsSelectHandler) {
+        const handled = handler(editor, location)
+        if (handled) {
+            return
+        }
+    }
+    select(editor, location)
 }

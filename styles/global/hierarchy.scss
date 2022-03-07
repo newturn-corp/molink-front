@@ -184,12 +184,16 @@
 
   background: #FFFFFF;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
-
   display: flex;
   cursor: pointer;
-  .icon {
+  svg {
     margin: auto auto;
-    user-select: none;
+    width: 16px;
+    fill: #3A3C3F;
+    &:hover {
+      fill: #0094FF;
+      transition: fill 0.5s;
+    }
   }
 }
 .hierarchy-width-controller {

@@ -1,71 +1,40 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import { Menu, MenuItem } from '@material-ui/core'
 import AuthManager from '../../../../manager/Auth/AuthManager'
 import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
-import UserManager from '../../../../manager/global/User/UserManager'
 import SupportManager from '../../../../manager/global/SupportManager'
+import { Portal } from '../../../utils/Portal'
+import { UserMenuItem } from './UserMenuItem'
+import UserManager from '../../../../manager/global/User/UserManager'
+import SettingManager from '../../../../manager/global/Setting/SettingManager'
 
 export const UserMenu: React.FC<{
 }> = observer(() => {
-    const handleClose = async (event: React.MouseEvent<HTMLLIElement, MouseEvent>, key: string) => {
-        if (event) {
-            event.stopPropagation()
-            event.preventDefault()
-        }
-
-        switch (key) {
-        case 'sign-out':
-            await AuthManager.signOut()
-            break
-        case 'support':
-            SupportManager.showSupportModal = true
-            break
-        case 'setting':
-            await RoutingManager.moveTo(Page.SettingProfile)
-            break
-        }
-        UserManager.isUserMenuOpen = false
-    }
-
-    return <>
-        <Menu
-            keepMounted
-            open={UserManager.isUserMenuOpen}
-            onClose={(event) => handleClose(null, null)}
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center'
-            }}
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'center'
-            }}
-            PaperProps={{
-                style: {
-                    maxHeight: 48 * 4.5,
-                    width: '20ch'
-                }
-            }}
+    return <Portal>
+        <div
+            className={'user-menu'}
         >
-            <MenuItem
-                key={'support'}
-                onClick={(event) => handleClose(event, 'support')}
-            >
-                {'문의 & 의견'}
-            </MenuItem>
-            <MenuItem
-                key={'setting'}
-                onClick={(event) => handleClose(event, 'setting')}
-            >
-                {'설정'}
-            </MenuItem>
-            <MenuItem
-                key={'sign-out'}
-                onClick={(event) => handleClose(event, 'sign-out')}
-            >
-                {'로그아웃'}
-            </MenuItem>
-        </Menu>
-    </>
+            <UserMenuItem
+                text={'문의 & 의견'}
+                onClick={() => {
+                    UserManager.isUserMenuOpen = false
+                    SupportManager.showSupportModal = true
+                }}
+            />
+            {/* <UserMenuItem */}
+            {/*     text={'설정'} */}
+            {/*     onClick={async () => { */}
+            {/*         UserManager.isUserMenuOpen = false */}
+            {/*         SettingManager.openSettingModal() */}
+            {/*     }} */}
+            {/* /> */}
+            <UserMenuItem
+                text={'로그아웃'}
+                onClick={async () => {
+                    UserManager.isUserMenuOpen = false
+                    await AuthManager.signOut()
+                }}
+            />
+        </div>
+    </Portal>
 })

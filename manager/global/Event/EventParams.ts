@@ -39,7 +39,7 @@ export type HierarchyWidthChangeParam = {
     width: number
 }
 export type ToolbarOnOffChangeParam = {
-    isToolbarOpen: number
+    isToolbarOpen: boolean
 }
 
 export type EventParam = {} | OnEditorKeyDownParam | DocumentChildrenOpenParam | OpenDocumentParam | ChangeDocumentTitleInEditorParam | UserAuthorizationParam | ChangeDocumentTitleInFileSystemParam | NewEditorOpenParam | EditorChangeParam

@@ -15,3 +15,17 @@ export const moveSelectionWhenArrowRightDown = (event) => {
     Transforms.move(EditorManager.slateEditor, { unit: 'offset' })
     return true
 }
+
+export const moveSelectionWhenArrowUpDown = (event) => {
+    // event.preventDefault()
+    // console.log('up')
+    // Transforms.move(EditorManager.slateEditor, { unit: 'line', reverse: true })
+    return true
+}
+
+export const moveSelectionWhenArrowDownDown = (event) => {
+    event.preventDefault()
+    console.log('down')
+    Transforms.move(EditorManager.slateEditor, { unit: 'line' })
+    return true
+}

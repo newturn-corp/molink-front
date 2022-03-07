@@ -67,7 +67,8 @@ type AuthInputProps = {
     onFocus?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>,
     onPaste?: ClipboardEventHandler<HTMLDivElement>,
     style?: any,
-    helperText?: string
+    helperText?: string,
+    defaultValue?: string
 }
 
 export const AuthInput: React.FC<AuthInputProps> = (props: AuthInputProps) => {

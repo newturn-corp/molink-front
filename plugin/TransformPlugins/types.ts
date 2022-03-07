@@ -12,3 +12,5 @@ export type TransformsSetNodeHandler<T extends Node> = (editor: Editor,
         split?: boolean
         voids?: boolean
     }) => boolean
+
+export type TransformsSelectHandler = (editor: Editor, location: Location) => boolean

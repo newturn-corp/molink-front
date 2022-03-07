@@ -17,6 +17,7 @@ import { Event } from '../global/Event/Event'
 import UserManager from '../global/User/UserManager'
 import HierarchyManager from '../global/Hierarchy/HierarchyManager'
 import EventManager from '../global/Event/EventManager'
+import { throttle } from 'lodash'
 
 class EditorManager {
     public editable: boolean = false
@@ -30,6 +31,8 @@ class EditorManager {
     awareness: Awareness
     isConnected: boolean = false
     cursors: Cursor[] = []
+    editableElement: HTMLElement = null
+    contentBody: HTMLElement = null
 
     isLocked: boolean = false
     isToolbarOpen: boolean = true
@@ -53,9 +56,9 @@ class EditorManager {
     async load (documentId: string) {
         this.yjsDocument = new Y.Doc()
         this.sharedType = this.yjsDocument.getArray<SyncElement>('content')
-        this.sharedType.observeDeep(() => {
-            console.log(this.sharedType.toJSON())
-        })
+        // this.sharedType.observeDeep(() => {
+        //     console.log(this.sharedType.toJSON())
+        // })
         this.yInfo = this.yjsDocument.getMap('info')
         this.yInfo.observeDeep(() => {
             this.info = this.yInfo.toJSON()
@@ -98,7 +101,7 @@ class EditorManager {
                 name: UserManager.profile.nickname
             })
 
-            this.awareness.on('update', () => {
+            this.awareness.on('update', throttle(() => {
                 if (!this.sharedType) {
                     return
                 }
@@ -130,13 +133,17 @@ class EditorManager {
                     })
                     .filter((cursor) => cursor.anchor && cursor.focus)
                 this.cursors = newCursorData
-            })
+            }, 300))
 
             this.websocketProvider.connect()
-            this.slateEditor = EditorPlugin(withCursor(
-                withYjs(withReact(withHistory(createEditor())), this.sharedType),
-                this.websocketProvider.awareness
-            ))
+            this.slateEditor = EditorPlugin(
+                withCursor(
+                    withYjs(
+                        withReact(withHistory(createEditor())),
+                        this.sharedType
+                    ),
+                    this.awareness
+                ))
         }
         currentHierarchy.openedDocumentId = documentId
     }

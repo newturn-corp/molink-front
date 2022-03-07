@@ -24,13 +24,13 @@ export class LocationController {
 
         if (parentId) {
             const parent = yMap.get(parentId)
-            const page = yMap.get(parentId)
+            const page = yMap.get(pageId)
 
             // 만약 부모보다 자식의 공개 범위가 넓으면
             if (visibilityController.checkVisibilityWide(page.visibility, parent.visibility) === 1) {
                 const action = await DialogManager.openDialog(
                     '페이지 공개 범위 변경',
-                    `'이 페이지의 공개 범위인 '${visibilityToText(page.visibility)}'가\n새로운 상위 페이지의 공개 범위인 '${visibilityToText(parent.visibility)}'보다 넓습니다.\n이 페이지의 공개 범위가 '${parent.visibility}'로 변경됩니다.`, ['변경'])
+                    `이 페이지의 공개 범위인 '${visibilityToText(page.visibility)}'가\n새로운 상위 페이지의 공개 범위인 '${visibilityToText(parent.visibility)}'보다 넓습니다.\n이 페이지의 공개 범위가 '${visibilityToText(parent.visibility)}'로 변경됩니다.`, ['변경'])
                 if (action === -1) {
                     return
                 }

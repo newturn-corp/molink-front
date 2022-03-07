@@ -18,9 +18,14 @@ export const SlateTextElement: React.FC<{
       const isEmpty = children[0].props.text.text === '' && children.length === 1
       const isHead = [TextCategory.Head1, TextCategory.Head2, TextCategory.Head3].includes(element.category)
       return (
-          <p className={ selected && isEmpty && isSelectionCollapsed && !isHead && EditorManager.showPlaceholder
-              ? `selected-empty-text text ${element.category}`
-              : `text ${element.category}`} {...attributes}>
+          <p className={
+              selected &&
+              isEmpty &&
+              isSelectionCollapsed &&
+              !isHead &&
+              EditorManager.showPlaceholder
+                  ? `selected-empty-text text ${element.category}`
+                  : `text ${element.category}`} {...attributes}>
               {children}
           </p>
       )

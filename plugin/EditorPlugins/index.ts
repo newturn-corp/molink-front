@@ -40,7 +40,7 @@ export const EditorPlugin = (editor: Editor) => {
         deleteBackward(unit)
     }
 
-    const insertBreakHandlers: InsertBreakHandler[] = [CorrectVoidBehaviorWhenInsertBreak, maintainBottomMargin]
+    const insertBreakHandlers: InsertBreakHandler[] = [CorrectVoidBehaviorWhenInsertBreak]
     editor.insertBreak = () => {
         for (const handler of insertBreakHandlers) {
             const handled = handler(editor)

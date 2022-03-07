@@ -17,12 +17,14 @@ export const ContentComponent: React.FC<{
             <ContentForEmptyDocument />
         </div>
     }
-    return <div className={'contents'}
-        style={StyleManager.contentStyle.main}
-    >
-        <ContentHeaderIcon/>
-        <ContentTitleComponent/>
-        <EditorContainer/>
+    return <>
+        <div className={'contents'}
+            style={StyleManager.contentStyle.main}
+        >
+            <ContentHeaderIcon/>
+            <ContentTitleComponent/>
+            <EditorContainer/>
+        </div>
         <ContentFooter/>
-    </div>
+    </>
 })

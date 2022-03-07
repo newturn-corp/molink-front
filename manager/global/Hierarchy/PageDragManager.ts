@@ -3,13 +3,15 @@ import React from 'react'
 import HierarchyManager from './HierarchyManager'
 import { Event } from '../Event/Event'
 import EventManager from '../Event/EventManager'
+import Hierarchy from './Hierarchy'
 
-class PageDragManager {
+export class PageDragManager {
+    private hierarchy: Hierarchy
+
     public draggingDocument: Document = null
     public draggingDocumentId: string = null
 
     public newOrder: number = 0
-    public newParent: Document | null = null
     public newParentId: string | null = null
 
     public fileSystemElement: HTMLElement
@@ -23,13 +25,10 @@ class PageDragManager {
 
     private _dragOverCount = 0
 
-    constructor () {
+    constructor (hierarchy) {
         makeAutoObservable(this)
-        EventManager.addEventListener(Event.UpdateHierarchy, () => {
-            this.fileSystemElement = document.getElementsByClassName('MuiList-root MuiList-padding')[0] as HTMLElement
-            this.indicatorTooltip = document.getElementsByClassName('ant-tooltip')[0] as HTMLElement
-            this.dragIndicator = document.getElementsByClassName('drag-indicator')[0] as HTMLElement
-        }, 1)
+        this.hierarchy = hierarchy
+        this.fileSystemElement = document.getElementsByClassName('MuiList-root MuiList-padding')[0] as HTMLElement
     }
 
     handleDragStart (documentId: string) {
@@ -73,8 +72,7 @@ class PageDragManager {
             return
         }
         event.preventDefault()
-        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-        const document = currentHierarchy.map[documentId]
+        const document = this.hierarchy.map[documentId]
 
         const documentElement = globalThis.document.getElementById('document-' + document.id)
         const mouseY = event.pageY
@@ -93,7 +91,7 @@ class PageDragManager {
             if (document.order === 0) {
                 this.viewerText = `${document.title} 위로 이동`
             } else {
-                const documentOnTop = currentHierarchy.getSibling(document.id, document.order - 1)
+                const documentOnTop = this.hierarchy.getSibling(document.id, document.order - 1)
                 this.viewerText = `${documentOnTop.title} 아래로 이동`
             }
 
@@ -117,7 +115,7 @@ class PageDragManager {
                 if (this._dragOverCount < 30) {
                     this.viewerText = `${document.title}의 하위 페이지로 추가 또는 이 페이지 열기 (${30 - this._dragOverCount})`
                 } else if (this._dragOverCount === 30) {
-                    currentHierarchy.updateHierarchyChildrenOpen(documentId, true)
+                    this.hierarchy.updateHierarchyChildrenOpen(documentId, true)
                     this._dragOverCount = 0
                 }
             } else {
@@ -143,7 +141,7 @@ class PageDragManager {
         this.setIndicatorTooltipVisible(false)
 
         // 만약 전혀 변하지 않았다면 따로 처리하지 않는다.
-        const document = HierarchyManager.hierarchy.yMap.get(this.draggingDocumentId)
+        const document = this.hierarchy.yMap.get(this.draggingDocumentId)
         if (document.order === this.newOrder) {
             if (!this.newParentId) {
                 if (!document.parentId) {
@@ -156,8 +154,7 @@ class PageDragManager {
             }
         }
 
-        await HierarchyManager.hierarchy.locationController.updatePageLocation(this.draggingDocumentId, this.newParentId, this.newOrder)
+        await this.hierarchy.locationController.updatePageLocation(this.draggingDocumentId, this.newParentId, this.newOrder)
         this._dragOverCount = 0
     }
 }
-export default new PageDragManager()

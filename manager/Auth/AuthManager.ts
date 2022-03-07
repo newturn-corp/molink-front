@@ -48,6 +48,8 @@ class AuthManager {
     passwordState: PasswordState = PasswordState.DEFAULT
     nicknameState: NicknameState = NicknameState.Default
 
+    isLoading: boolean = false
+
     constructor () {
         makeAutoObservable(this)
     }
@@ -155,10 +157,10 @@ class AuthManager {
     }
 
     async startPasswordChange () {
-        if (!this.validateEmail(this.email)) {
-            this.emailState = EmailState.NOT_EMAIL
-            return { success: false }
-        }
+        // if (!this.validateEmail(this.email)) {
+        //     this.emailState = EmailState.NOT_EMAIL
+        //     return { success: false }
+        // }
         const result = await AuthAPI.startPasswordChange(this.email)
         if (result.success === false) {
             if (result.failReason === START_PASSWORD_CHANGE_FAIL_REASON.INVALID_EMAIL) {
