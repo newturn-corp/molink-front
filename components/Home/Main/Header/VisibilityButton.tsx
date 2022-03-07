@@ -7,6 +7,7 @@ import { VisibilityMenu } from './VisibilityMenu'
 import PublicIcon from '../../../Icon/PublicIcon'
 import PrivateIcon from '../../../Icon/PrivateIcon'
 import OnlyFollowerIcon from '../../../Icon/OnlyFollowerIcon'
+import EditorManager from '../../../../manager/Blog/EditorManager'
 
 const getIconByVisibility = (visibility: PageVisibility) => {
     switch (visibility) {
@@ -36,6 +37,7 @@ export const VisibilityButton: React.FC<{
     const page = currentHierarchy.map[currentHierarchy.openedDocumentId]
     return <>
         <ContentSettingButton
+            active={EditorManager.editable}
             tooltip={getTextByVisibility(page.visibility)}
             onClick={(event) => {
                 event.stopPropagation()
