@@ -7,6 +7,7 @@ import LockIcon from '../../../Icon/LockIcon'
 export const LockButton: React.FC<{
   }> = observer(() => {
       return <ContentSettingButton
+          active={EditorManager.editable}
           tooltip={EditorManager.isLocked ? '잠겨짐' : '잠금하기'}
           onClick={() => {
               EditorManager.updateIsLocked(!EditorManager.isLocked)
