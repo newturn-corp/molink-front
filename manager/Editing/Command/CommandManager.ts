@@ -73,7 +73,7 @@ class CommandManager {
     // 바로 위 노드가 void인 경우, 현재 node를 set하고
     // 일반적인 경우, insertNode를 함
     insertNode (editor: Editor, node: Element) {
-        if (this.isSiblingVoid) {
+        if (!this.isSiblingVoid) {
             Transforms.delete(editor)
             Transforms.setNodes<Element>(editor, node, {
                 match: n => Editor.isBlock(editor, n)
@@ -223,16 +223,14 @@ class CommandManager {
             if (Element.isElement(currentNode) && currentNode.type === 'code') {
                 return false
             }
-
             const { selection } = editor
             if (selection && Range.isCollapsed(selection)) {
                 const [start] = Range.edges(selection)
                 // 시작점을 가져옴
                 const wordBefore = Editor.before(editor, start, { unit: 'word' })
                 let before = wordBefore && Editor.before(editor, wordBefore)
-                const parent = Node.parent(editor, before.path) as Element
-                this.isSiblingVoid = editor.isVoid(parent)
-                before = this.isSiblingVoid ? wordBefore : before
+                this.isSiblingVoid = before && editor.isVoid(Node.parent(editor, before.path) as Element)
+                before = this.isSiblingVoid ? wordBefore : (before || wordBefore)
                 const beforeRange = before && Editor.range(editor, before, start)
                 const beforeText = beforeRange && Editor.string(editor, beforeRange)
                 const beforeMatch = beforeText && beforeText.match(/^\//)
@@ -240,11 +238,8 @@ class CommandManager {
                 const afterRange = Editor.range(editor, start, after)
                 const afterText = Editor.string(editor, afterRange)
                 const afterMatch = afterText.match(/^(\s|$)/)
-
                 if (beforeMatch && afterMatch) {
-                    if (!this.target) {
-                        this.target = beforeRange
-                    }
+                    this.target = beforeRange
 
                     const searchResult = beforeText.match(/^\/((\w|\W)+)$/)
                     if (!searchResult) {
@@ -266,9 +261,10 @@ class CommandManager {
                     return
                 }
             }
+            this.isSiblingVoid = false
             this.target = null
         } catch (err) {
-
+            console.log(err)
         }
     }
 
@@ -309,6 +305,7 @@ class CommandManager {
             return false
         }
         event.preventDefault()
+        console.log(this.target)
         Transforms.select(editor, toJS(this.target))
         await this.insertNodeByCommand(editor, this.getSearchedCommandByIndex(this.index))
         this.target = null

@@ -21,7 +21,10 @@ export type TextElement = {
   }
 
 export type OrderedListElement = {
-    type: 'ol-list'
+    type: 'ol-list',
+    data?: {
+      start: number
+    },
     children: Descendant[]
   }
 

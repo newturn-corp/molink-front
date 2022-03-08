@@ -5,14 +5,14 @@ import StyleManager from './Style/StyleManager'
 enum NOTIFICATION_TYPE { SUCCESS, ERROR }
 
 class FeedbackManager {
-    public showFeedback (type: NOTIFICATION_TYPE, message: string, description: string, duration: number = 1000, width: number = 500) {
+    public showFeedback (type: NOTIFICATION_TYPE, message: string, description: string, duration: number = 10, width: number = 500) {
         notification.open({
             message,
             description,
             duration,
             style: {
                 whiteSpace: 'pre-line',
-                width: 284,
+                width: 'fit-content',
                 boxShadow: '0px 8px 16px rgba(145, 158, 171, 0.12)',
                 borderRadius: 8,
                 fontSize: 14,

@@ -84,11 +84,11 @@ const SignIn = observer(() => {
                             onClick={async (e) => {
                                 setLoading(true)
                                 const result = await AuthManager.signIn()
-                                setLoading(false)
                                 if (result.success) {
                                     await UserManager.load()
                                     await RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.nickname}`)
                                 }
+                                setLoading(false)
                             }}
                         />
                         <AuthButton

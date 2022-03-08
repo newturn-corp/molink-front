@@ -15,10 +15,27 @@ const CommandBlock: React.FC<{
         key={`command-block-${command.name}`}
         className={className}
     >
-        <img key={`command-block-img-${command.name}`} className='command-img' src={command.imgSrc}/>
-        <div key={`command-block-text-container${command.name}`} className='text-container'>
-            <p key={`command-block-name-${command.name}`} className='name'>{command.name}</p>
-            <p key={`command-block-description-${command.name}`} className='description'>{command.description}</p>
+        <img
+            key={`command-block-img-${command.name}`}
+            className='command-img'
+            src={command.imgSrc}
+        />
+        <div
+            key={`command-block-text-container${command.name}`}
+            className='text-container'
+        >
+            <p
+                key={`command-block-name-${command.name}`}
+                className='name'
+            >
+                {command.name}
+            </p>
+            <p
+                key={`command-block-description-${command.name}`}
+                className='description'
+            >
+                {command.description}
+            </p>
         </div>
     </div>
 }
@@ -30,20 +47,20 @@ export const CommandListComponent: React.FC<{
       const ref = useRef<HTMLDivElement | null>()
 
       useEffect(() => {
-          const containterElement = containerRef.current
+          const containerElement = containerRef.current
           const listElement = ref.current
           if (CommandManager.target && CommandManager.searchedCommandGroupList.length > 0) {
               const domSelection = window.getSelection()
               const domRange = domSelection.getRangeAt(0)
               const rect = domRange.getBoundingClientRect()
 
-              containterElement.style.opacity = '1'
-              if (globalThis.document.body.clientHeight < rect.top + containterElement.offsetHeight + 100) {
-                  containterElement.style.top = `${rect.top - containterElement.offsetHeight - 5}px`
-                  containterElement.style.left = `${rect.left + 5}px`
+              containerElement.style.opacity = '1'
+              if (globalThis.document.body.clientHeight < rect.top + containerElement.offsetHeight + 100) {
+                  containerElement.style.top = `${rect.top - containerElement.offsetHeight - 5}px`
+                  containerElement.style.left = `${rect.left + 5}px`
               } else {
-                  containterElement.style.top = `${rect.top + rect.height + 5}px`
-                  containterElement.style.left = `${rect.left + 5}px`
+                  containerElement.style.top = `${rect.top + rect.height + 5}px`
+                  containerElement.style.left = `${rect.left + 5}px`
               }
               // Command 이동에 따라 자동 스크롤 조정
               const currentElement = document.getElementById(`command-block-${CommandManager.index}`)
@@ -54,7 +71,7 @@ export const CommandListComponent: React.FC<{
                   listElement.scrollTop = currentHeight - listElement.offsetHeight + 32
               }
           } else {
-              containterElement.removeAttribute('style')
+              containerElement.removeAttribute('style')
           }
       }, [CommandManager.searchedCommandGroupList.length, editor, CommandManager.index, CommandManager.search, CommandManager.target])
       let index = 0
@@ -74,8 +91,13 @@ export const CommandListComponent: React.FC<{
                               return <>
                               </>
                           }
-                          return <>
-                              <div className={'command-group-name'}>
+                          return <div
+                              key={`command-group-container-${group.name}`}
+                          >
+                              <div
+                                  key={`command-group-name-${group.name}`}
+                                  className={'command-group-name'}
+                              >
                                   {group.name}
                               </div>
                               {
@@ -87,7 +109,7 @@ export const CommandListComponent: React.FC<{
                                       />
                                   ))
                               }
-                          </>
+                          </div>
                       })
                   }
               </div>

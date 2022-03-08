@@ -117,7 +117,8 @@ export const ShortcutWhenInsertText = (editor: Editor, text: string) => {
                 ListTransforms.wrapInList(editor)
                 return true
             } else if (type === 'ol-list') {
-                ListTransforms.wrapInList(editor, 'ol-list')
+                const start = beforeText.split('.')[0]
+                ListTransforms.wrapInList(editor, 'ol-list', { start: Number(start) })
                 return true
             } else if (type === 'check-list') {
                 const newProperties: Partial<SlateElement> = {
