@@ -12,7 +12,7 @@ class FeedbackManager {
             duration,
             style: {
                 whiteSpace: 'pre-line',
-                width: 284,
+                width: 'fit-content',
                 boxShadow: '0px 8px 16px rgba(145, 158, 171, 0.12)',
                 borderRadius: 8,
                 fontSize: 14,
