@@ -52,6 +52,15 @@ class AuthManager {
 
     constructor () {
         makeAutoObservable(this)
+        EventManager.addEventListener(Event.MoveToAnotherPage, () => {
+            this.emailState = EmailState.DEFAULT
+            this.passwordState = PasswordState.DEFAULT
+            this.nicknameState = NicknameState.Default
+            this.email = ''
+            this.pwd = ''
+            this.pwdCheck = ''
+            this.nickname = ''
+        }, 1)
     }
 
     validateEmail (email: string) {
