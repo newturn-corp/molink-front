@@ -148,8 +148,14 @@ class AuthManager {
         await RoutingManager.moveTo(Page.SignIn)
     }
 
-    verifyEmail (hash: string) {
-        return AuthAPI.verifyEmail(hash)
+    async verifyEmail (hash: string) {
+        const result = await AuthAPI.verifyEmail(hash)
+        if (!result.success) {
+            await FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '이미 만료된 인증입니다.', '')
+        } else {
+            await FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '이메일 인증 성공!', '')
+        }
+        await RoutingManager.moveTo(Page.SignIn)
     }
 
     checkPasswordChangeExist (hash: string) {
