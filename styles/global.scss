@@ -12,12 +12,12 @@ body {
     background-color: #FAFAFB;
 }
 ::-moz-selection {
-    background: #D6E6F6;
-    color: rgb(55, 53, 47);
+    background: #D6E6F6 !important;
+    color: rgb(55, 53, 47) !important;
  }
 ::selection {
-    background: #D6E6F6;
-    color: rgb(55, 53, 47);
+    background: #D6E6F6 !important;
+    color: rgb(55, 53, 47) !important;
 }
 .menu-background {
     position: fixed;
