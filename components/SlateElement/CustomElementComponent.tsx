@@ -8,6 +8,7 @@ import { SlateDocumentElement } from './Element/SlateDocumentElement'
 import { SlateCheckListItemElement } from './Element/SlateCheckListItemElement'
 import { SlateYoutubeElement } from './Element/SlateYoutubeElement'
 import { SlateCodeElement } from './Element/SlateCodeElement'
+import { SlateOrderedListElement } from './Element/SlateOrderedListElement'
 
 export const CustomElementComponent: React.FC<{
     attributes,
@@ -27,7 +28,7 @@ export const CustomElementComponent: React.FC<{
       case 'check-list':
           return <ul className='check-list' {...attributes}>{children}</ul>
       case 'ol-list':
-          return <ol {...attributes}>{children}</ol>
+          return <SlateOrderedListElement { ...props }/>
       case 'list-item':
       case 'ordered-list-item':
           return <li {...attributes}>{children}</li>
