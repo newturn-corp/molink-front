@@ -12,13 +12,13 @@ body {
 }
 
 ::-moz-selection {
-  background: #D6E6F6;
-  color: #37352f;
+  background: #D6E6F6 !important;
+  color: #37352f !important;
 }
 
 ::selection {
-  background: #D6E6F6;
-  color: #37352f;
+  background: #D6E6F6 !important;
+  color: #37352f !important;
 }
 
 .menu-background {
