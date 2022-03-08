@@ -6,7 +6,7 @@ import { UploadImageDTO, UploadImageFromURLDTO, UploadImageResponseDTO } from '@
 
 class MainAPI extends BaseAPI {
     async saveSupport (dto: SaveSupportDTO): Promise<void> {
-        const res = await this.post('/supports', dto)
+        const res = await this.post('/main/supports', dto)
         if (res.status !== 201) throw new APIError(res)
     }
 
