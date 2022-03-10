@@ -19,13 +19,11 @@ export enum Page {
 
 class RoutingManager {
     async moveTo (page: Page, extra: string = '') {
-        EditorManager.reset()
         await EventManager.issueEvent(Event.MoveToAnotherPage)
         await Router.push(page + extra)
     }
 
     async rawMoveTo (url: string) {
-        EditorManager.reset()
         const domain = new URL(url)
         // 외부 주소일 경우 새 창에서, 내부 주소일 경우 페이지 이동
         if (domain.hostname.replace('www.', '') !== process.env.FRONT_HOST_NAME) {

@@ -1,11 +1,11 @@
 import { makeAutoObservable, observable } from 'mobx'
-import { createEditor, Editor as SlateEditor } from 'slate'
+import { createEditor, Editor, Editor as SlateEditor, Transforms } from 'slate'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { SyncElement, withYjs } from 'slate-yjs'
 import randomColor from 'randomcolor'
 import { withHistory } from 'slate-history'
-import { withReact } from 'slate-react'
+import { ReactEditor, withReact } from 'slate-react'
 import { EditorPlugin } from '../../plugin'
 import ViewerAPI from '../../api/ViewerAPI'
 import { DocumentNotExists } from '../../Errors/DocumentError'
@@ -21,12 +21,17 @@ import { throttle } from 'lodash'
 
 class EditorManager {
     public editable: boolean = false
-    public showPlaceholder: boolean = false
+    public showPlaceholder: boolean = true
     yjsDocument: Y.Doc = null
     slateEditor: SlateEditor = null
     sharedType: Y.Array<SyncElement> = null
+
     yInfo: Y.Map<any> = null
     info: any
+
+    ySelection: Y.Map<any> = null
+    selectionMap: any
+
     websocketProvider: WebsocketProvider = null
     awareness: Awareness
     isConnected: boolean = false
@@ -47,8 +52,10 @@ class EditorManager {
         })
         EventManager.addEventListeners(
             [Event.UnloadPage,
-                Event.MoveToAnotherPage
+                Event.MoveToAnotherPage,
+                Event.SignOut
             ], () => {
+                this._saveCurrentSelection()
                 this.reset()
             }, 1)
     }
@@ -64,6 +71,12 @@ class EditorManager {
             this.info = this.yInfo.toJSON()
             this.isLocked = this.yInfo.get('isLocked')
         })
+
+        this.ySelection = this.yjsDocument.getMap('selection')
+        this.ySelection.observeDeep(() => {
+            this.selectionMap = this.ySelection.toJSON()
+        })
+
         const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
         if (!currentHierarchy) {
             throw new DocumentNotExists()
@@ -91,6 +104,20 @@ class EditorManager {
 
             this.websocketProvider.on('status', ({ status }: { status: string }) => {
                 this.isConnected = status === 'connected'
+            })
+
+            this.websocketProvider.on('sync', () => {
+                if (!this.selectionMap) {
+                    return
+                }
+                if (this.selectionMap) {
+                    const userSelection = this.selectionMap[UserManager.userId.toString()]
+                    if (!userSelection) {
+                        return
+                    }
+                    ReactEditor.focus(this.slateEditor)
+                    Transforms.select(this.slateEditor, userSelection)
+                }
             })
 
             this.awareness = this.websocketProvider.awareness
@@ -149,17 +176,28 @@ class EditorManager {
         currentHierarchy.openedDocumentId = documentId
     }
 
+    private _saveCurrentSelection () {
+        if (this.ySelection) {
+            this.ySelection.set(UserManager.userId.toString(), this.slateEditor.selection)
+        }
+    }
+
     reset () {
         if (this.websocketProvider) {
             this.websocketProvider.destroy()
         }
         this.editable = false
-        this.showPlaceholder = false
+        this.showPlaceholder = true
+
         this.yjsDocument = null
         this.slateEditor = null
         this.sharedType = null
         this.yInfo = null
         this.info = null
+
+        this.ySelection = null
+        this.selectionMap = null
+
         this.websocketProvider = null
         this.isConnected = false
         this.isLocked = false

@@ -219,47 +219,48 @@ class CommandManager {
 
     handleEditorChange (editor: Editor) {
         try {
-            const currentNode = editor.children[editor.selection.anchor.path[0]]
+            const { selection } = editor
+            if (!selection || Range.isCollapsed(selection)) {
+                return false
+            }
+            const currentNode = editor.children[selection.anchor.path[0]]
             if (Element.isElement(currentNode) && currentNode.type === 'code') {
                 return false
             }
-            const { selection } = editor
-            if (selection && Range.isCollapsed(selection)) {
-                const [start] = Range.edges(selection)
-                // 시작점을 가져옴
-                const wordBefore = Editor.before(editor, start, { unit: 'word' })
-                let before = wordBefore && Editor.before(editor, wordBefore)
-                this.isSiblingVoid = before && editor.isVoid(Node.parent(editor, before.path) as Element)
-                before = this.isSiblingVoid ? wordBefore : (before || wordBefore)
-                const beforeRange = before && Editor.range(editor, before, start)
-                const beforeText = beforeRange && Editor.string(editor, beforeRange)
-                const beforeMatch = beforeText && beforeText.match(/^\//)
-                const after = Editor.after(editor, start)
-                const afterRange = Editor.range(editor, start, after)
-                const afterText = Editor.string(editor, afterRange)
-                const afterMatch = afterText.match(/^(\s|$)/)
-                if (beforeMatch && afterMatch) {
-                    this.target = beforeRange
+            const [start] = Range.edges(selection)
+            // 시작점을 가져옴
+            const wordBefore = Editor.before(editor, start, { unit: 'word' })
+            let before = wordBefore && Editor.before(editor, wordBefore)
+            this.isSiblingVoid = before && editor.isVoid(Node.parent(editor, before.path) as Element)
+            before = this.isSiblingVoid ? wordBefore : (before || wordBefore)
+            const beforeRange = before && Editor.range(editor, before, start)
+            const beforeText = beforeRange && Editor.string(editor, beforeRange)
+            const beforeMatch = beforeText && beforeText.match(/^\//)
+            const after = Editor.after(editor, start)
+            const afterRange = Editor.range(editor, start, after)
+            const afterText = Editor.string(editor, afterRange)
+            const afterMatch = afterText.match(/^(\s|$)/)
+            if (beforeMatch && afterMatch) {
+                this.target = beforeRange
 
-                    const searchResult = beforeText.match(/^\/((\w|\W)+)$/)
-                    if (!searchResult) {
-                        this.search = ''
-                    } else {
-                        this.search = searchResult[1]
-                    }
-                    this._searchedCommandGroupList = []
-                    this._searchedCommandCount = 0
-                    for (const commandGroup of this.commandGroupList) {
-                        const searchedGroup = commandGroup.search(this.search)
-                        if (searchedGroup.commands.length === 0) {
-                            continue
-                        }
-                        this._searchedCommandGroupList.push(searchedGroup)
-                        this._searchedCommandCount += searchedGroup.commands.length
-                    }
-                    this.index = 0
-                    return
+                const searchResult = beforeText.match(/^\/((\w|\W)+)$/)
+                if (!searchResult) {
+                    this.search = ''
+                } else {
+                    this.search = searchResult[1]
                 }
+                this._searchedCommandGroupList = []
+                this._searchedCommandCount = 0
+                for (const commandGroup of this.commandGroupList) {
+                    const searchedGroup = commandGroup.search(this.search)
+                    if (searchedGroup.commands.length === 0) {
+                        continue
+                    }
+                    this._searchedCommandGroupList.push(searchedGroup)
+                    this._searchedCommandCount += searchedGroup.commands.length
+                }
+                this.index = 0
+                return false
             }
             this.isSiblingVoid = false
             this.target = null

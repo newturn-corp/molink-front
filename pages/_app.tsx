@@ -13,8 +13,11 @@ import '../styles/contents/hovering-toolbar.css'
 import '../styles/contents/command-list.css'
 import '../styles/contents/header.css'
 
-import '../styles/contents.css'
 import '../styles/auth.css'
+import '../styles/auth/sign-up.css'
+
+import '../styles/contents.css'
+
 import '../styles/home.css'
 import '../styles/search.css'
 import '../styles/setting.css'
