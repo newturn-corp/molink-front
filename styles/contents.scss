@@ -240,13 +240,13 @@
             .divider-container {
                 position: relative;
                 width: 100%;
-                height: 6em;
+                height: 2em;
                 .divider {
                     position: absolute;
                 }
                 .line-divider {
-                    margin-top: calc(3em - 0.5px);
-                    margin-bottom: calc(3em - 0.5px);
+                    margin-top: calc(1em - 0.5px);
+                    margin-bottom: calc(1em - 0.5px);
                     height: 1px;
                 }
                 .long-line-divider {

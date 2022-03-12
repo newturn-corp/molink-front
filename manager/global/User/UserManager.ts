@@ -30,7 +30,7 @@ class UserManager {
 
         EventManager.addEventListener(Event.SignOut, () => {
             this.reset()
-        }, 1)
+        }, 5)
         EventManager.addEventListener(Event.PageBodyClick, () => {
             this.isUserMenuOpen = false
         }, 1)

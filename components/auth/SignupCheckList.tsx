@@ -24,6 +24,7 @@ export const SignupCheckList: React.FC<{
             isChecked={SignupManager.isAcceptAllCheckList}
             textNode={<p>전체 동의</p>}
             onChange={event => {
+                SignupManager.checkListState = SignUpCheckListState.Default
                 SignupManager.isAcceptAllCheckList = event.target.checked
             }}
         />
@@ -34,6 +35,7 @@ export const SignupCheckList: React.FC<{
             isChecked={SignupManager.isAcceptTermOfUse}
             textNode={<p><a href={'https://www.molink.life/blog/Molink/4629add3ae7d9971bc539427afd127ad/%EC%9D%B4%EC%9A%A9%20%EC%95%BD%EA%B4%80'} target={'_blank'} rel="noreferrer">이용 약관</a> 동의 (필수)</p>}
             onChange={event => {
+                SignupManager.checkListState = SignUpCheckListState.Default
                 SignupManager.isAcceptTermOfUse = event.target.checked
             }}
         />
@@ -48,6 +50,7 @@ export const SignupCheckList: React.FC<{
                     </a> 동의 (필수)
                 </p>}
             onChange={event => {
+                SignupManager.checkListState = SignUpCheckListState.Default
                 SignupManager.isAcceptPrivacy = event.target.checked
             }}
         />

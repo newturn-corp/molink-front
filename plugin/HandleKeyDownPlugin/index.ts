@@ -12,6 +12,7 @@ import {
 } from './ArrowKeyMovementPlugin'
 import { redoWhenControlYKeyDown, undoWhenControlZKeyDown } from './UndoPlugin'
 import { insertNewLineWhenShiftEnterKeyDown } from './InsertNewLinePlugin'
+import { handleEnterInVoid } from './CorrectVoidBehaviorHandleKeyDown'
 
 const handlerMap = new Map()
 handlerMap.set('ArrowLeft', [
@@ -50,7 +51,8 @@ handlerMap.set('shift+Tab', [
 handlerMap.set('Enter', [
     (event, editor) => CommandManager.handleEnterAndTab(event, editor),
     handleEnterInList,
-    handleEnterInCode
+    handleEnterInCode,
+    handleEnterInVoid
 ])
 handlerMap.set('shift+Enter', [
     handleShiftEnterInCode,

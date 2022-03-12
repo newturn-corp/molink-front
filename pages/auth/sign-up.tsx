@@ -149,8 +149,7 @@ const SignUp = observer(() => {
                         <SignupCheckList/>
                         <AuthButton
                             text={'계정 생성'}
-                            backgroundColor={'#FFFFFF'}
-                            textColor={'#3A7BBF'}
+                            theme={'primary-stroke'}
                             onClick={async () => {
                                 setLoading(true)
                                 const result = await SignupManager.signup()

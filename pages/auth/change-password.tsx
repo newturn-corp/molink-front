@@ -82,8 +82,7 @@ const AuthChangePasswordPage = () => {
                         />
                         <AuthButton
                             text={'비밀번호 변경'}
-                            textColor={'#FFFFFF'}
-                            backgroundColor={'#3A7BBF'}
+                            theme={'primary'}
                             style={{
                                 marginTop: 44
                             }}

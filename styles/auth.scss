@@ -75,6 +75,26 @@
         user-select: none;
     }
 }
+.auth-button.primary {
+    background: #3A7BBF;
+    color: #FFFFFF;
+    &:hover {
+        background: #2E639A;
+    }
+    &:active {
+        background: #183451;
+    }
+}
+.auth-button.primary-stroke {
+    background: #FFFFFF;
+    color: #2E639A;
+    &:hover {
+        background: #E8EBED;
+    }
+    &:active {
+        background: #D6E6F6;
+    }
+}
 .auth-input {
     width: 100%;
     .MuiFilledInput-root {

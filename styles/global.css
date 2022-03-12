@@ -200,6 +200,46 @@ body {
 .support-modal .ant-input-textarea {
   margin-top: 20px;
 }
+.support-modal .ant-modal-content {
+  padding: 16px;
+  border-radius: 4px;
+}
+.support-modal .ant-modal-header {
+  padding: 0px;
+  border-bottom: none;
+}
+.support-modal .ant-modal-header .ant-modal-title {
+  color: #242425;
+  font-weight: 700;
+  font-size: 20px;
+}
+.support-modal .ant-modal-body {
+  margin-top: 16px;
+  padding: 0px;
+}
+.support-modal .ant-modal-body .desc {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+.support-modal .ant-modal-body .ant-input-textarea::after {
+  font-weight: 400;
+  font-size: 12px;
+  color: #3A3C3F;
+}
+.support-modal .ant-modal-body .ant-input {
+  border: 1px solid #DCE1E5;
+  border-radius: 10px;
+  padding: 16px 12px;
+  margin-bottom: 8px;
+}
+.support-modal .ant-modal-body .modal-buttons {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 32px;
+}
 
 .no-select {
   -webkit-touch-callout: none;
@@ -217,6 +257,44 @@ body {
   font-family: Pretendard;
   overflow: hidden;
   color: #72787F;
+}
+
+.button {
+  display: flex;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.25s;
+}
+.button .text {
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 17px;
+  line-height: 20px;
+  margin: auto auto;
+  user-select: none;
+}
+
+.button.primary {
+  background: #3A7BBF;
+  color: #FFFFFF;
+}
+.button.primary:hover {
+  background: #2E639A;
+}
+.button.primary:active {
+  background: #183451;
+}
+
+.button.primary-stroke {
+  background: #FFFFFF;
+  color: #2E639A;
+}
+.button.primary-stroke:hover {
+  background: #E8EBED;
+}
+.button.primary-stroke:active {
+  background: #D6E6F6;
 }
 
 /*# sourceMappingURL=global.css.map */

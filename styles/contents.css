@@ -220,14 +220,14 @@
 .content-container .content-body .contents .divider-container {
   position: relative;
   width: 100%;
-  height: 6em;
+  height: 2em;
 }
 .content-container .content-body .contents .divider-container .divider {
   position: absolute;
 }
 .content-container .content-body .contents .divider-container .line-divider {
-  margin-top: calc(3em - 0.5px);
-  margin-bottom: calc(3em - 0.5px);
+  margin-top: calc(1em - 0.5px);
+  margin-bottom: calc(1em - 0.5px);
   height: 1px;
 }
 .content-container .content-body .contents .divider-container .long-line-divider {

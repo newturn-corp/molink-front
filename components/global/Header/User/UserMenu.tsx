@@ -15,10 +15,16 @@ export const UserMenu: React.FC<{
             className={'user-menu'}
         >
             <UserMenuItem
-                text={'문의 & 의견'}
+                text={'문의 & 의견 보내기'}
                 onClick={() => {
                     UserManager.isUserMenuOpen = false
                     SupportManager.showSupportModal = true
+                }}
+            />
+            <UserMenuItem
+                text={'개인 정보 처리방침 & 약관'}
+                onClick={async () => {
+                    await RoutingManager.rawMoveTo('https://www.molink.life/blog/Molink/4629add3ae7d9971bc539427afd127ad/%EC%9D%B4%EC%9A%A9%20%EC%95%BD%EA%B4%80', true)
                 }}
             />
             {/* <UserMenuItem */}
