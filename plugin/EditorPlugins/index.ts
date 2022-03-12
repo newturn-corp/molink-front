@@ -3,8 +3,7 @@ import {
     DeleteBackwardHandler,
     InsertBreakHandler,
     InsertDataHandler,
-    InsertTextHandler,
-    NormalizeNodeHandler, SplitNodeHandler
+    InsertTextHandler
 } from './types'
 import { CorrectVoidBehaviorWhenDeleteBackward, CorrectVoidBehaviorWhenInsertBreak } from './CorrectVoidBehavior'
 import { WrapLinkWhenInsertData, WrapLinkWhenInsertText } from './LinkPlugin'
@@ -14,7 +13,6 @@ import { insertYoutubeWhenInsertData } from './YoutubePlugin'
 import CommandManager from '../../manager/Editing/Command/CommandManager'
 import { insertCodeWhenInsertData } from './CodeEditorPlugin'
 import { correctDeleteBackwardInHeader } from './HeaderDeleteBackwardPlugin'
-import { fixContentNextHeaderWhenSplitNodes } from './FixContentNextHeaderPlugin'
 
 export const EditorPlugin = (editor: Editor) => {
     const { isVoid, isInline, insertBreak, deleteBackward, normalizeNode, insertText, insertData, onChange } = editor
