@@ -1,13 +1,17 @@
 import { Transforms, Node, Location, NodeMatch } from 'slate'
-import FixHeadNextNormalText from './FixHeadNextNormalTextPlugin'
+import { fixContentNextHeaderWhenSplitNodes } from './FixHeadNextNormalTextPlugin'
 import HoveringToolbar from './HoveringToolbarPlugin'
-import { TransformsSelectHandler, TransformsSetNodeHandler, TransformsTransformHandler } from './types'
+import {
+    TransformsSelectHandler,
+    TransformsSetNodeHandler,
+    TransformsSplitNodeHandler,
+    TransformsTransformHandler
+} from './types'
 import UnknownPlugin from './UnknownPlugin'
 
-const { transform, setNodes, select } = Transforms
+const { transform, setNodes, select, splitNodes } = Transforms
 
 const transformsTransformHandler: TransformsTransformHandler[] = [
-    FixHeadNextNormalText,
     HoveringToolbar
 ]
 Transforms.transform = (editor, operation) => {
@@ -40,6 +44,17 @@ Transforms.setNodes = (editor,
         }
     }
     setNodes(editor, props, options)
+}
+
+const transformsSplitNodeHandlers: TransformsSplitNodeHandler[] = [fixContentNextHeaderWhenSplitNodes]
+Transforms.splitNodes = (editor, options) => {
+    for (const handler of transformsSplitNodeHandlers) {
+        const handled = handler(editor, options)
+        if (handled) {
+            return
+        }
+    }
+    splitNodes(editor, options)
 }
 
 const transformsSelectHandler: TransformsSelectHandler[] = [

@@ -85,6 +85,7 @@ const SignIn = observer(() => {
                                 const result = await AuthManager.signIn()
                                 if (result.success) {
                                     await UserManager.load()
+                                    console.log(UserManager.profile.nickname)
                                     await RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.nickname}`)
                                 }
                                 setLoading(false)

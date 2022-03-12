@@ -3,8 +3,7 @@ import {
     DeleteBackwardHandler,
     InsertBreakHandler,
     InsertDataHandler,
-    InsertTextHandler,
-    NormalizeNodeHandler
+    InsertTextHandler
 } from './types'
 import { CorrectVoidBehaviorWhenDeleteBackward, CorrectVoidBehaviorWhenInsertBreak } from './CorrectVoidBehavior'
 import { WrapLinkWhenInsertData, WrapLinkWhenInsertText } from './LinkPlugin'
