@@ -39,8 +39,9 @@ class GlobalManager {
             this.mousePositionX = event.pageX
             this.mousePositionY = event.pageY
         })
-        this.window.onbeforeunload = async () => {
-            await EventManager.issueEvent(Event.UnloadPage, {})
+        this.window.onbeforeunload = () => {
+            EventManager.issueEvent(Event.UnloadPage, {})
+            return undefined
         }
         this.window.onresize = async () => {
             await EventManager.issueEvent(Event.WindowResize, {})

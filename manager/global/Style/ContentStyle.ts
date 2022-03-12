@@ -59,6 +59,7 @@ export class ContentStyle {
         makeAutoObservable(this)
         EventManager.addDisposableEventListener(Event.InitGlobalVariable, () => {
             this.handleInitGlobalVariable()
+            this.refresh()
         }, 1)
         EventManager.addEventListeners([Event.HierarchyOnOffChange, Event.WindowResize, Event.HierarchyWidthChange], () => {
             this.refresh()
