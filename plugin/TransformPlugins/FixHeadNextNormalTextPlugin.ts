@@ -1,81 +1,165 @@
-import { Descendant, Editor, Node, Operation, Text } from 'slate'
-import { TextCategory, TextElement } from '../../Types/slate/CustomElement'
-import { createDraft, finishDraft, isDraft } from 'immer'
+import { TransformsSplitNodeHandler } from './types'
+import {
+    Editor as SlateEditor,
+    Editor,
+    Element as SlateElement,
+    Element,
+    Node,
+    Path,
+    Point,
+    Range,
+    Transforms
+} from 'slate'
+import { TextCategory } from '../../Types/slate/CustomElement'
 
-/**
- * 이 플러그인은 Head로 선언된 ELement에서 Enter를 쳐서
- * 새로운 라인을 만들 때, 같은 HeadElement가 아닌
- * ContentElement를 만들도록 합니다.
- * @param editor
- * @returns
- */
-export default (editor: Editor, op: Operation) => {
-    // 이 함수는 split_node 명령이 Head1, 2, 3일 때만 따로 수행함
-    if (op.type !== 'split_node') {
-        return false
+const deleteRange = (editor: Editor, range: Range): Point | null => {
+    if (Range.isCollapsed(range)) {
+        return range.anchor
+    } else {
+        const [, end] = Range.edges(range)
+        const pointRef = Editor.pointRef(editor, end)
+        Transforms.delete(editor, { at: range })
+        return pointRef.unref()
     }
-    const { path, position, properties } = op
+}
 
-    const node: any = Node.get(editor, path)
+export const fixContentNextHeaderWhenSplitNodes: TransformsSplitNodeHandler = (editor, options) => {
+    Editor.withoutNormalizing(editor, () => {
+        const { mode = 'lowest', voids = false } = options
+        let { match, at = editor.selection, height = 0, always = false } = options
 
-    if (![TextCategory.Head1, TextCategory.Head2, TextCategory.Head3].includes(node.category)) {
-        return false
-    }
-
-    editor.children = createDraft(editor.children)
-    const selection = editor.selection && createDraft(editor.selection)
-
-    try {
-        if (path.length === 0) {
-            throw new Error(
-                `Cannot apply a "split_node" operation at path [${path}] because the root node cannot be split.`
-            )
+        if (match == null) {
+            match = n => Editor.isBlock(editor, n)
         }
 
-        const node = Node.get(editor, path)
-        const parent = Node.parent(editor, path)
-        const index = path[path.length - 1]
-        let newNode: Descendant
+        if (Range.isRange(at)) {
+            at = deleteRange(editor, at)
+        }
 
-        if (Text.isText(node)) {
-            const before = node.text.slice(0, position)
-            const after = node.text.slice(position)
-            node.text = before
-            newNode = {
-                ...(properties as Partial<Text>),
-                text: after
+        // If the target is a path, the default height-skipping and position
+        // counters need to account for us potentially splitting at a non-leaf.
+        if (Path.isPath(at)) {
+            const path = at
+            const point = Editor.point(editor, path)
+            const [parent] = Editor.parent(editor, path)
+            match = n => n === parent
+            height = point.path.length - path.length + 1
+            at = point
+            always = true
+        }
+
+        if (!at) {
+            return false
+        }
+
+        const beforeRef = Editor.pointRef(editor, at, {
+            affinity: 'backward'
+        })
+        const [highest] = Editor.nodes(editor, { at, match, mode, voids })
+
+        if (!highest) {
+            return false
+        }
+
+        const voidMatch = Editor.void(editor, { at, mode: 'highest' })
+        const nudge = 0
+
+        if (!voids && voidMatch) {
+            const [voidNode, voidPath] = voidMatch
+
+            if (Element.isElement(voidNode) && editor.isInline(voidNode)) {
+                let after = Editor.after(editor, voidPath)
+
+                if (!after) {
+                    const text = { text: '' }
+                    const afterPath = Path.next(voidPath)
+                    Transforms.insertNodes(editor, text, { at: afterPath, voids })
+                    after = Editor.point(editor, afterPath)!
+                }
+
+                at = after
+                always = true
             }
-        } else {
-            const before = node.children.slice(0, position)
-            const after = node.children.slice(position)
-            node.children = before
 
-            newNode = {
-                ...(properties as Partial<Element>),
-                children: after
-            } as TextElement
-            newNode.category = TextCategory.Content3
+            const siblingHeight = at.path.length - voidPath.length
+            height = siblingHeight + 1
+            always = true
         }
 
-        parent.children.splice(index + 1, 0, newNode)
+        const afterRef = Editor.pointRef(editor, at)
+        const depth = at.path.length - height
+        const [, highestPath] = highest
+        const lowestPath = at.path.slice(0, depth)
+        let position = height === 0 ? at.offset : at.path[depth] + nudge
 
-        if (selection) {
-            // console.log('체크')
-            // Transforms.select(editor, Range.points(selection))
-            // for (const [point, key] of Range.points(selection)) {
-            //     selection[key] = Point.transform(point, op)!
-            // }
-        }
-    } finally {
-        editor.children = finishDraft(editor.children)
+        for (const [node, path] of Editor.levels(editor, {
+            at: lowestPath,
+            reverse: true,
+            voids
+        })) {
+            let split = false
 
-        if (selection) {
-            editor.selection = isDraft(selection)
-                ? (finishDraft(selection))
-                : selection
-        } else {
-            editor.selection = null
+            if (
+                path.length < highestPath.length ||
+                path.length === 0 ||
+                (!voids && Editor.isVoid(editor, node))
+            ) {
+                break
+            }
+
+            const point = beforeRef.current!
+            const isEnd = Editor.isEnd(editor, point, path)
+            const isStart = Editor.isStart(editor, point, path)
+
+            if (always || !beforeRef || !Editor.isEdge(editor, point, path)) {
+                split = true
+                const properties = Node.extractProps(node) as any
+                console.log(properties)
+                if (properties.type === 'text' && [TextCategory.Head1, TextCategory.Head2, TextCategory.Head3].includes(properties.category)) {
+                    if (isStart) {
+                        Transforms.setNodes<SlateElement>(editor, {
+                            type: 'text',
+                            category: TextCategory.Content3
+                        }, {
+                            match: n => SlateEditor.isBlock(editor, n)
+                        })
+                        editor.apply({
+                            type: 'split_node',
+                            path,
+                            position,
+                            properties
+                        })
+                    } else {
+                        editor.apply({
+                            type: 'split_node',
+                            path,
+                            position,
+                            properties: {
+                                type: 'text',
+                                category: TextCategory.Content3
+                            }
+                        })
+                    }
+                } else {
+                    editor.apply({
+                        type: 'split_node',
+                        path,
+                        position,
+                        properties
+                    })
+                }
+            }
+
+            position = path[path.length - 1] + (split || isEnd ? 1 : 0)
         }
-    }
+
+        if (options.at == null) {
+            const point = afterRef.current || Editor.end(editor, [])
+            Transforms.select(editor, point)
+        }
+
+        beforeRef.unref()
+        afterRef.unref()
+    })
     return true
 }

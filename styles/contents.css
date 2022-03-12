@@ -52,6 +52,7 @@
   color: #aaa;
   position: absolute;
   top: 3px;
+  cursor: text;
 }
 .content-container .content-body .contents .head1 {
   margin-top: 0.8rem;

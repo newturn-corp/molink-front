@@ -1,4 +1,4 @@
-import { Editor, Node, NodeEntry } from 'slate'
+import { Editor, Node, NodeEntry, NodeMatch } from 'slate'
 
 export type InsertBreakHandler = (editor: Editor) => boolean
 

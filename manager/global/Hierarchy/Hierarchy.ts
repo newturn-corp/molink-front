@@ -58,7 +58,8 @@ export default class Hierarchy {
             this.topLevelDocumentIdList = this.yTopLevelDocumentIdList.toArray()
         })
         EventManager.addEventListeners(
-            [Event.UnloadPage
+            [Event.UnloadPage,
+                Event.SignOut
             ], () => {
                 this.reset()
             }, 1)
@@ -103,6 +104,9 @@ export default class Hierarchy {
         if (this.websocketProvider) {
             this.websocketProvider.destroy()
         }
+        this.selectedDocumentId = null
+        this.openedDocumentId = null
+        this.nameChangingDocumentId = null
     }
 
     public async createDocument (order:number, parentId: string | null) {

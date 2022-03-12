@@ -14,3 +14,15 @@ export type TransformsSetNodeHandler<T extends Node> = (editor: Editor,
     }) => boolean
 
 export type TransformsSelectHandler = (editor: Editor, location: Location) => boolean
+
+export type TransformsSplitNodeHandler = <T extends Node>(
+    editor: Editor,
+    options: {
+            at?: Location
+            match?: NodeMatch<T>
+            mode?: 'highest' | 'lowest'
+            always?: boolean
+            height?: number
+            voids?: boolean
+    }
+) => boolean

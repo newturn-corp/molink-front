@@ -253,8 +253,6 @@ class CommandManager {
             const before = wordBeforeText[wordBeforeText.length - 1] === '/' ? Editor.before(editor, start, { unit: 'character' }) : Editor.before(editor, wordBefore, { unit: 'character' })
             const beforeRange = before && Editor.range(editor, before, start)
             const beforeText = beforeRange && Editor.string(editor, beforeRange)
-            console.log('beforeText')
-            console.log(beforeText)
             const beforeMatch = beforeText && beforeText.match(/(^\/)/)
             const after = Editor.after(editor, start)
             const afterRange = Editor.range(editor, start, after)
