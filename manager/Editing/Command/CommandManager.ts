@@ -1,6 +1,6 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import React from 'react'
-import { BaseRange, Editor, Element, Node, Range, Transforms } from 'slate'
+import { BaseRange, Editor, Element, Node, Path, Range, Transforms } from 'slate'
 import { DividerType, TextCategory } from '../../../Types/slate/CustomElement'
 import { ListTransforms } from '../../../plugin/GlobalPlugins/ListPlugin'
 import Command from './Command'
@@ -73,14 +73,33 @@ class CommandManager {
     // 바로 위 노드가 void인 경우, 현재 node를 set하고
     // 일반적인 경우, insertNode를 함
     insertNode (editor: Editor, node: Element) {
-        if (!this.isSiblingVoid) {
+        const { selection } = editor
+        const [start] = Range.edges(selection)
+        const lineBefore = Editor.before(editor, start, { unit: 'word' })
+        const beforeRange = lineBefore && Editor.range(editor, lineBefore, start)
+        const beforeText = beforeRange && Editor.string(editor, beforeRange)
+        if (beforeText.length > 0) {
+            Transforms.insertNodes(editor, node)
+        } else {
             Transforms.delete(editor)
             Transforms.setNodes<Element>(editor, node, {
                 match: n => Editor.isBlock(editor, n)
             })
-        } else {
-            Transforms.insertNodes(editor, node)
         }
+        // Transforms.select(editor, beforeRange)
+
+        // const selectedNodePath = Path.parent(editor.selection.anchor.path)
+        // const selectedNode = Node.get(editor, selectedNodePath)
+        // if (!this.isSiblingVoid) {
+        //     console.log('!this.isSiblingVoid')
+        //     Transforms.delete(editor)
+        //     Transforms.setNodes<Element>(editor, node, {
+        //         match: n => Editor.isBlock(editor, n)
+        //     })
+        // } else {
+        //     console.log('isSiblingVoid')
+        //     Transforms.insertNodes(editor, node)
+        // }
     }
 
     async insertNodeByCommand (editor: Editor, command: Command) {
@@ -219,50 +238,53 @@ class CommandManager {
 
     handleEditorChange (editor: Editor) {
         try {
-            const currentNode = editor.children[editor.selection.anchor.path[0]]
+            const { selection } = editor
+            if (!selection || !Range.isCollapsed(selection)) {
+                return false
+            }
+            const currentNode = editor.children[selection.anchor.path[0]]
             if (Element.isElement(currentNode) && currentNode.type === 'code') {
                 return false
             }
-            const { selection } = editor
-            if (selection && Range.isCollapsed(selection)) {
-                const [start] = Range.edges(selection)
-                // 시작점을 가져옴
-                const wordBefore = Editor.before(editor, start, { unit: 'word' })
-                let before = wordBefore && Editor.before(editor, wordBefore)
-                this.isSiblingVoid = before && editor.isVoid(Node.parent(editor, before.path) as Element)
-                before = this.isSiblingVoid ? wordBefore : (before || wordBefore)
-                const beforeRange = before && Editor.range(editor, before, start)
-                const beforeText = beforeRange && Editor.string(editor, beforeRange)
-                const beforeMatch = beforeText && beforeText.match(/^\//)
-                const after = Editor.after(editor, start)
-                const afterRange = Editor.range(editor, start, after)
-                const afterText = Editor.string(editor, afterRange)
-                const afterMatch = afterText.match(/^(\s|$)/)
-                if (beforeMatch && afterMatch) {
-                    this.target = beforeRange
+            const [start] = Range.edges(selection)
+            // 시작점을 가져옴
+            const wordBefore = Editor.before(editor, start, { unit: 'word' })
+            const wordBeforeText = Editor.string(editor, Editor.range(editor, wordBefore, start))
+            const before = wordBeforeText[wordBeforeText.length - 1] === '/' ? Editor.before(editor, start, { unit: 'character' }) : Editor.before(editor, wordBefore, { unit: 'character' })
+            const beforeRange = before && Editor.range(editor, before, start)
+            const beforeText = beforeRange && Editor.string(editor, beforeRange)
+            console.log('beforeText')
+            console.log(beforeText)
+            const beforeMatch = beforeText && beforeText.match(/(^\/)/)
+            const after = Editor.after(editor, start)
+            const afterRange = Editor.range(editor, start, after)
+            const afterText = Editor.string(editor, afterRange)
+            const afterMatch = afterText.match(/^(\s|$)/)
+            if (beforeMatch && afterMatch) {
+                this.target = beforeRange
 
-                    const searchResult = beforeText.match(/^\/((\w|\W)+)$/)
-                    if (!searchResult) {
-                        this.search = ''
-                    } else {
-                        this.search = searchResult[1]
-                    }
-                    this._searchedCommandGroupList = []
-                    this._searchedCommandCount = 0
-                    for (const commandGroup of this.commandGroupList) {
-                        const searchedGroup = commandGroup.search(this.search)
-                        if (searchedGroup.commands.length === 0) {
-                            continue
-                        }
-                        this._searchedCommandGroupList.push(searchedGroup)
-                        this._searchedCommandCount += searchedGroup.commands.length
-                    }
-                    this.index = 0
-                    return
+                const searchResult = beforeText.match(/^\/((\w|\W)+)$/)
+                if (!searchResult) {
+                    this.search = ''
+                } else {
+                    this.search = searchResult[1]
                 }
+                this._searchedCommandGroupList = []
+                this._searchedCommandCount = 0
+                for (const commandGroup of this.commandGroupList) {
+                    const searchedGroup = commandGroup.search(this.search)
+                    if (searchedGroup.commands.length === 0) {
+                        continue
+                    }
+                    this._searchedCommandGroupList.push(searchedGroup)
+                    this._searchedCommandCount += searchedGroup.commands.length
+                }
+                this.index = 0
+                return false
+            } else {
+                this.isSiblingVoid = false
+                this.target = null
             }
-            this.isSiblingVoid = false
-            this.target = null
         } catch (err) {
             console.log(err)
         }
@@ -274,10 +296,12 @@ class CommandManager {
 
     getSearchedCommandByIndex (index: number) {
         for (const commandGroup of this._searchedCommandGroupList) {
-            if (commandGroup.commands.length < index) {
+            if (commandGroup.commands.length < index + 1) {
                 index -= commandGroup.commands.length
                 continue
             }
+            console.log(commandGroup)
+            console.log(index)
             return commandGroup.commands[index]
         }
     }
@@ -305,7 +329,6 @@ class CommandManager {
             return false
         }
         event.preventDefault()
-        console.log(this.target)
         Transforms.select(editor, toJS(this.target))
         await this.insertNodeByCommand(editor, this.getSearchedCommandByIndex(this.index))
         this.target = null

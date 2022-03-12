@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const AuthButton: React.FC<{
+export const Button: React.FC<{
     text: string,
     onClick: Function,
     theme: 'primary' | 'primary-stroke',
@@ -15,7 +15,7 @@ export const AuthButton: React.FC<{
 }) => {
     const customStyle = style || {}
     return <div
-        className={'auth-button' + ' ' + theme}
+        className={'button' + ' ' + theme}
         style={{
             border: border || '1px solid #3A7BBF',
             ...customStyle

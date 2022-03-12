@@ -46,7 +46,6 @@ export default class Hierarchy {
                 this.openedDocumentId = null
                 await RoutingManager.moveTo(Page.Blog, `/${this.nickname}`)
             }
-            console.log(this.yMap.toJSON())
             this.map = this.yMap.toJSON()
         })
 

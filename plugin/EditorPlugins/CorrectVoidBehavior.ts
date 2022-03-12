@@ -38,7 +38,7 @@ export const CorrectVoidBehaviorWhenInsertBreak = (editor: Editor) => {
             category: TextCategory.Content3,
             children: [{ text: '' }]
         })
-        return
+        return true
     }
 
     return false

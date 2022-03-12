@@ -72,8 +72,7 @@ const ChangePasswordRequest = observer(() => {
                         </pre>
                         <AuthButton
                             text={'비밀번호 초기화 이메일 받기'}
-                            textColor={'#FFFFFF'}
-                            backgroundColor={'#3A7BBF'}
+                            theme={'primary'}
                             style={{
                                 marginTop: 44
                             }}

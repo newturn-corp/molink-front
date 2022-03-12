@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Backdrop, CircularProgress } from '@material-ui/core'
-import AuthManager, { EmailState, NicknameState, PasswordState } from '../../manager/Auth/AuthManager'
+import { EmailState, NicknameState, PasswordState } from '../../manager/Auth/AuthStates'
 import { observer } from 'mobx-react-lite'
 import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 import { AuthHeader } from '../../components/auth/AuthHeader'
 import { AuthTitle } from '../../components/auth/AuthTitle'
 import { AuthButton } from '../../components/auth/AuthButton'
 import { AuthInput } from '../../components/auth/AuthInput'
-import FeedbackManager, { NOTIFICATION_TYPE } from '../../manager/global/FeedbackManager'
 import UserManager from '../../manager/global/User/UserManager'
+import SignupManager from '../../manager/Auth/SignupManager'
+import { SignupCheckList } from '../../components/auth/SignupCheckList'
 
 const getEmailHelperText = (emailState: EmailState) => {
     switch (emailState) {
@@ -76,17 +77,17 @@ const SignUp = observer(() => {
                             label="이메일"
                             variant="outlined"
                             autoComplete='new-street-address'
-                            error={AuthManager.emailState !== EmailState.DEFAULT}
+                            error={SignupManager.emailState !== EmailState.DEFAULT}
                             onChange={(e) => {
                                 const { value } = e.target
-                                AuthManager.emailState = EmailState.DEFAULT
-                                AuthManager.email = value
+                                SignupManager.emailState = EmailState.DEFAULT
+                                SignupManager.email = value
                             }}
                             onFocus={(e) => {
-                                AuthManager.emailState = EmailState.DEFAULT
+                                SignupManager.emailState = EmailState.DEFAULT
                             }}
-                            defaultValue={AuthManager.email}
-                            helperText={getEmailHelperText(AuthManager.emailState)}
+                            defaultValue={SignupManager.email}
+                            helperText={getEmailHelperText(SignupManager.emailState)}
                         />
                         <AuthInput
                             name={Math.random().toString()}
@@ -95,20 +96,20 @@ const SignUp = observer(() => {
                             isPassword={true}
                             autoComplete='new-password'
                             variant="outlined"
-                            error={AuthManager.passwordState !== PasswordState.DEFAULT}
+                            error={SignupManager.passwordState !== PasswordState.DEFAULT}
                             onChange={(e) => {
                                 const { value } = e.target
-                                AuthManager.passwordState = PasswordState.DEFAULT
-                                AuthManager.pwd = value
+                                SignupManager.passwordState = PasswordState.DEFAULT
+                                SignupManager.pwd = value
                             }}
                             onFocus={(e) => {
-                                AuthManager.passwordState = PasswordState.DEFAULT
+                                SignupManager.passwordState = PasswordState.DEFAULT
                             }}
                             onPaste={(e) => {
                                 e.preventDefault()
                             }}
-                            defaultValue={AuthManager.pwd}
-                            helperText={getPasswordHelperText(AuthManager.passwordState)}
+                            defaultValue={SignupManager.pwd}
+                            helperText={getPasswordHelperText(SignupManager.passwordState)}
                         />
                         <AuthInput
                             name={Math.random().toString()}
@@ -117,18 +118,18 @@ const SignUp = observer(() => {
                             isPassword={true}
                             autoComplete='new-password'
                             variant="outlined"
-                            error={AuthManager.passwordState !== PasswordState.DEFAULT}
+                            error={SignupManager.passwordState !== PasswordState.DEFAULT}
                             onChange={(e) => {
-                                AuthManager.passwordState = PasswordState.DEFAULT
-                                AuthManager.pwdCheck = e.target.value
+                                SignupManager.passwordState = PasswordState.DEFAULT
+                                SignupManager.pwdCheck = e.target.value
                             }}
                             onFocus={(e) => {
-                                AuthManager.passwordState = PasswordState.DEFAULT
+                                SignupManager.passwordState = PasswordState.DEFAULT
                             }}
                             onPaste={(e) => {
                                 e.preventDefault()
                             }}
-                            defaultValue={AuthManager.pwdCheck}
+                            defaultValue={SignupManager.pwdCheck}
                         />
                         <AuthInput
                             name={Math.random().toString()}
@@ -136,22 +137,22 @@ const SignUp = observer(() => {
                             label="닉네임"
                             autoComplete='off'
                             variant='outlined'
-                            error={AuthManager.nicknameState !== NicknameState.Default}
+                            error={SignupManager.nicknameState !== NicknameState.Default}
                             onChange={(e) => {
                                 const { value } = e.target
-                                AuthManager.nicknameState = NicknameState.Default
-                                AuthManager.nickname = value
+                                SignupManager.nicknameState = NicknameState.Default
+                                SignupManager.nickname = value
                             }}
-                            defaultValue={AuthManager.nickname}
-                            helperText={getNicknameHelperText(AuthManager.nicknameState)}
+                            defaultValue={SignupManager.nickname}
+                            helperText={getNicknameHelperText(SignupManager.nicknameState)}
                         />
+                        <SignupCheckList/>
                         <AuthButton
                             text={'계정 생성'}
-                            backgroundColor={'#FFFFFF'}
-                            textColor={'#3A7BBF'}
+                            theme={'primary-stroke'}
                             onClick={async () => {
                                 setLoading(true)
-                                const result = await AuthManager.signup()
+                                const result = await SignupManager.signup()
                                 setLoading(false)
                                 if (result.success) {
                                     await RoutingManager.moveTo(Page.SignIn)

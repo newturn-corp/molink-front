@@ -12,7 +12,6 @@ export const DragIndicator: React.FC<{
           if (currentHierarchy) {
               currentHierarchy.pageDragManager.indicatorTooltip = document.getElementsByClassName('drag-indicator-tooltip')[0] as HTMLElement
               currentHierarchy.pageDragManager.dragIndicator = indicatorRef.current
-              console.log(currentHierarchy.pageDragManager)
           }
       }, [currentHierarchy])
       return (

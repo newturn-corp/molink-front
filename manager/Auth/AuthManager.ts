@@ -4,6 +4,7 @@ import FeedbackManager, { NOTIFICATION_TYPE } from '../global/FeedbackManager'
 import RoutingManager, { Page } from '../global/RoutingManager'
 import EventManager from '../global/Event/EventManager'
 import { Event } from '../global/Event/Event'
+import AuthValidator from './AuthValidator'
 
 export enum SignupError {
     NOT_EMAIL,
@@ -105,55 +106,9 @@ class AuthManager {
         return { success: true }
     }
 
-    async signup () {
-        // 사전 이메일 확인
-        if (this.email.length === 0) {
-            this.emailState = EmailState.EmptyEmail
-            return { success: false }
-        }
-        if (!this.validateEmail(this.email)) {
-            this.emailState = EmailState.NOT_EMAIL
-            return { success: false }
-        }
-        this.emailState = EmailState.DEFAULT
-
-        if (!this.validateNickname(this.nickname)) {
-            this.nicknameState = NicknameState.NicknameConditionNotSatisfied
-        }
-        this.nicknameState = NicknameState.Default
-
-        if (this.pwd !== this.pwdCheck) {
-            this.passwordState = PasswordState.PASSWORD_MISMATCH
-            return { success: false }
-        } else if (!this.validatePassword(this.pwd)) {
-            this.passwordState = PasswordState.PASSWORD_CONDITION_NOT_SATISFIED
-            return { success: false }
-        } else {
-            const result = await AuthAPI.signUp(this.email, this.pwd, this.nickname)
-            if (result.success === false) {
-                if (result.reason === SIGN_UP_FAIL_REASON.ALREADY_EXISTS) {
-                    this.emailState = EmailState.SAME_EMAIL
-                } else if (result.reason === SIGN_UP_FAIL_REASON.INVALID_EMAIL) {
-                    this.emailState = EmailState.NOT_EMAIL
-                } else if (result.reason === SIGN_UP_FAIL_REASON.INVALID_PASSWORD) {
-                    this.passwordState = PasswordState.PASSWORD_CONDITION_NOT_SATISFIED
-                } else if (result.reason === SIGN_UP_FAIL_REASON.TOO_MANY_SIGN_UP_REQEUST) {
-                    this.emailState = EmailState.TOO_MANY_REQUEST
-                } else if (result.reason === SIGN_UP_FAIL_REASON.INVALID_NICKNAME) {
-                    this.nicknameState = NicknameState.NicknameConditionNotSatisfied
-                } else if (result.reason === SIGN_UP_FAIL_REASON.NICKNAME_ALREADY_EXISTS) {
-                    this.nicknameState = NicknameState.NicknameAlreadyExists
-                }
-                return { success: false }
-            }
-            FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '인증 메일이 발송되었습니다!', '')
-            return { success: true }
-        }
-    }
-
     async signOut () {
-        await AuthAPI.signOut()
         await EventManager.issueEvent(Event.SignOut, {})
+        await AuthAPI.signOut()
         await RoutingManager.moveTo(Page.SignIn)
     }
 

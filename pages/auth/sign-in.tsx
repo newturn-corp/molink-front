@@ -76,8 +76,7 @@ const SignIn = observer(() => {
                         />
                         <AuthButton
                             text={'로그인'}
-                            textColor={'#FFFFFF'}
-                            backgroundColor={'#3A7BBF'}
+                            theme={'primary'}
                             style={{
                                 marginTop: 22
                             }}
@@ -93,8 +92,7 @@ const SignIn = observer(() => {
                         />
                         <AuthButton
                             text={'계정 생성'}
-                            textColor={'#3A7BBF'}
-                            backgroundColor={'#FFFFFF'}
+                            theme={'primary-stroke'}
                             border={'1px solid #3A7BBF'}
                             onClick={async () => {
                                 setLoading(true)

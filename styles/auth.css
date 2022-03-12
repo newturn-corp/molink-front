@@ -70,6 +70,28 @@
   user-select: none;
 }
 
+.auth-button.primary {
+  background: #3A7BBF;
+  color: #FFFFFF;
+}
+.auth-button.primary:hover {
+  background: #2E639A;
+}
+.auth-button.primary:active {
+  background: #183451;
+}
+
+.auth-button.primary-stroke {
+  background: #FFFFFF;
+  color: #2E639A;
+}
+.auth-button.primary-stroke:hover {
+  background: #E8EBED;
+}
+.auth-button.primary-stroke:active {
+  background: #D6E6F6;
+}
+
 .auth-input {
   width: 100%;
 }

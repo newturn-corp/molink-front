@@ -29,6 +29,7 @@ class SupportManager {
 
     handleCancel () {
         this.showSupportModal = false
+        this.content = ''
     }
 
     handleChange (event: ChangeEvent<HTMLTextAreaElement>) {
