@@ -34,7 +34,7 @@ export const ToolbarEditingButton
                 trigger={'hover'}
             >
                 <div
-                    className={'button disabled'}
+                    className={'toolbar-editing-button disabled'}
                 >
                     {props.icon}
                     <p className='text'>
@@ -44,7 +44,7 @@ export const ToolbarEditingButton
             </Tooltip>
         } else {
             return <div
-                className={'button active'}
+                className={'toolbar-editing-button active'}
                 onClick={(event) => {
                     props.onClick(event)
                 }}
