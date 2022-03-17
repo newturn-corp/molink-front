@@ -47,23 +47,28 @@ class BlogManager {
                 const authority = await ViewerAPI.getDocumentAuthority(documentId)
                 if (!authority.viewable) {
                     await DialogManager.openDialog('문서가 존재하지 않습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
-                    return RoutingManager.moveTo(Page.Blog, `/${authority.nickname}`)
+                    await RoutingManager.moveTo(Page.Blog, `/${authority.nickname}`)
+                    return
                 }
-                return RoutingManager.moveTo(Page.Blog, `/${authority.nickname}/${documentId}/${encodeURIComponent(authority.documentName)}`)
+                await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${authority.nickname}/${documentId}/${encodeURIComponent(authority.documentName)}`)
+                return
             } else if (type === HomeURLType.UserMainURL) {
                 const { id: userId } = await ViewerAPI.getUserIDByNickname(nickname)
                 await HierarchyManager.loadHierarchy(userId, nickname)
                 if (UserManager.userId === userId && UserManager.profile && UserManager.profile.lastOpenPageId) {
-                    return RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.lastOpenPageId}`)
+                    await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${UserManager.profile.lastOpenPageId}`)
+                    return
                 }
             } else if (type === HomeURLType.StandardDocumentURL) {
                 const authority = await ViewerAPI.getDocumentAuthority(documentId)
                 if (!authority.viewable) {
                     await DialogManager.openDialog('문서가 존재하지 않습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
-                    return RoutingManager.moveTo(Page.Blog, `/${authority.nickname}`)
+                    await RoutingManager.moveTo(Page.Blog, `/${authority.nickname}`)
+                    return
                 }
                 if (authority.nickname !== nickname || (documentName !== undefined && authority.documentName !== decodeURIComponent(documentName))) {
-                    return RoutingManager.moveTo(Page.Blog, `/${authority.nickname}/${documentId}/${encodeURIComponent(authority.documentName)}`)
+                    await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${authority.nickname}/${documentId}/${encodeURIComponent(authority.documentName)}`)
+                    return
                 }
                 await HierarchyManager.loadHierarchy(authority.userId, nickname)
                 await EditorManager.load(documentId)

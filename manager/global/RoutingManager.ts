@@ -23,6 +23,11 @@ class RoutingManager {
         await Router.push(page + extra)
     }
 
+    async moveWithoutAddHistory (page: Page, extra: string = '') {
+        await EventManager.issueEvent(Event.MoveToAnotherPage)
+        await Router.replace(page + extra)
+    }
+
     async rawMoveTo (url: string, shouldOpenNewWindow: boolean = false) {
         const domain = new URL(url)
         // 외부 주소일 경우 새 창에서, 내부 주소일 경우 페이지 이동

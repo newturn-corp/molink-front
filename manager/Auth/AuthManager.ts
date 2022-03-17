@@ -76,36 +76,6 @@ class AuthManager {
         return pwdReg.test(pwd)
     }
 
-    private validateNickname (nickname: string) {
-        if (nickname.length < 2) {
-            return false
-        } else if (nickname.length > 27) {
-            return false
-        }
-        const nicknameReg = /^([ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_-](?:(?:[ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_-]|(?:\.(?!\.))){0,28}(?:[ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_-]))?)$/
-        return nicknameReg.test((nickname))
-    }
-
-    async signIn () {
-        if (!this.validateEmail(this.email)) {
-            this.emailState = EmailState.NOT_EMAIL
-            return { success: false }
-        }
-        this.emailState = EmailState.DEFAULT
-        const result = await AuthAPI.signIn(this.email, this.pwd)
-        if (result.success === false) {
-            if (result.failReason === SIGN_IN_FAIL_REASON.EMAIL_NOT_AUTHORIZED) {
-                this.emailState = EmailState.NOT_AUTHORIZED
-            } else if (result.failReason === SIGN_IN_FAIL_REASON.WRONG_EMAIL_PASSWORD) {
-                this.emailState = EmailState.WRONG_EMAIL_PASSWORD
-            } else if (result.failReason === SIGN_IN_FAIL_REASON.TOO_MANY_REQUEST) {
-                this.emailState = EmailState.TOO_MANY_REQUEST
-            }
-            return { success: false }
-        }
-        return { success: true }
-    }
-
     async signOut () {
         await EventManager.issueEvent(Event.SignOut, {})
         await AuthAPI.signOut()

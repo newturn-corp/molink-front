@@ -9,7 +9,6 @@ export const CorrectVoidBehaviorWhenDeleteBackward = (editor: Editor, unit: 'cha
     ) {
         return false
     }
-
     const parentPath = Path.parent(editor.selection.anchor.path)
     const parentNode = Node.get(editor, parentPath)
     const parentIsEmpty = Node.string(parentNode).length === 0
