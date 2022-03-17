@@ -71,6 +71,7 @@ type AuthInputProps = {
     helperText?: string,
     defaultValue?: string,
     isPassword?: boolean
+    inputRef?: React.MutableRefObject<any>
 }
 
 export const AuthInput: React.FC<AuthInputProps> = (props: AuthInputProps) => {

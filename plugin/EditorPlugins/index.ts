@@ -15,7 +15,7 @@ import { insertCodeWhenInsertData } from './CodeEditorPlugin'
 import { correctDeleteBackwardInHeader } from './HeaderDeleteBackwardPlugin'
 
 export const EditorPlugin = (editor: Editor) => {
-    const { isVoid, isInline, insertBreak, deleteBackward, normalizeNode, insertText, insertData, onChange } = editor
+    const { isVoid, isInline, insertBreak, deleteBackward, deleteForward, normalizeNode, insertText, insertData, onChange } = editor
 
     const voidTypeList: string[] = ['divider', 'image', 'document', 'mention', 'youtube']
     editor.isVoid = element => {
@@ -29,6 +29,7 @@ export const EditorPlugin = (editor: Editor) => {
 
     const deleteBackwardHandlers: DeleteBackwardHandler[] = [CorrectVoidBehaviorWhenDeleteBackward, ShortcutWhenDeleteBackward, correctDeleteBackwardInHeader]
     editor.deleteBackward = unit => {
+        console.log('deleteBackward')
         for (const handler of deleteBackwardHandlers) {
             const handled = handler(editor, unit)
             if (handled) {
@@ -36,6 +37,11 @@ export const EditorPlugin = (editor: Editor) => {
             }
         }
         deleteBackward(unit)
+    }
+
+    editor.deleteForward = unit => {
+        console.log('deleteForward')
+        deleteForward(unit)
     }
 
     const insertBreakHandlers: InsertBreakHandler[] = [CorrectVoidBehaviorWhenInsertBreak]

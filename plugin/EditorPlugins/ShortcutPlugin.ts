@@ -7,7 +7,7 @@ import {
     Editor,
     Node, Element
 } from 'slate'
-import { ListTransforms } from '../GlobalPlugins/ListPlugin'
+import { ListEditor, ListTransforms } from '../GlobalPlugins/ListPlugin'
 import { DeleteBackwardHandler } from './types'
 import { DividerType } from '../../Types/slate/CustomElement'
 import ShortcutManager from '../../manager/Editing/ShortcutManager'
@@ -112,6 +112,12 @@ export const ShortcutWhenInsertText = (editor: Editor, text: string) => {
         const type = SHORTCUTS[beforeText]
 
         if (type) {
+            if (type === 'unordered-list' || type === 'ol-list' || type === 'check-list') {
+                // 이미 리스트 내부이면 처리하지 않는다.
+                if (ListEditor.getCurrentItem(editor)) {
+                    return false
+                }
+            }
             Transforms.select(editor, range)
             Transforms.delete(editor)
             if (type === 'unordered-list') {
