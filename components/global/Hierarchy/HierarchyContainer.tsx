@@ -10,6 +10,7 @@ import { HierarchyOnOffButton } from './HierarchyOnOffButton'
 import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
 import UserManager from '../../../manager/global/User/UserManager'
 import StyleManager from '../../../manager/global/Style/StyleManager'
+import { HierarchyButtonGroup } from './HierarchyButtonGroup'
 
 export const HierarchyContainer: React.FC<{
   }> = observer(() => {
@@ -46,6 +47,13 @@ export const HierarchyContainer: React.FC<{
                       HierarchyManager.isHierarchyOpen
                           ? <>
                               <HierarchyName/>
+                              <div
+                                  className={'hierarchy-divider'}
+                              />
+                              <HierarchyButtonGroup/>
+                              <div
+                                  className={'hierarchy-divider'}
+                              />
                               <HierarchyContextMenu/>
                               <HierarchyComponent/>
                               <DragIndicator/>

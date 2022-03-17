@@ -55,7 +55,7 @@ export const DocumentComponent: React.FC<{
                       paddingLeft: padding,
                       marginRight: 5,
                       backgroundColor: isSelected || isOpen ? hierarchySelectedDocumentBackgroundColor : undefined,
-                      borderRadius: 10,
+                      borderRadius: 8,
                       marginLeft: 8,
                       width: 'inherit'
                   }}

@@ -1,8 +1,8 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import {
-    ChangeDocumentNameOption,
-    CreateNewDocumentOption,
-    DeleteDocumentOption,
+    ChangePageNameOption,
+    CreateNewPageOption,
+    DeletePageOption,
     HierarchyControlOption, SettingDocumentListOption
 } from './HierarchyOptions'
 import Hierarchy from './Hierarchy'
@@ -59,13 +59,13 @@ class HierarchyManager {
 
         this._availControlOptions = []
         if (currentHierarchy.editable) {
-            this._availControlOptions.push(new CreateNewDocumentOption(documentId))
-            if (document) {
-                this._availControlOptions.push(new ChangeDocumentNameOption(documentId))
-                this._availControlOptions.push(new DeleteDocumentOption(documentId))
+            this._availControlOptions.push(new CreateNewPageOption(documentId))
+            if (documentId) {
+                this._availControlOptions.push(new ChangePageNameOption(documentId))
+                this._availControlOptions.push(new DeletePageOption(documentId))
             }
         }
-        this._availControlOptions.push(new SettingDocumentListOption(documentId))
+        // this._availControlOptions.push(new SettingDocumentListOption(documentId))
 
         this.openHierarchyContextMenu = true
         this._clickPosition = {

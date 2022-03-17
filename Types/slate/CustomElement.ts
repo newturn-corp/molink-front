@@ -14,6 +14,10 @@ export enum TextCategory {
       Content3 = 'content3'
   }
 
+export type QuoteElement = {
+    type: 'block-quote'
+}
+
 export type TextElement = {
     type: 'text',
     category: TextCategory,
@@ -124,4 +128,4 @@ OrderedListItemElement |
 DividerElement |
 DocumentElement |
 CheckListItemElement |
-CodeElement | YoutubeElement
+CodeElement | YoutubeElement | QuoteElement

@@ -1,6 +1,6 @@
 import { Transforms, Node, Location, NodeMatch } from 'slate'
 import { fixContentNextHeaderWhenSplitNodes } from './FixHeadNextNormalTextPlugin'
-import HoveringToolbar from './HoveringToolbarPlugin'
+// import HoveringToolbar from './HoveringToolbarPlugin'
 import {
     TransformsSelectHandler,
     TransformsSetNodeHandler,
@@ -11,18 +11,18 @@ import UnknownPlugin from './UnknownPlugin'
 
 const { transform, setNodes, select, splitNodes } = Transforms
 
-const transformsTransformHandler: TransformsTransformHandler[] = [
-    HoveringToolbar
-]
-Transforms.transform = (editor, operation) => {
-    for (const handler of transformsTransformHandler) {
-        const handled = handler(editor, operation)
-        if (handled) {
-            return
-        }
-    }
-    transform(editor, operation)
-}
+// const transformsTransformHandler: TransformsTransformHandler[] = [
+//     HoveringToolbar
+// ]
+// Transforms.transform = (editor, operation) => {
+//     for (const handler of transformsTransformHandler) {
+//         const handled = handler(editor, operation)
+//         if (handled) {
+//             return
+//         }
+//     }
+//     transform(editor, operation)
+// }
 
 const transformsSetNodeHandler: TransformsSetNodeHandler<Node>[] = [
     UnknownPlugin

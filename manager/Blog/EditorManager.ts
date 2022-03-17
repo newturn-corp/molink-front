@@ -69,6 +69,7 @@ class EditorManager {
         this.yInfo = this.yjsDocument.getMap('info')
         this.yInfo.observeDeep(() => {
             this.info = this.yInfo.toJSON()
+            console.log(this.yInfo)
             this.isLocked = this.yInfo.get('isLocked')
         })
 
@@ -116,6 +117,7 @@ class EditorManager {
                         return
                     }
                     ReactEditor.focus(this.slateEditor)
+                    console.log(userSelection)
                     Transforms.select(this.slateEditor, userSelection)
                 }
             })
@@ -172,8 +174,8 @@ class EditorManager {
                     this.awareness
                 ))
         }
-        await EventManager.issueEvent(Event.LoadContent)
         currentHierarchy.openedDocumentId = documentId
+        await EventManager.issueEvent(Event.LoadContent)
     }
 
     private _saveCurrentSelection () {

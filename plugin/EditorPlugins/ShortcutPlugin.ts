@@ -10,6 +10,7 @@ import {
 import { ListTransforms } from '../GlobalPlugins/ListPlugin'
 import { DeleteBackwardHandler } from './types'
 import { DividerType } from '../../Types/slate/CustomElement'
+import ShortcutManager from '../../manager/Editing/ShortcutManager'
 
 const SHORTCUTS = {
     '*': 'unordered-list',
@@ -129,11 +130,9 @@ export const ShortcutWhenInsertText = (editor: Editor, text: string) => {
                     match: n => SlateEditor.isBlock(editor, n)
                 })
                 ListTransforms.wrapInList(editor, 'check-list')
-                return
+                return true
             }
-            const newProperties: Partial<SlateElement> = {
-                type
-            }
+            const newProperties: Partial<SlateElement> = ShortcutManager.getPropertyByShortcut(beforeText)
             Transforms.setNodes<SlateElement>(editor, newProperties, {
                 match: n => SlateEditor.isBlock(editor, n)
             })

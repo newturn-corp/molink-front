@@ -67,6 +67,7 @@ export class ContentStyle {
         EventManager.addEventListener(Event.ToolbarOnOffChange, ({ isToolbarOpen }: ToolbarOnOffChangeParam) => this.handleToolbarOnOffChange(isToolbarOpen), 1)
         EventManager.addEventListener(Event.LoadContent, () => {
             this.handleLoadContent()
+            this.refresh()
         }, 1)
     }
 
@@ -109,6 +110,7 @@ export class ContentStyle {
             width: containerSize
         }
         this._body.width = containerSize
+        this._body.height = window.innerHeight - this._body.top - 56
         this._main = {
             marginLeft: Math.max((containerSize - contentSize) * 0.5, isBrowser ? 100 : 20),
             width: contentSize

@@ -53,6 +53,9 @@ class BlogManager {
             } else if (type === HomeURLType.UserMainURL) {
                 const { id: userId } = await ViewerAPI.getUserIDByNickname(nickname)
                 await HierarchyManager.loadHierarchy(userId, nickname)
+                if (UserManager.userId === userId && UserManager.profile && UserManager.profile.lastOpenPageId) {
+                    return RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.lastOpenPageId}`)
+                }
             } else if (type === HomeURLType.StandardDocumentURL) {
                 const authority = await ViewerAPI.getDocumentAuthority(documentId)
                 if (!authority.viewable) {
