@@ -63,9 +63,9 @@ class EditorManager {
     async load (documentId: string) {
         this.yjsDocument = new Y.Doc()
         this.sharedType = this.yjsDocument.getArray<SyncElement>('content')
-        this.sharedType.observeDeep(() => {
-            console.log(this.sharedType.toJSON())
-        })
+        // this.sharedType.observeDeep(() => {
+        //     console.log(this.sharedType.toJSON())
+        // })
         this.yInfo = this.yjsDocument.getMap('info')
         this.yInfo.observeDeep(() => {
             this.info = this.yInfo.toJSON()
@@ -117,6 +117,7 @@ class EditorManager {
                         return
                     }
                     ReactEditor.focus(this.slateEditor)
+                    console.log(userSelection)
                     Transforms.select(this.slateEditor, userSelection)
                 }
             })

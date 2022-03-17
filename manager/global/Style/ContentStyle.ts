@@ -67,6 +67,7 @@ export class ContentStyle {
         EventManager.addEventListener(Event.ToolbarOnOffChange, ({ isToolbarOpen }: ToolbarOnOffChangeParam) => this.handleToolbarOnOffChange(isToolbarOpen), 1)
         EventManager.addEventListener(Event.LoadContent, () => {
             this.handleLoadContent()
+            this.refresh()
         }, 1)
     }
 
