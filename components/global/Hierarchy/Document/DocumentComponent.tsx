@@ -62,7 +62,7 @@ export const DocumentComponent: React.FC<{
                   draggable={!isChangingName && currentHierarchy.editable}
                   onClick={async (event) => {
                       if (!isOpen) {
-                          await RoutingManager.moveTo(Page.Blog, `/${documentId}`)
+                          await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${documentId}`)
                       }
                   }}
                   onDragStart={(event) => handleDragStart(event)}
