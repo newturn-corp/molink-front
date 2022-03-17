@@ -42,13 +42,14 @@ class CommandManager {
                 new Command('숫자목록', '숫자 목록', '/image/editor/command/ordered-list.png'),
                 new Command('체크목록', '체크 목록', '/image/editor/command/check-list.png')
             ]
-        ),
-        new CommandGroup(
-            '추가',
-            [
-                new Command('페이지', '새로운 하위 페이지를 만듭니다.', '/image/editor/command/document.png')
-            ]
         )
+        // ),
+        // new CommandGroup(
+        //     '추가',
+        //     [
+        //         new Command('페이지', '새로운 하위 페이지를 만듭니다.', '/image/editor/command/document.png')
+        //     ]
+        // )
     ]
 
     isSiblingVoid: boolean = false
@@ -78,7 +79,7 @@ class CommandManager {
         const lineBefore = Editor.before(editor, start, { unit: 'word' })
         const beforeRange = lineBefore && Editor.range(editor, lineBefore, start)
         const beforeText = beforeRange && Editor.string(editor, beforeRange)
-        if (beforeText.length > 0) {
+        if (beforeText && beforeText.length > 0) {
             Transforms.insertNodes(editor, node)
         } else {
             Transforms.delete(editor)

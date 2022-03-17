@@ -17,10 +17,10 @@ export abstract class HierarchyControlOption {
     abstract handleOnClick ()
 }
 
-export class CreateNewDocumentOption extends HierarchyControlOption {
+export class CreateNewPageOption extends HierarchyControlOption {
     constructor (documentId: string | null) {
         super(documentId)
-        this.name = documentId ? '하위 문서 생성' : '문서 생성'
+        this.name = documentId ? '하위 페이지 생성' : '페이지 생성'
     }
 
     getOrder (hierarchy: Hierarchy) {
@@ -40,8 +40,8 @@ export class CreateNewDocumentOption extends HierarchyControlOption {
     }
 }
 
-export class ChangeDocumentNameOption extends HierarchyControlOption {
-    name = '문서 이름 변경'
+export class ChangePageNameOption extends HierarchyControlOption {
+    name = '페이지 이름 변경'
 
     handleOnClick () {
         const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
@@ -49,8 +49,8 @@ export class ChangeDocumentNameOption extends HierarchyControlOption {
     }
 }
 
-export class DeleteDocumentOption extends HierarchyControlOption {
-    name = '문서 삭제'
+export class DeletePageOption extends HierarchyControlOption {
+    name = '페이지 삭제'
 
     getChildrenCount (hierarchy: Hierarchy, documentId: string) {
         const document = HierarchyManager.hierarchy.yMap.get(documentId)
@@ -107,7 +107,7 @@ export class DeleteDocumentOption extends HierarchyControlOption {
 }
 
 export class SettingDocumentListOption extends HierarchyControlOption {
-    name = '문서 목록 설정'
+    name = '페이지 목록 설정'
 
     async handleOnClick () {
         const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)

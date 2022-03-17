@@ -113,7 +113,7 @@ export class PageDragManager {
             if (!document.childrenOpen && document.children.length > 0) {
                 this._dragOverCount += 1
                 if (this._dragOverCount < 30) {
-                    this.viewerText = `${document.title}의 하위 페이지로 추가 또는 이 페이지 열기 (${30 - this._dragOverCount})`
+                    this.viewerText = `${document.title}의 하위 페이지로 추가`
                 } else if (this._dragOverCount === 30) {
                     this.hierarchy.updateHierarchyChildrenOpen(documentId, true)
                     this._dragOverCount = 0
