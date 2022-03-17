@@ -5,6 +5,7 @@ import Hierarchy from './Hierarchy'
 import { getChildren } from './HierarchyUtils'
 import ContentAPI from '../../../api/ContentAPI'
 import { DeleteContentsDTO } from '@newturn-develop/types-molink'
+import UserManager from '../User/UserManager'
 
 export abstract class HierarchyControlOption {
     name: string = ''
@@ -101,6 +102,7 @@ export class DeletePageOption extends HierarchyControlOption {
         await ContentAPI.deleteContents(new DeleteContentsDTO(childIDList))
         currentHierarchy.selectedDocumentId = null
         if (isOpenedDocumentIncludes) {
+            UserManager.profile.setLastOpenPageId(null)
             await RoutingManager.moveTo(Page.Blog, `/${currentHierarchy.nickname}`)
         }
     }

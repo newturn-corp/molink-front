@@ -173,8 +173,8 @@ class EditorManager {
                     this.awareness
                 ))
         }
-        await EventManager.issueEvent(Event.LoadContent)
         currentHierarchy.openedDocumentId = documentId
+        await EventManager.issueEvent(Event.LoadContent)
     }
 
     private _saveCurrentSelection () {
