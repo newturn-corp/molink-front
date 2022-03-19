@@ -29,7 +29,8 @@ module.exports = {
         'no-case-declarations': 'off',
         'react/display-name': 'off',
         'accessor-pairs': 'off',
-        'import/no-absolute-path': 'off'
+        'import/no-absolute-path': 'off',
+        '@next/next/no-img-element': 'off'
     },
     globals: {
         JSX: true,
