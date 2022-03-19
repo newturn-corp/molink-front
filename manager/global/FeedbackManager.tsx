@@ -1,7 +1,6 @@
 import React from 'react'
 import { notification } from 'antd'
 import StyleManager from './Style/StyleManager'
-import Image from 'next/image'
 
 enum NOTIFICATION_TYPE { SUCCESS, ERROR }
 
