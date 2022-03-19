@@ -1,6 +1,7 @@
 import React from 'react'
 import { notification } from 'antd'
 import StyleManager from './Style/StyleManager'
+import Image from 'next/image'
 
 enum NOTIFICATION_TYPE { SUCCESS, ERROR }
 
@@ -21,7 +22,9 @@ class FeedbackManager {
                 padding: 12,
                 color: StyleManager.colorStyle.text.primary
             },
-            icon: <img src={'/image/global/notification/success-icon.png'}></img>
+            icon: <img
+                src={'/image/global/notification/success-icon.png'}
+            />
         })
     }
 

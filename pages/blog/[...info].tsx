@@ -6,7 +6,6 @@ import { HomeMainComponent } from '../../components/Home/Main/HomeMainComponent'
 import BlogManager from '../../manager/Blog/BlogManager'
 import { HierarchyWidthController } from '../../components/global/Hierarchy/HierarchyWidthController'
 import { HierarchyContainer } from '../../components/global/Hierarchy/HierarchyContainer'
-import HierarchyManager from '../../manager/global/Hierarchy/HierarchyManager'
 import EventManager from '../../manager/global/Event/EventManager'
 import { Event } from '../../manager/global/Event/Event'
 
@@ -31,7 +30,7 @@ const BlogPage = () => {
             <MobileView>
                 {/* <FileSystem />
                 <DrawerWidthController/> */}
-                {/* <HomeMainComponent/> */}
+                <HomeMainComponent/>
                 {/* <CollectButton /> */}
             </MobileView>
         </div>

@@ -2,6 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import EditorManager from '../../../manager/Blog/EditorManager'
 import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
+import Image from 'next/image'
 
 export const ToolbarControlButton: React.FC<{
 }> = observer(() => {

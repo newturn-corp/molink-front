@@ -10,6 +10,8 @@ import { AuthInput } from '../../components/auth/AuthInput'
 import UserManager from '../../manager/global/User/UserManager'
 import SignupManager from '../../manager/Auth/SignupManager'
 import { SignupCheckList } from '../../components/auth/SignupCheckList'
+import { AuthContainer } from '../../components/auth/AuthContainer'
+import { AuthSubButton } from '../../components/auth/AuthSubButton'
 
 const getEmailHelperText = (emailState: EmailState) => {
     switch (emailState) {
@@ -63,105 +65,103 @@ const SignUp = observer(() => {
     }, [])
     return <div className='auth-page'>
         <AuthHeader/>
-        <div
-            className={'auth-container' + (loading ? ' loading' : '')}
+        <AuthContainer
+            loading={loading}
         >
-            {
-                loading
-                    ? <CircularProgress color="inherit" />
-                    : <>
-                        <AuthTitle text={'계정 생성'}/>
-                        <AuthInput
-                            name={Math.random().toString()}
-                            type={'text'}
-                            label="이메일"
-                            variant="outlined"
-                            autoComplete='new-street-address'
-                            error={SignupManager.emailState !== EmailState.DEFAULT}
-                            onChange={(e) => {
-                                const { value } = e.target
-                                SignupManager.emailState = EmailState.DEFAULT
-                                SignupManager.email = value
-                            }}
-                            onFocus={(e) => {
-                                SignupManager.emailState = EmailState.DEFAULT
-                            }}
-                            defaultValue={SignupManager.email}
-                            helperText={getEmailHelperText(SignupManager.emailState)}
-                        />
-                        <AuthInput
-                            name={Math.random().toString()}
-                            type={'password'}
-                            label="비밀번호"
-                            isPassword={true}
-                            autoComplete='new-password'
-                            variant="outlined"
-                            error={SignupManager.passwordState !== PasswordState.DEFAULT}
-                            onChange={(e) => {
-                                const { value } = e.target
-                                SignupManager.passwordState = PasswordState.DEFAULT
-                                SignupManager.pwd = value
-                            }}
-                            onFocus={(e) => {
-                                SignupManager.passwordState = PasswordState.DEFAULT
-                            }}
-                            onPaste={(e) => {
-                                e.preventDefault()
-                            }}
-                            defaultValue={SignupManager.pwd}
-                            helperText={getPasswordHelperText(SignupManager.passwordState)}
-                        />
-                        <AuthInput
-                            name={Math.random().toString()}
-                            type={'password'}
-                            label="비밀번호 확인"
-                            isPassword={true}
-                            autoComplete='new-password'
-                            variant="outlined"
-                            error={SignupManager.passwordState !== PasswordState.DEFAULT}
-                            onChange={(e) => {
-                                SignupManager.passwordState = PasswordState.DEFAULT
-                                SignupManager.pwdCheck = e.target.value
-                            }}
-                            onFocus={(e) => {
-                                SignupManager.passwordState = PasswordState.DEFAULT
-                            }}
-                            onPaste={(e) => {
-                                e.preventDefault()
-                            }}
-                            defaultValue={SignupManager.pwdCheck}
-                        />
-                        <AuthInput
-                            name={Math.random().toString()}
-                            type={'text'}
-                            label="닉네임"
-                            autoComplete='off'
-                            variant='outlined'
-                            error={SignupManager.nicknameState !== NicknameState.Default}
-                            onChange={(e) => {
-                                const { value } = e.target
-                                SignupManager.nicknameState = NicknameState.Default
-                                SignupManager.nickname = value
-                            }}
-                            defaultValue={SignupManager.nickname}
-                            helperText={getNicknameHelperText(SignupManager.nicknameState)}
-                        />
-                        <SignupCheckList/>
-                        <AuthButton
-                            text={'계정 생성'}
-                            theme={'primary-stroke'}
-                            onClick={async () => {
-                                setLoading(true)
-                                const result = await SignupManager.signup()
-                                setLoading(false)
-                                if (result.success) {
-                                    await RoutingManager.moveTo(Page.SignIn)
-                                }
-                            }}
-                        />
-                    </>
-            }
-        </div>
+            <AuthTitle text={'계정 생성'}/>
+            <AuthInput
+                name={Math.random().toString()}
+                type={'text'}
+                label="이메일"
+                variant="outlined"
+                autoComplete='new-street-address'
+                error={SignupManager.emailState !== EmailState.DEFAULT}
+                onChange={(e) => {
+                    const { value } = e.target
+                    SignupManager.emailState = EmailState.DEFAULT
+                    SignupManager.email = value
+                }}
+                onFocus={(e) => {
+                    SignupManager.emailState = EmailState.DEFAULT
+                }}
+                defaultValue={SignupManager.email}
+                helperText={getEmailHelperText(SignupManager.emailState)}
+            />
+            <AuthInput
+                name={Math.random().toString()}
+                type={'password'}
+                label="비밀번호"
+                isPassword={true}
+                autoComplete='new-password'
+                variant="outlined"
+                error={SignupManager.passwordState !== PasswordState.DEFAULT}
+                onChange={(e) => {
+                    const { value } = e.target
+                    SignupManager.passwordState = PasswordState.DEFAULT
+                    SignupManager.pwd = value
+                }}
+                onFocus={(e) => {
+                    SignupManager.passwordState = PasswordState.DEFAULT
+                }}
+                onPaste={(e) => {
+                    e.preventDefault()
+                }}
+                defaultValue={SignupManager.pwd}
+                helperText={getPasswordHelperText(SignupManager.passwordState)}
+            />
+            <AuthInput
+                name={Math.random().toString()}
+                type={'password'}
+                label="비밀번호 확인"
+                isPassword={true}
+                autoComplete='new-password'
+                variant="outlined"
+                error={SignupManager.passwordState !== PasswordState.DEFAULT}
+                onChange={(e) => {
+                    SignupManager.passwordState = PasswordState.DEFAULT
+                    SignupManager.pwdCheck = e.target.value
+                }}
+                onFocus={(e) => {
+                    SignupManager.passwordState = PasswordState.DEFAULT
+                }}
+                onPaste={(e) => {
+                    e.preventDefault()
+                }}
+                defaultValue={SignupManager.pwdCheck}
+            />
+            <AuthInput
+                name={Math.random().toString()}
+                type={'text'}
+                label="닉네임"
+                autoComplete='off'
+                variant='outlined'
+                error={SignupManager.nicknameState !== NicknameState.Default}
+                onChange={(e) => {
+                    const { value } = e.target
+                    SignupManager.nicknameState = NicknameState.Default
+                    SignupManager.nickname = value
+                }}
+                defaultValue={SignupManager.nickname}
+                helperText={getNicknameHelperText(SignupManager.nicknameState)}
+            />
+            <SignupCheckList/>
+            <AuthButton
+                text={'계정 생성'}
+                theme={'primary-stroke'}
+                onClick={async () => {
+                    setLoading(true)
+                    const result = await SignupManager.signup()
+                    setLoading(false)
+                    if (result.success) {
+                        await RoutingManager.moveTo(Page.SignIn)
+                    }
+                }}
+            />
+            <AuthSubButton
+                text={'이미 계정이 있나요? 로그인하기'}
+                onClick={() => RoutingManager.moveTo(Page.SignIn)}
+            />
+        </AuthContainer>
     </div>
 })
 

@@ -79,13 +79,7 @@ export const EditorComponent: React.FC<{
               onKeyDown={async (event) => {
                   await handleKeyDown(event, EditorManager.slateEditor)
               }}
-              onBeforeInput={(event) => {
-                  console.log('onBeforeInput')
-                  console.log(event)
-              }}
               onDOMBeforeInput={(event: InputEvent) => {
-                  console.log('onDOMBeforeInput')
-                  console.log(event)
                   handleDOMBeforeInput(event)
               }}
           />

@@ -60,7 +60,7 @@ const Caption: React.FC<{
                   setCaptionFocused(false)
               }}
               onKeyDown={(e) => {
-                  if (e.ctrlKey || e.shiftKey) {
+                  if (e.ctrlKey) {
                       e.preventDefault()
                   }
                   if (e.key === 'ArrowDown') {

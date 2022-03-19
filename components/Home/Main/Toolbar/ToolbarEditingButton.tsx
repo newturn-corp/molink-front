@@ -50,6 +50,7 @@ export const ToolbarEditingButton
                 }}
             >
                 {props.icon}
+                {props.children}
                 <p className='text'>
                     {props.text}
                 </p>

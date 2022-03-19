@@ -14,6 +14,9 @@ module.exports = (phase, { defaultConfig }) => {
     }
     defaultConfig.future = { webpack5: true }
     defaultConfig.swcMinify = true
+    defaultConfig.images = {
+        domains: phase === PHASE_DEVELOPMENT_SERVER ? ['knowlink-development-content-image.s3.ap-northeast-2.amazonaws.com'] : ['knowlink-production-content-image.s3.ap-northeast-2.amazonaws.com']
+    }
     defaultConfig.webpack = config => {
         // 아래를 추가합니다.
         config.module.rules.push({

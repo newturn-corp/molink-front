@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-
-import { CircularProgress } from '@material-ui/core'
 import { observer } from 'mobx-react'
 import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 import { AuthInput } from '../../components/auth/AuthInput'
@@ -10,6 +8,8 @@ import { AuthButton } from '../../components/auth/AuthButton'
 import UserManager from '../../manager/global/User/UserManager'
 import SignInManager from '../../manager/Auth/SignInManager'
 import { EmailState, PasswordState } from '../../manager/Auth/AuthStates'
+import { AuthContainer } from '../../components/auth/AuthContainer'
+import { AuthSubButton } from '../../components/auth/AuthSubButton'
 
 const getEmailHelperText = (emailState: EmailState) => {
     if (emailState === EmailState.DEFAULT) {
@@ -58,76 +58,69 @@ const SignIn = observer(() => {
     }, [SignInManager.emailState, SignInManager.passwordState, emailRef, passwordRef])
     return <div className='auth-page sign-in-page'>
         <AuthHeader/>
-        <div
-            className={'auth-container' + (loading ? ' loading' : '')}
-        >
-            <CircularProgress style={{ display: loading ? undefined : 'none' }} color="inherit" />
-            <div style={{ display: loading ? 'none' : undefined }}>
-                <AuthTitle text={'로그인'}/>
-                <form onKeyDown={async (event) => {
-                    if (event.key === 'Enter') {
-                        await login()
-                    }
-                }}>
-                    <AuthInput
-                        inputRef={emailRef}
-                        label="이메일"
-                        type="email"
-                        variant="outlined"
-                        autoComplete='off'
-                        style={{
-                            marginBottom: 12
-                        }}
-                        error={SignInManager.emailState !== EmailState.DEFAULT}
-                        onChange={(e) => {
-                            const { value } = e.target
-                            SignInManager.emailState = EmailState.DEFAULT
-                            SignInManager.email = value
-                        }}
-                        helperText={getEmailHelperText(SignInManager.emailState)}
-                    />
-                    <AuthInput
-                        inputRef={passwordRef}
-                        label="비밀번호"
-                        type="password"
-                        autoComplete="current-password"
-                        variant="outlined"
-                        error={SignInManager.passwordState !== PasswordState.DEFAULT}
-                        onChange={(e) => {
-                            const { value } = e.target
-                            SignInManager.passwordState = PasswordState.DEFAULT
-                            SignInManager.pwd = value
-                        }}
-                    />
-                </form>
-                <AuthButton
-                    text={'로그인'}
-                    theme={'primary'}
+        <AuthContainer loading={loading}>
+            <AuthTitle text={'로그인'}/>
+            <form onKeyDown={async (event) => {
+                if (event.key === 'Enter') {
+                    await login()
+                }
+            }}>
+                <AuthInput
+                    inputRef={emailRef}
+                    label="이메일"
+                    type="email"
+                    variant="outlined"
+                    autoComplete='off'
                     style={{
-                        marginTop: 22
+                        marginBottom: 12
                     }}
-                    onClick={async () => {
-                        await login()
+                    error={SignInManager.emailState !== EmailState.DEFAULT}
+                    onChange={(e) => {
+                        const { value } = e.target
+                        SignInManager.emailState = EmailState.DEFAULT
+                        SignInManager.email = value
+                    }}
+                    helperText={getEmailHelperText(SignInManager.emailState)}
+                />
+                <AuthInput
+                    inputRef={passwordRef}
+                    label="비밀번호"
+                    type="password"
+                    autoComplete="current-password"
+                    variant="outlined"
+                    error={SignInManager.passwordState !== PasswordState.DEFAULT}
+                    onChange={(e) => {
+                        const { value } = e.target
+                        SignInManager.passwordState = PasswordState.DEFAULT
+                        SignInManager.pwd = value
                     }}
                 />
-                <AuthButton
-                    text={'계정 생성'}
-                    theme={'primary-stroke'}
-                    border={'1px solid #3A7BBF'}
-                    onClick={async () => {
-                        setLoading(true)
-                        await RoutingManager.moveTo(Page.SignUp)
-                        setLoading(false)
-                    }}
-                />
-                <div
-                    className={'reset-password-button'}
-                    onClick={() => RoutingManager.moveTo(Page.changePasswordRequest)}
-                >
-                    {'비밀번호를 잊으셨나요?'}
-                </div>
-            </div>
-        </div>
+            </form>
+            <AuthButton
+                text={'로그인'}
+                theme={'primary'}
+                style={{
+                    marginTop: 22
+                }}
+                onClick={async () => {
+                    await login()
+                }}
+            />
+            <AuthButton
+                text={'계정 생성'}
+                theme={'primary-stroke'}
+                border={'1px solid #3A7BBF'}
+                onClick={async () => {
+                    setLoading(true)
+                    await RoutingManager.moveTo(Page.SignUp)
+                    setLoading(false)
+                }}
+            />
+            <AuthSubButton
+                text={'비밀번호를 잊으셨나요?'}
+                onClick={() => RoutingManager.moveTo(Page.ChangePasswordRequest)}
+            />
+        </AuthContainer>
     </div>
 })
 

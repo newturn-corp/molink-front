@@ -39,16 +39,16 @@
   text-align: center;
   margin-bottom: 0px;
 }
-.content-toolbar .editing-button-group .button.active {
+.content-toolbar .editing-button-group .toolbar-editing-button.active {
   cursor: pointer;
 }
-.content-toolbar .editing-button-group .button.active:hover {
+.content-toolbar .editing-button-group .toolbar-editing-button.active:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
-.content-toolbar .editing-button-group .button.disabled {
+.content-toolbar .editing-button-group .toolbar-editing-button.disabled {
   cursor: default;
 }
-.content-toolbar .editing-button-group .button.disabled svg {
+.content-toolbar .editing-button-group .toolbar-editing-button.disabled svg {
   fill: #ababab;
 }
 .content-toolbar .toolbar-control-button {
