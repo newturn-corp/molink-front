@@ -237,7 +237,7 @@ class CommandManager {
         }
     }
 
-    handleEditorChange (editor: Editor) {
+    public handleEditorChange (editor: Editor) {
         try {
             const { selection } = editor
             if (!selection || !Range.isCollapsed(selection)) {

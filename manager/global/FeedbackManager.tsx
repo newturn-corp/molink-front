@@ -21,7 +21,9 @@ class FeedbackManager {
                 padding: 12,
                 color: StyleManager.colorStyle.text.primary
             },
-            icon: <img src={'/image/global/notification/success-icon.png'}></img>
+            icon: <img
+                src={'/image/global/notification/success-icon.png'}
+            />
         })
     }
 

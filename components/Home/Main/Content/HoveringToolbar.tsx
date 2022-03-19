@@ -2,7 +2,7 @@ import { cx, css } from '@emotion/css'
 import { FormatBold, FormatItalic, FormatUnderlined, Link } from '@material-ui/icons'
 import React, { useRef, PropsWithChildren, Ref, useEffect } from 'react'
 import { Editor, Node, Range, Text, Transforms } from 'slate'
-import { ReactEditor, useSlate } from 'slate-react'
+import { ReactEditor, useSelected, useSlate } from 'slate-react'
 import { LinkInput } from './LinkInput'
 import LinkManager from '../../../../manager/Editing/LinkManager'
 import { Portal } from '../../../utils/Portal'
@@ -204,8 +204,8 @@ export const HoveringToolbar: React.FC<{
                 <FormatButton format="bold" icon={<FormatBold/>} />
                 <FormatButton format="italic" icon={<FormatItalic/>} />
                 <FormatButton format="underlined" icon={<FormatUnderlined/>} />
-                {/* <div className={'divider'}></div> */}
-                {/* <LinkButton /> */}
+                <div className={'divider'}></div>
+                <LinkButton />
             </Menu>
             <LinkInput />
         </Portal>

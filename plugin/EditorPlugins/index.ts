@@ -13,6 +13,7 @@ import { insertYoutubeWhenInsertData } from './YoutubePlugin'
 import CommandManager from '../../manager/Editing/Command/CommandManager'
 import { insertCodeWhenInsertData } from './CodeEditorPlugin'
 import { correctDeleteBackwardInHeader } from './HeaderDeleteBackwardPlugin'
+import { isBrowser } from 'react-device-detect'
 
 export const EditorPlugin = (editor: Editor) => {
     const { isVoid, isInline, insertBreak, deleteBackward, deleteForward, normalizeNode, insertText, insertData, onChange } = editor
@@ -97,7 +98,9 @@ export const EditorPlugin = (editor: Editor) => {
     }
 
     editor.onChange = () => {
-        CommandManager.handleEditorChange(editor)
+        if (isBrowser) {
+            CommandManager.handleEditorChange(editor)
+        }
         onChange()
     }
 

@@ -12,18 +12,30 @@ import Align from 'public/image/icon/align.svg'
 import Bold from 'public/image/icon/bold.svg'
 import Italic from 'public/image/icon/italic.svg'
 import Underline from 'public/image/icon/underline.svg'
+import ToolbarManager from '../../../../manager/Editing/ToolbarManager'
 
 export const EditingButtonGroup: React.FC<{
 }> = observer(() => {
     return <div
         className={'editing-button-group'}
     >
-        <ToolbarEditingButton
-            icon={<Photo/>}
-            text={'이미지'}
-            onClick={() => {}}
-            disabled={true}
+        <input
+            accept='image/jpg,impge/png,image/jpeg'
+            style={{ display: 'none' }}
+            id="image-insert-button"
+            multiple
+            onChange={(event) => ToolbarManager.insertImage(event)}
+            type="file"
         />
+        <label htmlFor={'image-insert-button'}>
+            <ToolbarEditingButton
+                icon={<Photo/>}
+                text={'이미지'}
+                onClick={() => {}}
+                disabled={false}
+            >
+            </ToolbarEditingButton>
+        </label>
         <ToolbarEditingButton
             icon={<Video/>}
             text={'동영상'}

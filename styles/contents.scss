@@ -233,6 +233,10 @@
                 color: rgb(104, 104, 104);
                 border-bottom: 1px solid rgb(104, 104, 104);
             }
+            .link.selected {
+                border: 2px solid rgb(176, 176, 176);
+                border-radius: 2px;
+            }
             .code {
                 padding: 20px;
                 border-radius: 5px;

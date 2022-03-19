@@ -8,7 +8,7 @@ export enum Page {
     Index = '/',
     SignIn = '/auth/sign-in',
     Search = '/search',
-    changePasswordRequest = '/auth/change-password-request',
+    ChangePasswordRequest = '/auth/change-password-request',
     SignUp = '/auth/sign-up',
     SettingProfile = '/setting/profile',
     SettingFollow = '/setting/follow',

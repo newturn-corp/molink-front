@@ -4,3 +4,7 @@ node_modules
 cert
 server.js
 private
+out
+capacitor.config.ts
+android
+ios
