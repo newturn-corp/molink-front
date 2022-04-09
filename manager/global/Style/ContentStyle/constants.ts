@@ -17,15 +17,15 @@ export const defaultContentMainStyle = {
     width: 800
 }
 
-export const defaultContentHeaderStyle = {
-    height: 40,
-    top: 56
-}
-
 export const defaultContentToolbarStyle = {
-    height: 56,
+    height: 89,
     top: 0,
     padding: 8
+}
+
+export const defaultContentHeaderStyle = {
+    height: 40,
+    top: defaultContentToolbarStyle.height
 }
 
 export const closeStateContentToolbarStyle = {
@@ -37,7 +37,7 @@ export const closeStateContentToolbarStyle = {
 export const defaultToolbarOnOffButtonStyle = {
     width: 26,
     height: 26,
-    top: 15
+    top: 60
 }
 
 export const closeStateToolbarOnOffButtonStyle = {

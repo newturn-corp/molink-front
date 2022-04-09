@@ -9,6 +9,9 @@ import { SlateCheckListItemElement } from './Element/SlateCheckListItemElement'
 import { SlateYoutubeElement } from './Element/SlateYoutubeElement'
 import { SlateCodeElement } from './Element/SlateCodeElement'
 import { SlateOrderedListElement } from './Element/SlateOrderedListElement'
+import { SlateVideoElement } from './Element/SlateVideoElement'
+import { SlateFileElement } from './Element/SlateFileElement'
+import { SlateBookmarkElement } from './Element/SlateBookmarkElement'
 
 export const CustomElementComponent: React.FC<{
     attributes,
@@ -19,6 +22,12 @@ export const CustomElementComponent: React.FC<{
       switch (element.type) {
       case 'image':
           return <SlateImageElement { ...props } />
+      case 'video':
+          return <SlateVideoElement { ...props } />
+      case 'file':
+          return <SlateFileElement { ...props } />
+      case 'bookmark':
+          return <SlateBookmarkElement { ...props } />
       case 'title':
           return <SlateTitleElement { ...props } />
       case 'text':

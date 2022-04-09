@@ -152,7 +152,7 @@ export const ShortcutWhenDeleteBackward: DeleteBackwardHandler = (editor: Editor
     const { selection } = editor
 
     const currentNode = editor.children[editor.selection.anchor.path[0]]
-    if (Element.isElement(currentNode) && currentNode.type === 'code') {
+    if (Element.isElement(currentNode) && ['code', 'image', 'video', 'file'].includes(currentNode.type)) {
         return false
     }
 

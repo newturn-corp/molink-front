@@ -21,7 +21,8 @@ export type QuoteElement = {
 export type TextElement = {
     type: 'text',
     category: TextCategory,
-    children: CustomText[]
+    children: CustomText[],
+    align?: 'left' | 'right' | 'center' | 'justify'
   }
 
 export type OrderedListElement = {
@@ -37,10 +38,10 @@ export type BulletedListElement = {
     children: Descendant[]
   }
 
-export enum ImageFloatOption {
-    Left,
-    Center,
-    Right
+export enum FloatOption {
+    Left = 'left',
+    Center = 'center',
+    Right = 'right'
 }
 
 export type SlateImageElementType = {
@@ -49,11 +50,36 @@ export type SlateImageElementType = {
     width: number
     height: number
     isUploading: boolean
-    floatOption: ImageFloatOption
+    floatOption: FloatOption
     caption: string
     captionHeight: number
+    size: number
     children: EmptyText[]
-  }
+}
+
+export type SlateVideoElementType = {
+    type: 'video'
+    url: string
+    isUploading: boolean
+    name: string
+    children: EmptyText[]
+    floatOption: FloatOption
+    width: number
+    height: number
+    caption: string
+    captionHeight: number,
+    size: number
+}
+
+export type SlateFileElementType = {
+    type: 'file'
+    url: string
+    isUploading: boolean
+    name: string
+    children: EmptyText[]
+    size: number,
+    fileType: string
+}
 
 export enum DividerType {
     Dot,
@@ -115,10 +141,16 @@ export type YoutubeElement = {
     children: Descendant[]
 }
 
+export type BookmarkElementType = {
+    type: 'bookmark',
+    url: string,
+    children: EmptyText[]
+}
+
 export type CustomElement =
 TextElement |
 BulletedListElement |
-    SlateImageElementType |
+SlateImageElementType |
 MentionElement |
 TitleElement |
 ListItemElement |
@@ -128,4 +160,5 @@ OrderedListItemElement |
 DividerElement |
 DocumentElement |
 CheckListItemElement |
-CodeElement | YoutubeElement | QuoteElement
+CodeElement | YoutubeElement | QuoteElement |
+SlateVideoElementType | SlateFileElementType | BookmarkElementType

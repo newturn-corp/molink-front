@@ -27,9 +27,9 @@ export const DragIndicator: React.FC<{
                   ref={indicatorRef}
                   id={'page-drag-indicator'}
                   className='drag-indicator'
-                  style={{
-                      width: 240
-                  }}
+                  // style={{
+                  //     width: '240'
+                  // }}
               >
               </div>
           </Tooltip>

@@ -1,4 +1,5 @@
-import { Editor, Location, NodeMatch, Range, Transforms, Node, Path } from 'slate'
+import { Editor, Location, NodeMatch, Range, Transforms, Node, Path, Element } from 'slate'
+import UserManager from '../../manager/global/User/UserManager'
 
 const matchPath = (editor: Editor, path: Path): ((node: Node) => boolean) => {
     const [node] = Editor.node(editor, path)
@@ -107,6 +108,18 @@ export default function<T extends Node> (
             }
 
             if (hasChanges) {
+                if (Element.isElement(node) &&
+                    (['file', 'image', 'video'].includes(node.type) ||
+                    ['file', 'image', 'video'].includes((newProperties as any).type))) {
+                    const newSize = (newProperties as any).size
+                    const prevSize = (newProperties as any).size || 0
+                    if (newSize) {
+                        console.log('setNode')
+                        console.log(UserManager.limit.totalUploadLimit)
+                        console.log(newSize - prevSize)
+                        UserManager.limit.totalUploadLimit -= (newSize - prevSize)
+                    }
+                }
                 editor.apply({
                     type: 'set_node',
                     path,

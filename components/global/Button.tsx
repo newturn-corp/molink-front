@@ -4,28 +4,26 @@ export const Button: React.FC<{
     text: string,
     onClick: Function,
     theme: 'primary' | 'primary-stroke',
+    fontSize?: number
     style?: any,
     border?: string,
-}> = ({
-    text,
-    onClick,
-    border,
-    style,
-    theme
-}) => {
-    const customStyle = style || {}
+}> = (props) => {
+    const customStyle = props.style || {}
     return <div
-        className={'button' + ' ' + theme}
+        className={'button' + ' ' + props.theme}
         style={{
-            border: border || '1px solid #3A7BBF',
+            border: props.border || '1px solid #3A7BBF',
             ...customStyle
         }}
-        onClick={() => onClick()}
+        onClick={() => props.onClick()}
     >
         <div
             className={'text'}
+            style={{
+                fontSize: props.fontSize
+            }}
         >
-            {text}
+            {props.text}
         </div>
     </div>
 }

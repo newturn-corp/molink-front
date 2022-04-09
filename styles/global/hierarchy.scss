@@ -1,9 +1,6 @@
 .hierarchy {
-  position: fixed;
-  top: 56px;
   flex-shrink: 0;
   overflow-x: hidden;
-  height: calc(100vh - 60px);
   z-index: 10;
   right: none;
 
@@ -81,13 +78,16 @@
     }
   }
 
+  .MuiBackdrop-root {
+    z-index: 900;
+  }
+
   .MuiDrawer-paper {
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;
     z-index: 900;
-    height: calc(100vh - 60px);
-    background-color: transparent;
+    background-color: #FFFFFF;
 
     .MuiDrawer-paperAnchorDockedLeft {
       border-right: 1px solid #ECEFF2;
@@ -105,7 +105,6 @@
       padding-bottom: 0px;
       cursor: move; /* fallback if grab cursor is unsupported */
       cursor: grab;
-      height: 30px;
       .child-open-button {
         width: 20px;
         height: 20px;
@@ -141,7 +140,7 @@
           line-height: 14px;
         }
       }
-      .document-title {
+      .page-title {
         //position: absolute;
         height: 16px;
         top: calc(50% - 16px/2);
@@ -150,10 +149,8 @@
         overflow: hidden;
         text-overflow: ellipsis;
         border: 0px;
-        font-family: Pretendard;
         font-style: normal;
         font-weight: 600;
-        font-size: 15px;
         line-height: 16px;
         .text {
           display: inline;
@@ -174,18 +171,15 @@
         width: 20px;
         height: 20px;
         border-radius: 3px;
-        margin-right: 3px;
-        //padding-left: 2px;
-        //padding-bottom: 2px;
+        padding: 0px 2px 2px;
         &:hover {
           background-color: #dddddd;
           transition: 0.3s;
         }
-        .MuiSvgIcon-root {
-          width: 20px;
-          height: 18px;
-          font-size: 18px;
-          color: #6b6b6b;
+        svg {
+          width: 16px;
+          height: 16px;
+          fill: #6b6b6b;
         }
       }
       .add-page-button {
@@ -193,7 +187,6 @@
         height: 20px;
         border-radius: 3px;
         border: 1px solid #cccccc;
-        margin-right: 8px;
         &:hover {
           background-color: #dddddd;
           transition: 0.3s;
@@ -202,7 +195,6 @@
           width: 18px;
           height: 18px;
           font-size: 18px;
-          padding-bottom: 2px;
           color: #6b6b6b;
         }
       }
@@ -218,6 +210,59 @@
   ::-webkit-scrollbar-thumb {
     background: rgb(209, 209, 209);
     border-radius: 5px;
+  }
+}
+.mobile-hierarchy-option-drawer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .title {
+    display: flex;
+    height: 44px;
+    border-bottom: 1px solid #ECEFF2;
+    background-color: white;
+    margin-bottom: 40px;
+    .text {
+      display: flex;
+      margin: 0 auto;
+      font-weight: 600;
+      justify-content: center;
+      align-items: center;
+    }
+    .close-button {
+      position: absolute;
+      right: 12px;
+      top: 7px;
+
+      color: #0094FF;
+      font-weight: 600;
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+  .option-button-group {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    .option-button {
+      padding: 12px;
+      padding-left: 20px;
+      svg {
+        width: 20px;
+        height: 20px;
+        margin: 2px 6px 2.5px 0px;
+        fill: #6C7177;
+      }
+      display: flex;
+      flex-direction: row;
+      border-top: 1px solid #d0d0d0;
+      .name {
+        line-height: 25px;
+      }
+    }
+  }
+  .option-button-group:last-child {
+    border-bottom: 1px solid #d0d0d0;
   }
 }
 .hierarchy-on-off-button {
@@ -262,4 +307,17 @@
   content: '';
   color: transparent;
   left: -4px;
+}
+
+.drag-indicator {
+  position: absolute;
+  background-color: #B9E2FF;
+  height: 3px;
+  visibility: hidden;
+  width: 100%;
+}
+
+.drag-indicator-tooltip {
+  z-index: 10000;
+  visibility: hidden;
 }

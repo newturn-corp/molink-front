@@ -8,13 +8,14 @@ import Hierarchy from './Hierarchy'
 export class PageDragManager {
     private hierarchy: Hierarchy
 
-    public draggingDocument: Document = null
-    public draggingDocumentId: string = null
+    public draggingPage: Document = null
+    public draggingPageId: string = null
 
     public newOrder: number = 0
     public newParentId: string | null = null
 
     public fileSystemElement: HTMLElement
+    private hierarchyMarginElement: HTMLElement
 
     public indicatorTooltip: HTMLElement
     private isTooltipVisible: boolean = false
@@ -32,7 +33,7 @@ export class PageDragManager {
     }
 
     handleDragStart (documentId: string) {
-        this.draggingDocumentId = documentId
+        this.draggingPageId = documentId
     }
 
     setIndicatorVisible (visible: boolean) {
@@ -65,19 +66,19 @@ export class PageDragManager {
     }
 
     handleDragOver (event: React.DragEvent<HTMLDivElement>, documentId: string) {
-        if (!this.draggingDocumentId) {
+        if (!this.draggingPageId) {
             return
         }
-        if (this.draggingDocumentId === documentId) {
+        if (this.draggingPageId === documentId) {
             return
         }
         event.preventDefault()
         const document = this.hierarchy.map[documentId]
 
-        const documentElement = globalThis.document.getElementById('document-' + document.id)
+        const pageElement = globalThis.document.getElementById('document-' + document.id)
         const mouseY = event.pageY
-        const y = documentElement.getBoundingClientRect().y
-        const height = documentElement.offsetHeight
+        const y = pageElement.getBoundingClientRect().y
+        const height = pageElement.offsetHeight
         const topStandard = y + height * 0.25
         const bottomStandard = y + height * 0.75
 
@@ -124,11 +125,33 @@ export class PageDragManager {
         }
     }
 
-    handleDragLeave (documentId: string) {
-        if (!this.draggingDocumentId) {
+    handleDragOverHierarchyMargin () {
+        if (!this.draggingPageId) {
             return
         }
-        if (this.draggingDocumentId === documentId) {
+        const lastPageId = this.hierarchy.topLevelDocumentIdList[this.hierarchy.topLevelDocumentIdList.length - 1]
+        if (this.draggingPageId === lastPageId || !lastPageId) {
+            return
+        }
+        if (!this.hierarchyMarginElement) {
+            this.hierarchyMarginElement = document.getElementById('hierarchy-margin')
+        }
+        const lastPage = this.hierarchy.map[lastPageId]
+        const y = this.hierarchyMarginElement.getBoundingClientRect().y
+        this.setViewerPosition(y)
+        this.setIndicatorVisible(true)
+        this.newOrder = lastPage.order + 1
+        this.newParentId = null
+
+        this.viewerText = `${lastPage.title} 아래로 이동`
+        this._dragOverCount = 0
+    }
+
+    handleDragLeave (documentId: string) {
+        if (!this.draggingPageId) {
+            return
+        }
+        if (this.draggingPageId === documentId) {
             return
         }
         this._dragOverCount = 0
@@ -141,7 +164,7 @@ export class PageDragManager {
         this.setIndicatorTooltipVisible(false)
 
         // 만약 전혀 변하지 않았다면 따로 처리하지 않는다.
-        const document = this.hierarchy.yMap.get(this.draggingDocumentId)
+        const document = this.hierarchy.yMap.get(this.draggingPageId)
         if (document.order === this.newOrder) {
             if (!this.newParentId) {
                 if (!document.parentId) {
@@ -154,7 +177,8 @@ export class PageDragManager {
             }
         }
 
-        await this.hierarchy.locationController.updatePageLocation(this.draggingDocumentId, this.newParentId, this.newOrder)
+        await this.hierarchy.locationController.updatePageLocation(this.draggingPageId, this.newParentId, this.newOrder)
         this._dragOverCount = 0
+        this.hierarchyMarginElement = null
     }
 }

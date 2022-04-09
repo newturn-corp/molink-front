@@ -34,7 +34,7 @@ const getTextByVisibility = (visibility: PageVisibility) => {
 export const VisibilityButton: React.FC<{
 }> = observer(() => {
     const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    const page = currentHierarchy.map[currentHierarchy.openedDocumentId]
+    const page = currentHierarchy.map[currentHierarchy.openedPageId]
     return <>
         <ContentSettingButton
             active={EditorManager.editable}

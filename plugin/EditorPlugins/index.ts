@@ -1,24 +1,27 @@
 import { Editor, NodeEntry, Node } from 'slate'
 import {
-    DeleteBackwardHandler,
+    DeleteBackwardHandler, DeleteForwardHandler,
     InsertBreakHandler,
     InsertDataHandler,
     InsertTextHandler
 } from './types'
 import { CorrectVoidBehaviorWhenDeleteBackward, CorrectVoidBehaviorWhenInsertBreak } from './CorrectVoidBehavior'
-import { WrapLinkWhenInsertData, WrapLinkWhenInsertText } from './LinkPlugin'
-import { InsertImageWhenInsertData } from './ImagePlugin'
 import { ShortcutWhenDeleteBackward, ShortcutWhenInsertText } from './ShortcutPlugin'
 import { insertYoutubeWhenInsertData } from './YoutubePlugin'
 import CommandManager from '../../manager/Editing/Command/CommandManager'
 import { insertCodeWhenInsertData } from './CodeEditorPlugin'
 import { correctDeleteBackwardInHeader } from './HeaderDeleteBackwardPlugin'
 import { isBrowser } from 'react-device-detect'
+import { setFragmentData } from './setFragmentData'
+import FileManager from '../../manager/Editing/FileManager'
+import { handleDeleteBackwardAfterMedia, handleDeleteForwardAfterMedia } from './MediaPlugin'
+import FormattingManager from '../../manager/Editing/FormattingManager'
+import LinkManager from '../../manager/Editing/Link/LinkManager'
 
 export const EditorPlugin = (editor: Editor) => {
-    const { isVoid, isInline, insertBreak, deleteBackward, deleteForward, normalizeNode, insertText, insertData, onChange } = editor
+    const { isVoid, isInline, insertBreak, deleteBackward, deleteForward, normalizeNode, insertText, insertData, onChange, insertNode } = editor
 
-    const voidTypeList: string[] = ['divider', 'image', 'document', 'mention', 'youtube']
+    const voidTypeList: string[] = ['divider', 'image', 'document', 'mention', 'youtube', 'video', 'file', 'bookmark']
     editor.isVoid = element => {
         return voidTypeList.includes(element.type) || isVoid(element)
     }
@@ -28,9 +31,21 @@ export const EditorPlugin = (editor: Editor) => {
         return inlineStyleList.includes(element.type) || isInline(element)
     }
 
-    const deleteBackwardHandlers: DeleteBackwardHandler[] = [CorrectVoidBehaviorWhenDeleteBackward, ShortcutWhenDeleteBackward, correctDeleteBackwardInHeader]
+    editor.insertNode = node => {
+        insertNode(node)
+    }
+
+    editor.setFragmentData = data => {
+        setFragmentData(editor, data)
+    }
+
+    const deleteBackwardHandlers: DeleteBackwardHandler[] = [
+        handleDeleteBackwardAfterMedia,
+        CorrectVoidBehaviorWhenDeleteBackward,
+        ShortcutWhenDeleteBackward,
+        correctDeleteBackwardInHeader
+    ]
     editor.deleteBackward = unit => {
-        console.log('deleteBackward')
         for (const handler of deleteBackwardHandlers) {
             const handled = handler(editor, unit)
             if (handled) {
@@ -40,8 +55,16 @@ export const EditorPlugin = (editor: Editor) => {
         deleteBackward(unit)
     }
 
+    const deleteForwardHandlers: DeleteForwardHandler[] = [
+        handleDeleteForwardAfterMedia
+    ]
     editor.deleteForward = unit => {
-        console.log('deleteForward')
+        for (const handler of deleteForwardHandlers) {
+            const handled = handler(editor, unit)
+            if (handled) {
+                return
+            }
+        }
         deleteForward(unit)
     }
 
@@ -56,24 +79,13 @@ export const EditorPlugin = (editor: Editor) => {
         insertBreak()
     }
 
-    // const normalizeNodeHandlers: NormalizeNodeHandler[] = [FixLayoutWhenNormalizeNode]
-    // editor.normalizeNode = (entry: NodeEntry<Node>) => {
-    //     for (const handler of normalizeNodeHandlers) {
-    //         const handled = handler(editor, entry)
-    //         if (handled) {
-    //             return
-    //         }
-    //     }
-    //     normalizeNode(entry)
-    // }
-
     const insertTextHandlers: InsertTextHandler[] = [
-        WrapLinkWhenInsertText,
+        (editor, text) => LinkManager.handleInsertText(editor, text),
         ShortcutWhenInsertText
     ]
-    editor.insertText = (text: string) => {
+    editor.insertText = async (text: string) => {
         for (const handler of insertTextHandlers) {
-            const handled = handler(editor, text)
+            const handled = await handler(editor, text)
             if (handled) {
                 return
             }
@@ -84,12 +96,12 @@ export const EditorPlugin = (editor: Editor) => {
     const insertDataHandlers: InsertDataHandler[] = [
         insertCodeWhenInsertData,
         insertYoutubeWhenInsertData,
-        InsertImageWhenInsertData,
-        WrapLinkWhenInsertData
+        (editor, data) => FileManager.handleInsertData(editor, data),
+        (editor, data) => LinkManager.handleInsertData(editor, data)
     ]
-    editor.insertData = (data: DataTransfer) => {
+    editor.insertData = async (data: DataTransfer) => {
         for (const handler of insertDataHandlers) {
-            const handled = handler(editor, data)
+            const handled = await handler(editor, data)
             if (handled) {
                 return
             }
@@ -101,6 +113,7 @@ export const EditorPlugin = (editor: Editor) => {
         if (isBrowser) {
             CommandManager.handleEditorChange(editor)
         }
+        FormattingManager.handleEditorChange()
         onChange()
     }
 

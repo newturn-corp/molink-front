@@ -76,14 +76,14 @@ export abstract class BaseAPI {
     private async useFormData (
         method: 'POST' | 'PUT',
         path: string,
-        body: object
+        body: object,
+        isCustomURL: boolean = false
     ): Promise<NetworkMessage> {
         const formData = new FormData()
         // eslint-disable-next-line
     for (const [k, v] of Object.entries(body)) {
             formData.append(k, v)
         }
-        // NOTE(viz.ko):
         // remove content-type header from headers
         // so that browser can inject content-type with boundary definition
         // https://stackoverflow.com/a/35799817/3535760
@@ -91,7 +91,7 @@ export abstract class BaseAPI {
         delete headers['Content-Type']
         let res
         try {
-            res = await fetch(`${SERVER_BASE_URL}${path}`, {
+            res = await fetch(isCustomURL ? path : `${SERVER_BASE_URL}${path}`, {
                 method,
                 headers,
                 body: formData,
@@ -106,9 +106,10 @@ export abstract class BaseAPI {
 
     protected async postFormData (
         path: string,
-        body: object
+        body: object,
+        isCustomURL: boolean = false
     ): Promise<NetworkMessage> {
-        return this.useFormData('POST', path, body)
+        return this.useFormData('POST', path, body, isCustomURL)
     }
 
     protected async putFormData (

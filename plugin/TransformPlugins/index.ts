@@ -1,28 +1,28 @@
-import { Transforms, Node, Location, NodeMatch } from 'slate'
+import { Transforms, Node, Location, NodeMatch, Editor, Path, Range, Point, NodeEntry } from 'slate'
 import { fixContentNextHeaderWhenSplitNodes } from './FixHeadNextNormalTextPlugin'
 // import HoveringToolbar from './HoveringToolbarPlugin'
 import {
+    TransformsRemoveNodesHandler,
     TransformsSelectHandler,
     TransformsSetNodeHandler,
     TransformsSplitNodeHandler,
     TransformsTransformHandler
 } from './types'
 import UnknownPlugin from './UnknownPlugin'
+import FormattingManager from '../../manager/Editing/FormattingManager'
+import { customDelete } from './delete'
+import { customInsertNode } from './insertNode'
+import { customRemoveNodes } from './removeNodes'
+import { customSelect } from './select'
+import { move } from './move'
 
-const { transform, setNodes, select, splitNodes } = Transforms
+const { setNodes, select, splitNodes } = Transforms
 
-// const transformsTransformHandler: TransformsTransformHandler[] = [
-//     HoveringToolbar
-// ]
-// Transforms.transform = (editor, operation) => {
-//     for (const handler of transformsTransformHandler) {
-//         const handled = handler(editor, operation)
-//         if (handled) {
-//             return
-//         }
-//     }
-//     transform(editor, operation)
-// }
+Transforms.delete = customDelete
+Transforms.insertNodes = customInsertNode
+Transforms.removeNodes = customRemoveNodes
+Transforms.select = customSelect
+Transforms.move = move
 
 const transformsSetNodeHandler: TransformsSetNodeHandler<Node>[] = [
     UnknownPlugin
@@ -47,6 +47,7 @@ Transforms.setNodes = (editor,
 }
 
 const transformsSplitNodeHandlers: TransformsSplitNodeHandler[] = [fixContentNextHeaderWhenSplitNodes]
+const afterTransformsSplitNodeHandlers: TransformsSplitNodeHandler[] = []
 Transforms.splitNodes = (editor, options) => {
     for (const handler of transformsSplitNodeHandlers) {
         const handled = handler(editor, options)
@@ -55,17 +56,12 @@ Transforms.splitNodes = (editor, options) => {
         }
     }
     splitNodes(editor, options)
+    for (const handler of afterTransformsSplitNodeHandlers) {
+        handler(editor, options)
+    }
 }
 
-const transformsSelectHandler: TransformsSelectHandler[] = [
-    // maintainScreenMargin
-]
-Transforms.select = (editor, location) => {
-    for (const handler of transformsSelectHandler) {
-        const handled = handler(editor, location)
-        if (handled) {
-            return
-        }
-    }
-    select(editor, location)
-}
+// const transformsSelectHandler: TransformsSelectHandler[] = []
+// const afterTransformsSelectHandler: TransformsSelectHandler[] = [
+//     (editor, location) => FormattingManager.handleSelect()
+// ]

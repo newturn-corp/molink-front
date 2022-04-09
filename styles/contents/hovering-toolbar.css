@@ -13,7 +13,7 @@
   box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
 }
 .hovering-toolbar .button {
-  color: #37352f;
+  color: #0094FF;
   width: 24px;
   height: 24px;
   cursor: pointer;
@@ -31,12 +31,12 @@
   background-color: #bebebe;
 }
 .hovering-toolbar .inactive {
-  color: #a1a1a1;
+  color: #6C7177;
 }
 .hovering-toolbar .link-button {
   display: inline-block;
   height: 24px;
-  color: inherit;
+  color: #6C7177;
   cursor: pointer;
   margin: 0px;
 }

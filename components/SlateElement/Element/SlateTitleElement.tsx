@@ -1,4 +1,5 @@
 import React from 'react'
+import { isBrowser } from 'react-device-detect'
 
 export const SlateTitleElement: React.FC<{
     attributes,
@@ -9,7 +10,13 @@ export const SlateTitleElement: React.FC<{
       //     ContentManager.updateTitle(Node.string(element))
       // })
       return (
-          <p className='title' {...attributes}>
+          <p
+              className='title'
+              style={{
+                  fontSize: isBrowser ? 40 : 32
+              }}
+              {...attributes}
+          >
               {children}
           </p>
       )

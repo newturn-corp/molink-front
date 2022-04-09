@@ -123,11 +123,9 @@ body {
 
 .index-body {
     position: fixed;
-    top: 56px;
     width: 100%;
     //overflow-y: scroll;
     display: flex;
-    height: calc(100vh - 60px);
 }
 .index-body::-webkit-scrollbar {
     width: 10px;
@@ -139,9 +137,8 @@ body {
     background: rgb(209, 209, 209);
     border-radius: 5px;
 }
-
 .ant-notification {
-    top: 80px !important
+    margin-right: 12px;
 }
 .ant-notification-notice-message {
     margin-bottom: 0px !important;
@@ -189,6 +186,122 @@ body {
     top: 0;
     right: 100px;
     z-index: -2;
+}
+.ant-modal-mask {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.modal {
+    p {
+        margin: 0px;
+    }
+    .ant-input-textarea {
+        margin-top: 20px;
+    }
+    .ant-modal-content {
+        padding: 16px;
+        border-radius: 4px;
+    }
+    .ant-modal-header {
+        padding: 0px;
+        border-bottom: none;
+        .ant-modal-title {
+            color: #242425;
+            font-weight: 700;
+            font-size: 20px;
+        }
+    }
+    .ant-modal-body {
+        margin-top: 16px;
+        padding: 0px;
+        .desc {
+            font-family: 'Pretendard';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 20px;
+        }
+        .ant-input-textarea::after {
+            font-weight: 400;
+            font-size: 12px;
+            color: #3A3C3F;
+        }
+        .ant-input {
+            border: 1px solid #DCE1E5;
+            border-radius: 10px;
+            padding: 16px 12px;
+            margin-bottom: 8px;
+        }
+        .modal-buttons {
+            display: flex;
+            flex-direction: row-reverse;
+            margin-top: 32px;
+        }
+    }
+}
+
+.link-modal {
+    .bookmark {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        background-color: white;
+        border-radius: 3px;
+        border: 1px solid #ECEFF2;
+        height: min-content;
+        overflow: auto;
+        margin: 10px 0px;
+        .text-container {
+            display: flex;
+            flex-direction: column;
+            width: 70%;
+            padding: 16px 24px 16px 16px;
+            font-size: 15px;
+            line-height: 15px;
+            .title {
+                margin-bottom: 10px;
+                user-select: none;
+            }
+            .description {
+                font-size: 12px;
+                text-overflow: ellipsis;
+                overflow-y: hidden;
+                line-height: 16px;
+                max-height: 32px;
+                color: #7e7e7e;
+                margin-bottom: 10px;
+                user-select: none;
+            }
+            .url-container {
+                display: flex;
+                flex-direction: row;
+                .icon {
+                    width: 16px;
+                    height: 16px;
+                    margin-right: 5px;
+                }
+                .url {
+                    white-space: nowrap;
+                    line-height: 16px;
+                    overflow-x: hidden;
+                    font-size: 12px;
+                    user-select: none;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+        .image-container {
+            width: 30%;
+            position: relative;
+            max-height: 100%;
+            .image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                border-radius: 1px;
+            }
+        }
+    }
 }
 
 .support-modal {

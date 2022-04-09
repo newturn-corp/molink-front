@@ -10,7 +10,8 @@ module.exports = (phase, { defaultConfig }) => {
         TZ: 'Asia/Seoul',
         CONTENT_SERVER_URL: process.env.CONTENT_SERVER_URL,
         HIERARCHY_LIVE_SERVER_URL: process.env.HIERARCHY_LIVE_SERVER_URL,
-        USER_SERVER_URL: process.env.USER_SERVER_URL
+        USER_SERVER_URL: process.env.USER_SERVER_URL,
+        FILE_API_KEY: process.env.FILE_API_KEY
     }
     defaultConfig.future = { webpack5: true }
     defaultConfig.swcMinify = true

@@ -1,6 +1,6 @@
 import { Editor, Transforms } from 'slate'
 
-export const insertYoutubeWhenInsertData = (editor: Editor, data: DataTransfer) => {
+export const insertYoutubeWhenInsertData = async (editor: Editor, data: DataTransfer) => {
     const text = data.getData('text/plain')
     const youtubeRegex = /^(?:(?:https?:)?\/\/)?(?:(?:www|m)\.)?(?:(?:youtube\.com|youtu.be))(?:\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(?:\S+)?$/
     const matches = text.match(youtubeRegex)

@@ -217,7 +217,7 @@ class CommandManager {
         //     if (!ContentManager.openedDocument) {
         //         return
         //     }
-        //     const document = await Document.create(ContentManager.openedDocument, ContentManager.openedDocument.directoryInfo.children.length)
+        //     const document = await Page.create(ContentManager.openedDocument, ContentManager.openedDocument.directoryInfo.children.length)
         //     node = {
         //         type: 'document',
         //         documentId: document.meta.id,

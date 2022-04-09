@@ -6,7 +6,7 @@ import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager
 export const ToolbarControlButton: React.FC<{
 }> = observer(() => {
     const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    if (!currentHierarchy || !currentHierarchy.openedDocumentId) {
+    if (!currentHierarchy || !currentHierarchy.openedPageId) {
         return <></>
     }
     return <div

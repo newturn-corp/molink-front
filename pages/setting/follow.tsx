@@ -4,7 +4,7 @@ import { observer } from 'mobx-react'
 const SettingProfile = observer(() => {
     // const [value, setValue] = React.useState('female')
     //
-    // const handleChange = (event) => {
+    // const handleLinkOptionChange = (event) => {
     //     setValue(event.target.value)
     // }
     // UserManager.updateUserProfile()

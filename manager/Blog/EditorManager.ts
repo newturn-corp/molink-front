@@ -1,5 +1,5 @@
-import { makeAutoObservable, observable } from 'mobx'
-import { createEditor, Editor, Editor as SlateEditor, Transforms } from 'slate'
+import { makeAutoObservable, observable, toJS } from 'mobx'
+import { BasePoint, createEditor, Editor, Editor as SlateEditor, Element, Transforms } from 'slate'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { SyncElement, withYjs } from 'slate-yjs'
@@ -18,10 +18,13 @@ import UserManager from '../global/User/UserManager'
 import HierarchyManager from '../global/Hierarchy/HierarchyManager'
 import EventManager from '../global/Event/EventManager'
 import { throttle } from 'lodash'
+import React from 'react'
+import { TextCategory } from '../../Types/slate/CustomElement'
 
 class EditorManager {
     public editable: boolean = false
     public showPlaceholder: boolean = true
+    public pageId: string = null
     yjsDocument: Y.Doc = null
     slateEditor: SlateEditor = null
     sharedType: Y.Array<SyncElement> = null
@@ -38,9 +41,11 @@ class EditorManager {
     cursors: Cursor[] = []
     editableElement: HTMLElement = null
     contentBody: HTMLElement = null
+    titleRef: React.MutableRefObject<HTMLDivElement> = null
 
     isLocked: boolean = false
     isToolbarOpen: boolean = true
+    lastPressedKey: string = null
 
     constructor () {
         makeAutoObservable(this, {
@@ -48,7 +53,8 @@ class EditorManager {
             yjsDocument: false,
             sharedType: false,
             yInfo: false,
-            websocketProvider: false
+            websocketProvider: false,
+            titleRef: false
         })
         EventManager.addEventListeners(
             [Event.UnloadPage,
@@ -60,16 +66,15 @@ class EditorManager {
             }, 1)
     }
 
-    async load (documentId: string) {
+    async load (pageId: string) {
         this.yjsDocument = new Y.Doc()
         this.sharedType = this.yjsDocument.getArray<SyncElement>('content')
-        // this.sharedType.observeDeep(() => {
-        //     console.log(this.sharedType.toJSON())
-        // })
+        this.sharedType.observeDeep(() => {
+            console.log(this.sharedType.toJSON())
+        })
         this.yInfo = this.yjsDocument.getMap('info')
         this.yInfo.observeDeep(() => {
             this.info = this.yInfo.toJSON()
-            console.log(this.yInfo)
             this.isLocked = this.yInfo.get('isLocked')
         })
 
@@ -82,19 +87,19 @@ class EditorManager {
         if (!currentHierarchy) {
             throw new DocumentNotExists()
         }
-        const document = currentHierarchy.map[documentId]
-        if (!document) {
+        const page = currentHierarchy.map[pageId]
+        if (!page) {
             throw new DocumentNotExists()
         }
-        this.editable = UserManager.isUserAuthorized && currentHierarchy.editable && !!document
+        this.editable = UserManager.isUserAuthorized && currentHierarchy.editable && !!page
 
         if (!this.editable) {
-            const dto = await ViewerAPI.getContent(documentId)
+            const dto = await ViewerAPI.getContent(pageId)
             Y.applyUpdate(this.yjsDocument, Uint8Array.from(dto.content))
             this.slateEditor = EditorPlugin(
                 withYjs(withReact(withHistory(createEditor())), this.sharedType))
         } else {
-            this.websocketProvider = new WebsocketProvider(process.env.CONTENT_SERVER_URL, documentId, this.yjsDocument, {
+            this.websocketProvider = new WebsocketProvider(process.env.CONTENT_SERVER_URL, pageId, this.yjsDocument, {
                 connect: false
             })
             const color = randomColor({
@@ -174,12 +179,13 @@ class EditorManager {
                     this.awareness
                 ))
         }
-        currentHierarchy.openedDocumentId = documentId
+        this.pageId = pageId
+        currentHierarchy.openedPageId = pageId
         await EventManager.issueEvent(Event.LoadContent)
     }
 
     private _saveCurrentSelection () {
-        if (this.ySelection) {
+        if (this.ySelection && UserManager.isUserAuthorized) {
             this.ySelection.set(UserManager.userId.toString(), this.slateEditor.selection)
         }
     }
@@ -188,6 +194,7 @@ class EditorManager {
         if (this.websocketProvider) {
             this.websocketProvider.destroy()
         }
+        this.pageId = null
         this.editable = false
         this.showPlaceholder = true
 
@@ -212,6 +219,35 @@ class EditorManager {
     async updateIsToolbarOpen (isOpen: boolean) {
         this.isToolbarOpen = isOpen
         await EventManager.issueEvent(Event.ToolbarOnOffChange, { isToolbarOpen: isOpen })
+    }
+
+    setTitleFocus () {
+        this.titleRef.current.focus()
+    }
+
+    handleContentFooterClicked () {
+        ReactEditor.focus(this.slateEditor)
+        Transforms.insertNodes(this.slateEditor, {
+            type: 'text',
+            category: TextCategory.Content3,
+            children: [{ text: '' }]
+        }, {
+            at: [this.slateEditor.children.length]
+        })
+        Transforms.select(this.slateEditor, [this.slateEditor.children.length - 1])
+    }
+
+    insertElement (element: Element, insertPosition: BasePoint | number[]) {
+        const lineBefore = Editor.before(this.slateEditor, insertPosition, { unit: 'word' })
+        const beforeRange = lineBefore && Editor.range(this.slateEditor, lineBefore, insertPosition)
+        const beforeText = beforeRange && Editor.string(this.slateEditor, beforeRange)
+        if (beforeText && beforeText.length > 0) {
+            Transforms.insertNodes(this.slateEditor, element)
+        } else {
+            Transforms.setNodes<Element>(this.slateEditor, element, {
+                match: n => Editor.isBlock(this.slateEditor, n)
+            })
+        }
     }
 }
 export default new EditorManager()

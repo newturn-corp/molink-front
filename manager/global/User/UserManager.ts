@@ -7,17 +7,20 @@ import { HierarchyNotExists } from '../../../Errors/HierarchyError'
 import { Event } from '../Event/Event'
 import UserAPI from '../../../api/UserAPI'
 import { UserProfile } from './UserProfile'
+import { UserLimit } from './UserLimit'
 
 class UserManager {
     isUserAuthorized: boolean = false
     isLoading: boolean = false
     isUserMenuOpen: boolean = false
+    isUserDrawerOpen: boolean = false
     userId: number = null
 
     yjsDocument: Y.Doc = null
     websocketProvider: WebsocketProvider = null
     profile: UserProfile
     setting: UserSetting
+    limit: UserLimit
 
     constructor () {
         makeAutoObservable(this, {
@@ -27,6 +30,7 @@ class UserManager {
 
         this.profile = new UserProfile()
         this.setting = new UserSetting()
+        this.limit = new UserLimit()
 
         EventManager.addEventListener(Event.SignOut, () => {
             this.reset()
@@ -47,6 +51,7 @@ class UserManager {
 
             this.profile.sync(this.yjsDocument.getMap<any>('profile'))
             this.setting.sync(this.yjsDocument.getMap<any>('setting'))
+            this.limit.sync(this.yjsDocument.getMap<any>('limit'))
 
             this.websocketProvider = new WebsocketProvider(
                 process.env.USER_SERVER_URL,

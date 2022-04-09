@@ -4,6 +4,9 @@ import { UserSettingInterface } from '@newturn-develop/types-molink'
 import EventManager from '../Event/EventManager'
 import { Event } from '../Event/Event'
 import HierarchyManager from '../Hierarchy/HierarchyManager'
+import UserManager from './UserManager'
+import Identicon from 'identicon.js'
+import crypto from 'crypto'
 
 export class UserProfile {
     yProfile: Y.Map<any> = null
@@ -20,7 +23,7 @@ export class UserProfile {
             if (this.yProfile) {
                 const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
                 if (currentHierarchy) {
-                    this.yProfile.set('lastOpenPageId', currentHierarchy.openedDocumentId)
+                    this.yProfile.set('lastOpenPageId', currentHierarchy.openedPageId)
                 }
             }
         }, 1)
@@ -46,6 +49,20 @@ export class UserProfile {
 
     setLastOpenPageId (pageId: string) {
         this.yProfile.set('lastOpenPageId', pageId)
+    }
+
+    getUserProfileImageSrc () {
+        if (!UserManager.isUserAuthorized) {
+            return '/image/global/header/login-button-profile.png'
+        }
+        return UserManager.profile.profileImageUrl || `data:image/png;base64,${
+            new Identicon(
+                crypto.createHash('sha512')
+                    .update(UserManager.profile.nickname)
+                    .digest('base64'), {
+                    size: 64,
+                    foreground: [58, 123, 191, 255]
+                }).toString()}`
     }
 
     // async updateUserProfileImage (event: React.ChangeEvent<HTMLInputElement>) {

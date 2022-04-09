@@ -14,7 +14,8 @@ export enum Page {
     SettingFollow = '/setting/follow',
     SettingDocumentList = '/setting/document-list',
     Home = '',
-    Blog = '/blog'
+    Blog = '/blog',
+    MobileSupport = '/m/support'
 }
 
 class RoutingManager {
@@ -37,6 +38,10 @@ class RoutingManager {
             await EventManager.issueEvent(Event.MoveToAnotherPage)
             await Router.push(url)
         }
+    }
+
+    back () {
+        Router.back()
     }
 }
 export default new RoutingManager()

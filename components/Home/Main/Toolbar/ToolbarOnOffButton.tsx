@@ -9,7 +9,7 @@ import StyleManager from '../../../../manager/global/Style/StyleManager'
 export const ToolbarOnOffButton: React.FC<{
 }> = observer(() => {
     const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    if (!currentHierarchy || !currentHierarchy.openedDocumentId) {
+    if (!currentHierarchy || !currentHierarchy.openedPageId) {
         return <></>
     }
     return <div

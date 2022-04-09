@@ -1,23 +1,40 @@
 import { makeAutoObservable } from 'mobx'
-import { ChangeEvent } from 'react'
+import React, { ChangeEvent } from 'react'
 import MainAPI from '../../api/mainAPI'
 import { SaveSupportDTO } from '../../DTO/UserDTO'
 import FeedbackManager, { NOTIFICATION_TYPE } from './FeedbackManager'
+import { isBrowser } from 'react-device-detect'
+import { TextAreaRef } from 'antd/es/input/TextArea'
 
 class SupportManager {
     showSupportModal: boolean = false
+    isSupportDrawerOpen: boolean = false
     content: string = ''
+    supportModalTextAreaRef: React.MutableRefObject<TextAreaRef> = null
 
     constructor () {
-        makeAutoObservable(this)
+        makeAutoObservable(this, {
+            supportModalTextAreaRef: false
+        })
     }
 
-    async saveSupport (content: string) {
+    public openSupportModal () {
+        this.showSupportModal = true
+        setTimeout(() => {
+            this.supportModalTextAreaRef.current.focus()
+        }, 0)
+    }
+
+    private async saveSupport (content: string) {
         await MainAPI.saveSupport(new SaveSupportDTO(content))
     }
 
     async handleOk () {
-        this.showSupportModal = false
+        if (isBrowser) {
+            this.showSupportModal = false
+        } else {
+            this.isSupportDrawerOpen = false
+        }
         await this.saveSupport(this.content)
         this.content = ''
         FeedbackManager.showFeedback(

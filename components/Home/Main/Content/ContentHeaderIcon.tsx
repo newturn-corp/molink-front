@@ -11,9 +11,9 @@ export const ContentHeaderIcon: React.FC<{
       const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
       const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-      const page = currentHierarchy.map[currentHierarchy.openedDocumentId]
+      const page = currentHierarchy.map[currentHierarchy.openedPageId]
       const onEmojiClick = (emojiObject: IEmojiData) => {
-          const document = currentHierarchy.yMap.get(currentHierarchy.openedDocumentId)
+          const document = currentHierarchy.yMap.get(currentHierarchy.openedPageId)
           if (document.icon !== emojiObject.emoji) {
               document.icon = emojiObject.emoji
               currentHierarchy.yMap.set(document.id, document)
@@ -23,7 +23,7 @@ export const ContentHeaderIcon: React.FC<{
 
       return <>
           <Button
-              className={'icon'}
+              className={'header-icon'}
               disabled={!EditorManager.editable}
               onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
               {page.icon}
