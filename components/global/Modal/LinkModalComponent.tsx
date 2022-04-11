@@ -50,7 +50,7 @@ export const LinkModalComponent: React.FC<{
             }}
             value={LinkManager.modal.content}
         />
-        <pre
+        <div
             className={'desc'}
             style={{
                 marginTop: 10,
@@ -58,7 +58,7 @@ export const LinkModalComponent: React.FC<{
             }}
         >
             {'Tip! 링크를 복사한 뒤 페이지에 붙여넣으면 바로 북마크를 추가할 수 있습니다.'}
-        </pre>
+        </div>
         {
             info
                 ? <div
