@@ -3,6 +3,7 @@ import { makeAutoObservable } from 'mobx'
 import { UserSettingInterface } from '@newturn-develop/types-molink'
 import EventManager from '../Event/EventManager'
 import { Event } from '../Event/Event'
+import { isBrowser } from 'react-device-detect'
 
 export class UserSetting {
     ySetting: Y.Map<any> = null
@@ -10,7 +11,7 @@ export class UserSetting {
     hierarchyWidth: number = 240
     showSubDocumentCount: boolean = false
 
-    hierarchyBackgroundColor: string = '#FAFAFB'
+    hierarchyBackgroundColor: string = isBrowser ? '#FAFAFB' : 'transparent'
     hierarchySelectedDocumentBackgroundColor: string = '#ECEEF0'
 
     constructor () {
@@ -24,7 +25,7 @@ export class UserSetting {
         this.ySetting.observeDeep(async () => {
             this.setting = this.ySetting.toJSON()
             const newHierarchyWidth = this.ySetting.get('hierarchyWidth')
-            if (this.hierarchyWidth !== newHierarchyWidth) {
+            if (isBrowser && this.hierarchyWidth !== newHierarchyWidth) {
                 this.hierarchyWidth = newHierarchyWidth
                 await EventManager.issueEvent(
                     Event.HierarchyWidthChange,

@@ -8,7 +8,7 @@ import UserManager from '../../manager/global/User/UserManager'
 const SettingDocumentList = observer(() => {
     // const [value, setValue] = React.useState('female')
     //
-    // const handleChange = (event) => {
+    // const handleLinkOptionChange = (event) => {
     //     setValue(event.target.value)
     // }
     // UserManager.updateUserProfile()

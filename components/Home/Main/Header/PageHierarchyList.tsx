@@ -7,10 +7,10 @@ import EditorManager from '../../../../manager/Blog/EditorManager'
 export const PageHierarchyList: React.FC<{
   }> = observer(() => {
       const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-      if (!currentHierarchy || !currentHierarchy.openedDocumentId) {
+      if (!currentHierarchy || !currentHierarchy.openedPageId) {
           return <></>
       }
-      const pages = currentHierarchy.getPageHierarchy(currentHierarchy.openedDocumentId)
+      const pages = currentHierarchy.getPageHierarchy(currentHierarchy.openedPageId)
       return <div
           className={'page-hierarchy-list'}
           style={{
@@ -24,7 +24,7 @@ export const PageHierarchyList: React.FC<{
                           className='document-block'
                           key={`hierarchy-document-block-${index}`}
                           onClick={async () => {
-                              if (page.id === currentHierarchy.openedDocumentId) {
+                              if (page.id === currentHierarchy.openedPageId) {
                                   return
                               }
                               await RoutingManager.moveTo(Page.Blog, `/${page.id}`)

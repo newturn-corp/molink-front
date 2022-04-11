@@ -3,6 +3,9 @@ import EditorManager from '../../manager/Blog/EditorManager'
 
 const onKeyDown = (event, editor) => {
     const { selection } = editor
+    if (!selection) {
+        return
+    }
     if (!Range.isCollapsed(selection)) {
         return
     }

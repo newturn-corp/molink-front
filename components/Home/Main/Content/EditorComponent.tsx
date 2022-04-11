@@ -5,12 +5,13 @@ import { MentionListComponent } from './MentionListComponent'
 import { CommandListComponent } from './CommandListComponent'
 import { CustomElementComponent } from '../../../SlateElement/CustomElementComponent'
 import { CustomLeafComponent } from '../../../SlateElement/CustomLeafComponent'
-import { HoveringToolbar } from './HoveringToolbar'
+import { HoveringToolbar } from './HoveringToolbar/HoveringToolbar'
 import { handleDOMBeforeInput, handleKeyDown } from '../../../../plugin'
 import { decorate as decorateFunc } from '../../../../plugin/Decorate'
 import EditorManager from '../../../../manager/Blog/EditorManager'
 import { DOMNode } from 'slate-react/dist/utils/dom'
 import { Editor } from 'slate'
+import { LinkMenuComponent } from './LinkMenuComponent'
 
 export const getDefaultView = (value: any): Window | null => {
     return (
@@ -52,7 +53,6 @@ const HAS_BEFORE_INPUT_SUPPORT =
 
 const deleteForward = Editor.deleteForward
 Editor.deleteForward = (editor: Editor) => {
-    console.log('Editor.deleteForward')
     deleteForward(editor)
 }
 
@@ -85,5 +85,6 @@ export const EditorComponent: React.FC<{
           />
           <MentionListComponent editor={EditorManager.slateEditor} />
           <CommandListComponent editor={EditorManager.slateEditor} />
+          <LinkMenuComponent/>
       </Slate>
   })

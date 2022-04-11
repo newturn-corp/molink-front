@@ -12,7 +12,7 @@ import StyleManager from '../../../../manager/global/Style/StyleManager'
 export const VisibilityMenu: React.FC<{}
 > = observer(() => {
     const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    if (!currentHierarchy || !currentHierarchy.openedDocumentId) {
+    if (!currentHierarchy || !currentHierarchy.openedPageId) {
         return <></>
     }
     const visibilityController = currentHierarchy.visibilityController
@@ -36,7 +36,7 @@ export const VisibilityMenu: React.FC<{}
                 desc={'모두 이 페이지를 볼 수 있습니다.'}
                 icon={<Public/>}
                 onClick={() =>
-                    visibilityController.updatePageVisibility(currentHierarchy.openedDocumentId, PageVisibility.Public)
+                    visibilityController.updatePageVisibility(currentHierarchy.openedPageId, PageVisibility.Public)
                 }
             />
             <VisibilityMenuItem
@@ -44,7 +44,7 @@ export const VisibilityMenu: React.FC<{}
                 desc={'팔로워하는 사람들만 이 페이지를 볼 수 있습니다.'}
                 icon={<OnlyFollower/>}
                 onClick={() =>
-                    visibilityController.updatePageVisibility(currentHierarchy.openedDocumentId, PageVisibility.OnlyFollower)
+                    visibilityController.updatePageVisibility(currentHierarchy.openedPageId, PageVisibility.OnlyFollower)
                 }
             />
             <VisibilityMenuItem
@@ -52,7 +52,7 @@ export const VisibilityMenu: React.FC<{}
                 desc={'나만 이 페이지를 볼 수 있습니다.'}
                 icon={<Private/>}
                 onClick={() =>
-                    visibilityController.updatePageVisibility(currentHierarchy.openedDocumentId, PageVisibility.Private)
+                    visibilityController.updatePageVisibility(currentHierarchy.openedPageId, PageVisibility.Private)
                 }
             />
         </div>

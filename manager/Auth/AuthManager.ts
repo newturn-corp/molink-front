@@ -112,7 +112,7 @@ class AuthManager {
             }
             return { success: false }
         }
-        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '비밀번호 변경 메일이 전송되었습니다!', '')
+        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '비밀번호 변경 메일이 전송되었습니다!', '', 1000)
         return { success: true }
     }
 

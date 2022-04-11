@@ -1,0 +1,53 @@
+.mobile-column-drawer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.mobile-column-drawer .title {
+  display: flex;
+  height: 44px;
+  border-bottom: 1px solid #ECEFF2;
+  background-color: white;
+  margin-bottom: 40px;
+}
+.mobile-column-drawer .title .text {
+  display: flex;
+  margin: 0 auto;
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+}
+.mobile-column-drawer .title .close-button {
+  position: absolute;
+  right: 12px;
+  top: 7px;
+  color: #0094FF;
+  font-weight: 600;
+  height: 30px;
+  line-height: 30px;
+}
+.mobile-column-drawer .element {
+  padding: 12px 12px 12px 20px;
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid #d0d0d0;
+}
+.mobile-column-drawer .element svg {
+  width: 20px;
+  height: 20px;
+  margin: 2px 12px 2.5px 0px;
+  fill: #6C7177;
+}
+.mobile-column-drawer .element .name {
+  line-height: 25px;
+}
+.mobile-column-drawer .element:last-child {
+  border-bottom: 1px solid #d0d0d0;
+}
+.mobile-column-drawer .group {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+/*# sourceMappingURL=mobile-column-drawer.css.map */

@@ -6,7 +6,7 @@ import { LockButton } from './LockButton'
 export const ContentControlButtonGroup: React.FC<{
 }> = observer(() => {
     const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    if (!currentHierarchy || !currentHierarchy.openedDocumentId) {
+    if (!currentHierarchy || !currentHierarchy.openedPageId) {
         return <></>
     }
     return <div

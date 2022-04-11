@@ -22,56 +22,58 @@ class BlogManager {
             throw new InvalidParam()
         } else if (info.length === 1) {
             if (info[0].length < 28) {
-                return { type: HomeURLType.UserMainURL, nickname: info[0], documentId: null, documentName: null }
+                return { type: HomeURLType.UserMainURL, nickname: info[0], pageId: null, documentName: null }
             } else if (info[0].length === 32) {
-                return { type: HomeURLType.OnlyDocumentURL, nickname: null, documentId: info[0], documentName: null }
+                return { type: HomeURLType.OnlyDocumentURL, nickname: null, pageId: info[0], documentName: null }
             } else {
                 throw new InvalidParam()
             }
         } else {
             const nickname = info[0]
-            const documentId = info[1]
+            const pageId = info[1]
             const documentName = info[2]
-            if (nickname.length > 27 || documentId.length !== 32) {
+            if (nickname.length > 27 || pageId.length !== 32) {
                 throw new InvalidParam()
             }
-            return { type: HomeURLType.StandardDocumentURL, nickname, documentId, documentName }
+            return { type: HomeURLType.StandardDocumentURL, nickname, pageId, documentName }
         }
     }
 
     async handleEnterBlogPage (info: string[]) {
         try {
             await UserManager.load()
-            const { type, nickname, documentId, documentName } = this.interpretURLInfo(info)
+            const { type, nickname, pageId, documentName } = this.interpretURLInfo(info)
             if (type === HomeURLType.OnlyDocumentURL) {
-                const authority = await ViewerAPI.getDocumentAuthority(documentId)
+                const authority = await ViewerAPI.getDocumentAuthority(pageId)
                 if (!authority.viewable) {
                     await DialogManager.openDialog('문서가 존재하지 않습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
                     await RoutingManager.moveTo(Page.Blog, `/${authority.nickname}`)
                     return
                 }
-                await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${authority.nickname}/${documentId}/${encodeURIComponent(authority.documentName)}`)
+                await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${authority.nickname}/${pageId}/${encodeURIComponent(authority.documentName)}`)
                 return
             } else if (type === HomeURLType.UserMainURL) {
                 const { id: userId } = await ViewerAPI.getUserIDByNickname(nickname)
                 await HierarchyManager.loadHierarchy(userId, nickname)
-                if (UserManager.userId === userId && UserManager.profile && UserManager.profile.lastOpenPageId) {
-                    await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${UserManager.profile.lastOpenPageId}`)
-                    return
-                }
+                // if (UserManager.userId === userId && UserManager.profile && UserManager.profile.lastOpenPageId) {
+                //     await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${UserManager.profile.lastOpenPageId}`)
+                //     return
+                // }
             } else if (type === HomeURLType.StandardDocumentURL) {
-                const authority = await ViewerAPI.getDocumentAuthority(documentId)
+                const authority = await ViewerAPI.getDocumentAuthority(pageId)
                 if (!authority.viewable) {
                     await DialogManager.openDialog('문서가 존재하지 않습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
                     await RoutingManager.moveTo(Page.Blog, `/${authority.nickname}`)
                     return
                 }
                 if (authority.nickname !== nickname || (documentName !== undefined && authority.documentName !== decodeURIComponent(documentName))) {
-                    await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${authority.nickname}/${documentId}/${encodeURIComponent(authority.documentName)}`)
+                    await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${authority.nickname}/${pageId}/${encodeURIComponent(authority.documentName)}`)
                     return
                 }
                 await HierarchyManager.loadHierarchy(authority.userId, nickname)
-                await EditorManager.load(documentId)
+                await EditorManager.load(pageId)
+                const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
+                currentHierarchy.openPageParents(pageId)
             }
         } catch (err) {
             console.log(err)

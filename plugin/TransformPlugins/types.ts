@@ -2,6 +2,16 @@ import { Editor, Location, Node, NodeMatch, Operation } from 'slate'
 
 export type TransformsTransformHandler = (editor: Editor, operation: Operation) => boolean
 
+export type TransformsRemoveNodesHandler<T extends Node> = (
+    editor: Editor,
+    options: {
+        at?: Location
+        match?: NodeMatch<T>
+        mode?: 'highest' | 'lowest'
+        hanging?: boolean
+        voids?: boolean
+    }) => boolean
+
 export type TransformsSetNodeHandler<T extends Node> = (editor: Editor,
     props: Partial<Node>,
     options: {

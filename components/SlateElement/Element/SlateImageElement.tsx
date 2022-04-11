@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import {
     useSelected,
     useFocused,
@@ -11,19 +11,24 @@ import { Editor, Transforms } from 'slate'
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@material-ui/icons'
 
 import TextArea, { TextAreaRef } from 'antd/lib/input/TextArea'
-import { ImageFloatOption, SlateImageElementType, TextCategory } from '../../../Types/slate/CustomElement'
+import { FloatOption, SlateImageElementType, TextCategory } from '../../../Types/slate/CustomElement'
 import EditorManager from '../../../manager/Blog/EditorManager'
 import StyleManager from '../../../manager/global/Style/StyleManager'
+import FileUploadManager from '../../../manager/Editing/FileUploadManager'
+import MenuManager from '../../../manager/global/Menu/MenuManager'
+import MenuItem from '../../../manager/global/Menu/MenuItem'
+import MenuDotsIcon from '../../../public/image/icon/menu-dots.svg'
 
 const Caption: React.FC<{
     selected: boolean,
     caption: string,
-    floatOption: ImageFloatOption
+    floatOption: FloatOption
   }> = ({ selected, caption, floatOption }) => {
       const inputRef = useRef<TextAreaRef>(null)
       const [captionFocused, setCaptionFocused] = useState(false)
       const editor = useSlateStatic()
       const showCaption = selected || caption.length > 0
+
       if (!selected) {
           if (captionFocused) {
               setCaptionFocused(false)
@@ -37,7 +42,7 @@ const Caption: React.FC<{
               className={'caption'}
               style={{
                   userSelect: captionFocused ? 'auto' : undefined,
-                  textAlign: floatOption === ImageFloatOption.Left ? 'left' : floatOption === ImageFloatOption.Center ? 'center' : 'right'
+                  textAlign: floatOption === FloatOption.Left ? 'left' : floatOption === FloatOption.Center ? 'center' : 'right'
               }}
               tabIndex={-1}
               onClick={() => {
@@ -89,6 +94,15 @@ const Caption: React.FC<{
       </figcaption>
   }
 
+const getImageSrc = (src: string) => {
+    if (src && src.includes('https://cdn.filestackcontent.com')) {
+        return src + `?policy=${FileUploadManager.policy}&signature=${FileUploadManager.signature}`
+    } else if (src && src.includes('molink.life/files')) {
+        return src + `?pageId=${EditorManager.pageId}`
+    }
+    return src
+}
+
 export const SlateImageElement: React.FC<{
     attributes,
     children,
@@ -96,13 +110,19 @@ export const SlateImageElement: React.FC<{
   }> = ({ attributes, children, element }) => {
       const selected = useSelected()
       const focused = useFocused()
-      if (element.isUploading) {
-          <p>로딩 중..</p>
-      }
+      const [isMouseOver, setIsMouseOver] = useState(false)
+      const menuButtonRef = useRef<HTMLDivElement>()
+      const currentNodePath = useCallback(() => (
+          ReactEditor.findPath(EditorManager.slateEditor, element)
+      ), [EditorManager.slateEditor, element])
+
       return (
           <div
               className={'image-element'}
-              {...attributes}>
+              onMouseOver={() => setIsMouseOver(true)}
+              onMouseLeave={() => setIsMouseOver(false)}
+              {...attributes}
+          >
               {children}
               <div
                   contentEditable={false}
@@ -125,8 +145,8 @@ export const SlateImageElement: React.FC<{
                       lockAspectRatio
                       style={{
                           position: 'relative',
-                          float: element.floatOption === ImageFloatOption.Right ? 'right' : undefined,
-                          marginLeft: element.floatOption === ImageFloatOption.Center ? (StyleManager.contentStyle.main.width - element.width) / 2 : undefined,
+                          float: element.floatOption === FloatOption.Right ? 'right' : undefined,
+                          marginLeft: element.floatOption === FloatOption.Center ? (StyleManager.contentStyle.main.width - element.width) / 2 : undefined,
                           transform: 'none !important',
                           display: 'block'
                       }}
@@ -149,7 +169,7 @@ export const SlateImageElement: React.FC<{
                       }}>
                           <img
                               draggable={false}
-                              src={element.url}
+                              src={getImageSrc(element.url)}
                               className={css`
                             display: block;
                             width: 100%;
@@ -170,7 +190,7 @@ export const SlateImageElement: React.FC<{
                                           className={'button'}
                                           onClick={event => {
                                               Transforms.setNodes(EditorManager.slateEditor, {
-                                                  floatOption: ImageFloatOption.Left
+                                                  floatOption: FloatOption.Left
                                               }, {
                                                   at: EditorManager.slateEditor.selection
                                               })
@@ -182,7 +202,7 @@ export const SlateImageElement: React.FC<{
                                           className={'button'}
                                           onClick={event => {
                                               Transforms.setNodes(EditorManager.slateEditor, {
-                                                  floatOption: ImageFloatOption.Center
+                                                  floatOption: FloatOption.Center
                                               }, {
                                                   at: EditorManager.slateEditor.selection
                                               })
@@ -194,7 +214,7 @@ export const SlateImageElement: React.FC<{
                                           className={'button'}
                                           onClick={event => {
                                               Transforms.setNodes(EditorManager.slateEditor, {
-                                                  floatOption: ImageFloatOption.Right
+                                                  floatOption: FloatOption.Right
                                               }, {
                                                   at: EditorManager.slateEditor.selection
                                               })
@@ -233,6 +253,28 @@ export const SlateImageElement: React.FC<{
                                   </div>
                               </>
                               : <></>
+                      }
+                      {
+                          <div
+                              ref={menuButtonRef}
+                              className={'menu-button'}
+                              style={{
+                                  display: isMouseOver ? undefined : 'none'
+                              }}
+                              onClick={(event) => {
+                                  event.stopPropagation()
+                                  Transforms.select(EditorManager.slateEditor, currentNodePath())
+                                  const rect = menuButtonRef.current.getBoundingClientRect()
+                                  MenuManager.open([new MenuItem('삭제', () => {
+                                      Transforms.removeNodes(EditorManager.slateEditor, { at: currentNodePath() })
+                                  })], {
+                                      top: rect.top + (rect.height / 2),
+                                      left: rect.left + (rect.width / 2)
+                                  }, true)
+                              }}
+                          >
+                              <MenuDotsIcon/>
+                          </div>
                       }
                   </Rnd>
                   <Caption selected={selected} caption={element.caption} floatOption={element.floatOption}/>

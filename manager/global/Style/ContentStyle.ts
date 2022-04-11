@@ -18,6 +18,7 @@ import {
     defaultContentMainStyle, defaultContentToolbarStyle, defaultToolbarOnOffButtonStyle, defaultVisibilityMenuStyle
 } from './ContentStyle/constants'
 import EditorManager from '../../Blog/EditorManager'
+import StyleManager from './StyleManager'
 
 export class ContentStyle {
     _container: ContentContainerStyleInterface = defaultContentContainerStyle
@@ -72,9 +73,9 @@ export class ContentStyle {
     }
 
     handleInitGlobalVariable () {
-        this._body.top = this._header.height + this._toolbar.height
-        this._body.height = window.innerHeight - this._body.top - 56
-        this._visibilityMenu.top = this._header.top + this._header.height + 56
+        this._body.top = (isBrowser ? (this._header.height + this._toolbar.height) : 0)
+        this._body.height = window.innerHeight - this._body.top
+        this._visibilityMenu.top = this._header.top + this._header.height + StyleManager.globalStyle.header.height
         this.refresh()
     }
 
@@ -83,34 +84,34 @@ export class ContentStyle {
             this._toolbar = defaultContentToolbarStyle
             this._toolbarOnOffButton = defaultToolbarOnOffButtonStyle
             this._header.top = this._toolbar.height
-            this._visibilityMenu.top = this._header.top + this._header.height + 56
+            this._visibilityMenu.top = this._header.top + this._header.height + StyleManager.globalStyle.header.height
         } else {
             this._toolbar = closeStateContentToolbarStyle
             this._toolbarOnOffButton = closeStateToolbarOnOffButtonStyle
             this._header.top = this._toolbar.height
-            this._visibilityMenu.top = this._header.top + this._header.height + 56
+            this._visibilityMenu.top = this._header.top + this._header.height + StyleManager.globalStyle.header.height
         }
         this._body.top = this._header.height + this._toolbar.height
-        this._body.height = window.innerHeight - this._body.top - 56
+        this._body.height = window.innerHeight - this._body.top - StyleManager.globalStyle.header.height
     }
 
     handleLoadContent () {
         if (!EditorManager.editable) {
             this._header.top = 0
             this._body.top = this._header.height
-            this._body.height = window.innerHeight - this._body.top - 56
+            this._body.height = window.innerHeight - this._body.top
         }
     }
 
     refresh () {
         const containerSize = isBrowser ? globalThis.window.innerWidth - HierarchyManager.getHierarchyWidth() : globalThis.window.innerWidth
-        const contentSize = Math.min(800, containerSize * 0.75)
+        const contentSize = Math.min(800, containerSize * (isBrowser ? 0.75 : 0.9))
         this._container = {
             transform: isBrowser ? `translateX(${HierarchyManager.getHierarchyWidth()}px)` : undefined,
             width: containerSize
         }
         this._body.width = containerSize
-        this._body.height = window.innerHeight - this._body.top - 56
+        this._body.height = window.innerHeight - this._body.top
         this._main = {
             marginLeft: Math.max((containerSize - contentSize) * 0.5, isBrowser ? 100 : 20),
             width: contentSize

@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
 .content-container {
   position: fixed;
   height: 100%;
@@ -17,12 +18,149 @@
 .content-container .content-body .contents .MuiButton-root.Mui-disabled {
   color: #000000;
 }
-.content-container .content-body .contents .icon {
+.content-container .content-body .contents .menu-button {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  padding: 1px 4px 4px;
+  border-radius: 4px;
+  background-color: rgba(58, 60, 63, 0.8);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.content-container .content-body .contents .menu-button svg {
+  width: 100%;
+  height: 100%;
+  fill: rgba(255, 255, 255, 0.9);
+}
+.content-container .content-body .contents .menu-button:hover {
+  background-color: rgba(58, 60, 63, 0.6);
+}
+.content-container .content-body .contents .file-loading {
+  flex-direction: row;
+  background-color: #D6E6F6;
+  padding: 8px;
+  border-radius: 5px;
+}
+.content-container .content-body .contents .file-loading .progress {
+  margin: 10px 16px 10px 10px;
+  height: 24px;
+  user-select: none;
+}
+.content-container .content-body .contents .file-loading .text {
+  font-size: 14px;
+  color: #545454;
+  user-select: none;
+}
+.content-container .content-body .contents .image-element {
+  position: relative;
+}
+.content-container .content-body .contents .bookmark {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  border-radius: 3px;
+  border: 1px solid #ECEFF2;
+  height: min-content;
+  overflow: auto;
+  cursor: pointer;
+  margin: 10px 0px;
+}
+.content-container .content-body .contents .bookmark .text-container {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  padding: 16px 24px 16px 16px;
+  font-size: 15px;
+  line-height: 15px;
+}
+.content-container .content-body .contents .bookmark .text-container .title {
+  margin-bottom: 10px;
+  user-select: none;
+}
+.content-container .content-body .contents .bookmark .text-container .description {
+  font-size: 12px;
+  text-overflow: ellipsis;
+  overflow-y: hidden;
+  line-height: 16px;
+  max-height: 32px;
+  color: #7e7e7e;
+  margin-bottom: 10px;
+  user-select: none;
+}
+.content-container .content-body .contents .bookmark .text-container .url-container {
+  display: flex;
+  flex-direction: row;
+}
+.content-container .content-body .contents .bookmark .text-container .url-container .icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+.content-container .content-body .contents .bookmark .text-container .url-container .url {
+  white-space: nowrap;
+  line-height: 16px;
+  overflow-x: hidden;
+  font-size: 12px;
+  user-select: none;
+  text-overflow: ellipsis;
+}
+.content-container .content-body .contents .bookmark .image-container {
+  width: 30%;
+  position: relative;
+  max-height: 100%;
+}
+.content-container .content-body .contents .bookmark .image-container .image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 1px;
+}
+.content-container .content-body .contents .file {
+  position: relative;
+  border-radius: 5px;
+  user-select: none;
+  user-focus: none;
+  transition: background-color 0.25s;
+}
+.content-container .content-body .contents .file .name {
+  line-height: 25px;
+  margin: 0px 5px 0px 2px;
+  user-select: none;
+  user-focus: none;
+}
+.content-container .content-body .contents .file .size {
+  font-size: 12px;
+  user-select: none;
+  user-focus: none;
+  margin-top: 5px;
+}
+.content-container .content-body .contents .file .menu-button {
+  background-color: transparent;
+}
+.content-container .content-body .contents .file .menu-button svg {
+  fill: rgba(138, 138, 138, 0.9);
+}
+.content-container .content-body .contents .file .menu-button:hover {
+  background-color: rgba(189, 189, 189, 0.4);
+}
+.content-container .content-body .contents .video-element {
+  position: relative;
+}
+.content-container .content-body .contents .file:hover {
+  cursor: pointer;
+  background-color: #eeeeee;
+}
+.content-container .content-body .contents .header-icon {
   width: 90px;
   height: 90px;
   margin-bottom: 20px;
 }
-.content-container .content-body .contents .icon .MuiButton-label {
+.content-container .content-body .contents .header-icon .MuiButton-label {
   padding: 10px;
   font-size: 60px;
 }
@@ -32,7 +170,6 @@
   z-index: 100;
 }
 .content-container .content-body .contents .title {
-  font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 0.3rem;
 }
@@ -79,7 +216,6 @@
   font-size: 1rem;
 }
 .content-container .content-body .contents .textline .MuiInputBase-input {
-  font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", helvetica, "Apple SD Gothic Neo", sans-serif !important;
   color: #222426;
 }
 .content-container .content-body .contents .textline .MuiInput-underline {
@@ -194,7 +330,7 @@
   border: 1.5px solid black;
   position: absolute;
 }
-.content-container .content-body .contents .image-element .caption {
+.content-container .content-body .contents .caption {
   margin-top: 2px;
   text-align: center;
   border: unset;
@@ -203,10 +339,10 @@
   color: #a1a1a1;
   user-select: none;
 }
-.content-container .content-body .contents .image-element .caption:focus {
+.content-container .content-body .contents .caption:focus {
   border: auto;
 }
-.content-container .content-body .contents .image-element .caption:hover {
+.content-container .content-body .contents .caption:hover {
   user-select: auto;
 }
 .content-container .content-body .contents .link {
@@ -302,6 +438,7 @@
 .content-container .content-footer {
   width: 100%;
   height: 20vh;
+  cursor: text;
 }
 
 .content-container::-webkit-scrollbar {

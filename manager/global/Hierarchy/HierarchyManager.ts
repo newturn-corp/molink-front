@@ -10,13 +10,16 @@ import GlobalManager from '../../global/GlobalManager'
 import UserManager from '../User/UserManager'
 import { Event } from '../Event/Event'
 import EventManager from '../Event/EventManager'
+import { isBrowser } from 'react-device-detect'
 
 class HierarchyManager {
     hierarchyMap: Map<number, Hierarchy> = new Map()
     hierarchy: Hierarchy = null
     currentHierarchyUserId: number = 0
     openHierarchyContextMenu: boolean = false
-    isHierarchyOpen: boolean = true
+
+    isHierarchyOpen: boolean = isBrowser
+    isHierarchyOptionOpen: boolean = false
 
     private _clickPosition: { x: number, y: number } = { x: 0, y: 0 }
     get clickPosition () {
@@ -50,21 +53,12 @@ class HierarchyManager {
         await EventManager.issueEvent(Event.UpdateHierarchy, {})
     }
 
-    openContextMenu (documentId: string | null) {
+    openContextMenu (pageId: string | null) {
         const currentHierarchy = this.hierarchyMap.get(this.currentHierarchyUserId)
         if (!currentHierarchy.editable) {
             return
         }
-        currentHierarchy.selectedDocumentId = documentId
-
-        this._availControlOptions = []
-        if (currentHierarchy.editable) {
-            this._availControlOptions.push(new CreateNewPageOption(documentId))
-            if (documentId) {
-                this._availControlOptions.push(new ChangePageNameOption(documentId))
-                this._availControlOptions.push(new DeletePageOption(documentId))
-            }
-        }
+        this.initAvailControlOptions(currentHierarchy, pageId)
         // this._availControlOptions.push(new SettingDocumentListOption(documentId))
 
         this.openHierarchyContextMenu = true
@@ -74,10 +68,20 @@ class HierarchyManager {
         }
     }
 
+    public initAvailControlOptions (hierarchy: Hierarchy, pageId: string | null) {
+        hierarchy.selectedPageId = pageId
+        this._availControlOptions = []
+        this._availControlOptions.push(new CreateNewPageOption(pageId))
+        if (pageId) {
+            this._availControlOptions.push(new ChangePageNameOption(pageId))
+            this._availControlOptions.push(new DeletePageOption(pageId))
+        }
+    }
+
     closeContextMenu () {
         const currentHierarchy = this.hierarchyMap.get(this.currentHierarchyUserId)
         if (currentHierarchy) {
-            currentHierarchy.selectedDocumentId = null
+            currentHierarchy.selectedPageId = null
         }
         this.openHierarchyContextMenu = false
     }

@@ -3,7 +3,6 @@
   background-color: #ffffff;
   box-shadow: 0px 3px 4px rgba(145, 158, 171, 0.12);
   width: 100%;
-  height: 56px;
   z-index: 900;
   display: flex;
   flex-direction: row-reverse;
@@ -80,19 +79,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 2px 12px 2px 2px;
   position: absolute;
-  min-width: 105px;
-  height: 40px;
-  right: 16px;
-  top: 8px;
   /* Primary/Lighter */
   background: #D6E6F6;
   border-radius: 20px;
-}
-.header .user-container .profile {
-  width: 36px;
-  height: 36px;
 }
 .header .user-container .nickname {
   height: 16px;
@@ -138,6 +128,51 @@
 }
 .header .login-button-container {
   margin: 10px;
+}
+.header .open-hierarchy-button {
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  margin: 6px;
+}
+.header .open-hierarchy-button svg {
+  width: 24px;
+  height: 24px;
+  fill: #03053D;
+}
+
+.user-drawer .nickname {
+  margin-left: 12px;
+  line-height: 32px;
+}
+.user-drawer .privacy-and-terms-container {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #FAFAFB;
+  padding-bottom: 5px;
+}
+.user-drawer .privacy-and-terms-container .text {
+  color: #6C7177;
+  font-size: 12px;
+  line-height: 12px;
+  margin: 0px 2px;
+}
+
+.support-drawer .desc {
+  font-size: 15px;
+  word-break: keep-all;
+  margin: 0px 0px 10px 0px;
+}
+.support-drawer .support-input::after {
+  font-size: 13px;
+}
+.support-drawer .button-container {
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 /*# sourceMappingURL=header.css.map */

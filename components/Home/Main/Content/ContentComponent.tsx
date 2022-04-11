@@ -11,7 +11,7 @@ import StyleManager from '../../../../manager/global/Style/StyleManager'
 export const ContentComponent: React.FC<{
 }> = observer(() => {
     const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    if (!currentHierarchy || !currentHierarchy.openedDocumentId) {
+    if (!currentHierarchy || !currentHierarchy.openedPageId) {
         return <div className={'contents'}
             style={StyleManager.contentStyle.main}>
             <ContentForEmptyDocument />

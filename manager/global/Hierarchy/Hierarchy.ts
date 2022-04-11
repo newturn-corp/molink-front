@@ -32,9 +32,9 @@ export default class Hierarchy {
     public yTopLevelDocumentIdList: Y.Array<string>
     public topLevelDocumentIdList: string[] = []
 
-    public nameChangingDocumentId: string | null = null
-    public selectedDocumentId: string | null = null
-    public openedDocumentId: string | null = null
+    public nameChangingPageId: string | null = null
+    public selectedPageId: string | null = null
+    public openedPageId: string | null = null
 
     constructor (userId: number, nickname: string) {
         this.userId = userId
@@ -42,8 +42,8 @@ export default class Hierarchy {
         this.yDocument = new Y.Doc()
         this.yMap = this.yDocument.getMap('documentHierarchyInfoMap')
         this.yMap.observeDeep(async () => {
-            if (this.openedDocumentId && !this.yMap.get(this.openedDocumentId)) {
-                this.openedDocumentId = null
+            if (this.openedPageId && !this.yMap.get(this.openedPageId)) {
+                this.openedPageId = null
                 await RoutingManager.moveTo(Page.Blog, `/${this.nickname}`)
             }
             this.map = this.yMap.toJSON()
@@ -86,13 +86,20 @@ export default class Hierarchy {
 
             return new Promise<void>((resolve, reject) => {
                 let isResolved = false
-                this.websocketProvider.on('sync', (isSynced: boolean) => {
+                // this.websocketProvider.on('sync', (isSynced: boolean) => {
+                //     isResolved = true
+                //     resolve()
+                // })
+                const listener = () => {
                     isResolved = true
+                    this.yMap.unobserveDeep(listener)
                     resolve()
-                })
+                }
+                this.yMap.observeDeep(listener)
                 this.websocketProvider.connect()
                 setTimeout(() => {
                     if (!isResolved) {
+                        this.yMap.unobserveDeep(listener)
                         reject(new HierarchyNotExists())
                     }
                 }, 10000)
@@ -104,9 +111,9 @@ export default class Hierarchy {
         if (this.websocketProvider) {
             this.websocketProvider.destroy()
         }
-        this.selectedDocumentId = null
-        this.openedDocumentId = null
-        this.nameChangingDocumentId = null
+        this.selectedPageId = null
+        this.openedPageId = null
+        this.nameChangingPageId = null
     }
 
     public async createDocument (order:number, parentId: string | null) {
@@ -146,7 +153,7 @@ export default class Hierarchy {
                 this.yMap.set(parentId, parent)
             }
         })
-        this.selectedDocumentId = null
+        this.selectedPageId = null
         await RoutingManager.moveTo(Page.Blog, `/${this.nickname}/${newDocumentId}/${encodeURIComponent(newDocument.title)}`)
     }
 
@@ -163,8 +170,8 @@ export default class Hierarchy {
         const page = this.yMap.get(pageId)
         page.title = title
         this.yMap.set(pageId, page)
-        this.selectedDocumentId = null
-        this.nameChangingDocumentId = null
+        this.selectedPageId = null
+        this.nameChangingPageId = null
     }
 
     public getSibling (pageId: string, order: number) {
@@ -175,6 +182,18 @@ export default class Hierarchy {
             const parent = this.yMap.get(document.parentId)
             return this.yMap.get(parent.children[order])
         }
+    }
+
+    public openPageParents (pageId: string) {
+        const parents = this.getPageHierarchy(pageId)
+        this.yDocument.transact(() => {
+            for (const parent of parents) {
+                if (!parent.childrenOpen) {
+                    parent.childrenOpen = true
+                    this.yMap.set(parent.id, parent)
+                }
+            }
+        })
     }
 
     public getPageHierarchy (pageId: string) {

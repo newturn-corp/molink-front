@@ -1,16 +1,20 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { ReactEditor } from 'slate-react'
 import { Transforms } from 'slate'
 import { observer } from 'mobx-react'
 import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
 import EditorManager from '../../../../manager/Blog/EditorManager'
 import { TextCategory } from '../../../../Types/slate/CustomElement'
+import { isBrowser } from 'react-device-detect'
 
 export const ContentTitleComponent: React.FC<{
 }> = observer(() => {
-    const titleRef = useRef()
+    const titleRef = useRef<HTMLDivElement>()
+    useEffect(() => {
+        EditorManager.titleRef = titleRef
+    }, [titleRef])
     const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    const title = currentHierarchy.map[currentHierarchy.openedDocumentId].title
+    const title = currentHierarchy.map[currentHierarchy.openedPageId].title
     return (
         <div
             ref={titleRef}
@@ -18,10 +22,11 @@ export const ContentTitleComponent: React.FC<{
             contentEditable={EditorManager.editable}
             suppressContentEditableWarning={true}
             style={{
-                outline: '0px solid transparent'
+                outline: '0px solid transparent',
+                fontSize: isBrowser ? 40 : 32
             }}
             onBlur={(e) => {
-                currentHierarchy.updatePageTitle(currentHierarchy.openedDocumentId, e.currentTarget.textContent)
+                currentHierarchy.updatePageTitle(currentHierarchy.openedPageId, e.currentTarget.textContent)
             }}
             onKeyDown={(e) => {
                 const selection = document.getSelection()
@@ -39,7 +44,23 @@ export const ContentTitleComponent: React.FC<{
                             offset: 0
                         }
                     })
-                    currentHierarchy.updatePageTitle(currentHierarchy.openedDocumentId, e.currentTarget.textContent)
+                    currentHierarchy.updatePageTitle(currentHierarchy.openedPageId, e.currentTarget.textContent)
+                } else if (e.key === 'ArrowRight') {
+                    if (selection.anchorOffset === textContent.length) {
+                        e.preventDefault()
+                        ReactEditor.focus(EditorManager.slateEditor)
+                        Transforms.select(EditorManager.slateEditor, {
+                            anchor: {
+                                path: [0, 0],
+                                offset: 0
+                            },
+                            focus: {
+                                path: [0, 0],
+                                offset: 0
+                            }
+                        })
+                        currentHierarchy.updatePageTitle(currentHierarchy.openedPageId, e.currentTarget.textContent)
+                    }
                 } else if (e.key === 'Enter') {
                     e.preventDefault()
                     // Bug: Selection이 Collapsed 되어있지 않은 경우에 대한 디테일 처리 필요.
@@ -63,7 +84,7 @@ export const ContentTitleComponent: React.FC<{
                             offset: 0
                         }
                     })
-                    currentHierarchy.updatePageTitle(currentHierarchy.openedDocumentId, newTitle)
+                    currentHierarchy.updatePageTitle(currentHierarchy.openedPageId, newTitle)
                 }
             }}
         >

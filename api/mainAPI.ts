@@ -2,7 +2,12 @@ import { BaseAPI } from './baseAPI'
 import { APIError } from './APIError'
 
 import { SaveSupportDTO } from '../DTO/UserDTO'
-import { UploadImageDTO, UploadImageFromURLDTO, UploadImageResponseDTO } from '@newturn-develop/types-molink'
+import {
+    AnalyzeLinkResponseDTO,
+    UploadImageDTO,
+    UploadImageFromURLDTO,
+    UploadImageResponseDTO
+} from '@newturn-develop/types-molink'
 
 class MainAPI extends BaseAPI {
     async saveSupport (dto: SaveSupportDTO): Promise<void> {
@@ -10,15 +15,11 @@ class MainAPI extends BaseAPI {
         if (res.status !== 201) throw new APIError(res)
     }
 
-    async uploadImage (dto: UploadImageDTO): Promise<UploadImageResponseDTO> {
-        const res = await this.postFormData('/main/contents/image', dto)
-        if (res.status !== 201) throw new APIError(res)
-        return res.data
-    }
-
-    async uploadImageFromURL (dto: UploadImageFromURLDTO): Promise<UploadImageResponseDTO> {
-        const res = await this.post('/main/contents/image/url', dto)
-        if (res.status !== 201) throw new APIError(res)
+    async analyzeLink (link: string): Promise<AnalyzeLinkResponseDTO> {
+        console.log(encodeURIComponent(link))
+        console.log(decodeURIComponent(encodeURIComponent(link)))
+        const res = await this.get(`/main/link/analyze?link=${encodeURIComponent(link)}`)
+        if (res.status !== 200) throw new APIError(res)
         return res.data
     }
 }

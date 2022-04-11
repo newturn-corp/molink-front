@@ -8,3 +8,9 @@ out
 capacitor.config.ts
 android
 ios
+
+# Sentry
+.sentryclirc
+
+# Sentry
+.sentryclirc

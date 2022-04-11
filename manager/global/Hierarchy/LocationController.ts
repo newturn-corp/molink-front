@@ -60,7 +60,11 @@ export class LocationController {
             }
             // 새로운 부모에 추가하고 order 조정
             if (!parentId) {
-                yTopLevelDocumentIdList.insert(order, [pageId])
+                if (order > yTopLevelDocumentIdList.length) {
+                    yTopLevelDocumentIdList.push([pageId])
+                } else {
+                    yTopLevelDocumentIdList.insert(order, [pageId])
+                }
                 for (const [index, documentId] of yTopLevelDocumentIdList.toArray().entries()) {
                     const siblingDocument = yMap.get(documentId)
                     siblingDocument.order = index
