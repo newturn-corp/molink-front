@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react'
 
-import '../styles/index.css'
+import 'antd/dist/antd.css'
+
 import '../styles/global.css'
 import '../styles/global/header.css'
 import '../styles/global/hierarchy.css'
