@@ -63,9 +63,12 @@ class UserManager {
             return new Promise<void>((resolve, reject) => {
                 let isResolved = false
 
-                const listener = () => {
+                const listener = async () => {
                     isResolved = true
                     this.profile.yProfile.unobserveDeep(listener)
+                    await EventManager.issueEvent(Event.UserAuthorization, { result: true })
+                    this.isUserAuthorized = true
+                    this.isLoading = false
                     resolve()
                 }
                 this.profile.yProfile.observeDeep(listener)
