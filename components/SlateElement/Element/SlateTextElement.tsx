@@ -4,6 +4,7 @@ import { Range } from 'slate'
 import { useSelected, useSlate } from 'slate-react'
 import { TextCategory, TextElement } from '../../../Types/slate/CustomElement'
 import EditorManager from '../../../manager/Blog/EditorManager'
+import { isBrowser } from 'react-device-detect'
 
 export const SlateTextElement: React.FC<{
     attributes,
@@ -27,6 +28,7 @@ export const SlateTextElement: React.FC<{
               isEmpty &&
               isSelectionCollapsed &&
               !isHead &&
+              isBrowser &&
               EditorManager.showPlaceholder
                       ? `selected-empty-text text ${element.category}`
                       : `text ${element.category}`} {...attributes}>
