@@ -132,6 +132,9 @@
   margin: 0px 5px 0px 2px;
   user-select: none;
   user-focus: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .content-container .content-body .contents .file .size {
   font-size: 12px;
