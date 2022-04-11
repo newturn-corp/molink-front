@@ -8,6 +8,7 @@ import { Event } from '../Event/Event'
 import UserAPI from '../../../api/UserAPI'
 import { UserProfile } from './UserProfile'
 import { UserLimit } from './UserLimit'
+import { UserNotExists } from '../../../Errors/UserError'
 
 class UserManager {
     isUserAuthorized: boolean = false
@@ -62,24 +63,17 @@ class UserManager {
             return new Promise<void>((resolve, reject) => {
                 let isResolved = false
 
-                this.websocketProvider.on('status', (event) => {
-                    console.log(event)
-                })
-
-                this.websocketProvider.on('sync', async (isSynced: boolean) => {
-                    if (isSynced) {
-                        isResolved = true
-                        await EventManager.issueEvent(Event.UserAuthorization, { result: true })
-                        this.isUserAuthorized = true
-                        this.isLoading = false
-                        resolve()
-                    }
-                })
+                const listener = () => {
+                    isResolved = true
+                    this.profile.yProfile.unobserveDeep(listener)
+                    resolve()
+                }
+                this.profile.yProfile.observeDeep(listener)
                 this.websocketProvider.connect()
                 setTimeout(() => {
                     if (!isResolved) {
-                        this.isLoading = false
-                        reject(new HierarchyNotExists())
+                        this.profile.yProfile.unobserveDeep(listener)
+                        reject(new UserNotExists())
                     }
                 }, 10000)
             })
