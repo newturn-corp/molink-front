@@ -5,7 +5,7 @@ html {
 }
 
 body {
-  font-family: Pretendard;
+  font-family: Pretendard !important;
   color: #37352f;
   font-size: 1rem;
   background-color: #FAFAFB;
