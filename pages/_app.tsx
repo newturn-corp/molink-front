@@ -1,29 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react'
-import 'antd/dist/antd.css'
+import '../styles/index.css'
 
-import '../styles/global.css'
-import '../styles/global/header.css'
-import '../styles/global/hierarchy.css'
-import '../styles/global/visibility-menu.css'
-import '../styles/global/user-menu.css'
-
-import '../styles/components/mobile-column-drawer.css'
-import '../styles/components/menu.css'
-
-import '../styles/contents/toolbar.css'
-import '../styles/contents/hovering-toolbar.css'
-import '../styles/contents/command-list.css'
-import '../styles/contents/header.css'
-
-import '../styles/auth.css'
-import '../styles/auth/sign-up.css'
-
-import '../styles/contents.css'
-
-import '../styles/home.css'
-import '../styles/search.css'
-import '../styles/setting.css'
 import { AppProps } from 'next/dist/shared/lib/router/router'
 import { configure } from 'mobx'
 import GlobalManager from '../manager/global/GlobalManager'
