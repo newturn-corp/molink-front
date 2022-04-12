@@ -114,9 +114,6 @@ export default function<T extends Node> (
                     const newSize = (newProperties as any).size
                     const prevSize = (newProperties as any).size || 0
                     if (newSize) {
-                        console.log('setNode')
-                        console.log(UserManager.limit.totalUploadLimit)
-                        console.log(newSize - prevSize)
                         UserManager.limit.totalUploadLimit -= (newSize - prevSize)
                     }
                 }

@@ -21,7 +21,6 @@ export class LinkModal {
         this.isOpen = false
         this.helperText = undefined
         this.isError = false
-        console.log(this.content)
     }
 
     public async open () {

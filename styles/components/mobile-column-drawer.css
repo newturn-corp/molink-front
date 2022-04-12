@@ -4,6 +4,8 @@
   flex-direction: column;
 }
 .mobile-column-drawer .title {
+  position: sticky;
+  top: 0px;
   display: flex;
   height: 44px;
   border-bottom: 1px solid #ECEFF2;

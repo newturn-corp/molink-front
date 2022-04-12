@@ -1,9 +1,10 @@
 import { Editor, Range, Transforms, Location, Path } from 'slate'
+import EditorManager from '../../../manager/Blog/EditorManager'
 
 export const customSelect = (editor: Editor, target: Location) => {
     const { selection } = editor
     target = Editor.range(editor, target)
-
+    EditorManager.lastSelection = target
     if (selection) {
         Transforms.setSelection(editor, target)
     } else {

@@ -10,8 +10,6 @@ export const maintainBottomMargin = () => {
     const contentContainer = globalThis.document.getElementById('content-body')
     const cursorTop = rect.top - StyleManager.contentStyle.body.top - 56
     const clientHeight = contentContainer.clientHeight
-    console.log(cursorTop)
-    console.log(clientHeight)
     // const aaa = contentContainer.scrollHeight - contentContainer.scrollTop
     // console.log(rect.top - StyleManager.contentStyle.body.top - 56)
     // console.log(StyleManager.contentStyle.body.height * 0.8)

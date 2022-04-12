@@ -1,5 +1,5 @@
 import { isBrowser } from 'react-device-detect'
-import { VisibilityMenuStyleInterface } from './interface'
+import { MobileToolbarStyleInterface, VisibilityMenuStyleInterface } from './interface'
 
 export const defaultContentContainerStyle = {
     transform: isBrowser ? 'translateX(240px)' : undefined,
@@ -49,4 +49,9 @@ export const closeStateToolbarOnOffButtonStyle = {
 export const defaultVisibilityMenuStyle: VisibilityMenuStyleInterface = {
     top: 112,
     right: 20
+}
+
+export const defaultMobileToolbarStyle: MobileToolbarStyleInterface = {
+    bottom: 0,
+    height: 0
 }

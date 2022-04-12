@@ -36,3 +36,8 @@ export interface VisibilityMenuStyleInterface {
     top: number,
     right: number
 }
+
+export interface MobileToolbarStyleInterface {
+    bottom: number,
+    height: number
+}

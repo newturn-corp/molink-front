@@ -27,7 +27,8 @@ export enum Event {
     HierarchyWidthChange,
 
     // Toolbar Event
-    ToolbarOnOffChange
+    ToolbarOnOffChange,
+    MobileToolbarOnOffChange
 }
 
 export const eventList = [
@@ -58,5 +59,6 @@ export const eventList = [
     Event.HierarchyWidthChange,
 
     // Toolbar Event
-    Event.ToolbarOnOffChange
+    Event.ToolbarOnOffChange,
+    Event.MobileToolbarOnOffChange
 ]

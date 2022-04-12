@@ -6,6 +6,7 @@ import { HeaderLogo } from './HeaderLogo'
 import StyleManager from '../../../manager/global/Style/StyleManager'
 import { BrowserView, MobileView } from 'react-device-detect'
 import { OpenHierarchyButton } from './OpenHierarchyButton'
+import { MobilePageTitle } from './Mobile/MobilePageTitle'
 
 export const Header: React.FC<{
   }> = observer(() => {
@@ -23,6 +24,9 @@ export const Header: React.FC<{
           </BrowserView>
           <MobileView>
               <OpenHierarchyButton/>
+          </MobileView>
+          <MobileView>
+              <MobilePageTitle/>
           </MobileView>
       </div>
   })

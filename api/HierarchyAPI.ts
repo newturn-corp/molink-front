@@ -6,7 +6,6 @@ import { ChildrenVisibilityWide, PageNotExists, ParentVisibilityNarrow } from '.
 class HierarchyAPI extends BaseAPI {
     async changePageVisibility (dto: ChangePageVisibilityDTO) {
         const res = await this.put('/hierarchy/visibility', dto)
-        console.log(res.status)
         if (res.status === 404000) {
             throw new PageNotExists()
         } else if (res.status === 409000) {

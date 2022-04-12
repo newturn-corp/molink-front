@@ -80,6 +80,9 @@
 .content-container .content-body .contents .bookmark .text-container .title {
   margin-bottom: 10px;
   user-select: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .content-container .content-body .contents .bookmark .text-container .description {
   font-size: 12px;
@@ -398,8 +401,8 @@
 .content-container .content-body .contents .divider-container .dot-divider {
   width: 10%;
   margin-left: 45%;
-  margin-top: calc(3em - 2.5px);
-  margin-bottom: calc(3em - 2.5px);
+  margin-top: calc(1em - 2.5px);
+  margin-bottom: calc(1em - 2.5px);
   height: 5px;
   display: flex;
 }
@@ -443,6 +446,101 @@
   height: 20vh;
   cursor: text;
 }
+.content-container .mobile-toolbar {
+  position: fixed;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-top: 1px solid #C9CDD2;
+}
+.content-container .mobile-toolbar .content {
+  display: flex;
+  flex-direction: row;
+  margin: auto 0;
+}
+.content-container .mobile-toolbar .content .MuiSvgIcon-root {
+  color: #6C7177;
+}
+.content-container .mobile-toolbar .content .text {
+  color: #6C7177;
+  font-weight: 500;
+}
+
+.command-drawer .group {
+  background-color: unset;
+  margin-bottom: 20px;
+}
+.command-drawer .group .group-name {
+  font-size: 14px;
+  color: #9DA7B0;
+  margin-left: 8px;
+}
+.command-drawer .command-drawer-command-block {
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 10px;
+  padding-left: 15px;
+  width: 100%;
+  height: 65px;
+  left: 0px;
+  top: 0px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  border-top: 1px solid #E8EBED;
+  background-color: #fdfdfd;
+}
+.command-drawer .command-drawer-command-block .container {
+  display: flex;
+}
+.command-drawer .command-drawer-command-block .container .command-img {
+  position: static;
+  width: 45px;
+  top: 8.33%;
+  bottom: 8.33%;
+  background: #FFFFFF;
+  border: 1px solid #ECEFF2;
+  box-sizing: border-box;
+  border-radius: 4px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+.command-drawer .command-drawer-command-block .container .text-container {
+  margin-left: 10px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+.command-drawer .command-drawer-command-block .container .text-container .name {
+  position: static;
+  left: 0px;
+  top: 0%;
+  bottom: 55.56%;
+  color: #454C53;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 16px;
+  margin: 0px;
+  margin-bottom: 4px;
+}
+.command-drawer .command-drawer-command-block .container .text-container .description {
+  left: 0px;
+  top: 55.56%;
+  bottom: 0%;
+  color: #72787F;
+  height: 16px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  margin: 0px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.command-drawer .command-drawer-command-block:last-child {
+  border-bottom: 1px solid #E8EBED;
+}
 
 .content-container::-webkit-scrollbar {
   display: none;
@@ -453,6 +551,11 @@
   width: 10px;
 }
 
+@media (max-width: 800px) {
+  .content-body::-webkit-scrollbar {
+    width: 5px;
+  }
+}
 .content-body::-webkit-scrollbar-track {
   background: #e7e7e7;
 }

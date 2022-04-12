@@ -41,8 +41,6 @@ export const customRemoveNodes: TransformsRemoveNodesHandler<Node> = (editor, op
                 if (Element.isElement(node) && (node.type === 'image' || node.type === 'video' || node.type === 'file')) {
                     if (isNumber(node.size)) {
                         UserManager.limit.totalUploadLimit += node.size
-                        console.log('removeNodes')
-                        console.log(UserManager.limit.totalUploadLimit)
                     }
                     if (node.url && node.url.includes(`${process.env.SERVER_BASE_URL}/files`)) {
                         const handle = node.url.split('/').pop()
