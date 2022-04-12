@@ -7,15 +7,24 @@ import { ToolbarOnOffChangeParam } from '../Event/EventParams'
 import {
     ContentBodyStyleInterface,
     ContentContainerStyleInterface,
-    ContentHeaderStyleInterface, ContentMainStyleInterface,
-    ContentToolbarStyleInterface, ToolbarOnOffButtonStyleInterface, VisibilityMenuStyleInterface
+    ContentHeaderStyleInterface,
+    ContentMainStyleInterface,
+    ContentToolbarStyleInterface,
+    MobileToolbarStyleInterface,
+    ToolbarOnOffButtonStyleInterface,
+    VisibilityMenuStyleInterface
 } from './ContentStyle/interface'
 import {
     closeStateContentToolbarStyle,
     closeStateToolbarOnOffButtonStyle,
     defaultContentBodyStyle,
-    defaultContentContainerStyle, defaultContentHeaderStyle,
-    defaultContentMainStyle, defaultContentToolbarStyle, defaultToolbarOnOffButtonStyle, defaultVisibilityMenuStyle
+    defaultContentContainerStyle,
+    defaultContentHeaderStyle,
+    defaultContentMainStyle,
+    defaultContentToolbarStyle,
+    defaultMobileToolbarStyle,
+    defaultToolbarOnOffButtonStyle,
+    defaultVisibilityMenuStyle
 } from './ContentStyle/constants'
 import EditorManager from '../../Blog/EditorManager'
 import StyleManager from './StyleManager'
@@ -56,6 +65,11 @@ export class ContentStyle {
         return toJS(this._visibilityMenu)
     }
 
+    _mobileToolbar: MobileToolbarStyleInterface = defaultMobileToolbarStyle
+    get mobileToolbarStyle () {
+        return toJS(this._mobileToolbar)
+    }
+
     constructor () {
         makeAutoObservable(this)
         EventManager.addDisposableEventListener(Event.InitGlobalVariable, () => {
@@ -65,16 +79,21 @@ export class ContentStyle {
         EventManager.addEventListeners([Event.HierarchyOnOffChange, Event.WindowResize, Event.HierarchyWidthChange], () => {
             this.refresh()
         }, 1)
-        EventManager.addEventListener(Event.ToolbarOnOffChange, ({ isToolbarOpen }: ToolbarOnOffChangeParam) => this.handleToolbarOnOffChange(isToolbarOpen), 1)
+        EventManager.addEventListener(Event.ToolbarOnOffChange, ({ isToolbarOpen }: ToolbarOnOffChangeParam) => {
+            this.handleToolbarOnOffChange(isToolbarOpen)
+        }, 1)
         EventManager.addEventListener(Event.LoadContent, () => {
             this.handleLoadContent()
             this.refresh()
         }, 1)
+        EventManager.addEventListener(Event.MobileToolbarOnOffChange, ({ isToolbarOpen }: ToolbarOnOffChangeParam) => {
+            this.handleMobileToolbarOnOffChange(isToolbarOpen)
+        }, 1)
     }
 
     handleInitGlobalVariable () {
-        this._body.top = (isBrowser ? (this._header.height + this._toolbar.height) : 0)
-        this._body.height = window.innerHeight - this._body.top
+        this.refreshBodyTop()
+        this.refreshBodyHeight()
         this._visibilityMenu.top = this._header.top + this._header.height + StyleManager.globalStyle.header.height
         this.refresh()
     }
@@ -91,15 +110,40 @@ export class ContentStyle {
             this._header.top = this._toolbar.height
             this._visibilityMenu.top = this._header.top + this._header.height + StyleManager.globalStyle.header.height
         }
-        this._body.top = this._header.height + this._toolbar.height
-        this._body.height = window.innerHeight - this._body.top - StyleManager.globalStyle.header.height
+        this.refreshBodyTop()
+        this.refreshBodyHeight()
+    }
+
+    handleMobileToolbarOnOffChange (isToolbarOpen: boolean) {
+        if (isToolbarOpen) {
+            this._mobileToolbar.height = 40
+        } else {
+            this._mobileToolbar.height = 0
+        }
+        this.refreshBodyHeight()
+    }
+
+    private refreshBodyTop () {
+        if (isBrowser) {
+            this._body.top = this._header.height + this._toolbar.height
+        } else {
+            this._body.top = StyleManager.globalStyle.header.height
+        }
+    }
+
+    private refreshBodyHeight () {
+        if (isBrowser) {
+            this._body.height = window.innerHeight - this._body.top
+        } else {
+            this._body.height = window.innerHeight - this._body.top - this._mobileToolbar.height
+        }
     }
 
     handleLoadContent () {
         if (!EditorManager.editable) {
             this._header.top = 0
-            this._body.top = this._header.height
-            this._body.height = window.innerHeight - this._body.top
+            this.refreshBodyTop()
+            this.refreshBodyHeight()
         }
     }
 
@@ -111,7 +155,7 @@ export class ContentStyle {
             width: containerSize
         }
         this._body.width = containerSize
-        this._body.height = window.innerHeight - this._body.top
+        this.refreshBodyHeight()
         this._main = {
             marginLeft: Math.max((containerSize - contentSize) * 0.5, isBrowser ? 100 : 20),
             width: contentSize

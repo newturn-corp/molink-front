@@ -28,18 +28,9 @@ export const maintainScreenMargin = (editor: Editor, location: Location) => {
     const contentContainer = EditorManager.contentBody
     const cursorTop = rect.top - StyleManager.contentStyle.body.top - 56
     const clientHeight = contentContainer.clientHeight
-    // console.log(cursorTop)
-    // console.log(clientHeight)
-    //
-    // // const aaa = contentContainer.scrollHeight - contentContainer.scrollTop
-    // // console.log(rect.top - StyleManager.contentStyle.body.top - 56)
-    // // console.log(StyleManager.contentStyle.body.height * 0.8)
-    console.log(cursorTop)
     if (cursorTop < clientHeight * 0.2) {
-        console.log('top')
         contentContainer.scrollTop -= (clientHeight * 0.2 - cursorTop)
     } else if (cursorTop > clientHeight * 0.8) {
-        console.log('bottom')
         contentContainer.scrollTop += (cursorTop - clientHeight * 0.8)
     }
     return false

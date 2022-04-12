@@ -5,6 +5,7 @@ import { DividerType, TextCategory } from '../../../Types/slate/CustomElement'
 import { ListTransforms } from '../../../plugin/GlobalPlugins/ListPlugin'
 import Command from './Command'
 import CommandGroup from './CommandGroup'
+import EditorManager from '../../Blog/EditorManager'
 
 // /(슬래시)로 수행하는 명령을 맡아 처리하는 매니저
 class CommandManager {
@@ -12,6 +13,7 @@ class CommandManager {
     search: string = ''
     index: number = 0
     _searchedCommandCount: number = 0
+    isCommandDrawerOpen: boolean = false
 
     _searchedCommandGroupList: CommandGroup[] = []
     get searchedCommandGroupList () {
@@ -74,6 +76,9 @@ class CommandManager {
     // 바로 위 노드가 void인 경우, 현재 node를 set하고
     // 일반적인 경우, insertNode를 함
     insertNode (editor: Editor, node: Element) {
+        if (!editor.selection) {
+            Transforms.select(editor, EditorManager.lastSelection)
+        }
         const { selection } = editor
         const [start] = Range.edges(selection)
         const lineBefore = Editor.before(editor, start, { unit: 'word' })

@@ -5,7 +5,9 @@ import { ContentComponent } from './Content/ContentComponent'
 import StyleManager from '../../../manager/global/Style/StyleManager'
 import { ContentHeader } from './Header/ContentHeader'
 import EditorManager from '../../../manager/Blog/EditorManager'
-import { BrowserView } from 'react-device-detect'
+import { BrowserView, MobileView } from 'react-device-detect'
+import { MobileToolbar } from './MobileToolbar/MobileToolbar'
+import { CommandDrawer } from './Content/CommandDrawer'
 
 export const HomeMainComponent: React.FC<{
   }> = observer(() => {
@@ -28,6 +30,10 @@ export const HomeMainComponent: React.FC<{
               >
                   <ContentComponent/>
               </div>
+              <MobileView>
+                  <MobileToolbar/>
+                  <CommandDrawer/>
+              </MobileView>
           </div>
       </>
   })

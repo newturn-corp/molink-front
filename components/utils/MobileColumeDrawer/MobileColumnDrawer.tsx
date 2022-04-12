@@ -16,6 +16,7 @@ export const MobileColumnDrawer: React.FC<MobileColumnDrawerInterface> = observe
     const useStyles = makeStyles({
         paper: {
             height: '100%',
+            display: 'block',
             backgroundColor: props.backgroundColor
         }
     })

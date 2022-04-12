@@ -33,7 +33,6 @@ class MenuManager {
         this._menuItemList = menuItemList
         this.keyboardSelectionChange = keyboardSelectionChange
         const menuElement = this.menuRef.current
-        console.log(menuElement.offsetWidth)
         setTimeout(() => {
             if (globalThis.document.body.clientHeight < position.top + menuElement.offsetHeight + margin) {
                 menuElement.style.top = `${position.top - menuElement.offsetHeight - 5}px`

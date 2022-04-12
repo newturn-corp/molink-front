@@ -31,7 +31,6 @@ export abstract class BaseAPI {
                 credentials: 'include'
             })
         } catch (e) {
-            console.log(res)
             throw new NetworkError()
         }
         if (res.status === 500) throw new ServiceError()

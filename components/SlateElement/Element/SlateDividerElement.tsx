@@ -58,11 +58,6 @@ export const SlateDividerElement: React.FC<{
       const selected = useSelected()
       const focused = useFocused()
       const { dividerType } = element
-      console.log('selected')
-      console.log(selected)
-      console.log('focused')
-      console.log(focused)
-      console.log(EditorManager.slateEditor.selection)
       return (
           <div {...attributes}>
               {children}

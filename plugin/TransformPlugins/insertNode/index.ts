@@ -15,9 +15,6 @@ export const customInsertNode = (editor: Editor, nodes: Node | Node[], options) 
         }
         if (node.type === 'image' || node.type === 'video' || node.type === 'file') {
             if (node.size > 0) {
-                console.log(UserManager.limit.totalUploadLimit)
-                console.log(node.size)
-                console.log(UserManager.limit.totalUploadLimit - node.size)
                 UserManager.limit.totalUploadLimit -= node.size
             }
             if (node.url && node.url.includes(`${process.env.SERVER_BASE_URL}/files`)) {

@@ -33,12 +33,8 @@ const messageAuth = 2
 const messageHandlers = []
 
 messageHandlers[messageSync] = (encoder, decoder, provider, emitSynced, messageType) => {
-    console.log('sync message handler')
     encoding.writeVarUint(encoder, messageSync)
     const syncMessageType = syncProtocol.readSyncMessage(decoder, encoder, provider.doc, provider)
-    console.log(`provider synced ${provider.synced}`)
-    console.log(`syncMessageType ${syncMessageType} ${syncProtocol.messageYjsSyncStep2}`)
-    console.log(emitSynced)
     if (emitSynced && syncMessageType === syncProtocol.messageYjsSyncStep2 && !provider.synced) {
         console.log('synced 호출')
         provider.synced = true
@@ -79,7 +75,6 @@ const readMessage = (provider, buf, emitSynced) => {
     const decoder = decoding.createDecoder(buf)
     const encoder = encoding.createEncoder()
     const messageType = decoding.readVarUint(decoder)
-    console.log(`message Type ${messageType}`)
     const messageHandler = provider.messageHandlers[messageType]
     if (/** @type {any} */ (messageHandler)) {
         messageHandler(encoder, decoder, provider, emitSynced, messageType)

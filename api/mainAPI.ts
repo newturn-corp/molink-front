@@ -16,8 +16,6 @@ class MainAPI extends BaseAPI {
     }
 
     async analyzeLink (link: string): Promise<AnalyzeLinkResponseDTO> {
-        console.log(encodeURIComponent(link))
-        console.log(decodeURIComponent(encodeURIComponent(link)))
         const res = await this.get(`/main/link/analyze?link=${encodeURIComponent(link)}`)
         if (res.status !== 200) throw new APIError(res)
         return res.data

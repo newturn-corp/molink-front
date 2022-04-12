@@ -1,5 +1,15 @@
 import { makeAutoObservable, observable, toJS } from 'mobx'
-import { BasePoint, createEditor, Editor, Editor as SlateEditor, Element, Transforms } from 'slate'
+import {
+    BasePoint,
+    BaseRange,
+    createEditor,
+    Editor,
+    Editor as SlateEditor,
+    Element,
+    Location,
+    Range,
+    Transforms
+} from 'slate'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { SyncElement, withYjs } from 'slate-yjs'
@@ -46,6 +56,7 @@ class EditorManager {
     isLocked: boolean = false
     isToolbarOpen: boolean = true
     lastPressedKey: string = null
+    lastSelection: BaseRange = null
 
     constructor () {
         makeAutoObservable(this, {
@@ -54,7 +65,8 @@ class EditorManager {
             sharedType: false,
             yInfo: false,
             websocketProvider: false,
-            titleRef: false
+            titleRef: false,
+            lastSelection: false
         })
         EventManager.addEventListeners(
             [Event.UnloadPage,
@@ -122,7 +134,6 @@ class EditorManager {
                         return
                     }
                     ReactEditor.focus(this.slateEditor)
-                    console.log(userSelection)
                     Transforms.select(this.slateEditor, userSelection)
                 }
             })
