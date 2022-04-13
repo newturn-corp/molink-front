@@ -9,7 +9,8 @@
     "start": "next start",
     "check-dep": "yarn upgrade-interactive --latest",
     "precommit": "lint-staged",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "build-mobile": "next build && next export && npx cap sync"
   },
   "lint-staged": {
     "*.ts": [

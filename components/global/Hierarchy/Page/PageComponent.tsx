@@ -67,6 +67,9 @@ export const PageComponent: React.FC<{
                   onClick={async (event) => {
                       if (!isOpen) {
                           await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${documentId}`)
+                          if (isMobile) {
+                              HierarchyManager.isHierarchyOpen = false
+                          }
                       }
                   }}
                   onDragStart={(event) => handleDragStart(event)}
