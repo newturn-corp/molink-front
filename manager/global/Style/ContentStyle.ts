@@ -158,7 +158,7 @@ export class ContentStyle {
         this.refreshBodyHeight()
         this._main = {
             marginLeft: Math.max((containerSize - contentSize) * 0.5, isBrowser ? 100 : 20),
-            width: contentSize
+            width: isBrowser ? contentSize : contentSize - 5
         }
     }
 }

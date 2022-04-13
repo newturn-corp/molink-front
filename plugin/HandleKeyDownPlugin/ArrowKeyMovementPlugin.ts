@@ -22,7 +22,7 @@ export const moveToTitleWhenArrowUpDown = (event) => {
         const parentPath = Path.parent(selection.anchor.path)
         if (!Path.hasPrevious(parentPath)) {
             event.preventDefault()
-            EditorManager.titleRef.current.focus()
+            EditorManager.setTitleFocus()
             const range = globalThis.document.createRange()
             if (!EditorManager.titleRef.current.firstChild) {
                 return
@@ -66,19 +66,17 @@ export const moveSelectionWhenArrowDownDown = (event) => {
 export const moveSelectionWhenBackspaceDown = (event) => {
     const { selection } = EditorManager.slateEditor
     if (selection) {
-        const parentPath = Path.parent(selection.anchor.path)
-        if (!Path.hasPrevious(parentPath) && selection.focus.offset === 0) {
+        if (selection.anchor.path[0] === 0 && selection.focus.offset === 0) {
             event.preventDefault()
             Transforms.removeNodes(EditorManager.slateEditor, {
                 match: n => Element.isElement(n)
             })
-            EditorManager.titleRef.current.focus()
+            EditorManager.setTitleFocus()
             const range = globalThis.document.createRange()
             if (!EditorManager.titleRef.current.firstChild) {
                 return
             }
             range.selectNodeContents(EditorManager.titleRef.current)
-            console.log(EditorManager.titleRef.current.textContent)
             range.setStart(EditorManager.titleRef.current.firstChild, EditorManager.titleRef.current.textContent.length)
             range.setEnd(EditorManager.titleRef.current.firstChild, EditorManager.titleRef.current.textContent.length)
             const selection = window.getSelection()

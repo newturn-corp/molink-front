@@ -1,6 +1,13 @@
 import { Editor, NodeEntry, Path, Point, Range, Transforms } from 'slate'
 
-export const customDelete = (editor: Editor, options) => {
+export const customDelete = (editor: Editor, options: {
+    at?: any
+    distance?: number
+    unit?: 'character' | 'word' | 'line' | 'block'
+    reverse?: boolean
+    hanging?: boolean
+    voids?: boolean
+} = {}) => {
     Editor.withoutNormalizing(editor, () => {
         const {
             reverse = false,
