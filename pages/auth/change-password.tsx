@@ -39,10 +39,10 @@ const AuthChangePasswordPage = observer(() => {
             loading={loading}
         >
             <AuthTitle
-                text={LanguageManager.languageMap.get('ChangePassword')}
+                text={LanguageManager.languageMap.ChangePassword}
             />
             <AuthInput
-                label={LanguageManager.languageMap.get('Password')}
+                label={LanguageManager.languageMap.Password}
                 type="password"
                 autoComplete="new-password"
                 variant='outlined'
@@ -61,7 +61,7 @@ const AuthChangePasswordPage = observer(() => {
                 helperText={getPasswordHelperText(AuthManager.passwordState)}
             />
             <AuthInput
-                label={LanguageManager.languageMap.get('PasswordConfirm')}
+                label={LanguageManager.languageMap.PasswordConfirm}
                 type="password"
                 autoComplete="new-password"
                 variant='outlined'
@@ -78,7 +78,7 @@ const AuthChangePasswordPage = observer(() => {
                 }}
             />
             <AuthButton
-                text={LanguageManager.languageMap.get('ChangePassword')}
+                text={LanguageManager.languageMap.ChangePassword}
                 theme={'primary'}
                 style={{
                     marginTop: 44

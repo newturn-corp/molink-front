@@ -18,12 +18,12 @@ const getEmailHelperText = (emailState: EmailState) => {
     }
     switch (emailState) {
     case EmailState.NOT_EMAIL:
-        return LanguageManager.languageMap.get('EmailFormatError')
+        return LanguageManager.languageMap.EmailFormatError
     case EmailState.NOT_AUTHORIZED:
     case EmailState.WRONG_EMAIL_PASSWORD:
-        return LanguageManager.languageMap.get('WrongEmailPasswordError')
+        return LanguageManager.languageMap.WrongEmailPasswordError
     case EmailState.TOO_MANY_REQUEST:
-        return LanguageManager.languageMap.get('TooManyLoginRequestsError')
+        return LanguageManager.languageMap.TooManyLoginRequestsError
     }
     return undefined
 }
@@ -60,7 +60,7 @@ const SignIn = observer(() => {
     return <div className='auth-page sign-in-page'>
         <AuthHeader/>
         <AuthContainer loading={loading}>
-            <AuthTitle text={LanguageManager.languageMap.get('SignIn')}/>
+            <AuthTitle text={LanguageManager.languageMap.SignIn}/>
             <form onKeyDown={async (event) => {
                 if (event.key === 'Enter') {
                     await login()
@@ -68,7 +68,7 @@ const SignIn = observer(() => {
             }}>
                 <AuthInput
                     inputRef={emailRef}
-                    label={LanguageManager.languageMap.get('Email')}
+                    label={LanguageManager.languageMap.Email}
                     type="email"
                     variant="outlined"
                     autoComplete='off'
@@ -85,7 +85,7 @@ const SignIn = observer(() => {
                 />
                 <AuthInput
                     inputRef={passwordRef}
-                    label={LanguageManager.languageMap.get('Password')}
+                    label={LanguageManager.languageMap.Password}
                     type="password"
                     autoComplete="current-password"
                     variant="outlined"
@@ -98,7 +98,7 @@ const SignIn = observer(() => {
                 />
             </form>
             <AuthButton
-                text={LanguageManager.languageMap.get('SignIn')}
+                text={LanguageManager.languageMap.SignIn}
                 theme={'primary'}
                 style={{
                     marginTop: 22
@@ -108,7 +108,7 @@ const SignIn = observer(() => {
                 }}
             />
             <AuthButton
-                text={LanguageManager.languageMap.get('SignUp')}
+                text={LanguageManager.languageMap.SignUp}
                 theme={'primary-stroke'}
                 border={'1px solid #3A7BBF'}
                 onClick={async () => {
@@ -118,7 +118,7 @@ const SignIn = observer(() => {
                 }}
             />
             <AuthSubButton
-                text={LanguageManager.languageMap.get('ForgetPassword')}
+                text={LanguageManager.languageMap.ForgetPassword}
                 onClick={() => RoutingManager.moveTo(Page.ChangePasswordRequest)}
             />
         </AuthContainer>

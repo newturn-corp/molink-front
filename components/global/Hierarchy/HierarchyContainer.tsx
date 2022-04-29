@@ -62,13 +62,7 @@ export const HierarchyContainer: React.FC<{
                       HierarchyManager.isHierarchyOpen
                           ? <>
                               <HierarchyName/>
-                              <div
-                                  className={'hierarchy-divider'}
-                              />
                               <HierarchyButtonGroup/>
-                              <div
-                                  className={'hierarchy-divider'}
-                              />
                               <HierarchyContextMenu/>
                               <HierarchyComponent/>
                               <DragIndicator/>

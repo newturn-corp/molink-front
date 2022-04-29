@@ -2,10 +2,10 @@ import axios from 'axios'
 import { makeAutoObservable, toJS } from 'mobx'
 
 class LanguageManager {
-    languageMap: Map<string, string>
+    languageMap: { [index: string]: string }
 
     constructor () {
-        this.languageMap = new Map<string, string>()
+        this.languageMap = {}
         makeAutoObservable(this)
     }
 
@@ -13,9 +13,8 @@ class LanguageManager {
         const { data } = await axios.get(`/language/${language}.tsv`)
         data.split('\r\n').forEach(line => {
             const [key, text] = line.split('\t')
-            this.languageMap.set(key, text)
+            this.languageMap[key] = text
         })
-        console.log(toJS(this.languageMap))
     }
 }
 export default new LanguageManager()

@@ -16,18 +16,18 @@ export const SupportModal: React.FC<{
       }, [textAreaRef])
 
       return <CustomModal
-          title={LanguageManager.languageMap.get('Support')}
+          title={LanguageManager.languageMap.Support}
           onCancel={() => SupportManager.handleCancel()}
           isOpen={SupportManager.showSupportModal}
       >
           <div
               className={'desc'}
           >
-              {LanguageManager.languageMap.get('SupportDescription')}
+              {LanguageManager.languageMap.SupportDescription}
           </div>
           <TextArea
               ref={textAreaRef}
-              placeholder={LanguageManager.languageMap.get('SupportPlaceholder')}
+              placeholder={LanguageManager.languageMap.SupportPlaceholder}
               showCount
               value={SupportManager.content}
               maxLength={300}
@@ -39,7 +39,7 @@ export const SupportModal: React.FC<{
           >
               <Button
                   theme={'primary'}
-                  text={LanguageManager.languageMap.get('Send')}
+                  text={LanguageManager.languageMap.Send}
                   style={{
                       width: 100,
                       height: 40

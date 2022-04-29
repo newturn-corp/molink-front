@@ -34,7 +34,7 @@ const ChangePasswordRequest = observer(() => {
             loading={loading}
         >
             <AuthTitle
-                text={LanguageManager.languageMap.get('ChangePassword')}
+                text={LanguageManager.languageMap.ChangePassword}
             />
             <AuthInput
                 label="이메일"
