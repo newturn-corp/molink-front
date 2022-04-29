@@ -4,6 +4,7 @@ const { withSentryConfig } = require('@sentry/nextjs')
 
 const moduleExports = {
     env: {
+        NODE_ENV: process.env.NODE_ENV,
         SERVER_BASE_URL: process.env.SERVER_BASE_URL,
         FRONT_HOST_NAME: process.env.FRONT_HOST_NAME,
         TZ: 'Asia/Seoul',
