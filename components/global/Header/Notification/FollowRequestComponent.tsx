@@ -1,8 +1,8 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Avatar, MenuItem } from '@material-ui/core'
-import { FollowRequest } from '../../../domain/FollowRequest'
-import { getRelativeTime } from '../../../utils/getRelativeTime'
+import { getRelativeTime } from '../../../../utils/getRelativeTime'
+import { FollowRequest } from '@newturn-develop/types-molink'
 
 export const FollowRequestComponent: React.FC<{
     followRequest: FollowRequest,
@@ -26,11 +26,9 @@ export const FollowRequestComponent: React.FC<{
                   <div className='interaction'>
                       <div
                           className='button accept'
-                          onClick={() => followRequest.accept()}
                       >확인</div>
                       <div
                           className='button reject'
-                          onClick={() => followRequest.reject()}
                       >삭제</div>
                   </div>
               </div>

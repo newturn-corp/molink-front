@@ -25,9 +25,11 @@ import '../styles/contents.css'
 import '../styles/home.css'
 import '../styles/search.css'
 import '../styles/setting.css'
+import '../styles/blog.css'
 
 import { AppProps } from 'next/dist/shared/lib/router/router'
 import { configure } from 'mobx'
+import LanguageManager from '../manager/global/LanguageManager'
 import GlobalManager from '../manager/global/GlobalManager'
 import { DialogComponent } from '../components/Dialog'
 import { SiteHead } from '../components/global/SiteHead'
@@ -60,6 +62,7 @@ const removeConsoleLogOnProduction = () => {
 const App = ({ Component, pageProps }: AppProps) => {
     useEffect(() => {
         GlobalManager.init()
+            .then(() => LanguageManager.loadLanguage(navigator.language))
         removeConsoleLogOnProduction()
     }, [])
 

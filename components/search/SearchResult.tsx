@@ -10,11 +10,17 @@ export const SearchResults: React.FC<{
           return <></>
       }
       return <div className='search-result'>
+          <div
+              className={'search-result-count'}
+          >{`${SearchManager.searchResults.length}개의 사용자 검색 결과`}</div>
+          <div
+              className={'count-divider'}
+          />
           <List>
               {
                   SearchManager.searchResults.map(result => {
                       return <>
-                          {/* <UserSearchResult key={`user-search-result-${result.id}`} result={result} /> */}
+                          <UserSearchResult key={`user-search-result-${result.id}`} result={result} />
                           <Divider key={`user-search-divider-${result.id}`} variant="inset" component="li" />
                       </>
                   })

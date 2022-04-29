@@ -1,15 +1,5 @@
-import { makeAutoObservable, observable, toJS } from 'mobx'
-import {
-    BasePoint,
-    BaseRange,
-    createEditor,
-    Editor,
-    Editor as SlateEditor,
-    Element,
-    Location,
-    Range,
-    Transforms
-} from 'slate'
+import { makeAutoObservable, observable } from 'mobx'
+import { BasePoint, BaseRange, createEditor, Editor, Editor as SlateEditor, Element, Transforms } from 'slate'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { SyncElement, withYjs } from 'slate-yjs'
@@ -29,7 +19,12 @@ import HierarchyManager from '../global/Hierarchy/HierarchyManager'
 import EventManager from '../global/Event/EventManager'
 import { throttle } from 'lodash'
 import React from 'react'
-import { TextCategory } from '../../Types/slate/CustomElement'
+import { SlateImageElementType, TextCategory } from '../../Types/slate/CustomElement'
+import ContentAPI from '../../api/ContentAPI'
+import { UpdatePageDataInSearchEngineDTO } from '@newturn-develop/types-molink/dist/DTO'
+import moment from 'moment-timezone'
+import Serializer from './Editor/Serializer'
+import { PageVisibility } from '@newturn-develop/types-molink'
 
 class EditorManager {
     public editable: boolean = false
@@ -57,6 +52,7 @@ class EditorManager {
     isToolbarOpen: boolean = true
     lastPressedKey: string = null
     lastSelection: BaseRange = null
+    shouldUpdateLastEditedAt: boolean = false
 
     constructor () {
         makeAutoObservable(this, {
@@ -74,6 +70,7 @@ class EditorManager {
                 Event.SignOut
             ], () => {
                 this._saveCurrentSelection()
+                this.updatePageDataInSearchEngine()
                 this.reset()
             }, 1)
     }
@@ -81,9 +78,6 @@ class EditorManager {
     async load (pageId: string) {
         this.yjsDocument = new Y.Doc()
         this.sharedType = this.yjsDocument.getArray<SyncElement>('content')
-        this.sharedType.observeDeep(() => {
-            console.log(this.sharedType.toJSON())
-        })
         this.yInfo = this.yjsDocument.getMap('info')
         this.yInfo.observeDeep(() => {
             this.info = this.yInfo.toJSON()
@@ -196,7 +190,7 @@ class EditorManager {
     }
 
     private _saveCurrentSelection () {
-        if (this.ySelection && UserManager.isUserAuthorized) {
+        if (this.ySelection && UserManager.isUserAuthorized && this.editable) {
             this.ySelection.set(UserManager.userId.toString(), this.slateEditor.selection)
         }
     }
@@ -221,6 +215,7 @@ class EditorManager {
         this.websocketProvider = null
         this.isConnected = false
         this.isLocked = false
+        this.shouldUpdateLastEditedAt = false
     }
 
     updateIsLocked (isLocked: boolean) {
@@ -258,6 +253,43 @@ class EditorManager {
             Transforms.setNodes<Element>(this.slateEditor, element, {
                 match: n => Editor.isBlock(this.slateEditor, n)
             })
+        }
+    }
+
+    async updatePageDataInSearchEngine () {
+        if (!this.pageId || !UserManager.isUserAuthorized || !this.editable) {
+            return
+        }
+        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
+        const page = currentHierarchy.map[this.pageId]
+        if (!page) {
+            return
+        }
+        const image = this.slateEditor.children.filter(child => Element.isElement(child) && child.type === 'image')[0] as SlateImageElementType
+        const { result: content, description } = Serializer.serializePlainText(this.slateEditor.children)
+        await ContentAPI.updatePageDataInSearchEngine(new UpdatePageDataInSearchEngineDTO(
+            this.pageId,
+            page.title,
+            content,
+            description,
+            this.pageVisibilityToNumber(page.visibility),
+            this.shouldUpdateLastEditedAt ? Number(new Date()) : undefined,
+            image ? `${image.url}?pageId=${this.pageId}` : undefined))
+    }
+
+    pageVisibilityToNumber (visibility: PageVisibility) {
+        switch (visibility) {
+        case PageVisibility.Private: return 0
+        case PageVisibility.OnlyFollower: return 1
+        case PageVisibility.Public: return 2
+        }
+    }
+
+    handleEditorOnChange () {
+        if (!this.shouldUpdateLastEditedAt) {
+            if (this.slateEditor.operations.filter(operation => operation.type !== 'set_selection').length > 0) {
+                this.shouldUpdateLastEditedAt = true
+            }
         }
     }
 }

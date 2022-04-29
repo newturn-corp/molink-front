@@ -12,17 +12,18 @@ import SignupManager from '../../manager/Auth/SignupManager'
 import { SignupCheckList } from '../../components/auth/SignupCheckList'
 import { AuthContainer } from '../../components/auth/AuthContainer'
 import { AuthSubButton } from '../../components/auth/AuthSubButton'
+import LanguageManager from '../../manager/global/LanguageManager'
 
 const getEmailHelperText = (emailState: EmailState) => {
     switch (emailState) {
     case EmailState.DEFAULT:
         return undefined
     case EmailState.EmptyEmail:
-        return '이메일을 입력해주세요.'
+        return LanguageManager.languageMap.get('EmptyEmailError')
     case EmailState.NOT_EMAIL:
-        return '이메일 형식이 아닙니다.'
+        return LanguageManager.languageMap.get('EmailFormatError')
     case EmailState.SAME_EMAIL:
-        return '이미 존재하는 이메일입니다.'
+        return LanguageManager.languageMap.get('EmailAlreadyExistsError')
     default:
         throw new Error('Unhandled Email State')
     }
@@ -31,11 +32,11 @@ const getEmailHelperText = (emailState: EmailState) => {
 const getNicknameHelperText = (nicknameState: NicknameState) => {
     switch (nicknameState) {
     case NicknameState.Default:
-        return '최대 2~27글자, 특수문자는 -,_,.(마침표) 사용 가능'
+        return LanguageManager.languageMap.get('NicknameCondition')
     case NicknameState.NicknameConditionNotSatisfied:
-        return '2~15글자 내로 닉네임을 정해주세요.'
+        return LanguageManager.languageMap.get('NicknameConditionError')
     case NicknameState.NicknameAlreadyExists:
-        return '이미 존재하는 닉네임입니다.'
+        return LanguageManager.languageMap.get('NicknameAlreadyExistsError')
     default:
         throw new Error('Unhandled Password State')
     }
@@ -45,9 +46,9 @@ const getPasswordHelperText = (passwordState: PasswordState) => {
     switch (passwordState) {
     case PasswordState.DEFAULT:
     case PasswordState.PASSWORD_CONDITION_NOT_SATISFIED:
-        return '문자, 숫자 포함 최소 8글자'
+        return LanguageManager.languageMap.get('PasswordCondition')
     case PasswordState.PASSWORD_MISMATCH:
-        return '비밀번호가 일치하지 않습니다.'
+        return LanguageManager.languageMap.get('PasswordMismatch')
     default:
         throw new Error('Unhandled Password State')
     }
@@ -68,11 +69,11 @@ const SignUp = observer(() => {
         <AuthContainer
             loading={loading}
         >
-            <AuthTitle text={'계정 생성'}/>
+            <AuthTitle text={LanguageManager.languageMap.get('SignUp')}/>
             <AuthInput
                 name={Math.random().toString()}
                 type={'text'}
-                label="이메일"
+                label={LanguageManager.languageMap.get('Email')}
                 variant="outlined"
                 autoComplete='new-street-address'
                 error={SignupManager.emailState !== EmailState.DEFAULT}
@@ -90,7 +91,7 @@ const SignUp = observer(() => {
             <AuthInput
                 name={Math.random().toString()}
                 type={'password'}
-                label="비밀번호"
+                label={LanguageManager.languageMap.get('Password')}
                 isPassword={true}
                 autoComplete='new-password'
                 variant="outlined"
@@ -112,7 +113,7 @@ const SignUp = observer(() => {
             <AuthInput
                 name={Math.random().toString()}
                 type={'password'}
-                label="비밀번호 확인"
+                label={LanguageManager.languageMap.get('PasswordConfirm')}
                 isPassword={true}
                 autoComplete='new-password'
                 variant="outlined"
@@ -132,7 +133,7 @@ const SignUp = observer(() => {
             <AuthInput
                 name={Math.random().toString()}
                 type={'text'}
-                label="닉네임"
+                label={LanguageManager.languageMap.get('Nickname')}
                 autoComplete='off'
                 variant='outlined'
                 error={SignupManager.nicknameState !== NicknameState.Default}
@@ -146,7 +147,7 @@ const SignUp = observer(() => {
             />
             <SignupCheckList/>
             <AuthButton
-                text={'계정 생성'}
+                text={LanguageManager.languageMap.get('SignUp')}
                 theme={'primary-stroke'}
                 onClick={async () => {
                     setLoading(true)
@@ -158,7 +159,7 @@ const SignUp = observer(() => {
                 }}
             />
             <AuthSubButton
-                text={'이미 계정이 있나요? 로그인하기'}
+                text={LanguageManager.languageMap.get('AlreadyAccountExists')}
                 onClick={() => RoutingManager.moveTo(Page.SignIn)}
             />
         </AuthContainer>

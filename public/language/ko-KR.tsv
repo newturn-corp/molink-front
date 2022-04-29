@@ -1,0 +1,63 @@
+ChangePassword	비밀번호 변경
+PasswordMismatch	비밀번호가 일치하지 않습니다.
+Password	비밀번호
+PasswordConfirm	비밀번호 확인
+PasswordCondition	문자, 숫자 포함 최소 8글자
+Image	이미지
+File	파일
+Video	비디오
+Bookmark	북마크
+AddImage	이미지 추가
+AddBookmark	북마크 추가
+AddFile	파일 추가
+AddVideo	비디오 추가
+Bold	강조
+Italic	이탤릭
+Underline	밑줄
+AlignLeft	왼쪽 정렬
+AlignRight	오른쪽 정렬
+AlignCenter	가운데 정렬
+AlignJustify	양쪽 정렬
+SignIn	로그인
+SignUp	계정 생성
+Email	이메일
+ForgetPassword	비밀번호를 잊으셨나요?
+Nickname	닉네임
+EmptyEmailError	이메일을 입력해주세요.
+EmailFormatError	이메일 형식이 아닙니다.
+EmailAlreadyExistsError	이미 존재하는 이메일입니다.
+NicknameCondition	최대 2~27글자, 특수문자는 -,_,.(마침표) 사용 가능
+NicknameAlreadyExistsError	이미 존재하는 닉네임입니다.
+NicknameConditionError	2~15글자 내로 닉네임을 정해주세요.
+AlreadyAccountExists	이미 계정이 있나요? 로그인하기
+TooManyLoginRequestsError	요청을 너무 많이 보냈습니다. 잠시 뒤 다시 시도해주세요.
+WrongEmailPasswordError	이메일 혹은 비밀번호가 잘못 입력되었습니다.
+EmailFormatError	이메일 형식이 아닙니다.
+SearchInHierarchy	여기서 검색
+CreateNewPage	새 페이지 만들기
+Support	문의 & 의견
+SupportInMenu	문의 & 의견 보내기
+PrivacyAndTerms	개인 정보 처리방침 & 약관
+SignOut	로그아웃
+SupportDescription	Molink 서비스에 대해 문의 사항이나 의견이 있으시다면 편하게 전달해주세요! 이메일을 통해 빠른 시일 내에 답변드리겠습니다!
+SupportPlaceholder	문의사항을 입력해주세요.
+Send	전송
+SupportTitleInMobile	문의하기 & 의견 보내기
+AcceptAll	전체 동의
+Terms	이용 약관
+PrivacyCollectAndUse	개인정보 수집, 이용
+AcceptNecessary	 동의 (필수)
+SignUpCheckListHelperText	모두 동의하셔야 가입하실 수 있습니다.
+ChangePageName	이름 변경
+CreateChildPage	하위 페이지 만들기
+CreatePage	페이지 만들기
+Delete	삭제
+Accept	확인
+DeletePage	문서 삭제
+DeletePageDialogMsgOnlyOnePage	 문서를 제거합니다.
+DeletePageDialogMsg1	 문서와 하위 문서
+DeletePageDialogMsg2	개를 모두 제거합니다.
+SettingHierarchy	하이어라키 설정
+OrderedList	숫자 목록
+UnorderedList	기본 목록
+CheckList	체크 리스트

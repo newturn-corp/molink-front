@@ -13,6 +13,7 @@ export class VisibilityController {
     private hierarchy: Hierarchy
 
     public isVisibilityMenuOpen: boolean = false
+    public isVisibilityDrawerOpen: boolean = false
 
     constructor (hierarchy: Hierarchy) {
         this.hierarchy = hierarchy

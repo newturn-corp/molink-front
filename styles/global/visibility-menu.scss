@@ -58,75 +58,75 @@
       user-select: none;
     }
   }
+}
 
-  .visibility-menu-item {
+.visibility-menu-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 6px 4px;
+  border-radius: 4px;
+  width: 100%;
+  cursor: pointer;
+
+  .text-container {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 6px 4px;
-    border-radius: 4px;
-    width: 100%;
-    cursor: pointer;
+    flex-direction: column;
+    .name {
+      position: static;
+      left: 0px;
+      top: 0%;
+      bottom: 55.56%;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 15px;
+      line-height: 16px;
 
-    .text-container {
-      display: flex;
-      flex-direction: column;
-      .name {
-        position: static;
-        left: 0px;
-        top: 0%;
-        bottom: 55.56%;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 15px;
-        line-height: 16px;
-
-        color: #454C53;
-
-        flex: none;
-        order: 0;
-        flex-grow: 0;
-        margin: 4px 0px;
-        user-select: none;
-      }
-
-      .desc {
-        font-style: normal;
-        font-weight: normal;
-        font-size: 13px;
-        line-height: 16px;
-        color: #72787F;
-        flex: none;
-        order: 1;
-        flex-grow: 0;
-        margin: 0px;
-        user-select: none;
-      }
-    }
-
-    .icon {
-      display: flex;
-      align-items: center;
-      width: 40px;
-      height: 40px;
-      background: #FFFFFF;
-      border: 1px solid #ECEFF2;
-      box-sizing: border-box;
-      border-radius: 4px;
+      color: #454C53;
 
       flex: none;
       order: 0;
       flex-grow: 0;
-      margin: 0px 10px 0px 0px;
-
-      svg {
-        fill: #131415;
-        margin: 0 auto;
-      }
+      margin: 4px 0px;
+      user-select: none;
     }
 
-    &:hover {
-      background: #F2F3F5
+    .desc {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 16px;
+      color: #72787F;
+      flex: none;
+      order: 1;
+      flex-grow: 0;
+      margin: 0px;
+      user-select: none;
     }
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid #ECEFF2;
+    box-sizing: border-box;
+    border-radius: 4px;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 0px 10px 0px 0px;
+
+    svg {
+      fill: #131415;
+      margin: 0 auto;
+    }
+  }
+
+  &:hover {
+    background: #F2F3F5
   }
 }

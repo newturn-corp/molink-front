@@ -1,8 +1,8 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Avatar, MenuItem } from '@material-ui/core'
-import { Notification } from '../../../domain/Notification'
-import { getRelativeTime } from '../../../utils/getRelativeTime'
+import { Notification } from '../../../../domain/Notification'
+import { getRelativeTime } from '../../../../utils/getRelativeTime'
 
 export const NotificationBlock: React.FC<{
     notification: Notification,

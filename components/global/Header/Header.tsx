@@ -7,6 +7,8 @@ import StyleManager from '../../../manager/global/Style/StyleManager'
 import { BrowserView, MobileView } from 'react-device-detect'
 import { OpenHierarchyButton } from './OpenHierarchyButton'
 import { MobilePageTitle } from './Mobile/MobilePageTitle'
+import { NotificationButton } from './Notification/NotificationButton'
+import { SearchComponent } from './SearchComponent'
 
 export const Header: React.FC<{
   }> = observer(() => {
@@ -18,9 +20,13 @@ export const Header: React.FC<{
           <BrowserView>
               <div className='navigator'>
               </div>
-              {/* <SearchComponent /> */}
               <HeaderLogo/>
+
+              {/* <NotificationButton/> */}
               <SettingModal/>
+          </BrowserView>
+          <BrowserView>
+              <SearchComponent />
           </BrowserView>
           <MobileView>
               <OpenHierarchyButton/>

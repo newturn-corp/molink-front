@@ -8,6 +8,7 @@
     height: 56px;
     display: flex;
     margin-bottom: 0px;
+    cursor: pointer;
     .profile-image {
       margin-left: 12px;
       margin-top: 10px;
@@ -26,6 +27,9 @@
       color: #212B36;
     }
   }
+  //.hierarchy-name:hover {
+  //  background-color: #a1a1a1;
+  //}
 
   .hierarchy-divider {
     height: 1px;

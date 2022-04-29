@@ -6,6 +6,7 @@ import SupportManager from '../../../manager/global/SupportManager'
 import { Button } from '../Button'
 import { TextAreaRef } from 'antd/es/input/TextArea'
 import { CustomModal } from '../../utils/CustomModal'
+import LanguageManager from '../../../manager/global/LanguageManager'
 
 export const SupportModal: React.FC<{
   }> = observer(() => {
@@ -15,18 +16,18 @@ export const SupportModal: React.FC<{
       }, [textAreaRef])
 
       return <CustomModal
-          title="문의 & 의견"
+          title={LanguageManager.languageMap.get('Support')}
           onCancel={() => SupportManager.handleCancel()}
           isOpen={SupportManager.showSupportModal}
       >
-          <pre
+          <div
               className={'desc'}
           >
-              {'Molink 서비스에 대해 문의 사항이나 의견이 있으시다면 편하게 전달해주세요!\n이메일을 통해 빠른 시일 내에 답변드리겠습니다!'}
-          </pre>
+              {LanguageManager.languageMap.get('SupportDescription')}
+          </div>
           <TextArea
               ref={textAreaRef}
-              placeholder={'문의사항을 입력해주세요.'}
+              placeholder={LanguageManager.languageMap.get('SupportPlaceholder')}
               showCount
               value={SupportManager.content}
               maxLength={300}
@@ -38,7 +39,7 @@ export const SupportModal: React.FC<{
           >
               <Button
                   theme={'primary'}
-                  text={'전송'}
+                  text={LanguageManager.languageMap.get('Send')}
                   style={{
                       width: 100,
                       height: 40

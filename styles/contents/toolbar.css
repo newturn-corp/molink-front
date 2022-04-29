@@ -50,15 +50,15 @@
   margin-bottom: 0px;
 }
 .content-toolbar .editing-button-group .toolbar-editing-button.small {
-  width: 22px;
+  width: 24px;
   height: 26px;
-  padding: 3px 1px 1px;
+  padding: 1px 1px 1px;
   margin-left: 1px;
   margin-right: 1px;
 }
 .content-toolbar .editing-button-group .toolbar-editing-button.small svg {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   margin: 0px;
   fill: #6C7177;
 }

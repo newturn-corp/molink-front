@@ -1,23 +1,45 @@
 .search-page .core {
   margin: 0 auto;
-  margin-top: 150px;
+  margin-top: 100px;
   display: flex;
 }
 .search-page .core .search-meta {
-  width: 200px;
+  width: 264px;
   height: 100%;
   margin-right: 25px;
 }
-.search-page .core .search-meta .search-buttons {
-  width: 200px;
-  margin-top: 30px;
+.search-page .core .search-meta .search-category {
+  width: 100%;
 }
-.search-page .core .search-meta .search-buttons .MuiButton-label {
+.search-page .core .search-meta .search-category .MuiButtonBase-root {
+  height: 48px;
+}
+.search-page .core .search-meta .search-category .MuiButton-label {
   justify-content: left;
+  font-family: Pretendard;
+  font-size: 16px;
 }
 .search-page .core .search-result {
   width: 700px;
   height: 100%;
+  cursor: pointer;
+}
+.search-page .core .search-result .search-result-count {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.search-page .core .search-result .count-divider {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.12);
+}
+.search-page .core .search-result .MuiListItemText-primary {
+  font-family: Pretendard;
+  font-weight: 600;
+}
+.search-page .core .search-result .MuiListItemText-secondary {
+  font-family: Pretendard;
 }
 .search-page .core .search-result .avatar {
   cursor: pointer;

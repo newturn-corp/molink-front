@@ -5,6 +5,8 @@ import { HierarchyButton } from './HierarchyButton'
 import NewPageIcon from 'public/image/icon/new-page.svg'
 import SearchIcon from 'public/image/icon/search.svg'
 import DialogManager from '../../../manager/global/DialogManager'
+import LanguageManager from '../../../manager/global/LanguageManager'
+import { isMobile } from 'react-device-detect'
 
 export const HierarchyButtonGroup: React.FC<{
 }> = observer(() => {
@@ -18,7 +20,7 @@ export const HierarchyButtonGroup: React.FC<{
         >
             <HierarchyButton
                 icon={<SearchIcon/>}
-                text={'여기서 검색'}
+                text={LanguageManager.languageMap.get('SearchInHierarchy')}
                 onClick={async (event) => {
                     event.stopPropagation()
                 }}
@@ -26,10 +28,13 @@ export const HierarchyButtonGroup: React.FC<{
             ></HierarchyButton>
             <HierarchyButton
                 icon={<NewPageIcon/>}
-                text={'새 페이지 만들기'}
+                text={LanguageManager.languageMap.get('CreateNewPage')}
                 onClick={async (event) => {
                     event.stopPropagation()
                     await currentHierarchy.createDocument(currentHierarchy.topLevelDocumentIdList.length, null)
+                    if (isMobile) {
+                        HierarchyManager.isHierarchyOpen = false
+                    }
                 }}
             ></HierarchyButton>
         </div>

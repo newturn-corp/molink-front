@@ -23,19 +23,37 @@
   width: 100%;
   height: 100%;
 }
-.header .search {
+.header .search-container {
+  position: absolute;
+  left: calc(50% - 180px);
+  margin-right: 300px;
+}
+.header .search-container .search {
   margin: 14px;
   height: 32px;
   width: 150px;
   margin-left: 10px;
-  background-color: #dbfff3;
 }
-.header .search .ant-input-wrapper {
+.header .search-container .search .ant-input-wrapper {
   height: 100%;
   width: 100%;
+  background: #F2F3F5;
+  border-radius: 4px;
 }
-.header .search .ant-input-wrapper .ant-input {
+.header .search-container .search .ant-input-wrapper .ant-input {
   height: 100%;
+  border: 0px;
+  background: none;
+}
+.header .search-container .search .ant-input-group-addon {
+  background: none;
+}
+.header .search-container .search .ant-input-group-addon button {
+  background: none;
+  border: none;
+}
+.header .search-container .search .ant-input-group-addon button svg {
+  fill: #3A7BBF;
 }
 .header .navigator {
   width: calc(100% - 438px);
@@ -78,13 +96,11 @@
   padding: 4px;
 }
 .header .user-container {
+  position: relative;
   cursor: pointer;
-  /* Frame 242 */
   display: flex;
   flex-direction: row;
   align-items: center;
-  position: absolute;
-  /* Primary/Lighter */
   background: #D6E6F6;
   border-radius: 20px;
 }
@@ -103,6 +119,9 @@
   order: 1;
   flex-grow: 0;
   margin: 0px 0px 0px 6px;
+}
+.header .notification {
+  margin-right: 12px;
 }
 .header .notification .button {
   margin: 10px;
@@ -150,7 +169,6 @@
   line-height: 32px;
 }
 .user-drawer .privacy-and-terms-container {
-  position: fixed;
   bottom: 0px;
   width: 100%;
   display: flex;
@@ -177,6 +195,64 @@
 .support-drawer .button-container {
   display: flex;
   flex-direction: row-reverse;
+}
+
+.visibility-drawer .item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 4px;
+  width: 100%;
+  cursor: pointer;
+}
+.visibility-drawer .item .text-container {
+  display: flex;
+  flex-direction: column;
+}
+.visibility-drawer .item .text-container .name {
+  position: static;
+  left: 0px;
+  top: 0%;
+  bottom: 55.56%;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 16px;
+  color: #454C53;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 4px 0px;
+  user-select: none;
+}
+.visibility-drawer .item .text-container .desc {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  color: #72787F;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin: 0px;
+  user-select: none;
+}
+.visibility-drawer .item .icon {
+  display: flex;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: #FFFFFF;
+  box-sizing: border-box;
+  border-radius: 4px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 10px 0px 0px;
+}
+.visibility-drawer .item .icon svg {
+  fill: #131415;
+  margin: 0 auto;
 }
 
 /*# sourceMappingURL=header.css.map */

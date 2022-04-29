@@ -8,12 +8,16 @@ import EditorManager from '../../../manager/Blog/EditorManager'
 import { BrowserView, MobileView } from 'react-device-detect'
 import { MobileToolbar } from './MobileToolbar/MobileToolbar'
 import { CommandDrawer } from './Content/CommandDrawer'
+import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
+import { UserPageListComponent } from './Content/UserPageListComponent'
 
 export const HomeMainComponent: React.FC<{
   }> = observer(() => {
+      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
       useEffect(() => {
           EditorManager.contentBody = document.getElementById('content-body')
       }, [])
+
       return <>
           <div
               className={'content-container'}
@@ -23,13 +27,17 @@ export const HomeMainComponent: React.FC<{
                   <ContentToolbar/>
                   <ContentHeader/>
               </BrowserView>
-              <div
-                  id={'content-body'}
-                  className={'content-body'}
-                  style={StyleManager.contentStyle.body}
-              >
-                  <ContentComponent/>
-              </div>
+              {
+                  !currentHierarchy || !currentHierarchy.openedPageId
+                      ? <UserPageListComponent />
+                      : <div
+                          id={'content-body'}
+                          className={'content-body'}
+                          style={StyleManager.contentStyle.body}
+                      >
+                          <ContentComponent/>
+                      </div>
+              }
               <MobileView>
                   <MobileToolbar/>
                   <CommandDrawer/>

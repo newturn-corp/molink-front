@@ -6,6 +6,7 @@ import TextArea from 'antd/lib/input/TextArea'
 import { Button } from '../../Button'
 import { MobileColumnDrawerElement } from '../../../utils/MobileColumeDrawer/MobileColumnDrawerElement'
 import { MobileColumnDrawerGroup } from '../../../utils/MobileColumeDrawer/MobileColumnDrawerGroup'
+import LanguageManager from '../../../../manager/global/LanguageManager'
 
 export const SupportDrawer: React.FC<{
 }> = observer(() => {
@@ -17,7 +18,7 @@ export const SupportDrawer: React.FC<{
                 SupportManager.isSupportDrawerOpen = false
             }}
             backgroundColor={'#FAFAFB'}
-            title={'문의하기 & 의견 보내기'}
+            title={LanguageManager.languageMap.get('SupportTitleInMobile')}
         >
             <MobileColumnDrawerGroup>
                 <MobileColumnDrawerElement
@@ -28,11 +29,11 @@ export const SupportDrawer: React.FC<{
                     <div
                         className={'desc'}
                     >
-                        {'Molink 서비스에 대해 문의 사항이나 의견이 있으시다면 편하게 전달해주세요!\n이메일을 통해 빠른 시일 내에 답변드리겠습니다!'}
+                        {LanguageManager.languageMap.get('SupportDescription')}
                     </div>
                     <TextArea
                         className={'support-input'}
-                        placeholder={'문의사항 또는 의견을 입력해주세요.'}
+                        placeholder={LanguageManager.languageMap.get('SupportPlaceholder')}
                         showCount
                         value={SupportManager.content}
                         maxLength={300}
@@ -47,7 +48,7 @@ export const SupportDrawer: React.FC<{
                     >
                         <Button
                             theme={'primary'}
-                            text={'전송'}
+                            text={LanguageManager.languageMap.get('Send')}
                             style={{
                                 width: 60,
                                 height: 30

@@ -18,7 +18,7 @@ export const defaultContentMainStyle = {
 }
 
 export const defaultContentToolbarStyle = {
-    height: 89,
+    height: 90,
     top: 0,
     padding: 8
 }

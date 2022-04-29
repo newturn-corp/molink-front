@@ -1,8 +1,19 @@
-import { Editor, Element, Location, Range, Text, Transforms } from 'slate'
+import {
+    Editor as SlateEditor,
+    Editor,
+    Element as SlateElement,
+    Element,
+    Location,
+    Range,
+    Text,
+    Transforms
+} from 'slate'
 import EditorManager from '../Blog/EditorManager'
 import { makeAutoObservable } from 'mobx'
 import { toJSON } from 'yaml/util'
 import { TextElement } from '../../Types/slate/CustomElement'
+import { ListEditor, ListTransforms } from '../../plugin'
+import { ReactEditor } from 'slate-react'
 
 export enum Format {
     Bold = 'bold',
@@ -17,13 +28,21 @@ export enum Align {
     Justify = 'justify'
 }
 
+export enum List {
+    Dot = 'ul-list',
+    Number = 'ol-list',
+    Check = 'check-list'
+}
+
 class FormattingManager {
     formatActiveMap: Map<Format, boolean>
     alignMap: Map<Align, boolean>
+    listMap: Map<List, boolean>
 
     constructor () {
         this.formatActiveMap = new Map<Format, boolean>()
         this.alignMap = new Map<Align, boolean>()
+        this.listMap = new Map<List, boolean>()
         this.clear()
         makeAutoObservable(this)
     }
@@ -87,6 +106,30 @@ class FormattingManager {
         Transforms.setNodes<Element>(editor, newProperties)
     }
 
+    toggleList (list: List) {
+        const editor = EditorManager.slateEditor
+        ReactEditor.focus(editor)
+        const isActive = this.listMap.get(list)
+        if (isActive) {
+            ListTransforms.unwrapList(editor)
+            const newProperties: Partial<SlateElement> = {
+                type: 'text'
+            }
+            Transforms.setNodes(editor, newProperties)
+        } else {
+            if (list === List.Check) {
+                const newProperties: Partial<SlateElement> = {
+                    type: 'check-list-item',
+                    checked: false
+                }
+                Transforms.setNodes<SlateElement>(editor, newProperties, {
+                    match: n => SlateEditor.isBlock(editor, n)
+                })
+            }
+            ListTransforms.wrapInList(editor, list)
+        }
+    }
+
     clear () {
         this.formatActiveMap.set(Format.Bold, false)
         this.formatActiveMap.set(Format.Italic, false)
@@ -95,6 +138,9 @@ class FormattingManager {
         this.alignMap.set(Align.Right, false)
         this.alignMap.set(Align.Center, false)
         this.alignMap.set(Align.Justify, false)
+        this.listMap.set(List.Dot, false)
+        this.listMap.set(List.Number, false)
+        this.listMap.set(List.Check, false)
     }
 
     handleEditorChange () {
@@ -105,6 +151,22 @@ class FormattingManager {
         this.alignMap.set(Align.Center, this.isAlignActive(Align.Center))
         this.alignMap.set(Align.Right, this.isAlignActive(Align.Right))
         this.alignMap.set(Align.Justify, this.isAlignActive(Align.Justify))
+        this.listMap.set(List.Dot, false)
+        this.listMap.set(List.Number, false)
+        this.listMap.set(List.Check, false)
+        if (EditorManager.slateEditor.selection) {
+            const list = ListEditor.getListForItem(EditorManager.slateEditor, EditorManager.slateEditor.selection.anchor.path)
+            if (list) {
+                const [node] = list
+                if (node.type === 'ul-list') {
+                    this.listMap.set(List.Dot, true)
+                } else if (node.type === 'ol-list') {
+                    this.listMap.set(List.Number, true)
+                } else if (node.type === 'check-list') {
+                    this.listMap.set(List.Check, true)
+                }
+            }
+        }
     }
 }
 export default new FormattingManager()

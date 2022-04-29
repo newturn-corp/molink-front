@@ -13,6 +13,7 @@ import File from '../../../../public/image/icon/folder.svg'
 import Calendar from '../../../../public/image/icon/calendar.svg'
 import Code from '../../../../public/image/icon/code.svg'
 import Table from '../../../../public/image/icon/table.svg'
+import CheckList from '../../../../public/image/icon/check-list.svg'
 import {
     BookRounded,
     FormatAlignCenterRounded,
@@ -21,10 +22,13 @@ import {
     FormatAlignRightRounded,
     FormatBoldRounded,
     FormatItalicRounded,
-    FormatUnderlinedRounded
+    FormatUnderlinedRounded,
+    FormatListBulletedRounded,
+    FormatListNumberedRounded
 } from '@material-ui/icons'
-import FormattingManager, { Align, Format } from '../../../../manager/Editing/FormattingManager'
+import FormattingManager, { Align, Format, List } from '../../../../manager/Editing/FormattingManager'
 import LinkManager from '../../../../manager/Editing/Link/LinkManager'
+import LanguageManager from '../../../../manager/global/LanguageManager'
 
 export const ContentToolbar: React.FC<{
   }> = observer(() => {
@@ -56,8 +60,8 @@ export const ContentToolbar: React.FC<{
                       <ToolbarEditingButton
                           size={'standard'}
                           icon={<Photo/>}
-                          text={'이미지'}
-                          desc={'이미지 추가'}
+                          text={LanguageManager.languageMap.get('Image')}
+                          desc={LanguageManager.languageMap.get('AddImage')}
                           onClick={() => {}}
                           disabled={false}
                       />
@@ -74,8 +78,8 @@ export const ContentToolbar: React.FC<{
                       <ToolbarEditingButton
                           size={'standard'}
                           icon={<Video/>}
-                          text={'동영상'}
-                          desc={'동영상 추가'}
+                          text={LanguageManager.languageMap.get('Video')}
+                          desc={LanguageManager.languageMap.get('AddVideo')}
                           onClick={() => {}}
                           disabled={false}
                       />
@@ -93,8 +97,8 @@ export const ContentToolbar: React.FC<{
                       <ToolbarEditingButton
                           size={'standard'}
                           icon={<File/>}
-                          text={'파일'}
-                          desc={'파일 추가'}
+                          text={LanguageManager.languageMap.get('File')}
+                          desc={LanguageManager.languageMap.get('AddFile')}
                           onClick={() => {}}
                           disabled={false}
                       />
@@ -102,8 +106,8 @@ export const ContentToolbar: React.FC<{
                   <ToolbarEditingButton
                       size={'standard'}
                       icon={<BookRounded/>}
-                      text={'북마크'}
-                      desc={'북마크 추가'}
+                      text={LanguageManager.languageMap.get('Bookmark')}
+                      desc={LanguageManager.languageMap.get('AddBookmark')}
                       onClick={() => LinkManager.modal.open()}
                       disabled={false}
                   />
@@ -138,7 +142,7 @@ export const ContentToolbar: React.FC<{
               <div
                   className={'editing-button-group'}
                   style={{
-                      height: 26
+                      height: 28
                   }}
               >
                   <ToolbarEditingButton
@@ -148,7 +152,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.formatActiveMap.get(Format.Bold) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={'강조'}
+                      desc={LanguageManager.languageMap.get('Bold')}
                       onClick={() => FormattingManager.toggleFormat(Format.Bold)}
                   />
                   <ToolbarEditingButton
@@ -158,7 +162,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.formatActiveMap.get(Format.Italic) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={'이탤릭'}
+                      desc={LanguageManager.languageMap.get('Italic')}
                       onClick={() => FormattingManager.toggleFormat(Format.Italic)}
                   />
                   <ToolbarEditingButton
@@ -168,7 +172,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.formatActiveMap.get(Format.Underline) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={'밑줄'}
+                      desc={LanguageManager.languageMap.get('Underline')}
                       onClick={() => FormattingManager.toggleFormat(Format.Underline)}
                   />
                   <div className={'vertical-divider'}/>
@@ -179,7 +183,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.alignMap.get(Align.Left) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={'왼쪽 정렬'}
+                      desc={LanguageManager.languageMap.get('AlignLeft')}
                       onClick={() => FormattingManager.toggleAlign(Align.Left)}
                   />
                   <ToolbarEditingButton
@@ -189,7 +193,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.alignMap.get(Align.Center) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={'가운데 정렬'}
+                      desc={LanguageManager.languageMap.get('AlignCenter')}
                       onClick={() => FormattingManager.toggleAlign(Align.Center)}
                   />
                   <ToolbarEditingButton
@@ -199,7 +203,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.alignMap.get(Align.Right) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={'오른쪽 정렬'}
+                      desc={LanguageManager.languageMap.get('AlignRight')}
                       onClick={() => FormattingManager.toggleAlign(Align.Right)}
                   />
                   <ToolbarEditingButton
@@ -209,8 +213,39 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.alignMap.get(Align.Justify) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={'양쪽 정렬'}
+                      desc={LanguageManager.languageMap.get('AlignJustify')}
                       onClick={() => FormattingManager.toggleAlign(Align.Justify)}
+                  />
+                  <div className={'vertical-divider'}/>
+                  <ToolbarEditingButton
+                      size={'small'}
+                      icon={<FormatListBulletedRounded
+                          style={{
+                              fill: FormattingManager.listMap.get(List.Dot) ? '#0094FF' : '#6C7177'
+                          }}
+                      />}
+                      desc={LanguageManager.languageMap.get('UnorderedList')}
+                      onClick={() => FormattingManager.toggleList(List.Dot)}
+                  />
+                  <ToolbarEditingButton
+                      size={'small'}
+                      icon={<FormatListNumberedRounded
+                          style={{
+                              fill: FormattingManager.listMap.get(List.Number) ? '#0094FF' : '#6C7177'
+                          }}
+                      />}
+                      desc={LanguageManager.languageMap.get('OrderedList')}
+                      onClick={() => FormattingManager.toggleList(List.Number)}
+                  />
+                  <ToolbarEditingButton
+                      size={'small'}
+                      icon={<CheckList
+                          style={{
+                              fill: FormattingManager.listMap.get(List.Check) ? '#0094FF' : '#6C7177'
+                          }}
+                      />}
+                      desc={LanguageManager.languageMap.get('CheckList')}
+                      onClick={() => FormattingManager.toggleList(List.Check)}
                   />
               </div>
           </div>
