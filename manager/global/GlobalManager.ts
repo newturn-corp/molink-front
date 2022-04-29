@@ -18,6 +18,7 @@ class GlobalManager {
     mousePositionY = 0
 
     async init () {
+        console.log('GlobalManager init')
         this.navigator = navigator
         this.document = document
         this.window = window
