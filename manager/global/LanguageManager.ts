@@ -11,6 +11,7 @@ class LanguageManager {
 
     async loadLanguage (language: string) {
         const { data } = await axios.get(`/language/${language}.tsv`)
+        console.log(data)
         data.split('\r\n').forEach(line => {
             const [key, text] = line.split('\t')
             this.languageMap[key] = text
