@@ -15,6 +15,7 @@ class LanguageManager {
             const [key, text] = line.split('\t')
             this.languageMap[key] = text
         })
+        console.log(this.languageMap)
     }
 }
 export default new LanguageManager()
