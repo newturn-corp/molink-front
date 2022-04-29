@@ -27,7 +27,7 @@ export abstract class HierarchyControlOption {
 export class CreateNewPageOption extends HierarchyControlOption {
     constructor (documentId: string | null) {
         super(documentId)
-        this.name = documentId ? LanguageManager.languageMap.get('CreateChildPage') : LanguageManager.languageMap.get('CreatePage')
+        this.name = documentId ? LanguageManager.languageMap.CreateChildPage : LanguageManager.languageMap.CreatePage
         this.icon = <NewPageIcon/>
     }
 
@@ -51,7 +51,7 @@ export class CreateNewPageOption extends HierarchyControlOption {
 export class ChangePageNameOption extends HierarchyControlOption {
     constructor (documentId: string | null) {
         super(documentId)
-        this.name = LanguageManager.languageMap.get('ChangePageName')
+        this.name = LanguageManager.languageMap.ChangePageName
         this.icon = <EditIcon/>
     }
 
@@ -64,7 +64,7 @@ export class ChangePageNameOption extends HierarchyControlOption {
 export class DeletePageOption extends HierarchyControlOption {
     constructor (documentId: string | null) {
         super(documentId)
-        this.name = LanguageManager.languageMap.get('Delete')
+        this.name = LanguageManager.languageMap.Delete
         this.icon = <TrashCanIcon/>
     }
 
@@ -79,8 +79,10 @@ export class DeletePageOption extends HierarchyControlOption {
         const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
         const page = currentHierarchy.yMap.get(this.documentId)
         const childIDList = getChildren(currentHierarchy.map, page.id)
-        const msg = childIDList.length > 0 ? `${page.title}${LanguageManager.languageMap.get('DeletePageDialogMsg1')}${childIDList.length}${LanguageManager.languageMap.get('DeletePageDialogMsg2')}` : `${page.title}${LanguageManager.languageMap.get('DeletePageDialogMsgOnlyOnePage')}`
-        const index = await DialogManager.openDialog(LanguageManager.languageMap.get('DeletePage'), msg, [LanguageManager.languageMap.get('Accept')])
+        const msg = childIDList.length > 0
+            ? `${page.title}${LanguageManager.languageMap.DeletePageDialogMsg1}${childIDList.length}${LanguageManager.languageMap.DeletePageDialogMsg2}`
+            : `${page.title}${LanguageManager.languageMap.DeletePageDialogMsgOnlyOnePage}`
+        const index = await DialogManager.openDialog(LanguageManager.languageMap.DeletePage, msg, [LanguageManager.languageMap.Accept])
         if (index !== 0) {
             return
         }
@@ -127,7 +129,7 @@ export class DeletePageOption extends HierarchyControlOption {
 export class SettingDocumentListOption extends HierarchyControlOption {
     constructor (documentId: string | null) {
         super(documentId)
-        this.name = LanguageManager.languageMap.get('SettingHierarchy')
+        this.name = LanguageManager.languageMap.SettingHierarchy
         this.icon = <TrashCanIcon/>
     }
 

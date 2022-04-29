@@ -18,7 +18,7 @@ export const SupportDrawer: React.FC<{
                 SupportManager.isSupportDrawerOpen = false
             }}
             backgroundColor={'#FAFAFB'}
-            title={LanguageManager.languageMap.get('SupportTitleInMobile')}
+            title={LanguageManager.languageMap.SupportTitleInMobile}
         >
             <MobileColumnDrawerGroup>
                 <MobileColumnDrawerElement
@@ -29,11 +29,11 @@ export const SupportDrawer: React.FC<{
                     <div
                         className={'desc'}
                     >
-                        {LanguageManager.languageMap.get('SupportDescription')}
+                        {LanguageManager.languageMap.SupportDescription}
                     </div>
                     <TextArea
                         className={'support-input'}
-                        placeholder={LanguageManager.languageMap.get('SupportPlaceholder')}
+                        placeholder={LanguageManager.languageMap.SupportPlaceholder}
                         showCount
                         value={SupportManager.content}
                         maxLength={300}
@@ -48,7 +48,7 @@ export const SupportDrawer: React.FC<{
                     >
                         <Button
                             theme={'primary'}
-                            text={LanguageManager.languageMap.get('Send')}
+                            text={LanguageManager.languageMap.Send}
                             style={{
                                 width: 60,
                                 height: 30

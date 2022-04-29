@@ -19,11 +19,11 @@ const getEmailHelperText = (emailState: EmailState) => {
     case EmailState.DEFAULT:
         return undefined
     case EmailState.EmptyEmail:
-        return LanguageManager.languageMap.get('EmptyEmailError')
+        return LanguageManager.languageMap.EmptyEmailError
     case EmailState.NOT_EMAIL:
-        return LanguageManager.languageMap.get('EmailFormatError')
+        return LanguageManager.languageMap.EmailFormatError
     case EmailState.SAME_EMAIL:
-        return LanguageManager.languageMap.get('EmailAlreadyExistsError')
+        return LanguageManager.languageMap.EmailAlreadyExistsError
     default:
         throw new Error('Unhandled Email State')
     }
@@ -32,11 +32,11 @@ const getEmailHelperText = (emailState: EmailState) => {
 const getNicknameHelperText = (nicknameState: NicknameState) => {
     switch (nicknameState) {
     case NicknameState.Default:
-        return LanguageManager.languageMap.get('NicknameCondition')
+        return LanguageManager.languageMap.NicknameCondition
     case NicknameState.NicknameConditionNotSatisfied:
-        return LanguageManager.languageMap.get('NicknameConditionError')
+        return LanguageManager.languageMap.NicknameConditionError
     case NicknameState.NicknameAlreadyExists:
-        return LanguageManager.languageMap.get('NicknameAlreadyExistsError')
+        return LanguageManager.languageMap.NicknameAlreadyExistsError
     default:
         throw new Error('Unhandled Password State')
     }
@@ -46,9 +46,9 @@ const getPasswordHelperText = (passwordState: PasswordState) => {
     switch (passwordState) {
     case PasswordState.DEFAULT:
     case PasswordState.PASSWORD_CONDITION_NOT_SATISFIED:
-        return LanguageManager.languageMap.get('PasswordCondition')
+        return LanguageManager.languageMap.PasswordCondition
     case PasswordState.PASSWORD_MISMATCH:
-        return LanguageManager.languageMap.get('PasswordMismatch')
+        return LanguageManager.languageMap.PasswordMismatch
     default:
         throw new Error('Unhandled Password State')
     }
@@ -69,11 +69,11 @@ const SignUp = observer(() => {
         <AuthContainer
             loading={loading}
         >
-            <AuthTitle text={LanguageManager.languageMap.get('SignUp')}/>
+            <AuthTitle text={LanguageManager.languageMap.SignUp}/>
             <AuthInput
                 name={Math.random().toString()}
                 type={'text'}
-                label={LanguageManager.languageMap.get('Email')}
+                label={LanguageManager.languageMap.Email}
                 variant="outlined"
                 autoComplete='new-street-address'
                 error={SignupManager.emailState !== EmailState.DEFAULT}
@@ -91,7 +91,7 @@ const SignUp = observer(() => {
             <AuthInput
                 name={Math.random().toString()}
                 type={'password'}
-                label={LanguageManager.languageMap.get('Password')}
+                label={LanguageManager.languageMap.Password}
                 isPassword={true}
                 autoComplete='new-password'
                 variant="outlined"
@@ -113,7 +113,7 @@ const SignUp = observer(() => {
             <AuthInput
                 name={Math.random().toString()}
                 type={'password'}
-                label={LanguageManager.languageMap.get('PasswordConfirm')}
+                label={LanguageManager.languageMap.PasswordConfirm}
                 isPassword={true}
                 autoComplete='new-password'
                 variant="outlined"
@@ -133,7 +133,7 @@ const SignUp = observer(() => {
             <AuthInput
                 name={Math.random().toString()}
                 type={'text'}
-                label={LanguageManager.languageMap.get('Nickname')}
+                label={LanguageManager.languageMap.Nickname}
                 autoComplete='off'
                 variant='outlined'
                 error={SignupManager.nicknameState !== NicknameState.Default}
@@ -147,7 +147,7 @@ const SignUp = observer(() => {
             />
             <SignupCheckList/>
             <AuthButton
-                text={LanguageManager.languageMap.get('SignUp')}
+                text={LanguageManager.languageMap.SignUp}
                 theme={'primary-stroke'}
                 onClick={async () => {
                     setLoading(true)
@@ -159,7 +159,7 @@ const SignUp = observer(() => {
                 }}
             />
             <AuthSubButton
-                text={LanguageManager.languageMap.get('AlreadyAccountExists')}
+                text={LanguageManager.languageMap.AlreadyAccountExists}
                 onClick={() => RoutingManager.moveTo(Page.SignIn)}
             />
         </AuthContainer>

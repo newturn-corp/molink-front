@@ -15,28 +15,36 @@ export const HierarchyButtonGroup: React.FC<{
         return <></>
     }
     return (
-        <div
-            className={'hierarchy-button-group'}
-        >
-            <HierarchyButton
-                icon={<SearchIcon/>}
-                text={LanguageManager.languageMap.get('SearchInHierarchy')}
-                onClick={async (event) => {
-                    event.stopPropagation()
-                }}
-                disabled={true}
-            ></HierarchyButton>
-            <HierarchyButton
-                icon={<NewPageIcon/>}
-                text={LanguageManager.languageMap.get('CreateNewPage')}
-                onClick={async (event) => {
-                    event.stopPropagation()
-                    await currentHierarchy.createDocument(currentHierarchy.topLevelDocumentIdList.length, null)
-                    if (isMobile) {
-                        HierarchyManager.isHierarchyOpen = false
-                    }
-                }}
-            ></HierarchyButton>
-        </div>
+        <>
+            <div
+                className={'hierarchy-divider'}
+            />
+            <div
+                className={'hierarchy-button-group'}
+            >
+                <HierarchyButton
+                    icon={<SearchIcon/>}
+                    text={LanguageManager.languageMap.SearchInHierarchy}
+                    onClick={async (event) => {
+                        event.stopPropagation()
+                    }}
+                    disabled={true}
+                ></HierarchyButton>
+                <HierarchyButton
+                    icon={<NewPageIcon/>}
+                    text={LanguageManager.languageMap.CreateNewPage}
+                    onClick={async (event) => {
+                        event.stopPropagation()
+                        await currentHierarchy.createDocument(currentHierarchy.topLevelDocumentIdList.length, null)
+                        if (isMobile) {
+                            HierarchyManager.isHierarchyOpen = false
+                        }
+                    }}
+                ></HierarchyButton>
+            </div>
+            <div
+                className={'hierarchy-divider'}
+            />
+        </>
     )
 })

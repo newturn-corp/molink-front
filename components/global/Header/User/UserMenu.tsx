@@ -20,20 +20,20 @@ export const UserMenu: React.FC<MenuProps> = observer((props) => {
         }}
     >
         <MenuItem
-            text={LanguageManager.languageMap.get('SupportInMenu')}
+            text={LanguageManager.languageMap.SupportInMenu}
             onClick={() => {
                 UserManager.isUserMenuOpen = false
                 SupportManager.showSupportModal = true
             }}
         />
         <MenuItem
-            text={LanguageManager.languageMap.get('PrivacyAndTerms')}
+            text={LanguageManager.languageMap.PrivacyAndTerms}
             onClick={async () => {
                 await RoutingManager.rawMoveTo('https://www.molink.life/blog/Molink/4629add3ae7d9971bc539427afd127ad/%EC%9D%B4%EC%9A%A9%20%EC%95%BD%EA%B4%80', true)
             }}
         />
         <MenuItem
-            text={LanguageManager.languageMap.get('SignOut')}
+            text={LanguageManager.languageMap.SignOut}
             onClick={async () => {
                 UserManager.isUserMenuOpen = false
                 await AuthManager.signOut()

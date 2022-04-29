@@ -60,8 +60,8 @@ export const ContentToolbar: React.FC<{
                       <ToolbarEditingButton
                           size={'standard'}
                           icon={<Photo/>}
-                          text={LanguageManager.languageMap.get('Image')}
-                          desc={LanguageManager.languageMap.get('AddImage')}
+                          text={LanguageManager.languageMap.Image}
+                          desc={LanguageManager.languageMap.AddImage}
                           onClick={() => {}}
                           disabled={false}
                       />
@@ -78,8 +78,8 @@ export const ContentToolbar: React.FC<{
                       <ToolbarEditingButton
                           size={'standard'}
                           icon={<Video/>}
-                          text={LanguageManager.languageMap.get('Video')}
-                          desc={LanguageManager.languageMap.get('AddVideo')}
+                          text={LanguageManager.languageMap.Video}
+                          desc={LanguageManager.languageMap.AddVideo}
                           onClick={() => {}}
                           disabled={false}
                       />
@@ -97,8 +97,8 @@ export const ContentToolbar: React.FC<{
                       <ToolbarEditingButton
                           size={'standard'}
                           icon={<File/>}
-                          text={LanguageManager.languageMap.get('File')}
-                          desc={LanguageManager.languageMap.get('AddFile')}
+                          text={LanguageManager.languageMap.File}
+                          desc={LanguageManager.languageMap.AddFile}
                           onClick={() => {}}
                           disabled={false}
                       />
@@ -106,8 +106,8 @@ export const ContentToolbar: React.FC<{
                   <ToolbarEditingButton
                       size={'standard'}
                       icon={<BookRounded/>}
-                      text={LanguageManager.languageMap.get('Bookmark')}
-                      desc={LanguageManager.languageMap.get('AddBookmark')}
+                      text={LanguageManager.languageMap.Bookmark}
+                      desc={LanguageManager.languageMap.AddBookmark}
                       onClick={() => LinkManager.modal.open()}
                       disabled={false}
                   />
@@ -152,7 +152,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.formatActiveMap.get(Format.Bold) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={LanguageManager.languageMap.get('Bold')}
+                      desc={LanguageManager.languageMap.Bold}
                       onClick={() => FormattingManager.toggleFormat(Format.Bold)}
                   />
                   <ToolbarEditingButton
@@ -162,7 +162,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.formatActiveMap.get(Format.Italic) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={LanguageManager.languageMap.get('Italic')}
+                      desc={LanguageManager.languageMap.Italic}
                       onClick={() => FormattingManager.toggleFormat(Format.Italic)}
                   />
                   <ToolbarEditingButton
@@ -172,7 +172,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.formatActiveMap.get(Format.Underline) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={LanguageManager.languageMap.get('Underline')}
+                      desc={LanguageManager.languageMap.Underline}
                       onClick={() => FormattingManager.toggleFormat(Format.Underline)}
                   />
                   <div className={'vertical-divider'}/>
@@ -183,7 +183,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.alignMap.get(Align.Left) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={LanguageManager.languageMap.get('AlignLeft')}
+                      desc={LanguageManager.languageMap.AlignLeft}
                       onClick={() => FormattingManager.toggleAlign(Align.Left)}
                   />
                   <ToolbarEditingButton
@@ -193,7 +193,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.alignMap.get(Align.Center) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={LanguageManager.languageMap.get('AlignCenter')}
+                      desc={LanguageManager.languageMap.AlignCenter}
                       onClick={() => FormattingManager.toggleAlign(Align.Center)}
                   />
                   <ToolbarEditingButton
@@ -203,7 +203,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.alignMap.get(Align.Right) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={LanguageManager.languageMap.get('AlignRight')}
+                      desc={LanguageManager.languageMap.AlignRight}
                       onClick={() => FormattingManager.toggleAlign(Align.Right)}
                   />
                   <ToolbarEditingButton
@@ -213,7 +213,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.alignMap.get(Align.Justify) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={LanguageManager.languageMap.get('AlignJustify')}
+                      desc={LanguageManager.languageMap.AlignJustify}
                       onClick={() => FormattingManager.toggleAlign(Align.Justify)}
                   />
                   <div className={'vertical-divider'}/>
@@ -224,7 +224,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.listMap.get(List.Dot) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={LanguageManager.languageMap.get('UnorderedList')}
+                      desc={LanguageManager.languageMap.UnorderedList}
                       onClick={() => FormattingManager.toggleList(List.Dot)}
                   />
                   <ToolbarEditingButton
@@ -234,7 +234,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.listMap.get(List.Number) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={LanguageManager.languageMap.get('OrderedList')}
+                      desc={LanguageManager.languageMap.OrderedList}
                       onClick={() => FormattingManager.toggleList(List.Number)}
                   />
                   <ToolbarEditingButton
@@ -244,7 +244,7 @@ export const ContentToolbar: React.FC<{
                               fill: FormattingManager.listMap.get(List.Check) ? '#0094FF' : '#6C7177'
                           }}
                       />}
-                      desc={LanguageManager.languageMap.get('CheckList')}
+                      desc={LanguageManager.languageMap.CheckList}
                       onClick={() => FormattingManager.toggleList(List.Check)}
                   />
               </div>
