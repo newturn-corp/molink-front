@@ -11,11 +11,11 @@ const FollowButton: React.FC<{
     searchResult: ESUser
 }> = ({ searchResult }) => {
     const [isLoading, setIsLoading] = useState(false)
-    if (!UserManager.isUserAuthorized || UserManager.userId === searchResult.userId) {
+    if (!UserManager.isUserAuthorized || UserManager.userId === Number(searchResult.id)) {
         return <></>
     }
 
-    const followStatus = UserManager.follow.checkUserFollowStatus(searchResult.userId)
+    const followStatus = UserManager.follow.checkUserFollowStatus(Number(searchResult.id))
 
     const handleFollowButtonClick = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation()

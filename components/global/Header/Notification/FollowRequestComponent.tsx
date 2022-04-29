@@ -26,11 +26,9 @@ export const FollowRequestComponent: React.FC<{
                   <div className='interaction'>
                       <div
                           className='button accept'
-                          onClick={() => followRequest.accept()}
                       >확인</div>
                       <div
                           className='button reject'
-                          onClick={() => followRequest.reject()}
                       >삭제</div>
                   </div>
               </div>
