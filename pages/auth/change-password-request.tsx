@@ -10,6 +10,7 @@ import { AuthButton } from '../../components/auth/AuthButton'
 import UserManager from '../../manager/global/User/UserManager'
 import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 import { AuthContainer } from '../../components/auth/AuthContainer'
+import LanguageManager from '../../manager/global/LanguageManager'
 
 const getEmailHelperText = (emailState: EmailState) => {
     if (emailState === EmailState.DEFAULT) {
@@ -33,7 +34,7 @@ const ChangePasswordRequest = observer(() => {
             loading={loading}
         >
             <AuthTitle
-                text={'비밀번호 변경'}
+                text={LanguageManager.languageMap.get('ChangePassword')}
             />
             <AuthInput
                 label="이메일"

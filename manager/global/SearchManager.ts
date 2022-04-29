@@ -4,9 +4,10 @@ import { GetUserRepresentativeDocumentURLDTO, SearchUserDTO, UserSearchResultDTO
 import { RepresentativeDocumentNotExists, UserNotExists } from '../../Errors/UserError'
 import FeedbackManager, { NOTIFICATION_TYPE } from './FeedbackManager'
 import RoutingManager, { Page } from './RoutingManager'
+import { ESUser } from '@newturn-develop/types-molink'
 
 class SearchManager {
-    _searchResults: UserSearchResultDTO[] = null
+    _searchResults: ESUser[] = null
     isSearching = false
 
     get searchResults () {
@@ -23,7 +24,7 @@ class SearchManager {
         }
         this.isSearching = true
         const results = await UserAPI.searchUsers(new SearchUserDTO(text))
-        this._searchResults = results.userSearchResults
+        this._searchResults = results
         this.isSearching = false
     }
 

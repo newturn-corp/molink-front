@@ -1,0 +1,89 @@
+.page-list-container {
+  width: fit-content;
+  margin: 40px auto;
+}
+.page-list-container .list-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.page-list-container .pagination {
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.page-list-container .pagination .MuiPagination-root {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.page-column-component {
+  display: flex;
+  flex-direction: row;
+  height: 130px;
+  width: 800px;
+  margin: 12px 0px;
+  cursor: pointer;
+}
+.page-column-component .thumbnail {
+  width: 200px;
+  height: 100%;
+  border-radius: 8px;
+  display: flex;
+}
+.page-column-component .thumbnail img {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.page-column-component .thumbnail .text {
+  justify-content: center;
+  color: white;
+  margin: auto auto;
+  user-select: none;
+  font-size: 20px;
+  font-weight: 600;
+  max-width: 200px;
+}
+.page-column-component .text-container {
+  width: 600px;
+  padding: 0px 21px;
+  display: flex;
+  flex-direction: column;
+}
+.page-column-component .text-container .title {
+  fontSize: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 20px;
+}
+.page-column-component .text-container .last-edited-at {
+  font-size: 12px;
+  color: #9DA7B0;
+  margin-bottom: 8px;
+}
+.page-column-component .text-container .user-container {
+  display: flex;
+  flex-direction: row;
+  height: 20px;
+  margin-bottom: 8px;
+}
+.page-column-component .text-container .user-container .profile-image {
+  margin-right: 4px;
+  border-radius: 10px;
+}
+.page-column-component .text-container .user-container .nickname {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+}
+.page-column-component .text-container .description {
+  font-size: 14px;
+  line-height: 20px;
+  height: 40px;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  overflow-y: hidden;
+}
+
+/*# sourceMappingURL=blog.css.map */

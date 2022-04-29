@@ -169,7 +169,7 @@ export const ShortcutWhenDeleteBackward: DeleteBackwardHandler = (editor: Editor
                 block.type !== 'text' &&
                 Point.equals(selection.anchor, start)
             ) {
-                if (block.type === 'list-item') {
+                if (block.type === 'list-item' || block.type === 'check-list-item') {
                     ListTransforms.unwrapList(editor)
                 }
                 const newProperties: Partial<SlateElement> = {

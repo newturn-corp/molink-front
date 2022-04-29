@@ -9,8 +9,19 @@ const { Search } = Input
 export const SearchComponent: React.FC<{
   }> = observer(() => {
       const onSearch = async value => {
-          await RoutingManager.moveTo(Page.Search, `?q=${value}`)
+          await RoutingManager.moveTo(Page.SearchUser, `?q=${value}`)
       }
 
-      return <Search className='search' placeholder="input search text" onSearch={onSearch} style={{ width: 200 }} />
+      return <div
+          className={'search-container'}
+      >
+          <Search
+              className='search'
+              placeholder="현재 사용자만 검색할 수 있습니다."
+              onSearch={onSearch}
+              style={{
+                  width: 360
+              }}
+          />
+      </div>
   })

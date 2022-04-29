@@ -3,12 +3,13 @@ import { WebsocketProvider } from 'y-websocket'
 import * as Y from 'yjs'
 import { UserSetting } from './UserSetting'
 import EventManager from '../Event/EventManager'
-import { HierarchyNotExists } from '../../../Errors/HierarchyError'
 import { Event } from '../Event/Event'
 import UserAPI from '../../../api/UserAPI'
 import { UserProfile } from './UserProfile'
 import { UserLimit } from './UserLimit'
 import { UserNotExists } from '../../../Errors/UserError'
+import { UserNotification } from './UserNotification'
+import { UserFollow } from './UserFollow'
 
 class UserManager {
     isUserAuthorized: boolean = false
@@ -22,6 +23,8 @@ class UserManager {
     profile: UserProfile
     setting: UserSetting
     limit: UserLimit
+    notification: UserNotification
+    follow: UserFollow
 
     constructor () {
         makeAutoObservable(this, {
@@ -32,6 +35,8 @@ class UserManager {
         this.profile = new UserProfile()
         this.setting = new UserSetting()
         this.limit = new UserLimit()
+        this.notification = new UserNotification()
+        this.follow = new UserFollow()
 
         EventManager.addEventListener(Event.SignOut, () => {
             this.reset()
@@ -53,6 +58,8 @@ class UserManager {
             this.profile.sync(this.yjsDocument.getMap<any>('profile'))
             this.setting.sync(this.yjsDocument.getMap<any>('setting'))
             this.limit.sync(this.yjsDocument.getMap<any>('limit'))
+            this.notification.sync(this.yjsDocument.getMap<any>('notification'))
+            this.follow.sync(this.yjsDocument.getMap('myFollowRequests'), this.yjsDocument.getMap('followList'))
 
             this.websocketProvider = new WebsocketProvider(
                 process.env.USER_SERVER_URL,
@@ -105,6 +112,8 @@ class UserManager {
         }
         this.profile.reset()
         this.setting.reset()
+        this.limit.reset()
+        this.notification.reset()
         this.userId = null
         this.isUserAuthorized = false
         this.yjsDocument = null

@@ -46,7 +46,6 @@ class GlobalManager {
         this.window.onresize = async () => {
             await EventManager.issueEvent(Event.WindowResize, {})
         }
-
         await EventManager.issueEvent(Event.InitGlobalVariable, {})
     }
 

@@ -5,7 +5,11 @@ import {
     GetHierarcyResponseDTO,
     GetContentResponseDTO,
     GetDocumentAuthorityDTO,
-    GetUserIDDTO
+    GetUserIDDTO,
+    GetUserPageListDTO,
+    GetUserInfoByUserMapDTO,
+    GetUserInfoByUserMapResponseDTO,
+    GetUserPageListResponseDTO
 } from '@newturn-develop/types-molink'
 import { ContentNotExists, ContentUserNotExists } from '../Errors/ContentError'
 
@@ -51,6 +55,16 @@ class ViewerAPI extends BaseAPI {
         } else if (res.status === 409001) {
             throw new UnauthorizedForDocument()
         }
+        return res.data
+    }
+
+    async getUserPageList (userId: number, from: number): Promise<GetUserPageListResponseDTO> {
+        const res = await this.get(`/viewer/${userId}/pages?from=${from}`)
+        return res.data
+    }
+
+    async getUserInfoMapByIDList (userIDList: number[]): Promise<GetUserInfoByUserMapResponseDTO> {
+        const res = await this.get(`/viewer/users?userIDList=${userIDList.join(',')}`)
         return res.data
     }
 }

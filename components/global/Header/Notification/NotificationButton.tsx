@@ -3,12 +3,12 @@ import { observer } from 'mobx-react'
 import { Menu, Badge, IconButton } from '@material-ui/core'
 import NotificationsOutlinedIcon from '@material-ui/icons/NotificationsOutlined'
 import { NotificationBlock } from './NotificationBlock'
-import NotificationManager from '../../../manager/global/NotificationManager'
-import FollowManager from '../../../manager/global/FollowManager'
+import NotificationManager from '../../../../manager/global/NotificationManager'
+import FollowManager from '../../../../manager/global/FollowManager'
 import { FollowRequestComponent } from './FollowRequestComponent'
-import { Notification } from '../../../domain/Notification'
-import { FollowRequest } from '../../../domain/FollowRequest'
-import UserManager from '../../../manager/global/User/UserManager'
+import { Notification } from '../../../../domain/Notification'
+import { FollowRequest } from '../../../../domain/FollowRequest'
+import UserManager from '../../../../manager/global/User/UserManager'
 
 const FollowRequests: React.FC<{
     requests: FollowRequest[]
@@ -58,7 +58,7 @@ export const NotificationButton: React.FC<{
       // 하나라도 isViewed가 false인 Notification이 있으면 보여줌
       const notifications = NotificationManager.notifications
       const followRequests = FollowManager.followRequests.filter(req => !req.isHandled)
-      const isNewNotification = (NotificationManager.notifications.filter(noti => !noti.isViewed).length + FollowManager.viewedFollowRequestsLength) > 0
+      const isNewNotificationExists = UserManager.notification.checkIsUncheckedNotificationExists()
 
       const isNotificationExists = !!(notifications.length + followRequests.length)
 
@@ -81,7 +81,7 @@ export const NotificationButton: React.FC<{
               variant="dot"
               overlap={'circular'}
               onClick={(event) => handleClick(event)}
-              invisible={!isNewNotification}
+              invisible={!isNewNotificationExists}
           >
               <IconButton
                   className={'button'}

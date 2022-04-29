@@ -10,6 +10,7 @@ import SignInManager from '../../manager/Auth/SignInManager'
 import { EmailState, PasswordState } from '../../manager/Auth/AuthStates'
 import { AuthContainer } from '../../components/auth/AuthContainer'
 import { AuthSubButton } from '../../components/auth/AuthSubButton'
+import LanguageManager from '../../manager/global/LanguageManager'
 
 const getEmailHelperText = (emailState: EmailState) => {
     if (emailState === EmailState.DEFAULT) {
@@ -17,12 +18,12 @@ const getEmailHelperText = (emailState: EmailState) => {
     }
     switch (emailState) {
     case EmailState.NOT_EMAIL:
-        return '이메일 형식이 아닙니다.'
+        return LanguageManager.languageMap.get('EmailFormatError')
     case EmailState.NOT_AUTHORIZED:
     case EmailState.WRONG_EMAIL_PASSWORD:
-        return '이메일 혹은 비밀번호가 잘못 입력되었습니다.'
+        return LanguageManager.languageMap.get('WrongEmailPasswordError')
     case EmailState.TOO_MANY_REQUEST:
-        return '요청을 너무 많이 보냈습니다. 잠시 뒤 다시 시도해주세요.'
+        return LanguageManager.languageMap.get('TooManyLoginRequestsError')
     }
     return undefined
 }
@@ -59,7 +60,7 @@ const SignIn = observer(() => {
     return <div className='auth-page sign-in-page'>
         <AuthHeader/>
         <AuthContainer loading={loading}>
-            <AuthTitle text={'로그인'}/>
+            <AuthTitle text={LanguageManager.languageMap.get('SignIn')}/>
             <form onKeyDown={async (event) => {
                 if (event.key === 'Enter') {
                     await login()
@@ -67,7 +68,7 @@ const SignIn = observer(() => {
             }}>
                 <AuthInput
                     inputRef={emailRef}
-                    label="이메일"
+                    label={LanguageManager.languageMap.get('Email')}
                     type="email"
                     variant="outlined"
                     autoComplete='off'
@@ -84,7 +85,7 @@ const SignIn = observer(() => {
                 />
                 <AuthInput
                     inputRef={passwordRef}
-                    label="비밀번호"
+                    label={LanguageManager.languageMap.get('Password')}
                     type="password"
                     autoComplete="current-password"
                     variant="outlined"
@@ -97,7 +98,7 @@ const SignIn = observer(() => {
                 />
             </form>
             <AuthButton
-                text={'로그인'}
+                text={LanguageManager.languageMap.get('SignIn')}
                 theme={'primary'}
                 style={{
                     marginTop: 22
@@ -107,7 +108,7 @@ const SignIn = observer(() => {
                 }}
             />
             <AuthButton
-                text={'계정 생성'}
+                text={LanguageManager.languageMap.get('SignUp')}
                 theme={'primary-stroke'}
                 border={'1px solid #3A7BBF'}
                 onClick={async () => {
@@ -117,7 +118,7 @@ const SignIn = observer(() => {
                 }}
             />
             <AuthSubButton
-                text={'비밀번호를 잊으셨나요?'}
+                text={LanguageManager.languageMap.get('ForgetPassword')}
                 onClick={() => RoutingManager.moveTo(Page.ChangePasswordRequest)}
             />
         </AuthContainer>

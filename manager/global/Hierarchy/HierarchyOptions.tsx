@@ -10,6 +10,7 @@ import React, { ReactNode } from 'react'
 import NewPageIcon from 'public/image/icon/new-page.svg'
 import EditIcon from 'public/image/icon/edit.svg'
 import TrashCanIcon from 'public/image/icon/trash-can.svg'
+import LanguageManager from '../LanguageManager'
 
 export abstract class HierarchyControlOption {
     name: string = ''
@@ -26,7 +27,7 @@ export abstract class HierarchyControlOption {
 export class CreateNewPageOption extends HierarchyControlOption {
     constructor (documentId: string | null) {
         super(documentId)
-        this.name = documentId ? '하위 페이지 생성' : '페이지 생성'
+        this.name = documentId ? LanguageManager.languageMap.get('CreateChildPage') : LanguageManager.languageMap.get('CreatePage')
         this.icon = <NewPageIcon/>
     }
 
@@ -50,7 +51,7 @@ export class CreateNewPageOption extends HierarchyControlOption {
 export class ChangePageNameOption extends HierarchyControlOption {
     constructor (documentId: string | null) {
         super(documentId)
-        this.name = '이름 변경'
+        this.name = LanguageManager.languageMap.get('ChangePageName')
         this.icon = <EditIcon/>
     }
 
@@ -63,7 +64,7 @@ export class ChangePageNameOption extends HierarchyControlOption {
 export class DeletePageOption extends HierarchyControlOption {
     constructor (documentId: string | null) {
         super(documentId)
-        this.name = '삭제'
+        this.name = LanguageManager.languageMap.get('Delete')
         this.icon = <TrashCanIcon/>
     }
 
@@ -78,8 +79,8 @@ export class DeletePageOption extends HierarchyControlOption {
         const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
         const page = currentHierarchy.yMap.get(this.documentId)
         const childIDList = getChildren(currentHierarchy.map, page.id)
-        const msg = childIDList.length > 0 ? `${page.title} 문서와 그 하위 문서 ${childIDList.length}개를 모두 제거합니다.` : `${page.title} 문서를 제거합니다.`
-        const index = await DialogManager.openDialog('문서 삭제', msg, ['확인'])
+        const msg = childIDList.length > 0 ? `${page.title}${LanguageManager.languageMap.get('DeletePageDialogMsg1')}${childIDList.length}${LanguageManager.languageMap.get('DeletePageDialogMsg2')}` : `${page.title}${LanguageManager.languageMap.get('DeletePageDialogMsgOnlyOnePage')}`
+        const index = await DialogManager.openDialog(LanguageManager.languageMap.get('DeletePage'), msg, [LanguageManager.languageMap.get('Accept')])
         if (index !== 0) {
             return
         }
@@ -113,7 +114,8 @@ export class DeletePageOption extends HierarchyControlOption {
             }
             currentHierarchy.yMap.delete(page.id)
         })
-        await ContentAPI.deleteContents(new DeleteContentsDTO(childIDList))
+        const deleteList = [...childIDList, page.id]
+        await ContentAPI.deleteContents(new DeleteContentsDTO(deleteList))
         currentHierarchy.selectedPageId = null
         if (isOpenedDocumentIncludes) {
             UserManager.profile.setLastOpenPageId(null)
@@ -125,7 +127,7 @@ export class DeletePageOption extends HierarchyControlOption {
 export class SettingDocumentListOption extends HierarchyControlOption {
     constructor (documentId: string | null) {
         super(documentId)
-        this.name = '하이어라키 설정'
+        this.name = LanguageManager.languageMap.get('SettingHierarchy')
         this.icon = <TrashCanIcon/>
     }
 

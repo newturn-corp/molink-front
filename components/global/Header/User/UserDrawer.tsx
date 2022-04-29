@@ -11,9 +11,162 @@ import { Avatar } from '@material-ui/core'
 import AuthManager from '../../../../manager/Auth/AuthManager'
 import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
 import SupportManager from '../../../../manager/global/SupportManager'
+import { LinkRounded, LockOpenRounded, LockRounded, RedoRounded, UndoRounded } from '@material-ui/icons'
+import EditorManager from '../../../../manager/Blog/EditorManager'
+import { message } from 'antd'
+import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
+import { PageVisibility } from '@newturn-develop/types-molink'
+import Public from '../../../../public/image/editor/toolbar/visibility/public.svg'
+import OnlyFollower from '../../../../public/image/editor/toolbar/visibility/only-follower.svg'
+import Private from '../../../../public/image/editor/toolbar/visibility/private.svg'
+
+const getIconForPageVisibility = (visibility: PageVisibility) => {
+    switch (visibility) {
+    case PageVisibility.Public:
+        return <Public/>
+    case PageVisibility.OnlyFollower:
+        return <OnlyFollower/>
+    case PageVisibility.Private:
+        return <Private/>
+    }
+}
+
+const getNameForPageVisibility = (visibility: PageVisibility) => {
+    switch (visibility) {
+    case PageVisibility.Public:
+        return '전체 공개'
+    case PageVisibility.OnlyFollower:
+        return '팔로워만'
+    case PageVisibility.Private:
+        return '비공개'
+    }
+}
+
+const UserPart: React.FC<{
+}> = observer(() => {
+    return (
+        <MobileColumnDrawerGroup
+            style={{
+                marginBottom: 30
+            }}
+        >
+            <MobileColumnDrawerElement
+                onClick={async () => {
+                    if (!UserManager.isUserAuthorized) {
+                        await RoutingManager.moveTo(Page.SignIn)
+                    }
+                }}
+            >
+                <Avatar
+                    className='profile'
+                    style={{
+                        width: 32,
+                        height: 32
+                    }}
+                    src={UserManager.profile.getUserProfileImageSrc()}
+                />
+                <div
+                    className={'nickname'}
+                >
+                    {UserManager.isUserAuthorized ? UserManager.profile.nickname : '로그인'}
+                </div>
+            </MobileColumnDrawerElement>
+            {
+                UserManager.isUserAuthorized
+                    ? <>
+                        <MobileColumnDrawerElement
+                            onClick={async () => {
+                                UserManager.isUserDrawerOpen = false
+                                await AuthManager.signOut()
+                            }}
+                        >
+                            <LogOutIcon/>
+                            <div className={'name'}>{'로그 아웃'}</div>
+                        </MobileColumnDrawerElement>
+                    </>
+                    : <></>
+            }
+        </MobileColumnDrawerGroup>
+    )
+})
+
+const EditorPart: React.FC<{
+}> = observer(() => {
+    const hierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
+    if (!hierarchy || !hierarchy.openedPageId) {
+        return <></>
+    }
+    if (!EditorManager.editable) {
+        return <></>
+    }
+    const page = hierarchy.map[hierarchy.openedPageId]
+
+    return (
+        <>
+            <MobileColumnDrawerGroup
+                style={{
+                    marginBottom: 30
+                }}
+            >
+                <MobileColumnDrawerElement
+                    onClick={async () => {
+                        EditorManager.slateEditor.redo()
+                        UserManager.isUserDrawerOpen = false
+                    }}
+                >
+                    <UndoRounded/>
+                    <div className={'name'}>{'실행 취소'}</div>
+                </MobileColumnDrawerElement>
+                <MobileColumnDrawerElement
+                    onClick={async () => {
+                        EditorManager.slateEditor.undo()
+                        UserManager.isUserDrawerOpen = false
+                    }}
+                >
+                    <RedoRounded/>
+                    <div className={'name'}>{'다시 실행'}</div>
+                </MobileColumnDrawerElement>
+            </MobileColumnDrawerGroup>
+            <MobileColumnDrawerGroup
+                style={{
+                    marginBottom: 30
+                }}
+            >
+                <MobileColumnDrawerElement
+                    onClick={async () => {
+                        const info = EditorManager.info
+                        EditorManager.updateIsLocked(!info.isLocked)
+                        if (info.isLocked) {
+                            message.success('페이지가 잠금되었습니다.')
+                        } else {
+                            message.success('페이지가 잠금 해제 되었습니다.')
+                        }
+                    }}
+                >
+                    {
+                        EditorManager.isLocked ? <LockOpenRounded/> : <LockRounded/>
+                    }
+                    <div className={'name'}>{EditorManager.isLocked ? '페이지 잠금 해제' : '페이지 잠금'}</div>
+                </MobileColumnDrawerElement>
+                <MobileColumnDrawerElement
+                    onClick={async () => {
+                        hierarchy.visibilityController.isVisibilityDrawerOpen = true
+                        UserManager.isUserDrawerOpen = false
+                    }}
+                >
+                    {
+                        getIconForPageVisibility(page.visibility)
+                    }
+                    <div className={'name'}>{`공개 범위 변경 (${getNameForPageVisibility(page.visibility)})`}</div>
+                </MobileColumnDrawerElement>
+            </MobileColumnDrawerGroup>
+        </>
+    )
+})
 
 export const UserDrawer: React.FC<{
 }> = observer(() => {
+    const hierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
     return (
         <MobileColumnDrawer
             className={'user-drawer'}
@@ -24,48 +177,35 @@ export const UserDrawer: React.FC<{
             backgroundColor={'#FAFAFB'}
             title={'메뉴'}
         >
-            <MobileColumnDrawerGroup
-                style={{
-                    marginBottom: 40
-                }}
-            >
-                <MobileColumnDrawerElement
-                    onClick={async () => {
-                        await RoutingManager.moveTo(Page.SignIn)
-                    }}
-                >
-                    <Avatar
-                        className='profile'
-                        style={{
-                            width: 32,
-                            height: 32
-                        }}
-                        src={UserManager.profile.getUserProfileImageSrc()}
-                    />
-                    <div
-                        className={'nickname'}
-                    >
-                        {UserManager.isUserAuthorized ? UserManager.profile.nickname : '로그인'}
-                    </div>
-                </MobileColumnDrawerElement>
-                {
-                    UserManager.isUserAuthorized
-                        ? <>
+            <UserPart/>
+            <EditorPart/>
+            {
+                hierarchy && hierarchy.openedPageId
+                    ? <>
+                        <MobileColumnDrawerGroup
+                            style={{
+                                marginBottom: 30
+                            }}
+                        >
                             <MobileColumnDrawerElement
                                 onClick={async () => {
+                                    await navigator.clipboard.writeText(window.location.href)
                                     UserManager.isUserDrawerOpen = false
-                                    await AuthManager.signOut()
+                                    message.success('클립보드에 링크가 복사되었습니다.')
                                 }}
                             >
-                                <LogOutIcon/>
-                                <div className={'name'}>{'로그 아웃'}</div>
+                                <LinkRounded/>
+                                <div className={'name'}>{'링크 복사'}</div>
                             </MobileColumnDrawerElement>
-                        </>
-                        : <></>
-                }
-            </MobileColumnDrawerGroup>
-            <PrivacyAndTermsButton/>
-            <MobileColumnDrawerGroup>
+                        </MobileColumnDrawerGroup>
+                    </>
+                    : <></>
+            }
+            <MobileColumnDrawerGroup
+                style={{
+                    marginBottom: 20
+                }}
+            >
                 <MobileColumnDrawerElement
                     onClick={async () => {
                         SupportManager.isSupportDrawerOpen = true

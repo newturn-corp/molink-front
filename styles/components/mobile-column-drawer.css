@@ -32,7 +32,7 @@
   padding: 12px 12px 12px 20px;
   display: flex;
   flex-direction: row;
-  border-top: 1px solid #d0d0d0;
+  border-top: 1px solid #ECEFF2;
 }
 .mobile-column-drawer .element svg {
   width: 20px;
@@ -44,7 +44,7 @@
   line-height: 25px;
 }
 .mobile-column-drawer .element:last-child {
-  border-bottom: 1px solid #d0d0d0;
+  border-bottom: 1px solid #ECEFF2;
 }
 .mobile-column-drawer .group {
   background-color: white;

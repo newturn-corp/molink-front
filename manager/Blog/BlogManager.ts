@@ -9,6 +9,7 @@ import { InvalidParam } from '../../Errors/Common'
 import HierarchyManager from '../global/Hierarchy/HierarchyManager'
 import EditorManager from './EditorManager'
 import UserManager from '../global/User/UserManager'
+import { UserPageList } from './UserPageList'
 
 enum HomeURLType {
     OnlyDocumentURL = 'only-document-url',
@@ -17,6 +18,13 @@ enum HomeURLType {
 }
 
 class BlogManager {
+    blogUserId: number = 0
+    userPageList: UserPageList
+
+    constructor () {
+        this.userPageList = new UserPageList()
+    }
+
     interpretURLInfo (info: string[]) {
         if (info.length === 0) {
             throw new InvalidParam()
@@ -28,6 +36,10 @@ class BlogManager {
             } else {
                 throw new InvalidParam()
             }
+        } else if (info.length === 2) {
+            const nickname = info[0]
+            const pageListOrder = Number(info[1])
+            return { type: HomeURLType.UserMainURL, nickname, pageListOrder }
         } else {
             const nickname = info[0]
             const pageId = info[1]
@@ -42,7 +54,7 @@ class BlogManager {
     async handleEnterBlogPage (info: string[]) {
         try {
             await UserManager.load()
-            const { type, nickname, pageId, documentName } = this.interpretURLInfo(info)
+            const { type, nickname, pageId, documentName, pageListOrder } = this.interpretURLInfo(info)
             if (type === HomeURLType.OnlyDocumentURL) {
                 const authority = await ViewerAPI.getDocumentAuthority(pageId)
                 if (!authority.viewable) {
@@ -54,11 +66,9 @@ class BlogManager {
                 return
             } else if (type === HomeURLType.UserMainURL) {
                 const { id: userId } = await ViewerAPI.getUserIDByNickname(nickname)
+                this.blogUserId = userId
                 await HierarchyManager.loadHierarchy(userId, nickname)
-                // if (UserManager.userId === userId && UserManager.profile && UserManager.profile.lastOpenPageId) {
-                //     await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${UserManager.profile.lastOpenPageId}`)
-                //     return
-                // }
+                await this.userPageList.loadPageSummaryList(pageListOrder)
             } else if (type === HomeURLType.StandardDocumentURL) {
                 const authority = await ViewerAPI.getDocumentAuthority(pageId)
                 if (!authority.viewable) {

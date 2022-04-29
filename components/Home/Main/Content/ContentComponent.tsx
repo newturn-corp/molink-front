@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import { ContentForEmptyDocument } from './ContentForEmptyDocument'
+import { UserPageListComponent } from './UserPageListComponent'
 import { ContentHeaderIcon } from './ContentHeaderIcon'
 import { EditorContainer } from './EditorContainer'
 import { ContentTitleComponent } from './ContentTitleComponent'
@@ -10,13 +10,6 @@ import StyleManager from '../../../../manager/global/Style/StyleManager'
 
 export const ContentComponent: React.FC<{
 }> = observer(() => {
-    const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    if (!currentHierarchy || !currentHierarchy.openedPageId) {
-        return <div className={'contents'}
-            style={StyleManager.contentStyle.main}>
-            <ContentForEmptyDocument />
-        </div>
-    }
     return <>
         <div className={'contents'}
             style={StyleManager.contentStyle.main}

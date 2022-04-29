@@ -18,6 +18,7 @@ import { handleDeleteBackwardAfterMedia, handleDeleteForwardAfterMedia } from '.
 import FormattingManager from '../../manager/Editing/FormattingManager'
 import LinkManager from '../../manager/Editing/Link/LinkManager'
 import ToolbarManager from '../../manager/Editing/ToolbarManager'
+import EditorManager from '../../manager/Blog/EditorManager'
 
 export const EditorPlugin = (editor: Editor) => {
     const { isVoid, isInline, insertBreak, deleteBackward, deleteForward, normalizeNode, insertText, insertData, onChange, insertNode } = editor
@@ -116,6 +117,7 @@ export const EditorPlugin = (editor: Editor) => {
         }
         FormattingManager.handleEditorChange()
         ToolbarManager.handleEditorChange()
+        EditorManager.handleEditorOnChange()
         onChange()
     }
 

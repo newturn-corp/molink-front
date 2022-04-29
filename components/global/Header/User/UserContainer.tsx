@@ -14,6 +14,7 @@ import SupportManager from '../../../../manager/global/SupportManager'
 import AuthManager from '../../../../manager/Auth/AuthManager'
 import GlobalManager from '../../../../manager/global/GlobalManager'
 import StyleManager from '../../../../manager/global/Style/StyleManager'
+import { VisibilityDrawer } from '../Mobile/VisibilityDrawer'
 
 export const UserContainer: React.FC<{
 }> = observer(() => {
@@ -74,6 +75,7 @@ export const UserContainer: React.FC<{
         </div>
         <MobileView>
             <UserDrawer/>
+            <VisibilityDrawer/>
         </MobileView>
         <SupportModal/>
         <SupportDrawer/>

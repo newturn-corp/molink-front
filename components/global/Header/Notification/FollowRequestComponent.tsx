@@ -1,8 +1,8 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Avatar, MenuItem } from '@material-ui/core'
-import { FollowRequest } from '../../../domain/FollowRequest'
-import { getRelativeTime } from '../../../utils/getRelativeTime'
+import { getRelativeTime } from '../../../../utils/getRelativeTime'
+import { FollowRequest } from '@newturn-develop/types-molink'
 
 export const FollowRequestComponent: React.FC<{
     followRequest: FollowRequest,

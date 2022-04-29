@@ -8,6 +8,8 @@ import { AuthTitle } from '../../components/auth/AuthTitle'
 import { AuthInput } from '../../components/auth/AuthInput'
 import { AuthButton } from '../../components/auth/AuthButton'
 import { AuthContainer } from '../../components/auth/AuthContainer'
+import LanguageManager from '../../manager/global/LanguageManager'
+import { observer } from 'mobx-react'
 
 const getPasswordHelperText = (passwordState: PasswordState) => {
     switch (passwordState) {
@@ -21,7 +23,7 @@ const getPasswordHelperText = (passwordState: PasswordState) => {
     }
 }
 
-const AuthChangePasswordPage = () => {
+const AuthChangePasswordPage = observer(() => {
     const key = new URLSearchParams(window.location.search).get('key')
     useEffect(() => {
         AuthManager.checkPasswordChangeExist(new URLSearchParams(window.location.search).get('key')).then(res => {
@@ -37,10 +39,10 @@ const AuthChangePasswordPage = () => {
             loading={loading}
         >
             <AuthTitle
-                text={'비밀번호 변경'}
+                text={LanguageManager.languageMap.get('ChangePassword')}
             />
             <AuthInput
-                label="비밀번호"
+                label={LanguageManager.languageMap.get('Password')}
                 type="password"
                 autoComplete="new-password"
                 variant='outlined'
@@ -59,7 +61,7 @@ const AuthChangePasswordPage = () => {
                 helperText={getPasswordHelperText(AuthManager.passwordState)}
             />
             <AuthInput
-                label="비밀번호 확인"
+                label={LanguageManager.languageMap.get('PasswordConfirm')}
                 type="password"
                 autoComplete="new-password"
                 variant='outlined'
@@ -76,7 +78,7 @@ const AuthChangePasswordPage = () => {
                 }}
             />
             <AuthButton
-                text={'비밀번호 변경'}
+                text={LanguageManager.languageMap.get('ChangePassword')}
                 theme={'primary'}
                 style={{
                     marginTop: 44
@@ -92,6 +94,6 @@ const AuthChangePasswordPage = () => {
             />
         </AuthContainer>
     </div>
-}
+})
 
 export default AuthChangePasswordPage

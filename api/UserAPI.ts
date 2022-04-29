@@ -2,7 +2,7 @@ import { BaseAPI } from './baseAPI'
 import { APIError } from './APIError'
 import { SearchUserDTO, SearchResponseDTO, GetUserRepresentativeDocumentResponseDTO, GetUserRepresentativeDocumentURLDTO, UpdateUserProfileImageDto, UpdateUserBiographyDTO, FollowResponseDTO, FollowRequestDTO } from '../DTO/UserDTO'
 import { RepresentativeDocumentNotExists, UserNotExists } from '../Errors/UserError'
-import { GetUserIDDTO } from '@newturn-develop/types-molink'
+import { ESUser, GetUserIDDTO } from '@newturn-develop/types-molink'
 import { Unauthorized } from '../Errors/Common'
 
 class UserAPI extends BaseAPI {
@@ -16,10 +16,10 @@ class UserAPI extends BaseAPI {
         return data.id
     }
 
-    async searchUsers (dto: SearchUserDTO): Promise<SearchResponseDTO> {
+    async searchUsers (dto: SearchUserDTO): Promise<ESUser[]> {
         const res = await this.get(`/main/users/search?q=${dto.searchText}`)
         if (res.status !== 200) throw new APIError(res)
-        return res.data
+        return res.arr
     }
 
     async getUserRepresentativeDocumentUrl (dto: GetUserRepresentativeDocumentURLDTO): Promise<GetUserRepresentativeDocumentResponseDTO> {

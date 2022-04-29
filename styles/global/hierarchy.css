@@ -8,6 +8,7 @@
   height: 56px;
   display: flex;
   margin-bottom: 0px;
+  cursor: pointer;
 }
 .hierarchy .hierarchy-name .profile-image {
   margin-left: 12px;
