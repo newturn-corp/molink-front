@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 
 class LanguageManager {
     languageMap: Map<string, string>
@@ -15,6 +15,7 @@ class LanguageManager {
             const [key, text] = line.split('\t')
             this.languageMap.set(key, text)
         })
+        console.log(toJS(this.languageMap))
     }
 }
 export default new LanguageManager()
