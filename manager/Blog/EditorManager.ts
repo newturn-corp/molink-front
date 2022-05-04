@@ -22,7 +22,6 @@ import React from 'react'
 import { SlateImageElementType, TextCategory } from '../../Types/slate/CustomElement'
 import ContentAPI from '../../api/ContentAPI'
 import { UpdatePageDataInSearchEngineDTO } from '@newturn-develop/types-molink/dist/DTO'
-import moment from 'moment-timezone'
 import Serializer from './Editor/Serializer'
 import { PageVisibility } from '@newturn-develop/types-molink'
 
@@ -104,6 +103,7 @@ class EditorManager {
             Y.applyUpdate(this.yjsDocument, Uint8Array.from(dto.content))
             this.slateEditor = EditorPlugin(
                 withYjs(withReact(withHistory(createEditor())), this.sharedType))
+            this.isToolbarOpen = false
         } else {
             this.websocketProvider = new WebsocketProvider(process.env.CONTENT_SERVER_URL, pageId, this.yjsDocument, {
                 connect: false

@@ -19,6 +19,7 @@ import { PageVisibility } from '@newturn-develop/types-molink'
 import Public from '../../../../public/image/editor/toolbar/visibility/public.svg'
 import OnlyFollower from '../../../../public/image/editor/toolbar/visibility/only-follower.svg'
 import Private from '../../../../public/image/editor/toolbar/visibility/private.svg'
+import LanguageManager from '../../../../manager/global/LanguageManager'
 
 const getIconForPageVisibility = (visibility: PageVisibility) => {
     switch (visibility) {
@@ -34,11 +35,11 @@ const getIconForPageVisibility = (visibility: PageVisibility) => {
 const getNameForPageVisibility = (visibility: PageVisibility) => {
     switch (visibility) {
     case PageVisibility.Public:
-        return '전체 공개'
+        return LanguageManager.languageMap.PublicVisibility
     case PageVisibility.OnlyFollower:
-        return '팔로워만'
+        return LanguageManager.languageMap.OnlyFollowerVisibility
     case PageVisibility.Private:
-        return '비공개'
+        return LanguageManager.languageMap.PrivateVisibility
     }
 }
 
@@ -68,7 +69,7 @@ const UserPart: React.FC<{
                 <div
                     className={'nickname'}
                 >
-                    {UserManager.isUserAuthorized ? UserManager.profile.nickname : '로그인'}
+                    {UserManager.isUserAuthorized ? UserManager.profile.nickname : LanguageManager.languageMap.SignIn}
                 </div>
             </MobileColumnDrawerElement>
             {
@@ -81,7 +82,7 @@ const UserPart: React.FC<{
                             }}
                         >
                             <LogOutIcon/>
-                            <div className={'name'}>{'로그 아웃'}</div>
+                            <div className={'name'}>{LanguageManager.languageMap.SignOut}</div>
                         </MobileColumnDrawerElement>
                     </>
                     : <></>

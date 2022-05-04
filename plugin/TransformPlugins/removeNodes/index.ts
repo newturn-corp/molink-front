@@ -5,6 +5,8 @@ import { ChangePageFileRelationshipDTO } from '@newturn-develop/types-molink'
 import EditorManager from '../../../manager/Blog/EditorManager'
 import UserManager from '../../../manager/global/User/UserManager'
 import { isNumber } from 'lodash'
+import EventManager from '../../../manager/global/Event/EventManager'
+import { Event } from '../../../manager/global/Event/Event'
 
 const matchPath = (editor: Editor, path: Path): ((node: Node) => boolean) => {
     const [node] = Editor.node(editor, path)
@@ -40,7 +42,7 @@ export const customRemoveNodes: TransformsRemoveNodesHandler<Node> = (editor, op
                 const [node] = Editor.node(editor, path)
                 if (Element.isElement(node) && (node.type === 'image' || node.type === 'video' || node.type === 'file')) {
                     if (isNumber(node.size)) {
-                        UserManager.limit.totalUploadLimit += node.size
+                        EventManager.issueEvent(Event.PageFileUsageChange, { usage: -node.size })
                     }
                     if (node.url && node.url.includes(`${process.env.SERVER_BASE_URL}/files`)) {
                         const handle = node.url.split('/').pop()

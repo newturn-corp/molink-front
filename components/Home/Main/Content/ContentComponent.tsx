@@ -1,12 +1,12 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import { UserPageListComponent } from './UserPageListComponent'
 import { ContentHeaderIcon } from './ContentHeaderIcon'
 import { EditorContainer } from './EditorContainer'
 import { ContentTitleComponent } from './ContentTitleComponent'
 import { ContentFooter } from './ContentFooter'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
 import StyleManager from '../../../../manager/global/Style/StyleManager'
+import { PageUserInfoComponent } from './PageUserInfoComponent'
+import EditorManager from '../../../../manager/Blog/EditorManager'
 
 export const ContentComponent: React.FC<{
 }> = observer(() => {
@@ -16,6 +16,11 @@ export const ContentComponent: React.FC<{
         >
             <ContentHeaderIcon/>
             <ContentTitleComponent/>
+            {
+                EditorManager.editable
+                    ? <></>
+                    : <PageUserInfoComponent/>
+            }
             <EditorContainer/>
         </div>
         <ContentFooter/>

@@ -1,10 +1,18 @@
 import * as Y from 'yjs'
 import moment from 'moment-timezone'
+import EventManager from '../Event/EventManager'
+import { Event } from '../Event/Event'
 
 // 일 업로드 용량 제한은 업로드마다 차감되고, 다음날 원상복구된다.
 // 총 업로드 용량은 Insert Node, Set Node에서 차감되고, removeNodes에서 복구된다.
 export class UserLimit {
     yLimit: Y.Map<any> = null
+
+    constructor () {
+        EventManager.addEventListener(Event.PageFileUsageChange, (param: any) => {
+            this.totalUploadLimit -= param.usage
+        }, 1)
+    }
 
     get dailyUploadLimit () {
         return this.yLimit.get('dailyUploadLimit')
@@ -20,7 +28,6 @@ export class UserLimit {
     }
 
     get totalUploadLimit () {
-        console.log(this.yLimit.get('totalUploadLimit'))
         return this.yLimit.get('totalUploadLimit')
     }
 
@@ -30,8 +37,6 @@ export class UserLimit {
         } else {
             this.uploadRestrictedByTotalLimit = false
         }
-        console.log(this.totalUploadLimit)
-        console.log(limit)
         this.yLimit.set('totalUploadLimit', limit)
     }
 
@@ -65,12 +70,8 @@ export class UserLimit {
 
     sync (yLimit: Y.Map<any>) {
         this.yLimit = yLimit
-        this.yLimit.observeDeep(() => {
-            console.log(this.yLimit.toJSON())
-        })
         if (isNaN(this.totalUploadLimit) || this.totalUploadLimit === undefined || this.totalUploadLimit === null) {
             this.totalUploadLimit = 104857600 * 5 // 500MB
-            console.log(this.totalUploadLimit)
         }
         const today = moment().format('YYYY-MM-DD')
         if (this.lastDailyUploadLimitDate !== today) {

@@ -16,7 +16,8 @@ export enum Page {
     SettingDocumentList = '/setting/document-list',
     Home = '',
     Blog = '/blog',
-    MobileSupport = '/m/support'
+    MobileSupport = '/m/support',
+    SettingFileUpload = '/setting/file-upload'
 }
 
 class RoutingManager {

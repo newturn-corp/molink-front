@@ -7,17 +7,26 @@
   display: flex;
 }
 .setting-page .core .setting-meta {
-  width: 200px;
+  width: 264px;
   height: 100%;
+  margin-right: 25px;
 }
-.setting-page .core .setting-meta .search-buttons {
-  width: 200px;
+.setting-page .core .setting-meta .setting-category {
+  width: 100%;
 }
-.setting-page .core .setting-meta .search-buttons .MuiButton-label {
+.setting-page .core .setting-meta .setting-category .MuiButtonBase-root {
+  height: 48px;
+}
+.setting-page .core .setting-meta .setting-category .MuiButton-label {
   justify-content: left;
+  font-family: Pretendard;
+  font-size: 16px;
 }
 .setting-page .core .setting-meta .selected-setting-button {
-  background-color: #e7e7e7;
+  background-color: #ECEEF0;
+}
+.setting-page .core .setting-meta .selected-setting-button .MuiButton-label {
+  color: #3A7BBF;
 }
 .setting-page .core .setting-list {
   width: 700px;
@@ -26,8 +35,9 @@
 }
 .setting-page .core .setting-list .setting-name {
   margin-bottom: 0px;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
+  margin-bottom: 4px;
 }
 .setting-page .core .setting-list .MuiCheckbox-colorSecondary.Mui-checked {
   color: #37352f;

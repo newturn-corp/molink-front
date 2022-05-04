@@ -3,6 +3,7 @@ import { observer } from 'mobx-react'
 
 import { Input } from 'antd'
 import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
+import LanguageManager from '../../../manager/global/LanguageManager'
 
 const { Search } = Input
 
@@ -17,7 +18,7 @@ export const SearchComponent: React.FC<{
       >
           <Search
               className='search'
-              placeholder="현재 사용자만 검색할 수 있습니다."
+              placeholder={LanguageManager.languageMap.SearchPlaceholder}
               onSearch={onSearch}
               style={{
                   width: 360

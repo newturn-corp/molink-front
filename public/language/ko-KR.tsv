@@ -55,9 +55,30 @@ Delete	삭제
 Accept	확인
 DeletePage	문서 삭제
 DeletePageDialogMsgOnlyOnePage	 문서를 제거합니다.
-DeletePageDialogMsg1	 문서와 하위 문서
+DeletePageDialogMsg1	 문서와 그 하위 문서
 DeletePageDialogMsg2	개를 모두 제거합니다.
 SettingHierarchy	하이어라키 설정
 OrderedList	숫자 목록
 UnorderedList	기본 목록
 CheckList	체크 리스트
+FollowRequest	팔로우 요청
+PublicVisibility	전체 공개
+OnlyFollowerVisibility	팔로워만
+PrivateVisibility	비공개
+Privacy	개인정보 처리 방침
+SearchPlaceholder	현재 사용자만 검색할 수 있습니다.
+FollowRequestText	님이 팔로우 요청을 보냈습니다.
+Setting	설정
+PrivateVisibilityDescription	나만 이 페이지를 볼 수 있습니다.
+OnlyFollowerVisibilityDescription	팔로워하는 사람들만 이 페이지를 볼 수 있습니다.
+PublicVisibilityDescription	모두 이 페이지를 볼 수 있습니다.
+ChangeVisibility	공개 범위 변경
+PublicVisibilityChangeMessage	공개 범위가 '전체 공개'로 변경되었습니다.
+OnlyFollowerVisibilityChangeMessage	공개 범위가 '팔로워만'으로 변경되었습니다.
+PrivateVisibilityChangeMessage	공개 범위가 '비공개'으로 변경되었습니다.
+Link	링크
+LinkTip	Tip! 링크를 복사한 뒤 페이지에 붙여넣으면 바로 북마크를 추가할 수 있습니다.
+Toolbar	툴바
+Add	추가
+Locked	잠겨짐
+Lock	잠금하기

@@ -1,5 +1,28 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
+.page-user-info-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    .page-user-info {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+        .profile {
+            margin-right: 10px;
+        }
+        .nickname {
+            line-height: 30px;
+        }
+    }
+    .divider {
+        background-color: #C9CDD2;
+        height: 1px;
+        width: 100%;
+    }
+}
+
 .content-container {
     position: fixed;
     height: 100%;
@@ -11,7 +34,7 @@
         transition: top 0.25s;
         scroll-padding: 100px;
         .contents {
-            margin-top: 8vh;
+            margin-top: 80px;
             .MuiButton-root.Mui-disabled {
                 color: #000000;
             }
@@ -381,8 +404,13 @@
             }
             .code {
                 padding: 20px;
-                border-radius: 5px;
+                border-radius: 3px;
                 background: #f3f3f3;
+            }
+            .callout {
+                padding: 20px;
+                border-radius: 3px;
+                background: rgb(239, 240, 241);
             }
             .divider-container {
                 position: relative;

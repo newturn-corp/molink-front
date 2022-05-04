@@ -3,6 +3,7 @@ import { observer } from 'mobx-react'
 import { Avatar, MenuItem } from '@material-ui/core'
 import { getRelativeTime } from '../../../../utils/getRelativeTime'
 import { FollowRequest } from '@newturn-develop/types-molink'
+import LanguageManager from '../../../../manager/global/LanguageManager'
 
 export const FollowRequestComponent: React.FC<{
     followRequest: FollowRequest,
@@ -19,17 +20,17 @@ export const FollowRequestComponent: React.FC<{
               <div>
                   <div className='view-part'>
                       <div className='msg-container'>
-                          <div className='msg'><b>{followRequest.nickname}</b>님이 팔로우 요청을 보냈습니다.</div>
+                          <div className='msg'><b>{followRequest.nickname}</b>{LanguageManager.languageMap.FollowRequestText}</div>
                           <p className='createdAt'>{getRelativeTime(followRequest.createdAt)}</p>
                       </div>
                   </div>
                   <div className='interaction'>
                       <div
                           className='button accept'
-                      >확인</div>
+                      >{LanguageManager.languageMap.Accept}</div>
                       <div
                           className='button reject'
-                      >삭제</div>
+                      >{LanguageManager.languageMap.Delete}</div>
                   </div>
               </div>
           </div>

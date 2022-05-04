@@ -4,6 +4,8 @@ import FileAPI from '../../../api/FileAPI'
 import { ChangePageFileRelationshipDTO } from '@newturn-develop/types-molink'
 import EditorManager from '../../../manager/Blog/EditorManager'
 import UserManager from '../../../manager/global/User/UserManager'
+import EventManager from '../../../manager/global/Event/EventManager'
+import { Event } from '../../../manager/global/Event/Event'
 
 const { insertNodes } = Transforms
 
@@ -15,7 +17,7 @@ export const customInsertNode = (editor: Editor, nodes: Node | Node[], options) 
         }
         if (node.type === 'image' || node.type === 'video' || node.type === 'file') {
             if (node.size > 0) {
-                UserManager.limit.totalUploadLimit -= node.size
+                EventManager.issueEvent(Event.PageFileUsageChange, { usage: node.size })
             }
             if (node.url && node.url.includes(`${process.env.SERVER_BASE_URL}/files`)) {
                 const handle = node.url.split('/').pop()

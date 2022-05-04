@@ -44,6 +44,12 @@ class CommandManager {
                 new Command('숫자목록', '숫자 목록', '/image/editor/command/ordered-list.png'),
                 new Command('체크목록', '체크 목록', '/image/editor/command/check-list.png')
             ]
+        ),
+        new CommandGroup(
+            '강조',
+            [
+                new Command('콜아웃', '강조하기 위한 한 줄', '/image/editor/command/bullet-list.png')
+            ]
         )
         // ),
         // new CommandGroup(
@@ -264,6 +270,9 @@ class CommandManager {
             const afterRange = Editor.range(editor, start, after)
             const afterText = Editor.string(editor, afterRange)
             const afterMatch = afterText.match(/^(\s|$)/)
+            // console.log('matches')
+            // console.log(beforeMatch)
+            // console.log(afterMatch)
             if (beforeMatch && afterMatch) {
                 this.target = beforeRange
 
@@ -304,8 +313,6 @@ class CommandManager {
                 index -= commandGroup.commands.length
                 continue
             }
-            console.log(commandGroup)
-            console.log(index)
             return commandGroup.commands[index]
         }
     }
@@ -328,14 +335,17 @@ class CommandManager {
         return true
     }
 
-    async handleEnterAndTab (event: React.KeyboardEvent, editor: Editor) {
+    handleEnterAndTab (event: React.KeyboardEvent, editor: Editor) {
         if (!this.checkIsCommandListOpen()) {
             return false
         }
         event.preventDefault()
         Transforms.select(editor, toJS(this.target))
-        await this.insertNodeByCommand(editor, this.getSearchedCommandByIndex(this.index))
-        this.target = null
+        this.insertNodeByCommand(editor, this.getSearchedCommandByIndex(this.index))
+            .then(() => {
+                this.target = null
+            })
+
         return true
     }
 

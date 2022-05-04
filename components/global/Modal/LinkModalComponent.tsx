@@ -10,6 +10,7 @@ import { CustomInput } from '../../utils/CustomInput'
 import { AnalyzeLinkResponseDTO } from '@newturn-develop/types-molink'
 import mainAPI from '../../../api/mainAPI'
 import { isURL } from 'class-validator'
+import LanguageManager from '../../../manager/global/LanguageManager'
 
 export const LinkModalComponent: React.FC<{
 }> = observer(() => {
@@ -31,7 +32,7 @@ export const LinkModalComponent: React.FC<{
 
     return <CustomModal
         className={'link-modal'}
-        title="링크"
+        title={LanguageManager.languageMap.Link}
         onCancel={() => LinkManager.modal.close()}
         isOpen={LinkManager.modal.isOpen}
     >
@@ -57,7 +58,7 @@ export const LinkModalComponent: React.FC<{
                 marginBottom: 0
             }}
         >
-            {'Tip! 링크를 복사한 뒤 페이지에 붙여넣으면 바로 북마크를 추가할 수 있습니다.'}
+            {LanguageManager.languageMap.LinkTip}
         </div>
         {
             info
@@ -128,7 +129,7 @@ export const LinkModalComponent: React.FC<{
         >
             <Button
                 theme={'primary'}
-                text={'확인'}
+                text={LanguageManager.languageMap.Accept}
                 style={{
                     width: 100,
                     height: 40

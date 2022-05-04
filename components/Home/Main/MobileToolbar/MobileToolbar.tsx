@@ -4,6 +4,7 @@ import ToolbarManager from '../../../../manager/Editing/ToolbarManager'
 import { AddRounded } from '@material-ui/icons'
 import StyleManager from '../../../../manager/global/Style/StyleManager'
 import CommandManager from '../../../../manager/Editing/Command/CommandManager'
+import LanguageManager from '../../../../manager/global/LanguageManager'
 
 export const MobileToolbar: React.FC<{
 }> = observer(() => {
@@ -24,7 +25,7 @@ export const MobileToolbar: React.FC<{
             }}
         >
             <AddRounded/>
-            <div className={'text'}>추가</div>
+            <div className={'text'}>{LanguageManager.languageMap.Add}</div>
         </div>
     </div>
 })

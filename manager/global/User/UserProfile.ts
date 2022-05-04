@@ -1,12 +1,14 @@
 import * as Y from 'yjs'
 import { makeAutoObservable } from 'mobx'
-import { UserSettingInterface } from '@newturn-develop/types-molink'
+import { UserSettingInterface, UpdateUserBiographyDTO, UpdateUserProfileImageDTO } from '@newturn-develop/types-molink'
 import EventManager from '../Event/EventManager'
 import { Event } from '../Event/Event'
 import HierarchyManager from '../Hierarchy/HierarchyManager'
 import UserManager from './UserManager'
 import Identicon from 'identicon.js'
 import crypto from 'crypto'
+import UserAPI from '../../../api/UserAPI'
+import React from 'react'
 
 export class UserProfile {
     yProfile: Y.Map<any> = null
@@ -36,6 +38,7 @@ export class UserProfile {
             this.biography = this.yProfile.get('biography')
             this.nickname = this.yProfile.get('nickname')
             this.lastOpenPageId = this.yProfile.get('lastOpenPageId')
+            console.log(this.biography)
         })
     }
 
@@ -65,14 +68,22 @@ export class UserProfile {
                 }).toString()}`
     }
 
-    // async updateUserProfileImage (event: React.ChangeEvent<HTMLInputElement>) {
-    //     event.preventDefault()
-    //     const reader = new FileReader()
-    //     const file = event.target.files[0]
-    //     reader.onloadend = async () => {
-    //         this.profile.profileImageUrl = reader.result as string
-    //         await UserAPI.updateUserProfileImage(new UpdateUserProfileImageDto(file))
-    //     }
-    //     reader.readAsDataURL(file)
-    // }
+    async updateUserBiography (biography: string) {
+        await UserAPI.updateUserBiography(new UpdateUserBiographyDTO(biography))
+    }
+
+    async updateUserProfileImage (event: React.ChangeEvent<HTMLInputElement>) {
+        event.preventDefault()
+        const reader = new FileReader()
+        const file = event.target.files[0]
+        try {
+            reader.onloadend = async () => {
+                this.profileImageUrl = reader.result as string
+                await UserAPI.updateUserProfileImage(new UpdateUserProfileImageDTO(file))
+            }
+            reader.readAsDataURL(file)
+        } catch (e) {
+            console.log(file)
+        }
+    }
 }
