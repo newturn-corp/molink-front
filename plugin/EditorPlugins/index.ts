@@ -48,6 +48,7 @@ export const EditorPlugin = (editor: Editor) => {
         correctDeleteBackwardInHeader
     ]
     editor.deleteBackward = unit => {
+        console.log('deleteBackward')
         for (const handler of deleteBackwardHandlers) {
             const handled = handler(editor, unit)
             if (handled) {

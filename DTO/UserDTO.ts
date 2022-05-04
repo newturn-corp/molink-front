@@ -81,14 +81,6 @@ export class GetDocumentInitialInfoListDTO {
     }
 }
 
-export class UpdateUserProfileImageDto {
-    image: File
-
-    constructor (image: File) {
-        this.image = image
-    }
-}
-
 export class UpdateUserBiographyDTO {
     biography: string
 

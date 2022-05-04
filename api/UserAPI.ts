@@ -1,8 +1,8 @@
 import { BaseAPI } from './baseAPI'
 import { APIError } from './APIError'
-import { SearchUserDTO, SearchResponseDTO, GetUserRepresentativeDocumentResponseDTO, GetUserRepresentativeDocumentURLDTO, UpdateUserProfileImageDto, UpdateUserBiographyDTO, FollowResponseDTO, FollowRequestDTO } from '../DTO/UserDTO'
+import { SearchUserDTO, GetUserRepresentativeDocumentResponseDTO, GetUserRepresentativeDocumentURLDTO, UpdateUserBiographyDTO, FollowResponseDTO, FollowRequestDTO } from '../DTO/UserDTO'
 import { RepresentativeDocumentNotExists, UserNotExists } from '../Errors/UserError'
-import { ESUser, GetUserIDDTO } from '@newturn-develop/types-molink'
+import { ESUser, GetUserIDDTO, UpdateUserProfileImageDTO } from '@newturn-develop/types-molink'
 import { Unauthorized } from '../Errors/Common'
 
 class UserAPI extends BaseAPI {
@@ -32,8 +32,8 @@ class UserAPI extends BaseAPI {
         return new GetUserRepresentativeDocumentResponseDTO(res.data.url)
     }
 
-    async updateUserProfileImage (dto: UpdateUserProfileImageDto): Promise<void> {
-        const res = await this.putFormData('/main/users/profile-image', dto)
+    async updateUserProfileImage (dto: UpdateUserProfileImageDTO): Promise<void> {
+        const res = await this.putFormData('/users/profile-image', dto)
         if (res.status !== 200) throw new APIError(res)
     }
 

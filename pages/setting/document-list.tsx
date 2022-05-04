@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { Header } from '../../components/global/Header/Header'
 import { FormControlLabel, FormGroup, Checkbox } from '@material-ui/core'
-import { SettingButtonList } from '../../components/setting/SettingButtonList'
+import { SettingCategory } from '../../components/setting/SettingCategory'
 import UserManager from '../../manager/global/User/UserManager'
 
 const SettingDocumentList = observer(() => {
@@ -27,7 +27,7 @@ const SettingDocumentList = observer(() => {
         {/* <div className={'index-body'}> */}
         {/*     <div className='core'> */}
         {/*         <div className='setting-meta'> */}
-        {/*             <SettingButtonList/> */}
+        {/*             <SettingCategory/> */}
         {/*         </div> */}
         {/*         <div className='setting-list'> */}
         {/*             <div className='show-sub-document-count'> */}

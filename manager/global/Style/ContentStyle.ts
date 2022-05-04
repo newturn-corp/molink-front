@@ -125,7 +125,11 @@ export class ContentStyle {
 
     private refreshBodyTop () {
         if (isBrowser) {
-            this._body.top = this._header.height + this._toolbar.height
+            if (EditorManager.editable) {
+                this._body.top = this._header.height + this._toolbar.height
+            } else {
+                this._body.top = this._header.height
+            }
         } else {
             this._body.top = StyleManager.globalStyle.header.height
         }
@@ -142,9 +146,9 @@ export class ContentStyle {
     handleLoadContent () {
         if (!EditorManager.editable) {
             this._header.top = 0
-            this.refreshBodyTop()
-            this.refreshBodyHeight()
         }
+        this.refreshBodyTop()
+        this.refreshBodyHeight()
     }
 
     refresh () {

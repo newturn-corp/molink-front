@@ -23,7 +23,7 @@ const SettingProfile = observer(() => {
         {/* <div className={'index-body'}> */}
         {/*     <div className='core'> */}
         {/*         <div className='setting-meta'> */}
-        {/*             <SettingButtonList/> */}
+        {/*             <SettingCategory/> */}
         {/*         </div> */}
         {/*         <div className='setting-list'> */}
         {/*             <div> */}

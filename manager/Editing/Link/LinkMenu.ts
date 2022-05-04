@@ -69,7 +69,7 @@ export class LinkMenu {
         return true
     }
 
-    async handleEnterAndTab (event: React.KeyboardEvent, editor: Editor) {
+    handleEnterAndTab (event: React.KeyboardEvent, editor: Editor) {
         if (!this.isLinkMenuOpen) {
             return false
         }

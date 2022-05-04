@@ -9,6 +9,7 @@ import { PageVisibility } from '@newturn-develop/types-molink'
 import OnlyFollower from '../../../../public/image/editor/toolbar/visibility/only-follower.svg'
 import Private from '../../../../public/image/editor/toolbar/visibility/private.svg'
 import { message } from 'antd'
+import LanguageManager from '../../../../manager/global/LanguageManager'
 
 interface VisibilityMenuItemProps {
     icon: ReactNode
@@ -74,39 +75,39 @@ export const VisibilityDrawer: React.FC<{
                 <MobileColumnDrawerElement
                 >
                     <VisibilityDrawerItem
-                        name={'전체 공개'}
-                        desc={'모두 이 페이지를 볼 수 있습니다.'}
+                        name={LanguageManager.languageMap.PublicVisibility}
+                        desc={LanguageManager.languageMap.PublicVisibilityDescription}
                         icon={<Public/>}
                         onClick={async () => {
                             await visibilityController.updatePageVisibility(currentHierarchy.openedPageId, PageVisibility.Public)
                             visibilityController.isVisibilityDrawerOpen = false
-                            message.success('공개 범위가 \'전체 공개\'로 변경되었습니다.')
+                            message.success(LanguageManager.languageMap.PublicVisibilityChangeMessage)
                         }}
                     />
                 </MobileColumnDrawerElement>
                 <MobileColumnDrawerElement
                 >
                     <VisibilityDrawerItem
-                        name={'팔로워만'}
-                        desc={'팔로워하는 사람들만 이 페이지를 볼 수 있습니다.'}
+                        name={LanguageManager.languageMap.OnlyFollowerVisibility}
+                        desc={LanguageManager.languageMap.OnlyFollowerVisibilityDescription}
                         icon={<OnlyFollower/>}
                         onClick={async () => {
                             await visibilityController.updatePageVisibility(currentHierarchy.openedPageId, PageVisibility.OnlyFollower)
                             visibilityController.isVisibilityDrawerOpen = false
-                            message.success('공개 범위가 \'팔로워만\'으로 변경되었습니다.')
+                            message.success(LanguageManager.languageMap.OnlyFollowerVisibilityChangeMessage)
                         }}
                     />
                 </MobileColumnDrawerElement>
                 <MobileColumnDrawerElement
                 >
                     <VisibilityDrawerItem
-                        name={'비공개'}
-                        desc={'나만 이 페이지를 볼 수 있습니다.'}
+                        name={LanguageManager.languageMap.PrivateVisibility}
+                        desc={LanguageManager.languageMap.PrivateVisibilityDescription}
                         icon={<Private/>}
                         onClick={async () => {
                             await visibilityController.updatePageVisibility(currentHierarchy.openedPageId, PageVisibility.Private)
                             visibilityController.isVisibilityDrawerOpen = false
-                            message.success('공개 범위가 \'비공개\'으로 변경되었습니다.')
+                            message.success(LanguageManager.languageMap.PrivateVisibilityChangeMessage)
                         }}
                     />
                 </MobileColumnDrawerElement>

@@ -76,8 +76,8 @@ export const EditorComponent: React.FC<{
               readOnly={!EditorManager.editable || EditorManager.isLocked}
               spellCheck={!EditorManager.editable || EditorManager.isLocked}
               suppressContentEditableWarning={true}
-              onKeyDown={async (event) => {
-                  await handleKeyDown(event, EditorManager.slateEditor)
+              onKeyDown={(event) => {
+                  return handleKeyDown(event, EditorManager.slateEditor)
               }}
               onDOMBeforeInput={(event: InputEvent) => {
                   handleDOMBeforeInput(event)

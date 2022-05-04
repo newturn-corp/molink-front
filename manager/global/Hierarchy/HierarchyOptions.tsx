@@ -86,6 +86,14 @@ export class DeletePageOption extends HierarchyControlOption {
         if (index !== 0) {
             return
         }
+
+        // 파일 사용량 복구
+        for (const childID of childIDList) {
+            const childPage = currentHierarchy.yMap.get(childID)
+            UserManager.limit.totalUploadLimit += childPage.fileUsage
+        }
+        UserManager.limit.totalUploadLimit += page.fileUsage
+
         const isOpenedDocumentIncludes = currentHierarchy.openedPageId === page.id || childIDList.includes(currentHierarchy.openedPageId)
         if (isOpenedDocumentIncludes) {
             currentHierarchy.openedPageId = null

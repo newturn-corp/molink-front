@@ -31,6 +31,7 @@ export abstract class BaseAPI {
                 credentials: 'include'
             })
         } catch (e) {
+            console.log(path)
             throw new NetworkError()
         }
         if (res.status === 500) throw new ServiceError()
@@ -50,6 +51,7 @@ export abstract class BaseAPI {
                 credentials: 'include'
             })
         } catch (e) {
+            console.log(path)
             throw new NetworkError()
         }
         if (res.status === 500) throw new ServiceError()
@@ -66,6 +68,7 @@ export abstract class BaseAPI {
                 credentials: 'include'
             })
         } catch (e) {
+            console.log(path)
             throw new NetworkError()
         }
         if (res.status === 500) throw new ServiceError()
@@ -97,6 +100,7 @@ export abstract class BaseAPI {
                 credentials: 'include'
             })
         } catch (e) {
+            console.log(path)
             throw new NetworkError()
         }
         if (res.status === 500) throw new ServiceError()
@@ -131,6 +135,7 @@ export abstract class BaseAPI {
                 credentials: 'include'
             })
         } catch (e) {
+            console.log(path)
             throw new NetworkError()
         }
         if (res.status === 500) throw new ServiceError()

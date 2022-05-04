@@ -28,7 +28,6 @@ export const moveToTitleWhenArrowUpDown = (event) => {
                 return
             }
             range.selectNodeContents(EditorManager.titleRef.current)
-            console.log(EditorManager.titleRef.current.textContent)
             range.setStart(EditorManager.titleRef.current.firstChild, EditorManager.titleRef.current.textContent.length)
             range.setEnd(EditorManager.titleRef.current.firstChild, EditorManager.titleRef.current.textContent.length)
             const selection = window.getSelection()

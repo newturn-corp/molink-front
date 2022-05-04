@@ -6,9 +6,10 @@ import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 enum SettingLocation {
     Profile = 'profile',
     Follow = 'follow',
-    DocumentList = 'document-list',
+    Hierarchy = 'document-list',
     Subscribe = 'subscribe',
-    Wiki = 'wiki'
+    Wiki = 'wiki',
+    FileUpload = 'file-upload'
 }
 
 interface SettingButtonProps {
@@ -26,13 +27,15 @@ const handleSettingButtonDown = (location: SettingLocation, selected: boolean) =
         return RoutingManager.moveTo(Page.SettingProfile)
     case SettingLocation.Follow:
         return RoutingManager.moveTo(Page.SettingFollow)
-    case SettingLocation.DocumentList:
+    case SettingLocation.Hierarchy:
         return RoutingManager.moveTo(Page.SettingDocumentList)
+    case SettingLocation.FileUpload:
+        return RoutingManager.moveTo(Page.SettingFileUpload)
     }
 }
 
 const SettingButton: React.FC<SettingButtonProps> = ({ location, isDisabled, buttonText }) => {
-    const arr = GlobalManager.window.location.pathname.split('/')
+    const arr = globalThis.window.location.pathname.split('/')
     const currentSettingLocation = arr[arr.length - 1]
     const selected = currentSettingLocation === location
     return <Button className={`MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButtonGroup-grouped MuiButtonGroup-groupedVertical MuiButtonGroup-groupedOutlined MuiButtonGroup-groupedOutlinedVertical MuiButtonGroup-groupedOutlined${selected ? ' selected-setting-button' : ''}`}
@@ -50,14 +53,19 @@ const buttonPropsList: SettingButtonProps[] =
             isDisabled: false
         },
         {
-            buttonText: '팔로우 & 팔로잉',
-            location: SettingLocation.Follow,
+            buttonText: '파일 업로드',
+            location: SettingLocation.FileUpload,
             isDisabled: false
         },
         {
-            buttonText: '문서 목록',
-            location: SettingLocation.DocumentList,
-            isDisabled: false
+            buttonText: '팔로우 & 팔로잉',
+            location: SettingLocation.Follow,
+            isDisabled: true
+        },
+        {
+            buttonText: '하이어라키',
+            location: SettingLocation.Hierarchy,
+            isDisabled: true
         },
         {
             buttonText: '구독',
@@ -71,11 +79,11 @@ const buttonPropsList: SettingButtonProps[] =
         }
     ]
 
-export const SettingButtonList: React.FC<{
+export const SettingCategory: React.FC<{
   }> = () => {
       return <ButtonGroup
           orientation="vertical"
-          className='search-buttons'
+          className='setting-category'
           aria-label="vertical outlined primary button group"
       >
           {

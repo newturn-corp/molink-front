@@ -5,16 +5,25 @@
         margin-top: 150px;
         display: flex;
         .setting-meta {
-            width: 200px;
+            width: 264px;
             height: 100%;
-            .search-buttons {
-                width: 200px;
+            margin-right: 25px;
+            .setting-category {
+                width: 100%;
+                .MuiButtonBase-root {
+                    height: 48px;
+                }
                 .MuiButton-label {
                     justify-content: left;
+                    font-family: Pretendard;
+                    font-size: 16px;
                 }
             }
             .selected-setting-button {
-                background-color: rgb(231, 231, 231);
+                background-color: #ECEEF0;
+                .MuiButton-label {
+                    color: #3A7BBF;
+                }
             }
         }
 
@@ -24,13 +33,14 @@
             margin-left: 25px;
             .setting-name {
                 margin-bottom: 0px;
-                font-size: 20px;
+                font-size: 16px;
                 font-weight: 600;
+                margin-bottom: 4px;
             }
             .MuiCheckbox-colorSecondary.Mui-checked {
                 color: #37352f;
             }
-            
+
             .profile {
                 // display: flex;
                 .profile-image {

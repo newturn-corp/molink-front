@@ -69,6 +69,8 @@ class BlogManager {
                 this.blogUserId = userId
                 await HierarchyManager.loadHierarchy(userId, nickname)
                 await this.userPageList.loadPageSummaryList(pageListOrder)
+                const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
+                currentHierarchy.openedPageId = null
             } else if (type === HomeURLType.StandardDocumentURL) {
                 const authority = await ViewerAPI.getDocumentAuthority(pageId)
                 if (!authority.viewable) {

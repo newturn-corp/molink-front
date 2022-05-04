@@ -8,6 +8,7 @@ import OnlyFollower from 'public/image/editor/toolbar/visibility/only-follower.s
 import Public from 'public/image/editor/toolbar/visibility/public.svg'
 import Private from 'public/image/editor/toolbar/visibility/private.svg'
 import StyleManager from '../../../../manager/global/Style/StyleManager'
+import LanguageManager from '../../../../manager/global/LanguageManager'
 
 export const VisibilityMenu: React.FC<{}
 > = observer(() => {
@@ -28,28 +29,28 @@ export const VisibilityMenu: React.FC<{}
                 <p
                     className={'menu-title'}
                 >
-                    {'공개범위 설정'}
+                    {LanguageManager.languageMap.ChangeVisibility}
                 </p>
             </div>
             <VisibilityMenuItem
-                name={'전체 공개'}
-                desc={'모두 이 페이지를 볼 수 있습니다.'}
+                name={LanguageManager.languageMap.PublicVisibility}
+                desc={LanguageManager.languageMap.PublicVisibilityDescription}
                 icon={<Public/>}
                 onClick={() =>
                     visibilityController.updatePageVisibility(currentHierarchy.openedPageId, PageVisibility.Public)
                 }
             />
             <VisibilityMenuItem
-                name={'팔로워만'}
-                desc={'팔로워하는 사람들만 이 페이지를 볼 수 있습니다.'}
+                name={LanguageManager.languageMap.OnlyFollowerVisibility}
+                desc={LanguageManager.languageMap.OnlyFollowerVisibilityDescription}
                 icon={<OnlyFollower/>}
                 onClick={() =>
                     visibilityController.updatePageVisibility(currentHierarchy.openedPageId, PageVisibility.OnlyFollower)
                 }
             />
             <VisibilityMenuItem
-                name={'비공개'}
-                desc={'나만 이 페이지를 볼 수 있습니다.'}
+                name={LanguageManager.languageMap.PrivateVisibility}
+                desc={LanguageManager.languageMap.PrivateVisibilityDescription}
                 icon={<Private/>}
                 onClick={() =>
                     visibilityController.updatePageVisibility(currentHierarchy.openedPageId, PageVisibility.Private)

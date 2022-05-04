@@ -2,6 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import EditorManager from '../../../manager/Blog/EditorManager'
 import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
+import LanguageManager from '../../../manager/global/LanguageManager'
 
 export const ToolbarControlButton: React.FC<{
 }> = observer(() => {
@@ -33,7 +34,7 @@ export const ToolbarControlButton: React.FC<{
                     <p
                         className={'text'}
                     >
-                        {'툴바'}
+                        {LanguageManager.languageMap.Toolbar}
                     </p>
                     <div
                         className={'icon'}

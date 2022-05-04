@@ -28,7 +28,10 @@ export enum Event {
 
     // Toolbar Event
     ToolbarOnOffChange,
-    MobileToolbarOnOffChange
+    MobileToolbarOnOffChange,
+
+    FileUpload,
+    PageFileUsageChange
 }
 
 export const eventList = [
@@ -60,5 +63,8 @@ export const eventList = [
 
     // Toolbar Event
     Event.ToolbarOnOffChange,
-    Event.MobileToolbarOnOffChange
+    Event.MobileToolbarOnOffChange,
+
+    Event.FileUpload,
+    Event.PageFileUsageChange
 ]

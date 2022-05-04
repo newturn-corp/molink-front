@@ -41,6 +41,12 @@ export type HierarchyWidthChangeParam = {
 export type ToolbarOnOffChangeParam = {
     isToolbarOpen: boolean
 }
+export type FileUploadParam = {
+    size: number
+}
+export type PageFileUsageChangeParam = {
+    usage: number
+}
 
 export type EventParam = {} | OnEditorKeyDownParam | DocumentChildrenOpenParam | OpenDocumentParam | ChangeDocumentTitleInEditorParam | UserAuthorizationParam | ChangeDocumentTitleInFileSystemParam | NewEditorOpenParam | EditorChangeParam
-| HierarchyOnOffChangeParam | HierarchyWidthChangeParam | ToolbarOnOffChangeParam
+| HierarchyOnOffChangeParam | HierarchyWidthChangeParam | ToolbarOnOffChangeParam | FileUploadParam | PageFileUsageChangeParam

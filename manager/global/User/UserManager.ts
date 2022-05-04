@@ -10,6 +10,8 @@ import { UserLimit } from './UserLimit'
 import { UserNotExists } from '../../../Errors/UserError'
 import { UserNotification } from './UserNotification'
 import { UserFollow } from './UserFollow'
+import { UpdateUserProfileImageDTO } from '@newturn-develop/types-molink'
+import React from 'react'
 
 class UserManager {
     isUserAuthorized: boolean = false
@@ -94,17 +96,6 @@ class UserManager {
             this.isLoading = false
         }
     }
-
-    // async updateUserProfileImage (event: React.ChangeEvent<HTMLInputElement>) {
-    //     event.preventDefault()
-    //     const reader = new FileReader()
-    //     const file = event.target.files[0]
-    //     reader.onloadend = async () => {
-    //         this.profile.profileImageUrl = reader.result as string
-    //         await UserAPI.updateUserProfileImage(new UpdateUserProfileImageDto(file))
-    //     }
-    //     reader.readAsDataURL(file)
-    // }
 
     reset () {
         if (this.websocketProvider) {

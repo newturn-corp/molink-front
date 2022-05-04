@@ -63,6 +63,16 @@ export default class Hierarchy {
             ], () => {
                 this.reset()
             }, 1)
+        EventManager.addEventListener(
+            Event.PageFileUsageChange,
+            (param: any) => {
+                if (this.openedPageId) {
+                    const openedPage = this.yMap.get(this.openedPageId)
+                    openedPage.fileUsage += param.usage
+                    this.yMap.set(this.openedPageId, openedPage)
+                }
+            }, 1
+        )
         makeAutoObservable(this, {
             yTopLevelDocumentIdList: false,
             yMap: false
@@ -127,6 +137,7 @@ export default class Hierarchy {
             order,
             parentId,
             childrenOpen: false,
+            fileUsage: 0,
             children: []
         }
         await ContentAPI.createContent(newDocumentId)

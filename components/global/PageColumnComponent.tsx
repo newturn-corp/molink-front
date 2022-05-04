@@ -22,7 +22,8 @@ export const PageColumnComponent: React.FC<PageColumnComponentInterface> = obser
         <div
             className={'thumbnail'}
             style={{
-                backgroundColor: props.image ? undefined : '#0094FF'
+                backgroundColor: props.image ? undefined : '#0094FF',
+                padding: props.image ? undefined : 20
             }}
         >
             {
@@ -60,7 +61,7 @@ export const PageColumnComponent: React.FC<PageColumnComponentInterface> = obser
             </div>
             <div
                 className={'description'}
-            >{props.description ? props.description : ''}</div>
+            >{props.description ? props.description : '설명이 없습니다.'}</div>
         </div>
     </div>
 })

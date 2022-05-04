@@ -1,11 +1,11 @@
 .page-list-container {
   width: fit-content;
-  margin: 40px auto;
+  margin: 20px auto;
 }
 .page-list-container .list-title {
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .page-list-container .pagination {
   margin: 0 auto;
@@ -23,18 +23,21 @@
   width: 800px;
   margin: 12px 0px;
   cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
 }
 .page-column-component .thumbnail {
   width: 200px;
   height: 100%;
-  border-radius: 8px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
   display: flex;
-  padding: 20px;
 }
 .page-column-component .thumbnail img {
   width: 100%;
   height: 100%;
-  border-radius: 8px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
   object-fit: cover;
 }
 .page-column-component .thumbnail .text {
@@ -51,26 +54,26 @@
 }
 .page-column-component .text-container {
   width: 600px;
-  padding: 0px 21px;
+  padding: 10px 21px;
   display: flex;
   flex-direction: column;
 }
 .page-column-component .text-container .title {
   fontSize: 18px;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   line-height: 20px;
 }
 .page-column-component .text-container .last-edited-at {
   font-size: 12px;
   color: #9DA7B0;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 .page-column-component .text-container .user-container {
   display: flex;
   flex-direction: row;
   height: 20px;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 .page-column-component .text-container .user-container .profile-image {
   margin-right: 4px;

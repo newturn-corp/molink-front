@@ -8,6 +8,7 @@ import PublicIcon from '../../../Icon/PublicIcon'
 import PrivateIcon from '../../../Icon/PrivateIcon'
 import OnlyFollowerIcon from '../../../Icon/OnlyFollowerIcon'
 import EditorManager from '../../../../manager/Blog/EditorManager'
+import LanguageManager from '../../../../manager/global/LanguageManager'
 
 const getIconByVisibility = (visibility: PageVisibility) => {
     switch (visibility) {
@@ -23,11 +24,11 @@ const getIconByVisibility = (visibility: PageVisibility) => {
 const getTextByVisibility = (visibility: PageVisibility) => {
     switch (visibility) {
     case PageVisibility.Public:
-        return '전체 공개'
+        return LanguageManager.languageMap.PublicVisibility
     case PageVisibility.OnlyFollower:
-        return '팔로워만'
+        return LanguageManager.languageMap.OnlyFollowerVisibility
     case PageVisibility.Private:
-        return '비공개'
+        return LanguageManager.languageMap.PrivateVisibility
     }
 }
 

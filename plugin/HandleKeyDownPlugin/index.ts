@@ -28,14 +28,11 @@ handlerMap.set('ArrowUp', [
     (event, editor) => LinkManager.menu.handleArrowUp(event, editor),
     (event, editor) => CommandManager.handleArrowUp(event, editor),
     moveToTitleWhenArrowUpDown
-    // maintainScreenMargin,
 ])
 handlerMap.set('ArrowDown', [
     (event, editor) => LinkManager.menu.handleArrowDown(event, editor),
     (event, editor) => CommandManager.handleArrowDown(event, editor),
     moveSelectionWhenArrowDownDown
-    // maintainScreenMargin
-    // moveSelectionWhenArrowDownDown
 ])
 handlerMap.set('ctrl+z', [
     (event) => LinkManager.menu.handleCtrlZDown(event),
@@ -45,8 +42,8 @@ handlerMap.set('ctrl+y', [
     redoWhenControlYKeyDown
 ])
 handlerMap.set('Backspace', [
-    moveSelectionWhenBackspaceDown,
-    handleBackspaceInList
+    // moveSelectionWhenBackspaceDown,
+    // handleBackspaceInList
 ])
 handlerMap.set('Tab', [
     (event, editor) => LinkManager.menu.handleEnterAndTab(event, editor),
@@ -78,7 +75,7 @@ const generalKeyDownHandlers = [
     (event, editor) => EditorManager.lastPressedKey = event.key
 ]
 
-export const handleKeyDown = async (event, editor) => {
+export const handleKeyDown = (event, editor) => {
     for (const handler of generalKeyDownHandlers) {
         handler(event, editor)
     }
@@ -93,12 +90,14 @@ export const handleKeyDown = async (event, editor) => {
     }
     keys.push(event.key)
     const eventKey = keys.join('+')
+    console.log(eventKey)
     const handlers = handlerMap.get(eventKey)
-    if (!handlers) {
+    console.log(handlers)
+    if (!handlers || handlers.length === 0) {
         return false
     }
     for (const handler of handlers) {
-        const isHandled = await handler(event, editor)
+        const isHandled = handler(event, editor)
         if (isHandled) {
             return true
         }

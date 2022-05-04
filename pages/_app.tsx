@@ -63,6 +63,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     useEffect(() => {
         GlobalManager.init()
             .then(() => LanguageManager.loadLanguage(navigator.language))
+        removeConsoleLogOnProduction()
     }, [])
 
     return (

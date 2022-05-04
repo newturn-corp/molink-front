@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { observer } from 'mobx-react'
 import { SupportModal } from '../../Modal/SupportModal'
-import { UserMenu } from './UserMenu'
 import UserManager from '../../../../manager/global/User/UserManager'
 import { UserProfile } from './UserProfile'
 import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
@@ -15,6 +14,7 @@ import AuthManager from '../../../../manager/Auth/AuthManager'
 import GlobalManager from '../../../../manager/global/GlobalManager'
 import StyleManager from '../../../../manager/global/Style/StyleManager'
 import { VisibilityDrawer } from '../Mobile/VisibilityDrawer'
+import LanguageManager from '../../../../manager/global/LanguageManager'
 
 export const UserContainer: React.FC<{
 }> = observer(() => {
@@ -30,18 +30,22 @@ export const UserContainer: React.FC<{
         }
         if (UserManager.isUserAuthorized) {
             MenuManager.open([
-                new MenuItem('문의 & 의견 보내기',
+                new MenuItem(LanguageManager.languageMap.SupportInMenu,
                     () => {
                         UserManager.isUserMenuOpen = false
                         SupportManager.openSupportModal()
                         MenuManager.close()
                     }),
-                new MenuItem('개인 정보 처리방침 & 약관',
+                new MenuItem(LanguageManager.languageMap.PrivacyAndTerms,
                     async () => {
                         await RoutingManager.rawMoveTo('https://www.molink.life/blog/Molink/4629add3ae7d9971bc539427afd127ad/%EC%9D%B4%EC%9A%A9%20%EC%95%BD%EA%B4%80', true)
                         MenuManager.close()
                     }),
-                new MenuItem('로그아웃',
+                new MenuItem(LanguageManager.languageMap.Setting,
+                    async () => {
+                        await RoutingManager.moveTo(Page.SettingProfile)
+                    }),
+                new MenuItem(LanguageManager.languageMap.SignOut,
                     async () => {
                         UserManager.isUserMenuOpen = false
                         await AuthManager.signOut()

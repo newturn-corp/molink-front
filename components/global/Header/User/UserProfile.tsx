@@ -3,13 +3,14 @@ import { observer } from 'mobx-react'
 import { Avatar } from '@material-ui/core'
 import UserManager from '../../../../manager/global/User/UserManager'
 import { BrowserView, isBrowser } from 'react-device-detect'
+import LanguageManager from '../../../../manager/global/LanguageManager'
 
 export const UserProfile: React.FC<{
   }> = observer(() => {
       const { isUserAuthorized } = UserManager
 
       const getUserNickname = () => {
-          return isUserAuthorized ? UserManager.profile.nickname : '로그인'
+          return isUserAuthorized ? UserManager.profile.nickname : LanguageManager.languageMap.SignIn
       }
 
       return <>
