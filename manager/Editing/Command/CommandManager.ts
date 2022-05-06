@@ -181,6 +181,14 @@ class CommandManager {
             }
             this.insertNode(editor, node)
             break
+        case '콜아웃':
+            node = {
+                type: 'callout',
+                icon: '💡',
+                children: [{ text: '' }]
+            }
+            this.insertNode(editor, node)
+            break
         case '순서없는목록':
             const unorderedRange = {
                 anchor: {

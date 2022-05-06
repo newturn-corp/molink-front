@@ -12,6 +12,7 @@ import { SlateOrderedListElement } from './Element/SlateOrderedListElement'
 import { SlateVideoElement } from './Element/SlateVideoElement'
 import { SlateFileElement } from './Element/SlateFileElement'
 import { SlateBookmarkElement } from './Element/SlateBookmarkElement'
+import { SlateCalloutElement } from './Element/CalloutElement'
 
 export const CustomElementComponent: React.FC<{
     attributes,
@@ -57,6 +58,8 @@ export const CustomElementComponent: React.FC<{
           return <SlateYoutubeElement { ...props } />
       case 'code':
           return <SlateCodeElement { ...props } />
+      case 'callout':
+          return <SlateCalloutElement { ...props } />
       default:
           return <p {...attributes}>{children}</p>
       }

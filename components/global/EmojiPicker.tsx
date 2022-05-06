@@ -11,8 +11,9 @@ const EmojiPickerNoSSRWrapper = dynamic<IEmojiPickerProps>(
 
 export const EmojiPicker: React.FC<{
     showEmojiPicker: boolean,
-    onEmojiPick: (event: React.MouseEvent<Element, MouseEvent>, data: IEmojiData) => void
-  }> = ({ showEmojiPicker, onEmojiPick }) => {
+    onEmojiPick: (event: React.MouseEvent<Element, MouseEvent>, data: IEmojiData) => void,
+    disableSearchBar?: boolean
+  }> = ({ showEmojiPicker, onEmojiPick, disableSearchBar }) => {
       if (!showEmojiPicker) {
           return <></>
       }
@@ -29,5 +30,6 @@ export const EmojiPicker: React.FC<{
               flags: '국기',
               recently_used: '최근 사용한 이모지'
           }}
+          disableSearchBar={disableSearchBar}
           onEmojiClick={onEmojiPick} />
   }
