@@ -9,44 +9,8 @@ import { FollowRequestComponent } from './FollowRequestComponent'
 import { Notification } from '../../../../domain/Notification'
 import { FollowRequest } from '../../../../domain/FollowRequest'
 import UserManager from '../../../../manager/global/User/UserManager'
-
-const FollowRequests: React.FC<{
-    requests: FollowRequest[]
-}> = observer(({ requests }) => {
-    if (requests.filter(req => !req.isHandled).length === 0) {
-        return <></>
-    }
-    return <>
-        <p className='label'>팔로우 요청</p>
-        {
-            requests.map(req => {
-                return <FollowRequestComponent key={'follow-request-' + req.id} followRequest={req}/>
-            })
-        }
-    </>
-})
-
-const Notifications: React.FC<{
-    notifications: Notification[]
-}> = observer(({ notifications }) => {
-    if (notifications.length === 0) {
-        return <></>
-    }
-    return <>
-        <div className='notification-label-container'>
-            <p className='label'>알림</p>
-            <div
-                className='check-all-notification-button'
-                onClick={() => NotificationManager.setNotificationsCheckedAt()}
-            >모두 읽음</div>
-        </div>
-        {
-            notifications.map(noti => {
-                return <NotificationBlock key={'notification-block-' + noti.id} notification={noti}/>
-            })
-        }
-    </>
-})
+import { FollowRequestInfo } from '@newturn-develop/types-molink'
+import { NotificationList } from './NotificationList'
 
 export const NotificationButton: React.FC<{
   }> = observer(() => {
@@ -56,16 +20,12 @@ export const NotificationButton: React.FC<{
           return <></>
       }
       // 하나라도 isViewed가 false인 Notification이 있으면 보여줌
-      const notifications = NotificationManager.notifications
-      const followRequests = FollowManager.followRequests.filter(req => !req.isHandled)
-      const isNewNotificationExists = UserManager.notification.checkIsUncheckedNotificationExists()
+      const isNewNotificationExists = false
 
-      const isNotificationExists = !!(notifications.length + followRequests.length)
-
-      const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+      const handleClick = async (event: React.MouseEvent<HTMLElement>) => {
           setAnchorEl(event.currentTarget)
-          FollowManager.checkFollowRequestsViewed()
-          NotificationManager.checkNotificationsViewed()
+          await UserManager.follow.checkFollowRequestsViewed()
+          await UserManager.notification.checkNotificationsViewed()
       }
 
       const handleClose = (event: React.MouseEvent<HTMLLIElement, MouseEvent>, key: string) => {
@@ -119,19 +79,7 @@ export const NotificationButton: React.FC<{
               elevation={0}
               getContentAnchorEl={null}
           >
-              {
-                  isNotificationExists
-                      ? <>
-                          <FollowRequests requests={followRequests}/>
-                          <Notifications notifications={notifications} />
-                      </>
-                      : <div className='notification-not-exists'>
-                          <div className='text'>
-                          알림이 존재하지 않습니다.
-                          </div>
-                      </div>
-              }
-
+              <NotificationList/>
           </Menu>
       </div>
   })

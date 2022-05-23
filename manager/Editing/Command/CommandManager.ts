@@ -48,7 +48,7 @@ class CommandManager {
         new CommandGroup(
             '강조',
             [
-                new Command('콜아웃', '강조하기 위한 한 줄', '/image/editor/command/bullet-list.png')
+                new Command('콜아웃', '강조하기 위한 한 줄', '/image/icon/bulb.svg', 'callout-command')
             ]
         )
         // ),
@@ -177,6 +177,14 @@ class CommandManager {
             node = {
                 type: 'divider',
                 dividerType: DividerType.Dot,
+                children: [{ text: '' }]
+            }
+            this.insertNode(editor, node)
+            break
+        case '콜아웃':
+            node = {
+                type: 'callout',
+                icon: '💡',
                 children: [{ text: '' }]
             }
             this.insertNode(editor, node)

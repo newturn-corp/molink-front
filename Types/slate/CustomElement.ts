@@ -147,6 +147,12 @@ export type BookmarkElementType = {
     children: EmptyText[]
 }
 
+export type CalloutElementType = {
+    type: 'callout',
+    icon: string,
+    children: CustomText[]
+}
+
 export type CustomElement =
 TextElement |
 BulletedListElement |
@@ -160,5 +166,10 @@ OrderedListItemElement |
 DividerElement |
 DocumentElement |
 CheckListItemElement |
-CodeElement | YoutubeElement | QuoteElement |
-SlateVideoElementType | SlateFileElementType | BookmarkElementType
+CodeElement |
+YoutubeElement |
+QuoteElement |
+SlateVideoElementType |
+SlateFileElementType |
+BookmarkElementType |
+CalloutElementType

@@ -10,6 +10,7 @@ import HierarchyManager from '../global/Hierarchy/HierarchyManager'
 import EditorManager from './EditorManager'
 import UserManager from '../global/User/UserManager'
 import { UserPageList } from './UserPageList'
+import { FollowPageList } from './FollowPageList'
 
 enum HomeURLType {
     OnlyDocumentURL = 'only-document-url',
@@ -20,9 +21,11 @@ enum HomeURLType {
 class BlogManager {
     blogUserId: number = 0
     userPageList: UserPageList
+    followPageList: FollowPageList
 
     constructor () {
         this.userPageList = new UserPageList()
+        this.followPageList = new FollowPageList()
     }
 
     interpretURLInfo (info: string[]) {
@@ -68,7 +71,7 @@ class BlogManager {
                 const { id: userId } = await ViewerAPI.getUserIDByNickname(nickname)
                 this.blogUserId = userId
                 await HierarchyManager.loadHierarchy(userId, nickname)
-                await this.userPageList.loadPageSummaryList(pageListOrder)
+                await this.userPageList.loadPageSummaryList(userId, pageListOrder)
                 const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
                 currentHierarchy.openedPageId = null
             } else if (type === HomeURLType.StandardDocumentURL) {
@@ -117,6 +120,11 @@ class BlogManager {
                 throw err
             }
         }
+    }
+
+    async handleEnterMainPage () {
+        this.followPageList.clear()
+        // await this.followPageList.loadPageSummaryList()
     }
 }
 export default new BlogManager()

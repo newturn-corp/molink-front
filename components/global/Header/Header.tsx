@@ -21,8 +21,7 @@ export const Header: React.FC<{
               <div className='navigator'>
               </div>
               <HeaderLogo/>
-
-              {/* <NotificationButton/> */}
+              <NotificationButton/>
               <SettingModal/>
           </BrowserView>
           <BrowserView>

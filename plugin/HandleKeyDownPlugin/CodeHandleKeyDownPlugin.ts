@@ -1,8 +1,20 @@
-import { Text, Transforms } from 'slate'
+import { Editor, Element, Node, Text, Transforms } from 'slate'
 import { TextCategory } from '../../Types/slate/CustomElement'
+import EditorManager from '../../manager/Blog/EditorManager'
+
+const checkInsideIndependentBlock = (editor: Editor) => {
+    const ancestors = Node.ancestors(editor, editor.selection.anchor.path)
+    for (const [ancestor] of ancestors) {
+        console.log(ancestor)
+        if (Element.isElement(ancestor) && ['code', 'callout'].includes(ancestor.type)) {
+            return true
+        }
+    }
+    return false
+}
 
 export const handleEnterInCode = (event, editor) => {
-    if (editor.children[editor.selection.anchor.path[0]].type !== 'code') {
+    if (!checkInsideIndependentBlock(editor)) {
         return false
     }
     event.preventDefault()
@@ -20,7 +32,7 @@ export const handleTabInCode = (event, editor) => {
 }
 
 export const handleShiftEnterInCode = (event, editor) => {
-    if (editor.children[editor.selection.anchor.path[0]].type !== 'code') {
+    if (!checkInsideIndependentBlock(editor)) {
         return false
     }
     event.preventDefault()

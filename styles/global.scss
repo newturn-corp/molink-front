@@ -47,6 +47,7 @@ body {
             color: rgb(119, 119, 119);
             font-size: 15px;
             font-weight: 600;
+            font-family: Pretendard;
         }
         .notification-label-container {
             display: flex;
@@ -77,6 +78,7 @@ body {
                 display: flex;
                 .msg-container {
                     margin-left: 10px;
+                    font-family: Pretendard;
                     .msg {
                         font-size: 0.95rem;
                         word-break: break-all;
@@ -96,6 +98,7 @@ body {
                     padding: 7px 20px;
                     border-radius: 5px;
                     margin: 5px;
+                    font-family: Pretendard;
                 }
                 .accept {
                     background: #0095f6;

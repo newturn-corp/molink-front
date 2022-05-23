@@ -32,6 +32,9 @@
   flex-grow: 0;
   margin: 8px 0px;
 }
+.command-list .callout-command .command-img {
+  fill: #a1a1a1;
+}
 .command-list .command-block {
   display: flex;
   flex-direction: row;

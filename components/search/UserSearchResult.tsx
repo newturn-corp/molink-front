@@ -6,24 +6,24 @@ import UserManager from '../../manager/global/User/UserManager'
 import { ESUser } from '@newturn-develop/types-molink'
 import { FollowStatus } from '../../manager/global/User/UserFollow'
 import RoutingManager, { Page } from '../../manager/global/RoutingManager'
+import LanguageManager from '../../manager/global/LanguageManager'
 
 const FollowButton: React.FC<{
     searchResult: ESUser
-}> = ({ searchResult }) => {
+}> = observer(({ searchResult }) => {
     const [isLoading, setIsLoading] = useState(false)
     if (!UserManager.isUserAuthorized || UserManager.userId === Number(searchResult.id)) {
         return <></>
     }
 
     const followStatus = UserManager.follow.checkUserFollowStatus(Number(searchResult.id))
-
     const handleFollowButtonClick = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation()
         if (isLoading) {
             return
         }
         setIsLoading(true)
-        // await UserManager.follow(searchResult.id)
+        await UserManager.follow.requestFollow(Number(searchResult.id))
         setIsLoading(false)
     }
 
@@ -32,16 +32,17 @@ const FollowButton: React.FC<{
     }
 
     if (followStatus === FollowStatus.Following) {
-        return <div className='follow-button requested no-select'>팔로잉</div>
+        return <div className='follow-button requested no-select'>{LanguageManager.languageMap.Following}</div>
     } else if (followStatus === FollowStatus.FollowRequested) {
-        return <div className='follow-button requested no-select'>요청됨</div>
+        console.log('여기 호출!!!')
+        return <div className='follow-button requested no-select'>{LanguageManager.languageMap.Requested}</div>
     } else {
         return <div
             className='follow-button'
             onClick={(event) => handleFollowButtonClick(event)}
-        >팔로우</div>
+        >{LanguageManager.languageMap.Follow}</div>
     }
-}
+})
 
 export const UserSearchResult: React.FC<{
     result: ESUser

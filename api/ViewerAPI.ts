@@ -9,7 +9,7 @@ import {
     GetUserPageListDTO,
     GetUserInfoByUserMapDTO,
     GetUserInfoByUserMapResponseDTO,
-    GetUserPageListResponseDTO
+    GetUserPageListResponseDTO, GetPageListResponseDTO
 } from '@newturn-develop/types-molink'
 import { ContentNotExists, ContentUserNotExists } from '../Errors/ContentError'
 
@@ -58,8 +58,13 @@ class ViewerAPI extends BaseAPI {
         return res.data
     }
 
-    async getUserPageList (userId: number, from: number): Promise<GetUserPageListResponseDTO> {
+    async getUserPageList (userId: number, from: number): Promise<GetPageListResponseDTO> {
         const res = await this.get(`/viewer/${userId}/pages?from=${from}`)
+        return res.data
+    }
+
+    async getFollowPageList (from: number, count: number): Promise<GetPageListResponseDTO> {
+        const res = await this.get(`/viewer/follow-pages?from=${from}&count=${count}`)
         return res.data
     }
 

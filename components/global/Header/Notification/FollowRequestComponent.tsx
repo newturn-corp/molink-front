@@ -2,19 +2,20 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { Avatar, MenuItem } from '@material-ui/core'
 import { getRelativeTime } from '../../../../utils/getRelativeTime'
-import { FollowRequest } from '@newturn-develop/types-molink'
+import { FollowRequest, FollowRequestInfo } from '@newturn-develop/types-molink'
 import LanguageManager from '../../../../manager/global/LanguageManager'
+import UserManager from '../../../../manager/global/User/UserManager'
+import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
 
 export const FollowRequestComponent: React.FC<{
-    followRequest: FollowRequest,
-  }> = observer(({ followRequest }) => {
-      if (followRequest.isHandled) {
-          return <></>
-      }
-
+    followRequest: FollowRequestInfo,
+    index: number
+  }> = observer(({ followRequest, index }) => {
       return <MenuItem>
           <div className='notification-block'>
-              <div className='avatar-part'>
+              <div className='avatar-part'
+                  onClick={() => RoutingManager.moveTo(Page.Blog, `/${followRequest.nickname}`)}
+              >
                   <Avatar className='img' sizes='32' src={followRequest.profileImgUrl}/>
               </div>
               <div>
@@ -27,9 +28,11 @@ export const FollowRequestComponent: React.FC<{
                   <div className='interaction'>
                       <div
                           className='button accept'
+                          onClick={() => UserManager.follow.acceptFollowRequest(index)}
                       >{LanguageManager.languageMap.Accept}</div>
                       <div
                           className='button reject'
+                          onClick={() => UserManager.follow.rejectFollowRequest(index)}
                       >{LanguageManager.languageMap.Delete}</div>
                   </div>
               </div>

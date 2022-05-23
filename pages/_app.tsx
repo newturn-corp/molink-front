@@ -26,6 +26,7 @@ import '../styles/home.css'
 import '../styles/search.css'
 import '../styles/setting.css'
 import '../styles/blog.css'
+import '../styles/main.css'
 
 import { AppProps } from 'next/dist/shared/lib/router/router'
 import { configure } from 'mobx'

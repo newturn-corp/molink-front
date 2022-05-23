@@ -1,47 +1,66 @@
 import * as Y from 'yjs'
-import { makeAutoObservable } from 'mobx'
-import { FollowRequest, Notification } from '@newturn-develop/types-molink'
+import { makeAutoObservable, toJS } from 'mobx'
+import { ESUser, FollowRequest, NotificationInfo, NotificationType } from '@newturn-develop/types-molink'
+import UserAPI from '../../../api/UserAPI'
+import ViewerAPI from '../../../api/ViewerAPI'
+import { Notification } from '../../../domain/Notification'
+import NotificationAPI from '../../../api/NotificationAPI'
+import { Page } from '../RoutingManager'
 
 export class UserNotification {
-    yNotification: Y.Map<any> = null
-
-    get followRequests (): FollowRequest[] {
-        return this.yNotification.get('followRequests')
-    }
+    _notifications: Notification[] = null
 
     get notifications (): Notification[] {
-        return this.yNotification.get('notifications')
+        return toJS(this._notifications)
     }
 
     constructor () {
-        makeAutoObservable(this, {
-            yNotification: false
-        })
+        makeAutoObservable(this)
     }
 
-    sync (yNotification) {
-        this.yNotification = yNotification
-        if (!this.followRequests) {
-            this.yNotification.set('followRequests', [])
+    getNotificationMessage (causeUser: ESUser, notificationInfo: NotificationInfo) {
+        switch (notificationInfo.notificationType) {
+        case NotificationType.NewFollow:
+            return `새로운 팔로워: ${causeUser.nickname}님`
+        case NotificationType.FollowAccept:
+            return `${causeUser.nickname}님이 팔로우 요청을 수락하셨습니다.`
+        default:
+            throw new Error('Unhandled Notification Type')
         }
-        if (!this.notifications) {
-            this.yNotification.set('notifications', [])
+    }
+
+    async load () {
+        const infoList = await UserAPI.getNotifications()
+        console.log(infoList)
+        const requiredUserMap = {}
+        for (const info of infoList) {
+            if (info.causedUserId && !requiredUserMap[info.causedUserId]) {
+                requiredUserMap[info.causedUserId] = true
+            }
         }
+        const userIDList = [...Object.keys(requiredUserMap)] as any
+        const { infoMap } = await ViewerAPI.getUserInfoMapByIDList(userIDList)
+        const notifications = []
+        for (const info of infoList) {
+            const userInfo = infoMap[info.causedUserId]
+            notifications.push(new Notification('1', userInfo.profileImageUrl, this.getNotificationMessage(userInfo, info), info.isViewed, new Date(info.createdAt), Page.Blog, `/${userInfo.nickname}`))
+        }
+        this._notifications = notifications
     }
 
     reset () {
-        this.yNotification = null
+        this._notifications = []
     }
 
-    checkIsUncheckedNotificationExists () {
-        return (this.followRequests.filter(request => request.isViewed).length + this.notifications.filter(noti => noti.isViewed).length) > 0
+    async checkNotificationsViewed () {
+        await UserAPI.setNotificationsViewedAt()
+        this._notifications.forEach(noti => {
+            noti.isViewed = true
+        })
     }
 
-    acceptFollowRequest () {
-
-    }
-
-    rejectFollowRequest () {
-
+    async setNotificationsCheckedAt () {
+        await UserAPI.setNotificationsCheckedAt()
+        this._notifications = []
     }
 }

@@ -54,6 +54,7 @@
   font-size: 0.8rem;
   line-height: 0.8rem;
   border: 1px solid transparent;
+  margin: auto 0;
 }
 .search-page .core .search-result .requested {
   cursor: default;
