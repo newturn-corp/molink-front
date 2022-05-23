@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
 .page-user-info-container {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -245,7 +244,7 @@
   font-size: 1rem;
 }
 .content-container .content-body .contents .textline .MuiInputBase-input {
-  color: #222426;
+  color: rgb(34, 36, 38);
 }
 .content-container .content-body .contents .textline .MuiInput-underline {
   border-bottom: none !important;
@@ -282,7 +281,7 @@
   margin-bottom: 5px;
 }
 .content-container .content-body .contents ul ul {
-  border-left: 1px solid #cccccc;
+  border-left: 1px solid rgb(204, 204, 204);
   margin-left: -12px;
 }
 .content-container .content-body .contents ol {
@@ -296,7 +295,7 @@
   margin-bottom: 5px;
 }
 .content-container .content-body .contents ol ol {
-  border-left: 1px solid #cccccc;
+  border-left: 1px solid rgb(204, 204, 204);
   margin-left: -12px;
 }
 .content-container .content-body .contents div > .check-list {
@@ -316,7 +315,7 @@
   margin: 0.25rem;
   margin-left: -19px;
   background-color: transparent;
-  border: 2px solid #aaaaaa;
+  border: 2px solid rgb(170, 170, 170);
   cursor: pointer;
 }
 .content-container .content-body .contents .check-list .box:hover {
@@ -329,8 +328,8 @@
   position: absolute;
   top: -45px;
   height: 36px;
-  background-color: white;
-  border: 1px solid #d6d6d6;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(214, 214, 214);
   border-radius: 4px;
   box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
   display: flex;
@@ -349,7 +348,7 @@
   height: 100%;
 }
 .content-container .content-body .contents .image-adjust-button .inactive {
-  color: #a1a1a1;
+  color: rgb(161, 161, 161);
 }
 .content-container .content-body .contents .image-resize-dot {
   width: 12px;
@@ -365,7 +364,7 @@
   border: unset;
   font-size: 14px;
   padding: 0px;
-  color: #a1a1a1;
+  color: rgb(161, 161, 161);
   user-select: none;
 }
 .content-container .content-body .contents .caption:focus {
@@ -375,11 +374,11 @@
   user-select: auto;
 }
 .content-container .content-body .contents .link {
-  color: #686868;
-  border-bottom: 1px solid #686868;
+  color: rgb(104, 104, 104);
+  border-bottom: 1px solid rgb(104, 104, 104);
 }
 .content-container .content-body .contents .link.selected {
-  border: 2px solid #b0b0b0;
+  border: 2px solid rgb(176, 176, 176);
   border-radius: 2px;
 }
 .content-container .content-body .contents .code {
@@ -390,7 +389,7 @@
 .content-container .content-body .contents .callout {
   padding: 16px;
   border-radius: 3px;
-  background: #eff0f1;
+  background: rgb(239, 240, 241);
   display: flex;
   flex-direction: row;
 }
@@ -430,22 +429,22 @@
   height: 1px;
 }
 .content-container .content-body .contents .divider-container .long-line-divider {
-  background-color: #37352f;
+  background-color: rgb(55, 53, 47);
   width: 90%;
   margin-left: 5%;
 }
 .content-container .content-body .contents .divider-container .faint-long-line-divider {
-  background-color: #b4b4b4;
+  background-color: rgb(180, 180, 180);
   width: 90%;
   margin-left: 5%;
 }
 .content-container .content-body .contents .divider-container .short-line-divider {
-  background-color: #37352f;
+  background-color: rgb(55, 53, 47);
   width: 20%;
   margin-left: 40%;
 }
 .content-container .content-body .contents .divider-container .faint-short-line-divider {
-  background-color: #b4b4b4;
+  background-color: rgb(180, 180, 180);
   width: 20%;
   margin-left: 40%;
 }
@@ -458,7 +457,7 @@
   display: flex;
 }
 .content-container .content-body .contents .divider-container .dot-divider .dot {
-  background-color: #37352f;
+  background-color: rgb(55, 53, 47);
   width: 5px;
   height: 5px;
   border-radius: 2.5px;
@@ -485,12 +484,12 @@
   margin: 0px;
 }
 .content-container .content-body .contents .document .text {
-  color: #686868;
+  color: rgb(104, 104, 104);
   text-decoration: underline;
   font-size: 1em;
 }
 .content-container .content-body .contents .document:hover {
-  background: #ececec;
+  background: rgb(236, 236, 236);
 }
 .content-container .content-footer {
   width: 100%;
@@ -612,7 +611,7 @@
 }
 
 .content-body::-webkit-scrollbar-thumb {
-  background: #d1d1d1;
+  background: rgb(209, 209, 209);
   border-radius: 5px;
 }
 
