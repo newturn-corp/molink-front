@@ -8,7 +8,6 @@ import { Pagination } from '@material-ui/lab'
 
 export const UserPageListComponent: React.FC<{
   }> = observer(() => {
-      console.log(BlogManager.userPageList.pageSummaryList)
       return <div className={'page-list-container'}>
           <div className={'list-title'}>{'최근 페이지 목록'}</div>
           {

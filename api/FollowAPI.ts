@@ -21,10 +21,5 @@ class FollowAPI extends BaseAPI {
         const res = await this.put('/follow/requests/accept', dto)
         if (res.status !== 200) throw new APIError(res)
     }
-
-    async setFollowRequestsViewedAt (): Promise<void> {
-        const res = await this.put('/follow/requests/viewed_at', {})
-        if (res.status !== 200) throw new APIError(res)
-    }
 }
 export default new FollowAPI()

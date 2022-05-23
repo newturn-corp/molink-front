@@ -53,6 +53,7 @@ class UserManager {
             return
         }
         try {
+            console.log('여기 호출')
             this.isLoading = true
             this.userId = await UserAPI.getUserID()
             this.yjsDocument = new Y.Doc()
@@ -60,8 +61,8 @@ class UserManager {
             this.profile.sync(this.yjsDocument.getMap<any>('profile'))
             this.setting.sync(this.yjsDocument.getMap<any>('setting'))
             this.limit.sync(this.yjsDocument.getMap<any>('limit'))
-            this.notification.sync(this.yjsDocument.getMap<any>('notification'))
-            this.follow.sync(this.yjsDocument.getMap('myFollowRequests'), this.yjsDocument.getMap('followList'))
+            await this.notification.load()
+            await this.follow.load()
 
             this.websocketProvider = new WebsocketProvider(
                 process.env.USER_SERVER_URL,

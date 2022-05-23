@@ -9,7 +9,7 @@ const CommandBlock: React.FC<{
     index: number,
     command: Command
 }> = ({ index, command }) => {
-    const className = index === CommandManager.index ? 'command-block selected' : 'command-block'
+    const className = (index === CommandManager.index ? 'command-block selected' : 'command-block') + ' ' + (command.className ? command.className : '')
     return <div
         id={`command-block-${index}`}
         key={`command-block-${command.name}`}

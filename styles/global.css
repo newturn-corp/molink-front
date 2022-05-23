@@ -49,6 +49,7 @@ body {
   color: #777777;
   font-size: 15px;
   font-weight: 600;
+  font-family: Pretendard;
 }
 .notification-list .MuiPaper-root .notification-label-container {
   display: flex;
@@ -81,6 +82,7 @@ body {
 }
 .notification-list .MuiPaper-root .notification-block .view-part .msg-container {
   margin-left: 10px;
+  font-family: Pretendard;
 }
 .notification-list .MuiPaper-root .notification-block .view-part .msg-container .msg {
   font-size: 0.95rem;
@@ -100,6 +102,7 @@ body {
   padding: 7px 20px;
   border-radius: 5px;
   margin: 5px;
+  font-family: Pretendard;
 }
 .notification-list .MuiPaper-root .notification-block .interaction .accept {
   background: #0095f6;

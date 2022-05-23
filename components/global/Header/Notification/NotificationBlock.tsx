@@ -3,11 +3,20 @@ import { observer } from 'mobx-react'
 import { Avatar, MenuItem } from '@material-ui/core'
 import { Notification } from '../../../../domain/Notification'
 import { getRelativeTime } from '../../../../utils/getRelativeTime'
+import RoutingManager from '../../../../manager/global/RoutingManager'
 
 export const NotificationBlock: React.FC<{
     notification: Notification,
   }> = observer(({ notification }) => {
-      return <MenuItem>
+      return <MenuItem
+          onClick={async () => {
+              if (notification.moveToPage) {
+                  await RoutingManager.moveTo(notification.moveToPage, notification.moveTo)
+              } else if (notification.moveTo) {
+                  await RoutingManager.rawMoveTo(notification.moveTo)
+              }
+          }}
+      >
           <div className='notification-block'>
               <div className='avatar-part'>
                   <Avatar className='img' sizes='32' src={notification.imgUrl}/>

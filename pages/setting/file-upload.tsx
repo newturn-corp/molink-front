@@ -20,12 +20,10 @@ const SettingProfile = observer(() => {
     const totalUploadLimit = UserManager.limit.totalUploadLimit
     const totalUsage = maxTotalUploadLimit - totalUploadLimit
     const leftTotalSpaceMB = (totalUploadLimit / 1048576).toFixed(1)
-    console.log(totalUsage)
     const maxDailyUploadLimit = 104857600
     const dailyUploadLimit = UserManager.limit.dailyUploadLimit
     const dailyUsage = maxDailyUploadLimit - dailyUploadLimit
     const leftDailySpaceMB = (dailyUploadLimit / 1048576).toFixed(1)
-    console.log(dailyUsage)
     return <div className='setting-page' onClick={() => {
     } } >
         <Header />
