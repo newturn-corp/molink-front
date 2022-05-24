@@ -36,7 +36,13 @@
 
   .callout-command {
     .command-img {
-      fill: #a1a1a1;
+      padding: 2px;
+      svg {
+        fill: #a1a1a1;
+      }
+      .bulb_svg__cls-1 {
+        fill: #a1a1a1;
+      }
     }
   }
 

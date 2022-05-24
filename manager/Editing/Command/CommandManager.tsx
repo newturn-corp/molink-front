@@ -6,6 +6,7 @@ import { ListTransforms } from '../../../plugin/GlobalPlugins/ListPlugin'
 import Command from './Command'
 import CommandGroup from './CommandGroup'
 import EditorManager from '../../Blog/EditorManager'
+import BulbIcon from '../../../public/image/icon/bulb.svg'
 
 // /(슬래시)로 수행하는 명령을 맡아 처리하는 매니저
 class CommandManager {
@@ -48,7 +49,7 @@ class CommandManager {
         new CommandGroup(
             '강조',
             [
-                new Command('콜아웃', '강조하기 위한 한 줄', '/image/icon/bulb.svg', 'callout-command')
+                new Command('콜아웃', '강조하기 위한 한 줄', <BulbIcon/>, 'callout-command', 'svg')
             ]
         )
         // ),

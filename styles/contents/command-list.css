@@ -33,6 +33,12 @@
   margin: 8px 0px;
 }
 .command-list .callout-command .command-img {
+  padding: 2px;
+}
+.command-list .callout-command .command-img svg {
+  fill: #a1a1a1;
+}
+.command-list .callout-command .command-img .bulb_svg__cls-1 {
   fill: #a1a1a1;
 }
 .command-list .command-block {
@@ -99,7 +105,7 @@
   text-overflow: ellipsis;
 }
 .command-list .command-block.selected {
-  background: #eeeeee;
+  background: rgb(238, 238, 238);
 }
 
 .command-list::-webkit-scrollbar {
