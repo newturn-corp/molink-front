@@ -34,10 +34,14 @@ class SignInManager {
         if (result.success === false) {
             if (result.failReason === SIGN_IN_FAIL_REASON.EMAIL_NOT_AUTHORIZED) {
                 this.emailState = EmailState.NOT_AUTHORIZED
+                await FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '다시 인증 메일을 보냈습니다! 이메일을 확인해주세요!', '')
             } else if (result.failReason === SIGN_IN_FAIL_REASON.WRONG_EMAIL_PASSWORD) {
                 this.emailState = EmailState.WRONG_EMAIL_PASSWORD
             } else if (result.failReason === SIGN_IN_FAIL_REASON.TOO_MANY_REQUEST) {
                 this.emailState = EmailState.TOO_MANY_REQUEST
+            } else if (result.failReason === SIGN_IN_FAIL_REASON.TOO_MANY_EMAIL_AUTH_REQUEST) {
+                this.emailState = EmailState.NOT_AUTHORIZED
+                await FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '너무 많이 이메일 인증을 시도했습니다. 잠시 뒤에 시도해주세요.', '')
             }
             return { success: false }
         }
