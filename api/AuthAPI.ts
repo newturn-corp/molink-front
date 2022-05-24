@@ -13,7 +13,8 @@ export enum SIGN_UP_FAIL_REASON {
 export enum SIGN_IN_FAIL_REASON {
     WRONG_EMAIL_PASSWORD,
     EMAIL_NOT_AUTHORIZED,
-    TOO_MANY_REQUEST
+    TOO_MANY_REQUEST,
+    TOO_MANY_EMAIL_AUTH_REQUEST
 }
 
 export enum START_PASSWORD_CHANGE_FAIL_REASON {
@@ -66,6 +67,8 @@ class AutoAPI extends BaseAPI {
             return { success: false, failReason: SIGN_IN_FAIL_REASON.TOO_MANY_REQUEST }
         } else if (res.status === 409001) {
             return { success: false, failReason: SIGN_IN_FAIL_REASON.EMAIL_NOT_AUTHORIZED }
+        } else if (res.status === 409002) {
+            return { success: false, failReason: SIGN_IN_FAIL_REASON.TOO_MANY_EMAIL_AUTH_REQUEST }
         }
     }
 
