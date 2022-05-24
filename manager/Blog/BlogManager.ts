@@ -72,9 +72,8 @@ class BlogManager {
                 const dto = await ViewerAPI.getUserInfoMapByNicknameList([nickname])
                 const userInfo = dto.infoMap[nickname] as ESUser
                 const userId = Number(userInfo.id)
-                const profileImageSrc = userInfo.profileImageUrl
                 this.blogUserId = userId
-                await HierarchyManager.loadHierarchy(userId, nickname)
+                await HierarchyManager.loadHierarchy(userId)
                 await this.userPageList.loadPageSummaryList(userId, pageListOrder)
                 const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
                 currentHierarchy.openedPageId = null
@@ -89,7 +88,8 @@ class BlogManager {
                     await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${authority.nickname}/${pageId}/${encodeURIComponent(authority.documentName)}`)
                     return
                 }
-                await HierarchyManager.loadHierarchy(authority.userId, nickname)
+                this.blogUserId = authority.userId
+                await HierarchyManager.loadHierarchy(authority.userId)
                 await EditorManager.load(pageId)
                 const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
                 currentHierarchy.openPageParents(pageId)

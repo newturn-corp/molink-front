@@ -11,6 +11,11 @@ import UserManager from '../User/UserManager'
 import { Event } from '../Event/Event'
 import EventManager from '../Event/EventManager'
 import { isBrowser } from 'react-device-detect'
+import ViewerAPI from '../../../api/ViewerAPI'
+import { ESUser } from '@newturn-develop/types-molink'
+import DialogManager from '../DialogManager'
+import RoutingManager, { Page } from '../RoutingManager'
+import { UserNotExists } from '../../../Errors/UserError'
 
 class HierarchyManager {
     hierarchyMap: Map<number, Hierarchy> = new Map()
@@ -40,14 +45,19 @@ class HierarchyManager {
         )
     }
 
-    async loadHierarchy (userId: number, nickname: string, profileImageUrl: string) {
+    async loadHierarchy (userId: number) {
         this.currentHierarchyUserId = userId
         const exist = this.hierarchyMap.get(userId)
         // 만약 실시간 동기화된 하이어라키면 로드하지 않는다.
         if (exist && exist.websocketProvider) {
             return
         }
-        const hierarchy = new Hierarchy(userId, nickname, profileImageUrl)
+        const dto = await ViewerAPI.getUserInfoMapByIDList([userId])
+        const userInfo = dto.infoMap[userId] as ESUser
+        if (!userInfo) {
+            throw new UserNotExists()
+        }
+        const hierarchy = new Hierarchy(userId, userInfo.nickname, userInfo.profileImageUrl)
         await hierarchy.init()
         this.hierarchyMap.set(userId, hierarchy)
         await EventManager.issueEvent(Event.UpdateHierarchy, {})
