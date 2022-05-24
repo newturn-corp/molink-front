@@ -59,6 +59,7 @@
 .command-list .command-block .command-img {
   position: static;
   width: 40px;
+  height: 40px;
   top: 8.33%;
   bottom: 8.33%;
   background: #FFFFFF;

@@ -4,7 +4,9 @@ import { TextCategory } from '../../Types/slate/CustomElement'
 import { ListEditor, ListTransforms } from '../GlobalPlugins/ListPlugin'
 
 export const handleEnterInList = (event: React.KeyboardEvent<HTMLDivElement>, editor: Editor) => {
+    console.log('handleEnterInList')
     const currentItem = ListEditor.getCurrentItem(editor)
+    console.log(currentItem)
     if (!currentItem) {
         return false
     }
@@ -21,19 +23,23 @@ export const handleEnterInList = (event: React.KeyboardEvent<HTMLDivElement>, ed
     ) {
         // Block is empty, we exit the list
         if (ListEditor.getItemDepth(editor) > 1) {
+            console.log(1)
             ListTransforms.decreaseItemDepth(editor)
         } else {
             // Exit list
+            console.log(2)
             ListTransforms.unwrapList(editor)
         }
     } else {
         // Split list item
+        console.log(3)
         ListTransforms.splitListItem(editor)
     }
     return true
 }
 
 export const handleTabInList = (event: React.KeyboardEvent<HTMLDivElement>, editor: Editor) => {
+    console.log('handleTabInList')
     if (
         Range.isExpanded(editor.selection) ||
         !ListEditor.getCurrentItem(editor)
