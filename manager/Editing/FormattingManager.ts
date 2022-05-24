@@ -117,16 +117,16 @@ class FormattingManager {
             }
             Transforms.setNodes(editor, newProperties)
         } else {
+            ListTransforms.wrapInList(editor, list)
             if (list === List.Check) {
                 const newProperties: Partial<SlateElement> = {
                     type: 'check-list-item',
                     checked: false
                 }
                 Transforms.setNodes<SlateElement>(editor, newProperties, {
-                    match: n => SlateEditor.isBlock(editor, n)
+                    match: n => SlateEditor.isBlock(editor, n) && n.type === 'list-item'
                 })
             }
-            ListTransforms.wrapInList(editor, list)
         }
     }
 

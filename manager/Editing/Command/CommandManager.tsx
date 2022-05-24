@@ -1,6 +1,16 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import React from 'react'
-import { BaseRange, Editor, Element, Node, Path, Range, Transforms } from 'slate'
+import {
+    BaseRange,
+    Editor as SlateEditor,
+    Editor,
+    Element as SlateElement,
+    Element,
+    Node,
+    Path,
+    Range,
+    Transforms
+} from 'slate'
 import { DividerType, TextCategory } from '../../../Types/slate/CustomElement'
 import { ListTransforms } from '../../../plugin/GlobalPlugins/ListPlugin'
 import Command from './Command'
@@ -224,14 +234,14 @@ class CommandManager {
             }
             Transforms.select(editor, checklistRange)
             Transforms.delete(editor)
-            const newProperties: Partial<Element> = {
+            ListTransforms.wrapInList(editor, 'check-list')
+            const newProperties: Partial<SlateElement> = {
                 type: 'check-list-item',
                 checked: false
             }
-            Transforms.setNodes<Element>(editor, newProperties, {
-                match: n => Editor.isBlock(editor, n)
+            Transforms.setNodes<SlateElement>(editor, newProperties, {
+                match: n => SlateEditor.isBlock(editor, n) && n.type === 'list-item'
             })
-            ListTransforms.wrapInList(editor, 'check-list')
             break
         // case '페이지':
         //     if (!ContentManager.openedDocument) {

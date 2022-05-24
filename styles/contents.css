@@ -282,7 +282,7 @@
 }
 .content-container .content-body .contents ul ul {
   border-left: 1px solid rgb(204, 204, 204);
-  margin-left: -12px;
+  margin-left: -15px;
 }
 .content-container .content-body .contents ol {
   margin-left: -15px;
@@ -307,6 +307,9 @@
 }
 .content-container .content-body .contents .check-list ul {
   border-left: unset;
+}
+.content-container .content-body .contents .check-list .check-list {
+  margin-left: -30px;
 }
 .content-container .content-body .contents .check-list .box {
   left: -5px;

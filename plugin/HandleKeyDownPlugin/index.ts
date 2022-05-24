@@ -90,9 +90,7 @@ export const handleKeyDown = (event, editor) => {
     }
     keys.push(event.key)
     const eventKey = keys.join('+')
-    console.log(eventKey)
     const handlers = handlerMap.get(eventKey)
-    console.log(handlers)
     if (!handlers || handlers.length === 0) {
         return false
     }

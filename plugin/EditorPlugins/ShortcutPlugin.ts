@@ -14,6 +14,7 @@ import ShortcutManager from '../../manager/Editing/ShortcutManager'
 
 const SHORTCUTS = {
     '*': 'unordered-list',
+    '-': 'unordered-list',
     '>': 'block-quote',
     '#': 'heading-one',
     '##': 'heading-two',
@@ -128,14 +129,14 @@ export const ShortcutWhenInsertText = (editor: Editor, text: string) => {
                 ListTransforms.wrapInList(editor, 'ol-list', { start: Number(start) })
                 return true
             } else if (type === 'check-list') {
+                ListTransforms.wrapInList(editor, 'check-list')
                 const newProperties: Partial<SlateElement> = {
                     type: 'check-list-item',
                     checked: false
                 }
                 Transforms.setNodes<SlateElement>(editor, newProperties, {
-                    match: n => SlateEditor.isBlock(editor, n)
+                    match: n => SlateEditor.isBlock(editor, n) && n.type === 'list-item'
                 })
-                ListTransforms.wrapInList(editor, 'check-list')
                 return true
             }
             const newProperties: Partial<SlateElement> = ShortcutManager.getPropertyByShortcut(beforeText)

@@ -5,7 +5,6 @@ import EditorManager from '../../manager/Blog/EditorManager'
 const checkInsideIndependentBlock = (editor: Editor) => {
     const ancestors = Node.ancestors(editor, editor.selection.anchor.path)
     for (const [ancestor] of ancestors) {
-        console.log(ancestor)
         if (Element.isElement(ancestor) && ['code', 'callout'].includes(ancestor.type)) {
             return true
         }

@@ -17,7 +17,7 @@ export const SlateCheckListItemElement: React.FC<{
               className={css`
         display: flex;
         flex-direction: row;
-        align-items: center;
+        align-items: stretch;
 
         & + & {
           margin-top: 0;
@@ -32,6 +32,9 @@ export const SlateCheckListItemElement: React.FC<{
               >
                   <input
                       type="checkbox"
+                      style={{
+                          marginTop: 9
+                      }}
                       checked={checked}
                       onChange={event => {
                           const path = ReactEditor.findPath(editor, element)
