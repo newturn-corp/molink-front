@@ -11,6 +11,7 @@ import EditorManager from './EditorManager'
 import UserManager from '../global/User/UserManager'
 import { UserPageList } from './UserPageList'
 import { FollowPageList } from './FollowPageList'
+import { ESUser } from '@newturn-develop/types-molink'
 
 enum HomeURLType {
     OnlyDocumentURL = 'only-document-url',
@@ -68,7 +69,10 @@ class BlogManager {
                 await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${authority.nickname}/${pageId}/${encodeURIComponent(authority.documentName)}`)
                 return
             } else if (type === HomeURLType.UserMainURL) {
-                const { id: userId } = await ViewerAPI.getUserIDByNickname(nickname)
+                const dto = await ViewerAPI.getUserInfoMapByNicknameList([nickname])
+                const userInfo = dto.infoMap[nickname] as ESUser
+                const userId = Number(userInfo.id)
+                const profileImageSrc = userInfo.profileImageUrl
                 this.blogUserId = userId
                 await HierarchyManager.loadHierarchy(userId, nickname)
                 await this.userPageList.loadPageSummaryList(userId, pageListOrder)

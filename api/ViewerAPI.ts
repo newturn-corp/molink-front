@@ -72,5 +72,10 @@ class ViewerAPI extends BaseAPI {
         const res = await this.get(`/viewer/users?userIDList=${userIDList.join(',')}`)
         return res.data
     }
+
+    async getUserInfoMapByNicknameList (userNicknameList: string[]): Promise<GetUserInfoByUserMapResponseDTO> {
+        const res = await this.get(`/viewer/users/nickname-list?userNicknameList=${userNicknameList.join(',')}`)
+        return res.data
+    }
 }
 export default new ViewerAPI()

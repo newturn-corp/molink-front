@@ -40,14 +40,14 @@ class HierarchyManager {
         )
     }
 
-    async loadHierarchy (userId: number, nickname: string) {
+    async loadHierarchy (userId: number, nickname: string, profileImageUrl: string) {
         this.currentHierarchyUserId = userId
         const exist = this.hierarchyMap.get(userId)
         // 만약 실시간 동기화된 하이어라키면 로드하지 않는다.
         if (exist && exist.websocketProvider) {
             return
         }
-        const hierarchy = new Hierarchy(userId, nickname)
+        const hierarchy = new Hierarchy(userId, nickname, profileImageUrl)
         await hierarchy.init()
         this.hierarchyMap.set(userId, hierarchy)
         await EventManager.issueEvent(Event.UpdateHierarchy, {})
