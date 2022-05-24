@@ -255,26 +255,30 @@ export const SlateImageElement: React.FC<{
                               : <></>
                       }
                       {
-                          <div
-                              ref={menuButtonRef}
-                              className={'menu-button'}
-                              style={{
-                                  display: isMouseOver ? undefined : 'none'
-                              }}
-                              onClick={(event) => {
-                                  event.stopPropagation()
-                                  Transforms.select(EditorManager.slateEditor, currentNodePath())
-                                  const rect = menuButtonRef.current.getBoundingClientRect()
-                                  MenuManager.open([new MenuItem('삭제', () => {
-                                      Transforms.removeNodes(EditorManager.slateEditor, { at: currentNodePath() })
-                                  })], {
-                                      top: rect.top + (rect.height / 2),
-                                      left: rect.left + (rect.width / 2)
-                                  }, true)
-                              }}
-                          >
-                              <MenuDotsIcon/>
-                          </div>
+                          EditorManager.editable
+                              ? <div
+                                  ref={menuButtonRef}
+                                  className={'menu-button'}
+                                  style={{
+                                      display: isMouseOver ? undefined : 'none'
+                                  }}
+                                  onClick={(event) => {
+                                      event.stopPropagation()
+                                      Transforms.select(EditorManager.slateEditor, currentNodePath())
+                                      const rect = menuButtonRef.current.getBoundingClientRect()
+                                      MenuManager.open([new MenuItem('삭제', () => {
+                                          if (EditorManager.editable) {
+                                              Transforms.removeNodes(EditorManager.slateEditor, { at: currentNodePath() })
+                                          }
+                                      })], {
+                                          top: rect.top + (rect.height / 2),
+                                          left: rect.left + (rect.width / 2)
+                                      }, true)
+                                  }}
+                              >
+                                  <MenuDotsIcon/>
+                              </div>
+                              : <></>
                       }
                   </Rnd>
                   <Caption selected={selected} caption={element.caption} floatOption={element.floatOption}/>
