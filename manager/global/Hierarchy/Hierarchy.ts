@@ -21,6 +21,7 @@ export default class Hierarchy {
 
     public userId: number
     public nickname: string
+    public profileImageUrl: string
     public websocketProvider: WebsocketProvider = null
     public editable: boolean = false
     public yDocument: Y.Doc
@@ -36,9 +37,10 @@ export default class Hierarchy {
     public selectedPageId: string | null = null
     public openedPageId: string | null = null
 
-    constructor (userId: number, nickname: string) {
+    constructor (userId: number, nickname: string, profileImageUrl: string) {
         this.userId = userId
         this.nickname = nickname
+        this.profileImageUrl = profileImageUrl
         this.yDocument = new Y.Doc()
         this.yMap = this.yDocument.getMap('documentHierarchyInfoMap')
         this.yMap.observeDeep(async () => {

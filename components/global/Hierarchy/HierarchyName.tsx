@@ -24,14 +24,7 @@ export const HierarchyName: React.FC<{
                 <Avatar
                     className='profile-image'
                     sizes='32'
-                    src={`data:image/png;base64,${
-                        new Identicon(
-                            crypto.createHash('sha512')
-                                .update(currentHierarchy.nickname)
-                                .digest('base64'), {
-                                size: 64,
-                                foreground: [58, 123, 191, 255]
-                            }).toString()}`}
+                    src={currentHierarchy.profileImageUrl}
                 />
                 <div
                     className='text'

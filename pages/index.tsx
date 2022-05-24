@@ -28,7 +28,7 @@ const Index = observer(() => {
                     await RoutingManager.moveTo(Page.SignIn)
                 } else {
                     if (!HierarchyManager.currentHierarchyUserId) {
-                        await HierarchyManager.loadHierarchy(UserManager.userId, UserManager.profile.nickname)
+                        await HierarchyManager.loadHierarchy(UserManager.userId)
                     }
                 }
             })
