@@ -15,11 +15,19 @@ const CommandBlock: React.FC<{
         key={`command-block-${command.name}`}
         className={className}
     >
-        <img
-            key={`command-block-img-${command.name}`}
-            className='command-img'
-            src={command.imgSrc}
-        />
+        {
+            command.imgType === 'img'
+                ? <img
+                    key={`command-block-img-${command.name}`}
+                    className='command-img'
+                    src={command.imgSrc as string}
+                />
+                : <div
+                    className='command-img'
+                >
+                    {command.imgSrc}
+                </div>
+        }
         <div
             key={`command-block-text-container${command.name}`}
             className='text-container'

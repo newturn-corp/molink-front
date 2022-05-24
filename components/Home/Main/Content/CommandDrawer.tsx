@@ -40,11 +40,19 @@ export const CommandDrawer: React.FC<{
                                     }}
                                 >
                                     <div className={'container'}>
-                                        <img
-                                            key={`command-block-img-${command.name}`}
-                                            className='command-img'
-                                            src={command.imgSrc}
-                                        />
+                                        {
+                                            command.imgType === 'img'
+                                                ? <img
+                                                    key={`command-block-img-${command.name}`}
+                                                    className='command-img'
+                                                    src={command.imgSrc as string}
+                                                />
+                                                : <div
+                                                    className='command-img'
+                                                >
+                                                    {command.imgSrc}
+                                                </div>
+                                        }
                                         <div
                                             key={`command-block-text-container${command.name}`}
                                             className='text-container'
