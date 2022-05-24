@@ -267,7 +267,9 @@ export const SlateImageElement: React.FC<{
                                       Transforms.select(EditorManager.slateEditor, currentNodePath())
                                       const rect = menuButtonRef.current.getBoundingClientRect()
                                       MenuManager.open([new MenuItem('삭제', () => {
-                                          Transforms.removeNodes(EditorManager.slateEditor, { at: currentNodePath() })
+                                          if (EditorManager.editable) {
+                                              Transforms.removeNodes(EditorManager.slateEditor, { at: currentNodePath() })
+                                          }
                                       })], {
                                           top: rect.top + (rect.height / 2),
                                           left: rect.left + (rect.width / 2)
