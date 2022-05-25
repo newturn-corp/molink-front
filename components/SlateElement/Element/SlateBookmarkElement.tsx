@@ -58,6 +58,7 @@ export const SlateBookmarkElement: React.FC<{
         >
             <div
                 className={'title'}
+                contentEditable={false}
             >
                 {info.title}
             </div>
@@ -65,6 +66,7 @@ export const SlateBookmarkElement: React.FC<{
                 info.description
                     ? <div
                         className={'description'}
+                        contentEditable={'false'}
                     >
                         {info.description}
                     </div>
@@ -72,6 +74,7 @@ export const SlateBookmarkElement: React.FC<{
             }
             <div
                 className={'url-container'}
+                contentEditable={false}
             >
                 {
                     info.iconURL
@@ -83,6 +86,7 @@ export const SlateBookmarkElement: React.FC<{
                 }
                 <div
                     className={'url'}
+                    contentEditable={false}
                 >
                     {element.url}
                 </div>
@@ -102,7 +106,7 @@ export const SlateBookmarkElement: React.FC<{
                         <img
                             className={'image'}
                             src={info.imageURL}
-                        ></img>
+                        />
                     </div>
                 </div>
                 : <></>

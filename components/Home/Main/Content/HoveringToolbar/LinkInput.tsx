@@ -58,9 +58,9 @@ export const LinkInput: React.FC<{
                   noOptionsText={isUrl(LinkManager.hoveringToolbar.currentInputValue) ? '이 링크로 연결' : '선택된 문서가 없습니다.'}
                   //   getOptionSelected={(option, value) => option.text}
                   renderOption={(option) => (
-                      <React.Fragment>
+                      <div>
                           {`${option.icon}  ${option.text}`}
-                      </React.Fragment>
+                      </div>
                   )}
                   renderInput={(params) =>
                       <LinkInputTextField params={params}/>
