@@ -9,13 +9,12 @@ import { BrowserView, MobileView } from 'react-device-detect'
 import { MobileToolbar } from './MobileToolbar/MobileToolbar'
 import { CommandDrawer } from './Content/CommandDrawer'
 import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
-import { UserPageListComponent } from './Content/UserPageListComponent'
-import { BlogUserInfoComponent } from '../../Blog/BlogUserInfoComponent'
 import { BlogUserContent } from '../../Blog/UserContent/BlogUserContent'
+import BlogPage from '../../../manager/Blog/BlogPage'
+import { BlogPageType } from '../../../manager/Blog/Blog'
 
 export const HomeMainComponent: React.FC<{
   }> = observer(() => {
-      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
       useEffect(() => {
           EditorManager.contentBody = document.getElementById('content-body')
       }, [])
@@ -30,15 +29,21 @@ export const HomeMainComponent: React.FC<{
                   <ContentHeader/>
               </BrowserView>
               {
-                  !currentHierarchy || !currentHierarchy.openedPageId
-                      ? <BlogUserContent/>
-                      : <div
-                          id={'content-body'}
-                          className={'content-body'}
-                          style={StyleManager.contentStyle.body}
-                      >
-                          <ContentComponent/>
-                      </div>
+                  BlogPage.blog
+                      ? <>
+                          {
+                              BlogPage.blog.pageType === BlogPageType.NormalPage
+                                  ? <div
+                                      id={'content-body'}
+                                      className={'content-body'}
+                                      style={StyleManager.contentStyle.body}
+                                  >
+                                      <ContentComponent/>
+                                  </div>
+                                  : <BlogUserContent/>
+                          }
+                      </>
+                      : <></>
               }
               <MobileView>
                   <MobileToolbar/>
