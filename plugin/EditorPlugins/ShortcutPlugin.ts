@@ -101,6 +101,30 @@ export const ShortcutWhenInsertText = (editor: Editor, text: string) => {
         }
     }
 
+    if (text === ']') {
+        const { anchor } = selection
+        const block = SlateEditor.above(editor, {
+            match: n => SlateEditor.isBlock(editor, n)
+        })
+        const path = block ? block[1] : []
+        const start = SlateEditor.start(editor, path)
+        const range = { anchor, focus: start }
+        const beforeText = SlateEditor.string(editor, range)
+        if (beforeText === '[') {
+            Transforms.select(editor, range)
+            Transforms.delete(editor)
+            ListTransforms.wrapInList(editor, 'check-list')
+            const newProperties: Partial<SlateElement> = {
+                type: 'check-list-item',
+                checked: false
+            }
+            Transforms.setNodes<SlateElement>(editor, newProperties, {
+                match: n => SlateEditor.isBlock(editor, n) && n.type === 'list-item'
+            })
+            return true
+        }
+    }
+
     if (text === ' ') {
         const { anchor } = selection
         const block = SlateEditor.above(editor, {
