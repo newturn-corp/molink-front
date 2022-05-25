@@ -2,6 +2,7 @@ import React from 'react'
 import { ReactEditor, useReadOnly, useSlateStatic } from 'slate-react'
 import { css } from '@emotion/css'
 import { Transforms } from 'slate'
+import EditorManager from '../../../manager/Blog/EditorManager'
 
 export const SlateCheckListItemElement: React.FC<{
     attributes,
@@ -45,21 +46,24 @@ export const SlateCheckListItemElement: React.FC<{
                   <span
                       contentEditable={false}
                       className={css`
-          margin-right: 0.5em;
+          margin-right: 0.4em;
         `}
                   >
                       <input
                           type="checkbox"
                           style={{
-                              marginTop: 9
+                              marginTop: EditorManager.editable ? 8 : 4,
+                              cursor: EditorManager.editable ? 'pointer' : 'default'
                           }}
                           checked={checked}
                           onChange={event => {
-                              const path = ReactEditor.findPath(editor, element)
-                              const newProperties = {
-                                  checked: event.target.checked
+                              if (EditorManager.editable) {
+                                  const path = ReactEditor.findPath(editor, element)
+                                  const newProperties = {
+                                      checked: event.target.checked
+                                  }
+                                  Transforms.setNodes(editor, newProperties, { at: path })
                               }
-                              Transforms.setNodes(editor, newProperties, { at: path })
                           }}
                       />
                   </span>

@@ -200,6 +200,7 @@
 .content-container .content-body .contents .title {
   font-weight: 800;
   margin-bottom: 0.3rem;
+  word-break: keep-all;
 }
 .content-container .content-body .contents .text {
   margin: 0px;
@@ -317,7 +318,6 @@
   height: 1rem;
   border: 1px solid #9DA7B0;
   border-radius: 3px;
-  margin: auto 0;
   cursor: pointer;
 }
 .content-container .content-body .contents .check-list input[type=checkbox]:checked {
