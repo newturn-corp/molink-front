@@ -7,7 +7,7 @@ body {
     font-family: Pretendard;
     color: rgb(55, 53, 47);
     font-size: 1rem;
-    background-color: #FAFAFB;
+    //background-color: #FAFAFB;
 }
 ::-moz-selection {
     background: #D6E6F6 !important;
@@ -26,6 +26,27 @@ body {
     height: 100%;
     z-index: 10;
     backdrop-filter: blur(4px);
+}
+
+.follow-button {
+    background: #0095f6;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+
+    padding: 7px 9px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+    border: 1px solid transparent;
+
+    margin: auto 0;
+}
+.requested {
+    cursor: default;
+    background-color: transparent;
+    color: inherit;
+    border: 1px solid #bebebe;
 }
 
 

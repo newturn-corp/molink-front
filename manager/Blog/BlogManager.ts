@@ -21,11 +21,9 @@ enum HomeURLType {
 
 class BlogManager {
     blogUserId: number = 0
-    userPageList: UserPageList
     followPageList: FollowPageList
 
     constructor () {
-        this.userPageList = new UserPageList()
         this.followPageList = new FollowPageList()
     }
 
@@ -52,77 +50,6 @@ class BlogManager {
                 throw new InvalidParam()
             }
             return { type: HomeURLType.StandardDocumentURL, nickname, pageId, documentName }
-        }
-    }
-
-    async handleEnterBlogPage (info: string[]) {
-        try {
-            await UserManager.load()
-            const { type, nickname, pageId, documentName, pageListOrder } = this.interpretURLInfo(info)
-            if (type === HomeURLType.OnlyDocumentURL) {
-                const authority = await ViewerAPI.getDocumentAuthority(pageId)
-                if (!authority.viewable) {
-                    await DialogManager.openDialog('문서가 존재하지 않습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
-                    await RoutingManager.moveTo(Page.Blog, `/${authority.nickname}`)
-                    return
-                }
-                await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${authority.nickname}/${pageId}/${encodeURIComponent(authority.documentName)}`)
-                return
-            } else if (type === HomeURLType.UserMainURL) {
-                const dto = await ViewerAPI.getUserInfoMapByNicknameList([nickname])
-                const userInfo = dto.infoMap[nickname] as ESUser
-                const userId = Number(userInfo.id)
-                this.blogUserId = userId
-                await HierarchyManager.loadHierarchy(userId)
-                await this.userPageList.loadPageSummaryList(userId, pageListOrder)
-                const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-                currentHierarchy.openedPageId = null
-            } else if (type === HomeURLType.StandardDocumentURL) {
-                const authority = await ViewerAPI.getDocumentAuthority(pageId)
-                if (!authority.viewable) {
-                    await DialogManager.openDialog('문서가 존재하지 않습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
-                    await RoutingManager.moveTo(Page.Blog, `/${authority.nickname}`)
-                    return
-                }
-                if (authority.nickname !== nickname || (documentName !== undefined && authority.documentName !== decodeURIComponent(documentName))) {
-                    await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${authority.nickname}/${pageId}/${encodeURIComponent(authority.documentName)}`)
-                    return
-                }
-                this.blogUserId = authority.userId
-                await HierarchyManager.loadHierarchy(authority.userId)
-                await EditorManager.load(pageId)
-                const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-                currentHierarchy.openPageParents(pageId)
-            }
-        } catch (err) {
-            console.log(err)
-            if (err instanceof UserNotExists) {
-                await DialogManager.openDialog('사용자가 존재하지 않습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
-                await RoutingManager.moveTo(Page.Index)
-            } else if (err instanceof DocumentNotExists) {
-                await DialogManager.openDialog('문서가 존재하지 않습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
-                await RoutingManager.moveTo(Page.Index)
-            } else if (err instanceof UnexpectedError) {
-                await DialogManager.openDialog('예상치 못한 문제가 발생했습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
-                await RoutingManager.moveTo(Page.Index)
-            } else if (err instanceof UnauthorizedForDocument) {
-                await DialogManager.openDialog('문서를 찾을 수 없습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
-                await RoutingManager.moveTo(Page.Index)
-            } else if (err instanceof ContentNotExists) {
-                await DialogManager.openDialog('문서를 찾을 수 없습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
-                await RoutingManager.moveTo(Page.Index)
-            } else if (err instanceof UnauthorizedForContent) {
-                await DialogManager.openDialog('문서를 찾을 수 없습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
-                await RoutingManager.moveTo(Page.Index)
-            } else if (err instanceof ContentUserNotExists) {
-                await DialogManager.openDialog('문서를 찾을 수 없습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
-                await RoutingManager.moveTo(Page.Index)
-            } else if (err instanceof HierarchyNotExists) {
-                await DialogManager.openDialog('문서를 찾을 수 없습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
-                await RoutingManager.moveTo(Page.Index)
-            } else {
-                throw err
-            }
         }
     }
 

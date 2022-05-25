@@ -10,6 +10,8 @@ import { MobileToolbar } from './MobileToolbar/MobileToolbar'
 import { CommandDrawer } from './Content/CommandDrawer'
 import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
 import { UserPageListComponent } from './Content/UserPageListComponent'
+import { BlogUserInfoComponent } from '../../Blog/BlogUserInfoComponent'
+import { BlogUserContent } from '../../Blog/UserContent/BlogUserContent'
 
 export const HomeMainComponent: React.FC<{
   }> = observer(() => {
@@ -29,7 +31,7 @@ export const HomeMainComponent: React.FC<{
               </BrowserView>
               {
                   !currentHierarchy || !currentHierarchy.openedPageId
-                      ? <UserPageListComponent />
+                      ? <BlogUserContent/>
                       : <div
                           id={'content-body'}
                           className={'content-body'}

@@ -16,6 +16,8 @@ class GlobalManager {
     window: Window = null
     mousePositionX = 0
     mousePositionY = 0
+    screenWidth = 1920
+    screenHeight = 1080
 
     async init () {
         this.navigator = navigator
@@ -44,9 +46,15 @@ class GlobalManager {
             return undefined
         }
         this.window.onresize = async () => {
+            this.screenHeight = this.window.innerHeight
+            this.screenWidth = this.window.innerWidth
             await EventManager.issueEvent(Event.WindowResize, {})
         }
         await EventManager.issueEvent(Event.InitGlobalVariable, {})
+        setTimeout(() => {
+            this.screenHeight = this.window.innerHeight
+            this.screenWidth = this.window.innerWidth
+        }, 1000)
     }
 
     constructor () {

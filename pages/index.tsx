@@ -12,12 +12,6 @@ import { HierarchyWidthController } from '../components/global/Hierarchy/Hierarc
 import HierarchyManager from '../manager/global/Hierarchy/HierarchyManager'
 import BlogManager from '../manager/Blog/BlogManager'
 import { FollowPageListComponent } from '../components/Main/FollowPageListComponent'
-import { ContentToolbar } from '../components/Home/Main/Toolbar/ContentToolbar'
-import { ContentHeader } from '../components/Home/Main/Header/ContentHeader'
-import { UserPageListComponent } from '../components/Home/Main/Content/UserPageListComponent'
-import { ContentComponent } from '../components/Home/Main/Content/ContentComponent'
-import { MobileToolbar } from '../components/Home/Main/MobileToolbar/MobileToolbar'
-import { CommandDrawer } from '../components/Home/Main/Content/CommandDrawer'
 import { MainHeader } from '../components/Main/MainHeader'
 
 const Index = observer(() => {

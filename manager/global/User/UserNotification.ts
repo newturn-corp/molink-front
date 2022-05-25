@@ -14,6 +14,10 @@ export class UserNotification {
         return toJS(this._notifications)
     }
 
+    get isNewNotificationExist () {
+        return this._notifications.filter(noti => !noti.isViewed).length > 0
+    }
+
     constructor () {
         makeAutoObservable(this)
     }

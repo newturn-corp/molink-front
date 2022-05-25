@@ -45,26 +45,6 @@
             .avatar {
                 cursor: pointer;
             }
-            .follow-button {
-                background: #0095f6;
-                color: #ffffff;
-                font-weight: 600;
-                cursor: pointer;
-
-                padding: 7px 9px;
-                border-radius: 5px;
-                font-size: 0.8rem;
-                line-height: 0.8rem;
-                border: 1px solid transparent;
-
-                margin: auto 0;
-            }
-            .requested {
-                cursor: default;
-                background-color: transparent;
-                color: inherit;
-                border: 1px solid #bebebe;
-            }
         }
     }
 }

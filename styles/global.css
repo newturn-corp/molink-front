@@ -5,19 +5,18 @@ html {
 
 body {
   font-family: Pretendard;
-  color: #37352f;
+  color: rgb(55, 53, 47);
   font-size: 1rem;
-  background-color: #FAFAFB;
 }
 
 ::-moz-selection {
   background: #D6E6F6 !important;
-  color: #37352f !important;
+  color: rgb(55, 53, 47) !important;
 }
 
 ::selection {
   background: #D6E6F6 !important;
-  color: #37352f !important;
+  color: rgb(55, 53, 47) !important;
 }
 
 .menu-background {
@@ -31,8 +30,28 @@ body {
   backdrop-filter: blur(4px);
 }
 
+.follow-button {
+  background: #0095f6;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 7px 9px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+  border: 1px solid transparent;
+  margin: auto 0;
+}
+
+.requested {
+  cursor: default;
+  background-color: transparent;
+  color: inherit;
+  border: 1px solid #bebebe;
+}
+
 .notification-list .MuiPaper-root {
-  border: 1px solid #e2e2e2;
+  border: 1px solid rgb(226, 226, 226);
 }
 .notification-list .MuiPaper-root .MuiList-root {
   width: 100%;
@@ -46,7 +65,7 @@ body {
 }
 .notification-list .MuiPaper-root .label {
   margin: 5px 11px;
-  color: #777777;
+  color: rgb(119, 119, 119);
   font-size: 15px;
   font-weight: 600;
   font-family: Pretendard;
@@ -135,7 +154,7 @@ body {
 }
 
 .index-body::-webkit-scrollbar-thumb {
-  background: #d1d1d1;
+  background: rgb(209, 209, 209);
   border-radius: 5px;
 }
 

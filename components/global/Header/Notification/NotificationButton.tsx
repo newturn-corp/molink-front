@@ -2,14 +2,7 @@ import React, { useState } from 'react'
 import { observer } from 'mobx-react'
 import { Menu, Badge, IconButton } from '@material-ui/core'
 import NotificationsOutlinedIcon from '@material-ui/icons/NotificationsOutlined'
-import { NotificationBlock } from './NotificationBlock'
-import NotificationManager from '../../../../manager/global/NotificationManager'
-import FollowManager from '../../../../manager/global/FollowManager'
-import { FollowRequestComponent } from './FollowRequestComponent'
-import { Notification } from '../../../../domain/Notification'
-import { FollowRequest } from '../../../../domain/FollowRequest'
 import UserManager from '../../../../manager/global/User/UserManager'
-import { FollowRequestInfo } from '@newturn-develop/types-molink'
 import { NotificationList } from './NotificationList'
 
 export const NotificationButton: React.FC<{
@@ -20,7 +13,7 @@ export const NotificationButton: React.FC<{
           return <></>
       }
       // 하나라도 isViewed가 false인 Notification이 있으면 보여줌
-      const isNewNotificationExists = false
+      const isNewNotificationExists = UserManager.follow.isNewRequestedFollowExist || UserManager.notification.isNewNotificationExist
 
       const handleClick = async (event: React.MouseEvent<HTMLElement>) => {
           setAnchorEl(event.currentTarget)
