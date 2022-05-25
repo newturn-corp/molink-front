@@ -1,21 +1,24 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import UserAPI from '../../../api/UserAPI'
-import { AcceptFollowRequestDTO, FollowRequestDTO, FollowRequestInfo } from '@newturn-develop/types-molink'
-import FollowAPI from '../../../api/FollowAPI'
-
-export enum FollowStatus {
-    Default,
-    Following,
-    FollowRequested
-}
+import {
+    AcceptFollowRequestDTO,
+    FollowRequestDTO,
+    FollowRequestInfo,
+    FollowStatus
+} from '@newturn-develop/types-molink'
 
 export class UserFollow {
     followMap: { [index: number]: true } = null
     followRequestMap: { [index: number]: true } = null
+    followerMap: { [index: number]: true } = null
     _requestedFollows: FollowRequestInfo[] = null
 
     get requestedFollows () {
         return toJS(this._requestedFollows)
+    }
+
+    get isNewRequestedFollowExist () {
+        return this._requestedFollows.filter(request => !request.isViewed).length > 0
     }
 
     constructor () {
@@ -25,12 +28,14 @@ export class UserFollow {
     async load () {
         this.followMap = (await UserAPI.getFollowMap()).followMap
         this.followRequestMap = (await UserAPI.getMyFollowRequestMap()).followRequestMap
+        this.followerMap = (await UserAPI.getFollowerMap()).followerMap
         this._requestedFollows = (await UserAPI.getRequestedFollows()).follows
     }
 
     reset () {
         this.followMap = null
         this.followRequestMap = null
+        this.followerMap = null
     }
 
     // 특정 유저에 대한 팔로우 상태를 확인하는 함수
@@ -39,6 +44,8 @@ export class UserFollow {
             return FollowStatus.Following
         } else if (this.followRequestMap[userId]) {
             return FollowStatus.FollowRequested
+        } else if (this.followerMap[userId]) {
+            return FollowStatus.Followed
         } else {
             return FollowStatus.Default
         }
@@ -51,9 +58,8 @@ export class UserFollow {
 
     public async acceptFollowRequest (index: number) {
         const request = this._requestedFollows[index]
-        console.log(request)
         this._requestedFollows.splice(index, 1)
-        console.log(this._requestedFollows)
+        this.followerMap[request.followerId] = true
         await UserAPI.acceptFollowRequest(new AcceptFollowRequestDTO(request.id))
     }
 

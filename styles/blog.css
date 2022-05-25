@@ -16,6 +16,69 @@
   margin: 0 auto;
 }
 
+.blog-user-info {
+  display: flex;
+  flex-direction: row;
+  margin: 50px auto 0;
+  width: 800px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #dfe2e5;
+}
+.blog-user-info .profile-container {
+  width: 120px;
+  height: 120px;
+  margin-right: 80px;
+}
+.blog-user-info .profile-container .profile-image {
+  width: 120px;
+  height: 120px;
+}
+.blog-user-info .text-container {
+  display: flex;
+  flex-direction: column;
+}
+.blog-user-info .text-container .main-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.blog-user-info .text-container .main-container .nickname {
+  line-height: 30px;
+  font-size: 24px;
+  margin-right: 20px;
+}
+.blog-user-info .text-container .main-container .profile-setting-button {
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 7px 9px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+  border: 1px solid transparent;
+  margin: auto 0;
+  background-color: transparent;
+  color: inherit;
+  border: 1px solid #bebebe;
+}
+.blog-user-info .text-container .follow-info-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.blog-user-info .text-container .follow-info-container .info {
+  margin-right: 20px;
+  display: flex;
+  flex-direction: row;
+}
+.blog-user-info .text-container .follow-info-container .info .name {
+  margin-right: 5px;
+}
+.blog-user-info .text-container .follow-info-container .info .text {
+  min-width: 50px;
+  font-weight: 600;
+}
+
 .page-column-component {
   display: flex;
   flex-direction: row;
@@ -85,12 +148,30 @@
   font-weight: 400;
 }
 .page-column-component .text-container .description {
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 13.5px;
+  line-height: 18px;
   height: 40px;
   word-wrap: break-word;
   text-overflow: ellipsis;
   overflow-y: hidden;
+}
+
+.blog-user-content {
+  position: fixed;
+  overflow-y: scroll;
+}
+
+.blog-user-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.blog-user-content::-webkit-scrollbar-track {
+  background: #e7e7e7;
+}
+
+.blog-user-content::-webkit-scrollbar-thumb {
+  background: rgb(209, 209, 209);
+  border-radius: 5px;
 }
 
 /*# sourceMappingURL=blog.css.map */

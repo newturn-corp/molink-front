@@ -9,7 +9,7 @@ import {
     GetUserPageListDTO,
     GetUserInfoByUserMapDTO,
     GetUserInfoByUserMapResponseDTO,
-    GetUserPageListResponseDTO, GetPageListResponseDTO
+    GetUserPageListResponseDTO, GetPageListResponseDTO, GetFollowInfoResponseDTO, GetFollowStatusResponseDTO
 } from '@newturn-develop/types-molink'
 import { ContentNotExists, ContentUserNotExists } from '../Errors/ContentError'
 
@@ -75,6 +75,16 @@ class ViewerAPI extends BaseAPI {
 
     async getUserInfoMapByNicknameList (userNicknameList: string[]): Promise<GetUserInfoByUserMapResponseDTO> {
         const res = await this.get(`/viewer/users/nickname-list?userNicknameList=${userNicknameList.join(',')}`)
+        return res.data
+    }
+
+    async getUserFollowInfo (userID: number): Promise<GetFollowInfoResponseDTO> {
+        const res = await this.get(`/viewer/users/${userID}/follow-info`)
+        return res.data
+    }
+
+    async getUserFollowStatus (userID: number): Promise<GetFollowStatusResponseDTO> {
+        const res = await this.get(`/viewer/users/${userID}/follow-status`)
         return res.data
     }
 }

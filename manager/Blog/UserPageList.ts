@@ -1,19 +1,18 @@
 import { ESPageSummary, ESUser, GetUserInfoByUserMapDTO } from '@newturn-develop/types-molink'
 import ViewerAPI from '../../api/ViewerAPI'
-import HierarchyManager from '../global/Hierarchy/HierarchyManager'
-import BlogManager from './BlogManager'
 import { makeAutoObservable, toJS } from 'mobx'
+import { debounce, throttle } from 'lodash'
 
 export class UserPageList {
     _pageSummaryList: ESPageSummary[] = []
     from: number = 0
     listEnded: boolean = false
     userMap: { [index: number]: ESUser } = {}
-    currentListOrder: number = 0
     totalPageCount: number = 0
     userId: number
 
-    constructor () {
+    constructor (userId: number) {
+        this.userId = userId
         makeAutoObservable(this)
     }
 
@@ -21,16 +20,17 @@ export class UserPageList {
         return toJS(this._pageSummaryList)
     }
 
-    async loadPageSummaryList (userId: number, pageListOrder: number = 0) {
-        if (this.listEnded && this.userId === userId) {
+    get loadPageSummaryList () {
+        return throttle(this._loadPageSummaryList, 1000)
+    }
+
+    async _loadPageSummaryList () {
+        if (this.listEnded) {
             return
         }
-        if (this.userId !== userId) {
-            this.clear()
-            this.userId = userId
-        }
-        const { total, results } = await ViewerAPI.getUserPageList(userId, pageListOrder * 5)
+        const { total, results } = await ViewerAPI.getUserPageList(this.userId, this.from)
         this.totalPageCount = total
+        console.log(this.totalPageCount)
         if (results.length === 0) {
             this.listEnded = true
             return
@@ -46,20 +46,13 @@ export class UserPageList {
             const { infoMap } = await ViewerAPI.getUserInfoMapByIDList(userIDList)
             this.userMap = { ...this.userMap, ...infoMap }
         }
-        this._pageSummaryList = results
+        this._pageSummaryList.push(...results)
         this.from += results.length
-        this.currentListOrder = pageListOrder
-    }
-
-    async handlePageListChange (event, newOrder: number) {
-        this.currentListOrder = newOrder
-        await this.loadPageSummaryList(newOrder)
     }
 
     clear () {
         this._pageSummaryList = []
         this.from = 0
         this.listEnded = false
-        this.currentListOrder = 0
     }
 }

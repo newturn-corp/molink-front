@@ -8,7 +8,7 @@ import {
     GetMyFollowRequestResponseDTO,
     GetUserIDDTO,
     UpdateUserProfileImageDTO,
-    GetRequestedFollowsResponseDTO, NotificationInfo
+    GetRequestedFollowsResponseDTO, NotificationInfo, GetFollowerMapResponseDTO
 } from '@newturn-develop/types-molink'
 import { Unauthorized } from '../Errors/Common'
 import { FollowRequest } from '../domain/FollowRequest'
@@ -59,6 +59,12 @@ class UserAPI extends BaseAPI {
 
     async getFollowMap (): Promise<GetFollowMapResponseDTO> {
         const res = await this.get('/users/follow')
+        if (res.status !== 200) throw new APIError(res)
+        return res.data
+    }
+
+    async getFollowerMap (): Promise<GetFollowerMapResponseDTO> {
+        const res = await this.get('/users/follow/followers')
         if (res.status !== 200) throw new APIError(res)
         return res.data
     }
