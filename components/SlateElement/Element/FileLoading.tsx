@@ -28,11 +28,13 @@ export const FileLoading: React.FC<{
             }}
         >
             <div
+                contentEditable={false}
                 className={'text'}
             >
                 {fileName}
             </div>
             <div
+                contentEditable={false}
                 className={'text'}
             >
                 {getFileSizeString(fileSize)}

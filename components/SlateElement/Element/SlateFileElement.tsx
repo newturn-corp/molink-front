@@ -99,11 +99,13 @@ export const SlateFileElement: React.FC<{
                             <DescriptionOutlined/>
                             <div
                                 className={'name'}
+                                contentEditable={false}
                             >
                                 {element.name}
                             </div>
                             <div
                                 className={'size'}
+                                contentEditable={false}
                             >
                                 {getFileSizeString(element.size)}
                             </div>

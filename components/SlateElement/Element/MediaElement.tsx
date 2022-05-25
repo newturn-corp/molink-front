@@ -31,7 +31,14 @@ export const SlateMediaElement: React.FC<{
     const focused = useFocused()
     if (element.isUploading) {
         return <div>
-            {'로딩 중..'}
+            <div
+                contentEditable={false}
+                style={{
+                    userSelect: 'none'
+                }}
+            >
+                {'로딩 중..'}
+            </div>
             {children}
         </div>
     }

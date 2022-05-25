@@ -43,7 +43,12 @@ export const CursorComponent: React.FC<Caret> = ({ data, isForward }) => {
     return (
         <>
             <span contentEditable={false} style={caretStyles}>
-                <span style={{ position: 'relative' }}>
+                <span
+                    contentEditable={false}
+                    style={{
+                        position: 'relative',
+                        userSelect: 'none'
+                    }}>
                     <span contentEditable={false} style={cursorStyles}>
                         {data.name}
                     </span>

@@ -54,10 +54,10 @@ export const LinkInputTextField: React.FC<{
         InputProps={{
             ...params.InputProps,
             endAdornment: (
-                <React.Fragment>
+                <div>
                     {LinkManager.hoveringToolbar.isSearching ? <CircularProgress color="inherit" size={20} /> : null}
                     {params.InputProps.endAdornment}
-                </React.Fragment>
+                </div>
             )
         }}
     />
