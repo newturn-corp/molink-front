@@ -200,6 +200,7 @@
 .content-container .content-body .contents .title {
   font-weight: 800;
   margin-bottom: 0.3rem;
+  word-break: keep-all;
 }
 .content-container .content-body .contents .text {
   margin: 0px;
