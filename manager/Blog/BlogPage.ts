@@ -1,5 +1,4 @@
-import { Blog } from './Blog'
-import { UserPageList } from './UserPageList'
+import { Blog, BlogPageType } from './Blog'
 import { InvalidParam } from '../../Errors/Common'
 import UserManager from '../global/User/UserManager'
 import ViewerAPI from '../../api/ViewerAPI'
@@ -73,6 +72,7 @@ class BlogPage {
         if (!this.blog || this.blog.id !== userId) {
             this.blog = new Blog(userId)
         }
+        this.blog.pageType = BlogPageType.UserMainPage
         await HierarchyManager.loadHierarchy(userId)
         await this.blog.loadUserPageList()
         const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
@@ -91,6 +91,7 @@ class BlogPage {
         if (!this.blog || this.blog.id !== authority.userId) {
             this.blog = new Blog(authority.userId)
         }
+        this.blog.pageType = BlogPageType.NormalPage
         await HierarchyManager.loadHierarchy(authority.userId)
         await EditorManager.load(pageId)
         const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
