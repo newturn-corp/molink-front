@@ -3,6 +3,7 @@ import GlobalManager from './GlobalManager'
 import { Event } from './Event/Event'
 import EditorManager from '../Blog/EditorManager'
 import EventManager from './Event/EventManager'
+import HierarchyManager from './Hierarchy/HierarchyManager'
 
 export enum Page {
     Index = '/',
@@ -22,6 +23,10 @@ export enum Page {
 
 class RoutingManager {
     async moveTo (page: Page, extra: string = '') {
+        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
+        if (currentHierarchy && currentHierarchy.openedPageId) {
+            currentHierarchy.openedPageId = null
+        }
         await EventManager.issueEvent(Event.MoveToAnotherPage)
         await Router.push(page + extra)
     }
