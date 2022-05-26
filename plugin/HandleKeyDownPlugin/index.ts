@@ -42,8 +42,8 @@ handlerMap.set('ctrl+y', [
     redoWhenControlYKeyDown
 ])
 handlerMap.set('Backspace', [
-    // moveSelectionWhenBackspaceDown,
-    // handleBackspaceInList
+    handleBackspaceInList,
+    moveSelectionWhenBackspaceDown
 ])
 handlerMap.set('Tab', [
     (event, editor) => LinkManager.menu.handleEnterAndTab(event, editor),
