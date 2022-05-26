@@ -31,7 +31,9 @@ export enum Event {
     MobileToolbarOnOffChange,
 
     FileUpload,
-    PageFileUsageChange
+    PageFileUsageChange,
+
+    LockPage
 }
 
 export const eventList = [
@@ -66,5 +68,7 @@ export const eventList = [
     Event.MobileToolbarOnOffChange,
 
     Event.FileUpload,
-    Event.PageFileUsageChange
+    Event.PageFileUsageChange,
+
+    Event.LockPage
 ]

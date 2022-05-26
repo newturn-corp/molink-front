@@ -10,11 +10,24 @@
   flex-direction: row;
   margin-bottom: 10px;
 }
-.page-user-info-container .page-user-info .profile {
+.page-user-info-container .page-user-info .user-info {
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  padding: 4px 8px 4px 6px;
+  border-radius: 4px;
+}
+.page-user-info-container .page-user-info .user-info .profile {
   margin-right: 10px;
 }
-.page-user-info-container .page-user-info .nickname {
+.page-user-info-container .page-user-info .user-info .nickname {
   line-height: 30px;
+}
+.page-user-info-container .page-info {
+  font-size: 14px;
+  color: #a1a1a1;
+  line-height: 38px;
+  margin-left: 4px;
 }
 .page-user-info-container .divider {
   background-color: #C9CDD2;
