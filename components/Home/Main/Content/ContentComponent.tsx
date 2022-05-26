@@ -8,6 +8,7 @@ import StyleManager from '../../../../manager/global/Style/StyleManager'
 import { PageUserInfoComponent } from './PageUserInfoComponent'
 import EditorManager from '../../../../manager/Blog/EditorManager'
 import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
+import { LikeButton } from '../../../Blog/LikeButton'
 
 export const ContentComponent: React.FC<{
 }> = observer(() => {
@@ -27,6 +28,11 @@ export const ContentComponent: React.FC<{
                     : <PageUserInfoComponent/>
             }
             <EditorContainer/>
+            {
+                EditorManager.editable && !EditorManager.isLocked
+                    ? <></>
+                    : <LikeButton/>
+            }
         </div>
         <ContentFooter/>
     </>

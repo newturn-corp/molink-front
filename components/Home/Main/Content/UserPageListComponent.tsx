@@ -21,7 +21,6 @@ export const UserPageListComponent: React.FC<{
       const getItems = useCallback(async () => {
           setLoading(true)
           if (BlogPage.blog) {
-              console.log('나 호출!!!')
               await BlogPage.blog.userPageList.loadPageSummaryList()
           }
           setLoading(false)
@@ -33,7 +32,6 @@ export const UserPageListComponent: React.FC<{
 
       useEffect(() => {
           if (inView && !loading && !userPageList.listEnded) {
-              console.log('page 증가')
               setPage(prevState => prevState + 1)
           }
       }, [inView])
@@ -58,6 +56,7 @@ export const UserPageListComponent: React.FC<{
               {
                   userPageList.pageSummaryList.map((summary, index) => {
                       const userInfo = userPageList.userMap[summary.userId] as ESUser
+                      console.log(summary)
                       return <div
                           key={`page-column-component-container-${summary.id}`}
                           ref={index === userPageList.pageSummaryList.length - 1 ? ref : undefined}
@@ -71,6 +70,7 @@ export const UserPageListComponent: React.FC<{
                               lastEditedAt={moment(summary.lastEditedAt).format('YYYY.MM.DD')}
                               description={summary.description}
                               image={summary.image}
+                              like={summary.like}
                           />
                       </div>
                   })

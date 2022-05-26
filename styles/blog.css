@@ -82,7 +82,7 @@
 .page-column-component {
   display: flex;
   flex-direction: row;
-  height: 130px;
+  height: 152px;
   width: 800px;
   margin: 12px 0px;
   cursor: pointer;
@@ -90,7 +90,7 @@
   box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
 }
 .page-column-component .thumbnail {
-  width: 200px;
+  width: 250px;
   height: 100%;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
@@ -116,7 +116,7 @@
   text-align: center;
 }
 .page-column-component .text-container {
-  width: 600px;
+  width: 550px;
   padding: 10px 21px;
   display: flex;
   flex-direction: column;
@@ -136,6 +136,7 @@
   display: flex;
   flex-direction: row;
   height: 20px;
+  width: fit-content;
   margin-bottom: 5px;
 }
 .page-column-component .text-container .user-container .profile-image {
@@ -144,7 +145,7 @@
 }
 .page-column-component .text-container .user-container .nickname {
   font-size: 14px;
-  line-height: 16px;
+  line-height: 20px;
   font-weight: 400;
 }
 .page-column-component .text-container .description {
@@ -154,6 +155,25 @@
   word-wrap: break-word;
   text-overflow: ellipsis;
   overflow-y: hidden;
+}
+.page-column-component .number-container {
+  display: flex;
+  flex-direction: row;
+}
+.page-column-component .number-container .container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 12px;
+}
+.page-column-component .number-container .container svg {
+  fill: #9DA7B0;
+}
+.page-column-component .number-container .container .text {
+  font-size: 13px;
+  color: #6C7177;
+  line-height: 20px;
+  margin-left: 4px;
 }
 
 .blog-user-content {
@@ -172,6 +192,25 @@
 .blog-user-content::-webkit-scrollbar-thumb {
   background: rgb(209, 209, 209);
   border-radius: 5px;
+}
+
+.like-button {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #C9CDD2;
+  width: fit-content;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.like-button .icon.filled svg {
+  fill: red;
+}
+.like-button .count {
+  margin-left: 5px;
+  min-width: 40px;
+  font-size: 14px;
+  user-select: none;
 }
 
 /*# sourceMappingURL=blog.css.map */

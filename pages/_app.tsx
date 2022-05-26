@@ -36,6 +36,7 @@ import { DialogComponent } from '../components/Dialog'
 import { SiteHead } from '../components/global/SiteHead'
 import { MenuComponent } from '../components/global/MenuComponent'
 import { LinkModalComponent } from '../components/global/Modal/LinkModalComponent'
+import { ShouldLoginNoticeModal } from '../components/global/Modal/ShouldLoginNoticeModal'
 
 configure(
     {
@@ -74,6 +75,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                 <DialogComponent />
                 <MenuComponent />
                 <LinkModalComponent/>
+                <ShouldLoginNoticeModal/>
                 <Component {...pageProps} />
             </SafeHydrate>
         </>

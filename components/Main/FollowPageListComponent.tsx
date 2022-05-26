@@ -58,6 +58,7 @@ export const FollowPageListComponent: React.FC<{
                             lastEditedAt={moment(summary.lastEditedAt).format('YYYY.MM.DD')}
                             description={summary.description}
                             image={summary.image}
+                            like={summary.like}
                         />
                     </div>
                 })

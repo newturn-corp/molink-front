@@ -1,6 +1,11 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import RoutingManager, { Page } from '../../manager/global/RoutingManager'
+import { HeartFilled } from '@ant-design/icons'
+import CommentIcon from 'public/image/icon/comment.svg'
+import HeartIcon from 'public/image/icon/heart.svg'
+import { Thumbnail } from '../Blog/Page/Thumbnail'
+import { PageColumnComponentUserInfo } from '../Blog/Page/PageColumnComponentUserInfo'
 
 export interface PageColumnComponentInterface {
     id: string
@@ -9,7 +14,8 @@ export interface PageColumnComponentInterface {
     lastEditedAt: string,
     userProfileImageUrl: string,
     userNickname: string,
-    description: string
+    description: string,
+    like: number
 }
 
 export const PageColumnComponent: React.FC<PageColumnComponentInterface> = observer((props) => {
@@ -19,25 +25,10 @@ export const PageColumnComponent: React.FC<PageColumnComponentInterface> = obser
             await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${props.id}`)
         }}
     >
-        <div
-            className={'thumbnail'}
-            style={{
-                backgroundColor: props.image ? undefined : '#0094FF',
-                padding: props.image ? undefined : 20
-            }}
-        >
-            {
-                props.image
-                    ? <img
-                        src={props.image}
-                    />
-                    : <div
-                        className={'text'}
-                    >
-                        {props.title}
-                    </div>
-            }
-        </div>
+        <Thumbnail
+            title={props.title}
+            image={props.image}
+        />
         <div
             className={'text-container'}
         >
@@ -47,21 +38,39 @@ export const PageColumnComponent: React.FC<PageColumnComponentInterface> = obser
             <div
                 className={'last-edited-at'}
             >{props.lastEditedAt}</div>
-            <div
-                className={'user-container'}
-            >
-                <img
-                    className={'profile-image'}
-                    src={props.userProfileImageUrl}
-                    width={20}
-                />
-                <div
-                    className={'nickname'}
-                >{props.userNickname}</div>
-            </div>
+            <PageColumnComponentUserInfo
+                userProfileImageUrl={props.userProfileImageUrl}
+                userNickname={props.userNickname}
+            />
             <div
                 className={'description'}
-            >{props.description ? props.description : '설명이 없습니다.'}</div>
+            >
+                {props.description ? props.description : '설명이 없습니다.'}
+            </div>
+            <div
+                className={'number-container'}
+            >
+                <div
+                    className={'container'}
+                >
+                    <HeartIcon/>
+                    <div
+                        className={'text'}
+                    >
+                        {props.like}
+                    </div>
+                </div>
+                <div
+                    className={'container'}
+                >
+                    <CommentIcon/>
+                    <div
+                        className={'text'}
+                    >
+                        {0}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 })
