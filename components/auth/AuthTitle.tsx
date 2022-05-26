@@ -16,5 +16,5 @@ const Title = styled.div`
 export const AuthTitle: React.FC<{
     text: string
 }> = ({ text }) => {
-    return <Title>{text}</Title>
+    return <Title className={'title'}>{text}</Title>
 }

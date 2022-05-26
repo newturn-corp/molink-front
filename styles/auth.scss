@@ -147,3 +147,27 @@
         }
     }
 }
+.notice-email-auth-page {
+    .title {
+        margin-bottom: 10px;
+    }
+    .icon {
+        width: fit-content;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        svg {
+            margin: auto auto;
+            width: 80px;
+            height: 80px;
+            fill: #7AACE0;
+        }
+    }
+    .description {
+        text-align: center;
+        font-weight: 500;
+        font-size: 18px;
+    }
+    .auth-sub-button {
+        margin-top: 40px;
+    }
+}

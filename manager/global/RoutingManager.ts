@@ -12,6 +12,7 @@ export enum Page {
     SearchUser = '/search/users',
     ChangePasswordRequest = '/auth/change-password-request',
     SignUp = '/auth/sign-up',
+    NoticeEmailAuth = '/auth/notice-email-auth',
     SettingProfile = '/setting/profile',
     SettingFollow = '/setting/follow',
     SettingDocumentList = '/setting/document-list',

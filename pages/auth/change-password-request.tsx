@@ -75,8 +75,7 @@ const ChangePasswordRequest = observer(() => {
                     const result = await AuthManager.startPasswordChange()
                     setLoading(false)
                     if (result.success) {
-                        await UserManager.load()
-                        await RoutingManager.moveTo(Page.Home, `/${UserManager.profile.nickname}`)
+                        await RoutingManager.moveTo(Page.NoticeEmailAuth)
                     }
                 }}
             />

@@ -127,7 +127,7 @@
   line-height: 20px;
   height: 20px;
   margin: 8px auto 4px 10px;
-  color: #424242;
+  color: rgb(66, 66, 66);
 }
 .auth-page .auth-page-input {
   height: 76px;
@@ -142,6 +142,29 @@
 }
 .auth-page .auth-container.loading .MuiCircularProgress-svg {
   color: #0094FF;
+}
+
+.notice-email-auth-page .title {
+  margin-bottom: 10px;
+}
+.notice-email-auth-page .icon {
+  width: fit-content;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+.notice-email-auth-page .icon svg {
+  margin: auto auto;
+  width: 80px;
+  height: 80px;
+  fill: #7AACE0;
+}
+.notice-email-auth-page .description {
+  text-align: center;
+  font-weight: 500;
+  font-size: 18px;
+}
+.notice-email-auth-page .auth-sub-button {
+  margin-top: 40px;
 }
 
 /*# sourceMappingURL=auth.css.map */
