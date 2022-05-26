@@ -1,6 +1,11 @@
 import axios from 'axios'
 import { makeAutoObservable, toJS } from 'mobx'
 
+const defaultLanguage = 'ko-KR'
+const availLanguage = [
+    'ko-KR'
+]
+
 class LanguageManager {
     languageMap: { [index: string]: string }
 
@@ -10,6 +15,9 @@ class LanguageManager {
     }
 
     async loadLanguage (language: string) {
+        if (!availLanguage.includes(language)) {
+            language = defaultLanguage
+        }
         const { data } = await axios.get(`/language/${language}.tsv`)
         // @ts-ignore
         const separator = process.env.NODE_ENV === 'local' ? '\r\n' : '\n'
