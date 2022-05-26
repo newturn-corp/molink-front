@@ -3,12 +3,17 @@ import { Event } from '../../global/Event/Event'
 import EditorManager from '../EditorManager'
 import ViewerAPI from '../../../api/ViewerAPI'
 import { makeAutoObservable } from 'mobx'
+import UserManager from '../../global/User/UserManager'
+import ContentAPI from '../../../api/ContentAPI'
+import ModalManager from '../../global/ModalManager'
 
 export class PageUserInfo {
     isLoaded: boolean = false
     userProfileImageUrl: string = '/image/global/header/login-button-profile.png'
     nickname: string = '사용자'
     lastEditedAt: number = Number(new Date())
+    likeCount: number = 0
+    isLike: boolean = false
 
     constructor () {
         makeAutoObservable(this)
@@ -42,7 +47,28 @@ export class PageUserInfo {
         this.nickname = userInfo.nickname
         this.userProfileImageUrl = userInfo.profileImageUrl
         this.lastEditedAt = summary.lastEditedAt
+        this.likeCount = summary.like
+        if (UserManager.isUserAuthorized) {
+            const dto = await ViewerAPI.getUserLikePage(EditorManager.pageId)
+            this.isLike = dto.isLike
+        }
         this.isLoaded = true
+    }
+
+    async handleLikeButtonDown () {
+        if (!UserManager.isUserAuthorized) {
+            ModalManager.openShouldLoginNoticeModal = true
+            return
+        }
+
+        if (this.isLike) {
+            await ContentAPI.cancelLikePage(EditorManager.pageId)
+            this.likeCount -= 1
+        } else {
+            await ContentAPI.likePage(EditorManager.pageId)
+            this.likeCount += 1
+        }
+        this.isLike = !this.isLike
     }
 
     reset () {
@@ -50,5 +76,7 @@ export class PageUserInfo {
         this.nickname = '사용자'
         this.isLoaded = false
         this.lastEditedAt = Number(new Date())
+        this.isLike = false
+        this.likeCount = 0
     }
 }

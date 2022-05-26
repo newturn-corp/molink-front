@@ -13,13 +13,11 @@ export const handleDeleteBackwardAfterMedia = (editor: Editor, unit: 'character'
     if (Path.hasPrevious(parentPath)) {
         const prevNodePath = Path.previous(parentPath)
         const prevNode = Node.get(editor, prevNodePath)
-        console.log(prevNode)
         if (Element.isElement(prevNode) && ['file', 'image', 'video', 'bookmark'].includes(prevNode.type)) {
             Transforms.move(editor, {
                 unit: 'offset',
                 reverse: true
             })
-            console.log(editor.selection)
             return true
         }
     }
@@ -34,7 +32,6 @@ export const handleDeleteForwardAfterMedia = (editor: Editor, unit: 'character' 
     ) {
         return false
     }
-    console.log(editor.selection)
     const parentPath = Path.parent(editor.selection.anchor.path)
     const nextNodePath = Path.next(parentPath)
     // 만약 다음 노드가 존재하지 않는다면

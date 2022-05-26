@@ -1,5 +1,5 @@
 import { BaseAPI } from './baseAPI'
-import { CreateDocumentDTO, UpdatePageDataInSearchEngineDTO } from '@newturn-develop/types-molink/dist/DTO'
+import { CreateDocumentDTO, UpdatePageDataInSearchEngineDTO, LikeDTO, CancelLikeDTO } from '@newturn-develop/types-molink/dist/DTO'
 import { DeleteContentsDTO } from '@newturn-develop/types-molink/DTO/ContentDTO'
 
 class ContentAPI extends BaseAPI {
@@ -13,6 +13,14 @@ class ContentAPI extends BaseAPI {
 
     async updatePageDataInSearchEngine (dto: UpdatePageDataInSearchEngineDTO) {
         await this.put('/contents/page-data', dto)
+    }
+
+    async likePage (pageId: string) {
+        await this.post('/contents/like', new LikeDTO(pageId))
+    }
+
+    async cancelLikePage (pageId: string) {
+        await this.post('/contents/like/cancel', new CancelLikeDTO(pageId))
     }
 }
 export default new ContentAPI()

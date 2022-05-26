@@ -30,6 +30,10 @@ body {
   backdrop-filter: blur(4px);
 }
 
+.should-login-notice-modal {
+  top: 30%;
+}
+
 .follow-button {
   background: #0095f6;
   color: #ffffff;

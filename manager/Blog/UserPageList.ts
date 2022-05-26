@@ -30,7 +30,6 @@ export class UserPageList {
         }
         const { total, results } = await ViewerAPI.getUserPageList(this.userId, this.from)
         this.totalPageCount = total
-        console.log(this.totalPageCount)
         if (results.length === 0) {
             this.listEnded = true
             return
