@@ -34,8 +34,13 @@ export const handleDeleteForwardAfterMedia = (editor: Editor, unit: 'character' 
     ) {
         return false
     }
+    console.log(editor.selection)
     const parentPath = Path.parent(editor.selection.anchor.path)
     const nextNodePath = Path.next(parentPath)
+    // 만약 다음 노드가 존재하지 않는다면
+    if (nextNodePath[0] + 1 > editor.children.length) {
+        return false
+    }
     const currentNode = Node.get(editor, parentPath)
     const nextNode = Node.get(editor, nextNodePath)
     if (editor.selection.anchor.offset !== Node.string(currentNode).length) {
