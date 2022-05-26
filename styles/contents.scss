@@ -7,12 +7,25 @@
         display: flex;
         flex-direction: row;
         margin-bottom: 10px;
-        .profile {
-            margin-right: 10px;
+        .user-info {
+            display: flex;
+            flex-direction: row;
+            cursor: pointer;
+            padding: 4px 8px 4px 6px;
+            border-radius: 4px;
+            .profile {
+                margin-right: 10px;
+            }
+            .nickname {
+                line-height: 30px;
+            }
         }
-        .nickname {
-            line-height: 30px;
-        }
+    }
+    .page-info {
+        font-size: 14px;
+        color: #a1a1a1;
+        line-height: 38px;
+        margin-left: 4px;
     }
     .divider {
         background-color: #C9CDD2;

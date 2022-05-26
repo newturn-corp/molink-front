@@ -22,7 +22,7 @@ export const ContentComponent: React.FC<{
             <ContentHeaderIcon/>
             <ContentTitleComponent/>
             {
-                EditorManager.editable
+                EditorManager.editable && !EditorManager.isLocked
                     ? <></>
                     : <PageUserInfoComponent/>
             }

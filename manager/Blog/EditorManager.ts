@@ -80,7 +80,11 @@ class EditorManager {
         this.yInfo = this.yjsDocument.getMap('info')
         this.yInfo.observeDeep(() => {
             this.info = this.yInfo.toJSON()
-            this.isLocked = this.yInfo.get('isLocked')
+            const isLocked = this.yInfo.get('isLocked')
+            if (this.isLocked !== isLocked) {
+                this.isLocked = isLocked
+                EventManager.issueEvent(Event.LockPage, { isLocked })
+            }
         })
 
         this.ySelection = this.yjsDocument.getMap('selection')

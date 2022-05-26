@@ -47,6 +47,9 @@ export type FileUploadParam = {
 export type PageFileUsageChangeParam = {
     usage: number
 }
+export type LockPageParam = {
+    isLocked: boolean
+}
 
 export type EventParam = {} | OnEditorKeyDownParam | DocumentChildrenOpenParam | OpenDocumentParam | ChangeDocumentTitleInEditorParam | UserAuthorizationParam | ChangeDocumentTitleInFileSystemParam | NewEditorOpenParam | EditorChangeParam
-| HierarchyOnOffChangeParam | HierarchyWidthChangeParam | ToolbarOnOffChangeParam | FileUploadParam | PageFileUsageChangeParam
+| HierarchyOnOffChangeParam | HierarchyWidthChangeParam | ToolbarOnOffChangeParam | FileUploadParam | PageFileUsageChangeParam | LockPageParam
