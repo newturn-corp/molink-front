@@ -18,7 +18,7 @@ import { ReactEditor } from 'slate-react'
 export enum Format {
     Bold = 'bold',
     Italic = 'italic',
-    Underline = 'underline'
+    Underline = 'underlined'
 }
 
 export enum Align {

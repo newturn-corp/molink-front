@@ -8,6 +8,7 @@ export const CustomLeafComponent: React.FC<{
     children,
     leaf
   }> = ({ attributes, children, leaf }) => {
+      console.log(leaf)
       if (leaf.bold) {
           children = <strong>{children}</strong>
       }
@@ -21,7 +22,9 @@ export const CustomLeafComponent: React.FC<{
       }
 
       if (leaf.underlined) {
-          children = <u>{children}</u>
+          children = <u>
+              {children}
+          </u>
       }
 
       if (leaf.codehighlight) {
