@@ -154,7 +154,7 @@ const SignUp = observer(() => {
                     const result = await SignupManager.signup()
                     setLoading(false)
                     if (result.success) {
-                        await RoutingManager.moveTo(Page.SignIn)
+                        await RoutingManager.moveTo(Page.NoticeEmailAuth)
                     }
                 }}
             />
