@@ -8,7 +8,6 @@ export const CustomLeafComponent: React.FC<{
     children,
     leaf
   }> = ({ attributes, children, leaf }) => {
-      console.log(leaf)
       if (leaf.bold) {
           children = <strong>{children}</strong>
       }

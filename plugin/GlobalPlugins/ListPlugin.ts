@@ -11,6 +11,9 @@ import { getListForItem } from './List/editor/getListForItem'
 import { getDeepestItemDepth } from './List/editor/getDeepestItemDepth'
 import { getPreviousItem } from './List/editor/getPreviousItem'
 import { increaseItemDepth } from './List/transforms/increaseItemDepth'
+import { isList } from './List/element/isList'
+import { isSelectionInList } from './List/editor/isSelectionInList'
+import { wrapInList } from './List/transforms/wrapInList'
 
 const options = {
     types: ['ul-list', 'ol-list', 'check-list'],
@@ -26,6 +29,7 @@ const [
 ListTransforms.isItem = isItem
 
 ListElement.isItem = isItem
+ListElement.isList = isList
 
 ListEditor.getCurrentItem = getCurrentItem
 ListEditor.getTopmostItemsAtRange = getTopmostItemsAtRange
@@ -33,9 +37,11 @@ ListEditor.getListForItem = getListForItem
 ListEditor.getDeepestItemDepth = getDeepestItemDepth
 ListEditor.getItemDepth = getItemDepth
 ListEditor.getPreviousItem = getPreviousItem
+ListEditor.isSelectionInList = isSelectionInList
 
 ListTransforms.splitListItem = splitListItem
 ListTransforms.unwrapList = unwrapList
+ListTransforms.wrapInList = wrapInList
 ListTransforms.decreaseItemDepth = decreaseItemDepth
 ListTransforms.increaseItemDepth = increaseItemDepth
 
