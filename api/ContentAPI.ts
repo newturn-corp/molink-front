@@ -20,7 +20,7 @@ class ContentAPI extends BaseAPI {
     }
 
     async cancelLikePage (pageId: string) {
-        await this.post('/contents/like/cancel', new CancelLikeDTO(pageId))
+        await this.put('/contents/like/cancel', new CancelLikeDTO(pageId))
     }
 }
 export default new ContentAPI()
