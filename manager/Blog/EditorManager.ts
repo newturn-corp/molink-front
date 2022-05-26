@@ -101,6 +101,7 @@ class EditorManager {
             throw new DocumentNotExists()
         }
         this.editable = UserManager.isUserAuthorized && currentHierarchy.editable && !!page
+        this.lastPressedKey = null
 
         if (!this.editable) {
             const dto = await ViewerAPI.getContent(pageId)

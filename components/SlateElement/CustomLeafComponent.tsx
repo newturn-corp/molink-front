@@ -21,7 +21,9 @@ export const CustomLeafComponent: React.FC<{
       }
 
       if (leaf.underlined) {
-          children = <u>{children}</u>
+          children = <u>
+              {children}
+          </u>
       }
 
       if (leaf.codehighlight) {

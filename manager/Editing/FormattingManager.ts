@@ -12,13 +12,13 @@ import EditorManager from '../Blog/EditorManager'
 import { makeAutoObservable } from 'mobx'
 import { toJSON } from 'yaml/util'
 import { TextElement } from '../../Types/slate/CustomElement'
-import { ListEditor, ListTransforms } from '../../plugin'
+import { ListEditor, ListElement, ListTransforms } from '../../plugin'
 import { ReactEditor } from 'slate-react'
 
 export enum Format {
     Bold = 'bold',
     Italic = 'italic',
-    Underline = 'underline'
+    Underline = 'underlined'
 }
 
 export enum Align {
@@ -117,7 +117,17 @@ class FormattingManager {
             }
             Transforms.setNodes(editor, newProperties)
         } else {
-            ListTransforms.wrapInList(editor, list)
+            if (ListEditor.isSelectionInList(editor)) {
+                const newProperties: Partial<SlateElement> = {
+                    type: list as any
+                }
+                Transforms.setNodes<SlateElement>(editor, newProperties, {
+                    match: n => ListElement.isList(n)
+                })
+            } else {
+                ListTransforms.wrapInList(editor, list)
+            }
+
             if (list === List.Check) {
                 const newProperties: Partial<SlateElement> = {
                     type: 'check-list-item',
@@ -125,6 +135,13 @@ class FormattingManager {
                 }
                 Transforms.setNodes<SlateElement>(editor, newProperties, {
                     match: n => SlateEditor.isBlock(editor, n) && n.type === 'list-item'
+                })
+            } else {
+                const newProperties: Partial<SlateElement> = {
+                    type: 'list-item'
+                }
+                Transforms.setNodes<SlateElement>(editor, newProperties, {
+                    match: n => SlateEditor.isBlock(editor, n) && (n.type === 'list-item' || n.type === 'check-list-item')
                 })
             }
         }
