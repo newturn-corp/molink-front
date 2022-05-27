@@ -35,7 +35,6 @@ export class UserNotification {
 
     async load () {
         const infoList = await UserAPI.getNotifications()
-        console.log(infoList)
         const requiredUserMap = {}
         for (const info of infoList) {
             if (info.causedUserId && !requiredUserMap[info.causedUserId]) {

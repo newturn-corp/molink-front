@@ -53,7 +53,6 @@ class UserManager {
             return
         }
         try {
-            console.log('여기 호출')
             this.isLoading = true
             this.userId = await UserAPI.getUserID()
             this.yjsDocument = new Y.Doc()

@@ -1,17 +1,5 @@
-import { DocumentNotExists, UnauthorizedForDocument, UnexpectedError } from '../../Errors/DocumentError'
-import { UserNotExists } from '../../Errors/UserError'
-import DialogManager from '../global/DialogManager'
-import RoutingManager, { Page } from '../global/RoutingManager'
-import { ContentNotExists, ContentUserNotExists, UnauthorizedForContent } from '../../Errors/ContentError'
-import { HierarchyNotExists } from '../../Errors/HierarchyError'
-import ViewerAPI from '../../api/ViewerAPI'
 import { InvalidParam } from '../../Errors/Common'
-import HierarchyManager from '../global/Hierarchy/HierarchyManager'
-import EditorManager from './EditorManager'
-import UserManager from '../global/User/UserManager'
-import { UserPageList } from './UserPageList'
 import { FollowPageList } from './FollowPageList'
-import { ESUser } from '@newturn-develop/types-molink'
 
 enum HomeURLType {
     OnlyDocumentURL = 'only-document-url',

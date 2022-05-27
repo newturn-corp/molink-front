@@ -26,7 +26,7 @@ Nickname	닉네임
 EmptyEmailError	이메일을 입력해주세요.
 EmailFormatError	이메일 형식이 아닙니다.
 EmailAlreadyExistsError	이미 존재하는 이메일입니다.
-NicknameCondition	최대 2~27글자, 특수문자는 -,_,.(마침표) 사용 가능
+NicknameCondition	2~27글자, 띄어쓰기, -,_,.(마침표) 사용 가능
 NicknameAlreadyExistsError	이미 존재하는 닉네임입니다.
 NicknameConditionError	2~15글자 내로 닉네임을 정해주세요.
 AlreadyAccountExists	이미 계정이 있나요? 로그인하기

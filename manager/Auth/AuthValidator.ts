@@ -17,7 +17,7 @@ class AuthValidator {
         } else if (nickname.length > 27) {
             return false
         }
-        const nicknameReg = /^([ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_-](?:(?:[ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_-]|(?:\.(?!\.))){0,28}(?:[ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_-]))?)$/
+        const nicknameReg = /^([ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_\s-](?:(?:[ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_\s-]|(?:\.(?!\.))){0,28}(?:[ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_\s-]))?)$/
         return nicknameReg.test((nickname))
     }
 }

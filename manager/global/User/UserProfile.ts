@@ -38,7 +38,6 @@ export class UserProfile {
             this.biography = this.yProfile.get('biography')
             this.nickname = this.yProfile.get('nickname')
             this.lastOpenPageId = this.yProfile.get('lastOpenPageId')
-            console.log(this.biography)
         })
     }
 

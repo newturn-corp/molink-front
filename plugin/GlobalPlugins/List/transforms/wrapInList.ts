@@ -7,8 +7,6 @@ const getHighestSelectedElements = (
     editor: Editor
 ): Array<NodeEntry<Element>> => {
     const selection = editor.selection
-    console.log('getHighestSelectedElements')
-    console.log(selection)
     if (!selection) {
         return []
     }
@@ -66,8 +64,6 @@ export const wrapInList = (
             editor,
             getHighestSelectedElements(editor)
         )
-        console.log('selectedElements')
-        console.log(selectedElements)
         const newList = {
             type,
             ...(data && { data })

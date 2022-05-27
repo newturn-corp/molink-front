@@ -15,9 +15,7 @@ export class BlogUserInfo {
     }
 
     async load (userId: number) {
-        console.log('load')
         await Promise.all([this.loadUserInfo(userId), this.loadFollowInfo(userId)])
-        console.log(this)
     }
 
     async loadUserInfo (userId: number) {
