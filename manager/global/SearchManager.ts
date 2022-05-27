@@ -9,6 +9,7 @@ import { ESUser } from '@newturn-develop/types-molink'
 class SearchManager {
     _searchResults: ESUser[] = null
     isSearching = false
+    searchText: string = null
 
     get searchResults () {
         return toJS(this._searchResults)
@@ -23,8 +24,10 @@ class SearchManager {
             return
         }
         this.isSearching = true
+        this.searchText = text
         const results = await UserAPI.searchUsers(new SearchUserDTO(text))
         this._searchResults = results
+        console.log(results)
         this.isSearching = false
     }
 

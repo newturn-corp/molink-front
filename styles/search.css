@@ -24,6 +24,9 @@
   height: 100%;
   cursor: pointer;
 }
+.search-page .core .search-result .search-text {
+  font-size: 24px;
+}
 .search-page .core .search-result .search-result-count {
   font-size: 24px;
   font-weight: 700;

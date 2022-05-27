@@ -6,11 +6,12 @@ import { SearchResults } from '../../components/search/SearchResult'
 import UserManager from '../../manager/global/User/UserManager'
 
 const Search = () => {
+    const query = new URLSearchParams(window.location.search).get('q')
+
     useEffect(() => {
         UserManager.load()
-        const query = new URLSearchParams(window.location.search).get('q')
         SearchManager.search(query)
-    }, [])
+    }, [query])
 
     return <div className='search-page' onClick={() => {
     } } >
