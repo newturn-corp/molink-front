@@ -14,6 +14,8 @@ export class PageUserInfo {
     lastEditedAt: number = Number(new Date())
     likeCount: number = 0
     isLike: boolean = false
+    pageDescription: string = null
+    thumbnailImage: string = null
 
     constructor () {
         makeAutoObservable(this)
@@ -48,6 +50,8 @@ export class PageUserInfo {
         this.userProfileImageUrl = userInfo.profileImageUrl
         this.lastEditedAt = summary.lastEditedAt
         this.likeCount = summary.like
+        this.pageDescription = summary.description
+        this.thumbnailImage = summary.image
         if (UserManager.isUserAuthorized) {
             const dto = await ViewerAPI.getUserLikePage(EditorManager.pageId)
             this.isLike = dto.isLike
@@ -78,5 +82,7 @@ export class PageUserInfo {
         this.lastEditedAt = Number(new Date())
         this.isLike = false
         this.likeCount = 0
+        this.pageDescription = null
+        this.thumbnailImage = null
     }
 }
