@@ -54,25 +54,31 @@ export const UserPageListComponent: React.FC<{
               }}
           >
               {
-                  userPageList.pageSummaryList.map((summary, index) => {
-                      const userInfo = userPageList.userMap[summary.userId] as ESUser
-                      return <div
-                          key={`page-column-component-container-${summary.id}`}
-                          ref={index === userPageList.pageSummaryList.length - 1 ? ref : undefined}
+                  userPageList.pageSummaryList.length > 0
+                      ? userPageList.pageSummaryList.map((summary, index) => {
+                          const userInfo = userPageList.userMap[summary.userId] as ESUser
+                          return <div
+                              key={`page-column-component-container-${summary.id}`}
+                              ref={index === userPageList.pageSummaryList.length - 1 ? ref : undefined}
+                          >
+                              <PageColumnComponent
+                                  key={`page-column-component-${summary.id}`}
+                                  id={summary.id}
+                                  title={summary.title}
+                                  userNickname={userInfo.nickname}
+                                  userProfileImageUrl={userInfo.profileImageUrl}
+                                  lastEditedAt={moment(summary.lastEditedAt).format('YYYY.MM.DD')}
+                                  description={summary.description}
+                                  image={summary.image}
+                                  like={summary.like}
+                              />
+                          </div>
+                      })
+                      : <div
+                          className={'no-open-pages'}
                       >
-                          <PageColumnComponent
-                              key={`page-column-component-${summary.id}`}
-                              id={summary.id}
-                              title={summary.title}
-                              userNickname={userInfo.nickname}
-                              userProfileImageUrl={userInfo.profileImageUrl}
-                              lastEditedAt={moment(summary.lastEditedAt).format('YYYY.MM.DD')}
-                              description={summary.description}
-                              image={summary.image}
-                              like={summary.like}
-                          />
+                          {'공개된 페이지가 없습니다.'}
                       </div>
-                  })
               }
               {
                   loading ? <CircularProgress/> : <></>
