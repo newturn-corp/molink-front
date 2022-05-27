@@ -121,5 +121,11 @@ class AutoAPI extends BaseAPI {
     async signOut () {
         await this.delete('/auth/sign-out')
     }
+
+    async getRandomNickname () {
+        const res = await this.get('/auth/random-nickname')
+        if (res.status !== 200) throw new APIError(res)
+        return res.data
+    }
 }
 export default new AutoAPI()
