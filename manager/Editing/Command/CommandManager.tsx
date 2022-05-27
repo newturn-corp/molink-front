@@ -19,6 +19,7 @@ import EditorManager from '../../Blog/EditorManager'
 import BulbIcon from '../../../public/image/icon/bulb.svg'
 import EventManager from '../../global/Event/EventManager'
 import { Event } from '../../global/Event/Event'
+import LanguageManager from '../../global/LanguageManager'
 
 // /(슬래시)로 수행하는 명령을 맡아 처리하는 매니저
 class CommandManager {
@@ -35,33 +36,33 @@ class CommandManager {
 
     commandGroupList = [
         new CommandGroup(
-            '제목',
-            [new Command('제목1', '상위 레벨 제목에 사용', '/image/editor/command/head1.png'),
-                new Command('제목2', '핵심 세션에 사용', '/image/editor/command/head2.png'),
-                new Command('제목3', '하위 세션에 사용', '/image/editor/command/head3.png')]
+            'Title',
+            [new Command('Title1', 'TitleCommand1Description', '/image/editor/command/head1.png'),
+                new Command('Title2', 'TitleCommand2Description', '/image/editor/command/head2.png'),
+                new Command('Title3', 'TitleCommand3Description', '/image/editor/command/head3.png')]
         ),
         new CommandGroup(
-            '구분선',
+            'Divider',
             [
-                new Command('구분선-기본', '콘텐츠 구분선', '/image/editor/command/divider-default.png'),
-                new Command('구분선-흐릿한', '콘텐츠 구분선', '/image/editor/command/divider-faint.png'),
-                new Command('구분선-짦은', '콘텐츠 구분선', '/image/editor/command/divider-short.png'),
-                new Command('구분선-짦고 흐릿한', '콘텐츠 구분선', '/image/editor/command/divider-faint-short.png'),
-                new Command('구분선-점', '콘텐츠 구분선', '/image/editor/command/divider-dot.png')
+                new Command('DividerDefault', 'ContentDivider', '/image/editor/command/divider-default.png'),
+                new Command('DividerFaint', 'ContentDivider', '/image/editor/command/divider-faint.png'),
+                new Command('DividerShort', 'ContentDivider', '/image/editor/command/divider-short.png'),
+                new Command('DividerFaintShort', 'ContentDivider', '/image/editor/command/divider-faint-short.png'),
+                new Command('DividerDot', 'ContentDivider', '/image/editor/command/divider-dot.png')
             ]
         ),
         new CommandGroup(
-            '목록',
+            'List',
             [
-                new Command('순서없는목록', '순서 없는 목록', '/image/editor/command/bullet-list.png'),
-                new Command('숫자목록', '숫자 목록', '/image/editor/command/ordered-list.png'),
-                new Command('체크목록', '체크 목록', '/image/editor/command/check-list.png')
+                new Command('BulletListCommandName', 'BulletListCommandDescription', '/image/editor/command/bullet-list.png'),
+                new Command('OrderedListCommandName', 'OrderedListCommandDescription', '/image/editor/command/ordered-list.png'),
+                new Command('CheckListCommandName', 'CheckListCommandDescription', '/image/editor/command/check-list.png')
             ]
         ),
         new CommandGroup(
-            '강조',
+            'Accent',
             [
-                new Command('콜아웃', '강조하기 위한 한 줄', <BulbIcon/>, 'callout-command', 'svg')
+                new Command('CalloutCommandName', 'CalloutCommandDescription', <BulbIcon/>, 'callout-command', 'svg')
             ]
         )
         // ),

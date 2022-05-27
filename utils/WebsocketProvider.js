@@ -200,7 +200,6 @@ export class WebsocketProvider extends Observable {
     constructor (serverUrl, roomname, doc,
         { connect = true, awareness = new awarenessProtocol.Awareness(doc), params = {}, WebSocketPolyfill = WebSocket, resyncInterval = -1 } = {}) {
         super()
-        console.log('생성')
         // ensure that url is always ends with /
         while (serverUrl[serverUrl.length - 1] === '/') {
             serverUrl = serverUrl.slice(0, serverUrl.length - 1)

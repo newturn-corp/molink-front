@@ -6,6 +6,7 @@ import Command from '../../../../manager/Editing/Command/Command'
 import CommandGroup from '../../../../manager/Editing/Command/CommandGroup'
 import { MobileColumnDrawerGroup } from '../../../utils/MobileColumeDrawer/MobileColumnDrawerGroup'
 import EditorManager from '../../../../manager/Blog/EditorManager'
+import LanguageManager from '../../../../manager/global/LanguageManager'
 
 export const CommandDrawer: React.FC<{
 }> = observer(() => {
@@ -17,7 +18,7 @@ export const CommandDrawer: React.FC<{
                 CommandManager.isCommandDrawerOpen = false
             }}
             backgroundColor={'#FAFAFB'}
-            title={'추가하기'}
+            title={LanguageManager.languageMap.AddSomething}
         >
             {
                 CommandManager.commandGroupList.map((group, groupIndex) => {

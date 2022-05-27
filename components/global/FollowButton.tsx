@@ -38,7 +38,7 @@ export const FollowButton: React.FC<{
         return <div
             className='follow-button'
             onClick={(event) => handleFollowButtonClick(event)}
-        >{'맞팔로우'}</div>
+        >{LanguageManager.languageMap.F2F}</div>
     } else {
         return <div
             className='follow-button'

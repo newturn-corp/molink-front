@@ -20,7 +20,7 @@ const getEmailHelperText = (emailState: EmailState) => {
     case EmailState.NOT_EMAIL:
         return LanguageManager.languageMap.EmailFormatError
     case EmailState.NOT_AUTHORIZED:
-        return '이메일이 인증되지 않았습니다!'
+        return LanguageManager.languageMap.EmailNotAuthorizedError
     case EmailState.WRONG_EMAIL_PASSWORD:
         return LanguageManager.languageMap.WrongEmailPasswordError
     case EmailState.TOO_MANY_REQUEST:

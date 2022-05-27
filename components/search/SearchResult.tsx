@@ -3,6 +3,7 @@ import React from 'react'
 import { Divider, List } from '@material-ui/core'
 import SearchManager from '../../manager/global/SearchManager'
 import { UserSearchResult } from './UserSearchResult'
+import LanguageManager from '../../manager/global/LanguageManager'
 
 export const SearchResults: React.FC<{
   }> = observer(() => {
@@ -12,10 +13,14 @@ export const SearchResults: React.FC<{
       return <div className='search-result'>
           <div
               className={'search-text'}
-          >{`"${SearchManager.searchText}"에 대한`}</div>
+          >
+              {`"${SearchManager.searchText}"${LanguageManager.languageMap.For}`}
+          </div>
           <div
               className={'search-result-count'}
-          >{`${SearchManager.searchResults.length}개의 사용자 검색 결과`}</div>
+          >
+              {`${SearchManager.searchResults.length}${LanguageManager.languageMap.UserSearchResultCount}`}
+          </div>
           <div
               className={'count-divider'}
           />
@@ -32,7 +37,9 @@ export const SearchResults: React.FC<{
                               })
                           }
                       </>
-                      : <div>{'검색 결과가 없습니다.'}</div>
+                      : <div>
+                          {LanguageManager.languageMap.NoSearchResult}
+                      </div>
               }
           </List>
       </div>

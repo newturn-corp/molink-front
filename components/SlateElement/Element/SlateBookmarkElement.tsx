@@ -11,6 +11,7 @@ import { Transforms } from 'slate'
 import MenuDotsIcon from '../../../public/image/icon/menu-dots.svg'
 import MenuManager from '../../../manager/global/Menu/MenuManager'
 import MenuItem from '../../../manager/global/Menu/MenuItem'
+import LanguageManager from '../../../manager/global/LanguageManager'
 
 export const SlateBookmarkElement: React.FC<{
     attributes,
@@ -121,7 +122,7 @@ export const SlateBookmarkElement: React.FC<{
                 onClick={(event) => {
                     event.stopPropagation()
                     const rect = menuButtonRef.current.getBoundingClientRect()
-                    MenuManager.open([new MenuItem('삭제', () => {
+                    MenuManager.open([new MenuItem(LanguageManager.languageMap.Delete, () => {
                         Transforms.removeNodes(EditorManager.slateEditor, { at: currentNodePath() })
                     })], {
                         top: rect.top + (rect.height / 2),

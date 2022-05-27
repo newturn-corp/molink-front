@@ -13,6 +13,7 @@ import { ContentNotExists, ContentUserNotExists, UnauthorizedForContent } from '
 import { HierarchyNotExists } from '../../Errors/HierarchyError'
 import { BlogPageNotExist } from '../../Errors/BlogError'
 import { makeAutoObservable } from 'mobx'
+import LanguageManager from '../global/LanguageManager'
 
 enum BlogURLType {
     OnlyPageURL = 'only-page-url',
@@ -112,31 +113,31 @@ class BlogPage {
             }
         } catch (err) {
             if (err instanceof UserNotExists) {
-                await DialogManager.openDialog('사용자가 존재하지 않습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
+                await DialogManager.openDialog(LanguageManager.languageMap.UserNotExistsNoticeMessage, LanguageManager.languageMap.MoveToMainPageNoticeMessage, [LanguageManager.languageMap.Accept])
                 await RoutingManager.moveTo(Page.Index)
             } else if (err instanceof DocumentNotExists) {
-                await DialogManager.openDialog('문서가 존재하지 않습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
+                await DialogManager.openDialog(LanguageManager.languageMap.PageNotExistsNoticeMessage, LanguageManager.languageMap.MoveToMainPageNoticeMessage, [LanguageManager.languageMap.Accept])
                 await RoutingManager.moveTo(Page.Index)
             } else if (err instanceof UnexpectedError) {
-                await DialogManager.openDialog('예상치 못한 문제가 발생했습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
+                await DialogManager.openDialog(LanguageManager.languageMap.PageNotExistsNoticeMessage, LanguageManager.languageMap.MoveToMainPageNoticeMessage, [LanguageManager.languageMap.Accept])
                 await RoutingManager.moveTo(Page.Index)
             } else if (err instanceof UnauthorizedForDocument) {
-                await DialogManager.openDialog('문서를 찾을 수 없습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
+                await DialogManager.openDialog(LanguageManager.languageMap.PageNotExistsNoticeMessage, LanguageManager.languageMap.MoveToMainPageNoticeMessage, [LanguageManager.languageMap.Accept])
                 await RoutingManager.moveTo(Page.Index)
             } else if (err instanceof ContentNotExists) {
-                await DialogManager.openDialog('문서를 찾을 수 없습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
+                await DialogManager.openDialog(LanguageManager.languageMap.PageNotExistsNoticeMessage, LanguageManager.languageMap.MoveToMainPageNoticeMessage, [LanguageManager.languageMap.Accept])
                 await RoutingManager.moveTo(Page.Index)
             } else if (err instanceof UnauthorizedForContent) {
-                await DialogManager.openDialog('문서를 찾을 수 없습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
+                await DialogManager.openDialog(LanguageManager.languageMap.PageNotExistsNoticeMessage, LanguageManager.languageMap.MoveToMainPageNoticeMessage, [LanguageManager.languageMap.Accept])
                 await RoutingManager.moveTo(Page.Index)
             } else if (err instanceof ContentUserNotExists) {
-                await DialogManager.openDialog('문서를 찾을 수 없습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
+                await DialogManager.openDialog(LanguageManager.languageMap.PageNotExistsNoticeMessage, LanguageManager.languageMap.MoveToMainPageNoticeMessage, [LanguageManager.languageMap.Accept])
                 await RoutingManager.moveTo(Page.Index)
             } else if (err instanceof HierarchyNotExists) {
-                await DialogManager.openDialog('문서를 찾을 수 없습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
+                await DialogManager.openDialog(LanguageManager.languageMap.PageNotExistsNoticeMessage, LanguageManager.languageMap.MoveToMainPageNoticeMessage, [LanguageManager.languageMap.Accept])
                 await RoutingManager.moveTo(Page.Index)
             } else if (err instanceof BlogPageNotExist) {
-                await DialogManager.openDialog('페이지가 존재하지 않습니다.', '메인 화면으로 돌아갑니다.', ['확인'])
+                await DialogManager.openDialog(LanguageManager.languageMap.PageNotExistsNoticeMessage, LanguageManager.languageMap.MoveToMainPageNoticeMessage, [LanguageManager.languageMap.Accept])
                 await RoutingManager.moveTo(Page.Blog, `/${err.blogNickname}`)
             } else {
                 throw err

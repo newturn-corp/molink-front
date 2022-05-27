@@ -155,7 +155,7 @@ const SignUp = observer(() => {
                 InputLabelProps={{ shrink: SignupManager.nickname !== '' || nicknameFocus }}
             />
             <AuthSubButton
-                text={'무작위 닉네임 생성'}
+                text={LanguageManager.languageMap.GenerateRandomNickname}
                 style={{
                     border: '1px solid #C9CDD2',
                     fontSize: 12,
