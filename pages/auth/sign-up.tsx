@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Backdrop, CircularProgress } from '@material-ui/core'
 import { EmailState, NicknameState, PasswordState } from '../../manager/Auth/AuthStates'
 import { observer } from 'mobx-react-lite'
@@ -13,6 +13,8 @@ import { SignupCheckList } from '../../components/auth/SignupCheckList'
 import { AuthContainer } from '../../components/auth/AuthContainer'
 import { AuthSubButton } from '../../components/auth/AuthSubButton'
 import LanguageManager from '../../manager/global/LanguageManager'
+import axios from 'axios'
+import AuthAPI from '../../api/AuthAPI'
 
 const getEmailHelperText = (emailState: EmailState) => {
     switch (emailState) {
@@ -56,6 +58,8 @@ const getPasswordHelperText = (passwordState: PasswordState) => {
 
 const SignUp = observer(() => {
     const [loading, setLoading] = useState(false)
+    const nicknameRef = useRef<HTMLInputElement>(null)
+    const [nicknameFocus, setNicknameFocus] = useState(false)
     useEffect(() => {
         UserManager.load()
             .then(() => {
@@ -131,6 +135,7 @@ const SignUp = observer(() => {
                 defaultValue={SignupManager.pwdCheck}
             />
             <AuthInput
+                inputRef={nicknameRef}
                 name={Math.random().toString()}
                 type={'text'}
                 label={LanguageManager.languageMap.Nickname}
@@ -142,8 +147,27 @@ const SignUp = observer(() => {
                     SignupManager.nicknameState = NicknameState.Default
                     SignupManager.nickname = value
                 }}
+                value={SignupManager.nickname}
                 defaultValue={SignupManager.nickname}
                 helperText={getNicknameHelperText(SignupManager.nicknameState)}
+                onFocus={() => setNicknameFocus(true)}
+                onBlur={() => setNicknameFocus(false)}
+                InputLabelProps={{ shrink: SignupManager.nickname !== '' || nicknameFocus }}
+            />
+            <AuthSubButton
+                text={'무작위 닉네임 생성'}
+                style={{
+                    border: '1px solid #C9CDD2',
+                    fontSize: 12,
+                    color: '#595959',
+                    borderRadius: 5,
+                    padding: 7
+                }}
+                onClick={async () => {
+                    const { nickname } = await AuthAPI.getRandomNickname()
+                    SignupManager.nicknameState = NicknameState.Default
+                    SignupManager.nickname = nickname
+                }}
             />
             <SignupCheckList/>
             <AuthButton

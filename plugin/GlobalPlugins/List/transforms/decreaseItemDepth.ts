@@ -25,12 +25,6 @@ export const decreaseItemDepth = (
     const followingItems = currentList.children.slice(
         Path.relative(currentItemPath, currentListPath)[0] + 1
     )
-    console.log('currentItem')
-    console.log(currentItem)
-    console.log('currentList')
-    console.log(currentList)
-    console.log('followingItems')
-    console.log(followingItems)
     const currentListPathRef = Editor.pathRef(editor, currentListPath)
 
     Editor.withoutNormalizing(editor, () => {

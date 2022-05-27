@@ -94,9 +94,10 @@
 }
 .auth-sub-button {
     margin: 0 auto;
-    width: 300px;
+    width: fit-content;
     display: block;
-    height: 35px;
+    height: fit-content;
+    padding: 4px;
 
     font-style: normal;
     font-weight: 600;

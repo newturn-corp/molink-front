@@ -5,9 +5,17 @@ import { UserPageListComponent } from '../../Home/Main/Content/UserPageListCompo
 import StyleManager from '../../../manager/global/Style/StyleManager'
 import GlobalManager from '../../../manager/global/GlobalManager'
 import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
+import BlogPage from '../../../manager/Blog/BlogPage'
 
 export const BlogUserContent: React.FC<{
 }> = observer(() => {
+    const blog = BlogPage.blog
+    if (!blog) {
+        return <></>
+    }
+    const blogUserInfo = BlogPage.blog.blogUserInfo
+    const pageCount = BlogPage.blog.userPageList.totalPageCount
+
     return <div
         className={'blog-user-content'}
         style={{
@@ -16,7 +24,10 @@ export const BlogUserContent: React.FC<{
             width: GlobalManager.screenWidth - HierarchyManager.getHierarchyWidth()
         }}
     >
-        <BlogUserInfoComponent/>
+        <BlogUserInfoComponent
+            {...blogUserInfo}
+            pageCount={pageCount}
+        />
         <UserPageListComponent />
     </div>
 })

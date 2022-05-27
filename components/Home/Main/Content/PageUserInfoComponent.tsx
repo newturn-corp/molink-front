@@ -25,12 +25,12 @@ export const PageUserInfoComponent: React.FC<{
                         width: 30,
                         height: 30
                     }}
-                    src={PageManager.pageUserInfo.userProfileImageUrl}
+                    src={PageManager.blogUserInfo.profileImageUrl}
                 />
                 <div
                     className={'nickname'}
                 >
-                    {PageManager.pageUserInfo.nickname}
+                    {PageManager.blogUserInfo.nickname}
                 </div>
             </div>
             <div

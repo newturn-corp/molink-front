@@ -19,7 +19,7 @@ export const ContentTitleComponent: React.FC<{
         <div
             ref={titleRef}
             className='title'
-            contentEditable={EditorManager.editable}
+            contentEditable={EditorManager.editable && !EditorManager.isLocked}
             suppressContentEditableWarning={true}
             style={{
                 outline: '0px solid transparent',

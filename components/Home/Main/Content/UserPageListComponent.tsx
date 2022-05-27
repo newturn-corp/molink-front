@@ -56,7 +56,6 @@ export const UserPageListComponent: React.FC<{
               {
                   userPageList.pageSummaryList.map((summary, index) => {
                       const userInfo = userPageList.userMap[summary.userId] as ESUser
-                      console.log(summary)
                       return <div
                           key={`page-column-component-container-${summary.id}`}
                           ref={index === userPageList.pageSummaryList.length - 1 ? ref : undefined}

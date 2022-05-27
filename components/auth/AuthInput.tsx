@@ -64,14 +64,18 @@ type AuthInputProps = {
     variant: 'outlined',
     autoComplete: string,
     error: boolean,
+    select?: boolean,
+    value?: string,
     onChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>,
     onFocus?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>,
+    onBlur?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>
     onPaste?: ClipboardEventHandler<HTMLDivElement>,
     style?: any,
     helperText?: string,
     defaultValue?: string,
     isPassword?: boolean
     inputRef?: React.MutableRefObject<any>
+    InputLabelProps?: any
 }
 
 export const AuthInput: React.FC<AuthInputProps> = (props: AuthInputProps) => {

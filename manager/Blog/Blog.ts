@@ -16,7 +16,7 @@ export class Blog {
     constructor (id: number) {
         this.id = id
         this.userPageList = new UserPageList(id)
-        this.blogUserInfo = new BlogUserInfo(id)
+        this.blogUserInfo = new BlogUserInfo()
         makeAutoObservable(this)
     }
 

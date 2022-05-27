@@ -67,7 +67,6 @@ class BlogPage {
         if (!userInfo) {
             throw new UserNotExists()
         }
-        console.log(userInfo)
         const userId = Number(userInfo.id)
         if (!this.blog || this.blog.id !== userId) {
             this.blog = new Blog(userId)
@@ -75,6 +74,7 @@ class BlogPage {
         this.blog.pageType = BlogPageType.UserMainPage
         await HierarchyManager.loadHierarchy(userId)
         await this.blog.loadUserPageList()
+        await this.blog.blogUserInfo.load(userId)
         const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
         currentHierarchy.openedPageId = null
     }
@@ -93,6 +93,7 @@ class BlogPage {
         }
         this.blog.pageType = BlogPageType.NormalPage
         await HierarchyManager.loadHierarchy(authority.userId)
+        await this.blog.blogUserInfo.load(authority.userId)
         await EditorManager.load(pageId)
         const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
         currentHierarchy.openPageParents(pageId)
