@@ -13,6 +13,7 @@ import { SignupCheckList } from '../../components/auth/SignupCheckList'
 import { AuthContainer } from '../../components/auth/AuthContainer'
 import { AuthSubButton } from '../../components/auth/AuthSubButton'
 import LanguageManager from '../../manager/global/LanguageManager'
+import axios from 'axios'
 
 const getEmailHelperText = (emailState: EmailState) => {
     switch (emailState) {
@@ -144,6 +145,22 @@ const SignUp = observer(() => {
                 }}
                 defaultValue={SignupManager.nickname}
                 helperText={getNicknameHelperText(SignupManager.nicknameState)}
+            />
+            <AuthSubButton
+                text={'무작위 닉네임 생성'}
+                style={{
+                    border: '1px solid #C9CDD2',
+                    fontSize: 12,
+                    color: '#595959',
+                    borderRadius: 5,
+                    padding: 7
+                }}
+                onClick={async () => {
+                    const { data } = await axios.get('https://nickname.hwanmoo.kr/?format=json&count=1&max_length=10')
+                    const nickname = data.words[0]
+                    SignupManager.nicknameState = NicknameState.Default
+                    SignupManager.nickname = nickname
+                }}
             />
             <SignupCheckList/>
             <AuthButton
