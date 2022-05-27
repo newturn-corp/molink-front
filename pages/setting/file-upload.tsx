@@ -6,6 +6,7 @@ import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 import { Progress } from 'antd'
 import { SettingCategory } from '../../components/setting/SettingCategory'
 import UserManager from '../../manager/global/User/UserManager'
+import LanguageManager from '../../manager/global/LanguageManager'
 
 const SettingProfile = observer(() => {
     useEffect(() => {
@@ -34,7 +35,9 @@ const SettingProfile = observer(() => {
                 </div>
                 <div className='setting-list'>
                     <div className={'total-upload-limit'}>
-                        <p className='setting-name'>총 저장 공간</p>
+                        <p className='setting-name'>
+                            {LanguageManager.languageMap.TotalFileSpace}
+                        </p>
                         <Progress
                             style={{
                                 width: 400,
@@ -44,7 +47,9 @@ const SettingProfile = observer(() => {
                             format={v => `500MB 중 ${leftTotalSpaceMB}MB 남음`}/>
                     </div>
                     <div className={'daily-upload-limit'}>
-                        <p className='setting-name'>일일 사용량</p>
+                        <p className='setting-name'>
+                            {LanguageManager.languageMap.DailyFileSpace}
+                        </p>
                         <Progress
                             style={{
                                 width: 400,

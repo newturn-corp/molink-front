@@ -84,6 +84,7 @@ export class DeletePageOption extends HierarchyControlOption {
             : `${page.title}${LanguageManager.languageMap.DeletePageDialogMsgOnlyOnePage}`
         const index = await DialogManager.openDialog(LanguageManager.languageMap.DeletePage, msg, [LanguageManager.languageMap.Accept])
         if (index !== 0) {
+            currentHierarchy.selectedPageId = null
             return
         }
 
@@ -98,6 +99,10 @@ export class DeletePageOption extends HierarchyControlOption {
         if (isOpenedDocumentIncludes) {
             currentHierarchy.openedPageId = null
         }
+
+        // 페이지 먼저 삭제
+        const deleteList = [...childIDList, page.id]
+        await ContentAPI.deleteContents(new DeleteContentsDTO(deleteList))
 
         currentHierarchy.yDocument.transact(() => {
             const targetDocument = currentHierarchy.yMap.get(this.documentId)
@@ -124,8 +129,7 @@ export class DeletePageOption extends HierarchyControlOption {
             }
             currentHierarchy.yMap.delete(page.id)
         })
-        const deleteList = [...childIDList, page.id]
-        await ContentAPI.deleteContents(new DeleteContentsDTO(deleteList))
+
         currentHierarchy.selectedPageId = null
         if (isOpenedDocumentIncludes) {
             UserManager.profile.setLastOpenPageId(null)

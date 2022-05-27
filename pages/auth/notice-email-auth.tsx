@@ -15,7 +15,7 @@ const NoticeEmailAuth = observer(() => {
             loading={false}
         >
             <AuthTitle
-                text={'이메일 전송됨'}
+                text={LanguageManager.languageMap.NoticeEmailAuthTitle}
             />
             <div
                 className={'icon'}
@@ -23,13 +23,13 @@ const NoticeEmailAuth = observer(() => {
                 <MailOutlineRoundedIcon/>
             </div>
             <div className={'description'}>
-                {'인증 이메일이 전송되었습니다!'}
+                {LanguageManager.languageMap.NoticeEmailAuthDescription1}
             </div>
             <div className={'description'}>
-                {'메일함을 확인해주세요!'}
+                {LanguageManager.languageMap.NoticeEmailAuthDescription2}
             </div>
             <AuthSubButton
-                text={'로그인 페이지로 이동하기'}
+                text={LanguageManager.languageMap.MoveToLoginPage}
                 onClick={() => RoutingManager.moveTo(Page.SignIn)}
             />
         </AuthContainer>

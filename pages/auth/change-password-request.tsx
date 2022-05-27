@@ -18,11 +18,11 @@ const getEmailHelperText = (emailState: EmailState) => {
     }
     switch (emailState) {
     case EmailState.NOT_EMAIL:
-        return '이메일 형식이 아닙니다.'
+        return LanguageManager.languageMap.EmailFormatError
     case EmailState.TOO_MANY_REQUEST:
-        return '너무 많은 요청을 보냈습니다. 잠시 뒤 다시 시도해주세요.'
+        return LanguageManager.languageMap.TooManyRequestError
     case EmailState.EMAIL_NOT_EXIST:
-        return '계정이 존재하지 않습니다.'
+        return LanguageManager.languageMap.AccountNotExistsError
     }
 }
 
@@ -37,7 +37,7 @@ const ChangePasswordRequest = observer(() => {
                 text={LanguageManager.languageMap.ChangePassword}
             />
             <AuthInput
-                label="이메일"
+                label={LanguageManager.languageMap.Email}
                 type="email"
                 variant={'outlined'}
                 autoComplete={'on'}
@@ -60,12 +60,10 @@ const ChangePasswordRequest = observer(() => {
                     wordWrap: 'break-word'
                 }}
             >
-                {
-                    'Molink 가입 시 사용하신 이메일을 입력하시면\n새 비밀번호를 생성할 수 있는 링크를 보내드립니다. '
-                }
+                {LanguageManager.languageMap.ChangePasswordRequestDescription}
             </pre>
             <AuthButton
-                text={'비밀번호 초기화 이메일 받기'}
+                text={LanguageManager.languageMap.GetChangePasswordEmail}
                 theme={'primary'}
                 style={{
                     marginTop: 44

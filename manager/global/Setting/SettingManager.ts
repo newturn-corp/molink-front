@@ -1,10 +1,11 @@
 import { makeAutoObservable } from 'mobx'
 import { Setting } from './Setting'
+import LanguageManager from '../LanguageManager'
 
 const DEFAULT_SETTING_MAP = new Map<string, Setting>()
-DEFAULT_SETTING_MAP.set('profile', new Setting('프로필', true))
-DEFAULT_SETTING_MAP.set('hierarchy', new Setting('하이어라키'))
-DEFAULT_SETTING_MAP.set('follow', new Setting('팔로우'))
+DEFAULT_SETTING_MAP.set('profile', new Setting(LanguageManager.languageMap.Profile, true))
+DEFAULT_SETTING_MAP.set('hierarchy', new Setting(LanguageManager.languageMap.Blog))
+DEFAULT_SETTING_MAP.set('follow', new Setting(LanguageManager.languageMap.Follow))
 
 class SettingManager {
     isShowSettingModal: boolean = false

@@ -6,6 +6,7 @@ import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 import { Input } from 'antd'
 import { SettingCategory } from '../../components/setting/SettingCategory'
 import UserManager from '../../manager/global/User/UserManager'
+import LanguageManager from '../../manager/global/LanguageManager'
 const { TextArea } = Input
 
 const SettingProfile = observer(() => {
@@ -29,7 +30,9 @@ const SettingProfile = observer(() => {
                 <div className='setting-list'>
                     <div className='profile'>
                         <div className='profile-image'>
-                            <p className='setting-name'>프로필 이미지</p>
+                            <p className='setting-name'>
+                                {LanguageManager.languageMap.ProfileImage}
+                            </p>
                             <input
                                 accept='image/jpg,impge/png,image/jpeg'
                                 style={{ display: 'none' }}
@@ -42,11 +45,13 @@ const SettingProfile = observer(() => {
                                 <Avatar className='image' sizes='200' src={UserManager.profile.getUserProfileImageSrc()}/>
                             </label>
                             <div className='edit'>
-                                눌러서 변경하기
+                                {LanguageManager.languageMap.PressToChange}
                             </div>
                         </div>
                         <div className='biography'>
-                            <p className='setting-name'>한 줄 소개</p>
+                            <p className='setting-name'>
+                                {LanguageManager.languageMap.Biography}
+                            </p>
                             <TextArea
                                 maxLength={100}
                                 autoSize={{ minRows: 3, maxRows: 3 }}

@@ -1,6 +1,4 @@
-import { Backdrop, Button, CircularProgress, TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import { AuthLogo } from '../../components/auth/logo'
 import AuthManager, { PasswordState } from '../../manager/Auth/AuthManager'
 import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 import { AuthHeader } from '../../components/auth/AuthHeader'
@@ -15,9 +13,9 @@ const getPasswordHelperText = (passwordState: PasswordState) => {
     switch (passwordState) {
     case PasswordState.DEFAULT:
     case PasswordState.PASSWORD_CONDITION_NOT_SATISFIED:
-        return '문자, 숫자 포함 최소 8글자'
+        return LanguageManager.languageMap.PasswordCondition
     case PasswordState.PASSWORD_MISMATCH:
-        return '비밀번호가 일치하지 않습니다.'
+        return LanguageManager.languageMap.PasswordMismatch
     default:
         throw new Error('Unhandled Password State')
     }

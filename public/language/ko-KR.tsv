@@ -26,7 +26,7 @@ Nickname	닉네임
 EmptyEmailError	이메일을 입력해주세요.
 EmailFormatError	이메일 형식이 아닙니다.
 EmailAlreadyExistsError	이미 존재하는 이메일입니다.
-NicknameCondition	2~27글자, 띄어쓰기, -,_,.(마침표) 사용 가능
+NicknameCondition	최대 2~27글자, 특수문자는 -,_,.(마침표) 사용 가능
 NicknameAlreadyExistsError	이미 존재하는 닉네임입니다.
 NicknameConditionError	2~15글자 내로 닉네임을 정해주세요.
 AlreadyAccountExists	이미 계정이 있나요? 로그인하기
@@ -87,3 +87,52 @@ Biography	한 줄 소개
 Follow	팔로우
 Following	팔로잉
 Requested	요청됨
+Page	페이지
+Follower	팔로워
+AddSomething	추가하기
+UserNotExistsNoticeMessage	사용자가 존재하지 않습니다.
+PageNotExistsNoticeMessage	페이지가 존재하지 않습니다.
+MoveToMainPageNoticeMessage	메인 화면으로 돌아갑니다.
+Profile	프로필
+Blog	블로그
+F2F	맞팔로우
+Title	제목
+Title1	제목1
+Title2	제목2
+Title3	제목3
+Divider	구분선
+DividerDefault	구분선-기본
+DividerFaint	구분선-흐릿한
+DividerShort	구분선-짦은
+DividerFaintShort	구분선-짦고 흐릿한
+DividerDot	구분선-점
+ContentDivider	콘텐츠 구분선
+Accent	강조
+CalloutCommandName	콜아웃
+List	목록
+CalloutCommandDescription	강조하기 위한 한 줄
+TitleCommand1Description	상위 레벨 제목에 사용
+TitleCommand2Description	핵심 세션에 사용
+TitleCommand3Description	하위 세션에 사용
+BulletListCommandName	순서없는목록
+BulletListCommandDescription	순서 없는 목록
+OrderedListCommandName	숫자목록
+OrderedListCommandDescription	숫자 목록
+CheckListCommandName	체크목록
+CheckListCommandDescription	체크 목록
+NoSearchResult	검색 결과가 없습니다.
+UserSearchResultCount	개의 사용자 검색 결과
+For	에 대한
+PressToChange	눌러서 변경하기
+TotalFileSpace	총 저장 공간
+DailyFileSpace	일일 사용량
+TooManyRequestError	너무 많은 요청을 보냈습니다. 잠시 뒤 다시 시도해주세요.
+AccountNotExistsError	계정이 존재하지 않습니다.
+ChangePasswordRequestDescription	Molink 가입 시 사용하신 이메일을 입력하시면 새 비밀번호를 생성할 수 있는 링크를 보내드립니다.
+GetChangePasswordEmail	비밀번호 초기화 이메일 받기
+NoticeEmailAuthTitle	이메일 전송됨
+NoticeEmailAuthDescription1	인증 이메일이 전송되었습니다!
+NoticeEmailAuthDescription2	메일함을 확인해주세요!
+MoveToLoginPage	로그인 페이지로 이동하기
+EmailNotAuthorizedError	이메일이 인증되지 않았습니다!
+GenerateRandomNickname	무작위 닉네임 생성

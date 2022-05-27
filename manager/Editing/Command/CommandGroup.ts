@@ -1,12 +1,18 @@
 import Command from './Command'
+import { reaction } from 'mobx'
+import LanguageManager from '../../global/LanguageManager'
 
 class CommandGroup {
     name: string
     commands: Command[]
 
-    constructor (name: string, commands: Command[]) {
-        this.name = name
+    constructor (nameKey: string, commands: Command[]) {
+        this.name = nameKey
         this.commands = commands
+
+        reaction(() => LanguageManager.languageMap[nameKey], () => {
+            this.name = LanguageManager.languageMap[nameKey]
+        })
     }
 
     search (text: string) {
