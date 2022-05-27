@@ -201,6 +201,7 @@
   border: 1px solid #C9CDD2;
   width: fit-content;
   padding: 4px 8px;
+  border-radius: 5px;
   cursor: pointer;
 }
 .like-button .icon.filled svg {

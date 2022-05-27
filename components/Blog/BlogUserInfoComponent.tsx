@@ -7,22 +7,26 @@ import { BlogUserInfoProfile } from './UserContent/BlogUserInfoProfile'
 import { BlogUserInfoMain } from './UserContent/BlogUserInfoMain'
 import { BlogUserInfoFollowAndPage } from './UserContent/BlogUserInfoFollowAndPage'
 
-export const BlogUserInfoComponent: React.FC<{
-}> = observer(() => {
-    const blog = BlogPage.blog
-    if (!blog) {
-        return <></>
-    }
-    const blogUserInfo = BlogPage.blog.blogUserInfo
+export interface BlogUserInfoInterface {
+    userId: number,
+    nickname: string,
+    profileImageUrl: string,
+    biography: string,
+    followerCount: number,
+    followCount: number
+    pageCount?: number
+}
+
+export const BlogUserInfoComponent: React.FC<BlogUserInfoInterface> = observer((dto) => {
     const {
         userId,
         nickname,
         profileImageUrl,
         biography,
         followerCount,
-        followCount
-    } = blogUserInfo
-    const pageCount = BlogPage.blog.userPageList.totalPageCount
+        followCount,
+        pageCount
+    } = dto
     return <>
         <div
             className={'blog-user-info'}

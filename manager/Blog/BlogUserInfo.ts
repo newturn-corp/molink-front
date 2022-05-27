@@ -10,23 +10,27 @@ export class BlogUserInfo {
     followerCount: number = 0
     followCount: number = 0
 
-    constructor (userId: number) {
-        this.userId = userId
-        this.loadUserInfo()
-        this.loadFollowInfo()
+    constructor () {
         makeAutoObservable(this)
     }
 
-    async loadUserInfo () {
-        const dto = await ViewerAPI.getUserInfoMapByIDList([this.userId])
-        const userInfo = dto.infoMap[this.userId] as ESUser
+    async load (userId: number) {
+        console.log('load')
+        await Promise.all([this.loadUserInfo(userId), this.loadFollowInfo(userId)])
+        console.log(this)
+    }
+
+    async loadUserInfo (userId: number) {
+        const dto = await ViewerAPI.getUserInfoMapByIDList([userId])
+        const userInfo = dto.infoMap[userId] as ESUser
+        this.userId = userId
         this.nickname = userInfo.nickname
         this.profileImageUrl = userInfo.profileImageUrl
         this.biography = userInfo.biography
     }
 
-    async loadFollowInfo () {
-        const dto = await ViewerAPI.getUserFollowInfo(this.userId)
+    async loadFollowInfo (userId: number) {
+        const dto = await ViewerAPI.getUserFollowInfo(userId)
         this.followerCount = dto.followerCount
         this.followCount = dto.followCount
     }
