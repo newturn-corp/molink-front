@@ -39,6 +39,5 @@ export const PageUserInfoComponent: React.FC<{
                 {getRelativeTime(new Date(PageManager.pageUserInfo.lastEditedAt), true)}
             </div>
         </div>
-        <div className={'divider'}></div>
     </div>
 })

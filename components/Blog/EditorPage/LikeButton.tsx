@@ -1,10 +1,6 @@
-import React, { useState } from 'react'
-import { FollowStatus } from '@newturn-develop/types-molink'
+import React from 'react'
 import { observer } from 'mobx-react'
-import UserManager from '../../manager/global/User/UserManager'
-import { CircularProgress } from '@material-ui/core'
-import LanguageManager from '../../manager/global/LanguageManager'
-import PageManager from '../../manager/Blog/PageManager'
+import PageManager from '../../../manager/Blog/PageManager'
 import { HeartFilled, HeartOutlined } from '@ant-design/icons'
 
 export const LikeButton: React.FC<{

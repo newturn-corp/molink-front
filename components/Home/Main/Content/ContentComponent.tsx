@@ -2,15 +2,16 @@ import { observer } from 'mobx-react'
 import React from 'react'
 import { ContentHeaderIcon } from './ContentHeaderIcon'
 import { EditorContainer } from './EditorContainer'
-import { ContentTitleComponent } from './ContentTitleComponent'
+import { ContentTitleComponent } from '../../../Blog/EditorPage/ContentTitleComponent'
 import { ContentFooter } from './ContentFooter'
 import StyleManager from '../../../../manager/global/Style/StyleManager'
 import { PageUserInfoComponent } from './PageUserInfoComponent'
 import EditorManager from '../../../../manager/Blog/EditorManager'
 import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
-import { LikeButton } from '../../../Blog/LikeButton'
+import { LikeButton } from '../../../Blog/EditorPage/LikeButton'
 import { BlogUserInfoComponent } from '../../../Blog/BlogUserInfoComponent'
 import PageManager from '../../../../manager/Blog/PageManager'
+import { PageTagList } from '../../../Blog/EditorPage/PageTagList'
 
 export const ContentComponent: React.FC<{
 }> = observer(() => {
@@ -32,12 +33,25 @@ export const ContentComponent: React.FC<{
             style={StyleManager.contentStyle.main}
         >
             <ContentHeaderIcon/>
-            <ContentTitleComponent/>
-            {
-                EditorManager.editable && !EditorManager.isLocked
-                    ? <></>
-                    : <PageUserInfoComponent/>
-            }
+            <div
+                style={{
+                    marginBottom: 20
+                }}
+            >
+                <ContentTitleComponent/>
+                {
+                    EditorManager.editable && !EditorManager.isLocked
+                        ? <>
+                            <PageTagList/>
+                            <div className={'info-divider'}/>
+                        </>
+                        : <>
+                            <PageUserInfoComponent/>
+                            <PageTagList/>
+                            <div className={'info-divider'}/>
+                        </>
+                }
+            </div>
             <EditorContainer/>
             {
                 EditorManager.editable && !EditorManager.isLocked
