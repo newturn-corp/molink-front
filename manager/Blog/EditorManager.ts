@@ -39,6 +39,9 @@ class EditorManager {
     ySelection: Y.Map<any> = null
     selectionMap: any
 
+    yTags: Y.Array<string> = null
+    tags: string[] = []
+
     websocketProvider: WebsocketProvider = null
     awareness: Awareness
     isConnected: boolean = false
@@ -61,7 +64,8 @@ class EditorManager {
             yInfo: false,
             websocketProvider: false,
             titleRef: false,
-            lastSelection: false
+            lastSelection: false,
+            yTags: false
         })
         EventManager.addEventListeners(
             [Event.UnloadPage,
@@ -90,6 +94,11 @@ class EditorManager {
         this.ySelection = this.yjsDocument.getMap('selection')
         this.ySelection.observeDeep(() => {
             this.selectionMap = this.ySelection.toJSON()
+        })
+
+        this.yTags = this.yjsDocument.getArray('tags')
+        this.yTags.observeDeep(() => {
+            this.tags = this.yTags.toArray()
         })
 
         const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
@@ -261,6 +270,14 @@ class EditorManager {
         }
     }
 
+    addTag (text: string) {
+        this.yTags.push([text])
+    }
+
+    removeTag (index: number) {
+        this.yTags.delete(index)
+    }
+
     async updatePageDataInSearchEngine () {
         if (!this.pageId || !UserManager.isUserAuthorized || !this.editable) {
             return
@@ -279,7 +296,8 @@ class EditorManager {
             description,
             this.pageVisibilityToNumber(page.visibility),
             this.shouldUpdateLastEditedAt ? Number(new Date()) : undefined,
-            image ? `${image.url}?pageId=${this.pageId}` : undefined))
+            image ? `${image.url}?pageId=${this.pageId}` : undefined, this.tags)
+        )
     }
 
     pageVisibilityToNumber (visibility: PageVisibility) {

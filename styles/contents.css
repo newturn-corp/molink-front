@@ -1,20 +1,18 @@
 @charset "UTF-8";
 .page-user-info-container {
-  margin-top: 20px;
-  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 5px;
 }
 .page-user-info-container .page-user-info {
   display: flex;
   flex-direction: row;
-  margin-bottom: 10px;
 }
 .page-user-info-container .page-user-info .user-info {
   display: flex;
   flex-direction: row;
   cursor: pointer;
-  padding: 4px 8px 4px 6px;
+  padding: 4px 8px 4px 0px;
   border-radius: 4px;
 }
 .page-user-info-container .page-user-info .user-info .profile {
@@ -29,17 +27,43 @@
   line-height: 38px;
   margin-left: 4px;
 }
-.page-user-info-container .divider {
-  background-color: #C9CDD2;
-  height: 1px;
-  width: 100%;
-}
 
 .content-container {
   position: fixed;
   height: 100%;
   overflow: hidden;
   overflow-y: hidden;
+}
+.content-container .info-divider {
+  margin-top: calc(0.5em - 0.5px);
+  margin-bottom: calc(1em - 0.5px);
+  background-color: #C9CDD2;
+  height: 1px;
+  width: 100%;
+}
+.content-container .page-tag-list-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.content-container .page-tag-list-container .ant-tag {
+  font-size: 16px;
+  line-height: 28px;
+  color: #0094FF;
+  border-radius: 13.5px;
+  padding: 2px 12px;
+  border: none;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  background-color: #F7F8F9;
+  display: flex;
+  align-items: center;
+}
+.content-container .page-tag-list-container .tag-input {
+  border: none;
+  outline: none;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 .content-container .content-body {
   position: fixed;
@@ -217,7 +241,7 @@
 }
 .content-container .content-body .contents .text {
   margin: 0px;
-  padding: 3px;
+  padding: 3px 3px 3px 0px;
 }
 .content-container .content-body .contents .youtube-element .video {
   width: -webkit-fill-available;
@@ -285,8 +309,8 @@
 }
 .content-container .content-body .contents ul {
   list-style: disc;
-  margin-left: -15px;
-  -moz-margin-left: -20px;
+  margin-left: -18px;
+  -moz-margin-left: -23px;
 }
 .content-container .content-body .contents ul li::marker {
   color: inherit;
@@ -299,8 +323,8 @@
   margin-left: -15px;
 }
 .content-container .content-body .contents ol {
-  margin-left: -15px;
-  -moz-margin-left: -20px;
+  margin-left: -18px;
+  -moz-margin-left: -23px;
 }
 .content-container .content-body .contents ol li::marker {
   color: inherit;
@@ -313,7 +337,7 @@
   margin-left: -12px;
 }
 .content-container .content-body .contents div > .check-list {
-  margin-left: -20px;
+  margin-left: -26px;
   padding-left: 25px;
 }
 .content-container .content-body .contents .check-list {

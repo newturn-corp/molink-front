@@ -29,6 +29,7 @@ export const SlateTextElement: React.FC<{
               isSelectionCollapsed &&
               !isHead &&
               isBrowser &&
+              !EditorManager.isLocked &&
               EditorManager.showPlaceholder
                       ? `selected-empty-text text ${element.category}`
                       : `text ${element.category}`} {...attributes}>

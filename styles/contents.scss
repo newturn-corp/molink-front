@@ -1,17 +1,15 @@
 .page-user-info-container {
-    margin-top: 20px;
-    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
+    margin-bottom: 5px;
     .page-user-info {
         display: flex;
         flex-direction: row;
-        margin-bottom: 10px;
         .user-info {
             display: flex;
             flex-direction: row;
             cursor: pointer;
-            padding: 4px 8px 4px 6px;
+            padding: 4px 8px 4px 0px;
             border-radius: 4px;
             .profile {
                 margin-right: 10px;
@@ -27,11 +25,6 @@
         line-height: 38px;
         margin-left: 4px;
     }
-    .divider {
-        background-color: #C9CDD2;
-        height: 1px;
-        width: 100%;
-    }
 }
 
 .content-container {
@@ -39,6 +32,38 @@
     height: 100%;
     overflow: hidden;
     overflow-y: hidden;
+    .info-divider {
+        margin-top: calc(0.5em - 0.5px);
+        margin-bottom: calc(1em - 0.5px);
+        background-color: #C9CDD2;
+        height: 1px;
+        width: 100%;
+    }
+    .page-tag-list-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        .ant-tag {
+            font-size: 16px;
+            line-height: 28px;
+            //height: 30px;
+            color: #0094FF;
+            border-radius: 13.5px;
+            padding: 2px 12px;
+            border: none;
+            margin-top: 4px;
+            margin-bottom: 4px;
+            background-color: #F7F8F9;
+            display: flex;
+            align-items: center;
+        }
+        .tag-input {
+            border: none;
+            outline: none;
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+    }
     .content-body {
         position: fixed;
         overflow-y: scroll;
@@ -215,7 +240,7 @@
             }
             .text {
                 margin: 0px;
-                padding: 3px;
+                padding: 3px 3px 3px 0px;
             }
             .youtube-element {
                 .video {
@@ -290,8 +315,8 @@
             ul {
                 // margin-top: 5px;
                 list-style: disc;
-                margin-left: -15px;
-                -moz-margin-left: -20px;
+                margin-left: -18px;
+                -moz-margin-left: -23px;
                 li::marker {
                     color: inherit;
                 }
@@ -308,8 +333,8 @@
 
             ol {
                 // margin-top: 5px;
-                margin-left: -15px;
-                -moz-margin-left: -20px;
+                margin-left: -18px;
+                -moz-margin-left: -23px;
                 li::marker {
                     color: inherit;
                 }
@@ -327,7 +352,7 @@
 
 
             div > .check-list {
-                margin-left: -20px;
+                margin-left: -26px;
                 padding-left: 25px;
             }
             .check-list {

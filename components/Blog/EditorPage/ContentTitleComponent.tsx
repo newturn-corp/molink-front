@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from 'react'
 import { ReactEditor } from 'slate-react'
 import { Transforms } from 'slate'
 import { observer } from 'mobx-react'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
-import EditorManager from '../../../../manager/Blog/EditorManager'
-import { TextCategory } from '../../../../Types/slate/CustomElement'
+import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
+import EditorManager from '../../../manager/Blog/EditorManager'
+import { TextCategory } from '../../../Types/slate/CustomElement'
 import { isBrowser } from 'react-device-detect'
 
 export const ContentTitleComponent: React.FC<{
