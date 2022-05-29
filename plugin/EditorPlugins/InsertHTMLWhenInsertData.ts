@@ -7,7 +7,7 @@ import { handleUnorderedList } from './InsertHTMLPlugin/handleUnorderedList'
 
 const ELEMENT_TAGS = {
     A: el => ({ type: 'link', url: el.getAttribute('href') }),
-    BLOCKQUOTE: () => ({ type: 'quote' }),
+    BLOCKQUOTE: () => ({ type: 'block-quote' }),
     H1: () => ({ type: 'text', category: TextCategory.Head1 }),
     H2: () => ({ type: 'text', category: TextCategory.Head2 }),
     H3: () => ({ type: 'text', category: TextCategory.Head3 }),
