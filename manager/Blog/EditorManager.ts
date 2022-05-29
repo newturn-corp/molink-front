@@ -55,6 +55,7 @@ class EditorManager {
     lastPressedKey: string = null
     lastSelection: BaseRange = null
     shouldUpdateLastEditedAt: boolean = false
+    isLoaded: boolean = false
 
     constructor () {
         makeAutoObservable(this, {
@@ -199,6 +200,7 @@ class EditorManager {
                 ))
         }
         this.pageId = pageId
+        this.isLoaded = true
         currentHierarchy.openedPageId = pageId
         await EventManager.issueEvent(Event.LoadContent)
     }
@@ -213,6 +215,8 @@ class EditorManager {
         if (this.websocketProvider) {
             this.websocketProvider.destroy()
         }
+        this.isLoaded = false
+
         this.pageId = null
         this.editable = false
         this.showPlaceholder = true
