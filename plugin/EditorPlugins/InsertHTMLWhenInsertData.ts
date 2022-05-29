@@ -3,6 +3,7 @@ import { jsx } from 'slate-hyperscript'
 import { CustomElement, TextCategory } from '../../Types/slate/CustomElement'
 import { Align } from '../../manager/Editing/FormattingManager'
 import { handleSpan } from './InsertHTMLPlugin/handleSpan'
+import { handleUnorderedList } from './InsertHTMLPlugin/handleUnorderedList'
 
 const ELEMENT_TAGS = {
     A: el => ({ type: 'link', url: el.getAttribute('href') }),
@@ -19,7 +20,8 @@ const ELEMENT_TAGS = {
     P: () => ({ type: 'text', category: TextCategory.Content3 }),
     SPAN: () => ({ type: 'text', category: TextCategory.Content3 }),
     PRE: () => ({ type: 'code' }),
-    UL: () => ({ type: 'ul-list' })
+    UL: () => ({ type: 'ul-list' }),
+    DT: () => ({ type: 'text', category: TextCategory.Content3 })
 }
 
 // COMPAT: `B` is omitted here because Google Docs uses `<b>` in weird ways.
@@ -54,7 +56,7 @@ export const deserialize = el => {
     ) {
         parent = el.childNodes[0]
     }
-    console.log(parent.childNodes)
+
     let children = Array.from(parent.childNodes)
         .map(deserialize)
         .flat()
@@ -67,10 +69,14 @@ export const deserialize = el => {
         return jsx('fragment', {}, children)
     }
 
+    if (el.nodeName === 'DIV') {
+        if (el.parentNode.nodeName === 'BODY') {
+            return null
+        }
+    }
+
     if (nodeName === 'UL') {
-        return jsx('element', {
-            type: 'ul-list'
-        }, children)
+        return handleUnorderedList(el, children)
     }
 
     if (nodeName === 'SPAN') {
@@ -97,6 +103,22 @@ export const insertHTMLWhenInsertData = (editor, data) => {
         const parsed = new DOMParser().parseFromString(html, 'text/html')
         console.log(parsed.body)
         const fragment = deserialize(parsed.body)
+        const listItemEntry = []
+        for (let i = 0; i < fragment.length; i++) {
+            const node = fragment[i]
+            if (node.type === 'list-item') {
+                for (let j = i; j >= 0; j--) {
+                    const frontNode = fragment[j]
+                    if (frontNode.type === 'ul-list' || frontNode.type === 'ol-list') {
+                        frontNode.children.push(node)
+                    }
+                }
+                listItemEntry.push(i)
+            }
+        }
+        for (const index of listItemEntry.reverse()) {
+            fragment.splice(index, 1)
+        }
         console.log(fragment)
         Transforms.insertFragment(editor, fragment)
         return true

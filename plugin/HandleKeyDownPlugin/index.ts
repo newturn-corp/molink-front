@@ -26,8 +26,7 @@ handlerMap.set('ArrowRight', [
 ])
 handlerMap.set('ArrowUp', [
     (event, editor) => LinkManager.menu.handleArrowUp(event, editor),
-    (event, editor) => CommandManager.handleArrowUp(event, editor),
-    moveToTitleWhenArrowUpDown
+    (event, editor) => CommandManager.handleArrowUp(event, editor)
 ])
 handlerMap.set('ArrowDown', [
     (event, editor) => LinkManager.menu.handleArrowDown(event, editor),
@@ -42,8 +41,7 @@ handlerMap.set('ctrl+y', [
     redoWhenControlYKeyDown
 ])
 handlerMap.set('Backspace', [
-    handleBackspaceInList,
-    moveSelectionWhenBackspaceDown
+    handleBackspaceInList
 ])
 handlerMap.set('Tab', [
     (event, editor) => LinkManager.menu.handleEnterAndTab(event, editor),

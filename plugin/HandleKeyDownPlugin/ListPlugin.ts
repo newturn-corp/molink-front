@@ -4,9 +4,7 @@ import { TextCategory } from '../../Types/slate/CustomElement'
 import { ListEditor, ListTransforms } from '../GlobalPlugins/ListPlugin'
 
 export const handleEnterInList = (event: React.KeyboardEvent<HTMLDivElement>, editor: Editor) => {
-    console.log('handleEnterInList')
     const currentItem = ListEditor.getCurrentItem(editor)
-    console.log(currentItem)
     if (!currentItem) {
         return false
     }
