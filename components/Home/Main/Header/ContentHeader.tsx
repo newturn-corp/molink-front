@@ -10,7 +10,7 @@ import { ContentControlButtonGroup } from './ContentControlButtonGroup'
 export const ContentHeader: React.FC<{
 }> = observer(() => {
     const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    if (!currentHierarchy || !currentHierarchy.openedPageId) {
+    if (!currentHierarchy || !currentHierarchy.openedPageId || !EditorManager.isLoaded) {
         return <></>
     }
     return <div

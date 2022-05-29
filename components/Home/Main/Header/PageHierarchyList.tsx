@@ -7,9 +7,6 @@ import EditorManager from '../../../../manager/Blog/EditorManager'
 export const PageHierarchyList: React.FC<{
   }> = observer(() => {
       const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-      if (!currentHierarchy || !currentHierarchy.openedPageId) {
-          return <></>
-      }
       const pages = currentHierarchy.getPageHierarchy(currentHierarchy.openedPageId)
       return <div
           className={'page-hierarchy-list'}

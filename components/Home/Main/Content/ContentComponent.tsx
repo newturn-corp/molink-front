@@ -12,6 +12,8 @@ import { LikeButton } from '../../../Blog/EditorPage/LikeButton'
 import { BlogUserInfoComponent } from '../../../Blog/BlogUserInfoComponent'
 import PageManager from '../../../../manager/Blog/PageManager'
 import { PageTagList } from '../../../Blog/EditorPage/PageTagList'
+import { Skeleton } from '@material-ui/lab'
+import { EditorPageSkeleton } from '../../../Blog/EditorPage/EditorPageSkeleton'
 
 export const ContentComponent: React.FC<{
 }> = observer(() => {
@@ -32,41 +34,53 @@ export const ContentComponent: React.FC<{
         <div className={'contents'}
             style={StyleManager.contentStyle.main}
         >
-            <ContentHeaderIcon/>
-            <div
-                style={{
-                    marginBottom: 20
-                }}
-            >
-                <ContentTitleComponent/>
-                {
-                    EditorManager.editable && !EditorManager.isLocked
-                        ? <>
-                            <PageTagList/>
-                            <div className={'info-divider'}/>
-                        </>
-                        : <>
-                            <PageUserInfoComponent/>
-                            <PageTagList/>
-                            <div className={'info-divider'}/>
-                        </>
-                }
-            </div>
+            {
+                EditorManager.isLoaded
+                    ? <>
+                        <ContentHeaderIcon/>
+                        <div
+                            style={{
+                                marginBottom: 20
+                            }}
+                        >
+                            <ContentTitleComponent/>
+                            {
+                                EditorManager.editable && !EditorManager.isLocked
+                                    ? <>
+                                        <PageTagList/>
+                                        <div className={'info-divider'}/>
+                                    </>
+                                    : <>
+                                        <PageUserInfoComponent/>
+                                        <PageTagList/>
+                                        <div className={'info-divider'}/>
+                                    </>
+                            }
+                        </div>
+                    </>
+                    : <EditorPageSkeleton/>
+            }
             <EditorContainer/>
             {
-                EditorManager.editable && !EditorManager.isLocked
-                    ? <></>
-                    : <>
-                        <LikeButton/>
-                        <BlogUserInfoComponent
-                            userId={userId}
-                            nickname={nickname}
-                            biography={biography}
-                            profileImageUrl={profileImageUrl}
-                            followCount={followCount}
-                            followerCount={followerCount}
-                        />
+                EditorManager.isLoaded
+                    ? <>
+                        {
+                            EditorManager.editable && !EditorManager.isLocked
+                                ? <></>
+                                : <>
+                                    <LikeButton/>
+                                    <BlogUserInfoComponent
+                                        userId={userId}
+                                        nickname={nickname}
+                                        biography={biography}
+                                        profileImageUrl={profileImageUrl}
+                                        followCount={followCount}
+                                        followerCount={followerCount}
+                                    />
+                                </>
+                        }
                     </>
+                    : <></>
             }
         </div>
         <ContentFooter/>
