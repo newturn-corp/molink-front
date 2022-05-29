@@ -94,11 +94,11 @@ const Caption: React.FC<{
       </figcaption>
   }
 
-const getImageSrc = (src: string) => {
+const getImageSrc = (src: string, version) => {
     if (src && src.includes('https://cdn.filestackcontent.com')) {
         return src + `?policy=${FileUploadManager.policy}&signature=${FileUploadManager.signature}`
     } else if (src && src.includes('molink.life/files')) {
-        return src + `?pageId=${EditorManager.pageId}`
+        return src + `?pageId=${EditorManager.pageId}&v=${version}`
     }
     return src
 }
@@ -111,6 +111,7 @@ export const SlateImageElement: React.FC<{
       const selected = useSelected()
       const focused = useFocused()
       const [isMouseOver, setIsMouseOver] = useState(false)
+      const [version, setVersion] = useState(1)
       const menuButtonRef = useRef<HTMLDivElement>()
       const currentNodePath = useCallback(() => (
           ReactEditor.findPath(EditorManager.slateEditor, element)
@@ -169,7 +170,10 @@ export const SlateImageElement: React.FC<{
                       }}>
                           <img
                               draggable={false}
-                              src={getImageSrc(element.url)}
+                              src={getImageSrc(element.url, version)}
+                              onError={() => setTimeout(() => {
+                                  setVersion(version * (version + 1))
+                              }, version * 50)}
                               className={css`
                             display: block;
                             width: 100%;

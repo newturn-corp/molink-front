@@ -223,6 +223,9 @@ class EditorManager {
         this.yInfo = null
         this.info = null
 
+        this.yTags = null
+        this.tags = []
+
         this.ySelection = null
         this.selectionMap = null
 
