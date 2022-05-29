@@ -97,6 +97,12 @@
 .content-container .content-body .contents .menu-button:hover {
   background-color: rgba(58, 60, 63, 0.6);
 }
+.content-container .content-body .contents code {
+  background: rgba(135, 131, 120, 0.15);
+  color: #0094FF;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
 .content-container .content-body .contents .file-loading {
   flex-direction: row;
   background-color: #D6E6F6;
@@ -242,6 +248,8 @@
 .content-container .content-body .contents .text {
   margin: 0px;
   padding: 3px 3px 3px 0px;
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 .content-container .content-body .contents .youtube-element .video {
   width: -webkit-fill-available;
