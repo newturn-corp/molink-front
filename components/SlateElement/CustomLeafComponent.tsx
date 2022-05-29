@@ -1,5 +1,4 @@
 import React from 'react'
-import { css } from '@emotion/css'
 import { CursorComponent } from '../Home/Main/Content/CursorComponent'
 import { CodeHighlightLeaf } from './Leaf/CodeHighlightLeaf'
 

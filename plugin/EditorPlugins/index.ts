@@ -19,6 +19,7 @@ import FormattingManager from '../../manager/Editing/FormattingManager'
 import LinkManager from '../../manager/Editing/Link/LinkManager'
 import ToolbarManager from '../../manager/Editing/ToolbarManager'
 import EditorManager from '../../manager/Blog/EditorManager'
+import { insertHTMLWhenInsertData } from './InsertHTMLWhenInsertData'
 
 export const EditorPlugin = (editor: Editor) => {
     const { isVoid, isInline, insertBreak, deleteBackward, deleteForward, normalizeNode, insertText, insertData, onChange, insertNode } = editor
@@ -99,7 +100,8 @@ export const EditorPlugin = (editor: Editor) => {
         insertCodeWhenInsertData,
         insertYoutubeWhenInsertData,
         (editor, data) => FileManager.handleInsertData(editor, data),
-        (editor, data) => LinkManager.handleInsertData(editor, data)
+        (editor, data) => LinkManager.handleInsertData(editor, data),
+        insertHTMLWhenInsertData
     ]
     editor.insertData = async (data: DataTransfer) => {
         for (const handler of insertDataHandlers) {
@@ -112,7 +114,7 @@ export const EditorPlugin = (editor: Editor) => {
     }
 
     editor.onChange = () => {
-        console.log(editor.operations)
+        console.log(editor.children)
         if (isBrowser) {
             CommandManager.handleEditorChange(editor)
         }

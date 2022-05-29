@@ -96,6 +96,13 @@
                 background-color: rgba(58, 60, 63, 0.6);
             }
 
+            code {
+                background: rgba(135,131,120,0.15);
+                color: #0094FF;
+                padding: 2px 4px;
+                border-radius: 3px;
+            }
+
             .file-loading {
                 flex-direction: row;
                 background-color: #D6E6F6;
@@ -241,6 +248,8 @@
             .text {
                 margin: 0px;
                 padding: 3px 3px 3px 0px;
+                white-space: pre-wrap;
+                word-break: break-all;
             }
             .youtube-element {
                 .video {
