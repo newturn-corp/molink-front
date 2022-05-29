@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react'
-import { isBrowser } from 'react-device-detect'
 import EditorManager from '../../../manager/Blog/EditorManager'
 import { Tag, Tooltip } from 'antd'
-import NotificationManager from '../../../manager/global/NotificationManager'
 import FeedbackManager, { NOTIFICATION_TYPE } from '../../../manager/global/FeedbackManager'
 
 export const PageTagList: React.FC<{
