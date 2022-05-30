@@ -44,7 +44,7 @@ export class CreateNewPageOption extends HierarchyControlOption {
         const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
         const order = this.getOrder(currentHierarchy)
         const parentId = this.documentId
-        await currentHierarchy.createDocument(order, parentId)
+        await currentHierarchy.createPage(order, parentId)
     }
 }
 

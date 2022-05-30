@@ -77,6 +77,12 @@
 .content-container .content-body .contents .MuiButton-root.Mui-disabled {
   color: #000000;
 }
+.content-container .content-body .contents .editor .text {
+  margin: 0px;
+  padding: 3px 3px 3px 0px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
 .content-container .content-body .contents .menu-button {
   position: absolute;
   top: 6px;
@@ -244,12 +250,6 @@
   font-weight: 800;
   margin-bottom: 0.3rem;
   word-break: keep-all;
-}
-.content-container .content-body .contents .text {
-  margin: 0px;
-  padding: 3px 3px 3px 0px;
-  white-space: pre-wrap;
-  word-break: break-all;
 }
 .content-container .content-body .contents .youtube-element .video {
   width: -webkit-fill-available;

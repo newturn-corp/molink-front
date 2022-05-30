@@ -253,15 +253,17 @@ class EditorManager {
     }
 
     handleContentFooterClicked () {
-        ReactEditor.focus(this.slateEditor)
-        Transforms.insertNodes(this.slateEditor, {
-            type: 'text',
-            category: TextCategory.Content3,
-            children: [{ text: '' }]
-        }, {
-            at: [this.slateEditor.children.length]
-        })
-        Transforms.select(this.slateEditor, [this.slateEditor.children.length - 1])
+        if (this.editable && !this.isLocked) {
+            ReactEditor.focus(this.slateEditor)
+            Transforms.insertNodes(this.slateEditor, {
+                type: 'text',
+                category: TextCategory.Content3,
+                children: [{ text: '' }]
+            }, {
+                at: [this.slateEditor.children.length]
+            })
+            Transforms.select(this.slateEditor, [this.slateEditor.children.length - 1])
+        }
     }
 
     insertElement (element: Element, insertPosition: BasePoint | number[]) {

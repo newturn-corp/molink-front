@@ -15,6 +15,106 @@
     }
   }
 }
+.comment-container {
+  margin-top: 20px;
+  width: 100%;
+  .comment-count {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .page-comment {
+    display: flex;
+    flex-direction: column;
+    margin-top: 7px;
+    .main-container {
+      display: flex;
+      flex-direction: row;
+      .avatar-container {
+        cursor: pointer;
+      }
+      .text-container {
+        display: flex;
+        flex-direction: column;
+        margin-left: 15px;
+        width: 100%;
+        .top-container {
+          display: flex;
+          flex-direction: row;
+          width: 100%;
+          .info-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: fit-content;
+            .nickname {
+              user-select: none;
+              font-size: 14px;
+              margin-right: 5px;
+              cursor: pointer;
+            }
+            .created-at {
+              user-select: none;
+              color: #a1a1a1;
+              font-size: 14px;
+            }
+          }
+        }
+        .content {
+          font-size: 15px;
+        }
+        .comment-interaction-container {
+          display: flex;
+          flex-direction: row;
+          .comment-response-input-button {
+            cursor: pointer;
+            color: #a1a1a1;
+            font-size: 13px;
+          }
+        }
+        .comment-response-button {
+          margin-left: -5px;
+          color: #0094FF;
+          font-size: 15px;
+          display: flex;
+          flex-direction: row;
+          cursor: pointer;
+          margin-top: 3px;
+        }
+      }
+    }
+  }
+  .comment-input-container {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    width: 100%;
+    .profile {
+      margin-right: 15px;
+    }
+    .interaction-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      .comment-input {
+        font-size: 16px;
+        resize: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        box-shadow: none;
+        padding-left: 0px;
+      }
+      .button-container {
+        display: flex;
+        flex-direction: row-reverse;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
 .blog-user-info {
   display: flex;
   flex-direction: row;

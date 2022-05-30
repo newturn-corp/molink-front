@@ -128,10 +128,10 @@ export default class Hierarchy {
         this.nameChangingPageId = null
     }
 
-    public async createDocument (order:number, parentId: string | null) {
-        const newDocumentId = getUUID()
-        const newDocument: HierarchyDocumentInfoInterface = {
-            id: newDocumentId,
+    public async createPage (order:number, parentId: string | null) {
+        const newPageId = getUUID()
+        const newPage: HierarchyDocumentInfoInterface = {
+            id: newPageId,
             title: '새 페이지',
             icon: '📄',
             userId: this.userId,
@@ -142,12 +142,12 @@ export default class Hierarchy {
             fileUsage: 0,
             children: []
         }
-        await ContentAPI.createContent(newDocumentId)
+        await ContentAPI.createContent(newPageId)
 
         this.yDocument.transact(() => {
-            this.yMap.set(newDocument.id, newDocument)
+            this.yMap.set(newPage.id, newPage)
             if (parentId === null) {
-                this.yTopLevelDocumentIdList.insert(order, [newDocument.id])
+                this.yTopLevelDocumentIdList.insert(order, [newPage.id])
 
                 for (const [index, documentId] of this.yTopLevelDocumentIdList.toArray().entries()) {
                     const document = this.yMap.get(documentId)
@@ -156,7 +156,7 @@ export default class Hierarchy {
                 }
             } else {
                 const parent = this.yMap.get(parentId)
-                parent.children.splice(order, 0, newDocument.id)
+                parent.children.splice(order, 0, newPage.id)
                 for (const [index, documentId] of parent.children.entries()) {
                     const document = this.yMap.get(documentId)
                     document.order = index
@@ -167,7 +167,7 @@ export default class Hierarchy {
             }
         })
         this.selectedPageId = null
-        await RoutingManager.moveTo(Page.Blog, `/${this.nickname}/${newDocumentId}/${encodeURIComponent(newDocument.title)}`)
+        await RoutingManager.moveTo(Page.Blog, `/${this.nickname}/${newPageId}/${encodeURIComponent(newPage.title)}`)
     }
 
     public updateHierarchyChildrenOpen (pageId: string, isOpen: boolean) {

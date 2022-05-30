@@ -74,6 +74,14 @@
             .MuiButton-root.Mui-disabled {
                 color: #000000;
             }
+            .editor {
+                .text {
+                    margin: 0px;
+                    padding: 3px 3px 3px 0px;
+                    white-space: pre-wrap;
+                    word-break: break-all;
+                }
+            }
 
             .menu-button {
                 position: absolute;
@@ -245,12 +253,6 @@
                 font-weight: 800;
                 margin-bottom: 0.3rem;
                 word-break: keep-all;
-            }
-            .text {
-                margin: 0px;
-                padding: 3px 3px 3px 0px;
-                white-space: pre-wrap;
-                word-break: break-all;
             }
             .youtube-element {
                 .video {

@@ -70,6 +70,7 @@ export const EditorComponent: React.FC<{
           <HoveringToolbar/>
           <Editable
               id={'editable'}
+              className={'editor'}
               renderElement={renderElement}
               renderLeaf={renderLeaf}
               decorate={decorate}

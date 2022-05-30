@@ -35,7 +35,7 @@ export const HierarchyButtonGroup: React.FC<{
                     text={LanguageManager.languageMap.CreateNewPage}
                     onClick={async (event) => {
                         event.stopPropagation()
-                        await currentHierarchy.createDocument(currentHierarchy.topLevelDocumentIdList.length, null)
+                        await currentHierarchy.createPage(currentHierarchy.topLevelDocumentIdList.length, null)
                         if (isMobile) {
                             HierarchyManager.isHierarchyOpen = false
                         }
