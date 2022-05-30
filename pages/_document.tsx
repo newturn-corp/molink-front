@@ -9,6 +9,7 @@ const Document = () => {
                     rel={'stylesheet'}
                     href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
                 />
+                <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet"/>
             </Head>
             <body>
                 <Main />

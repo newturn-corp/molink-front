@@ -131,14 +131,14 @@ export const ContentToolbar: React.FC<{
                   {/*     onClick={() => {}} */}
                   {/*     disabled={true} */}
                   {/* /> */}
-                  {/* <ToolbarEditingButton */}
-                  {/*     size={'standard'} */}
-                  {/*     icon={<Code/>} */}
-                  {/*     text={'코드'} */}
-                  {/*     desc={'코드 추가'} */}
-                  {/*     onClick={() => {}} */}
-                  {/*     disabled={true} */}
-                  {/* /> */}
+                  <ToolbarEditingButton
+                      size={'standard'}
+                      icon={<Code/>}
+                      text={'코드'}
+                      desc={'코드 추가'}
+                      onClick={() => ToolbarManager.insertCode()}
+                      disabled={false}
+                  />
                   {/* <ToolbarEditingButton */}
                   {/*     size={'standard'} */}
                   {/*     icon={<Table/>} */}

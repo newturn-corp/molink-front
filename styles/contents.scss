@@ -109,6 +109,7 @@
                 color: #0094FF;
                 padding: 2px 4px;
                 border-radius: 3px;
+                font-family: "Fira Mono", source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
             }
 
             .file-loading {
@@ -482,9 +483,29 @@
                 border-radius: 2px;
             }
             .code {
-                padding: 20px;
+                position: relative;
+                padding: 30px;
                 border-radius: 3px;
                 background: #f3f3f3;
+                .change-language-button {
+                    position: absolute;
+                    top: 5px;
+                    left: 5px;
+                    font-size: 12px;
+                    padding: 2px 4px;
+                    border-radius: 3px;
+                    color: #868686;
+                    transition: color 0.3s;
+                    cursor: pointer;
+                    user-select: none;
+                }
+                .change-language-button:hover {
+                    background-color: rgba(0, 0, 0, 0.05);
+                }
+                .code-content {
+                    font-family: "Fira Mono", source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+                    font-size: 14px;
+                }
             }
             .callout {
                 padding: 16px;

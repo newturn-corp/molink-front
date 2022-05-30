@@ -11,7 +11,7 @@ import {
     Range,
     Transforms
 } from 'slate'
-import { DividerType, TextCategory } from '../../../Types/slate/CustomElement'
+import { AvailCodeLanguage, DividerType, TextCategory } from '../../../Types/slate/CustomElement'
 import { ListTransforms } from '../../../plugin/GlobalPlugins/ListPlugin'
 import Command from './Command'
 import CommandGroup from './CommandGroup'
@@ -20,6 +20,7 @@ import BulbIcon from '../../../public/image/icon/bulb.svg'
 import EventManager from '../../global/Event/EventManager'
 import { Event } from '../../global/Event/Event'
 import LanguageManager from '../../global/LanguageManager'
+import CodeIcon from 'public/image/icon/code.svg'
 
 // /(슬래시)로 수행하는 명령을 맡아 처리하는 매니저
 class CommandManager {
@@ -63,6 +64,12 @@ class CommandManager {
             'Accent',
             [
                 new Command('CalloutCommandName', 'CalloutCommandDescription', <BulbIcon/>, 'callout-command', 'svg')
+            ]
+        ),
+        new CommandGroup(
+            'Media',
+            [
+                new Command('CodeCommandName', 'CodeCommandDescription', <CodeIcon/>, 'code-command', 'svg')
             ]
         )
         // ),
@@ -248,6 +255,17 @@ class CommandManager {
             Transforms.setNodes<SlateElement>(editor, newProperties, {
                 match: n => SlateEditor.isBlock(editor, n) && n.type === 'list-item'
             })
+            break
+        case LanguageManager.languageMap.CodeCommandName:
+            node = {
+                type: 'code',
+                language: AvailCodeLanguage.Javascript,
+                children: [{
+                    text: '',
+                    codeLanguage: AvailCodeLanguage.Javascript
+                }]
+            }
+            Transforms.insertNodes(EditorManager.slateEditor, node)
             break
         // case '페이지':
         //     if (!ContentManager.openedDocument) {

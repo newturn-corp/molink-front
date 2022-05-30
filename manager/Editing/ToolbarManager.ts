@@ -1,10 +1,11 @@
 import React from 'react'
 import FileManager from './FileManager'
 import { makeAutoObservable } from 'mobx'
-import { Element, Node, Path, Range } from 'slate'
+import { Editor as SlateEditor, Element as SlateElement, Element, Node, Path, Range, Transforms } from 'slate'
 import EditorManager from '../Blog/EditorManager'
 import EventManager from '../global/Event/EventManager'
 import { Event } from '../global/Event/Event'
+import { AvailCodeLanguage, CodeElement } from '../../Types/slate/CustomElement'
 
 class ToolbarManager {
     _showMobileToolbar: boolean = false
@@ -50,6 +51,18 @@ class ToolbarManager {
     async insertFile (event: React.ChangeEvent<HTMLInputElement>) {
         const { url, file } = await FileManager.getURLAndFileFromInputEvent(event)
         await FileManager.insertFile(url, file)
+    }
+
+    async insertCode () {
+        const newProperties: CodeElement = {
+            type: 'code',
+            language: AvailCodeLanguage.Javascript,
+            children: [{
+                text: '',
+                codeLanguage: AvailCodeLanguage.Javascript
+            }]
+        }
+        Transforms.insertNodes(EditorManager.slateEditor, newProperties)
     }
 }
 export default new ToolbarManager()

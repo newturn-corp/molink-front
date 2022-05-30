@@ -9,7 +9,7 @@ import {
 } from 'slate'
 import { ListEditor, ListTransforms } from '../GlobalPlugins/ListPlugin'
 import { DeleteBackwardHandler } from './types'
-import { DividerType } from '../../Types/slate/CustomElement'
+import { AvailCodeLanguage, DividerType } from '../../Types/slate/CustomElement'
 import ShortcutManager from '../../manager/Editing/ShortcutManager'
 
 const SHORTCUTS = {
@@ -88,14 +88,16 @@ export const ShortcutWhenInsertText = (editor: Editor, text: string) => {
             Transforms.select(editor, range)
             Transforms.delete(editor)
             const newProperties: Partial<SlateElement> = {
-                type: 'code'
+                type: 'code',
+                language: AvailCodeLanguage.Javascript
             }
             Transforms.setNodes<SlateElement>(editor, newProperties, {
                 match: n => SlateEditor.isBlock(editor, n)
             })
             Transforms.insertNodes(editor, {
                 text: '',
-                codehighlight: true
+                codehighlight: true,
+                codeLanguage: AvailCodeLanguage.Javascript
             })
             return true
         }

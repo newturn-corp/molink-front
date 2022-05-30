@@ -1,3 +1,5 @@
+import { AvailCodeLanguage } from './CustomElement'
+
 export type EmptyText = {
     text: string
 }
@@ -8,6 +10,7 @@ export type FormattedText = {
     code?: boolean
     underlined?: boolean
     codehighlight?: boolean
+    codeLanguage?: AvailCodeLanguage
     text: string
 }
 

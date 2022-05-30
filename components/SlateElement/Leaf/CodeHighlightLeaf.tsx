@@ -1,65 +1,64 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { observer } from 'mobx-react'
 import { css } from '@emotion/css'
 
 export const CodeHighlightLeaf: React.FC<{
-    attributes,
     children,
     leaf
 }> = observer(({
-    attributes,
     children,
     leaf
 }) => {
+    const getCodeLeafStyle = useCallback((leaf) => {
+        if (leaf.punctuation) {
+            return {
+                color: '#999'
+            }
+        } else if (leaf.comment) {
+            return {
+                color: 'slategray'
+            }
+        } else if (leaf.operator) {
+            return {
+                color: 'hsl(301, 63%, 40%)'
+            }
+        } else if (leaf.url) {
+            return {
+                color: 'hsl(198, 99%, 37%)'
+            }
+        } else if (leaf.keyword) {
+            return {
+                color: '#07a'
+            }
+        } else if (leaf.variable || leaf.regex) {
+            return {
+                color: '#e90'
+            }
+        } else if (leaf.string || leaf.char) {
+            return {
+                color: '#690'
+            }
+        } else if (leaf.function || leaf['class-name']) {
+            return {
+                color: 'hsl(221, 87%, 60%)'
+            }
+        } else if (leaf.number ||
+            leaf.boolean ||
+            leaf.tag ||
+            leaf.constant ||
+            leaf.symbol ||
+            leaf['attr-name'] ||
+            leaf.selector) {
+            return {
+                color: '#905'
+            }
+        }
+        return {}
+    }, [])
+
     return (
         <span
-            {...attributes}
-            className={css`
-            ${leaf.comment &&
-            css`
-                color: slategray;
-              `} 
-    
-            ${(leaf.operator) &&
-            css`
-                color: hsl(301, 63%, 40%);
-              `}
-            ${(leaf.url) &&
-                css`
-                color: hsl(198, 99%, 37%);
-              `}
-            }
-            ${leaf.keyword &&
-            css`
-                color: #07a;
-              `}
-            ${(leaf.variable || leaf.regex) &&
-            css`
-                color: #e90;
-              `}
-            ${(leaf.number ||
-                leaf.boolean ||
-                leaf.tag ||
-                leaf.constant ||
-                leaf.symbol ||
-                leaf['attr-name'] ||
-                leaf.selector) &&
-            css`
-                color: #905;
-              `}
-            ${leaf.punctuation &&
-            css`
-                color: #999;
-              `}
-            ${(leaf.string || leaf.char) &&
-            css`
-                color: #690;
-              `}
-            ${(leaf.function || leaf['class-name']) &&
-            css`
-                color: hsl(221, 87%, 60%);
-              `}
-            `}
+            style={getCodeLeafStyle(leaf)}
         >
             {children}
         </span>
