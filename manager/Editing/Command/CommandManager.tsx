@@ -43,16 +43,6 @@ class CommandManager {
                 new Command('Title3', 'TitleCommand3Description', '/image/editor/command/head3.png')]
         ),
         new CommandGroup(
-            'Divider',
-            [
-                new Command('DividerDefault', 'ContentDivider', '/image/editor/command/divider-default.png'),
-                new Command('DividerFaint', 'ContentDivider', '/image/editor/command/divider-faint.png'),
-                new Command('DividerShort', 'ContentDivider', '/image/editor/command/divider-short.png'),
-                new Command('DividerFaintShort', 'ContentDivider', '/image/editor/command/divider-faint-short.png'),
-                new Command('DividerDot', 'ContentDivider', '/image/editor/command/divider-dot.png')
-            ]
-        ),
-        new CommandGroup(
             'List',
             [
                 new Command('BulletListCommandName', 'BulletListCommandDescription', '/image/editor/command/bullet-list.png'),
@@ -70,6 +60,12 @@ class CommandManager {
             'Media',
             [
                 new Command('CodeCommandName', 'CodeCommandDescription', <CodeIcon/>, 'code-command', 'svg')
+            ]
+        ),
+        new CommandGroup(
+            'ETCCommandGroupName',
+            [
+                new Command('DividerCommandName', 'DividerCommandDescription', '/image/editor/command/divider-default.png')
             ]
         )
         // ),
@@ -165,42 +161,10 @@ class CommandManager {
             }
             this.insertNode(editor, node)
             break
-        case '구분선-기본':
+        case LanguageManager.languageMap.DividerCommandName:
             node = {
                 type: 'divider',
                 dividerType: DividerType.LongLine,
-                children: [{ text: '' }]
-            }
-            this.insertNode(editor, node)
-            break
-        case '구분선-흐릿한':
-            node = {
-                type: 'divider',
-                dividerType: DividerType.FaintLongLine,
-                children: [{ text: '' }]
-            }
-            this.insertNode(editor, node)
-            break
-        case '구분선-짦은':
-            node = {
-                type: 'divider',
-                dividerType: DividerType.ShortLine,
-                children: [{ text: '' }]
-            }
-            this.insertNode(editor, node)
-            break
-        case '구분선-짦고 흐릿한':
-            node = {
-                type: 'divider',
-                dividerType: DividerType.FaintShortLine,
-                children: [{ text: '' }]
-            }
-            this.insertNode(editor, node)
-            break
-        case '구분선-점':
-            node = {
-                type: 'divider',
-                dividerType: DividerType.Dot,
                 children: [{ text: '' }]
             }
             this.insertNode(editor, node)
