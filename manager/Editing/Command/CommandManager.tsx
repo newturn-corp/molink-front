@@ -11,7 +11,7 @@ import {
     Range,
     Transforms
 } from 'slate'
-import { DividerType, TextCategory } from '../../../Types/slate/CustomElement'
+import { AvailCodeLanguage, DividerType, TextCategory } from '../../../Types/slate/CustomElement'
 import { ListTransforms } from '../../../plugin/GlobalPlugins/ListPlugin'
 import Command from './Command'
 import CommandGroup from './CommandGroup'
@@ -20,6 +20,7 @@ import BulbIcon from '../../../public/image/icon/bulb.svg'
 import EventManager from '../../global/Event/EventManager'
 import { Event } from '../../global/Event/Event'
 import LanguageManager from '../../global/LanguageManager'
+import CodeIcon from 'public/image/icon/code.svg'
 
 // /(슬래시)로 수행하는 명령을 맡아 처리하는 매니저
 class CommandManager {
@@ -42,16 +43,6 @@ class CommandManager {
                 new Command('Title3', 'TitleCommand3Description', '/image/editor/command/head3.png')]
         ),
         new CommandGroup(
-            'Divider',
-            [
-                new Command('DividerDefault', 'ContentDivider', '/image/editor/command/divider-default.png'),
-                new Command('DividerFaint', 'ContentDivider', '/image/editor/command/divider-faint.png'),
-                new Command('DividerShort', 'ContentDivider', '/image/editor/command/divider-short.png'),
-                new Command('DividerFaintShort', 'ContentDivider', '/image/editor/command/divider-faint-short.png'),
-                new Command('DividerDot', 'ContentDivider', '/image/editor/command/divider-dot.png')
-            ]
-        ),
-        new CommandGroup(
             'List',
             [
                 new Command('BulletListCommandName', 'BulletListCommandDescription', '/image/editor/command/bullet-list.png'),
@@ -63,6 +54,18 @@ class CommandManager {
             'Accent',
             [
                 new Command('CalloutCommandName', 'CalloutCommandDescription', <BulbIcon/>, 'callout-command', 'svg')
+            ]
+        ),
+        new CommandGroup(
+            'Media',
+            [
+                new Command('CodeCommandName', 'CodeCommandDescription', <CodeIcon/>, 'code-command', 'svg')
+            ]
+        ),
+        new CommandGroup(
+            'ETCCommandGroupName',
+            [
+                new Command('DividerCommandName', 'DividerCommandDescription', '/image/editor/command/divider-default.png')
             ]
         )
         // ),
@@ -158,42 +161,10 @@ class CommandManager {
             }
             this.insertNode(editor, node)
             break
-        case '구분선-기본':
+        case LanguageManager.languageMap.DividerCommandName:
             node = {
                 type: 'divider',
                 dividerType: DividerType.LongLine,
-                children: [{ text: '' }]
-            }
-            this.insertNode(editor, node)
-            break
-        case '구분선-흐릿한':
-            node = {
-                type: 'divider',
-                dividerType: DividerType.FaintLongLine,
-                children: [{ text: '' }]
-            }
-            this.insertNode(editor, node)
-            break
-        case '구분선-짦은':
-            node = {
-                type: 'divider',
-                dividerType: DividerType.ShortLine,
-                children: [{ text: '' }]
-            }
-            this.insertNode(editor, node)
-            break
-        case '구분선-짦고 흐릿한':
-            node = {
-                type: 'divider',
-                dividerType: DividerType.FaintShortLine,
-                children: [{ text: '' }]
-            }
-            this.insertNode(editor, node)
-            break
-        case '구분선-점':
-            node = {
-                type: 'divider',
-                dividerType: DividerType.Dot,
                 children: [{ text: '' }]
             }
             this.insertNode(editor, node)
@@ -248,6 +219,17 @@ class CommandManager {
             Transforms.setNodes<SlateElement>(editor, newProperties, {
                 match: n => SlateEditor.isBlock(editor, n) && n.type === 'list-item'
             })
+            break
+        case LanguageManager.languageMap.CodeCommandName:
+            node = {
+                type: 'code',
+                language: AvailCodeLanguage.Javascript,
+                children: [{
+                    text: '',
+                    codeLanguage: AvailCodeLanguage.Javascript
+                }]
+            }
+            Transforms.insertNodes(EditorManager.slateEditor, node)
             break
         // case '페이지':
         //     if (!ContentManager.openedDocument) {

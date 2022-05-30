@@ -30,6 +30,18 @@ import FormattingManager, { Align, Format, List } from '../../../../manager/Edit
 import LinkManager from '../../../../manager/Editing/Link/LinkManager'
 import LanguageManager from '../../../../manager/global/LanguageManager'
 
+const defaultContentToolbarStyle = {
+    height: 90,
+    top: 0,
+    padding: 8
+}
+
+const closeStateContentToolbarStyle = {
+    height: 32,
+    top: 0,
+    padding: 0
+}
+
 export const ContentToolbar: React.FC<{
   }> = observer(() => {
       const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
@@ -38,7 +50,7 @@ export const ContentToolbar: React.FC<{
       }
       return <div
           className={'content-toolbar'}
-          style={StyleManager.contentStyle.toolbar}
+          style={EditorManager.isToolbarOpen ? defaultContentToolbarStyle : closeStateContentToolbarStyle}
       >
           <div
               style={{
@@ -119,14 +131,14 @@ export const ContentToolbar: React.FC<{
                   {/*     onClick={() => {}} */}
                   {/*     disabled={true} */}
                   {/* /> */}
-                  {/* <ToolbarEditingButton */}
-                  {/*     size={'standard'} */}
-                  {/*     icon={<Code/>} */}
-                  {/*     text={'코드'} */}
-                  {/*     desc={'코드 추가'} */}
-                  {/*     onClick={() => {}} */}
-                  {/*     disabled={true} */}
-                  {/* /> */}
+                  <ToolbarEditingButton
+                      size={'standard'}
+                      icon={<Code/>}
+                      text={'코드'}
+                      desc={'코드 추가'}
+                      onClick={() => ToolbarManager.insertCode()}
+                      disabled={false}
+                  />
                   {/* <ToolbarEditingButton */}
                   {/*     size={'standard'} */}
                   {/*     icon={<Table/>} */}

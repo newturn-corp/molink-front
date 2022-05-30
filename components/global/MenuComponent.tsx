@@ -12,6 +12,7 @@ export const MenuComponent: React.FC<{}> = observer(() => {
         })
         MenuManager.menuRef = menuRef
     }, [])
+    console.log(MenuManager.menuItemList)
     return <Portal>
         <div
             style={{

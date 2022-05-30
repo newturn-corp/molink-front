@@ -1,11 +1,12 @@
 import React from 'react'
 import { CursorComponent } from '../Home/Main/Content/CursorComponent'
 import { CodeHighlightLeaf } from './Leaf/CodeHighlightLeaf'
+import { CustomText } from '../../Types/slate/CustomText'
 
 export const CustomLeafComponent: React.FC<{
     attributes,
     children,
-    leaf
+    leaf: any
   }> = ({ attributes, children, leaf }) => {
       if (leaf.bold) {
           children = <strong>{children}</strong>
@@ -25,13 +26,15 @@ export const CustomLeafComponent: React.FC<{
           </u>
       }
 
-      if (leaf.codehighlight) {
+      if (leaf.codeLanguage) {
           children = <CodeHighlightLeaf
-              attributes={attributes}
               leaf={leaf}
           >
               {children}
           </CodeHighlightLeaf>
+          if (leaf.bold && leaf.codeLanguage) {
+              console.log(children)
+          }
       }
 
       const data = leaf.data as any

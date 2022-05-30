@@ -128,8 +128,17 @@ export type CheckListItemElement = {
     children: CustomText[]
 }
 
+export enum AvailCodeLanguage {
+    Javascript = 'Javascript',
+    HTML = 'HTML',
+    Python = 'Python',
+    SQL = 'SQL',
+    JAVA = 'Java',
+    PHP = 'PHP'
+}
 export type CodeElement = {
     type: 'code',
+    language: AvailCodeLanguage,
     children: CustomText[]
 }
 

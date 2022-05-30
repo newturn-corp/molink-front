@@ -2,7 +2,7 @@ import { LinkManager } from '../../Editing/Link/LinkManager'
 import LinkMenuItem from '../../Editing/Link/LinkMenuItem'
 import { makeAutoObservable, toJS } from 'mobx'
 import { Editor } from 'slate'
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import MenuItem from './MenuItem'
 
 export type CSSPosition = {
@@ -49,6 +49,7 @@ class MenuManager {
     }
 
     close () {
+        console.log('close 호출')
         this.index = 0
         this._menuItemList = []
         this.isOpen = false

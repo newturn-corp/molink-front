@@ -96,10 +96,10 @@ const getLength = token => {
 }
 
 export const decorateCode = (node: Node, path: Path, ranges: BaseRange[]) => {
-    if (!Text.isText(node)) {
+    if (!Text.isText(node) || !node.codeLanguage) {
         return ranges
     }
-    const tokens = Prism.tokenize(node.text, Prism.languages.html)
+    const tokens = Prism.tokenize(node.text, Prism.languages[node.codeLanguage.toLowerCase()])
     let start = 0
 
     for (const token of tokens) {

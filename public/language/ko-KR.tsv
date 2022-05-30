@@ -136,3 +136,9 @@ NoticeEmailAuthDescription2	메일함을 확인해주세요!
 MoveToLoginPage	로그인 페이지로 이동하기
 EmailNotAuthorizedError	이메일이 인증되지 않았습니다!
 GenerateRandomNickname	무작위 닉네임 생성
+Media	미디어
+CodeCommandDescription	무한한 가능성의 글자들
+CodeCommandName	코드
+DividerCommandName	구분선
+ETCCommandGroupName	기타
+DividerCommandDescription	흐름을 제어하기

@@ -40,6 +40,9 @@ handlerMap.set('ctrl+z', [
 handlerMap.set('ctrl+y', [
     redoWhenControlYKeyDown
 ])
+handlerMap.set('ctrl+s', [
+    (event) => event.preventDefault()
+])
 handlerMap.set('Backspace', [
     handleBackspaceInList
 ])

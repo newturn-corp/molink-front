@@ -45,6 +45,17 @@
       }
     }
   }
+  .code-command {
+    .command-img {
+      padding: 5px;
+      svg {
+        fill: #a1a1a1;
+      }
+      .bulb_svg__cls-1 {
+        fill: #a1a1a1;
+      }
+    }
+  }
 
   .command-block {
     display: flex;

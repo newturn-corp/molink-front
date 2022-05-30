@@ -41,6 +41,15 @@
 .command-list .callout-command .command-img .bulb_svg__cls-1 {
   fill: #a1a1a1;
 }
+.command-list .code-command .command-img {
+  padding: 5px;
+}
+.command-list .code-command .command-img svg {
+  fill: #a1a1a1;
+}
+.command-list .code-command .command-img .bulb_svg__cls-1 {
+  fill: #a1a1a1;
+}
 .command-list .command-block {
   display: flex;
   flex-direction: row;
