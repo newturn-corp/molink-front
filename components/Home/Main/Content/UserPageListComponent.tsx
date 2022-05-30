@@ -71,6 +71,7 @@ export const UserPageListComponent: React.FC<{
                                   description={summary.description}
                                   image={summary.image}
                                   like={summary.like}
+                                  commentCount={summary.commentCount}
                               />
                           </div>
                       })
