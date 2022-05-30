@@ -110,7 +110,7 @@ class EditorManager {
         if (!page) {
             throw new DocumentNotExists()
         }
-        this.editable = UserManager.isUserAuthorized && currentHierarchy.editable && !!page
+        this.editable = UserManager.isUserAuthorized && (await ViewerAPI.getDocumentAuthority(pageId)).editable
         this.lastPressedKey = null
 
         if (!this.editable) {
