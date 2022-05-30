@@ -1,19 +1,31 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { observer } from 'mobx-react'
 import { Editor } from 'slate'
 import CommandManager from '../../../../manager/Editing/Command/CommandManager'
 import Command from '../../../../manager/Editing/Command/Command'
 import { Portal } from '../../../utils/Portal'
+import EditorManager from '../../../../manager/Blog/EditorManager'
 
 const CommandBlock: React.FC<{
     index: number,
     command: Command
 }> = ({ index, command }) => {
     const className = (index === CommandManager.index ? 'command-block selected' : 'command-block') + ' ' + (command.className ? command.className : '')
+    const [isMouseOver, setIsMouseOver] = useState(false)
     return <div
         id={`command-block-${index}`}
         key={`command-block-${command.name}`}
         className={className}
+        onMouseOver={() => {
+            if (!isMouseOver) {
+                CommandManager.index = index
+            }
+            setIsMouseOver(true)
+        }}
+        onClick={(event) => {
+            CommandManager.handleEnterAndTabAndClick(event, EditorManager.slateEditor)
+        }}
+        onMouseLeave={() => setIsMouseOver(false)}
     >
         {
             command.imgType === 'img'

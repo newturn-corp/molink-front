@@ -75,6 +75,8 @@
     order: 0;
     flex-grow: 0;
 
+    cursor: pointer;
+
     .command-img {
       position: static;
       width: 40px;
@@ -110,6 +112,7 @@
         line-height: 16px;
         margin: 0px;
         margin-bottom: 4px;
+        user-select: none;
       }
       .description {
         position: static;
@@ -128,6 +131,7 @@
 
         overflow: hidden;
         text-overflow: ellipsis;
+        user-select: none;
       }
     }
   }
