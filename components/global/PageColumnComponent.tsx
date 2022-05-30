@@ -15,7 +15,8 @@ export interface PageColumnComponentInterface {
     userProfileImageUrl: string,
     userNickname: string,
     description: string,
-    like: number
+    like: number,
+    commentCount: number
 }
 
 export const PageColumnComponent: React.FC<PageColumnComponentInterface> = observer((props) => {
@@ -67,7 +68,7 @@ export const PageColumnComponent: React.FC<PageColumnComponentInterface> = obser
                     <div
                         className={'text'}
                     >
-                        {0}
+                        {props.commentCount}
                     </div>
                 </div>
             </div>
