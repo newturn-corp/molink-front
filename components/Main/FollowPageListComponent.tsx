@@ -59,6 +59,7 @@ export const FollowPageListComponent: React.FC<{
                             description={summary.description}
                             image={summary.image}
                             like={summary.like}
+                            commentCount={summary.commentCount}
                         />
                     </div>
                 })
