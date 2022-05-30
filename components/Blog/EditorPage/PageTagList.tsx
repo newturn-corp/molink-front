@@ -42,7 +42,10 @@ export const PageTagList: React.FC<{
                             setNewTag(event.target.value)
                         }}
                         onFocus={() => setIsTagFocus(true)}
-                        onBlur={() => setIsTagFocus(false)}
+                        onBlur={() => {
+                            setNewTag('')
+                            setIsTagFocus(false)
+                        }}
                         onKeyDown={(event) => {
                             if (newTag !== '') {
                                 if (event.key === 'Enter' || event.key === ',') {

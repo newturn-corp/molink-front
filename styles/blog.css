@@ -16,6 +16,106 @@
   margin: 0 auto;
 }
 
+.comment-container {
+  margin-top: 20px;
+  width: 100%;
+}
+.comment-container .comment-count {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.comment-container .page-comment {
+  display: flex;
+  flex-direction: column;
+  margin-top: 7px;
+}
+.comment-container .page-comment .main-container {
+  display: flex;
+  flex-direction: row;
+}
+.comment-container .page-comment .main-container .avatar-container {
+  cursor: pointer;
+}
+.comment-container .page-comment .main-container .text-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+  width: 100%;
+}
+.comment-container .page-comment .main-container .text-container .top-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.comment-container .page-comment .main-container .text-container .top-container .info-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: fit-content;
+}
+.comment-container .page-comment .main-container .text-container .top-container .info-container .nickname {
+  user-select: none;
+  font-size: 14px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.comment-container .page-comment .main-container .text-container .top-container .info-container .created-at {
+  user-select: none;
+  color: #a1a1a1;
+  font-size: 14px;
+}
+.comment-container .page-comment .main-container .text-container .content {
+  font-size: 15px;
+}
+.comment-container .page-comment .main-container .text-container .comment-interaction-container {
+  display: flex;
+  flex-direction: row;
+}
+.comment-container .page-comment .main-container .text-container .comment-interaction-container .comment-response-input-button {
+  cursor: pointer;
+  color: #a1a1a1;
+  font-size: 13px;
+}
+.comment-container .page-comment .main-container .text-container .comment-response-button {
+  margin-left: -5px;
+  color: #0094FF;
+  font-size: 15px;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  margin-top: 3px;
+}
+.comment-container .comment-input-container {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  width: 100%;
+}
+.comment-container .comment-input-container .profile {
+  margin-right: 15px;
+}
+.comment-container .comment-input-container .interaction-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.comment-container .comment-input-container .interaction-container .comment-input {
+  font-size: 16px;
+  resize: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  box-shadow: none;
+  padding-left: 0px;
+}
+.comment-container .comment-input-container .interaction-container .button-container {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 10px;
+}
+
 .blog-user-info {
   display: flex;
   flex-direction: row;

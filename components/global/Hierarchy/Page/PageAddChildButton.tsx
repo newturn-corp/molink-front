@@ -11,7 +11,7 @@ export const PageAddChildButton: React.FC<{
     const document = currentHierarchy.map[documentId]
     const handleClick = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation()
-        await currentHierarchy.createDocument(document.children.length, documentId)
+        await currentHierarchy.createPage(document.children.length, documentId)
         if (isMobile) {
             HierarchyManager.isHierarchyOpen = false
         }

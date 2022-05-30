@@ -14,6 +14,7 @@ import PageManager from '../../../../manager/Blog/PageManager'
 import { PageTagList } from '../../../Blog/EditorPage/PageTagList'
 import { Skeleton } from '@material-ui/lab'
 import { EditorPageSkeleton } from '../../../Blog/EditorPage/EditorPageSkeleton'
+import { CommentContainer } from '../../../Blog/EditorPage/Comment/CommentContainer'
 
 export const ContentComponent: React.FC<{
 }> = observer(() => {
@@ -77,6 +78,7 @@ export const ContentComponent: React.FC<{
                                         followCount={followCount}
                                         followerCount={followerCount}
                                     />
+                                    <CommentContainer/>
                                 </>
                         }
                     </>
