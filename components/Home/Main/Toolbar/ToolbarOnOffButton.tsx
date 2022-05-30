@@ -6,15 +6,23 @@ import ArrowDownDoubleIcon from 'public/image/icon/arrow-down-double.svg'
 import ArrowUpDoubleIcon from 'public/image/icon/arrow-up-double.svg'
 import StyleManager from '../../../../manager/global/Style/StyleManager'
 
+const closeStateStyle = {
+    width: 24,
+    height: 24,
+    top: 5
+}
+
+const openStateStyle = {
+    width: 26,
+    height: 26,
+    top: 60
+}
+
 export const ToolbarOnOffButton: React.FC<{
 }> = observer(() => {
-    const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    if (!currentHierarchy || !currentHierarchy.openedPageId) {
-        return <></>
-    }
     return <div
         className={'toolbar-control-button'}
-        style={StyleManager.contentStyle.toolbarOnOffButton}
+        style={EditorManager.isToolbarOpen ? openStateStyle : closeStateStyle}
         onClick={async () => {
             await EditorManager.updateIsToolbarOpen(!EditorManager.isToolbarOpen)
         }}
