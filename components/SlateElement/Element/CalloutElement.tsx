@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { Button } from '@material-ui/core'
 import EditorManager from '../../../manager/Blog/EditorManager'
-import { EmojiPicker } from '../../global/EmojiPicker'
+import { EmojiPickerComponent } from '../../global/EmojiPickerComponent'
 import { IEmojiData } from 'emoji-picker-react'
 import { Transforms } from 'slate'
 import { ReactEditor } from 'slate-react'
+import EmojiPicker from '../../../manager/global/EmojiPicker'
 
 export const SlateCalloutElement: React.FC<{
     attributes,
@@ -15,19 +16,18 @@ export const SlateCalloutElement: React.FC<{
     children,
     element
 }) => {
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+    const iconRef = useRef(null)
     const currentNodePath = useCallback(() => (
         ReactEditor.findPath(EditorManager.slateEditor, element)
     ), [EditorManager.slateEditor, element])
 
-    const onEmojiClick = (emojiObject: IEmojiData) => {
+    const onEmojiClick = useCallback((event, emojiObject: IEmojiData) => {
         Transforms.setNodes(EditorManager.slateEditor, {
             icon: emojiObject.emoji
         }, {
             at: currentNodePath()
         })
-        setShowEmojiPicker(false)
-    }
+    }, [currentNodePath])
 
     return (
         <div
@@ -35,21 +35,22 @@ export const SlateCalloutElement: React.FC<{
             spellCheck='false'
             {...attributes}>
             <div
+                ref={iconRef}
                 className={'emoji'}
                 contentEditable={false}
                 onClick={(event) => {
                     event.preventDefault()
                     event.stopPropagation()
-                    setShowEmojiPicker(!showEmojiPicker)
+                    const rect = iconRef.current.getBoundingClientRect()
+                    const position = {
+                        top: rect.top + (rect.height / 2),
+                        left: rect.left + (rect.width / 2)
+                    }
+                    EmojiPicker.open(position, onEmojiClick)
                 }}
             >
                 {element.icon}
             </div>
-            <EmojiPicker
-                showEmojiPicker={showEmojiPicker}
-                onEmojiPick={(event, emojiObject) => onEmojiClick(emojiObject)}
-                disableSearchBar={true}
-            />
             {children}
         </div>
     )
