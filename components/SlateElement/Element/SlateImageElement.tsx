@@ -27,7 +27,7 @@ const Caption: React.FC<{
       const inputRef = useRef<TextAreaRef>(null)
       const [captionFocused, setCaptionFocused] = useState(false)
       const editor = useSlateStatic()
-      const showCaption = selected || caption.length > 0
+      const showCaption = selected || (caption && caption.length > 0)
 
       if (!selected) {
           if (captionFocused) {

@@ -34,6 +34,7 @@ class EmojiPicker {
 
     close () {
         this.isOpen = false
+        this.pickerRef.current.removeAttribute('style')
     }
 }
 export default new EmojiPicker()

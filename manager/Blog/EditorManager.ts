@@ -134,17 +134,17 @@ class EditorManager {
             })
 
             this.websocketProvider.on('sync', () => {
-                // if (!this.selectionMap) {
-                //
-                // }
-                // if (this.selectionMap) {
-                //     const userSelection = this.selectionMap[UserManager.userId.toString()]
-                //     if (!userSelection) {
-                //         return
-                //     }
-                //     ReactEditor.focus(this.slateEditor as ReactEditor)
-                //     Transforms.select(this.slateEditor, userSelection)
-                // }
+                if (!this.selectionMap) {
+                    return
+                }
+                if (this.selectionMap) {
+                    const userSelection = this.selectionMap[UserManager.userId.toString()]
+                    if (!userSelection) {
+                        return
+                    }
+                    ReactEditor.focus(this.slateEditor as ReactEditor)
+                    Transforms.select(this.slateEditor, userSelection)
+                }
             })
 
             this.awareness = this.websocketProvider.awareness
