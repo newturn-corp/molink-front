@@ -5,6 +5,7 @@ import EventManager from '../global/Event/EventManager'
 import { Event } from '../global/Event/Event'
 import { makeAutoObservable } from 'mobx'
 import AuthValidator from './AuthValidator'
+import { SignUpDTO } from '@newturn-develop/types-molink'
 
 class SignUpManager {
     email: string = ''
@@ -26,10 +27,12 @@ class SignUpManager {
         this._isAcceptAllCheckList = value
         this.isAcceptTermOfUse = value
         this.isAcceptPrivacy = value
+        this.isAcceptMarketing = value
     }
 
     isAcceptTermOfUse: boolean = false
     isAcceptPrivacy: boolean = false
+    isAcceptMarketing: boolean = false
     checkListState: SignUpCheckListState = SignUpCheckListState.Default
 
     constructor () {
@@ -80,7 +83,7 @@ class SignUpManager {
             this.checkListState = SignUpCheckListState.NotAllAccepted
             return { success: false }
         }
-        const result = await AuthAPI.signUp(this.email, this.pwd, this.nickname)
+        const result = await AuthAPI.signUp(new SignUpDTO(this.email, this.pwd, this.nickname, this.isAcceptMarketing))
         if (result.success === false) {
             if (result.reason === SIGN_UP_FAIL_REASON.ALREADY_EXISTS) {
                 this.emailState = EmailState.SAME_EMAIL

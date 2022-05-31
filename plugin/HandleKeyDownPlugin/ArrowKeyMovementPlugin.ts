@@ -1,4 +1,4 @@
-import { Element, Path, Transforms } from 'slate'
+import { Element, Path, Range, Transforms } from 'slate'
 import EditorManager from '../../manager/Blog/EditorManager'
 
 export const moveSelectionWhenArrowLeftDown = (event) => {
@@ -10,10 +10,30 @@ export const moveSelectionWhenArrowLeftDown = (event) => {
     return true
 }
 
+export const moveSelectionWhenCommandArrowLeftDown = (event) => {
+    event.preventDefault()
+    const { selection } = EditorManager.slateEditor
+    if (selection && Range.isExpanded(selection)) {
+        Transforms.collapse(EditorManager.slateEditor, { edge: 'focus' })
+    }
+
+    Transforms.move(EditorManager.slateEditor, { unit: 'word', reverse: true })
+}
+
 export const moveSelectionWhenArrowRightDown = (event) => {
     event.preventDefault()
     Transforms.move(EditorManager.slateEditor, { unit: 'offset' })
     return true
+}
+
+export const moveSelectionWhenCommandArrowRightDown = (event) => {
+    event.preventDefault()
+    const { selection } = EditorManager.slateEditor
+    if (selection && Range.isExpanded(selection)) {
+        Transforms.collapse(EditorManager.slateEditor, { edge: 'focus' })
+    }
+
+    Transforms.move(EditorManager.slateEditor, { unit: 'word', reverse: false })
 }
 
 export const moveToTitleWhenArrowUpDown = (event) => {

@@ -44,10 +44,11 @@ SupportPlaceholder	문의사항을 입력해주세요.
 Send	전송
 SupportTitleInMobile	문의하기 & 의견 보내기
 AcceptAll	전체 동의
-Terms	이용 약관
-PrivacyCollectAndUse	개인정보 수집, 이용
+SignUpCheckListTerms	이용 약관
+SignUpCheckListPrivacyCollectAndUse	개인정보 수집, 이용
+SignUpCheckListMarketing	마케팅 정보 수신 동의 (선택)
 AcceptNecessary	 동의 (필수)
-SignUpCheckListHelperText	모두 동의하셔야 가입하실 수 있습니다.
+SignUpCheckListHelperText	필수 항목을 모두 동의하셔야 가입하실 수 있습니다.
 ChangePageName	이름 변경
 CreateChildPage	하위 페이지 만들기
 CreatePage	페이지 만들기
