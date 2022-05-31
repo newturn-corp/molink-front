@@ -64,6 +64,7 @@
   flex: none;
   order: 0;
   flex-grow: 0;
+  cursor: pointer;
 }
 .command-list .command-block .command-img {
   position: static;
@@ -97,6 +98,7 @@
   line-height: 16px;
   margin: 0px;
   margin-bottom: 4px;
+  user-select: none;
 }
 .command-list .command-block .text-container .description {
   position: static;
@@ -113,6 +115,7 @@
   margin: 0px;
   overflow: hidden;
   text-overflow: ellipsis;
+  user-select: none;
 }
 .command-list .command-block.selected {
   background: rgb(238, 238, 238);

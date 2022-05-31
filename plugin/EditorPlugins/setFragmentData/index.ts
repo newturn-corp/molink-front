@@ -43,7 +43,6 @@ export const getPlainText = (domNode: globalThis.Node) => {
 }
 
 export const setFragmentData = (e: Editor, data: Pick<DataTransfer, 'getData' | 'setData'>) => {
-    console.log('setFragmentData')
     const { selection } = e
 
     if (!selection) {
@@ -76,8 +75,6 @@ export const setFragmentData = (e: Editor, data: Pick<DataTransfer, 'getData' | 
     // range from the void node's spacer span, to the end of the void node's
     // content, since the spacer is before void's content in the DOM.
     if (endVoid) {
-        console.log('endVoid')
-        console.log(endVoid)
         const [voidNode] = endVoid
         const r = domRange.cloneRange()
         const domNode = ReactEditor.toDOMNode(e, voidNode)

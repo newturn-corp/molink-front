@@ -169,7 +169,7 @@ class CommandManager {
             }
             this.insertNode(editor, node)
             break
-        case '콜아웃':
+        case LanguageManager.languageMap.CalloutCommandName:
             node = {
                 type: 'callout',
                 icon: '💡',
@@ -342,7 +342,7 @@ class CommandManager {
         return true
     }
 
-    handleEnterAndTab (event: React.KeyboardEvent, editor: Editor) {
+    handleEnterAndTabAndClick (event: React.KeyboardEvent | React.MouseEvent, editor: Editor) {
         if (!this.checkIsCommandListOpen()) {
             return false
         }

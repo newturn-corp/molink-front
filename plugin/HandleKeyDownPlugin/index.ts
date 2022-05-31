@@ -48,7 +48,7 @@ handlerMap.set('Backspace', [
 ])
 handlerMap.set('Tab', [
     (event, editor) => LinkManager.menu.handleEnterAndTab(event, editor),
-    (event, editor) => CommandManager.handleEnterAndTab(event, editor),
+    (event, editor) => CommandManager.handleEnterAndTabAndClick(event, editor),
     handleTabInCode,
     handleTabInList
 ])
@@ -57,7 +57,7 @@ handlerMap.set('shift+Tab', [
 ])
 handlerMap.set('Enter', [
     (event, editor) => LinkManager.menu.handleEnterAndTab(event, editor),
-    (event, editor) => CommandManager.handleEnterAndTab(event, editor),
+    (event, editor) => CommandManager.handleEnterAndTabAndClick(event, editor),
     handleEnterInList,
     handleEnterInCode,
     handleEnterInVoid
