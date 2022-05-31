@@ -49,7 +49,6 @@ class MenuManager {
     }
 
     close () {
-        console.log('close 호출')
         this.index = 0
         this._menuItemList = []
         this.isOpen = false

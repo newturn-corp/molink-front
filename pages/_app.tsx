@@ -11,6 +11,7 @@ import '../styles/global/user-menu.css'
 
 import '../styles/components/mobile-column-drawer.css'
 import '../styles/components/menu.css'
+import '../styles/components/emoji-picker.css'
 
 import '../styles/contents/toolbar.css'
 import '../styles/contents/hovering-toolbar.css'
@@ -37,6 +38,7 @@ import { SiteHead } from '../components/global/SiteHead'
 import { MenuComponent } from '../components/global/MenuComponent'
 import { LinkModalComponent } from '../components/global/Modal/LinkModalComponent'
 import { ShouldLoginNoticeModal } from '../components/global/Modal/ShouldLoginNoticeModal'
+import { EmojiPickerComponent } from '../components/global/EmojiPickerComponent'
 
 configure(
     {
@@ -76,6 +78,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                 <MenuComponent />
                 <LinkModalComponent/>
                 <ShouldLoginNoticeModal/>
+                <EmojiPickerComponent/>
                 <Component {...pageProps} />
             </SafeHydrate>
         </>
