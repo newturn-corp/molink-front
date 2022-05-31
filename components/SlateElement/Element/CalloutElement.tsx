@@ -36,7 +36,7 @@ export const SlateCalloutElement: React.FC<{
             {...attributes}>
             <div
                 className={'emoji'}
-                contentEditable={false }
+                contentEditable={false}
                 onClick={(event) => {
                     event.preventDefault()
                     event.stopPropagation()

@@ -67,7 +67,7 @@ export const SlateBookmarkElement: React.FC<{
                 info.description
                     ? <div
                         className={'description'}
-                        contentEditable={'false'}
+                        contentEditable={false}
                     >
                         {info.description}
                     </div>
