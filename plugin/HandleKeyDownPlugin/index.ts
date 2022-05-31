@@ -9,20 +9,30 @@ import CommandManager from '../../manager/Editing/Command/CommandManager'
 import {
     moveSelectionWhenArrowDownDown,
     moveSelectionWhenArrowLeftDown,
-    moveSelectionWhenArrowRightDown, moveSelectionWhenBackspaceDown, moveToTitleWhenArrowUpDown
+    moveSelectionWhenArrowRightDown,
+    moveSelectionWhenBackspaceDown,
+    moveSelectionWhenCommandArrowLeftDown, moveSelectionWhenCommandArrowRightDown,
+    moveToTitleWhenArrowUpDown
 } from './ArrowKeyMovementPlugin'
 import { redoWhenControlYKeyDown, undoWhenControlZKeyDown } from './UndoPlugin'
 import { insertNewLineWhenShiftEnterKeyDown } from './InsertNewLinePlugin'
 import { handleEnterInVoid } from './CorrectVoidBehaviorHandleKeyDown'
 import EditorManager from '../../manager/Blog/EditorManager'
 import LinkManager from '../../manager/Editing/Link/LinkManager'
+import { isMac } from 'lib0/environment'
 
 const handlerMap = new Map()
 handlerMap.set('ArrowLeft', [
     moveSelectionWhenArrowLeftDown
 ])
+handlerMap.set('command+ArrowLeft', [
+    moveSelectionWhenCommandArrowLeftDown
+])
 handlerMap.set('ArrowRight', [
     moveSelectionWhenArrowRightDown
+])
+handlerMap.set('command+ArrowRight', [
+    moveSelectionWhenCommandArrowRightDown
 ])
 handlerMap.set('ArrowUp', [
     (event, editor) => LinkManager.menu.handleArrowUp(event, editor),
@@ -88,6 +98,10 @@ export const handleKeyDown = (event, editor) => {
         keys.push('alt')
     } else if (event.ctrlKey) {
         keys.push('ctrl')
+    } else if (event.metaKey) {
+        if (isMac) {
+            keys.push('command')
+        }
     }
     keys.push(event.key)
     const eventKey = keys.join('+')

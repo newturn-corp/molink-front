@@ -1,5 +1,6 @@
 import { BaseAPI } from './baseAPI'
 import { APIError } from './APIError'
+import { SignUpDTO } from '@newturn-develop/types-molink'
 
 export enum SIGN_UP_FAIL_REASON {
     ALREADY_EXISTS,
@@ -30,12 +31,8 @@ export enum VERIFY_EMAIL_FAIL_REASON {
 }
 
 class AutoAPI extends BaseAPI {
-    async signUp (email: string, pwd: string, nickname: string) {
-        const res = await this.post('/auth/sign-up', {
-            email,
-            pwd,
-            nickname
-        })
+    async signUp (dto: SignUpDTO) {
+        const res = await this.post('/auth/sign-up', dto)
         if (res.status === 201) {
             return { success: true }
         } else if (res.status === 409001) {

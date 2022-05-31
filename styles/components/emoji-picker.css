@@ -1,5 +1,7 @@
 .emoji-picker {
   position: absolute;
+  top: -9999px;
+  left: -9999px;
 }
 
 /*# sourceMappingURL=emoji-picker.css.map */
