@@ -16,6 +16,7 @@ class PageManager {
         this.blogUserInfo = new BlogUserInfo()
         this.pageCommentInfo = new PageCommentInfo()
         EventManager.addEventListener(Event.LoadContent, async () => {
+            await this.pageUserInfo.load()
             if (!EditorManager.editable || EditorManager.isLocked) {
                 await this.blogUserInfo.load(EditorManager.info.userId)
                 await this.pageCommentInfo.load()
@@ -28,10 +29,6 @@ class PageManager {
             }
         }, 1)
         makeAutoObservable(this)
-    }
-
-    get pageFileVolumn () {
-        return EditorManager.yInfo.get('page-file-volumn')
     }
 }
 export default new PageManager()

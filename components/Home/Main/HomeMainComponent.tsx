@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { ContentToolbar } from './Toolbar/ContentToolbar'
 import { ContentComponent } from './Content/ContentComponent'
 import StyleManager from '../../../manager/global/Style/StyleManager'
-import { ContentHeader } from './Header/ContentHeader'
+import { EditorHeader } from '../../Blog/EditorPage/Header/EditorHeader'
 import EditorManager from '../../../manager/Blog/EditorManager'
 import { BrowserView, MobileView } from 'react-device-detect'
 import { MobileToolbar } from './MobileToolbar/MobileToolbar'
@@ -25,7 +25,7 @@ export const HomeMainComponent: React.FC<{
           >
               <BrowserView>
                   <ContentToolbar/>
-                  <ContentHeader/>
+                  <EditorHeader/>
               </BrowserView>
               {
                   BlogPage.blog

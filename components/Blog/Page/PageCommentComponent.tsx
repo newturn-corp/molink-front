@@ -28,7 +28,6 @@ export const PageCommentComponent: React.FC<{
         content,
         children
     } = comment
-    console.log(children)
     const commentUserInfo = UserInfoMap.map[userId]
     if (!commentUserInfo) {
         return <></>

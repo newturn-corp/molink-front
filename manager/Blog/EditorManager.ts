@@ -201,7 +201,7 @@ class EditorManager {
         }
         this.pageId = pageId
         this.isLoaded = true
-        this.isToolbarOpen = true
+        this.isToolbarOpen = this.editable
         currentHierarchy.openedPageId = pageId
         await EventManager.issueEvent(Event.LoadContent)
     }

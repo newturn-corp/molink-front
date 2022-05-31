@@ -1,5 +1,13 @@
 import { BaseAPI } from './baseAPI'
-import { CreateDocumentDTO, UpdatePageDataInSearchEngineDTO, LikeDTO, CancelLikeDTO, SaveCommentDTO, SaveCommentResponseDTO } from '@newturn-develop/types-molink/dist/DTO'
+import {
+    CreateDocumentDTO,
+    UpdatePageDataInSearchEngineDTO,
+    LikeDTO,
+    CancelLikeDTO,
+    SaveCommentDTO,
+    SaveCommentResponseDTO,
+    PublishPageDTO
+} from '@newturn-develop/types-molink/dist/DTO'
 import { DeleteContentsDTO } from '@newturn-develop/types-molink/DTO/ContentDTO'
 
 class ContentAPI extends BaseAPI {
@@ -25,6 +33,11 @@ class ContentAPI extends BaseAPI {
 
     async saveComment (dto: SaveCommentDTO): Promise<SaveCommentResponseDTO> {
         const res = await this.post('/contents/comment', dto)
+        return res.data
+    }
+
+    async publishPage (dto: PublishPageDTO) {
+        const res = await this.put('/contents/publish', dto)
         return res.data
     }
 }

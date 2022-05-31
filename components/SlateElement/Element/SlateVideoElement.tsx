@@ -66,7 +66,6 @@ export const SlateVideoElement: React.FC<{
                                     height: '100%'
                                 }}
                                 controls={true}
-                                onProgress={(progress) => console.log(progress)}
                             />
                             {
                                 <div

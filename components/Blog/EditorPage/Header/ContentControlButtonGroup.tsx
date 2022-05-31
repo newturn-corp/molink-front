@@ -7,12 +7,14 @@ import { PageHierarchyList } from './PageHierarchyList'
 import StyleManager from '../../../../manager/global/Style/StyleManager'
 import { LockButton } from './LockButton'
 import { VisibilityButton } from './VisibilityButton'
+import { PublishButton } from './PublishButton'
 
 export const ContentControlButtonGroup: React.FC<{
 }> = observer(() => {
     return <div
         className={'content-control-button-group'}
     >
+        <PublishButton/>
         <LockButton/>
         <VisibilityButton/>
     </div>

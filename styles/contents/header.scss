@@ -42,14 +42,15 @@
     flex-direction: row;
     position: absolute;
     right: 12px;
-    margin-top: 13px;
+    margin-top: 10px;
     .setting-button {
-      width: 26px;
-      height: 26px;
-      padding: 3px;
+      width: 30px;
+      height: 30px;
+      padding: 5px;
       border-radius: 4px;
       transition: top 0.25s;
       margin: 0 3px;
+      margin-right: 0px;
       svg {
         width: 100%;
         height: 100%;
@@ -61,6 +62,33 @@
       cursor: pointer;
       &:hover {
         background-color: rgba($color: #000000, $alpha: 0.04);
+      }
+    }
+    .publish-button {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background-color: #0094FF;
+      padding: 5px;
+      padding-right: 10px;
+      margin-right: 5px;
+      height: 30px;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      svg {
+        height: 100%;
+        fill: #FFFFFF;
+        transition: fill 0.25s;
+      }
+    }
+    .unpublishable {
+      background-color: #FFFFFF;
+      border: 1px solid #a1a1a1;
+      color: #a1a1a1;
+      svg {
+        fill: #a1a1a1;
       }
     }
   }
