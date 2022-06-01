@@ -27,6 +27,7 @@ export const HierarchyContainer: React.FC<{
       })
       const classes = useStyles()
       const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
+
       if (!currentHierarchy) {
           return <></>
       }
@@ -65,7 +66,9 @@ export const HierarchyContainer: React.FC<{
                               <HierarchyButtonGroup/>
                               <HierarchyContextMenu/>
                               <HierarchyComponent/>
-                              <DragIndicator/>
+                              {
+                                  currentHierarchy.editable ? <DragIndicator/> : <></>
+                              }
                           </>
                           : <>
                           </>

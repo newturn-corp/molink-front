@@ -1,6 +1,6 @@
 import moment from 'moment-timezone'
 
-export const getRelativeTime = (time: Date, showDate: boolean = false, useText: true) => {
+export const getRelativeTime = (time: Date, showDate: boolean = false, useText: boolean = true) => {
     const secondDiff = moment().diff(moment(time), 'second')
     if (secondDiff < 60) {
         if (useText) {

@@ -1,4 +1,4 @@
-import { ESPageSummary, ESUser, GetUserInfoByUserMapDTO } from '@newturn-develop/types-molink'
+import { ESPageSummary, ESUser, GetPageListDTO, GetUserInfoByUserMapDTO } from '@newturn-develop/types-molink'
 import ViewerAPI from '../../api/ViewerAPI'
 import HierarchyManager from '../global/Hierarchy/HierarchyManager'
 import BlogManager from './BlogManager'
@@ -29,7 +29,7 @@ export class FollowPageList {
         if (this.listEnded) {
             return
         }
-        const { total, results } = await ViewerAPI.getFollowPageList(this.from, 8)
+        const { total, results } = await ViewerAPI.getFollowPageList(new GetPageListDTO(this.from, 8))
         this.totalPageCount = total
         if (results.length === 0) {
             this.listEnded = true

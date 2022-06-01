@@ -8,7 +8,10 @@ import ContentAPI from '../../../api/ContentAPI'
 import ModalManager from '../../global/ModalManager'
 import moment from 'moment-timezone'
 import FeedbackManager, { NOTIFICATION_TYPE } from '../../global/FeedbackManager'
-import { PublishPageDTO } from '@newturn-develop/types-molink'
+import { PageVisibility, PublishPageDTO } from '@newturn-develop/types-molink'
+import HierarchyManager from '../../global/Hierarchy/HierarchyManager'
+import DialogManager from '../../global/DialogManager'
+import EditorPage from '../Editor/EditorPage'
 
 export class PageUserInfo {
     isLoaded: boolean = false
@@ -39,7 +42,7 @@ export class PageUserInfo {
     }
 
     async load () {
-        const summary = await ViewerAPI.getPageSummary(EditorManager.pageId)
+        const summary = await ViewerAPI.getPageSummary(EditorPage.pageId)
         const userId = Number(summary.userId)
         const { infoMap } = await ViewerAPI.getUserInfoMapByIDList([userId])
         const userInfo = infoMap[userId]
@@ -75,10 +78,25 @@ export class PageUserInfo {
     }
 
     async handlePublishButtonDown () {
+        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
+        const {
+            title,
+            visibility
+        } = currentHierarchy.getPage(EditorManager.pageId)
+        if (visibility === PageVisibility.Private) {
+            const index = await DialogManager.openDialog('비공개 페이지 발행하기', `${title} 페이지의 공개 범위가 비공개 상태이므로 발행해도 아무도 볼 수 없습니다. 공개 범위를 전체 공개로 변경하고 발행하시겠습니까?`, ['변경 후 발행', '비공개 상태로 발행'])
+            if (index === 0) {
+                await currentHierarchy.visibilityController.updatePageVisibility(EditorManager.pageId, PageVisibility.Public)
+            }
+        }
+
         if (this.lastPublishedAt && moment(this.lastPublishedAt).isAfter(moment().subtract(3, 'days'))) {
             FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '아직 발행할 수 없어요!', '', 5)
+            return
         }
         await ContentAPI.publishPage(new PublishPageDTO(EditorManager.pageId))
+
+        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, `${title} 페이지가 발행되었습니다!`, '', 5)
         this.lastPublishedAt = Number(new Date())
         this.isPublishable = false
     }

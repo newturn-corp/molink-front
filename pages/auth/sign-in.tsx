@@ -11,6 +11,7 @@ import { EmailState, PasswordState } from '../../manager/Auth/AuthStates'
 import { AuthContainer } from '../../components/auth/AuthContainer'
 import { AuthSubButton } from '../../components/auth/AuthSubButton'
 import LanguageManager from '../../manager/global/LanguageManager'
+import GlobalManager from '../../manager/global/GlobalManager'
 
 const getEmailHelperText = (emailState: EmailState) => {
     if (emailState === EmailState.DEFAULT) {
@@ -44,7 +45,11 @@ const SignIn = observer(() => {
         const result = await SignInManager.signIn()
         if (result.success) {
             await UserManager.load()
-            await RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.nickname}`)
+            if (GlobalManager.window.history.length > 0) {
+                RoutingManager.back()
+            } else {
+                await RoutingManager.moveTo(Page.Index)
+            }
         }
         setLoading(false)
     }, [])

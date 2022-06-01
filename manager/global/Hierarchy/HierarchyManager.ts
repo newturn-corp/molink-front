@@ -13,8 +13,6 @@ import EventManager from '../Event/EventManager'
 import { isBrowser } from 'react-device-detect'
 import ViewerAPI from '../../../api/ViewerAPI'
 import { ESUser } from '@newturn-develop/types-molink'
-import DialogManager from '../DialogManager'
-import RoutingManager, { Page } from '../RoutingManager'
 import { UserNotExists } from '../../../Errors/UserError'
 
 class HierarchyManager {
@@ -23,7 +21,7 @@ class HierarchyManager {
     currentHierarchyUserId: number = 0
     openHierarchyContextMenu: boolean = false
 
-    isHierarchyOpen: boolean = isBrowser
+    isHierarchyOpen: boolean = false
     isHierarchyOptionOpen: boolean = false
 
     private _clickPosition: { x: number, y: number } = { x: 0, y: 0 }
@@ -60,6 +58,9 @@ class HierarchyManager {
         const hierarchy = new Hierarchy(userId, userInfo.nickname, userInfo.profileImageUrl)
         await hierarchy.init()
         this.hierarchyMap.set(userId, hierarchy)
+        if (isBrowser) {
+            this.isHierarchyOpen = true
+        }
         await EventManager.issueEvent(Event.UpdateHierarchy, {})
     }
 
@@ -98,7 +99,7 @@ class HierarchyManager {
 
     getHierarchyWidth () {
         if (!this.isHierarchyOpen) {
-            return 30
+            return UserManager.isUserAuthorized ? 30 : 0
         }
         return UserManager.setting ? UserManager.setting.hierarchyWidth : 240
     }

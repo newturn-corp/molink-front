@@ -181,4 +181,11 @@ export class PageDragManager {
         this._dragOverCount = 0
         this.hierarchyMarginElement = null
     }
+
+    clear () {
+        this.indicatorTooltip = null
+        this.dragIndicator = null
+        this.hierarchyMarginElement = null
+        this.fileSystemElement = null
+    }
 }

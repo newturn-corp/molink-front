@@ -13,6 +13,8 @@ class DialogManager {
     }
 
     openDialog (title: string, description: string, buttonTexts: string[]) {
+        console.log('openDialog')
+        console.log(title)
         this.title = title
         this.description = description
         this.buttonTexts = buttonTexts

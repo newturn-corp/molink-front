@@ -1,4 +1,5 @@
 import React from 'react'
+import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 
 export const AuthLogo: React.FC<{
   }> = () => {
@@ -6,5 +7,8 @@ export const AuthLogo: React.FC<{
           className='logo'
           src='/image/global/header/logo.png'
           alt='logo'
+          onClick={() => {
+              RoutingManager.moveTo(Page.Index)
+          }}
       />
   }

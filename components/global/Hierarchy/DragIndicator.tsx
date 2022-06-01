@@ -14,6 +14,7 @@ export const DragIndicator: React.FC<{
               currentHierarchy.pageDragManager.dragIndicator = indicatorRef.current
           }
       }, [currentHierarchy])
+
       return (
           <Tooltip
               ref={tooltipRef}

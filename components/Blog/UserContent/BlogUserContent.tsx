@@ -1,20 +1,21 @@
 import { observer } from 'mobx-react'
 import React from 'react'
 import { BlogUserInfoComponent } from '../../Blog/BlogUserInfoComponent'
-import { UserPageListComponent } from '../../Home/Main/Content/UserPageListComponent'
 import StyleManager from '../../../manager/global/Style/StyleManager'
 import GlobalManager from '../../../manager/global/GlobalManager'
 import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
-import BlogPage from '../../../manager/Blog/BlogPage'
+import { PageListComponent } from '../../global/PageList/PageListComponent'
+import Blog from '../../../manager/global/Blog/Blog'
+import { PageListViewType } from '../../../Enums/PageListViewType'
 
 export const BlogUserContent: React.FC<{
 }> = observer(() => {
-    const blog = BlogPage.blog
-    if (!blog) {
+    const blogUserInfo = Blog.blogUserInfo
+    const userPageList = Blog.userPageList
+    if (!blogUserInfo || !userPageList) {
         return <></>
     }
-    const blogUserInfo = BlogPage.blog.blogUserInfo
-    const pageCount = BlogPage.blog.userPageList.totalPageCount
+    const pageCount = userPageList.totalPageCount
 
     return <div
         className={'blog-user-content'}
@@ -28,6 +29,13 @@ export const BlogUserContent: React.FC<{
             {...blogUserInfo}
             pageCount={pageCount}
         />
-        <UserPageListComponent />
+        <PageListComponent
+            pageSummaryList={userPageList.pageSummaryList}
+            isListEnded={userPageList.listEnded}
+            onLoadPageList={async () => {
+                await userPageList.loadPageSummaryList()
+            }}
+            viewType={PageListViewType.List}
+        />
     </div>
 })

@@ -1,7 +1,8 @@
-import { ESPageSummary, ESUser, GetUserInfoByUserMapDTO } from '@newturn-develop/types-molink'
+import { ESPageSummary, ESUser, GetPageListDTO, GetUserInfoByUserMapDTO } from '@newturn-develop/types-molink'
 import ViewerAPI from '../../api/ViewerAPI'
 import { makeAutoObservable, toJS } from 'mobx'
 import { debounce, throttle } from 'lodash'
+import UserInfoMap from '../global/User/UserInfoMap'
 
 export class UserPageList {
     _pageSummaryList: ESPageSummary[] = []
@@ -28,23 +29,14 @@ export class UserPageList {
         if (this.listEnded) {
             return
         }
-        const { total, results } = await ViewerAPI.getUserPageList(this.userId, this.from)
+        const { total, results } = await ViewerAPI.getUserPageList(this.userId, new GetPageListDTO(this.from, 6))
         this.totalPageCount = total
         if (results.length === 0) {
             this.listEnded = true
             return
         }
-        const requiredUserMap = {}
-        for (const summary of results) {
-            if (!this.userMap[summary.userId] && !requiredUserMap[summary.userId]) {
-                requiredUserMap[summary.userId] = true
-            }
-        }
-        if (Object.keys(requiredUserMap).length !== 0) {
-            const userIDList = [...Object.keys(requiredUserMap)] as any
-            const { infoMap } = await ViewerAPI.getUserInfoMapByIDList(userIDList)
-            this.userMap = { ...this.userMap, ...infoMap }
-        }
+        const userIDList = Array.from(new Set(results.map(summary => Number(summary.userId))))
+        await UserInfoMap.updateUserInfoMap(userIDList)
         this._pageSummaryList.push(...results)
         this.from += results.length
     }

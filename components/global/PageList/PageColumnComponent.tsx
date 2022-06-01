@@ -1,11 +1,11 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import RoutingManager, { Page } from '../../manager/global/RoutingManager'
+import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 import { HeartFilled } from '@ant-design/icons'
 import CommentIcon from 'public/image/icon/comment.svg'
 import HeartIcon from 'public/image/icon/heart.svg'
-import { Thumbnail } from '../Blog/Page/Thumbnail'
-import { PageColumnComponentUserInfo } from '../Blog/Page/PageColumnComponentUserInfo'
+import { Thumbnail } from './Thumbnail'
+import { PageColumnComponentUserInfo } from './PageColumnComponentUserInfo'
 
 export interface PageColumnComponentInterface {
     id: string
@@ -23,7 +23,7 @@ export const PageColumnComponent: React.FC<PageColumnComponentInterface> = obser
     return <div
         className={'page-column-component'}
         onClick={async () => {
-            await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${props.id}`)
+            await RoutingManager.moveTo(Page.Blog, `/${props.id}`)
         }}
     >
         <Thumbnail

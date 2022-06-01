@@ -12,6 +12,11 @@ export const HierarchyComponent: React.FC<{
           <List
               component="nav"
               aria-labelledby="nested-list-subheader"
+              style={{
+                  overflowX: 'hidden',
+                  overflowY: 'auto',
+                  marginTop: 5
+              }}
           >
               {
                   currentHierarchy.topLevelDocumentIdList.map(documentId => {
