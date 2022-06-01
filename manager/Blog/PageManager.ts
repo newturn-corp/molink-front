@@ -16,8 +16,8 @@ class PageManager {
         this.blogUserInfo = new BlogUserInfo()
         this.pageCommentInfo = new PageCommentInfo()
         EventManager.addEventListener(Event.LoadContent, async () => {
-            await this.pageUserInfo.load()
             if (!EditorManager.editable || EditorManager.isLocked) {
+                await this.pageUserInfo.load()
                 await this.blogUserInfo.load(EditorManager.info.userId)
                 await this.pageCommentInfo.load()
             }

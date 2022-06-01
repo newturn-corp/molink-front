@@ -190,9 +190,10 @@ export default class Hierarchy {
     }
 
     public openPageParents (pageId: string) {
-        const parents = this.getPageHierarchy(pageId)
+        const pageHierarchy = this.getPageHierarchy(pageId)
+        pageHierarchy.pop()
         this.yDocument.transact(() => {
-            for (const parent of parents) {
+            for (const parent of pageHierarchy) {
                 if (!parent.childrenOpen) {
                     parent.childrenOpen = true
                     this.yMap.set(parent.id, parent)
