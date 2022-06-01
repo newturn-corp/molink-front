@@ -1,10 +1,20 @@
 import { BaseAPI } from './baseAPI'
-import { CreateDocumentDTO, UpdatePageDataInSearchEngineDTO, LikeDTO, CancelLikeDTO, SaveCommentDTO, SaveCommentResponseDTO } from '@newturn-develop/types-molink/dist/DTO'
+import {
+    CreateDocumentDTO,
+    UpdatePageDataInSearchEngineDTO,
+    LikeDTO,
+    CancelLikeDTO,
+    SaveCommentDTO,
+    SaveCommentResponseDTO,
+    PublishPageDTO
+} from '@newturn-develop/types-molink/dist/DTO'
 import { DeleteContentsDTO } from '@newturn-develop/types-molink/DTO/ContentDTO'
+import { HierarchyDocumentInfoInterface } from '@newturn-develop/types-molink'
 
 class ContentAPI extends BaseAPI {
-    async createContent (pageId: string) {
-        await this.post('/contents/contents', new CreateDocumentDTO(pageId))
+    async createContent (dto: CreateDocumentDTO): Promise<HierarchyDocumentInfoInterface> {
+        const res = await this.post('/contents/contents', dto)
+        return res.data
     }
 
     async deleteContents (dto: DeleteContentsDTO) {
@@ -25,6 +35,11 @@ class ContentAPI extends BaseAPI {
 
     async saveComment (dto: SaveCommentDTO): Promise<SaveCommentResponseDTO> {
         const res = await this.post('/contents/comment', dto)
+        return res.data
+    }
+
+    async publishPage (dto: PublishPageDTO) {
+        const res = await this.put('/contents/publish', dto)
         return res.data
     }
 }

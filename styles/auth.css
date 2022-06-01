@@ -12,6 +12,7 @@
   margin: 14px auto auto;
   width: 103px;
   height: 28px;
+  cursor: pointer;
 }
 
 .auth-container {

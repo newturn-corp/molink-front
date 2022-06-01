@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import PageManager from '../../../../manager/Blog/PageManager'
-import { PageCommentComponent } from '../../Page/PageCommentComponent'
+import { PageCommentComponent } from '../../../global/PageList/PageCommentComponent'
 import { Input } from 'antd'
 import { CommentInputContainer } from './CommentInputContainer'
 const TextArea = Input.TextArea

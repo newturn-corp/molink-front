@@ -68,11 +68,9 @@ const moveAsSubItem = (
 export const increaseItemDepth = (
     editor: Editor
 ): void => {
-    console.log('increaseItemDepth')
     const previousItem = ListEditor.getPreviousItem(editor)
     const currentItem = ListEditor.getCurrentItem(editor)
     const maxDepth = 6 * 2
-    console.log(previousItem)
     if (!previousItem || !currentItem) {
         return
     }

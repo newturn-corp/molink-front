@@ -7,7 +7,7 @@
   .hierarchy-name {
     height: 56px;
     display: flex;
-    margin-bottom: 0px;
+    margin-bottom: 5px;
     cursor: pointer;
     .profile-image {
       margin-left: 12px;
@@ -88,10 +88,20 @@
 
   .MuiDrawer-paper {
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
     position: relative;
     z-index: 900;
     background-color: #FFFFFF;
+    .MuiList-root::-webkit-scrollbar {
+      width: 8px;
+    }
+    .MuiList-root::-webkit-scrollbar-track {
+      background: #e7e7e7;
+    }
+    .MuiList-root::-webkit-scrollbar-thumb {
+      background: rgb(209, 209, 209);
+      border-radius: 8px;
+    }
 
     .MuiDrawer-paperAnchorDockedLeft {
       border-right: 1px solid #ECEFF2;

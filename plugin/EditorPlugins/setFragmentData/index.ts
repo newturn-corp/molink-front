@@ -65,7 +65,6 @@ export const setFragmentData = (e: Editor, data: Pick<DataTransfer, 'getData' | 
 
     // Make sure attach is non-empty, since empty nodes will not get copied.
     contents.childNodes.forEach(node => {
-        console.log(node)
         if (node.textContent && node.textContent.trim() !== '') {
             attach = node as HTMLElement
         }

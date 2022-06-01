@@ -13,7 +13,7 @@ import {
     GetPageListResponseDTO,
     GetFollowInfoResponseDTO,
     GetFollowStatusResponseDTO,
-    ESPageSummary, GetUserLikePageResponseDTO, ESComment
+    ESPageSummary, GetUserLikePageResponseDTO, ESComment, GetPageListDTO
 } from '@newturn-develop/types-molink'
 import { ContentNotExists, ContentUserNotExists } from '../Errors/ContentError'
 
@@ -62,13 +62,18 @@ class ViewerAPI extends BaseAPI {
         return res.data
     }
 
-    async getUserPageList (userId: number, from: number): Promise<GetPageListResponseDTO> {
-        const res = await this.get(`/viewer/${userId}/pages?from=${from}`)
+    async getUserPageList (userId: number, dto: GetPageListDTO): Promise<GetPageListResponseDTO> {
+        const res = await this.get(`/viewer/page-list/${userId}?from=${dto.from}&count=${dto.count}`)
         return res.data
     }
 
-    async getFollowPageList (from: number, count: number): Promise<GetPageListResponseDTO> {
-        const res = await this.get(`/viewer/follow-pages?from=${from}&count=${count}`)
+    async getFollowPageList (dto: GetPageListDTO): Promise<GetPageListResponseDTO> {
+        const res = await this.get(`/viewer/page-list/follow?from=${dto.from}&count=${dto.count}`)
+        return res.data
+    }
+
+    async getPopularPageList (dto: GetPageListDTO): Promise<GetPageListResponseDTO> {
+        const res = await this.get(`/viewer/page-list/popular?from=${dto.from}&count=${dto.count}`)
         return res.data
     }
 

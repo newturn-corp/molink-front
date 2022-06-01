@@ -32,9 +32,6 @@ export const CustomLeafComponent: React.FC<{
           >
               {children}
           </CodeHighlightLeaf>
-          if (leaf.bold && leaf.codeLanguage) {
-              console.log(children)
-          }
       }
 
       const data = leaf.data as any

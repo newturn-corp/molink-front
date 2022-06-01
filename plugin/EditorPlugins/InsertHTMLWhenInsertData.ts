@@ -119,7 +119,6 @@ export const insertHTMLWhenInsertData = (editor, data) => {
         for (const index of listItemEntry.reverse()) {
             fragment.splice(index, 1)
         }
-        console.log(fragment)
         Transforms.insertFragment(editor, fragment)
         return true
     }

@@ -14,6 +14,9 @@ export const ContentTitleComponent: React.FC<{
         EditorManager.titleRef = titleRef
     }, [titleRef])
     const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
+    if (!currentHierarchy || !currentHierarchy.map[currentHierarchy.openedPageId]) {
+        return <></>
+    }
     const title = currentHierarchy.map[currentHierarchy.openedPageId].title
     return (
         <div

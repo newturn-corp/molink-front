@@ -245,7 +245,7 @@ class CommandManager {
         //         Transforms.select(editor, [0, 0])
         //     }, 1)
         //     EventManager.addDisposableEventListener(Event.EditorChange, () => {
-        //         RoutingManager.moveTo(Page.Index, `?id=${document.meta.id}`)
+        //         RoutingManager.moveTo(Page.MainPageComponent, `?id=${document.meta.id}`)
         //     }, 1)
         //     this.insertNode(editor, node)
         //     FileSystemManager.selectedDocument = document

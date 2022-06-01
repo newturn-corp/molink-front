@@ -7,7 +7,7 @@
 .hierarchy .hierarchy-name {
   height: 56px;
   display: flex;
-  margin-bottom: 0px;
+  margin-bottom: 5px;
   cursor: pointer;
 }
 .hierarchy .hierarchy-name .profile-image {
@@ -81,10 +81,20 @@
 }
 .hierarchy .MuiDrawer-paper {
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   position: relative;
   z-index: 900;
   background-color: #FFFFFF;
+}
+.hierarchy .MuiDrawer-paper .MuiList-root::-webkit-scrollbar {
+  width: 8px;
+}
+.hierarchy .MuiDrawer-paper .MuiList-root::-webkit-scrollbar-track {
+  background: #e7e7e7;
+}
+.hierarchy .MuiDrawer-paper .MuiList-root::-webkit-scrollbar-thumb {
+  background: rgb(209, 209, 209);
+  border-radius: 8px;
 }
 .hierarchy .MuiDrawer-paper .MuiDrawer-paperAnchorDockedLeft {
   border-right: 1px solid #ECEFF2;
@@ -202,7 +212,7 @@
   background: #e7e7e7;
 }
 .hierarchy ::-webkit-scrollbar-thumb {
-  background: #d1d1d1;
+  background: rgb(209, 209, 209);
   border-radius: 5px;
 }
 

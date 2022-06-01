@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react'
 import PageManager from '../../../../manager/Blog/PageManager'
-import { PageCommentComponent } from '../../Page/PageCommentComponent'
+import { PageCommentComponent } from '../../../global/PageList/PageCommentComponent'
 import { Avatar, Input } from 'antd'
 import UserManager from '../../../../manager/global/User/UserManager'
 import { Button } from '../../../global/Button'
+import DialogManager from '../../../../manager/global/DialogManager'
+import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
+import ModalManager from '../../../../manager/global/ModalManager'
 const TextArea = Input.TextArea
 
 export const CommentInputContainer: React.FC<{
@@ -25,7 +28,7 @@ export const CommentInputContainer: React.FC<{
             <Avatar
                 className={'profile'}
                 size={parentCommentId ? 32 : 40}
-                src={UserManager.profile.profileImageUrl}
+                src={UserManager.profile.profileImageUrl || '/image/global/header/login-button-profile.png'}
             />
         </div>
         <div
@@ -36,8 +39,17 @@ export const CommentInputContainer: React.FC<{
                 placeholder={'댓글 작성하기'}
                 rows={1}
                 value={content}
-                onChange={(event) => setContent(event.target.value)}
-                onFocus={() => setIsTextAreaFocus(true)}
+                onChange={(event) => {
+                    setContent(event.target.value)
+                }}
+                onClick={() => {
+                    if (!UserManager.isUserAuthorized) {
+                        ModalManager.openShouldLoginNoticeModal = true
+                    }
+                }}
+                onFocus={async () => {
+                    setIsTextAreaFocus(true)
+                }}
                 onBlur={() => setIsTextAreaFocus(false)}
                 autoSize
             />

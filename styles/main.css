@@ -1,13 +1,16 @@
 .main-header {
+  position: relative;
   height: 56px;
   border-bottom: 1px solid #ECEFF2;
+  padding: 12px 0px;
+  display: flex;
+  flex-direction: row;
 }
 .main-header .category-container {
   width: 800px;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
-  padding: 12px 0px;
 }
 .main-header .category-container .category {
   border-radius: 27px;
@@ -20,10 +23,32 @@
   background: #ABB3BB;
   margin-right: 10px;
   user-select: none;
+  cursor: pointer;
 }
 .main-header .category-container .active-category {
   background: #1890FF;
+  cursor: default;
   box-shadow: 0px 8px 16px rgba(24, 144, 255, 0.24);
+}
+.main-header .view-type-selector {
+  display: flex;
+  flex-direction: row;
+  margin-right: 25px;
+}
+.main-header .view-type-selector .change-view-button {
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 5px;
+}
+.main-header .view-type-selector .change-view-button:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.main-header .view-type-selector svg {
+  fill: #ABB3BB;
+}
+.main-header .view-type-selector .active svg {
+  fill: #3A7BBF;
 }
 
 .follow-page-list-container {

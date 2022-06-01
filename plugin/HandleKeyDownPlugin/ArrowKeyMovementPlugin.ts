@@ -62,7 +62,6 @@ export const moveSelectionWhenArrowDownDown = (event) => {
     const { selection } = EditorManager.slateEditor
     if (selection) {
         const parentPath = Path.parent(selection.anchor.path)
-        console.log(Path.next(parentPath))
         // if (!Path.hasPrevious(parentPath)) {
         //     event.preventDefault()
         //     EditorManager.titleRef.current.focus()

@@ -5,7 +5,7 @@ import { Avatar } from 'antd'
 import UserInfoMap from '../../../manager/global/User/UserInfoMap'
 import { getRelativeTime } from '../../../utils/getRelativeTime'
 import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
-import { CommentInputContainer } from '../EditorPage/Comment/CommentInputContainer'
+import { CommentInputContainer } from '../../Blog/EditorPage/Comment/CommentInputContainer'
 import { Collapse, List } from '@material-ui/core'
 import { ArrowDropDown, ArrowRight } from '@material-ui/icons'
 
@@ -28,7 +28,6 @@ export const PageCommentComponent: React.FC<{
         content,
         children
     } = comment
-    console.log(children)
     const commentUserInfo = UserInfoMap.map[userId]
     if (!commentUserInfo) {
         return <></>

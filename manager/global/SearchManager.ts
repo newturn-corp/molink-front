@@ -27,7 +27,6 @@ class SearchManager {
         this.searchText = text
         const results = await UserAPI.searchUsers(new SearchUserDTO(text))
         this._searchResults = results
-        console.log(results)
         this.isSearching = false
     }
 

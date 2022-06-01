@@ -80,6 +80,7 @@ class EditorManager {
     }
 
     async load (pageId: string) {
+        this.pageId = pageId
         this.yjsDocument = new Y.Doc()
         this.sharedType = this.yjsDocument.getArray<SyncElement>('content')
         this.yInfo = this.yjsDocument.getMap('info')
@@ -199,9 +200,8 @@ class EditorManager {
                     this.awareness
                 ))
         }
-        this.pageId = pageId
         this.isLoaded = true
-        this.isToolbarOpen = true
+        this.isToolbarOpen = this.editable
         currentHierarchy.openedPageId = pageId
         await EventManager.issueEvent(Event.LoadContent)
     }

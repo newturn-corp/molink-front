@@ -5,6 +5,7 @@ import DialogManager from '../manager/global/DialogManager'
 
 export const DialogComponent: React.FC<{
   }> = observer(() => {
+      console.log(DialogManager.showDialog)
       return <Dialog
           className={'dialog'}
           open={DialogManager.showDialog}
@@ -21,9 +22,9 @@ export const DialogComponent: React.FC<{
           <DialogContent
               className={'dialog-content'}
           >
-              <pre>
+              <p>
                   {DialogManager.description}
-              </pre>
+              </p>
               {/* <DialogContentText id="alert-dialog-description"> */}
               {/*      */}
               {/* </DialogContentText> */}
@@ -31,7 +32,7 @@ export const DialogComponent: React.FC<{
           <DialogActions>
               {
                   DialogManager.buttonTexts.map((text, index) =>
-                      <Button key={Math.random()} onClick={(e) => {
+                      <Button key={`dialog-button-${index}`} onClick={(e) => {
                           e.stopPropagation()
                           DialogManager.onClose(index)
                       }} color="primary">

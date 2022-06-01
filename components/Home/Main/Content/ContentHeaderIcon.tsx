@@ -10,7 +10,7 @@ export const ContentHeaderIcon: React.FC<{
   }> = observer(() => {
       const iconRef = useRef(null)
       const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-      const page = currentHierarchy.map[currentHierarchy.openedPageId]
+
       const onEmojiClick = useCallback((event, emojiObject: IEmojiData) => {
           const page = currentHierarchy.yMap.get(currentHierarchy.openedPageId)
           if (page.icon !== emojiObject.emoji) {
@@ -18,6 +18,14 @@ export const ContentHeaderIcon: React.FC<{
               currentHierarchy.yMap.set(page.id, page)
           }
       }, [iconRef])
+
+      if (!currentHierarchy) {
+          return <></>
+      }
+      const page = currentHierarchy.map[currentHierarchy.openedPageId]
+      if (!page) {
+          return <></>
+      }
 
       return <>
           <Button

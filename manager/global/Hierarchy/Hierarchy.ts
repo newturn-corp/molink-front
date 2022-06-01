@@ -13,6 +13,7 @@ import { LocationController } from './LocationController'
 import EventManager from '../Event/EventManager'
 import { Event } from '../Event/Event'
 import { PageDragManager } from './PageDragManager'
+import { CreateDocumentDTO } from '@newturn-develop/types-molink/dist/DTO'
 
 export default class Hierarchy {
     public visibilityController: VisibilityController
@@ -123,26 +124,17 @@ export default class Hierarchy {
         if (this.websocketProvider) {
             this.websocketProvider.destroy()
         }
+        this.map = {}
+        this.topLevelDocumentIdList = []
         this.selectedPageId = null
         this.openedPageId = null
         this.nameChangingPageId = null
+        this.pageDragManager.clear()
     }
 
     public async createPage (order:number, parentId: string | null) {
         const newPageId = getUUID()
-        const newPage: HierarchyDocumentInfoInterface = {
-            id: newPageId,
-            title: '새 페이지',
-            icon: '📄',
-            userId: this.userId,
-            visibility: PageVisibility.Private,
-            order,
-            parentId,
-            childrenOpen: false,
-            fileUsage: 0,
-            children: []
-        }
-        await ContentAPI.createContent(newPageId)
+        const newPage = await ContentAPI.createContent(new CreateDocumentDTO(newPageId, order, parentId))
 
         this.yDocument.transact(() => {
             this.yMap.set(newPage.id, newPage)
@@ -221,5 +213,9 @@ export default class Hierarchy {
             hierarchy.unshift(parent)
         }
         return hierarchy
+    }
+
+    getPage (pageId) {
+        return this.yMap.get(pageId)
     }
 }

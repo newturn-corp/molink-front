@@ -1,4 +1,4 @@
-import { Blog, BlogPageType } from './Blog'
+import { BlogPageType } from './Blog'
 import { InvalidParam } from '../../Errors/Common'
 import UserManager from '../global/User/UserManager'
 import ViewerAPI from '../../api/ViewerAPI'
@@ -14,6 +14,8 @@ import { HierarchyNotExists } from '../../Errors/HierarchyError'
 import { BlogPageNotExist } from '../../Errors/BlogError'
 import { makeAutoObservable } from 'mobx'
 import LanguageManager from '../global/LanguageManager'
+import Blog from '../global/Blog/Blog'
+import EditorPage from './Editor/EditorPage'
 
 enum BlogURLType {
     OnlyPageURL = 'only-page-url',
@@ -22,7 +24,7 @@ enum BlogURLType {
 }
 
 class BlogPage {
-    blog: Blog = null
+    pageType: BlogPageType = null
 
     constructor () {
         makeAutoObservable(this)
@@ -69,13 +71,13 @@ class BlogPage {
             throw new UserNotExists()
         }
         const userId = Number(userInfo.id)
-        if (!this.blog || this.blog.id !== userId) {
-            this.blog = new Blog(userId)
+        if (Blog.id !== userId) {
+            Blog.load(userId)
         }
-        this.blog.pageType = BlogPageType.UserMainPage
+        this.pageType = BlogPageType.UserMainPage
         await HierarchyManager.loadHierarchy(userId)
-        await this.blog.loadUserPageList()
-        await this.blog.blogUserInfo.load(userId)
+        await Blog.loadUserPageList()
+        await Blog.loadBlogUserInfo()
         const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
         currentHierarchy.openedPageId = null
     }
@@ -89,12 +91,13 @@ class BlogPage {
             await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${authority.nickname}/${pageId}/${encodeURIComponent(authority.documentName)}`)
             return
         }
-        if (!this.blog || this.blog.id !== authority.userId) {
-            this.blog = new Blog(authority.userId)
+        EditorPage.handleEnter(pageId)
+        if (Blog.id !== authority.userId) {
+            Blog.load(authority.userId)
         }
-        this.blog.pageType = BlogPageType.NormalPage
+        this.pageType = BlogPageType.NormalPage
         await HierarchyManager.loadHierarchy(authority.userId)
-        await this.blog.blogUserInfo.load(authority.userId)
+        await Blog.blogUserInfo.load(authority.userId)
         await EditorManager.load(pageId)
         const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
         currentHierarchy.openPageParents(pageId)

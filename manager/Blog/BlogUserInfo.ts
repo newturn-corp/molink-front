@@ -18,6 +18,14 @@ export class BlogUserInfo {
         await Promise.all([this.loadUserInfo(userId), this.loadFollowInfo(userId)])
     }
 
+    clear () {
+        this.nickname = '사용자'
+        this.profileImageUrl = ''
+        this.biography = ''
+        this.followerCount = 0
+        this.followCount = 0
+    }
+
     async loadUserInfo (userId: number) {
         const dto = await ViewerAPI.getUserInfoMapByIDList([userId])
         const userInfo = dto.infoMap[userId] as ESUser

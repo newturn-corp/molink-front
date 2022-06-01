@@ -1,33 +1,29 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import { observer } from 'mobx-react'
-import RoutingManager, { Page } from '../manager/global/RoutingManager'
 import UserManager from '../manager/global/User/UserManager'
 import { Header } from '../components/global/Header/Header'
 import StyleManager from '../manager/global/Style/StyleManager'
-import { HomeMainComponent } from '../components/Home/Main/HomeMainComponent'
-import { BrowserView, MobileView } from 'react-device-detect'
+import { BrowserView } from 'react-device-detect'
 import { HierarchyContainer } from '../components/global/Hierarchy/HierarchyContainer'
 import { HierarchyWidthController } from '../components/global/Hierarchy/HierarchyWidthController'
-import HierarchyManager from '../manager/global/Hierarchy/HierarchyManager'
-import BlogManager from '../manager/Blog/BlogManager'
-import { FollowPageListComponent } from '../components/Main/FollowPageListComponent'
 import { MainHeader } from '../components/Main/MainHeader'
+import { PageListComponent } from '../components/global/PageList/PageListComponent'
+import MainPage from '../manager/Main/MainPage'
+import ContentContainer from '../components/global/ContentContainer'
+import GlobalManager from '../manager/global/GlobalManager'
+import HierarchyManager from '../manager/global/Hierarchy/HierarchyManager'
 
-const Index = observer(() => {
+const MainPageComponent = observer(() => {
     useEffect(() => {
         UserManager.load()
             .then(async () => {
-                if (!UserManager.isUserAuthorized) {
-                    await RoutingManager.moveTo(Page.SignIn)
-                } else {
-                    if (!HierarchyManager.currentHierarchyUserId) {
-                        await HierarchyManager.loadHierarchy(UserManager.userId)
-                    }
-                }
+                MainPage.handleEnter()
             })
-        BlogManager.handleEnterMainPage()
     }, [])
+
+    const pageList = MainPage.pageLists[MainPage.currentCategoryIndex]
+
     return <div>
         <Header />
         <div
@@ -37,16 +33,19 @@ const Index = observer(() => {
             <BrowserView>
                 <HierarchyContainer />
                 <HierarchyWidthController/>
-                <div
-                    className={'content-container'}
-                    style={StyleManager.contentStyle.container}
-                >
+                <ContentContainer>
                     <MainHeader/>
-                    <FollowPageListComponent/>
-                </div>
+                    <PageListComponent
+                        pageSummaryList={pageList.pageSummaryList}
+                        isListEnded={pageList.listEnded}
+                        onLoadPageList={() => pageList.loadPageSummaryList()}
+                        viewType={MainPage.viewType}
+                        showScroll={true}
+                    />
+                </ContentContainer>
             </BrowserView>
         </div>
     </div>
 })
 
-export default Index
+export default MainPageComponent

@@ -1,13 +1,11 @@
 import { observer } from 'mobx-react'
 import React, { useCallback, useState } from 'react'
-import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
 import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
 import EditorManager from '../../../../manager/Blog/EditorManager'
 import { PageHierarchyList } from './PageHierarchyList'
-import StyleManager from '../../../../manager/global/Style/StyleManager'
 import { ContentControlButtonGroup } from './ContentControlButtonGroup'
 
-export const ContentHeader: React.FC<{
+export const EditorHeader: React.FC<{
 }> = observer(() => {
     const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
     const getHeaderStyle = useCallback(() => {
