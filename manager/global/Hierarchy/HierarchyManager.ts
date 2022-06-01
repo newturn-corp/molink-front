@@ -47,7 +47,7 @@ class HierarchyManager {
         this.currentHierarchyUserId = userId
         const exist = this.hierarchyMap.get(userId)
         // 만약 실시간 동기화된 하이어라키면 로드하지 않는다.
-        if (exist && exist.websocketProvider) {
+        if (exist) {
             return
         }
         const dto = await ViewerAPI.getUserInfoMapByIDList([userId])
