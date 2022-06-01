@@ -21,6 +21,7 @@ export const SlateCodeElement: React.FC<{
     const editor = useSlate()
     const changeLanguageButtonRef = useRef(null)
     const [isMouseOver, setIsMouseOver] = useState(false)
+    const [isLanguageChangeButtonMouseOver, setIsLanguageChangeButtonMouseOver] = useState(false)
     const currentNodePath = useCallback(() => (
         ReactEditor.findPath(EditorManager.slateEditor, element)
     ), [EditorManager.slateEditor, element])
@@ -50,8 +51,12 @@ export const SlateCodeElement: React.FC<{
                 ref={changeLanguageButtonRef}
                 className={'change-language-button'}
                 style={{
-                    color: (EditorManager.editable && isMouseOver) ? undefined : '#00000000'
+                    cursor: EditorManager.editable && !EditorManager.isLocked ? 'pointer' : 'default',
+                    color: (EditorManager.editable && !EditorManager.isLocked && isMouseOver) ? undefined : '#00000000',
+                    backgroundColor: (EditorManager.editable && !EditorManager.isLocked && isLanguageChangeButtonMouseOver) ? 'rgba(0, 0, 0, 0.05)' : undefined
                 }}
+                onMouseOver={() => setIsLanguageChangeButtonMouseOver(true)}
+                onMouseLeave={() => setIsLanguageChangeButtonMouseOver(false)}
                 contentEditable={false}
                 onClick={(event) => {
                     event.stopPropagation()

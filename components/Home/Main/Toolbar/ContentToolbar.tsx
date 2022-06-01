@@ -44,8 +44,7 @@ const closeStateContentToolbarStyle = {
 
 export const ContentToolbar: React.FC<{
   }> = observer(() => {
-      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-      if (!currentHierarchy || !currentHierarchy.openedPageId || !currentHierarchy.editable) {
+      if (!EditorManager.editable || EditorManager.isLocked) {
           return <></>
       }
       return <div

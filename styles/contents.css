@@ -515,11 +515,7 @@
   border-radius: 3px;
   color: #868686;
   transition: color 0.3s;
-  cursor: pointer;
   user-select: none;
-}
-.content-container .content-body .contents .code .change-language-button:hover {
-  background-color: rgba(0, 0, 0, 0.05);
 }
 .content-container .content-body .contents .code .code-content {
   font-family: "Fira Mono", source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
