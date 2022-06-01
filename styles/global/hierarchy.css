@@ -7,7 +7,6 @@
 .hierarchy .hierarchy-name {
   height: 56px;
   display: flex;
-  margin-bottom: 5px;
   cursor: pointer;
 }
 .hierarchy .hierarchy-name .profile-image {
