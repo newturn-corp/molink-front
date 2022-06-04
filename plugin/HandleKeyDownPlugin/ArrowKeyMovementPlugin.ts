@@ -16,7 +16,7 @@ export const moveSelectionWhenCommandArrowLeftDown = (event, editor) => {
         Transforms.collapse(editor, { edge: 'focus' })
     }
 
-    Transforms.move(editor, { unit: 'word', reverse: true })
+    Transforms.move(editor, { unit: 'line', reverse: true })
 }
 
 export const moveSelectionWhenArrowRightDown = (event, editor) => {
@@ -32,5 +32,5 @@ export const moveSelectionWhenCommandArrowRightDown = (event, editor) => {
         Transforms.collapse(editor, { edge: 'focus' })
     }
 
-    Transforms.move(editor, { unit: 'word', reverse: false })
+    Transforms.move(editor, { unit: 'line', reverse: false })
 }
