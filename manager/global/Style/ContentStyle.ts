@@ -1,6 +1,5 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import { isBrowser } from 'react-device-detect'
-import HierarchyManager from '../Hierarchy/HierarchyManager'
 import { Event } from '../Event/Event'
 import EventManager from '../Event/EventManager'
 import { ToolbarOnOffChangeParam } from '../Event/EventParams'
@@ -26,8 +25,9 @@ import {
     defaultToolbarOnOffButtonStyle,
     defaultVisibilityMenuStyle
 } from './ContentStyle/constants'
-import EditorManager from '../../Blog/EditorManager'
 import StyleManager from './StyleManager'
+import EditorPage from '../../Blog/Editor/EditorPage'
+import Blog from '../Blog/Blog'
 
 export class ContentStyle {
     _container: ContentContainerStyleInterface = defaultContentContainerStyle
@@ -125,7 +125,7 @@ export class ContentStyle {
 
     private refreshBodyTop () {
         if (isBrowser) {
-            if (EditorManager.editable) {
+            if (EditorPage.editor?.editable) {
                 this._body.top = this._header.height + this._toolbar.height
             } else {
                 this._body.top = this._header.height
@@ -144,7 +144,7 @@ export class ContentStyle {
     }
 
     handleLoadContent () {
-        if (!EditorManager.editable) {
+        if (EditorPage.editor && !EditorPage.editor.editable) {
             this._header.top = 0
         }
         this.refreshBodyTop()
@@ -152,10 +152,11 @@ export class ContentStyle {
     }
 
     refresh () {
-        const containerSize = isBrowser ? globalThis.window.innerWidth - HierarchyManager.getHierarchyWidth() : globalThis.window.innerWidth
+        const blogWidth = Blog.getBlogWidth()
+        const containerSize = isBrowser ? globalThis.window.innerWidth - blogWidth : globalThis.window.innerWidth
         const contentSize = Math.min(800, containerSize * (isBrowser ? 0.75 : 0.9))
         this._container = {
-            transform: isBrowser ? `translateX(${HierarchyManager.getHierarchyWidth()}px)` : undefined,
+            transform: isBrowser ? `translateX(${blogWidth}px)` : undefined,
             width: containerSize
         }
         this._body.width = containerSize

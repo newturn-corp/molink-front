@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react'
 import Drawer from '@material-ui/core/Drawer'
 import { makeStyles } from '@material-ui/core/styles'
@@ -7,12 +7,12 @@ import { DragIndicator } from './DragIndicator'
 import { HierarchyComponent } from './HierarchyComponent'
 import { HierarchyName } from './HierarchyName'
 import { HierarchyOnOffButton } from './HierarchyOnOffButton'
-import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
 import UserManager from '../../../manager/global/User/UserManager'
 import StyleManager from '../../../manager/global/Style/StyleManager'
 import { HierarchyButtonGroup } from './HierarchyButtonGroup'
 import { BrowserView, isBrowser, MobileView } from 'react-device-detect'
 import { HierarchyOptionDrawer } from './HierarchyOptionDrawer/HierarchyOptionDrawer'
+import Blog from '../../../manager/global/Blog/Blog'
 
 export const HierarchyContainer: React.FC<{
   }> = observer(() => {
@@ -26,9 +26,8 @@ export const HierarchyContainer: React.FC<{
           }
       })
       const classes = useStyles()
-      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
 
-      if (!currentHierarchy) {
+      if (!Blog.pageHierarchy) {
           return <></>
       }
 
@@ -48,30 +47,29 @@ export const HierarchyContainer: React.FC<{
                   onContextMenu={(event) => {
                       event.preventDefault()
                       event.stopPropagation()
-                      HierarchyManager.openContextMenu(null)
+                      Blog.pageHierarchy.contextMenu.open(null)
                   }}
-                  open={isBrowser ? undefined : HierarchyManager.isHierarchyOpen}
+                  open={isBrowser ? undefined : Blog.isOpen}
                   onClose={isBrowser
                       ? undefined
                       : () => {
-                          HierarchyManager.isHierarchyOpen = false
+                          Blog.isOpen = false
                       }}
                   style={StyleManager.hierarchyStyle.containerStyle}
                   classes={classes}
               >
                   {
-                      HierarchyManager.isHierarchyOpen
-                          ? <>
-                              <HierarchyName/>
-                              <HierarchyButtonGroup/>
-                              <HierarchyContextMenu/>
-                              <HierarchyComponent/>
-                              {
-                                  currentHierarchy.editable ? <DragIndicator/> : <></>
-                              }
-                          </>
-                          : <>
-                          </>
+                      Blog.isOpen && <>
+                          <HierarchyName/>
+                          <HierarchyButtonGroup/>
+                          <HierarchyComponent/>
+                          {
+                              Blog.pageHierarchy.editable && <>
+                                  <HierarchyContextMenu/>
+                                  <DragIndicator/>
+                              </>
+                          }
+                      </>
                   }
 
               </Drawer>

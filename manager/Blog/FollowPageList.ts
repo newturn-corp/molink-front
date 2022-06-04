@@ -1,7 +1,5 @@
 import { ESPageSummary, ESUser, GetPageListDTO, GetUserInfoByUserMapDTO } from '@newturn-develop/types-molink'
 import ViewerAPI from '../../api/ViewerAPI'
-import HierarchyManager from '../global/Hierarchy/HierarchyManager'
-import BlogManager from './BlogManager'
 import { makeAutoObservable, toJS } from 'mobx'
 import { throttle } from 'lodash'
 

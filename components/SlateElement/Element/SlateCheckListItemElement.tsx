@@ -2,14 +2,15 @@ import React from 'react'
 import { ReactEditor, useReadOnly, useSlateStatic } from 'slate-react'
 import { css } from '@emotion/css'
 import { Transforms } from 'slate'
-import EditorManager from '../../../manager/Blog/EditorManager'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 export const SlateCheckListItemElement: React.FC<{
     attributes,
     children,
     element
   }> = ({ attributes, children, element }) => {
-      const editor = useSlateStatic()
+      const editor = EditorPage.editor
+      const slateEditor = useSlateStatic()
       const readOnly = useReadOnly()
       const { checked } = element
       const checkListIndex = []
@@ -50,17 +51,17 @@ export const SlateCheckListItemElement: React.FC<{
                       <input
                           type="checkbox"
                           style={{
-                              marginTop: EditorManager.editable ? 8 : 4,
-                              cursor: EditorManager.editable ? 'pointer' : 'default'
+                              marginTop: editor.editable ? 8 : 4,
+                              cursor: editor.editable ? 'pointer' : 'default'
                           }}
                           checked={checked}
                           onChange={event => {
-                              if (EditorManager.editable) {
-                                  const path = ReactEditor.findPath(editor, element)
+                              if (editor.editable) {
+                                  const path = ReactEditor.findPath(slateEditor, element)
                                   const newProperties = {
                                       checked: event.target.checked
                                   }
-                                  Transforms.setNodes(editor, newProperties, { at: path })
+                                  Transforms.setNodes(slateEditor, newProperties, { at: path })
                               }
                           }}
                       />

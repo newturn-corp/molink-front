@@ -5,7 +5,6 @@ import DialogManager from '../manager/global/DialogManager'
 
 export const DialogComponent: React.FC<{
   }> = observer(() => {
-      console.log(DialogManager.showDialog)
       return <Dialog
           className={'dialog'}
           open={DialogManager.showDialog}

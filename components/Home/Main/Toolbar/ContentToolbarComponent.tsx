@@ -1,18 +1,11 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
-import EditorManager from '../../../../manager/Blog/EditorManager'
-import StyleManager from '../../../../manager/global/Style/StyleManager'
 import { ToolbarOnOffButton } from './ToolbarOnOffButton'
-import ToolbarManager from '../../../../manager/Editing/ToolbarManager'
 import { ToolbarEditingButton } from './ToolbarEditingButton'
 import Photo from '../../../../public/image/icon/photo.svg'
 import Video from '../../../../public/image/icon/video.svg'
-import Link from '../../../../public/image/icon/link.svg'
 import File from '../../../../public/image/icon/folder.svg'
-import Calendar from '../../../../public/image/icon/calendar.svg'
 import Code from '../../../../public/image/icon/code.svg'
-import Table from '../../../../public/image/icon/table.svg'
 import CheckList from '../../../../public/image/icon/check-list.svg'
 import {
     BookRounded,
@@ -29,6 +22,7 @@ import {
 import FormattingManager, { Align, Format, List } from '../../../../manager/Editing/FormattingManager'
 import LinkManager from '../../../../manager/Editing/Link/LinkManager'
 import LanguageManager from '../../../../manager/global/LanguageManager'
+import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 
 const defaultContentToolbarStyle = {
     height: 90,
@@ -42,18 +36,22 @@ const closeStateContentToolbarStyle = {
     padding: 0
 }
 
-export const ContentToolbar: React.FC<{
+export const ContentToolbarComponent: React.FC<{
   }> = observer(() => {
-      if (!EditorManager.editable || EditorManager.isLocked) {
+      const editor = EditorPage.editor
+      if (!editor.editable || editor.info.isLocked) {
           return <></>
       }
+
+      const toolbar = editor.toolbar
+
       return <div
           className={'content-toolbar'}
-          style={EditorManager.isToolbarOpen ? defaultContentToolbarStyle : closeStateContentToolbarStyle}
+          style={toolbar.isOpen ? defaultContentToolbarStyle : closeStateContentToolbarStyle}
       >
           <div
               style={{
-                  display: EditorManager.isToolbarOpen ? undefined : 'none'
+                  display: toolbar.isOpen ? undefined : 'none'
               }}
           >
               <div
@@ -64,7 +62,7 @@ export const ContentToolbar: React.FC<{
                       style={{ display: 'none' }}
                       id="image-insert-button"
                       multiple
-                      onChange={(event) => ToolbarManager.insertImage(event)}
+                      onChange={(event) => toolbar.insertImage(event)}
                       type="file"
                   />
                   <label htmlFor={'image-insert-button'}>
@@ -82,7 +80,7 @@ export const ContentToolbar: React.FC<{
                       style={{ display: 'none' }}
                       id="video-insert-button"
                       multiple
-                      onChange={(event) => ToolbarManager.insertVideo(event)}
+                      onChange={(event) => toolbar.insertVideo(event)}
                       type="file"
                   />
                   <label htmlFor={'video-insert-button'}>
@@ -101,7 +99,8 @@ export const ContentToolbar: React.FC<{
                       id="file-insert-button"
                       multiple
                       onChange={(event) =>
-                          ToolbarManager.insertFile(event)}
+                          toolbar.insertFile(event)
+                      }
                       type="file"
                   />
                   <label htmlFor={'file-insert-button'}>
@@ -135,7 +134,7 @@ export const ContentToolbar: React.FC<{
                       icon={<Code/>}
                       text={'코드'}
                       desc={'코드 추가'}
-                      onClick={() => ToolbarManager.insertCode()}
+                      onClick={() => toolbar.insertCode()}
                       disabled={false}
                   />
                   {/* <ToolbarEditingButton */}

@@ -1,5 +1,5 @@
 import { Node, Range, Text } from 'slate'
-import EditorManager from '../../manager/Blog/EditorManager'
+import EditorPage from '../../manager/Blog/Editor/EditorPage'
 
 const onKeyDown = (event, editor) => {
     const { selection } = editor
@@ -13,6 +13,6 @@ const onKeyDown = (event, editor) => {
     if (!Text.isText(node)) {
         return
     }
-    EditorManager.showPlaceholder = !(node.text === '' && event.key === 'Process')
+    EditorPage.editor.showPlaceholder = !(node.text === '' && event.key === 'Process')
 }
 export { onKeyDown }

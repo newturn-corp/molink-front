@@ -1,39 +1,51 @@
-import { makeAutoObservable } from 'mobx'
 import { UserPageList } from '../../Blog/UserPageList'
 import { BlogUserInfo } from '../../Blog/BlogUserInfo'
-
-export enum BlogPageType {
-    UserMainPage,
-    NormalPage
-}
+import { BlogPageHierarchy } from './BlogPageHierarchy'
+import { makeAutoObservable } from 'mobx'
+import UserManager from '../User/UserManager'
 
 class Blog {
-    id: number
+    id: number = null
+    isOpen: boolean = true
     userPageList: UserPageList = null
     blogUserInfo: BlogUserInfo = null
-    pageType: BlogPageType = BlogPageType.NormalPage
+    pageHierarchy: BlogPageHierarchy = null
 
     constructor () {
         makeAutoObservable(this)
     }
 
-    load (userId: number) {
-        this.id = userId
-        this.userPageList = new UserPageList(userId)
+    async load (id: number) {
+        if (this.id === id) {
+            return
+        } else {
+            this.reset()
+        }
+        this.id = id
+        this.pageHierarchy = new BlogPageHierarchy()
+        await this.pageHierarchy.load(id)
         this.blogUserInfo = new BlogUserInfo()
+        await this.blogUserInfo.load(id)
+        this.userPageList = new UserPageList(this.id)
     }
 
-    clear () {
-        this.userPageList?.clear()
-        this.blogUserInfo?.clear()
+    reset () {
+        if (this.pageHierarchy) {
+            this.pageHierarchy.reset()
+        }
+        if (this.blogUserInfo) {
+            this.blogUserInfo.reset()
+        }
+        if (this.userPageList) {
+            this.userPageList.clear()
+        }
     }
 
-    async loadUserPageList () {
-        await this.userPageList.loadPageSummaryList()
-    }
-
-    async loadBlogUserInfo () {
-        await this.blogUserInfo.load(this.id)
+    getBlogWidth () {
+        if (!this.isOpen) {
+            return UserManager.isUserAuthorized ? 30 : 0
+        }
+        return UserManager.setting ? UserManager.setting.hierarchyWidth : 240
     }
 }
 export default new Blog()

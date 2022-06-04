@@ -12,14 +12,14 @@ import AuthManager from '../../../../manager/Auth/AuthManager'
 import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
 import SupportManager from '../../../../manager/global/SupportManager'
 import { LinkRounded, LockOpenRounded, LockRounded, RedoRounded, UndoRounded } from '@material-ui/icons'
-import EditorManager from '../../../../manager/Blog/EditorManager'
 import { message } from 'antd'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
 import { PageVisibility } from '@newturn-develop/types-molink'
 import Public from '../../../../public/image/editor/toolbar/visibility/public.svg'
 import OnlyFollower from '../../../../public/image/editor/toolbar/visibility/only-follower.svg'
 import Private from '../../../../public/image/editor/toolbar/visibility/private.svg'
 import LanguageManager from '../../../../manager/global/LanguageManager'
+import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
+import Blog from '../../../../manager/global/Blog/Blog'
 
 const getIconForPageVisibility = (visibility: PageVisibility) => {
     switch (visibility) {
@@ -93,14 +93,16 @@ const UserPart: React.FC<{
 
 const EditorPart: React.FC<{
 }> = observer(() => {
-    const hierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    if (!hierarchy || !hierarchy.openedPageId) {
+    const pageHierarchy = Blog.pageHierarchy
+    if (!pageHierarchy || !pageHierarchy.openedPage) {
         return <></>
     }
-    if (!EditorManager.editable) {
+    const openedPage = pageHierarchy.openedPage
+    const editor = EditorPage.editor
+    const slateEditor = editor.slateEditor
+    if (!editor.editable) {
         return <></>
     }
-    const page = hierarchy.map[hierarchy.openedPageId]
 
     return (
         <>
@@ -111,7 +113,7 @@ const EditorPart: React.FC<{
             >
                 <MobileColumnDrawerElement
                     onClick={async () => {
-                        EditorManager.slateEditor.redo()
+                        slateEditor.redo()
                         UserManager.isUserDrawerOpen = false
                     }}
                 >
@@ -120,7 +122,7 @@ const EditorPart: React.FC<{
                 </MobileColumnDrawerElement>
                 <MobileColumnDrawerElement
                     onClick={async () => {
-                        EditorManager.slateEditor.undo()
+                        slateEditor.undo()
                         UserManager.isUserDrawerOpen = false
                     }}
                 >
@@ -135,9 +137,9 @@ const EditorPart: React.FC<{
             >
                 <MobileColumnDrawerElement
                     onClick={async () => {
-                        const info = EditorManager.info
-                        EditorManager.updateIsLocked(!info.isLocked)
-                        if (info.isLocked) {
+                        const isLocked = editor.info.isLocked
+                        editor.info.updateIsLocked(!editor.info.isLocked)
+                        if (isLocked) {
                             message.success('페이지가 잠금되었습니다.')
                         } else {
                             message.success('페이지가 잠금 해제 되었습니다.')
@@ -145,20 +147,22 @@ const EditorPart: React.FC<{
                     }}
                 >
                     {
-                        EditorManager.isLocked ? <LockOpenRounded/> : <LockRounded/>
+                        editor.info.isLocked ? <LockOpenRounded/> : <LockRounded/>
                     }
-                    <div className={'name'}>{EditorManager.isLocked ? '페이지 잠금 해제' : '페이지 잠금'}</div>
+                    <div className={'name'}>
+                        {editor.info.isLocked ? '페이지 잠금 해제' : '페이지 잠금'}
+                    </div>
                 </MobileColumnDrawerElement>
                 <MobileColumnDrawerElement
                     onClick={async () => {
-                        hierarchy.visibilityController.isVisibilityDrawerOpen = true
+                        pageHierarchy.visibilityController.isVisibilityDrawerOpen = true
                         UserManager.isUserDrawerOpen = false
                     }}
                 >
                     {
-                        getIconForPageVisibility(page.visibility)
+                        getIconForPageVisibility(openedPage.visibility)
                     }
-                    <div className={'name'}>{`공개 범위 변경 (${getNameForPageVisibility(page.visibility)})`}</div>
+                    <div className={'name'}>{`공개 범위 변경 (${getNameForPageVisibility(openedPage.visibility)})`}</div>
                 </MobileColumnDrawerElement>
             </MobileColumnDrawerGroup>
         </>
@@ -167,7 +171,7 @@ const EditorPart: React.FC<{
 
 export const UserDrawer: React.FC<{
 }> = observer(() => {
-    const hierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
+    const pageHierarchy = Blog.pageHierarchy
     return (
         <MobileColumnDrawer
             className={'user-drawer'}
@@ -181,7 +185,7 @@ export const UserDrawer: React.FC<{
             <UserPart/>
             <EditorPart/>
             {
-                hierarchy && hierarchy.openedPageId
+                pageHierarchy && pageHierarchy.openedPage
                     ? <>
                         <MobileColumnDrawerGroup
                             style={{

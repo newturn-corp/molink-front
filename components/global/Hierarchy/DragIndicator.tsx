@@ -1,26 +1,25 @@
 import React, { useEffect, useRef } from 'react'
 import { observer } from 'mobx-react'
 import { Tooltip } from 'antd'
-import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
+import Blog from '../../../manager/global/Blog/Blog'
 
 export const DragIndicator: React.FC<{
   }> = observer(() => {
-      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
+      const pageHierarchy = Blog.pageHierarchy
+      const pageDragManager = Blog.pageHierarchy.pageDragManager
       const tooltipRef = useRef<HTMLDivElement>(null)
       const indicatorRef = useRef<HTMLDivElement>(null)
       useEffect(() => {
-          if (currentHierarchy) {
-              currentHierarchy.pageDragManager.indicatorTooltip = document.getElementsByClassName('drag-indicator-tooltip')[0] as HTMLElement
-              currentHierarchy.pageDragManager.dragIndicator = indicatorRef.current
-          }
-      }, [currentHierarchy])
+          pageDragManager.indicatorTooltip = document.getElementsByClassName('drag-indicator-tooltip')[0] as HTMLElement
+          pageDragManager.dragIndicator = indicatorRef.current
+      }, [pageHierarchy])
 
       return (
           <Tooltip
               ref={tooltipRef}
               id={'page-drag-tooltip'}
               placement="right"
-              title={currentHierarchy && currentHierarchy.pageDragManager.viewerText}
+              title={pageDragManager.viewerText}
               visible={true}
               overlayClassName={'drag-indicator-tooltip'}
           >
@@ -28,9 +27,6 @@ export const DragIndicator: React.FC<{
                   ref={indicatorRef}
                   id={'page-drag-indicator'}
                   className='drag-indicator'
-                  // style={{
-                  //     width: '240'
-                  // }}
               >
               </div>
           </Tooltip>

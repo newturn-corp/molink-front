@@ -15,12 +15,12 @@ class EventManager {
     }
 
     public async issueEvent (event: Event, param: EventParam = {}) {
-        const listeners = this._eventListenerMap.get(event)
-        for (const listener of listeners) {
-            await listener.listener(param)
-        }
         const disposableListeners = this._disposableEventListenerMap.get(event)
         for (const listener of disposableListeners) {
+            await listener.listener(param)
+        }
+        const listeners = this._eventListenerMap.get(event)
+        for (const listener of listeners) {
             await listener.listener(param)
         }
         this._disposableEventListenerMap.set(event, [])

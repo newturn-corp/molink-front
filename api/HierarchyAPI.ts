@@ -1,5 +1,9 @@
 import { BaseAPI } from './baseAPI'
-import { ChangePageVisibilityDTO } from '@newturn-develop/types-molink'
+import {
+    ChangePageVisibilityDTO,
+    CreatePageInBlogDTO,
+    HierarchyDocumentInfoInterface
+} from '@newturn-develop/types-molink'
 import { APIError } from './APIError'
 import { ChildrenVisibilityWide, PageNotExists, ParentVisibilityNarrow } from '../Errors/HierarchyError'
 
@@ -16,6 +20,11 @@ class HierarchyAPI extends BaseAPI {
             throw new APIError(res)
         }
         return true
+    }
+
+    async createPageInBlog (dto: CreatePageInBlogDTO): Promise<HierarchyDocumentInfoInterface> {
+        const res = await this.post('/hierarchy/pages', dto)
+        return res.data
     }
 }
 export default new HierarchyAPI()

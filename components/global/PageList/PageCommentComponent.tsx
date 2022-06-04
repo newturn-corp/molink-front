@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react'
-import PageManager from '../../../manager/Blog/PageManager'
 import { Avatar } from 'antd'
 import UserInfoMap from '../../../manager/global/User/UserInfoMap'
 import { getRelativeTime } from '../../../utils/getRelativeTime'
 import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 import { CommentInputContainer } from '../../Blog/EditorPage/Comment/CommentInputContainer'
-import { Collapse, List } from '@material-ui/core'
+import { Collapse } from '@material-ui/core'
 import { ArrowDropDown, ArrowRight } from '@material-ui/icons'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 export const PageCommentComponent: React.FC<{
     commentId: string,
@@ -18,7 +18,8 @@ export const PageCommentComponent: React.FC<{
 }) => {
     const [openCommentResponseInput, setOpenCommentResponseInput] = useState(false)
     const [openCommentResponse, setOpenCommentResponse] = useState(!!depth)
-    const comment = PageManager.pageCommentInfo.commentMap[commentId]
+    const commentMap = EditorPage.commentInfo.commentMap
+    const comment = commentMap[commentId]
     if (!comment) {
         return <></>
     }
@@ -28,7 +29,7 @@ export const PageCommentComponent: React.FC<{
         content,
         children
     } = comment
-    const commentUserInfo = UserInfoMap.map[userId]
+    const commentUserInfo = UserInfoMap.idMap[userId]
     if (!commentUserInfo) {
         return <></>
     }
@@ -108,7 +109,7 @@ export const PageCommentComponent: React.FC<{
                                     : <>
                                         <ArrowRight/>
                                         <div>
-                                            {`${comment.getAllChildrenCommentCount(PageManager.pageCommentInfo.commentMap)}개의 답글 보기`}
+                                            {`${comment.getAllChildrenCommentCount(commentMap)}개의 답글 보기`}
                                         </div>
                                     </>
                             }

@@ -2,8 +2,8 @@ import { makeAutoObservable } from 'mobx'
 import isUrl from 'is-url'
 import React, { ChangeEvent } from 'react'
 import { TextAreaRef } from 'antd/es/input/TextArea'
-import EditorManager from '../../Blog/EditorManager'
-import { Transforms } from 'slate'
+import { Editor, Range, Transforms } from 'slate'
+import EditorPage from '../../Blog/Editor/EditorPage'
 
 export class LinkModal {
     isOpen: boolean = false
@@ -43,18 +43,30 @@ export class LinkModal {
         }
     }
 
+    getInsertPosition (editor: Editor) {
+        const { selection } = editor
+        if (selection) {
+            return Range.edges(selection)[0]
+        } else if (EditorPage.editor.lastSelection) {
+            return Range.edges(EditorPage.editor.lastSelection)[0]
+        }
+        return [editor.children.length]
+    }
+
     public async handleOk () {
         if (!isUrl(this.content)) {
             this.helperText = '링크 형식이 아닙니다.'
             this.isError = true
             return
         }
-        Transforms.insertNodes(EditorManager.slateEditor, {
+
+        const slateEditor = EditorPage.editor.slateEditor
+        Transforms.insertNodes(slateEditor, {
             type: 'bookmark',
             url: this.content,
             children: [{ text: '' }]
         }, {
-            at: [EditorManager.slateEditor.children.length]
+            at: this.getInsertPosition(slateEditor)
         })
         this.close()
     }

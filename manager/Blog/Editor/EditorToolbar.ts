@@ -1,29 +1,34 @@
-import React from 'react'
-import FileManager from './FileManager'
 import { makeAutoObservable } from 'mobx'
-import { Editor as SlateEditor, Element as SlateElement, Element, Node, Path, Range, Transforms } from 'slate'
-import EditorManager from '../Blog/EditorManager'
-import EventManager from '../global/Event/EventManager'
-import { Event } from '../global/Event/Event'
-import { AvailCodeLanguage, CodeElement } from '../../Types/slate/CustomElement'
+import EventManager from '../../global/Event/EventManager'
+import { Event } from '../../global/Event/Event'
+import { Element, Node, Path, Range, Transforms } from 'slate'
+import React from 'react'
+import FileManager from '../../Editing/FileManager'
+import { AvailCodeLanguage, CodeElement } from '../../../Types/slate/CustomElement'
+import EditorPage from './EditorPage'
 
-class ToolbarManager {
-    _showMobileToolbar: boolean = false
-    get showMobileToolbar () {
-        return this._showMobileToolbar
-    }
-
-    set showMobileToolbar (showMobileToolbar: boolean) {
-        EventManager.issueEvent(Event.MobileToolbarOnOffChange, { isToolbarOpen: showMobileToolbar })
-        this._showMobileToolbar = showMobileToolbar
-    }
+export class EditorToolbar {
+    isOpen: boolean = true
+    showMobileToolbar: boolean = false
 
     constructor () {
         makeAutoObservable(this)
     }
 
+    async open () {
+        this.isOpen = true
+        await EventManager.issueEvent(Event.ToolbarOnOffChange, { isToolbarOpen: true })
+        await EventManager.issueEvent(Event.MobileToolbarOnOffChange, { isToolbarOpen: true })
+    }
+
+    async close () {
+        this.isOpen = false
+        await EventManager.issueEvent(Event.ToolbarOnOffChange, { isToolbarOpen: false })
+        await EventManager.issueEvent(Event.MobileToolbarOnOffChange, { isToolbarOpen: false })
+    }
+
     handleEditorChange () {
-        const editor = EditorManager.slateEditor
+        const editor = EditorPage.editor.slateEditor
         const { selection } = editor
         if (!selection || Range.isExpanded(selection)) {
             this.showMobileToolbar = false
@@ -62,7 +67,6 @@ class ToolbarManager {
                 codeLanguage: AvailCodeLanguage.Javascript
             }]
         }
-        Transforms.insertNodes(EditorManager.slateEditor, newProperties)
+        Transforms.insertNodes(EditorPage.editor.slateEditor, newProperties)
     }
 }
-export default new ToolbarManager()

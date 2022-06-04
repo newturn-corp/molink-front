@@ -9,25 +9,25 @@ import { PageChildrenOpenButton } from './PageChildrenOpenButton'
 import { PageAddChildButton } from './PageAddChildButton'
 import { PageMenuButton } from './PageMenuButton'
 import UserManager from '../../../../manager/global/User/UserManager'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
 import { isMobile } from 'react-device-detect'
 import StyleManager from '../../../../manager/global/Style/StyleManager'
+import Blog from '../../../../manager/global/Blog/Blog'
 
 let ghost
 export const PageComponent: React.FC<{
-    documentId: string,
+    pageID: string,
     depth: number
-  }> = observer(({ documentId, depth }) => {
+  }> = observer(({ pageID, depth }) => {
       const [isMouseOver, setIsMouseOver] = useState(false)
       const divRef = useRef<HTMLDivElement>(null)
       const padding = 4 + depth * 12
 
-      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
+      const currentHierarchy = Blog.pageHierarchy
       const pageDragManager = currentHierarchy.pageDragManager
-      const page = currentHierarchy.map[documentId]
-      const isSelected = currentHierarchy.selectedPageId === page.id
+      const page = currentHierarchy.map[pageID]
+      const isSelected = currentHierarchy.contextMenu?.selectedPageId === page.id
       const isChangingName = currentHierarchy.nameChangingPageId === page.id
-      const isOpen = currentHierarchy.openedPageId === page.id
+      const isOpen = currentHierarchy.openedPage && currentHierarchy.openedPage.pageId === page.id
       const hierarchySelectedDocumentBackgroundColor = UserManager.setting ? UserManager.setting.hierarchySelectedDocumentBackgroundColor : '#ECEEF0'
 
       const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
@@ -66,9 +66,9 @@ export const PageComponent: React.FC<{
                   draggable={!isChangingName && currentHierarchy.editable}
                   onClick={async (event) => {
                       if (!isOpen) {
-                          await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${documentId}`)
+                          await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${pageID}`)
                           if (isMobile) {
-                              HierarchyManager.isHierarchyOpen = false
+                              Blog.isOpen = false
                           }
                       }
                   }}
@@ -79,13 +79,13 @@ export const PageComponent: React.FC<{
                   onContextMenu={(event) => {
                       event.preventDefault()
                       event.stopPropagation()
-                      HierarchyManager.openContextMenu(page.id)
+                      currentHierarchy.contextMenu.open(page.id)
                   }}
                   onMouseOver={() => setIsMouseOver(true)}
                   onMouseLeave={() => setIsMouseOver(false)}
               >
                   <PageChildrenOpenButton
-                      documentId={documentId}
+                      pageID={pageID}
                       key={`page-children-open-${page.id}`}
                   />
                   <PageIcon
@@ -93,24 +93,26 @@ export const PageComponent: React.FC<{
                       key={`page-icon-${page.id}`}
                   />
                   <PageTitle
-                      documentId={documentId}
+                      pageID={pageID}
                       key={`page-title-${page.id}`}
                   />
                   {
-                      (isMouseOver || isMobile) && currentHierarchy.editable
-                          ? <>
-                              <PageMenuButton documentId={documentId}/>
-                              <PageAddChildButton documentId={documentId}/>
-                          </>
-                          : <>
-                          </>
+                      ((isMouseOver || isMobile) && currentHierarchy.editable) &&
+                      <>
+                          <PageMenuButton pageID={pageID}/>
+                          <PageAddChildButton pageID={pageID}/>
+                      </>
                   }
               </ListItem>
-              <Collapse in={page.childrenOpen} timeout="auto" unmountOnExit>
-                  <List id={`document-child-list-${page.id}`} component="div" disablePadding>
+              <Collapse
+                  key={`page-collapse-${page.id}`}
+                  in={page.childrenOpen} timeout="auto" unmountOnExit>
+                  <List
+                      key={`page-children-${page.id}`}
+                      id={`document-child-list-${page.id}`} component="div" disablePadding>
                       {
                           page.children.map(childDocumentId => {
-                              return <PageComponent key={Math.random()} documentId={childDocumentId} depth={depth + 1}/>
+                              return <PageComponent key={Math.random()} pageID={childDocumentId} depth={depth + 1}/>
                           })
                       }
                   </List>

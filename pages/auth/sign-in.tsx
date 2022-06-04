@@ -45,8 +45,15 @@ const SignIn = observer(() => {
         const result = await SignInManager.signIn()
         if (result.success) {
             await UserManager.load()
-            if (GlobalManager.window.history.length > 0) {
-                RoutingManager.back()
+            const lastPage = RoutingManager.history[RoutingManager.history.length - 1]
+            if (RoutingManager.history.length > 0 && !(
+                [
+                    Page.SignUp,
+                    Page.SignIn,
+                    Page.ChangePasswordRequest,
+                    Page.NoticeEmailAuth
+                ].includes(lastPage.page))) {
+                await RoutingManager.back()
             } else {
                 await RoutingManager.moveTo(Page.Index)
             }

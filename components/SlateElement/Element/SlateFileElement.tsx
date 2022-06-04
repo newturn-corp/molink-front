@@ -1,14 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import {
-    SlateFileElementType,
-    SlateVideoElementType
+    SlateFileElementType
 } from '../../../Types/slate/CustomElement'
-import ReactPlayer from 'react-player'
 import FileUploadManager from '../../../manager/Editing/FileUploadManager'
-import EditorManager from '../../../manager/Blog/EditorManager'
-import { ReactEditor, useFocused, useSelected } from 'slate-react'
-import { SlateMediaElement } from './MediaElement'
-import { CircularProgress } from '@material-ui/core'
+import { ReactEditor, useSelected, useSlateStatic } from 'slate-react'
 import { getFileSizeString } from '../../../utils/getFileSizeString'
 import { FileLoading } from './FileLoading'
 import { DescriptionOutlined } from '@material-ui/icons'
@@ -19,12 +14,13 @@ import axios from 'axios'
 import MenuManager from '../../../manager/global/Menu/MenuManager'
 import MenuItem from '../../../manager/global/Menu/MenuItem'
 import MenuDotsIcon from '../../../public/image/icon/menu-dots.svg'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 const getFileSrc = (src: string) => {
     if (src && src.includes('https://cdn.filestackcontent.com')) {
         return src + `?policy=${FileUploadManager.policy}&signature=${FileUploadManager.signature}`
     } else if (src && src.includes('molink.life/files')) {
-        return src + `?pageId=${EditorManager.pageId}`
+        return src + `?pageId=${EditorPage.pageId}`
     }
     return src
 }
@@ -35,20 +31,23 @@ export const SlateFileElement: React.FC<{
     element: SlateFileElementType
 }> = ({ attributes, children, element }) => {
     const selected = useSelected()
+    const slateEditor = useSlateStatic()
     const currentNodePath = useCallback(() => (
-        ReactEditor.findPath(EditorManager.slateEditor, element)
-    ), [EditorManager.slateEditor, element])
+        ReactEditor.findPath(slateEditor, element)
+    ), [slateEditor, element])
     const [isMouseOver, setIsMouseOver] = useState(false)
     const menuButtonRef = useRef<HTMLDivElement>()
 
+    const editor = EditorPage.editor
+
     useEffect(() => {
         if (selected) {
-            const reverse = ['ArrowUp', 'ArrowLeft', 'Backspace'].includes(EditorManager.lastPressedKey)
-            Transforms.select(EditorManager.slateEditor, currentNodePath())
-            Transforms.collapse(EditorManager.slateEditor, { edge: 'end' })
-            Transforms.move(EditorManager.slateEditor, { unit: 'line', reverse })
+            const reverse = ['ArrowUp', 'ArrowLeft', 'Backspace'].includes(editor.lastPressedKey)
+            Transforms.select(slateEditor, currentNodePath())
+            Transforms.collapse(slateEditor, { edge: 'end' })
+            Transforms.move(slateEditor, { unit: 'line', reverse })
         }
-    }, [selected, EditorManager.slateEditor, currentNodePath])
+    }, [selected, slateEditor, currentNodePath])
 
     return (
         <div>
@@ -121,7 +120,7 @@ export const SlateFileElement: React.FC<{
                                     event.stopPropagation()
                                     const rect = menuButtonRef.current.getBoundingClientRect()
                                     MenuManager.open([new MenuItem('삭제', () => {
-                                        Transforms.removeNodes(EditorManager.slateEditor, { at: currentNodePath() })
+                                        Transforms.removeNodes(slateEditor, { at: currentNodePath() })
                                     })], {
                                         top: rect.top + (rect.height / 2),
                                         left: rect.left + (rect.width / 2)

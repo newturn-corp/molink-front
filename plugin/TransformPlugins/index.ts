@@ -2,14 +2,10 @@ import { Transforms, Node, Location, NodeMatch, Editor, Path, Range, Point, Node
 import { fixContentNextHeaderWhenSplitNodes } from './FixHeadNextNormalTextPlugin'
 // import HoveringToolbar from './HoveringToolbarPlugin'
 import {
-    TransformsRemoveNodesHandler,
-    TransformsSelectHandler,
     TransformsSetNodeHandler,
-    TransformsSplitNodeHandler,
-    TransformsTransformHandler
+    TransformsSplitNodeHandler
 } from './types'
 import UnknownPlugin from './UnknownPlugin'
-import FormattingManager from '../../manager/Editing/FormattingManager'
 import { customDelete } from './delete'
 import { customInsertNode } from './insertNode'
 import { customRemoveNodes } from './removeNodes'

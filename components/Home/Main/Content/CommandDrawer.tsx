@@ -2,11 +2,9 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { MobileColumnDrawer } from '../../../utils/MobileColumeDrawer/MobileColumnDrawer'
 import CommandManager from '../../../../manager/Editing/Command/CommandManager'
-import Command from '../../../../manager/Editing/Command/Command'
-import CommandGroup from '../../../../manager/Editing/Command/CommandGroup'
 import { MobileColumnDrawerGroup } from '../../../utils/MobileColumeDrawer/MobileColumnDrawerGroup'
-import EditorManager from '../../../../manager/Blog/EditorManager'
 import LanguageManager from '../../../../manager/global/LanguageManager'
+import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 
 export const CommandDrawer: React.FC<{
 }> = observer(() => {
@@ -36,7 +34,7 @@ export const CommandDrawer: React.FC<{
                                     key={`command-drawer-${command.name}`}
                                     className={'command-drawer-command-block'}
                                     onClick={() => {
-                                        CommandManager.insertNodeByCommand(EditorManager.slateEditor, command)
+                                        CommandManager.insertNodeByCommand(EditorPage.editor.slateEditor, command)
                                         CommandManager.isCommandDrawerOpen = false
                                     }}
                                 >

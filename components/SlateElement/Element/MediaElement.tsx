@@ -1,24 +1,23 @@
-import React, { useRef, useState } from 'react'
+import React from 'react'
 import {
     FloatOption, SlateImageElementType,
     SlateVideoElementType
 } from '../../../Types/slate/CustomElement'
-import ReactPlayer from 'react-player'
 import FileUploadManager from '../../../manager/Editing/FileUploadManager'
-import EditorManager from '../../../manager/Blog/EditorManager'
-import { useFocused, useSelected } from 'slate-react'
+import { useFocused, useSelected, useSlateStatic } from 'slate-react'
 import StyleManager from '../../../manager/global/Style/StyleManager'
 import { Transforms } from 'slate'
 import { css } from '@emotion/css'
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@material-ui/icons'
 import { Rnd } from 'react-rnd'
 import { Caption } from './Caption'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 const getVideoSrc = (src: string) => {
     if (src && src.includes('https://cdn.filestackcontent.com')) {
         return src + `?policy=${FileUploadManager.policy}&signature=${FileUploadManager.signature}`
     } else if (src && src.includes('molink.life/files')) {
-        return src + `?pageId=${EditorManager.pageId}`
+        return src + `?pageId=${EditorPage.pageId}`
     }
     return src
 }
@@ -29,6 +28,8 @@ export const SlateMediaElement: React.FC<{
 }> = ({ children, element }) => {
     const selected = useSelected()
     const focused = useFocused()
+    const slateEditor = useSlateStatic()
+
     if (element.isUploading) {
         return <div>
             <div
@@ -77,11 +78,11 @@ export const SlateMediaElement: React.FC<{
                         const heightStr = ref.style.height
                         const width = Number(widthStr.slice(0, widthStr.length - 2))
                         const height = Number(heightStr.slice(0, heightStr.length - 2))
-                        Transforms.setNodes(EditorManager.slateEditor, {
+                        Transforms.setNodes(slateEditor, {
                             width,
                             height
                         }, {
-                            at: EditorManager.slateEditor.selection
+                            at: slateEditor.selection
                         })
                     }}
                 >
@@ -102,10 +103,10 @@ export const SlateMediaElement: React.FC<{
                                     <div
                                         className={'button'}
                                         onClick={event => {
-                                            Transforms.setNodes(EditorManager.slateEditor, {
+                                            Transforms.setNodes(slateEditor, {
                                                 floatOption: FloatOption.Left
                                             }, {
-                                                at: EditorManager.slateEditor.selection
+                                                at: slateEditor.selection
                                             })
                                         }}
                                     >
@@ -114,10 +115,10 @@ export const SlateMediaElement: React.FC<{
                                     <div
                                         className={'button'}
                                         onClick={event => {
-                                            Transforms.setNodes(EditorManager.slateEditor, {
+                                            Transforms.setNodes(slateEditor, {
                                                 floatOption: FloatOption.Center
                                             }, {
-                                                at: EditorManager.slateEditor.selection
+                                                at: slateEditor.selection
                                             })
                                         }}
                                     >
@@ -126,10 +127,10 @@ export const SlateMediaElement: React.FC<{
                                     <div
                                         className={'button'}
                                         onClick={event => {
-                                            Transforms.setNodes(EditorManager.slateEditor, {
+                                            Transforms.setNodes(slateEditor, {
                                                 floatOption: FloatOption.Right
                                             }, {
-                                                at: EditorManager.slateEditor.selection
+                                                at: slateEditor.selection
                                             })
                                         }}
                                     >

@@ -1,17 +1,17 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { ArrowDropDown, ArrowRight } from '@material-ui/icons'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
-import { isBrowser } from 'react-device-detect'
+import Blog from '../../../../manager/global/Blog/Blog'
 
 export const PageChildrenOpenButton: React.FC<{
-    documentId: string
-  }> = observer(({ documentId }) => {
-      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-      const document = currentHierarchy.map[documentId]
+    pageID: string
+  }> = observer(({ pageID }) => {
+      const pageHierarchy = Blog.pageHierarchy
+      const page = pageHierarchy.map[pageID]
+
       const handleClick = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
           event.stopPropagation()
-          await currentHierarchy.updateHierarchyChildrenOpen(documentId, !document.childrenOpen)
+          await pageHierarchy.updateHierarchyChildrenOpen(pageID, !page.childrenOpen)
       }
 
       return <div
@@ -19,7 +19,7 @@ export const PageChildrenOpenButton: React.FC<{
           onClick={(event) => handleClick(event)}
       >
           {
-              document.childrenOpen
+              page.childrenOpen
                   ? <ArrowDropDown />
                   : <ArrowRight />
           }

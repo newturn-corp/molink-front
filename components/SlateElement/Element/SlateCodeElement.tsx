@@ -1,11 +1,11 @@
 import React, { useCallback, useRef, useState } from 'react'
-import EditorManager from '../../../manager/Blog/EditorManager'
 import { observer } from 'mobx-react'
 import { AvailCodeLanguage, CodeElement } from '../../../Types/slate/CustomElement'
 import { Text, Transforms } from 'slate'
 import MenuManager from '../../../manager/global/Menu/MenuManager'
 import MenuItem from '../../../manager/global/Menu/MenuItem'
 import { ReactEditor, useSlate } from 'slate-react'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 const availLanguages = [AvailCodeLanguage.Javascript, AvailCodeLanguage.Python, AvailCodeLanguage.HTML, AvailCodeLanguage.JAVA, AvailCodeLanguage.PHP, AvailCodeLanguage.SQL]
 
@@ -18,26 +18,27 @@ export const SlateCodeElement: React.FC<{
     children,
     element
 }) => {
-    const editor = useSlate()
+    const editor = EditorPage.editor
+    const slateEditor = useSlate()
     const changeLanguageButtonRef = useRef(null)
     const [isMouseOver, setIsMouseOver] = useState(false)
     const [isLanguageChangeButtonMouseOver, setIsLanguageChangeButtonMouseOver] = useState(false)
     const currentNodePath = useCallback(() => (
-        ReactEditor.findPath(EditorManager.slateEditor, element)
-    ), [EditorManager.slateEditor, element])
+        ReactEditor.findPath(slateEditor, element)
+    ), [slateEditor, element])
     const changeLanguage = useCallback((language: AvailCodeLanguage) => {
-        Transforms.setNodes(editor, {
+        Transforms.setNodes(slateEditor, {
             language
         }, {
             at: currentNodePath()
         })
-        Transforms.setNodes(editor, {
+        Transforms.setNodes(slateEditor, {
             codeLanguage: language
         }, {
             at: currentNodePath(),
             match: node => Text.isText(node)
         })
-    }, [editor])
+    }, [slateEditor])
 
     return (
         <p
@@ -51,9 +52,9 @@ export const SlateCodeElement: React.FC<{
                 ref={changeLanguageButtonRef}
                 className={'change-language-button'}
                 style={{
-                    cursor: EditorManager.editable && !EditorManager.isLocked ? 'pointer' : 'default',
-                    color: (EditorManager.editable && !EditorManager.isLocked && isMouseOver) ? undefined : '#00000000',
-                    backgroundColor: (EditorManager.editable && !EditorManager.isLocked && isLanguageChangeButtonMouseOver) ? 'rgba(0, 0, 0, 0.05)' : undefined
+                    cursor: editor.editable && !editor.info.isLocked ? 'pointer' : 'default',
+                    color: (editor.editable && !editor.info.isLocked && isMouseOver) ? undefined : '#00000000',
+                    backgroundColor: (editor.editable && !editor.info.isLocked && isLanguageChangeButtonMouseOver) ? 'rgba(0, 0, 0, 0.05)' : undefined
                 }}
                 onMouseOver={() => setIsLanguageChangeButtonMouseOver(true)}
                 onMouseLeave={() => setIsLanguageChangeButtonMouseOver(false)}

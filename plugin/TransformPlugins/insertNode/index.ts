@@ -1,11 +1,9 @@
 import { Editor, Node, Transforms, Element } from 'slate'
-import FileUploadManager from '../../../manager/Editing/FileUploadManager'
 import FileAPI from '../../../api/FileAPI'
 import { ChangePageFileRelationshipDTO } from '@newturn-develop/types-molink'
-import EditorManager from '../../../manager/Blog/EditorManager'
-import UserManager from '../../../manager/global/User/UserManager'
 import EventManager from '../../../manager/global/Event/EventManager'
 import { Event } from '../../../manager/global/Event/Event'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 const { insertNodes } = Transforms
 
@@ -21,7 +19,7 @@ export const customInsertNode = (editor: Editor, nodes: Node | Node[], options) 
             }
             if (node.url && node.url.includes(`${process.env.SERVER_BASE_URL}/files`)) {
                 const handle = node.url.split('/').pop()
-                FileAPI.addPageFileRelationship(new ChangePageFileRelationshipDTO(EditorManager.pageId, handle))
+                FileAPI.addPageFileRelationship(new ChangePageFileRelationshipDTO(EditorPage.pageId, handle))
             }
         }
     }

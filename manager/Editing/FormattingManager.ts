@@ -3,17 +3,14 @@ import {
     Editor,
     Element as SlateElement,
     Element,
-    Location,
-    Range,
     Text,
     Transforms
 } from 'slate'
-import EditorManager from '../Blog/EditorManager'
 import { makeAutoObservable } from 'mobx'
-import { toJSON } from 'yaml/util'
 import { TextElement } from '../../Types/slate/CustomElement'
 import { ListEditor, ListElement, ListTransforms } from '../../plugin'
 import { ReactEditor } from 'slate-react'
+import EditorPage from '../Blog/Editor/EditorPage'
 
 export enum Format {
     Bold = 'bold',
@@ -48,8 +45,12 @@ class FormattingManager {
     }
 
     isFormatActive (format: Format) {
+        const slateEditor = EditorPage.editor.slateEditor
+        if (!slateEditor) {
+            return false
+        }
         try {
-            const [match] = Editor.nodes(EditorManager.slateEditor, {
+            const [match] = Editor.nodes(slateEditor, {
                 match: n => n[format] === true,
                 universal: true
             })
@@ -61,13 +62,16 @@ class FormattingManager {
     }
 
     isAlignActive (align) {
-        const editor = EditorManager.slateEditor
-        const { selection } = editor
+        const slateEditor = EditorPage.editor.slateEditor
+        if (!slateEditor) {
+            return false
+        }
+        const { selection } = slateEditor
         if (!selection) return false
 
         const [match] = Array.from(
-            Editor.nodes(editor, {
-                at: Editor.unhangRange(editor, selection),
+            Editor.nodes(slateEditor, {
+                at: Editor.unhangRange(slateEditor, selection),
                 match: n =>
                     !Editor.isEditor(n) &&
                     Element.isElement(n) &&
@@ -80,12 +84,14 @@ class FormattingManager {
 
     toggleFormat (format: Format) {
         const isActive = this.formatActiveMap.get(format)
-        const [match] = Editor.nodes(EditorManager.slateEditor, {
-            at: EditorManager.slateEditor.selection,
+        const slateEditor = EditorPage.editor.slateEditor
+
+        const [match] = Editor.nodes(slateEditor, {
+            at: slateEditor.selection,
             match: Text.isText
         })
         Transforms.setNodes(
-            EditorManager.slateEditor,
+            slateEditor,
             {
                 [format]: isActive ? null : true
             },
@@ -98,7 +104,8 @@ class FormattingManager {
     }
 
     toggleAlign (format) {
-        const editor = EditorManager.slateEditor
+        const slateEditor = EditorPage.editor.slateEditor
+        const editor = slateEditor
         const isActive = this.isAlignActive(format)
         const newProperties: Partial<Element> = {
             align: isActive ? undefined : format
@@ -107,7 +114,7 @@ class FormattingManager {
     }
 
     toggleList (list: List) {
-        const editor = EditorManager.slateEditor
+        const editor = EditorPage.editor.slateEditor
         ReactEditor.focus(editor)
         const isActive = this.listMap.get(list)
         if (isActive) {
@@ -171,8 +178,9 @@ class FormattingManager {
         this.listMap.set(List.Dot, false)
         this.listMap.set(List.Number, false)
         this.listMap.set(List.Check, false)
-        if (EditorManager.slateEditor.selection) {
-            const list = ListEditor.getListForItem(EditorManager.slateEditor, EditorManager.slateEditor.selection.anchor.path)
+        const slateEditor = EditorPage.editor.slateEditor
+        if (slateEditor.selection) {
+            const list = ListEditor.getListForItem(slateEditor, slateEditor.selection.anchor.path)
             if (list) {
                 const [node] = list
                 if (node.type === 'ul-list') {

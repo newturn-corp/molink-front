@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react'
 import { observer } from 'mobx-react'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
 
 export interface OptionDrawerTitlePropsInterface {
     icon: ReactNode

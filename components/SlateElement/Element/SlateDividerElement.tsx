@@ -1,12 +1,11 @@
 import React, { useCallback } from 'react'
 import {
     useSelected,
-    useFocused, ReactEditor
+    useFocused, ReactEditor, useSlateStatic
 } from 'slate-react'
-import { DividerElement, DividerType, FloatOption } from '../../../Types/slate/CustomElement'
-import EditorManager from '../../../manager/Blog/EditorManager'
-import { Range, Transforms } from 'slate'
-import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight, MoreHorizRounded, Remove } from '@material-ui/icons'
+import { DividerElement, DividerType } from '../../../Types/slate/CustomElement'
+import { Transforms } from 'slate'
+import { MoreHorizRounded, Remove } from '@material-ui/icons'
 import { Tooltip } from 'antd'
 import LineIcon from 'public/image/icon/line.svg'
 
@@ -60,9 +59,10 @@ export const SlateDividerElement: React.FC<{
   }> = ({ attributes, children, element }) => {
       const selected = useSelected()
       const focused = useFocused()
+      const slateEditor = useSlateStatic()
       const currentNodePath = useCallback(() => (
-          ReactEditor.findPath(EditorManager.slateEditor, element)
-      ), [EditorManager.slateEditor, element])
+          ReactEditor.findPath(slateEditor, element)
+      ), [slateEditor, element])
       const { dividerType } = element
       return (
           <div {...attributes}>
@@ -76,8 +76,7 @@ export const SlateDividerElement: React.FC<{
               >
                   {getDividerByType(dividerType)}
                   {
-                      selected && focused
-                          ? <>
+                      selected && focused &&
                               <div
                                   className='element-setting-hovering-buttons'
                                   style={{
@@ -91,7 +90,7 @@ export const SlateDividerElement: React.FC<{
                                       <div
                                           className={'button black'}
                                           onClick={event => {
-                                              Transforms.setNodes(EditorManager.slateEditor, {
+                                              Transforms.setNodes(slateEditor, {
                                                   dividerType: DividerType.LongLine
                                               }, {
                                                   at: currentNodePath()
@@ -109,7 +108,7 @@ export const SlateDividerElement: React.FC<{
                                       <div
                                           className={'button gray'}
                                           onClick={event => {
-                                              Transforms.setNodes(EditorManager.slateEditor, {
+                                              Transforms.setNodes(slateEditor, {
                                                   dividerType: DividerType.FaintLongLine
                                               }, {
                                                   at: currentNodePath()
@@ -127,7 +126,7 @@ export const SlateDividerElement: React.FC<{
                                       <div
                                           className={'button'}
                                           onClick={event => {
-                                              Transforms.setNodes(EditorManager.slateEditor, {
+                                              Transforms.setNodes(slateEditor, {
                                                   dividerType: DividerType.ShortLine
                                               }, {
                                                   at: currentNodePath()
@@ -144,7 +143,7 @@ export const SlateDividerElement: React.FC<{
                                       <div
                                           className={'button gray'}
                                           onClick={event => {
-                                              Transforms.setNodes(EditorManager.slateEditor, {
+                                              Transforms.setNodes(slateEditor, {
                                                   dividerType: DividerType.FaintShortLine
                                               }, {
                                                   at: currentNodePath()
@@ -161,7 +160,7 @@ export const SlateDividerElement: React.FC<{
                                       <div
                                           className={'button'}
                                           onClick={event => {
-                                              Transforms.setNodes(EditorManager.slateEditor, {
+                                              Transforms.setNodes(slateEditor, {
                                                   dividerType: DividerType.Dot
                                               }, {
                                                   at: currentNodePath()
@@ -172,8 +171,6 @@ export const SlateDividerElement: React.FC<{
                                       </div>
                                   </Tooltip>
                               </div>
-                          </>
-                          : <></>
                   }
               </div>
           </div>

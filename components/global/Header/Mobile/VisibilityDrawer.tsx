@@ -1,6 +1,5 @@
 import React, { MouseEventHandler, ReactNode } from 'react'
 import { observer } from 'mobx-react'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
 import { MobileColumnDrawer } from '../../../utils/MobileColumeDrawer/MobileColumnDrawer'
 import { MobileColumnDrawerGroup } from '../../../utils/MobileColumeDrawer/MobileColumnDrawerGroup'
 import { MobileColumnDrawerElement } from '../../../utils/MobileColumeDrawer/MobileColumnDrawerElement'
@@ -10,6 +9,7 @@ import OnlyFollower from '../../../../public/image/editor/toolbar/visibility/onl
 import Private from '../../../../public/image/editor/toolbar/visibility/private.svg'
 import { message } from 'antd'
 import LanguageManager from '../../../../manager/global/LanguageManager'
+import Blog from '../../../../manager/global/Blog/Blog'
 
 interface VisibilityMenuItemProps {
     icon: ReactNode
@@ -51,11 +51,11 @@ const VisibilityDrawerItem : React.FC<VisibilityMenuItemProps> = observer((props
 
 export const VisibilityDrawer: React.FC<{
 }> = observer(() => {
-    const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    if (!currentHierarchy || !currentHierarchy.openedPageId) {
+    const pageHierarchy = Blog.pageHierarchy
+    if (!pageHierarchy || !pageHierarchy.openedPage) {
         return <></>
     }
-    const visibilityController = currentHierarchy.visibilityController
+    const visibilityController = pageHierarchy.visibilityController
 
     return (
         <MobileColumnDrawer
@@ -79,7 +79,7 @@ export const VisibilityDrawer: React.FC<{
                         desc={LanguageManager.languageMap.PublicVisibilityDescription}
                         icon={<Public/>}
                         onClick={async () => {
-                            await visibilityController.updatePageVisibility(currentHierarchy.openedPageId, PageVisibility.Public)
+                            await visibilityController.updatePageVisibility(pageHierarchy.openedPage.pageId, PageVisibility.Public)
                             visibilityController.isVisibilityDrawerOpen = false
                             message.success(LanguageManager.languageMap.PublicVisibilityChangeMessage)
                         }}
@@ -92,7 +92,7 @@ export const VisibilityDrawer: React.FC<{
                         desc={LanguageManager.languageMap.OnlyFollowerVisibilityDescription}
                         icon={<OnlyFollower/>}
                         onClick={async () => {
-                            await visibilityController.updatePageVisibility(currentHierarchy.openedPageId, PageVisibility.OnlyFollower)
+                            await visibilityController.updatePageVisibility(pageHierarchy.openedPage.pageId, PageVisibility.OnlyFollower)
                             visibilityController.isVisibilityDrawerOpen = false
                             message.success(LanguageManager.languageMap.OnlyFollowerVisibilityChangeMessage)
                         }}
@@ -105,7 +105,7 @@ export const VisibilityDrawer: React.FC<{
                         desc={LanguageManager.languageMap.PrivateVisibilityDescription}
                         icon={<Private/>}
                         onClick={async () => {
-                            await visibilityController.updatePageVisibility(currentHierarchy.openedPageId, PageVisibility.Private)
+                            await visibilityController.updatePageVisibility(pageHierarchy.openedPage.pageId, PageVisibility.Private)
                             visibilityController.isVisibilityDrawerOpen = false
                             message.success(LanguageManager.languageMap.PrivateVisibilityChangeMessage)
                         }}

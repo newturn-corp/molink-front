@@ -46,14 +46,14 @@ export class LinkManager {
     private unwrapLink (editor) {
         Transforms.unwrapNodes(editor, {
             match: n =>
-                !Editor.isEditor(n) && Element.isElement(n) && n.type === 'link'
+                !Editor.isEditor(n) && Element.isElement(n) && (n as Element).type === 'link'
         })
     }
 
     isLinkActive (editor) {
         const [link] = Editor.nodes(editor, {
             match: n =>
-                !Editor.isEditor(n) && Element.isElement(n) && n.type === 'link'
+                !Editor.isEditor(n) && Element.isElement(n) && (n as Element).type === 'link'
         })
         return !!link
     }

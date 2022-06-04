@@ -2,21 +2,18 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { Portal } from '../../../utils/Portal'
 import { VisibilityMenuItem } from './VisibilityMenuItem'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
 import { PageVisibility } from '@newturn-develop/types-molink'
 import OnlyFollower from 'public/image/editor/toolbar/visibility/only-follower.svg'
 import Public from 'public/image/editor/toolbar/visibility/public.svg'
 import Private from 'public/image/editor/toolbar/visibility/private.svg'
 import StyleManager from '../../../../manager/global/Style/StyleManager'
 import LanguageManager from '../../../../manager/global/LanguageManager'
+import Blog from '../../../../manager/global/Blog/Blog'
 
 export const VisibilityMenu: React.FC<{}
 > = observer(() => {
-    const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    if (!currentHierarchy || !currentHierarchy.openedPageId) {
-        return <></>
-    }
-    const visibilityController = currentHierarchy.visibilityController
+    const pageHierarchy = Blog.pageHierarchy
+    const visibilityController = pageHierarchy.visibilityController
 
     return <Portal>
         <div
@@ -37,7 +34,7 @@ export const VisibilityMenu: React.FC<{}
                 desc={LanguageManager.languageMap.PublicVisibilityDescription}
                 icon={<Public/>}
                 onClick={() =>
-                    visibilityController.updatePageVisibility(currentHierarchy.openedPageId, PageVisibility.Public)
+                    visibilityController.updatePageVisibility(pageHierarchy.openedPage.pageId, PageVisibility.Public)
                 }
             />
             <VisibilityMenuItem
@@ -45,7 +42,7 @@ export const VisibilityMenu: React.FC<{}
                 desc={LanguageManager.languageMap.OnlyFollowerVisibilityDescription}
                 icon={<OnlyFollower/>}
                 onClick={() =>
-                    visibilityController.updatePageVisibility(currentHierarchy.openedPageId, PageVisibility.OnlyFollower)
+                    visibilityController.updatePageVisibility(pageHierarchy.openedPage.pageId, PageVisibility.OnlyFollower)
                 }
             />
             <VisibilityMenuItem
@@ -53,7 +50,7 @@ export const VisibilityMenu: React.FC<{}
                 desc={LanguageManager.languageMap.PrivateVisibilityDescription}
                 icon={<Private/>}
                 onClick={() =>
-                    visibilityController.updatePageVisibility(currentHierarchy.openedPageId, PageVisibility.Private)
+                    visibilityController.updatePageVisibility(pageHierarchy.openedPage.pageId, PageVisibility.Private)
                 }
             />
         </div>

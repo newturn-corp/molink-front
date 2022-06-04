@@ -1,22 +1,17 @@
-import { ChangePageVisibilityDTO, NoticePageVisibilityChangeDTO, PageVisibility } from '@newturn-develop/types-molink'
-import { getChildren, getParents, visibilityToText } from './HierarchyUtils'
+import { ChangePageVisibilityDTO, PageVisibility } from '@newturn-develop/types-molink'
+import { visibilityToText } from '../Hierarchy/HierarchyUtils'
 import DialogManager from '../DialogManager'
-import Hierarchy from './Hierarchy'
 import { makeAutoObservable } from 'mobx'
 import EventManager from '../Event/EventManager'
 import { Event } from '../Event/Event'
-import FileAPI from '../../../api/FileAPI'
 import HierarchyAPI from '../../../api/HierarchyAPI'
 import { ChildrenVisibilityWide, ParentVisibilityNarrow } from '../../../Errors/HierarchyError'
 
 export class VisibilityController {
-    private hierarchy: Hierarchy
-
     public isVisibilityMenuOpen: boolean = false
     public isVisibilityDrawerOpen: boolean = false
 
-    constructor (hierarchy: Hierarchy) {
-        this.hierarchy = hierarchy
+    constructor () {
         EventManager.addEventListener(Event.PageBodyClick, () => {
             this.isVisibilityMenuOpen = false
         }, 1)
@@ -43,10 +38,6 @@ export class VisibilityController {
     }
 
     public async updatePageVisibility (pageId: string, visibility: PageVisibility, force = false) {
-        if (!this.hierarchy.editable) {
-            return
-        }
-
         try {
             await HierarchyAPI.changePageVisibility(new ChangePageVisibilityDTO(pageId, visibility, force))
         } catch (err) {

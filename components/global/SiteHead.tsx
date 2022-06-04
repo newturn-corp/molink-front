@@ -1,30 +1,38 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import Head from 'next/head'
-import HierarchyManager from '../../manager/global/Hierarchy/HierarchyManager'
-import PageManager from '../../manager/Blog/PageManager'
+import EditorPage from '../../manager/Blog/Editor/EditorPage'
+import Blog from '../../manager/global/Blog/Blog'
 
 export const SiteHead: React.FC<{
   }> = observer(() => {
-      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-      const headText = !currentHierarchy || !currentHierarchy.openedPageId || !currentHierarchy.map[currentHierarchy.openedPageId] ? 'Molink' : currentHierarchy.map[currentHierarchy.openedPageId].title
-      const siteDescription = PageManager.pageUserInfo.pageDescription || '내가 주도하는 블로그 플랫폼, Molink'
-      const author = PageManager.pageUserInfo.nickname || 'Molink'
+      const pageHierarchy = Blog.pageHierarchy
+      const headText = pageHierarchy && pageHierarchy.openedPage ? pageHierarchy.openedPage.title : 'Molink'
+      const {
+          pageDescription,
+          thumbnailImage
+      } = EditorPage.pageInfo || {
+          pageDescription: '내가 주도하는 블로그 플랫폼, Molink',
+          thumbnailImage: null
+      }
+      const {
+          nickname
+      } = EditorPage.userInfo || {
+          nickname: 'Molink'
+      }
 
       return <Head>
           <title>{headText}</title>
-          <meta name="description" content={siteDescription} />
+          <meta name="description" content={pageDescription} />
           <meta property="og:title" content={headText} />
           <meta property="og:type" content="website" />
           {
-              PageManager.pageUserInfo.thumbnailImage
-                  ? <meta
-                      property="og:image"
-                      content={PageManager.pageUserInfo.thumbnailImage}
-                  />
-                  : <></>
+              thumbnailImage && <meta
+                  property="og:image"
+                  content={thumbnailImage}
+              />
           }
-          <meta property="og:article:author" content={author}/>
+          <meta property="og:article:author" content={nickname}/>
           <link rel='shortcut icon' href='/favicon.ico' />
       </Head>
   })

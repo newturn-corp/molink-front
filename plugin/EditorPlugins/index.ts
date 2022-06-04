@@ -17,9 +17,9 @@ import FileManager from '../../manager/Editing/FileManager'
 import { handleDeleteBackwardAfterMedia, handleDeleteForwardAfterMedia } from './MediaPlugin'
 import FormattingManager from '../../manager/Editing/FormattingManager'
 import LinkManager from '../../manager/Editing/Link/LinkManager'
-import ToolbarManager from '../../manager/Editing/ToolbarManager'
-import EditorManager from '../../manager/Blog/EditorManager'
 import { insertHTMLWhenInsertData } from './InsertHTMLWhenInsertData'
+import EventManager from '../../manager/global/Event/EventManager'
+import { Event } from '../../manager/global/Event/Event'
 
 export const EditorPlugin = (editor: Editor) => {
     const { isVoid, isInline, insertBreak, deleteBackward, deleteForward, normalizeNode, insertText, insertData, onChange, insertNode } = editor
@@ -114,12 +114,11 @@ export const EditorPlugin = (editor: Editor) => {
     }
 
     editor.onChange = () => {
+        EventManager.issueEvent(Event.EditorChange)
         if (isBrowser) {
             CommandManager.handleEditorChange(editor)
         }
         FormattingManager.handleEditorChange()
-        ToolbarManager.handleEditorChange()
-        EditorManager.handleEditorOnChange()
         onChange()
     }
 

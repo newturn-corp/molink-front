@@ -1,15 +1,13 @@
-import MainAPI from '../../api/mainAPI'
-import { ChangePageFileRelationshipDTO, UploadImageDTO, UploadImageFromURLDTO } from '@newturn-develop/types-molink'
-import { SERVER_BASE_URL } from '../../infra/constants'
+import { ChangePageFileRelationshipDTO } from '@newturn-develop/types-molink'
 import * as filestack from 'filestack-js'
 import UserManager from '../global/User/UserManager'
 import EventManager from '../global/Event/EventManager'
 import { Event } from '../global/Event/Event'
 import FileAPI from '../../api/FileAPI'
 import { UserAuthorizationParam } from '../global/Event/EventParams'
-import HierarchyManager from '../global/Hierarchy/HierarchyManager'
-import EditorManager from '../Blog/EditorManager'
 import { isNumber } from 'lodash'
+import EditorPage from '../Blog/Editor/EditorPage'
+import Blog from '../global/Blog/Blog'
 const client = filestack.init(process.env.FILE_API_KEY)
 
 class UploadManager {
@@ -39,14 +37,10 @@ class UploadManager {
     }
 
     getTag () {
-        const { hierarchyMap, currentHierarchyUserId } = HierarchyManager
-        const currentHierarchy = hierarchyMap.get(currentHierarchyUserId)
-        const visibility = currentHierarchy.map[currentHierarchy.openedPageId].visibility
-
         return {
             userId: UserManager.userId.toString(),
-            pageId: EditorManager.pageId,
-            visibility
+            pageId: EditorPage.pageId,
+            visibility: Blog.pageHierarchy.openedPage.visibility
         }
     }
 
@@ -59,7 +53,7 @@ class UploadManager {
     }
 
     async _uploadFile (file: File) {
-        const pageId = EditorManager.pageId
+        const pageId = EditorPage.pageId
         const result = await client.upload(file, {
             tags: this.getTag()
         }, {}, {}, {
@@ -86,7 +80,7 @@ class UploadManager {
     }
 
     async _uploadFileFromURL (fileUrl: string) {
-        const pageId = EditorManager.pageId
+        const pageId = EditorPage.pageId
         const result = await client.storeURL(fileUrl, {
             location: 's3'
         }, {}, {

@@ -11,8 +11,6 @@ import { MainHeader } from '../components/Main/MainHeader'
 import { PageListComponent } from '../components/global/PageList/PageListComponent'
 import MainPage from '../manager/Main/MainPage'
 import ContentContainer from '../components/global/ContentContainer'
-import GlobalManager from '../manager/global/GlobalManager'
-import HierarchyManager from '../manager/global/Hierarchy/HierarchyManager'
 
 const MainPageComponent = observer(() => {
     useEffect(() => {

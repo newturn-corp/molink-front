@@ -1,5 +1,5 @@
 import { Editor, Text, Transforms } from 'slate'
-import EditorManager from '../../manager/Blog/EditorManager'
+import EditorPage from '../../manager/Blog/Editor/EditorPage'
 
 const isFormatActive = (editor, format) => {
     try {
@@ -24,15 +24,16 @@ const toggleFormat = (editor, format) => {
 }
 
 export default (event: InputEvent) => {
+    const slateEditor = EditorPage.editor.slateEditor
     switch (event.inputType) {
     case 'formatBold':
         event.preventDefault()
-        return toggleFormat(EditorManager.slateEditor, 'bold')
+        return toggleFormat(slateEditor, 'bold')
     case 'formatItalic':
         event.preventDefault()
-        return toggleFormat(EditorManager.slateEditor, 'italic')
+        return toggleFormat(slateEditor, 'italic')
     case 'formatUnderline':
         event.preventDefault()
-        return toggleFormat(EditorManager.slateEditor, 'underlined')
+        return toggleFormat(slateEditor, 'underlined')
     }
 }

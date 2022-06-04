@@ -3,7 +3,6 @@ import { FloatOption, TextCategory } from '../../../Types/slate/CustomElement'
 import TextArea, { TextAreaRef } from 'antd/lib/input/TextArea'
 import { ReactEditor, useSlateStatic } from 'slate-react'
 import { Editor, Transforms } from 'slate'
-import EditorManager from '../../../manager/Blog/EditorManager'
 
 export const Caption: React.FC<{
     selected: boolean,
@@ -40,10 +39,10 @@ export const Caption: React.FC<{
             //   readOnly={!captionFocused}
             rows={1}
             onChange={(e) => {
-                Transforms.setNodes(EditorManager.slateEditor, {
+                Transforms.setNodes(editor, {
                     caption: e.target.value
                 }, {
-                    at: EditorManager.slateEditor.selection
+                    at: editor.selection
                 })
             }}
             onBlur={(e) => {
