@@ -46,7 +46,7 @@ export class VisibilityController {
                     '상위 페이지 범위 변경',
                     `'${visibilityToText(visibility)}'보다 좁은 공개 범위의 상위 페이지가 있습니다.\n이 페이지의 공개 범위를 '${visibilityToText(visibility)}'로 변경하면\n상위 페이지의 공개 범위도 같이 변경됩니다. 변경하시겠습니까?`, ['변경'])
                 if (action === -1) {
-                    return
+                    return false
                 }
                 await this.updatePageVisibility(pageId, visibility, true)
             } else if (err instanceof ChildrenVisibilityWide) {
@@ -54,10 +54,11 @@ export class VisibilityController {
                     '하위 페이지 범위 변경',
                     `'${visibilityToText(visibility)}'보다 넓은 공개 범위의 하위 페이지가 있습니다.\n이 페이지의 공개 범위를 '${visibilityToText(visibility)}'로 변경하면\n하위 페이지의 공개 범위도 같이 변경됩니다. 변경하시겠습니까?`, ['변경'])
                 if (action === -1) {
-                    return
+                    return false
                 }
                 await this.updatePageVisibility(pageId, visibility, true)
             }
         }
+        return true
     }
 }

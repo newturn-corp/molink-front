@@ -4,6 +4,7 @@ import { observer } from 'mobx-react'
 export interface MenuItemProps {
     text: string
     onClick: MouseEventHandler<HTMLDivElement>
+    icon?: ReactNode
     selected?: boolean
 }
 
@@ -21,6 +22,7 @@ export const MenuItem: React.FC<MenuItemProps> = observer(
                 }
             }
         >
+            {props.icon}
             <div className={'text'}>
                 {props.text}
             </div>

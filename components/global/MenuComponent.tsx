@@ -5,7 +5,7 @@ import { observer } from 'mobx-react'
 import { MenuItem } from '../utils/Menu/MenuItem'
 
 export const MenuComponent: React.FC<{}> = observer(() => {
-    const menuRef = useRef<HTMLDivElement>()
+    const menuRef = useRef<HTMLDivElement>(null)
     useEffect(() => {
         document.getElementsByTagName('body')[0].addEventListener('click', (event) => {
             MenuManager.close()
@@ -41,6 +41,7 @@ export const MenuComponent: React.FC<{}> = observer(() => {
                         return <MenuItem
                             key={`menu-item-${item.name}`}
                             text={item.name}
+                            icon={item.icon}
                             selected={MenuManager.keyboardSelectionChange && MenuManager.index === index}
                             onClick={() => item.onClick()}
                         />

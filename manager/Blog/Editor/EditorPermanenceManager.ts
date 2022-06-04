@@ -7,6 +7,7 @@ import { EditorTagList } from './EditorTagList'
 import { SlateImageElementType } from '../../../Types/slate/CustomElement'
 import Blog from '../../global/Blog/Blog'
 import UserManager from '../../global/User/UserManager'
+import EditorPage from './EditorPage'
 
 export class EditorPermanenceManager {
     pageId: string
@@ -30,7 +31,7 @@ export class EditorPermanenceManager {
     }
 
     async persistPageDataInSearchEngine () {
-        if (!UserManager.isUserAuthorized) {
+        if (!UserManager.isUserAuthorized || !EditorPage.editor.editable) {
             return
         }
         const page = Blog.pageHierarchy.openedPage

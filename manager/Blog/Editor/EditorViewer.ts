@@ -1,39 +1,28 @@
-import * as Y from 'yjs'
-import { SyncElement, withYjs } from 'slate-yjs'
 import ViewerAPI from '../../../api/ViewerAPI'
 import { EditorPlugin } from '../../../plugin'
 import { withReact } from 'slate-react'
-import { createEditor } from 'slate'
-import { makeAutoObservable } from 'mobx'
-import { withHistory } from 'slate-history'
+import { createEditor, Editor as SlateEditor, Node } from 'slate'
 
 export class EditorViewer {
     pageId: string = null
-    yjsDocument: Y.Doc = null
-    sharedType: Y.Array<SyncElement> = null
+    content: Node[]
 
-    constructor (pageId: string, yjsDocument: Y.Doc) {
+    constructor (pageId: string) {
         this.pageId = pageId
-        this.yjsDocument = yjsDocument
-        this.sharedType = yjsDocument.getArray<SyncElement>('content')
-        makeAutoObservable(this, {
-            yjsDocument: false,
-            sharedType: false
-        })
     }
 
     async load () {
-        const dto = await ViewerAPI.getContent(this.pageId)
-        Y.applyUpdate(this.yjsDocument, Uint8Array.from(dto.content))
+        const content = await ViewerAPI.getContent(this.pageId)
+        this.content = JSON.parse(content.rawContent)
     }
 
-    getSlateEditor () {
-        return EditorPlugin(
-            withYjs(withReact(withHistory(createEditor())), this.sharedType))
+    getSlateEditor (): SlateEditor {
+        const editor = EditorPlugin(withReact(createEditor()))
+        editor.children = this.content
+        return editor
     }
 
     reset () {
-        this.yjsDocument = null
-        this.sharedType = null
+        this.content = null
     }
 }
