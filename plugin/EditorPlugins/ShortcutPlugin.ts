@@ -193,10 +193,10 @@ export const ShortcutWhenDeleteBackward: DeleteBackwardHandler = (editor: Editor
             if (
                 !SlateEditor.isEditor(block) &&
                 SlateElement.isElement(block) &&
-                block.type !== 'text' &&
+                (block as Element).type !== 'text' &&
                 Point.equals(selection.anchor, start)
             ) {
-                if (block.type === 'list-item' || block.type === 'check-list-item') {
+                if ((block as Element).type === 'list-item' || (block as Element).type === 'check-list-item') {
                     ListTransforms.unwrapList(editor)
                 }
                 const newProperties: Partial<SlateElement> = {

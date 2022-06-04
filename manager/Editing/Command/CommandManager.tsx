@@ -84,19 +84,6 @@ class CommandManager {
         }, 1)
     }
 
-    isBlockActive (editor, format) {
-        const { selection } = editor
-        if (!selection) return false
-
-        const [match] = Editor.nodes(editor, {
-            at: Editor.unhangRange(editor, selection),
-            match: n =>
-                !Editor.isEditor(n) && Element.isElement(n) && n.type === format
-        })
-
-        return !!match
-    }
-
     // 바로 위 노드가 void인 경우, 현재 node를 set하고
     // 일반적인 경우, insertNode를 함
     insertNode (editor: Editor, node: Element) {
