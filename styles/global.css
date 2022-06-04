@@ -109,6 +109,7 @@ body {
 }
 .notification-list .MuiPaper-root .notification-block .view-part .msg-container .msg {
   font-size: 0.95rem;
+  line-height: 18px;
   word-break: break-all;
 }
 .notification-list .MuiPaper-root .notification-block .view-part .msg-container .createdAt {
@@ -430,4 +431,4 @@ body {
   background: #D6E6F6;
 }
 
-/*# sourceMappingURL=global.css.idMap */
+/*# sourceMappingURL=global.css.map */

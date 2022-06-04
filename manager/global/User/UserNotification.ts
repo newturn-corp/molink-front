@@ -6,6 +6,7 @@ import ViewerAPI from '../../../api/ViewerAPI'
 import { Notification } from '../../../domain/Notification'
 import NotificationAPI from '../../../api/NotificationAPI'
 import { Page } from '../RoutingManager'
+import UserInfoMap from './UserInfoMap'
 
 export class UserNotification {
     _notifications: Notification[] = null
@@ -15,7 +16,7 @@ export class UserNotification {
     }
 
     get isNewNotificationExist () {
-        return this._notifications.filter(noti => !noti.isViewed).length > 0
+        return this.notifications.filter(noti => !noti.isViewed).length > 0
     }
 
     constructor () {
@@ -23,6 +24,9 @@ export class UserNotification {
     }
 
     getNotificationMessage (causeUser: ESUser, notificationInfo: NotificationInfo) {
+        if (notificationInfo.notificationContent) {
+            return notificationInfo.notificationContent
+        }
         switch (notificationInfo.notificationType) {
         case NotificationType.NewFollow:
             return `새로운 팔로워: ${causeUser.nickname}님`
@@ -35,14 +39,8 @@ export class UserNotification {
 
     async load () {
         const infoList = await UserAPI.getNotifications()
-        const requiredUserMap = {}
-        for (const info of infoList) {
-            if (info.causedUserId && !requiredUserMap[info.causedUserId]) {
-                requiredUserMap[info.causedUserId] = true
-            }
-        }
-        const userIDList = [...Object.keys(requiredUserMap)] as any
-        const { infoMap } = await ViewerAPI.getUserInfoMapByIDList(userIDList)
+        const userIDList = Array.from(new Set(infoList.map(info => info.causedUserId)))
+        const infoMap = await UserInfoMap.getUserInfoMapByUserIDList(userIDList)
         const notifications = []
         for (const info of infoList) {
             const userInfo = infoMap[info.causedUserId]

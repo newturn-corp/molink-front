@@ -6,6 +6,7 @@ import ContentAPI from '../../../api/ContentAPI'
 import { EditorTagList } from './EditorTagList'
 import { SlateImageElementType } from '../../../Types/slate/CustomElement'
 import Blog from '../../global/Blog/Blog'
+import UserManager from '../../global/User/UserManager'
 
 export class EditorPermanenceManager {
     pageId: string
@@ -18,8 +19,8 @@ export class EditorPermanenceManager {
         this.pageId = pageId
         this.tagList = tagList
         this.slateEditor = slateEditor
-        EventManager.addDisposableEventListener(
-            Event.MoveToAnotherPage, async () => {
+        EventManager.addDisposableEventListeners(
+            [Event.MoveToAnotherPage, Event.SignOut], async () => {
                 await this.persistPageDataInSearchEngine()
             }, 10)
         EventManager.addEventListener(
@@ -29,8 +30,10 @@ export class EditorPermanenceManager {
     }
 
     async persistPageDataInSearchEngine () {
+        if (!UserManager.isUserAuthorized) {
+            return
+        }
         const page = Blog.pageHierarchy.openedPage
-        console.log(page)
         const title = page.title
         const image = this.slateEditor.children.filter(child => Element.isElement(child) && child.type === 'image')[0] as SlateImageElementType
         const { content, rawContent, description } = this.getPagePermanenceDataFromNodeArray(this.slateEditor.children)

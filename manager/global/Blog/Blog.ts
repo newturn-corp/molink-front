@@ -42,10 +42,11 @@ class Blog {
     }
 
     getBlogWidth () {
-        if (!this.isOpen) {
+        if (this.isOpen && this.pageHierarchy) {
+            return UserManager.setting ? UserManager.setting.hierarchyWidth : 240
+        } else {
             return UserManager.isUserAuthorized ? 30 : 0
         }
-        return UserManager.setting ? UserManager.setting.hierarchyWidth : 240
     }
 }
 export default new Blog()

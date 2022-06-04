@@ -24,7 +24,9 @@ export const NotificationBlock: React.FC<{
               <div>
                   <div className='view-part'>
                       <div className='msg-container'>
-                          <div className='msg'>{notification.msg}</div>
+                          <div className='msg' dangerouslySetInnerHTML={{
+                              __html: notification.msg
+                          }}/>
                           <p className='createdAt'>{getRelativeTime(notification.createdAt)}</p>
                       </div>
                   </div>
