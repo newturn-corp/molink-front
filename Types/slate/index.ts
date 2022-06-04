@@ -4,10 +4,11 @@ import { ReactEditor } from 'slate-react'
 
 import { CustomElement } from './CustomElement'
 import { CustomText } from './CustomText'
+import { YjsEditor } from 'slate-yjs'
 
 declare module 'slate' {
     interface CustomTypes {
-      Editor: BaseEditor & ReactEditor & HistoryEditor
+      Editor: BaseEditor & ReactEditor & HistoryEditor & YjsEditor
       Element: CustomElement
       Text: CustomText
     }

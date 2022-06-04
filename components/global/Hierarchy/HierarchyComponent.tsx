@@ -2,12 +2,11 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import List from '@material-ui/core/List'
 import { PageComponent } from './Page/PageComponent'
-import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
+import Blog from '../../../manager/global/Blog/Blog'
 
 export const HierarchyComponent: React.FC<{
   }> = observer(() => {
-      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-      const pageDragManager = currentHierarchy.pageDragManager
+      const pageHierarchy = Blog.pageHierarchy
       return (
           <List
               component="nav"
@@ -19,10 +18,10 @@ export const HierarchyComponent: React.FC<{
               }}
           >
               {
-                  currentHierarchy.topLevelDocumentIdList.map(documentId => {
+                  pageHierarchy.topLevelDocumentIdList.map(pageID => {
                       return <PageComponent
-                          key={Math.random()}
-                          documentId={documentId}
+                          key={`page-${pageID}`}
+                          pageID={pageID}
                           depth={0}
                       />
                   })
@@ -41,7 +40,7 @@ export const HierarchyComponent: React.FC<{
                       width: '100%',
                       height: 250
                   }}
-                  onDragOver={() => pageDragManager.handleDragOverHierarchyMargin()}
+                  onDragOver={() => pageHierarchy.pageDragManager.handleDragOverHierarchyMargin()}
               />
           </List>
       )

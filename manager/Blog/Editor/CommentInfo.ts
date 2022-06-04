@@ -1,35 +1,32 @@
 import { makeAutoObservable } from 'mobx'
 import ViewerAPI from '../../../api/ViewerAPI'
-import EditorManager from '../EditorManager'
 import UserInfoMap from '../../global/User/UserInfoMap'
 import { PageComment } from '../../../domain/PageComment'
 import ContentAPI from '../../../api/ContentAPI'
 import { SaveCommentDTO } from '@newturn-develop/types-molink/dist/DTO'
 import UserManager from '../../global/User/UserManager'
 
-export class PageCommentInfo {
+export class CommentInfo {
+    pageId: string
     commentCount: number = 0
     commentMap: { [index: string]: PageComment } = {}
     topLevelCommentIDList: string[] = []
 
-    constructor () {
+    constructor (pageId: string) {
+        this.pageId = pageId
         makeAutoObservable(this)
     }
 
     async load () {
         // 초기화
-        this.commentCount = 0
-        this.commentMap = {}
-        this.topLevelCommentIDList = []
-
-        const comments = await ViewerAPI.getPageComments(EditorManager.pageId)
+        const comments = await ViewerAPI.getPageComments(this.pageId)
         this.commentCount = comments.length
 
         const commentUserIDSet = new Set<number>()
         for (const comment of comments) {
             commentUserIDSet.add(comment.userId)
         }
-        await UserInfoMap.updateUserInfoMap(Array.from(commentUserIDSet))
+        await UserInfoMap.updateUserInfoMapByUserIDList(Array.from(commentUserIDSet))
         for (const comment of comments) {
             if (!comment.parentCommentId) {
                 this.topLevelCommentIDList.push(comment.id)
@@ -60,13 +57,13 @@ export class PageCommentInfo {
     }
 
     async saveComment (parentCommentID: string | null, content: string) {
-        const { commentID } = await ContentAPI.saveComment(new SaveCommentDTO(EditorManager.pageId, content, parentCommentID))
+        const { commentID } = await ContentAPI.saveComment(new SaveCommentDTO(this.pageId, content, parentCommentID))
         this.commentCount += 1
+        this.commentMap[commentID] = new PageComment(content, new Date(), UserManager.userId)
         if (parentCommentID) {
             this.commentMap[parentCommentID].children.push(commentID)
         } else {
             this.topLevelCommentIDList.push(commentID)
         }
-        this.commentMap[commentID] = new PageComment(content, new Date(), UserManager.userId)
     }
 }

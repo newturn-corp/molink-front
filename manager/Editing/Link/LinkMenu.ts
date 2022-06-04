@@ -1,10 +1,9 @@
 import React from 'react'
-import isUrl from 'is-url'
-import { Editor, Element, Range, Transforms } from 'slate'
-import { makeAutoObservable, toJS } from 'mobx'
+import { Editor, Element, Transforms } from 'slate'
+import { makeAutoObservable } from 'mobx'
 import LinkMenuItem from './LinkMenuItem'
 import { LinkManager } from './LinkManager'
-import EditorManager from '../../Blog/EditorManager'
+import EditorPage from '../../Blog/Editor/EditorPage'
 
 export class LinkMenu {
     manager: LinkManager
@@ -25,14 +24,16 @@ export class LinkMenu {
                 this.close()
             }),
             new LinkMenuItem('북마크 추가', () => {
-                Transforms.removeNodes(EditorManager.slateEditor, {
-                    match: node => Element.isElement(node) && EditorManager.slateEditor.isInline(node) && node.type === 'link'
+                const editor = EditorPage.editor
+                const slateEditor = editor.slateEditor
+                Transforms.removeNodes(slateEditor, {
+                    match: node => Element.isElement(node) && slateEditor.isInline(node) && node.type === 'link'
                 })
-                EditorManager.insertElement({
+                editor.insertElement({
                     type: 'bookmark',
                     url,
                     children: [{ text: '' }]
-                }, EditorManager.slateEditor.selection.focus)
+                }, slateEditor.selection.focus)
                 this.close()
             })
         ]

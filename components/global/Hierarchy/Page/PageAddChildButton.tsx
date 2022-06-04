@@ -1,24 +1,25 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Add } from '@material-ui/icons'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
 import { isBrowser, isMobile } from 'react-device-detect'
+import Blog from '../../../../manager/global/Blog/Blog'
 
 export const PageAddChildButton: React.FC<{
-    documentId: string
-}> = observer(({ documentId }) => {
-    const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    const document = currentHierarchy.map[documentId]
+    pageID: string
+}> = observer(({ pageID }) => {
+    const pageHierarchy = Blog.pageHierarchy
+
     const handleClick = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation()
-        await currentHierarchy.createPage(document.children.length, documentId)
+        pageHierarchy.createPage(document.children.length, pageID)
         if (isMobile) {
-            HierarchyManager.isHierarchyOpen = false
+            Blog.isOpen = false
         }
     }
 
     return <div
         className='add-page-button'
+        key={`add-page-button-${pageID}`}
         onClick={(event) => handleClick(event)}
         style={{
             marginRight: isBrowser ? 8 : 12

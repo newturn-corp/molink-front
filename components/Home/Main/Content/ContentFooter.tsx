@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import EditorManager from '../../../../manager/Blog/EditorManager'
+import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 
 export const ContentFooter: React.FC<{
 }> = observer(() => {
     return <div
         className='content-footer'
-        onClick={() => EditorManager.handleContentFooterClicked()}
+        onClick={() => EditorPage.editor.handleContentFooterClicked()}
     ></div>
 })

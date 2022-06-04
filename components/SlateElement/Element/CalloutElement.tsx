@@ -1,10 +1,7 @@
-import React, { useCallback, useRef, useState } from 'react'
-import { Button } from '@material-ui/core'
-import EditorManager from '../../../manager/Blog/EditorManager'
-import { EmojiPickerComponent } from '../../global/EmojiPickerComponent'
+import React, { useCallback, useRef } from 'react'
 import { IEmojiData } from 'emoji-picker-react'
 import { Transforms } from 'slate'
-import { ReactEditor } from 'slate-react'
+import { ReactEditor, useSlateStatic } from 'slate-react'
 import EmojiPicker from '../../../manager/global/EmojiPicker'
 
 export const SlateCalloutElement: React.FC<{
@@ -16,18 +13,20 @@ export const SlateCalloutElement: React.FC<{
     children,
     element
 }) => {
+    const editor = useSlateStatic()
     const iconRef = useRef(null)
-    const currentNodePath = useCallback(() => (
-        ReactEditor.findPath(EditorManager.slateEditor, element)
-    ), [EditorManager.slateEditor, element])
+
+    const getCurrentNodePath = useCallback(() => (
+        ReactEditor.findPath(editor, element)
+    ), [editor, element])
 
     const onEmojiClick = useCallback((event, emojiObject: IEmojiData) => {
-        Transforms.setNodes(EditorManager.slateEditor, {
+        Transforms.setNodes(editor, {
             icon: emojiObject.emoji
         }, {
-            at: currentNodePath()
+            at: getCurrentNodePath()
         })
-    }, [currentNodePath])
+    }, [getCurrentNodePath])
 
     return (
         <div

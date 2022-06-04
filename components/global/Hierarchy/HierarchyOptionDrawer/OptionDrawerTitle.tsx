@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
+import Blog from '../../../../manager/global/Blog/Blog'
 
 export interface OptionDrawerTitlePropsInterface {
     title: string
@@ -19,7 +19,7 @@ export const OptionDrawerTitle: React.FC<OptionDrawerTitlePropsInterface> = obse
             <div
                 className={'close-button'}
                 onClick={() => {
-                    HierarchyManager.isHierarchyOptionOpen = false
+                    Blog.pageHierarchy.isHierarchyOptionOpen = false
                 }}
             >
                 닫기

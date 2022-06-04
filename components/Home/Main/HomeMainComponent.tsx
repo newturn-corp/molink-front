@@ -1,10 +1,9 @@
 import { observer } from 'mobx-react'
-import React, { useEffect } from 'react'
-import { ContentToolbar } from './Toolbar/ContentToolbar'
+import React, { useEffect, useRef } from 'react'
+import { ContentToolbarComponent } from './Toolbar/ContentToolbarComponent'
 import { ContentComponent } from './Content/ContentComponent'
 import StyleManager from '../../../manager/global/Style/StyleManager'
 import { EditorHeader } from '../../Blog/EditorPage/Header/EditorHeader'
-import EditorManager from '../../../manager/Blog/EditorManager'
 import { BrowserView, MobileView } from 'react-device-detect'
 import { MobileToolbar } from './MobileToolbar/MobileToolbar'
 import { CommandDrawer } from './Content/CommandDrawer'
@@ -12,28 +11,35 @@ import { BlogUserContent } from '../../Blog/UserContent/BlogUserContent'
 import BlogPage from '../../../manager/Blog/BlogPage'
 import { BlogPageType } from '../../../manager/Blog/Blog'
 import ContentContainer from '../../global/ContentContainer'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 export const HomeMainComponent: React.FC<{
   }> = observer(() => {
+      const contentBodyRef = useRef(null)
       useEffect(() => {
-          EditorManager.contentBody = document.getElementById('content-body')
-      }, [])
+          if (EditorPage.editor && contentBodyRef) {
+              EditorPage.editor.contentBody = contentBodyRef.current
+          }
+      }, [EditorPage.editor, contentBodyRef])
 
       return <>
           <ContentContainer>
-              <BrowserView>
-                  <ContentToolbar/>
-                  <EditorHeader/>
-              </BrowserView>
               {
                   BlogPage.pageType === BlogPageType.NormalPage
-                      ? <div
-                          id={'content-body'}
-                          className={'content-body'}
-                          style={StyleManager.contentStyle.body}
-                      >
-                          <ContentComponent/>
-                      </div>
+                      ? <>
+                          <BrowserView>
+                              <ContentToolbarComponent/>
+                              <EditorHeader/>
+                          </BrowserView>
+                          <div
+                              id={'content-body'}
+                              ref={contentBodyRef}
+                              className={'content-body'}
+                              style={StyleManager.contentStyle.body}
+                          >
+                              <ContentComponent/>
+                          </div>
+                      </>
                       : BlogPage.pageType === BlogPageType.UserMainPage ? <BlogUserContent/> : <></>
               }
               <MobileView>

@@ -1,25 +1,26 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import PageManager from '../../../manager/Blog/PageManager'
 import { HeartFilled, HeartOutlined } from '@ant-design/icons'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 export const LikeButton: React.FC<{
 }> = observer(() => {
+    const pageInfo = EditorPage.pageInfo
     return <div
         className={'like-button'}
-        onClick={() => PageManager.pageUserInfo.handleLikeButtonDown()}
+        onClick={() => pageInfo.handleLikeButtonDown()}
     >
         <div
-            className={'icon' + (PageManager.pageUserInfo.isLike ? ' filled' : '')}
+            className={'icon' + (pageInfo.isLike ? ' filled' : '')}
         >
             {
-                PageManager.pageUserInfo.isLike
+                pageInfo.isLike
                     ? <HeartFilled/>
                     : <HeartOutlined/>
             }
         </div>
         <div className={'count'}>
-            {`공감 ${PageManager.pageUserInfo.likeCount}`}
+            {`공감 ${pageInfo.likeCount}`}
         </div>
     </div>
 })

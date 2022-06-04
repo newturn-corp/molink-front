@@ -2,26 +2,26 @@ import React, { useRef } from 'react'
 import { observer } from 'mobx-react'
 import { HierarchyDocumentInfoInterface } from '@newturn-develop/types-molink'
 import UserManager from '../../../../manager/global/User/UserManager'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
 import StyleManager from '../../../../manager/global/Style/StyleManager'
+import Blog from '../../../../manager/global/Blog/Blog'
 
-const getTitle = (document: HierarchyDocumentInfoInterface, isChangingName: boolean) => {
-    const childrenLength = document.children.length
+const getTitle = (page: HierarchyDocumentInfoInterface, isChangingName: boolean) => {
+    const childrenLength = page.children.length
     if (childrenLength > 0 && !isChangingName && UserManager.setting.showSubDocumentCount) {
-        return `${document.title} (${childrenLength})`
+        return `${page.title} (${childrenLength})`
     }
-    return document.title
+    return page.title
 }
 
 export const PageTitle: React.FC<{
-    documentId: string
-  }> = observer(({ documentId }) => {
+    pageID: string
+  }> = observer(({ pageID }) => {
       const inputRef = useRef<HTMLDivElement>(null)
-      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-      const page = currentHierarchy.map[documentId]
-      const isChangingName = currentHierarchy.nameChangingPageId === page.id
-      const isDocumentOpen = currentHierarchy.openedPageId === page.id
-      const textClassName = isDocumentOpen ? 'text text-opened' : 'text'
+      const pageHierarchy = Blog.pageHierarchy
+      const page = pageHierarchy.map[pageID]
+      const isChangingName = pageHierarchy.nameChangingPageId === page.id
+      const isPageOpen = pageHierarchy.openedPage && pageHierarchy.openedPage.pageId === page.id
+      const textClassName = isPageOpen ? 'text text-opened' : 'text'
 
       if (isChangingName && inputRef) {
           new Promise(resolve => setTimeout(resolve, 30)).then(() => {
@@ -58,14 +58,16 @@ export const PageTitle: React.FC<{
                   }
                   event.preventDefault()
                   if (isChangingName) {
-                      await currentHierarchy.updatePageTitle(page.id, inputRef.current.innerText)
+                      await pageHierarchy.updatePageTitle(page.id, inputRef.current.innerText)
                   }
               }}
               onBlur={async () => {
                   if (isChangingName) {
-                      await currentHierarchy.updatePageTitle(page.id, inputRef.current.innerText)
+                      await pageHierarchy.updatePageTitle(page.id, inputRef.current.innerText)
                   }
               }}
-          >{getTitle(page, isChangingName)}</div>
+          >
+              {getTitle(page, isChangingName)}
+          </div>
       </div>
   })

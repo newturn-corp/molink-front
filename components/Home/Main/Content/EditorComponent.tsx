@@ -2,16 +2,16 @@ import { observer } from 'mobx-react'
 import React, { useCallback, useEffect } from 'react'
 import { Slate, Editable, ReactEditor } from 'slate-react'
 import { MentionListComponent } from './MentionListComponent'
-import { CommandListComponent } from './CommandListComponent'
+import { CommandListComponent } from '../../../Blog/EditorPage/Command/CommandListComponent'
 import { CustomElementComponent } from '../../../SlateElement/CustomElementComponent'
 import { CustomLeafComponent } from '../../../SlateElement/CustomLeafComponent'
 import { HoveringToolbar } from './HoveringToolbar/HoveringToolbar'
 import { handleDOMBeforeInput, handleKeyDown } from '../../../../plugin'
 import { decorate as decorateFunc } from '../../../../plugin/Decorate'
-import EditorManager from '../../../../manager/Blog/EditorManager'
 import { DOMNode } from 'slate-react/dist/utils/dom'
 import { Editor } from 'slate'
 import { LinkMenuComponent } from './LinkMenuComponent'
+import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 
 export const getDefaultView = (value: any): Window | null => {
     return (
@@ -58,14 +58,18 @@ Editor.deleteForward = (editor: Editor) => {
 
 export const EditorComponent: React.FC<{
   }> = observer(() => {
+      const editor = EditorPage.editor
+      const slateEditor = editor.slateEditor
+      const cursors = editor.synchronizer?.cursors
+
       const renderElement = useCallback(props => <CustomElementComponent {...props} />, [])
       const renderLeaf = useCallback(props => <CustomLeafComponent {...props} />, [])
-      const decorate = useCallback(([node, path]) => decorateFunc([node, path]), [EditorManager.cursors])
+      const decorate = useCallback(([node, path]) => decorateFunc([node, path]), [cursors])
       useEffect(() => {
-          EditorManager.editableElement = document.getElementById('editable')
+          editor.editableElement = document.getElementById('editable')
       }, [])
 
-      return <Slate editor={EditorManager.slateEditor} value={[]} onChange={value => {
+      return <Slate editor={slateEditor} value={slateEditor.children} onChange={value => {
       }}>
           <HoveringToolbar/>
           <Editable
@@ -74,18 +78,18 @@ export const EditorComponent: React.FC<{
               renderElement={renderElement}
               renderLeaf={renderLeaf}
               decorate={decorate}
-              readOnly={!EditorManager.editable || EditorManager.isLocked}
-              spellCheck={!EditorManager.editable || EditorManager.isLocked}
+              readOnly={!editor.editable || editor.info.isLocked}
+              spellCheck={!editor.editable || editor.info.isLocked}
               suppressContentEditableWarning={true}
               onKeyDown={(event) => {
-                  return handleKeyDown(event, EditorManager.slateEditor)
+                  return handleKeyDown(event, slateEditor)
               }}
               onDOMBeforeInput={(event: InputEvent) => {
                   handleDOMBeforeInput(event)
               }}
           />
-          <MentionListComponent editor={EditorManager.slateEditor} />
-          <CommandListComponent editor={EditorManager.slateEditor} />
+          <MentionListComponent editor={slateEditor} />
+          <CommandListComponent editor={slateEditor} />
           <LinkMenuComponent/>
       </Slate>
   })

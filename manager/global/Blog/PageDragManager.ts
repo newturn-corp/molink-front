@@ -1,12 +1,9 @@
 import { makeAutoObservable } from 'mobx'
 import React from 'react'
-import HierarchyManager from './HierarchyManager'
-import { Event } from '../Event/Event'
-import EventManager from '../Event/EventManager'
-import Hierarchy from './Hierarchy'
+import { BlogPageHierarchy } from './BlogPageHierarchy'
 
 export class PageDragManager {
-    private hierarchy: Hierarchy
+    pageHierarchy: BlogPageHierarchy
 
     public draggingPage: Document = null
     public draggingPageId: string = null
@@ -26,9 +23,9 @@ export class PageDragManager {
 
     private _dragOverCount = 0
 
-    constructor (hierarchy) {
+    constructor (pageHierarchy: BlogPageHierarchy) {
         makeAutoObservable(this)
-        this.hierarchy = hierarchy
+        this.pageHierarchy = pageHierarchy
         this.fileSystemElement = document.getElementsByClassName('MuiList-root MuiList-padding')[0] as HTMLElement
     }
 
@@ -65,15 +62,15 @@ export class PageDragManager {
         this.dragIndicator.style.top = (position - 60) + 'px'
     }
 
-    handleDragOver (event: React.DragEvent<HTMLDivElement>, documentId: string) {
+    handleDragOver (event: React.DragEvent<HTMLDivElement>, pageID: string) {
         if (!this.draggingPageId) {
             return
         }
-        if (this.draggingPageId === documentId) {
+        if (this.draggingPageId === pageID) {
             return
         }
         event.preventDefault()
-        const document = this.hierarchy.map[documentId]
+        const document = this.pageHierarchy.map[pageID]
 
         const pageElement = globalThis.document.getElementById('document-' + document.id)
         const mouseY = event.pageY
@@ -92,7 +89,7 @@ export class PageDragManager {
             if (document.order === 0) {
                 this.viewerText = `${document.title} 위로 이동`
             } else {
-                const documentOnTop = this.hierarchy.getSibling(document.id, document.order - 1)
+                const documentOnTop = this.pageHierarchy.getSibling(document.id, document.order - 1)
                 this.viewerText = `${documentOnTop.title} 아래로 이동`
             }
 
@@ -116,7 +113,7 @@ export class PageDragManager {
                 if (this._dragOverCount < 30) {
                     this.viewerText = `${document.title}의 하위 페이지로 추가`
                 } else if (this._dragOverCount === 30) {
-                    this.hierarchy.updateHierarchyChildrenOpen(documentId, true)
+                    this.pageHierarchy.updateHierarchyChildrenOpen(pageID, true)
                     this._dragOverCount = 0
                 }
             } else {
@@ -129,14 +126,14 @@ export class PageDragManager {
         if (!this.draggingPageId) {
             return
         }
-        const lastPageId = this.hierarchy.topLevelDocumentIdList[this.hierarchy.topLevelDocumentIdList.length - 1]
+        const lastPageId = this.pageHierarchy.topLevelDocumentIdList[this.pageHierarchy.topLevelDocumentIdList.length - 1]
         if (this.draggingPageId === lastPageId || !lastPageId) {
             return
         }
         if (!this.hierarchyMarginElement) {
             this.hierarchyMarginElement = document.getElementById('hierarchy-margin')
         }
-        const lastPage = this.hierarchy.map[lastPageId]
+        const lastPage = this.pageHierarchy.map[lastPageId]
         const y = this.hierarchyMarginElement.getBoundingClientRect().y
         this.setViewerPosition(y)
         this.setIndicatorVisible(true)
@@ -164,7 +161,7 @@ export class PageDragManager {
         this.setIndicatorTooltipVisible(false)
 
         // 만약 전혀 변하지 않았다면 따로 처리하지 않는다.
-        const document = this.hierarchy.yMap.get(this.draggingPageId)
+        const document = this.pageHierarchy.yMap.get(this.draggingPageId)
         if (document.order === this.newOrder) {
             if (!this.newParentId) {
                 if (!document.parentId) {
@@ -177,7 +174,7 @@ export class PageDragManager {
             }
         }
 
-        await this.hierarchy.locationController.updatePageLocation(this.draggingPageId, this.newParentId, this.newOrder)
+        await this.pageHierarchy.locationController.updatePageLocation(this.draggingPageId, this.newParentId, this.newOrder)
         this._dragOverCount = 0
         this.hierarchyMarginElement = null
     }

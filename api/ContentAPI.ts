@@ -6,14 +6,19 @@ import {
     CancelLikeDTO,
     SaveCommentDTO,
     SaveCommentResponseDTO,
-    PublishPageDTO
-} from '@newturn-develop/types-molink/dist/DTO'
+    PublishPageDTO, CreatePageDTO
+    , HierarchyDocumentInfoInterface, CreatePageResponseDTO
+} from '@newturn-develop/types-molink'
 import { DeleteContentsDTO } from '@newturn-develop/types-molink/DTO/ContentDTO'
-import { HierarchyDocumentInfoInterface } from '@newturn-develop/types-molink'
 
 class ContentAPI extends BaseAPI {
     async createContent (dto: CreateDocumentDTO): Promise<HierarchyDocumentInfoInterface> {
         const res = await this.post('/contents/contents', dto)
+        return res.data
+    }
+
+    async createContentV2 (dto: CreatePageDTO): Promise<CreatePageResponseDTO> {
+        const res = await this.post('/contents/contents/v2', dto)
         return res.data
     }
 

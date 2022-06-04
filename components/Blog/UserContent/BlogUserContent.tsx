@@ -3,15 +3,15 @@ import React from 'react'
 import { BlogUserInfoComponent } from '../../Blog/BlogUserInfoComponent'
 import StyleManager from '../../../manager/global/Style/StyleManager'
 import GlobalManager from '../../../manager/global/GlobalManager'
-import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
 import { PageListComponent } from '../../global/PageList/PageListComponent'
-import Blog from '../../../manager/global/Blog/Blog'
 import { PageListViewType } from '../../../Enums/PageListViewType'
+import Blog from '../../../manager/global/Blog/Blog'
 
 export const BlogUserContent: React.FC<{
 }> = observer(() => {
     const blogUserInfo = Blog.blogUserInfo
     const userPageList = Blog.userPageList
+    const pageHierarchy = Blog.pageHierarchy
     if (!blogUserInfo || !userPageList) {
         return <></>
     }
@@ -22,7 +22,7 @@ export const BlogUserContent: React.FC<{
         style={{
             top: 0,
             height: GlobalManager.screenHeight - StyleManager.globalStyle.header.height,
-            width: GlobalManager.screenWidth - HierarchyManager.getHierarchyWidth()
+            width: GlobalManager.screenWidth - Blog.getBlogWidth()
         }}
     >
         <BlogUserInfoComponent

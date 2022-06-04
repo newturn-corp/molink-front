@@ -1,17 +1,18 @@
 import { observer } from 'mobx-react'
 import React from 'react'
 import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
-import EditorManager from '../../../../manager/Blog/EditorManager'
+import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
+import Blog from '../../../../manager/global/Blog/Blog'
 
 export const PageHierarchyList: React.FC<{
   }> = observer(() => {
-      const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-      const pages = currentHierarchy.getPageHierarchy(currentHierarchy.openedPageId)
+      const pageHierarchy = Blog.pageHierarchy
+      const openedPage = pageHierarchy.openedPage
+      const pages = pageHierarchy.getPageHierarchy(openedPage.pageId)
       return <div
           className={'page-hierarchy-list'}
           style={{
-              top: EditorManager.isToolbarOpen ? 81 : 25
+              top: EditorPage.editor.toolbar.isOpen ? 81 : 25
           }}
       >
           {
@@ -21,7 +22,7 @@ export const PageHierarchyList: React.FC<{
                           className='document-block'
                           key={`hierarchy-document-block-${index}`}
                           onClick={async () => {
-                              if (page.id === currentHierarchy.openedPageId) {
+                              if (page.id === openedPage.pageId) {
                                   return
                               }
                               await RoutingManager.moveTo(Page.Blog, `/${page.id}`)

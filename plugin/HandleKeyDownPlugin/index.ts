@@ -7,19 +7,16 @@ import {
 import { handleEnterInCode, handleShiftEnterInCode, handleTabInCode } from './CodeHandleKeyDownPlugin'
 import CommandManager from '../../manager/Editing/Command/CommandManager'
 import {
-    moveSelectionWhenArrowDownDown,
     moveSelectionWhenArrowLeftDown,
     moveSelectionWhenArrowRightDown,
-    moveSelectionWhenBackspaceDown,
-    moveSelectionWhenCommandArrowLeftDown, moveSelectionWhenCommandArrowRightDown,
-    moveToTitleWhenArrowUpDown
+    moveSelectionWhenCommandArrowLeftDown, moveSelectionWhenCommandArrowRightDown
 } from './ArrowKeyMovementPlugin'
 import { redoWhenControlYKeyDown, undoWhenControlZKeyDown } from './UndoPlugin'
 import { insertNewLineWhenShiftEnterKeyDown } from './InsertNewLinePlugin'
 import { handleEnterInVoid } from './CorrectVoidBehaviorHandleKeyDown'
-import EditorManager from '../../manager/Blog/EditorManager'
 import LinkManager from '../../manager/Editing/Link/LinkManager'
 import { isMac } from 'lib0/environment'
+import EditorPage from '../../manager/Blog/Editor/EditorPage'
 
 const handlerMap = new Map()
 handlerMap.set('ArrowLeft', [
@@ -40,8 +37,7 @@ handlerMap.set('ArrowUp', [
 ])
 handlerMap.set('ArrowDown', [
     (event, editor) => LinkManager.menu.handleArrowDown(event, editor),
-    (event, editor) => CommandManager.handleArrowDown(event, editor),
-    moveSelectionWhenArrowDownDown
+    (event, editor) => CommandManager.handleArrowDown(event, editor)
 ])
 handlerMap.set('ctrl+z', [
     (event) => LinkManager.menu.handleCtrlZDown(event),
@@ -83,7 +79,7 @@ handlerMap.set('Escape', [
 
 const generalKeyDownHandlers = [
     PlaceHolderOnKeyDown,
-    (event, editor) => EditorManager.lastPressedKey = event.key
+    (event, editor) => EditorPage.editor.lastPressedKey = event.key
 ]
 
 export const handleKeyDown = (event, editor) => {

@@ -1,9 +1,8 @@
 import Router from 'next/router'
 import GlobalManager from './GlobalManager'
 import { Event } from './Event/Event'
-import EditorManager from '../Blog/EditorManager'
 import EventManager from './Event/EventManager'
-import HierarchyManager from './Hierarchy/HierarchyManager'
+import { RoutingHistory } from './Routing/RoutingHistory'
 
 export enum Page {
     Index = '/',
@@ -23,13 +22,12 @@ export enum Page {
 }
 
 class RoutingManager {
+    history: RoutingHistory[] = []
+
     async moveTo (page: Page, extra: string = '') {
-        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-        if (currentHierarchy && currentHierarchy.openedPageId) {
-            currentHierarchy.openedPageId = null
-        }
         await EventManager.issueEvent(Event.MoveToAnotherPage)
         await Router.push(page + extra)
+        this.history.push(new RoutingHistory(page, extra))
     }
 
     async moveWithoutAddHistory (page: Page, extra: string = '') {
@@ -45,11 +43,21 @@ class RoutingManager {
         } else {
             await EventManager.issueEvent(Event.MoveToAnotherPage)
             await Router.push(url)
+            this.history.push(new RoutingHistory(null, url))
         }
     }
 
-    back () {
-        Router.back()
+    async back () {
+        if (this.history.length > 0) {
+            const { page, extra } = this.history.pop()
+            if (page) {
+                await Router.push(page + extra)
+            } else {
+                await Router.push(extra)
+            }
+        } else {
+            Router.back()
+        }
     }
 }
 export default new RoutingManager()

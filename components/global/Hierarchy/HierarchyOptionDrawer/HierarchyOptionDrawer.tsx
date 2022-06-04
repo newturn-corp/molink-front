@@ -1,11 +1,11 @@
-import React, { CSSProperties, useState } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react'
 import Drawer from '@material-ui/core/Drawer'
 import { makeStyles } from '@material-ui/core/styles'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
-import { BrowserView, isBrowser } from 'react-device-detect'
+import { isBrowser } from 'react-device-detect'
 import { OptionDrawerTitle } from './OptionDrawerTitle'
 import { OptionButtonGroup } from './OptionButtonGroup'
+import Blog from '../../../../manager/global/Blog/Blog'
 
 export const HierarchyOptionDrawer: React.FC<{
 }> = observer(() => {
@@ -16,21 +16,21 @@ export const HierarchyOptionDrawer: React.FC<{
         }
     })
     const classes = useStyles()
-    const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    if (!currentHierarchy) {
+    const pageHierarchy = Blog.pageHierarchy
+    if (!pageHierarchy) {
         return <></>
     }
-    const selectedPage = currentHierarchy.map[currentHierarchy.selectedPageId]
+    const selectedPage = pageHierarchy.map[pageHierarchy.contextMenu.selectedPageId]
     return (
         <Drawer
             className='mobile-hierarchy-option-drawer'
             variant={'temporary'}
             anchor={'bottom'}
-            open={HierarchyManager.isHierarchyOptionOpen}
+            open={pageHierarchy.contextMenu.isOpen}
             onClose={isBrowser
                 ? undefined
                 : () => {
-                    HierarchyManager.isHierarchyOptionOpen = false
+                    pageHierarchy.contextMenu.close()
                 }}
             classes={classes}
         >

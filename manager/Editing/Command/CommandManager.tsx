@@ -6,8 +6,6 @@ import {
     Editor,
     Element as SlateElement,
     Element,
-    Node,
-    Path,
     Range,
     Transforms
 } from 'slate'
@@ -15,12 +13,12 @@ import { AvailCodeLanguage, DividerType, TextCategory } from '../../../Types/sla
 import { ListTransforms } from '../../../plugin/GlobalPlugins/ListPlugin'
 import Command from './Command'
 import CommandGroup from './CommandGroup'
-import EditorManager from '../../Blog/EditorManager'
 import BulbIcon from '../../../public/image/icon/bulb.svg'
 import EventManager from '../../global/Event/EventManager'
 import { Event } from '../../global/Event/Event'
 import LanguageManager from '../../global/LanguageManager'
 import CodeIcon from 'public/image/icon/code.svg'
+import EditorPage from '../../Blog/Editor/EditorPage'
 
 // /(슬래시)로 수행하는 명령을 맡아 처리하는 매니저
 class CommandManager {
@@ -103,7 +101,7 @@ class CommandManager {
     // 일반적인 경우, insertNode를 함
     insertNode (editor: Editor, node: Element) {
         if (!editor.selection) {
-            Transforms.select(editor, EditorManager.lastSelection)
+            Transforms.select(editor, EditorPage.editor.lastSelection)
         }
         const { selection } = editor
         const [start] = Range.edges(selection)
@@ -229,7 +227,7 @@ class CommandManager {
                     codeLanguage: AvailCodeLanguage.Javascript
                 }]
             }
-            Transforms.insertNodes(EditorManager.slateEditor, node)
+            Transforms.insertNodes(editor, node)
             break
         // case '페이지':
         //     if (!ContentManager.openedDocument) {
@@ -238,7 +236,7 @@ class CommandManager {
         //     const document = await Page.create(ContentManager.openedDocument, ContentManager.openedDocument.directoryInfo.children.length)
         //     node = {
         //         type: 'document',
-        //         documentId: document.meta.id,
+        //         pageID: document.meta.id,
         //         children: [{ text: '' }]
         //     }
         //     EventManager.addDisposableEventListener(Event.LoadingContent, ({ editor }: { editor: EditorManager }) => {
@@ -280,7 +278,7 @@ class CommandManager {
             // console.log('matches')
             // console.log(beforeMatch)
             // console.log(afterMatch)
-            if (beforeMatch && afterMatch && EditorManager.lastPressedKey === '/') {
+            if (beforeMatch && afterMatch && EditorPage.editor.lastPressedKey === '/') {
                 this.target = beforeRange
 
                 const searchResult = beforeText.match(/^\/((\w|\W)+)$/)

@@ -1,26 +1,25 @@
-import React, { useCallback, useEffect } from 'react'
-
+import React, { useCallback } from 'react'
 import { observer } from 'mobx-react'
 import { isBrowser } from 'react-device-detect'
-import HierarchyManager from '../../manager/global/Hierarchy/HierarchyManager'
 import GlobalManager from '../../manager/global/GlobalManager'
+import Blog from '../../manager/global/Blog/Blog'
 
 const ContentContainer: React.FC<{
 }> = observer((props) => {
-    const hierarchyWidth = HierarchyManager.getHierarchyWidth()
+    const blogWidth = Blog.getBlogWidth()
     const getContainerSize = useCallback(() => {
         if (!GlobalManager.window) {
             return 0
         }
         if (isBrowser) {
-            return GlobalManager.screenWidth - hierarchyWidth
+            return GlobalManager.screenWidth - blogWidth
         } else {
             return GlobalManager.screenHeight
         }
-    }, [GlobalManager.screenWidth, GlobalManager.screenHeight, hierarchyWidth])
+    }, [GlobalManager.screenWidth, GlobalManager.screenHeight, blogWidth])
 
     const style = {
-        transform: isBrowser ? `translateX(${hierarchyWidth}px)` : undefined,
+        transform: isBrowser ? `translateX(${blogWidth}px)` : undefined,
         width: getContainerSize()
     }
 

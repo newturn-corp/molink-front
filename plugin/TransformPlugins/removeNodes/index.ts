@@ -2,11 +2,10 @@ import { Editor, Element, Node, Path, Range } from 'slate'
 import { TransformsRemoveNodesHandler } from '../types'
 import FileAPI from '../../../api/FileAPI'
 import { ChangePageFileRelationshipDTO } from '@newturn-develop/types-molink'
-import EditorManager from '../../../manager/Blog/EditorManager'
-import UserManager from '../../../manager/global/User/UserManager'
 import { isNumber } from 'lodash'
 import EventManager from '../../../manager/global/Event/EventManager'
 import { Event } from '../../../manager/global/Event/Event'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 const matchPath = (editor: Editor, path: Path): ((node: Node) => boolean) => {
     const [node] = Editor.node(editor, path)
@@ -46,7 +45,7 @@ export const customRemoveNodes: TransformsRemoveNodesHandler<Node> = (editor, op
                     }
                     if (node.url && node.url.includes(`${process.env.SERVER_BASE_URL}/files`)) {
                         const handle = node.url.split('/').pop()
-                        FileAPI.removePageFileRelationship(new ChangePageFileRelationshipDTO(EditorManager.pageId, handle))
+                        FileAPI.removePageFileRelationship(new ChangePageFileRelationshipDTO(EditorPage.pageId, handle))
                     }
                 }
                 editor.apply({ type: 'remove_node', path, node })

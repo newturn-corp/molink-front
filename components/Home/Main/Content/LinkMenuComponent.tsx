@@ -3,7 +3,6 @@ import { observer } from 'mobx-react'
 import LinkManager from '../../../../manager/Editing/Link/LinkManager'
 import { MenuItem } from '../../../utils/Menu/MenuItem'
 import { Menu } from '../../../utils/Menu/Menu'
-import EditorManager from '../../../../manager/Blog/EditorManager'
 
 export const LinkMenuComponent: React.FC<{
 }> = observer(() => {

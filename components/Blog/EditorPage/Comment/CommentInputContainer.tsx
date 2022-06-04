@@ -1,13 +1,10 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react'
-import PageManager from '../../../../manager/Blog/PageManager'
-import { PageCommentComponent } from '../../../global/PageList/PageCommentComponent'
 import { Avatar, Input } from 'antd'
 import UserManager from '../../../../manager/global/User/UserManager'
 import { Button } from '../../../global/Button'
-import DialogManager from '../../../../manager/global/DialogManager'
-import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
 import ModalManager from '../../../../manager/global/ModalManager'
+import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 const TextArea = Input.TextArea
 
 export const CommentInputContainer: React.FC<{
@@ -54,45 +51,41 @@ export const CommentInputContainer: React.FC<{
                 autoSize
             />
             {
-                isTextAreaFocus || (content !== '' || parentCommentId)
-                    ? <div
-                        className={'button-container'}
-                    >
-                        <Button
-                            theme={'primary'}
-                            text={'댓글'}
-                            style={{
-                                width: 60,
-                                height: 35,
-                                marginLeft: 10
-                            }}
-                            fontSize={14}
-                            onClick={async () => {
-                                await PageManager.pageCommentInfo.saveComment(parentCommentId, content)
-                                setContent('')
-                            }}
-                        />
-                        <Button
-                            theme={'gray-stroke'}
-                            text={'취소'}
-                            style={{
-                                width: 60,
-                                height: 35,
-                                marginLeft: 10
-                            }}
-                            fontSize={14}
-                            onClick={async () => {
-                                setContent('')
-                                if (onCancel) {
-                                    onCancel()
-                                }
-                            }}
-                        />
-                    </div>
-                    : <></>
+                (isTextAreaFocus || content !== '' || parentCommentId) && <div
+                    className={'button-container'}
+                >
+                    <Button
+                        theme={'primary'}
+                        text={'댓글'}
+                        style={{
+                            width: 60,
+                            height: 35,
+                            marginLeft: 10
+                        }}
+                        fontSize={14}
+                        onClick={async () => {
+                            await EditorPage.commentInfo.saveComment(parentCommentId, content)
+                            setContent('')
+                        }}
+                    />
+                    <Button
+                        theme={'gray-stroke'}
+                        text={'취소'}
+                        style={{
+                            width: 60,
+                            height: 35,
+                            marginLeft: 10
+                        }}
+                        fontSize={14}
+                        onClick={async () => {
+                            setContent('')
+                            if (onCancel) {
+                                onCancel()
+                            }
+                        }}
+                    />
+                </div>
             }
-
         </div>
-
     </div>
 })

@@ -5,8 +5,6 @@ import ViewerAPI from '../../api/ViewerAPI'
 import DialogManager from '../global/DialogManager'
 import RoutingManager, { Page } from '../global/RoutingManager'
 import { ESUser } from '@newturn-develop/types-molink'
-import HierarchyManager from '../global/Hierarchy/HierarchyManager'
-import EditorManager from './EditorManager'
 import { UserNotExists } from '../../Errors/UserError'
 import { DocumentNotExists, UnauthorizedForDocument, UnexpectedError } from '../../Errors/DocumentError'
 import { ContentNotExists, ContentUserNotExists, UnauthorizedForContent } from '../../Errors/ContentError'
@@ -14,8 +12,9 @@ import { HierarchyNotExists } from '../../Errors/HierarchyError'
 import { BlogPageNotExist } from '../../Errors/BlogError'
 import { makeAutoObservable } from 'mobx'
 import LanguageManager from '../global/LanguageManager'
-import Blog from '../global/Blog/Blog'
 import EditorPage from './Editor/EditorPage'
+import Blog from '../global/Blog/Blog'
+import UserInfoMap from '../global/User/UserInfoMap'
 
 enum BlogURLType {
     OnlyPageURL = 'only-page-url',
@@ -65,21 +64,15 @@ class BlogPage {
     }
 
     private async _handleEnterUserMainURL (nickname: string) {
-        const dto = await ViewerAPI.getUserInfoMapByNicknameList([nickname])
-        const userInfo = dto.infoMap[nickname] as ESUser
+        const infoMap = await UserInfoMap.getUserInfoMapByUserNicknameList([nickname])
+        const userInfo = infoMap[nickname] as ESUser
         if (!userInfo) {
             throw new UserNotExists()
         }
         const userId = Number(userInfo.id)
-        if (Blog.id !== userId) {
-            Blog.load(userId)
-        }
+        await Blog.load(userId)
+        await Blog.userPageList.loadPageSummaryList()
         this.pageType = BlogPageType.UserMainPage
-        await HierarchyManager.loadHierarchy(userId)
-        await Blog.loadUserPageList()
-        await Blog.loadBlogUserInfo()
-        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-        currentHierarchy.openedPageId = null
     }
 
     private async _handleEnterStandardPageURL (pageId: string, nickname: string, pageName: string) {
@@ -91,16 +84,9 @@ class BlogPage {
             await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${authority.nickname}/${pageId}/${encodeURIComponent(authority.documentName)}`)
             return
         }
-        EditorPage.handleEnter(pageId)
-        if (Blog.id !== authority.userId) {
-            Blog.load(authority.userId)
-        }
+        await Blog.load(authority.userId)
+        await EditorPage.handleEnter(pageId, authority.userId)
         this.pageType = BlogPageType.NormalPage
-        await HierarchyManager.loadHierarchy(authority.userId)
-        await Blog.blogUserInfo.load(authority.userId)
-        await EditorManager.load(pageId)
-        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-        currentHierarchy.openPageParents(pageId)
     }
 
     async handleEnter (info: string[]) {

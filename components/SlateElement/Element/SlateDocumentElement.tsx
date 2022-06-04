@@ -18,10 +18,10 @@ export const SlateDocumentElement: React.FC<{
                   }}
               >
                   {/* <div className='icon'> */}
-                  {/*     {DocumentManager.documentMap.get(element.documentId).meta.icon} */}
+                  {/*     {DocumentManager.documentMap.get(element.pageID).meta.icon} */}
                   {/* </div> */}
                   {/* <div className='text'> */}
-                  {/*     {DocumentManager.documentMap.get(element.documentId).meta.title} */}
+                  {/*     {DocumentManager.documentMap.get(element.pageID).meta.title} */}
                   {/* </div> */}
               </div>
           </div>

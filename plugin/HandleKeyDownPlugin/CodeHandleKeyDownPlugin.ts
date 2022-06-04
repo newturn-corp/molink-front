@@ -1,6 +1,5 @@
 import { Editor, Element, Node, Text, Transforms } from 'slate'
 import { TextCategory } from '../../Types/slate/CustomElement'
-import EditorManager from '../../manager/Blog/EditorManager'
 
 const checkInsideIndependentBlock = (editor: Editor) => {
     const ancestors = Node.ancestors(editor, editor.selection.anchor.path)

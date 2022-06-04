@@ -4,20 +4,20 @@ import {
 } from '../../../Types/slate/CustomElement'
 import ReactPlayer from 'react-player'
 import FileUploadManager from '../../../manager/Editing/FileUploadManager'
-import EditorManager from '../../../manager/Blog/EditorManager'
-import { ReactEditor, useFocused, useSelected } from 'slate-react'
+import { ReactEditor, useFocused, useSelected, useSlateStatic } from 'slate-react'
 import { SlateMediaElement } from './MediaElement'
 import { FileLoading } from './FileLoading'
 import MenuManager from '../../../manager/global/Menu/MenuManager'
 import MenuItem from '../../../manager/global/Menu/MenuItem'
 import { Transforms } from 'slate'
 import MenuDotsIcon from '../../../public/image/icon/menu-dots.svg'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 const getVideoSrc = (src: string) => {
     if (src && src.includes('https://cdn.filestackcontent.com')) {
         return src + `?policy=${FileUploadManager.policy}&signature=${FileUploadManager.signature}`
     } else if (src && src.includes('molink.life/files')) {
-        return src + `?pageId=${EditorManager.pageId}`
+        return src + `?pageId=${EditorPage.pageId}`
     }
     return src
 }
@@ -30,9 +30,10 @@ export const SlateVideoElement: React.FC<{
     const selected = useSelected()
     const focused = useFocused()
     const [isReady, setIsReady] = useState(false)
+    const slateEditor = useSlateStatic()
     const currentNodePath = useCallback(() => (
-        ReactEditor.findPath(EditorManager.slateEditor, element)
-    ), [EditorManager.slateEditor, element])
+        ReactEditor.findPath(slateEditor, element)
+    ), [slateEditor, element])
     const [isMouseOver, setIsMouseOver] = useState(false)
     const menuButtonRef = useRef<HTMLDivElement>()
 
@@ -76,10 +77,10 @@ export const SlateVideoElement: React.FC<{
                                     }}
                                     onClick={(event) => {
                                         event.stopPropagation()
-                                        Transforms.select(EditorManager.slateEditor, currentNodePath())
+                                        Transforms.select(slateEditor, currentNodePath())
                                         const rect = menuButtonRef.current.getBoundingClientRect()
                                         MenuManager.open([new MenuItem('삭제', () => {
-                                            Transforms.removeNodes(EditorManager.slateEditor, { at: currentNodePath() })
+                                            Transforms.removeNodes(slateEditor, { at: currentNodePath() })
                                         })], {
                                             top: rect.top + (rect.height / 2),
                                             left: rect.left + (rect.width / 2)

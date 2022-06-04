@@ -1,34 +1,29 @@
 import { Portal } from '@material-ui/core'
-import { reaction } from 'mobx'
 import { observer } from 'mobx-react'
 import React from 'react'
-import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
+import Blog from '../../../manager/global/Blog/Blog'
 
-let root: HTMLDivElement = null
 export const HierarchyContextMenu: React.FC = observer(() => {
-    reaction(() => HierarchyManager.clickPosition, () => {
-        const clickX = HierarchyManager.clickPosition.x
-        const clickY = HierarchyManager.clickPosition.y
-        root.style.left = `${clickX + 5}px`
-        root.style.top = `${clickY + 5}px`
-    })
+    const contextMenu = Blog.pageHierarchy.contextMenu
+
     return <Portal container={globalThis.document.body}>
         <div
-            ref={ref => { root = ref }}
             className="contextMenu"
             style={{
-                visibility: HierarchyManager.openHierarchyContextMenu ? 'visible' : 'hidden'
+                left: contextMenu.clickPosition.x + 5,
+                top: contextMenu.clickPosition.y + 5,
+                visibility: Blog.pageHierarchy.contextMenu.isOpen ? 'visible' : 'hidden'
             }}
         >
             {
-                HierarchyManager.availControlOptions.map(option =>
+                Blog.pageHierarchy.contextMenu.availControlOptions.map(option =>
                     <div
                         onClick={(e) => {
                             e.stopPropagation()
-                            HierarchyManager.openHierarchyContextMenu = false
+                            Blog.pageHierarchy.contextMenu.close()
                             option.handleOnClick()
                         }}
-                        key={Math.random()}
+                        key={`hierarchy-context-menu-${option}`}
                         className="contextMenu--option"
                     >
                         {option.name}

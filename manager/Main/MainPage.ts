@@ -3,12 +3,10 @@ import { MainPagePageList } from './MainPagePageList'
 import ViewerAPI from '../../api/ViewerAPI'
 import { GetPageListDTO } from '@newturn-develop/types-molink'
 import UserManager from '../global/User/UserManager'
-import HierarchyManager from '../global/Hierarchy/HierarchyManager'
-import Blog from '../global/Blog/Blog'
 import EventManager from '../global/Event/EventManager'
 import { Event } from '../global/Event/Event'
-import Hierarchy from '../global/Hierarchy/Hierarchy'
 import { PageListViewType } from '../../Enums/PageListViewType'
+import Blog from '../global/Blog/Blog'
 
 class MainPage {
     pageLists: MainPagePageList[] = []
@@ -36,33 +34,19 @@ class MainPage {
         }
         this.pageLists[this.currentCategoryIndex].loadPageSummaryList()
         if (UserManager.isUserAuthorized) {
-            await this._loadBlog()
+            await Blog.load(UserManager.userId)
         } else {
-            const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-            if (currentHierarchy) {
-                currentHierarchy.reset()
-                HierarchyManager.currentHierarchyUserId = 0
-                HierarchyManager.isHierarchyOpen = false
-                HierarchyManager.hierarchyMap = new Map<number, Hierarchy>()
-                Blog.clear()
-            }
+            Blog.reset()
             EventManager.addDisposableEventListener(Event.UserAuthorization, async ({ result }: any) => {
                 if (result) {
-                    await this._loadBlog()
+                    await Blog.load(UserManager.userId)
                 }
             }, 1)
         }
     }
 
-    private async _loadBlog () {
-        await Blog.load(UserManager.userId)
-        await Blog.loadBlogUserInfo()
-        await HierarchyManager.loadHierarchy(UserManager.userId)
-    }
-
     setCurrentCategoryIndex (index: number) {
         this.currentCategoryIndex = index
-        console.log(index)
         this.pageLists[this.currentCategoryIndex].loadPageSummaryList()
     }
 }

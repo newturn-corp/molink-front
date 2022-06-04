@@ -5,13 +5,13 @@ import {
 import RoutingManager from '../../../manager/global/RoutingManager'
 import { AnalyzeLinkResponseDTO } from '@newturn-develop/types-molink'
 import mainAPI from '../../../api/mainAPI'
-import { ReactEditor, useSelected } from 'slate-react'
-import EditorManager from '../../../manager/Blog/EditorManager'
+import { ReactEditor, useSelected, useSlateStatic } from 'slate-react'
 import { Transforms } from 'slate'
 import MenuDotsIcon from '../../../public/image/icon/menu-dots.svg'
 import MenuManager from '../../../manager/global/Menu/MenuManager'
 import MenuItem from '../../../manager/global/Menu/MenuItem'
 import LanguageManager from '../../../manager/global/LanguageManager'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 export const SlateBookmarkElement: React.FC<{
     attributes,
@@ -19,9 +19,10 @@ export const SlateBookmarkElement: React.FC<{
     element: BookmarkElementType
 }> = ({ attributes, children, element }) => {
     const selected = useSelected()
+    const slateEditor = useSlateStatic()
     const currentNodePath = useCallback(() => (
-        ReactEditor.findPath(EditorManager.slateEditor, element)
-    ), [EditorManager.slateEditor, element])
+        ReactEditor.findPath(slateEditor, element)
+    ), [slateEditor, element])
     const [isMouseOver, setIsMouseOver] = useState(false)
     const menuButtonRef = useRef<HTMLDivElement>()
 
@@ -39,12 +40,12 @@ export const SlateBookmarkElement: React.FC<{
 
     useEffect(() => {
         if (selected) {
-            const reverse = ['ArrowUp', 'ArrowLeft', 'Backspace'].includes(EditorManager.lastPressedKey)
-            Transforms.select(EditorManager.slateEditor, currentNodePath())
-            Transforms.collapse(EditorManager.slateEditor, { edge: 'end' })
-            Transforms.move(EditorManager.slateEditor, { unit: 'line', reverse })
+            const reverse = ['ArrowUp', 'ArrowLeft', 'Backspace'].includes(EditorPage.editor.lastPressedKey)
+            Transforms.select(slateEditor, currentNodePath())
+            Transforms.collapse(slateEditor, { edge: 'end' })
+            Transforms.move(slateEditor, { unit: 'line', reverse })
         }
-    }, [selected, EditorManager.slateEditor, currentNodePath])
+    }, [selected, slateEditor, currentNodePath])
 
     return <div
         contentEditable={false}
@@ -123,7 +124,7 @@ export const SlateBookmarkElement: React.FC<{
                     event.stopPropagation()
                     const rect = menuButtonRef.current.getBoundingClientRect()
                     MenuManager.open([new MenuItem(LanguageManager.languageMap.Delete, () => {
-                        Transforms.removeNodes(EditorManager.slateEditor, { at: currentNodePath() })
+                        Transforms.removeNodes(slateEditor, { at: currentNodePath() })
                     })], {
                         top: rect.top + (rect.height / 2),
                         left: rect.left + (rect.width / 2)

@@ -1,10 +1,8 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
-import EditorManager from '../../../../manager/Blog/EditorManager'
 import ArrowDownDoubleIcon from 'public/image/icon/arrow-down-double.svg'
 import ArrowUpDoubleIcon from 'public/image/icon/arrow-up-double.svg'
-import StyleManager from '../../../../manager/global/Style/StyleManager'
+import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 
 const closeStateStyle = {
     width: 24,
@@ -20,15 +18,20 @@ const openStateStyle = {
 
 export const ToolbarOnOffButton: React.FC<{
 }> = observer(() => {
+    const toolbar = EditorPage.editor.toolbar
     return <div
         className={'toolbar-control-button'}
-        style={EditorManager.isToolbarOpen ? openStateStyle : closeStateStyle}
+        style={toolbar.isOpen ? openStateStyle : closeStateStyle}
         onClick={async () => {
-            await EditorManager.updateIsToolbarOpen(!EditorManager.isToolbarOpen)
+            if (toolbar.isOpen) {
+                await toolbar.close()
+            } else {
+                await toolbar.open()
+            }
         }}
     >
         {
-            EditorManager.isToolbarOpen
+            toolbar.isOpen
                 ? <ArrowUpDoubleIcon/>
                 : <ArrowDownDoubleIcon/>
         }

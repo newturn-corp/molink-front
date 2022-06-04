@@ -1,14 +1,14 @@
-import HierarchyManager from '../../global/Hierarchy/HierarchyManager'
 import Fuse from 'fuse.js'
 import UserManager from '../../global/User/UserManager'
 import { IS_DEV } from '../../../infra/constants'
 import { LinkElement } from '../../../Types/slate/CustomElement'
 import { Range, Transforms } from 'slate'
-import EditorManager from '../../Blog/EditorManager'
 import { isURL } from 'class-validator'
 import { LinkOption } from './LinkManager'
 import { HierarchyDocumentInfoInterface } from '@newturn-develop/types-molink'
 import { makeAutoObservable, toJS } from 'mobx'
+import EditorPage from '../../Blog/Editor/EditorPage'
+import Blog from '../../global/Blog/Blog'
 
 export class LinkHoveringToolbar {
     _options: LinkOption[] = []
@@ -32,8 +32,7 @@ export class LinkHoveringToolbar {
 
     showLinkInput (selectionRange) {
         this.selectionRange = selectionRange
-        const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-        const pages = Array.from(currentHierarchy.yMap.values())
+        const pages = Array.from(Blog.pageHierarchy.yMap.values())
         this.fuse = new Fuse(pages, {
             keys: ['title']
         })
@@ -73,11 +72,12 @@ export class LinkHoveringToolbar {
             children: []
         }
 
-        Transforms.wrapNodes(EditorManager.slateEditor, link, {
+        const slateEditor = EditorPage.editor.slateEditor
+        Transforms.wrapNodes(slateEditor, link, {
             at: this.selectionRange,
             split: true
         })
-        Transforms.collapse(EditorManager.slateEditor, { edge: 'end' })
+        Transforms.collapse(slateEditor, { edge: 'end' })
         this.close()
     }
 
@@ -91,11 +91,12 @@ export class LinkHoveringToolbar {
             children: []
         }
 
-        Transforms.wrapNodes(EditorManager.slateEditor, link, {
+        const slateEditor = EditorPage.editor.slateEditor
+        Transforms.wrapNodes(slateEditor, link, {
             at: this.selectionRange,
             split: true
         })
-        Transforms.collapse(EditorManager.slateEditor, { edge: 'end' })
+        Transforms.collapse(slateEditor, { edge: 'end' })
         this.close()
     }
 }

@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react'
 import React, { useCallback, useEffect, useState } from 'react'
 import { ESPageSummary, ESUser } from '@newturn-develop/types-molink'
-import moment from 'moment-timezone'
 import { useInView } from 'react-intersection-observer'
 import UserInfoMap from '../../../manager/global/User/UserInfoMap'
 import { PageColumnComponent } from './PageColumnComponent'
@@ -9,10 +8,10 @@ import { CircleProgress } from '../CircleProgress'
 import { getRelativeTime } from '../../../utils/getRelativeTime'
 import { PageCellComponent } from './PageCellComponent'
 import { PageListViewType } from '../../../Enums/PageListViewType'
-import HierarchyManager from '../../../manager/global/Hierarchy/HierarchyManager'
 import GlobalManager from '../../../manager/global/GlobalManager'
 import { isBrowser } from 'react-device-detect'
 import StyleManager from '../../../manager/global/Style/StyleManager'
+import Blog from '../../../manager/global/Blog/Blog'
 
 const ScrollContainer: React.FC<{
     showScroll: boolean
@@ -24,7 +23,7 @@ const ScrollContainer: React.FC<{
                 overflowY: 'scroll',
                 top: 0,
                 height: GlobalManager.screenHeight - StyleManager.globalStyle.header.height,
-                width: GlobalManager.screenWidth - HierarchyManager.getHierarchyWidth()
+                width: GlobalManager.screenWidth - Blog.getBlogWidth()
             }}
         >
             {props.children}
@@ -69,7 +68,7 @@ export const PageListComponent: React.FC<{
         }
     }, [inView, loading, isListEnded])
 
-    const hierarchyWidth = HierarchyManager.getHierarchyWidth()
+    const hierarchyWidth = Blog.getBlogWidth()
     const getContentContainerSize = useCallback(() => {
         if (!GlobalManager.window) {
             return 0
@@ -112,7 +111,7 @@ export const PageListComponent: React.FC<{
                 {
                     viewType === PageListViewType.List
                         ? pageSummaryList.map((summary, index) => {
-                            const userInfo = UserInfoMap.map[summary.userId] as ESUser
+                            const userInfo = UserInfoMap.idMap[summary.userId] as ESUser
                             return <div
                                 key={`page-column-component-container-${summary.id}-${index}`}
                                 ref={index === pageSummaryList.length - 1 ? ref : undefined}
@@ -132,7 +131,7 @@ export const PageListComponent: React.FC<{
                             </div>
                         })
                         : pageSummaryList.map((summary, index) => {
-                            const userInfo = UserInfoMap.map[summary.userId] as ESUser
+                            const userInfo = UserInfoMap.idMap[summary.userId] as ESUser
                             return <div
                                 key={`page-cell-component-container-${summary.id}-${index}`}
                                 ref={index === pageSummaryList.length - 1 ? ref : undefined}

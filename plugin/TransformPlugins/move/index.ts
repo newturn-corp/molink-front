@@ -1,5 +1,4 @@
-import { Editor, Path, Range, Transforms } from 'slate'
-import EditorManager from '../../../manager/Blog/EditorManager'
+import { Editor, Range, Transforms } from 'slate'
 
 export const move = (
     editor: Editor,
@@ -15,21 +14,6 @@ export const move = (
     let { edge = null } = options
 
     if (!selection) {
-        return
-    }
-    const parentPath = Path.parent(selection.focus.path)
-    if (!Path.hasPrevious(parentPath) && selection.focus.offset === 0 && reverse) {
-        EditorManager.titleRef.current.focus()
-        const range = globalThis.document.createRange()
-        if (!EditorManager.titleRef.current.firstChild) {
-            return
-        }
-        range.selectNodeContents(EditorManager.titleRef.current)
-        range.setStart(EditorManager.titleRef.current.firstChild, EditorManager.titleRef.current.textContent.length)
-        range.setEnd(EditorManager.titleRef.current.firstChild, EditorManager.titleRef.current.textContent.length)
-        const selection = window.getSelection()
-        selection.removeAllRanges()
-        selection.addRange(range)
         return
     }
 

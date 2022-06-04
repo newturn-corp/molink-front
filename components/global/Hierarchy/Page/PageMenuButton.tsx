@@ -1,27 +1,27 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { observer } from 'mobx-react'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
 import { isBrowser } from 'react-device-detect'
 import MenuDotsIcon from 'public/image/icon/menu-dots.svg'
+import Blog from '../../../../manager/global/Blog/Blog'
 
 export const PageMenuButton: React.FC<{
-    documentId: string
-}> = observer(({ documentId }) => {
-    const handleClick = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    pageID: string
+}> = observer(({ pageID }) => {
+    const pageHierarchy = Blog.pageHierarchy
+    const handleClick = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.preventDefault()
         event.stopPropagation()
         if (isBrowser) {
-            await HierarchyManager.openContextMenu(documentId)
+            Blog.pageHierarchy.contextMenu.open(pageID)
         } else {
-            const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-            currentHierarchy.selectedPageId = documentId
-            HierarchyManager.initAvailControlOptions(currentHierarchy, documentId)
-            HierarchyManager.isHierarchyOptionOpen = true
+            pageHierarchy.contextMenu.selectedPageId = pageID
+            pageHierarchy.contextMenu.open(pageID)
         }
-    }
+    }, [])
 
     return <div
         className='menu-button'
+        key={`page-menu-button-${pageID}`}
         onClick={(event) => handleClick(event)}
         style={{
             marginRight: isBrowser ? 3 : 6

@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { OptionButton } from './OptionButton'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
+import Blog from '../../../../manager/global/Blog/Blog'
 
 export const OptionButtonGroup: React.FC<{}> = observer(() => {
     return (
@@ -9,7 +9,7 @@ export const OptionButtonGroup: React.FC<{}> = observer(() => {
             className={'option-button-group'}
         >
             {
-                HierarchyManager.availControlOptions.map(option =>
+                Blog.pageHierarchy.contextMenu.availControlOptions.map(option =>
                     (<OptionButton
                         icon={option.icon}
                         name={option.name}

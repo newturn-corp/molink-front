@@ -48,7 +48,7 @@ export class PageList {
             return
         }
         const userIDList = Array.from(new Set(results.map(summary => Number(summary.userId))))
-        await UserInfoMap.updateUserInfoMap(userIDList)
+        await UserInfoMap.updateUserInfoMapByUserIDList(userIDList)
         this.pageSummaryList.push(...results)
         this.from += results.length
         this.isLoading = false

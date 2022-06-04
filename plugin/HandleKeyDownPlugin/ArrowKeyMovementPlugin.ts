@@ -1,106 +1,36 @@
-import { Element, Path, Range, Transforms } from 'slate'
-import EditorManager from '../../manager/Blog/EditorManager'
+import { Range, Transforms } from 'slate'
 
-export const moveSelectionWhenArrowLeftDown = (event) => {
+export const moveSelectionWhenArrowLeftDown = (event, editor) => {
     event.preventDefault()
-    Transforms.move(EditorManager.slateEditor, {
+    Transforms.move(editor, {
         unit: 'offset',
         reverse: true
     })
     return true
 }
 
-export const moveSelectionWhenCommandArrowLeftDown = (event) => {
+export const moveSelectionWhenCommandArrowLeftDown = (event, editor) => {
     event.preventDefault()
-    const { selection } = EditorManager.slateEditor
+    const { selection } = editor
     if (selection && Range.isExpanded(selection)) {
-        Transforms.collapse(EditorManager.slateEditor, { edge: 'focus' })
+        Transforms.collapse(editor, { edge: 'focus' })
     }
 
-    Transforms.move(EditorManager.slateEditor, { unit: 'word', reverse: true })
+    Transforms.move(editor, { unit: 'word', reverse: true })
 }
 
-export const moveSelectionWhenArrowRightDown = (event) => {
+export const moveSelectionWhenArrowRightDown = (event, editor) => {
     event.preventDefault()
-    Transforms.move(EditorManager.slateEditor, { unit: 'offset' })
+    Transforms.move(editor, { unit: 'offset' })
     return true
 }
 
-export const moveSelectionWhenCommandArrowRightDown = (event) => {
+export const moveSelectionWhenCommandArrowRightDown = (event, editor) => {
     event.preventDefault()
-    const { selection } = EditorManager.slateEditor
+    const { selection } = editor
     if (selection && Range.isExpanded(selection)) {
-        Transforms.collapse(EditorManager.slateEditor, { edge: 'focus' })
+        Transforms.collapse(editor, { edge: 'focus' })
     }
 
-    Transforms.move(EditorManager.slateEditor, { unit: 'word', reverse: false })
-}
-
-export const moveToTitleWhenArrowUpDown = (event) => {
-    const { selection } = EditorManager.slateEditor
-    if (selection) {
-        const parentPath = Path.parent(selection.anchor.path)
-        if (!Path.hasPrevious(parentPath)) {
-            event.preventDefault()
-            EditorManager.setTitleFocus()
-            const range = globalThis.document.createRange()
-            if (!EditorManager.titleRef.current.firstChild) {
-                return
-            }
-            range.selectNodeContents(EditorManager.titleRef.current)
-            range.setStart(EditorManager.titleRef.current.firstChild, EditorManager.titleRef.current.textContent.length)
-            range.setEnd(EditorManager.titleRef.current.firstChild, EditorManager.titleRef.current.textContent.length)
-            const selection = window.getSelection()
-            selection.removeAllRanges()
-            selection.addRange(range)
-        }
-    }
-    return false
-}
-
-export const moveSelectionWhenArrowDownDown = (event) => {
-    const { selection } = EditorManager.slateEditor
-    if (selection) {
-        const parentPath = Path.parent(selection.anchor.path)
-        // if (!Path.hasPrevious(parentPath)) {
-        //     event.preventDefault()
-        //     EditorManager.titleRef.current.focus()
-        //     const range = globalThis.document.createRange()
-        //     if (!EditorManager.titleRef.current.firstChild) {
-        //         return
-        //     }
-        //     range.selectNodeContents(EditorManager.titleRef.current)
-        //     console.log(EditorManager.titleRef.current.textContent)
-        //     range.setStart(EditorManager.titleRef.current.firstChild, EditorManager.titleRef.current.textContent.length)
-        //     range.setEnd(EditorManager.titleRef.current.firstChild, EditorManager.titleRef.current.textContent.length)
-        //     const selection = window.getSelection()
-        //     selection.removeAllRanges()
-        //     selection.addRange(range)
-        // }
-    }
-    return false
-}
-
-export const moveSelectionWhenBackspaceDown = (event) => {
-    const { selection } = EditorManager.slateEditor
-    if (selection) {
-        if (selection.anchor.path[0] === 0 && selection.focus.offset === 0) {
-            event.preventDefault()
-            Transforms.removeNodes(EditorManager.slateEditor, {
-                match: n => Element.isElement(n)
-            })
-            EditorManager.setTitleFocus()
-            const range = globalThis.document.createRange()
-            if (!EditorManager.titleRef.current.firstChild) {
-                return
-            }
-            range.selectNodeContents(EditorManager.titleRef.current)
-            range.setStart(EditorManager.titleRef.current.firstChild, EditorManager.titleRef.current.textContent.length)
-            range.setEnd(EditorManager.titleRef.current.firstChild, EditorManager.titleRef.current.textContent.length)
-            const selection = window.getSelection()
-            selection.removeAllRanges()
-            selection.addRange(range)
-            return true
-        }
-    }
+    Transforms.move(editor, { unit: 'word', reverse: false })
 }

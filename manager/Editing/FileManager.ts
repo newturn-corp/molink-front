@@ -7,12 +7,12 @@ import {
     SlateVideoElementType
 } from '../../Types/slate/CustomElement'
 import FileUploadManager from './FileUploadManager'
-import EditorManager from '../Blog/EditorManager'
 import imageExtensions from 'image-extensions'
 import isUrl from 'is-url'
 import React from 'react'
 import FeedbackManager, { NOTIFICATION_TYPE } from '../global/FeedbackManager'
 import UserManager from '../global/User/UserManager'
+import EditorPage from '../Blog/Editor/EditorPage'
 
 class FileManager {
     private _insert (editor: Editor, element: Element, insertPosition: BasePoint | number[]) {
@@ -93,7 +93,7 @@ class FileManager {
     }
 
     async insertFile (url: string, file?: File) {
-        const editor = EditorManager.slateEditor
+        const editor = EditorPage.editor.slateEditor
         const text = { text: '' }
         const slateFileElement: SlateFileElementType = {
             type: 'file',
@@ -128,7 +128,7 @@ class FileManager {
     }
 
     insertVideo (url: string, file?: File) {
-        const editor = EditorManager.slateEditor
+        const editor = EditorPage.editor.slateEditor
         const video = document.createElement('video')
         video.src = url
         video.onloadeddata = async () => {
@@ -173,7 +173,7 @@ class FileManager {
     }
 
     insertImage (url: string, file?: File) {
-        const editor = EditorManager.slateEditor
+        const editor = EditorPage.editor.slateEditor
         const image = new Image()
         image.src = url
 

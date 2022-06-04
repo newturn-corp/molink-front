@@ -12,12 +12,12 @@ import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@material-
 
 import TextArea, { TextAreaRef } from 'antd/lib/input/TextArea'
 import { FloatOption, SlateImageElementType, TextCategory } from '../../../Types/slate/CustomElement'
-import EditorManager from '../../../manager/Blog/EditorManager'
 import StyleManager from '../../../manager/global/Style/StyleManager'
 import FileUploadManager from '../../../manager/Editing/FileUploadManager'
 import MenuManager from '../../../manager/global/Menu/MenuManager'
 import MenuItem from '../../../manager/global/Menu/MenuItem'
 import MenuDotsIcon from '../../../public/image/icon/menu-dots.svg'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 const Caption: React.FC<{
     selected: boolean,
@@ -55,10 +55,10 @@ const Caption: React.FC<{
               //   readOnly={!captionFocused}
               rows={1}
               onChange={(e) => {
-                  Transforms.setNodes(EditorManager.slateEditor, {
+                  Transforms.setNodes(editor, {
                       caption: e.target.value
                   }, {
-                      at: EditorManager.slateEditor.selection
+                      at: editor.selection
                   })
               }}
               onBlur={(e) => {
@@ -98,7 +98,7 @@ const getImageSrc = (src: string, version) => {
     if (src && src.includes('https://cdn.filestackcontent.com')) {
         return src + `?policy=${FileUploadManager.policy}&signature=${FileUploadManager.signature}`
     } else if (src && src.includes('molink.life/files')) {
-        return src + `?pageId=${EditorManager.pageId}&v=${version}`
+        return src + `?pageId=${EditorPage.pageId}&v=${version}`
     }
     return src
 }
@@ -110,12 +110,15 @@ export const SlateImageElement: React.FC<{
   }> = ({ attributes, children, element }) => {
       const selected = useSelected()
       const focused = useFocused()
+      const editor = useSlateStatic()
       const [isMouseOver, setIsMouseOver] = useState(false)
       const [version, setVersion] = useState(1)
       const menuButtonRef = useRef<HTMLDivElement>()
       const currentNodePath = useCallback(() => (
-          ReactEditor.findPath(EditorManager.slateEditor, element)
-      ), [EditorManager.slateEditor, element])
+          ReactEditor.findPath(editor, element)
+      ), [editor, element])
+
+      const editable = EditorPage.editor.editable
 
       return (
           <div
@@ -156,11 +159,11 @@ export const SlateImageElement: React.FC<{
                           const heightStr = ref.style.height
                           const width = Number(widthStr.slice(0, widthStr.length - 2))
                           const height = Number(heightStr.slice(0, heightStr.length - 2))
-                          Transforms.setNodes(EditorManager.slateEditor, {
+                          Transforms.setNodes(editor, {
                               width,
                               height
                           }, {
-                              at: EditorManager.slateEditor.selection
+                              at: editor.selection
                           })
                       }}
                   >
@@ -183,106 +186,103 @@ export const SlateImageElement: React.FC<{
                           />
                       </figure>
                       {
-                          selected && focused
-                              ? <>
+                          selected && focused &&
+                          <>
+                              <div
+                                  className='image-adjust-button'
+                                  style={{
+                                      left: (element.width - 100) / 2
+                                  }}>
                                   <div
-                                      className='image-adjust-button'
-                                      style={{
-                                          left: (element.width - 100) / 2
-                                      }}>
-                                      <div
-                                          className={'button'}
-                                          onClick={event => {
-                                              Transforms.setNodes(EditorManager.slateEditor, {
-                                                  floatOption: FloatOption.Left
-                                              }, {
-                                                  at: EditorManager.slateEditor.selection
-                                              })
-                                          }}
-                                      >
-                                          <FormatAlignLeft />
-                                      </div>
-                                      <div
-                                          className={'button'}
-                                          onClick={event => {
-                                              Transforms.setNodes(EditorManager.slateEditor, {
-                                                  floatOption: FloatOption.Center
-                                              }, {
-                                                  at: EditorManager.slateEditor.selection
-                                              })
-                                          }}
-                                      >
-                                          <FormatAlignCenter />
-                                      </div>
-                                      <div
-                                          className={'button'}
-                                          onClick={event => {
-                                              Transforms.setNodes(EditorManager.slateEditor, {
-                                                  floatOption: FloatOption.Right
-                                              }, {
-                                                  at: EditorManager.slateEditor.selection
-                                              })
-                                          }}
-                                      >
-                                          <FormatAlignRight />
-                                      </div>
+                                      className={'button'}
+                                      onClick={event => {
+                                          Transforms.setNodes(editor, {
+                                              floatOption: FloatOption.Left
+                                          }, {
+                                              at: editor.selection
+                                          })
+                                      }}
+                                  >
+                                      <FormatAlignLeft />
                                   </div>
                                   <div
-                                      className='image-resize-dot'
-                                      style={{
-                                          top: -7.5,
-                                          left: -7.5
-                                      }}>
+                                      className={'button'}
+                                      onClick={event => {
+                                          Transforms.setNodes(editor, {
+                                              floatOption: FloatOption.Center
+                                          }, {
+                                              at: editor.selection
+                                          })
+                                      }}
+                                  >
+                                      <FormatAlignCenter />
                                   </div>
                                   <div
-                                      className='image-resize-dot'
-                                      style={{
-                                          top: -7.5,
-                                          right: -7.5
-                                      }}>
+                                      className={'button'}
+                                      onClick={event => {
+                                          Transforms.setNodes(editor, {
+                                              floatOption: FloatOption.Right
+                                          }, {
+                                              at: editor.selection
+                                          })
+                                      }}
+                                  >
+                                      <FormatAlignRight />
                                   </div>
-                                  <div
-                                      className='image-resize-dot'
-                                      style={{
-                                          bottom: -7.5,
-                                          left: -7.5
-                                      }}>
-                                  </div>
-                                  <div
-                                      className='image-resize-dot'
-                                      style={{
-                                          bottom: -7.5,
-                                          right: -7.5
-                                      }}>
-                                  </div>
-                              </>
-                              : <></>
+                              </div>
+                              <div
+                                  className='image-resize-dot'
+                                  style={{
+                                      top: -7.5,
+                                      left: -7.5
+                                  }}>
+                              </div>
+                              <div
+                                  className='image-resize-dot'
+                                  style={{
+                                      top: -7.5,
+                                      right: -7.5
+                                  }}>
+                              </div>
+                              <div
+                                  className='image-resize-dot'
+                                  style={{
+                                      bottom: -7.5,
+                                      left: -7.5
+                                  }}>
+                              </div>
+                              <div
+                                  className='image-resize-dot'
+                                  style={{
+                                      bottom: -7.5,
+                                      right: -7.5
+                                  }}>
+                              </div>
+                          </>
                       }
                       {
-                          EditorManager.editable
-                              ? <div
-                                  ref={menuButtonRef}
-                                  className={'menu-button'}
-                                  style={{
-                                      display: isMouseOver ? undefined : 'none'
-                                  }}
-                                  onClick={(event) => {
-                                      event.stopPropagation()
-                                      Transforms.select(EditorManager.slateEditor, currentNodePath())
-                                      const rect = menuButtonRef.current.getBoundingClientRect()
-                                      MenuManager.open([new MenuItem('삭제', () => {
-                                          if (EditorManager.editable) {
-                                              Transforms.removeNodes(EditorManager.slateEditor, { at: currentNodePath() })
-                                          }
-                                      })], {
-                                          top: rect.top + (rect.height / 2),
-                                          left: rect.left + (rect.width / 2)
-                                      }, true)
-                                  }}
-                              >
-                                  <MenuDotsIcon/>
-                              </div>
-                              : <></>
+                          editable && <div
+                              ref={menuButtonRef}
+                              className={'menu-button'}
+                              style={{
+                                  display: isMouseOver ? undefined : 'none'
+                              }}
+                              onClick={(event) => {
+                                  event.stopPropagation()
+                                  Transforms.select(editor, currentNodePath())
+                                  const rect = menuButtonRef.current.getBoundingClientRect()
+                                  MenuManager.open([new MenuItem('삭제', () => {
+                                      if (editable) {
+                                          Transforms.removeNodes(editor, { at: currentNodePath() })
+                                      }
+                                  })], {
+                                      top: rect.top + (rect.height / 2),
+                                      left: rect.left + (rect.width / 2)
+                                  }, true)
+                              }}
+                          >
+                              <MenuDotsIcon/>
+                          </div>
                       }
                   </Rnd>
                   <Caption selected={selected} caption={element.caption} floatOption={element.floatOption}/>

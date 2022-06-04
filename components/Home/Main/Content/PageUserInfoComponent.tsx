@@ -1,12 +1,14 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import PageManager from '../../../../manager/Blog/PageManager'
 import { Avatar } from '@material-ui/core'
 import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
 import { getRelativeTime } from '../../../../utils/getRelativeTime'
+import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 
 export const PageUserInfoComponent: React.FC<{
 }> = observer(() => {
+    const pageInfo = EditorPage.pageInfo
+    const userInfo = EditorPage.userInfo
     return <div
         className={'page-user-info-container'}
     >
@@ -16,7 +18,7 @@ export const PageUserInfoComponent: React.FC<{
             <div
                 className={'user-info'}
                 onClick={async () => {
-                    await RoutingManager.moveTo(Page.Blog, `/${PageManager.pageUserInfo.nickname}`)
+                    await RoutingManager.moveTo(Page.Blog, `/${userInfo.nickname}`)
                 }}
             >
                 <Avatar
@@ -25,18 +27,18 @@ export const PageUserInfoComponent: React.FC<{
                         width: 30,
                         height: 30
                     }}
-                    src={PageManager.blogUserInfo.profileImageUrl}
+                    src={userInfo.userProfileImageUrl}
                 />
                 <div
                     className={'nickname'}
                 >
-                    {PageManager.blogUserInfo.nickname}
+                    {userInfo.nickname}
                 </div>
             </div>
             <div
                 className={'page-info'}
             >
-                {getRelativeTime(new Date(PageManager.pageUserInfo.lastEditedAt), true)}
+                {getRelativeTime(new Date(pageInfo.lastEditedAt), true)}
             </div>
         </div>
     </div>

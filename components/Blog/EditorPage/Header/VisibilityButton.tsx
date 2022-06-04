@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react'
 import React from 'react'
 import { PageVisibility } from '@newturn-develop/types-molink'
-import HierarchyManager from '../../../../manager/global/Hierarchy/HierarchyManager'
 import { ContentSettingButton } from './ContentSettingButton'
 import { VisibilityMenu } from './VisibilityMenu'
 import PublicIcon from '../../../Icon/PublicIcon'
 import PrivateIcon from '../../../Icon/PrivateIcon'
 import OnlyFollowerIcon from '../../../Icon/OnlyFollowerIcon'
-import EditorManager from '../../../../manager/Blog/EditorManager'
 import LanguageManager from '../../../../manager/global/LanguageManager'
+import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
+import Blog from '../../../../manager/global/Blog/Blog'
 
 const getIconByVisibility = (visibility: PageVisibility) => {
     switch (visibility) {
@@ -34,23 +34,23 @@ const getTextByVisibility = (visibility: PageVisibility) => {
 
 export const VisibilityButton: React.FC<{
 }> = observer(() => {
-    const currentHierarchy = HierarchyManager.hierarchyMap.get(HierarchyManager.currentHierarchyUserId)
-    const page = currentHierarchy.map[currentHierarchy.openedPageId]
+    const pageHierarchy = Blog.pageHierarchy
+    const page = Blog.pageHierarchy.openedPage
+    const editor = EditorPage.editor
     return <>
         <ContentSettingButton
-            active={EditorManager.editable}
+            active={editor.editable && !editor.info.isLocked}
             tooltip={getTextByVisibility(page.visibility)}
             onClick={(event) => {
                 event.stopPropagation()
-                const { isVisibilityMenuOpen } = currentHierarchy.visibilityController
-                currentHierarchy.visibilityController.isVisibilityMenuOpen = !isVisibilityMenuOpen
+                const { isVisibilityMenuOpen } = pageHierarchy.visibilityController
+                pageHierarchy.visibilityController.isVisibilityMenuOpen = !isVisibilityMenuOpen
             }}
             icon={getIconByVisibility(page.visibility)}
         />
         {
-            currentHierarchy.visibilityController.isVisibilityMenuOpen
-                ? <VisibilityMenu/>
-                : <></>
+            pageHierarchy.visibilityController.isVisibilityMenuOpen &&
+                <VisibilityMenu/>
         }
         <></>
     </>
