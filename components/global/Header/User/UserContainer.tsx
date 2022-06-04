@@ -15,6 +15,7 @@ import GlobalManager from '../../../../manager/global/GlobalManager'
 import StyleManager from '../../../../manager/global/Style/StyleManager'
 import { VisibilityDrawer } from '../Mobile/VisibilityDrawer'
 import LanguageManager from '../../../../manager/global/LanguageManager'
+import { Settings } from '@material-ui/icons'
 
 export const UserContainer: React.FC<{
 }> = observer(() => {

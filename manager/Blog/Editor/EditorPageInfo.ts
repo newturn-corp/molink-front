@@ -64,7 +64,10 @@ export class EditorPageInfo {
         if (visibility === PageVisibility.Private) {
             const index = await DialogManager.openDialog('비공개 페이지 발행하기', `${title} 페이지의 공개 범위가 비공개 상태이므로 발행해도 아무도 볼 수 없습니다. 공개 범위를 전체 공개로 변경하고 발행하시겠습니까?`, ['변경 후 발행', '비공개 상태로 발행'])
             if (index === 0) {
-                await pageHierarchy.visibilityController.updatePageVisibility(EditorPage.pageId, PageVisibility.Public)
+                const result = await pageHierarchy.visibilityController.updatePageVisibility(EditorPage.pageId, PageVisibility.Public)
+                if (!result) {
+                    return
+                }
             }
         }
 
@@ -73,6 +76,7 @@ export class EditorPageInfo {
             return
         }
         await ContentAPI.publishPage(new PublishPageDTO(EditorPage.pageId))
+        await EditorPage.editor.permanenceManager.persistPageDataInSearchEngine()
 
         FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, `${title} 페이지가 발행되었습니다!`, '', 5)
         this.lastPublishedAt = Number(new Date())
