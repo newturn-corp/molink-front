@@ -74,7 +74,7 @@ export class Editor {
         this.editable = UserManager.isUserAuthorized && (await ViewerAPI.getDocumentAuthority(pageId)).editable
 
         if (!this.editable) {
-            this.viewer = new EditorViewer(pageId, this.yjsDocument)
+            this.viewer = new EditorViewer(pageId)
             await this.viewer.load()
             this.slateEditor = this.viewer.getSlateEditor()
         } else {

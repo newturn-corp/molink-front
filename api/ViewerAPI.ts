@@ -47,7 +47,7 @@ class ViewerAPI extends BaseAPI {
         return res.data
     }
 
-    async getContent (documentId: string): Promise<GetContentResponseDTO> {
+    async getContent (documentId: string): Promise<any> {
         const res = await this.get(`/viewer/contents/${documentId}`)
         if (res.status === 404001) {
             throw new ContentNotExists()
