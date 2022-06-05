@@ -119,7 +119,7 @@ export const SlateImageElement: React.FC<{
       ), [editor, element])
 
       const editable = EditorPage.editor.editable
-      const isSelectionCollapsed = Range.isCollapsed(editor.selection)
+      const isSelectionCollapsed = editor.selection && Range.isCollapsed(editor.selection)
 
       return (
           <div
