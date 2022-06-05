@@ -7,7 +7,7 @@ import {
 } from 'slate-react'
 import { css } from '@emotion/css'
 import { Rnd } from 'react-rnd'
-import { Editor, Transforms } from 'slate'
+import { Editor, Path, Range, Transforms } from 'slate'
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@material-ui/icons'
 
 import TextArea, { TextAreaRef } from 'antd/lib/input/TextArea'
@@ -119,6 +119,7 @@ export const SlateImageElement: React.FC<{
       ), [editor, element])
 
       const editable = EditorPage.editor.editable
+      const isSelectionCollapsed = Range.isCollapsed(editor.selection)
 
       return (
           <div
@@ -186,7 +187,7 @@ export const SlateImageElement: React.FC<{
                           />
                       </figure>
                       {
-                          selected && focused &&
+                          selected && focused && isSelectionCollapsed &&
                           <>
                               <div
                                   className='image-adjust-button'
@@ -285,7 +286,7 @@ export const SlateImageElement: React.FC<{
                           </div>
                       }
                   </Rnd>
-                  <Caption selected={selected} caption={element.caption} floatOption={element.floatOption}/>
+                  <Caption selected={selected && isSelectionCollapsed} caption={element.caption} floatOption={element.floatOption}/>
               </div>
           </div>
       )
