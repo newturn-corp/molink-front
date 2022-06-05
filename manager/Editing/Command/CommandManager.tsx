@@ -122,7 +122,7 @@ class CommandManager {
     async insertNodeByCommand (editor: Editor, command: Command) {
         let node: Element
         switch (command.name) {
-        case '제목1':
+        case LanguageManager.languageMap.Title1:
             node = {
                 type: 'text',
                 category: TextCategory.Head1,
@@ -130,7 +130,7 @@ class CommandManager {
             }
             this.insertNode(editor, node)
             break
-        case '제목2':
+        case LanguageManager.languageMap.Title2:
             node = {
                 type: 'text',
                 category: TextCategory.Head2,
@@ -138,7 +138,7 @@ class CommandManager {
             }
             this.insertNode(editor, node)
             break
-        case '제목3':
+        case LanguageManager.languageMap.Title3:
             node = {
                 type: 'text',
                 category: TextCategory.Head3,
