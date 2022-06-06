@@ -8,6 +8,7 @@ import '../styles/global/header.css'
 import '../styles/global/hierarchy.css'
 import '../styles/global/visibility-menu.css'
 import '../styles/global/user-menu.css'
+import '../styles/global/tutorial-modal.css'
 
 import '../styles/components/mobile-column-drawer.css'
 import '../styles/components/menu.css'
@@ -39,6 +40,8 @@ import { MenuComponent } from '../components/global/MenuComponent'
 import { LinkModalComponent } from '../components/global/Modal/LinkModalComponent'
 import { ShouldLoginNoticeModal } from '../components/global/Modal/ShouldLoginNoticeModal'
 import { EmojiPickerComponent } from '../components/global/EmojiPickerComponent'
+import { TutorialModal } from '../components/global/Modal/TutorialModal'
+import ImagePreLoader from '../manager/global/ImagePreLoader'
 
 configure(
     {
@@ -67,6 +70,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     useEffect(() => {
         GlobalManager.init()
             .then(() => LanguageManager.loadLanguage(navigator.language))
+        ImagePreLoader.preloadCommandIcon()
         removeConsoleLogOnProduction()
     }, [])
 
@@ -78,6 +82,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                 <MenuComponent />
                 <LinkModalComponent/>
                 <ShouldLoginNoticeModal/>
+                <TutorialModal/>
                 <EmojiPickerComponent/>
                 <Component {...pageProps} />
             </SafeHydrate>

@@ -28,6 +28,7 @@ class MainPage {
     }
 
     async handleEnter () {
+        await UserManager.load()
         this.currentCategoryIndex = 0
         for (const pageList of this.pageLists) {
             pageList.clear()

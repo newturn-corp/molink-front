@@ -16,6 +16,8 @@ import StyleManager from '../../../../manager/global/Style/StyleManager'
 import { VisibilityDrawer } from '../Mobile/VisibilityDrawer'
 import LanguageManager from '../../../../manager/global/LanguageManager'
 import { Settings } from '@material-ui/icons'
+import ModalManager from '../../../../manager/global/ModalManager'
+import ImagePreLoader from '../../../../manager/global/ImagePreLoader'
 
 export const UserContainer: React.FC<{
 }> = observer(() => {
@@ -41,6 +43,11 @@ export const UserContainer: React.FC<{
                         UserManager.isUserMenuOpen = false
                         SupportManager.openSupportModal()
                         MenuManager.close()
+                    }),
+                new MenuItem('사용 방법',
+                    async () => {
+                        ImagePreLoader.preloadTutorialImage()
+                        ModalManager.openTutorialModal = true
                     }),
                 new MenuItem(LanguageManager.languageMap.PrivacyAndTerms,
                     async () => {
