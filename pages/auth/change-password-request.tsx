@@ -36,6 +36,17 @@ const ChangePasswordRequest = observer(() => {
             <AuthTitle
                 text={LanguageManager.languageMap.ChangePassword}
             />
+            <p
+                className='change-password-description'
+                style={{
+                    wordBreak: 'break-all',
+                    wordWrap: 'break-word',
+                    marginBottom: 30
+                }}
+                dangerouslySetInnerHTML={{
+                    __html: LanguageManager.languageMap.ChangePasswordRequestDescription
+                }}
+            />
             <AuthInput
                 label={LanguageManager.languageMap.Email}
                 type="email"
@@ -53,20 +64,11 @@ const ChangePasswordRequest = observer(() => {
                 }}
                 helperText={getEmailHelperText(AuthManager.emailState)}
             />
-            <pre
-                className='change-password-description'
-                style={{
-                    wordBreak: 'break-all',
-                    wordWrap: 'break-word'
-                }}
-            >
-                {LanguageManager.languageMap.ChangePasswordRequestDescription}
-            </pre>
             <AuthButton
                 text={LanguageManager.languageMap.GetChangePasswordEmail}
                 theme={'primary'}
                 style={{
-                    marginTop: 44
+                    marginTop: 10
                 }}
                 onClick={async (e) => {
                     setLoading(true)
