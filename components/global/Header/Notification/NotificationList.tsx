@@ -36,22 +36,20 @@ export const NotificationList: React.FC<{
                 : <></>
         }
         {
-            notifications.length > 0
-                ? <>
-                    <div className='notification-label-container'>
-                        <p className='label'>알림</p>
-                        <div
-                            className='check-all-notification-button'
-                            onClick={() => UserManager.notification.setNotificationsCheckedAt()}
-                        >모두 읽음</div>
-                    </div>
-                    {
-                        notifications.map(noti => {
-                            return <NotificationBlock key={'notification-block-' + noti.id} notification={noti}/>
-                        })
-                    }
-                </>
-                : <></>
+            notifications.length > 0 && <>
+                <div className='notification-label-container'>
+                    <p className='label'>알림</p>
+                    <div
+                        className='check-all-notification-button'
+                        onClick={() => UserManager.notification.setNotificationsCheckedAt()}
+                    >모두 읽음</div>
+                </div>
+                {
+                    notifications.map((noti, index) => {
+                        return <NotificationBlock key={'notification-block-' + index} notification={noti}/>
+                    })
+                }
+            </>
         }
 
     </>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import Modal from 'antd/lib/modal/Modal'
 
 export interface CustomModalProps {
@@ -6,6 +6,7 @@ export interface CustomModalProps {
     isOpen: boolean
     onCancel: Function
     className?: string
+    width?: number
 }
 
 export const CustomModal: React.FC<CustomModalProps> = (props) => {
@@ -17,6 +18,7 @@ export const CustomModal: React.FC<CustomModalProps> = (props) => {
         okText={''}
         cancelText={''}
         footer={null}
+        width={props.width}
     >
         {props.children}
     </Modal>

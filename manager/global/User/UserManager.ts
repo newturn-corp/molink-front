@@ -12,6 +12,7 @@ import { UserNotification } from './UserNotification'
 import { UserFollow } from './UserFollow'
 import { UpdateUserProfileImageDTO } from '@newturn-develop/types-molink'
 import React from 'react'
+import { UserETC } from './UserETC'
 
 class UserManager {
     isUserAuthorized: boolean = false
@@ -27,6 +28,7 @@ class UserManager {
     limit: UserLimit
     notification: UserNotification
     follow: UserFollow
+    etc: UserETC
 
     constructor () {
         makeAutoObservable(this, {
@@ -39,6 +41,7 @@ class UserManager {
         this.limit = new UserLimit()
         this.notification = new UserNotification()
         this.follow = new UserFollow()
+        this.etc = new UserETC()
 
         EventManager.addEventListener(Event.SignOut, () => {
             this.reset()
@@ -60,6 +63,7 @@ class UserManager {
             this.profile.sync(this.yjsDocument.getMap<any>('profile'))
             this.setting.sync(this.yjsDocument.getMap<any>('setting'))
             this.limit.sync(this.yjsDocument.getMap<any>('limit'))
+            this.etc.sync(this.yjsDocument.getMap<any>('etc'))
             await this.notification.load()
             await this.follow.load()
 
@@ -105,6 +109,7 @@ class UserManager {
         this.setting.reset()
         this.limit.reset()
         this.notification.reset()
+        this.etc.reset()
         this.userId = null
         this.isUserAuthorized = false
         this.yjsDocument = null
