@@ -68,6 +68,7 @@ class SignUpManager {
 
         if (!AuthValidator.validateNickname(this.nickname)) {
             this.nicknameState = NicknameState.NicknameConditionNotSatisfied
+            return { success: false }
         }
         this.nicknameState = NicknameState.Default
 
