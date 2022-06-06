@@ -68,6 +68,7 @@ class SignUpManager {
 
         if (!AuthValidator.validateNickname(this.nickname)) {
             this.nicknameState = NicknameState.NicknameConditionNotSatisfied
+            return { success: false }
         }
         this.nicknameState = NicknameState.Default
 
@@ -100,7 +101,7 @@ class SignUpManager {
             }
             return { success: false }
         }
-        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '인증 메일이 발송되었습니다!', '')
+        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '인증 메일이 발송되었습니다!', '', 5)
         return { success: true }
     }
 }

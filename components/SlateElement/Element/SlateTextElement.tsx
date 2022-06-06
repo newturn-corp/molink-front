@@ -5,6 +5,7 @@ import { useSelected, useSlate } from 'slate-react'
 import { TextCategory, TextElement } from '../../../Types/slate/CustomElement'
 import { isBrowser } from 'react-device-detect'
 import EditorPage from '../../../manager/Blog/Editor/EditorPage'
+import { Align } from '../../../manager/Editing/FormattingManager'
 
 export const SlateTextElement: React.FC<{
     attributes,
@@ -33,7 +34,7 @@ export const SlateTextElement: React.FC<{
               isBrowser &&
               !editor.info.isLocked &&
               editor.showPlaceholder
-                      ? `selected-empty-text text ${element.category}`
+                      ? `${element.align === Align.Right ? 'selected-empty-text-align-right' : 'selected-empty-text'} text ${element.category}`
                       : `text ${element.category}`} {...attributes}>
               {children}
           </p>

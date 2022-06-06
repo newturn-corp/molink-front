@@ -34,7 +34,7 @@ const SettingProfile = observer(() => {
                                 {LanguageManager.languageMap.ProfileImage}
                             </p>
                             <input
-                                accept='image/jpg,impge/png,image/jpeg'
+                                accept='image/jpg,image/png,image/jpeg'
                                 style={{ display: 'none' }}
                                 id="profile-image-button"
                                 multiple

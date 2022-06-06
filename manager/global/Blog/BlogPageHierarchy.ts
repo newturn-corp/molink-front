@@ -152,14 +152,14 @@ export class BlogPageHierarchy {
     }
 
     public getPageHierarchy (pageId: string) {
-        const page = this.yMap.get(pageId)
+        const page = this.map[pageId]
         const hierarchy = [page]
         while (true) {
             const lastPage = hierarchy[0]
             if (!lastPage.parentId) {
                 break
             }
-            const parent = this.yMap.get(lastPage.parentId)
+            const parent = this.map[lastPage.parentId]
             hierarchy.unshift(parent)
         }
         return hierarchy

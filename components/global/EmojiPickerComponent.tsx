@@ -16,9 +16,6 @@ export const EmojiPickerComponent: React.FC<{
   }> = observer(() => {
       const pickerRef = useRef<HTMLDivElement>()
       useEffect(() => {
-          document.getElementsByTagName('body')[0].addEventListener('click', (event) => {
-              EmojiPicker.close()
-          })
           EmojiPicker.pickerRef = pickerRef
       }, [])
 
@@ -29,6 +26,11 @@ export const EmojiPickerComponent: React.FC<{
               style={{
                   userSelect: EmojiPicker.isOpen ? undefined : 'none',
                   opacity: EmojiPicker.isOpen ? '1' : '0'
+              }}
+              onClick={(event) => {
+                  console.log('emoji-picker click')
+                  event.stopPropagation()
+                  event.preventDefault()
               }}
           >
               <EmojiPickerNoSSRWrapper
@@ -44,7 +46,9 @@ export const EmojiPickerComponent: React.FC<{
                       recently_used: '최근 사용한 이모지'
                   }}
                   disableSearchBar={EmojiPicker.disableSearchbar}
-                  onEmojiClick={(event, data) => EmojiPicker.onEmojiClick(event, data)} />
+                  onEmojiClick={(event, data) => EmojiPicker.onEmojiClick(event, data)}
+                  preload={true}
+              />
           </div>
       </Portal>
   })

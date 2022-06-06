@@ -9,8 +9,9 @@ const TextArea = Input.TextArea
 
 export const CommentInputContainer: React.FC<{
     parentCommentId: string
+    onComment?: Function
     onCancel?: Function
-}> = observer(({ parentCommentId, onCancel }) => {
+}> = observer(({ parentCommentId, onCancel, onComment }) => {
     const [content, setContent] = useState('')
     const [isTextAreaFocus, setIsTextAreaFocus] = useState(false)
     return <div
@@ -66,6 +67,9 @@ export const CommentInputContainer: React.FC<{
                         onClick={async () => {
                             await EditorPage.commentInfo.saveComment(parentCommentId, content)
                             setContent('')
+                            if (onComment) {
+                                onComment()
+                            }
                         }}
                     />
                     <Button

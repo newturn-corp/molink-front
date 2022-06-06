@@ -2,6 +2,8 @@ import React from 'react'
 import { IEmojiData } from 'emoji-picker-react'
 import { CSSPosition } from './Menu/MenuManager'
 import { makeAutoObservable } from 'mobx'
+import EventManager from './Event/EventManager'
+import { Event } from './Event/Event'
 
 class EmojiPicker {
     isOpen: boolean = false
@@ -30,6 +32,9 @@ class EmojiPicker {
             }
             this.isOpen = true
         }, 0)
+        EventManager.addDisposableEventListener(Event.PageBodyClick, () => {
+            this.close()
+        }, 1)
     }
 
     close () {

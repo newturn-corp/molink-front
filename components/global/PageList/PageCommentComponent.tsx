@@ -90,6 +90,10 @@ export const PageCommentComponent: React.FC<{
                     openCommentResponseInput && <CommentInputContainer
                         parentCommentId={commentId}
                         onCancel={() => setOpenCommentResponseInput(false)}
+                        onComment={() => {
+                            setOpenCommentResponseInput(false)
+                            setOpenCommentResponse(true)
+                        }}
                     />
                 }
                 {
