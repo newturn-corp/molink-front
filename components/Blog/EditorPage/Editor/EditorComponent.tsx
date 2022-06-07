@@ -88,15 +88,6 @@ export const EditorComponent: React.FC<{
                   onDOMBeforeInput={(event: InputEvent) => {
                       handleDOMBeforeInput(event)
                   }}
-                  onCompositionEnd={() => {
-                      console.log('onCompositionEnd')
-                  }}
-                  onCompositionEndCapture={() => {
-                      console.log('onCompositionEndCapture')
-                  }}
-                  onClick={() => {
-                      console.log('onClick')
-                  }}
               />
           </RemoteCursorOverlay>
           <MentionListComponent editor={slateEditor} />
