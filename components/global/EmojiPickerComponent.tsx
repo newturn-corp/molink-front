@@ -47,7 +47,6 @@ export const EmojiPickerComponent: React.FC<{
                   }}
                   disableSearchBar={EmojiPicker.disableSearchbar}
                   onEmojiClick={(event, data) => EmojiPicker.onEmojiClick(event, data)}
-                  preload={true}
               />
           </div>
       </Portal>
