@@ -34,7 +34,7 @@ export class CommentInfo {
             this.commentMap[comment.id] = new PageComment(comment.content, new Date(comment.createdAt), comment.userId)
         }
         for (const comment of comments) {
-            if (comment.parentCommentId) {
+            if (comment.parentCommentId && this.commentMap[comment.parentCommentId]) {
                 this.commentMap[comment.parentCommentId].children.push(comment.id)
             }
         }

@@ -27,6 +27,33 @@
     }
 }
 
+.remote-cursor-overlay {
+    position: relative;
+    display: flex;
+    .remote-selection {
+        position: absolute;
+        pointer-events: none;
+    }
+    .caret {
+        position: absolute;
+        width: 0.125rem;
+        .label {
+            position: absolute;
+            color: white;
+            white-space: nowrap;
+            top: 0;
+            padding-top: 0.125rem;
+            padding-bottom: 0.125rem;
+            padding-left: 0.375rem;
+            padding-right: 0.375rem;
+            font-size: 0.75rem;
+            line-height: 1rem;
+            border-radius: 0.25rem;
+            border-bottom-left-radius: 0;
+        }
+    }
+}
+
 .content-container {
     position: fixed;
     height: 100%;
@@ -75,6 +102,7 @@
                 color: #000000;
             }
             .editor {
+                width: 100%;
                 .text {
                     margin: 0px;
                     padding: 3px 3px 3px 0px;

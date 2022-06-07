@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react'
 import React from 'react'
 import { ContentHeaderIcon } from './ContentHeaderIcon'
-import { EditorContainer } from './EditorContainer'
+import { EditorContainer } from '../../../Blog/EditorPage/Editor/EditorContainer'
 import { ContentTitleComponent } from '../../../Blog/EditorPage/ContentTitleComponent'
 import { ContentFooter } from './ContentFooter'
 import StyleManager from '../../../../manager/global/Style/StyleManager'

@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-
 const { withSentryConfig } = require('@sentry/nextjs')
 
 const moduleExports = {
