@@ -1,7 +1,6 @@
-import { decorateCursor } from './Cursor'
 import { decorateCode } from './Code'
 
-const decorationList = [decorateCursor, decorateCode]
+const decorationList = [decorateCode]
 
 export const decorate = ([node, path]) => {
     return decorationList.reduce((prev, func) => {

@@ -114,6 +114,7 @@ export const EditorPlugin = (editor: Editor) => {
     }
 
     editor.onChange = () => {
+        console.log(editor.operations)
         EventManager.issueEvent(Event.EditorChange)
         if (isBrowser) {
             CommandManager.handleEditorChange(editor)

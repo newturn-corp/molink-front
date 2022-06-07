@@ -23,7 +23,7 @@ export class UserSetting {
     sync (ySetting: Y.Map<any>) {
         this.ySetting = ySetting
         this.ySetting.observeDeep(async () => {
-            this.setting = this.ySetting.toJSON()
+            this.setting = this.ySetting.toJSON() as any
             const newHierarchyWidth = this.ySetting.get('hierarchyWidth')
             if (isBrowser && this.hierarchyWidth !== newHierarchyWidth) {
                 this.hierarchyWidth = newHierarchyWidth

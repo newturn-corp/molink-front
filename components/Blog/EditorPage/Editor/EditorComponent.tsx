@@ -1,17 +1,18 @@
 import { observer } from 'mobx-react'
 import React, { useCallback, useEffect } from 'react'
 import { Slate, Editable, ReactEditor } from 'slate-react'
-import { MentionListComponent } from './MentionListComponent'
-import { CommandListComponent } from '../../../Blog/EditorPage/Command/CommandListComponent'
+import { MentionListComponent } from '../../../Home/Main/Content/MentionListComponent'
+import { CommandListComponent } from '../Command/CommandListComponent'
 import { CustomElementComponent } from '../../../SlateElement/CustomElementComponent'
 import { CustomLeafComponent } from '../../../SlateElement/CustomLeafComponent'
-import { HoveringToolbar } from './HoveringToolbar/HoveringToolbar'
+import { HoveringToolbar } from '../../../Home/Main/Content/HoveringToolbar/HoveringToolbar'
 import { handleDOMBeforeInput, handleKeyDown } from '../../../../plugin'
 import { decorate as decorateFunc } from '../../../../plugin/Decorate'
 import { DOMNode } from 'slate-react/dist/utils/dom'
 import { Editor } from 'slate'
-import { LinkMenuComponent } from './LinkMenuComponent'
+import { LinkMenuComponent } from '../../../Home/Main/Content/LinkMenuComponent'
 import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
+import { RemoteCursorOverlay } from './Overlay/Cursor/RemoteCursorOverlay'
 
 export const getDefaultView = (value: any): Window | null => {
     return (
@@ -60,11 +61,10 @@ export const EditorComponent: React.FC<{
   }> = observer(() => {
       const editor = EditorPage.editor
       const slateEditor = editor.slateEditor
-      const cursors = editor.synchronizer?.cursors
 
       const renderElement = useCallback(props => <CustomElementComponent {...props} />, [])
       const renderLeaf = useCallback(props => <CustomLeafComponent {...props} />, [])
-      const decorate = useCallback(([node, path]) => decorateFunc([node, path]), [cursors])
+      const decorate = useCallback(([node, path]) => decorateFunc([node, path]), [])
       useEffect(() => {
           editor.editableElement = document.getElementById('editable')
       }, [])
@@ -72,22 +72,33 @@ export const EditorComponent: React.FC<{
       return <Slate editor={slateEditor} value={slateEditor.children} onChange={value => {
       }}>
           <HoveringToolbar/>
-          <Editable
-              id={'editable'}
-              className={'editor'}
-              renderElement={renderElement}
-              renderLeaf={renderLeaf}
-              decorate={decorate}
-              readOnly={!editor.editable || editor.info.isLocked}
-              spellCheck={!editor.editable || editor.info.isLocked}
-              suppressContentEditableWarning={true}
-              onKeyDown={(event) => {
-                  return handleKeyDown(event, slateEditor)
-              }}
-              onDOMBeforeInput={(event: InputEvent) => {
-                  handleDOMBeforeInput(event)
-              }}
-          />
+          <RemoteCursorOverlay>
+              <Editable
+                  id={'editable'}
+                  className={'editor'}
+                  renderElement={renderElement}
+                  renderLeaf={renderLeaf}
+                  decorate={decorate}
+                  readOnly={!editor.editable || editor.info.isLocked}
+                  spellCheck={!editor.editable || editor.info.isLocked}
+                  suppressContentEditableWarning={true}
+                  onKeyDown={(event) => {
+                      return handleKeyDown(event, slateEditor)
+                  }}
+                  onDOMBeforeInput={(event: InputEvent) => {
+                      handleDOMBeforeInput(event)
+                  }}
+                  onCompositionEnd={() => {
+                      console.log('onCompositionEnd')
+                  }}
+                  onCompositionEndCapture={() => {
+                      console.log('onCompositionEndCapture')
+                  }}
+                  onClick={() => {
+                      console.log('onClick')
+                  }}
+              />
+          </RemoteCursorOverlay>
           <MentionListComponent editor={slateEditor} />
           <CommandListComponent editor={slateEditor} />
           <LinkMenuComponent/>

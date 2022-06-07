@@ -34,6 +34,7 @@
     "@newturn-develop/types-molink": "^0.0.133",
     "@productboard/slate-edit-list": "^0.21.5",
     "@sentry/nextjs": "^6.19.6",
+    "@slate-yjs/react": "^0.2.4",
     "@svgr/webpack": "^6.2.1",
     "@types/slate-plain-serializer": "^0.7.1",
     "@typescript-eslint/eslint-plugin": "^5.6.0",

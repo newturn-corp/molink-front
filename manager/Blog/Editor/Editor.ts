@@ -15,7 +15,7 @@ import { EditorSynchronizer } from './EditorSynchronizer'
 import { EditorViewer } from './EditorViewer'
 import React from 'react'
 import { EditorToolbar } from './EditorToolbar'
-import { YjsEditor } from 'slate-yjs'
+import { YjsEditor } from '@slate-yjs/core'
 
 export class Editor {
     public editable: boolean = false
@@ -81,6 +81,7 @@ export class Editor {
             this.synchronizer = new EditorSynchronizer(this.pageId, this.yjsDocument)
             await this.synchronizer.connect()
             this.slateEditor = this.synchronizer.getSlateEditor()
+            YjsEditor.connect(this.slateEditor)
             this.permanenceManager = new EditorPermanenceManager(this.pageId, this.tagList, this.slateEditor)
         }
         this.isLoaded = true

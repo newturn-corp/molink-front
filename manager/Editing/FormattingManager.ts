@@ -85,21 +85,31 @@ class FormattingManager {
     toggleFormat (format: Format) {
         const isActive = this.formatActiveMap.get(format)
         const slateEditor = EditorPage.editor.slateEditor
+        console.log('toggleFormat호출')
+        console.log(slateEditor.selection)
+        console.log(slateEditor.children)
+        // Transforms.setNodes(
+        //     slateEditor,
+        //     {
+        //         [format]: isActive ? null : true
+        //     },
+        //     {
+        //         match: Text.isText,
+        //         split: true
+        //     }
+        // )
+        if (isActive) {
+            SlateEditor.removeMark(slateEditor, format)
+        } else {
+            SlateEditor.addMark(slateEditor, format, true)
+        }
+        setTimeout(() => {
+            Transforms.select(slateEditor, slateEditor.selection)
+        }, 1000)
 
-        const [match] = Editor.nodes(slateEditor, {
-            at: slateEditor.selection,
-            match: Text.isText
-        })
-        Transforms.setNodes(
-            slateEditor,
-            {
-                [format]: isActive ? null : true
-            },
-            {
-                match: Text.isText,
-                split: true
-            }
-        )
+        console.log('addMark 호출!')
+        console.log(slateEditor.selection)
+        console.log(slateEditor.children)
         this.clear()
     }
 
