@@ -121,6 +121,7 @@ export const EditorPlugin = (editor: Editor) => {
         }
         FormattingManager.handleEditorChange()
         onChange()
+        console.log(editor.selection)
     }
 
     return editor

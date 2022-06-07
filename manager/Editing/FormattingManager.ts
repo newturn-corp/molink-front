@@ -88,28 +88,15 @@ class FormattingManager {
         console.log('toggleFormat호출')
         console.log(slateEditor.selection)
         console.log(slateEditor.children)
-        // Transforms.setNodes(
-        //     slateEditor,
-        //     {
-        //         [format]: isActive ? null : true
-        //     },
-        //     {
-        //         match: Text.isText,
-        //         split: true
-        //     }
-        // )
         if (isActive) {
             SlateEditor.removeMark(slateEditor, format)
         } else {
             SlateEditor.addMark(slateEditor, format, true)
         }
-        setTimeout(() => {
-            Transforms.select(slateEditor, slateEditor.selection)
-        }, 1000)
-
         console.log('addMark 호출!')
         console.log(slateEditor.selection)
         console.log(slateEditor.children)
+        ReactEditor.focus(slateEditor)
         this.clear()
     }
 

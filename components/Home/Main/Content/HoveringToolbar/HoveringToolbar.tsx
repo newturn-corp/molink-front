@@ -97,6 +97,7 @@ const FormatButton: React.FC<{
             className={'button' + (isActive ? '' : ' inactive')}
             onClick={event => {
                 event.preventDefault()
+                event.stopPropagation()
                 FormattingManager.toggleFormat(format)
             }}
         >
