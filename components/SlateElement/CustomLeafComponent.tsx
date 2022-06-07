@@ -1,7 +1,5 @@
 import React from 'react'
-import { CursorComponent } from '../Home/Main/Content/CursorComponent'
 import { CodeHighlightLeaf } from './Leaf/CodeHighlightLeaf'
-import { CustomText } from '../../Types/slate/CustomText'
 
 export const CustomLeafComponent: React.FC<{
     attributes,
@@ -43,7 +41,6 @@ export const CustomLeafComponent: React.FC<{
               backgroundColor: data?.alphaColor
           } as any
           }>
-          {leaf.isCaret ? <CursorComponent {...(leaf as any)} /> : null}
           {children}
       </span>
   }

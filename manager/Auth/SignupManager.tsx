@@ -25,9 +25,11 @@ class SignUpManager {
 
     set isAcceptAllCheckList (value: boolean) {
         this._isAcceptAllCheckList = value
-        this.isAcceptTermOfUse = value
-        this.isAcceptPrivacy = value
-        this.isAcceptMarketing = value
+        if (value) {
+            this.isAcceptTermOfUse = value
+            this.isAcceptPrivacy = value
+            this.isAcceptMarketing = value
+        }
     }
 
     isAcceptTermOfUse: boolean = false
