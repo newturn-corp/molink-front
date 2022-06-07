@@ -85,17 +85,11 @@ class FormattingManager {
     toggleFormat (format: Format) {
         const isActive = this.formatActiveMap.get(format)
         const slateEditor = EditorPage.editor.slateEditor
-        console.log('toggleFormat호출')
-        console.log(slateEditor.selection)
-        console.log(slateEditor.children)
         if (isActive) {
             SlateEditor.removeMark(slateEditor, format)
         } else {
             SlateEditor.addMark(slateEditor, format, true)
         }
-        console.log('addMark 호출!')
-        console.log(slateEditor.selection)
-        console.log(slateEditor.children)
         ReactEditor.focus(slateEditor)
         this.clear()
     }
