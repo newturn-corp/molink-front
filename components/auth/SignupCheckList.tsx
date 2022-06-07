@@ -46,7 +46,7 @@ export const SignupCheckList: React.FC<{
                 SignupManager.checkListState = SignUpCheckListState.Default
                 SignupManager.isAcceptTermOfUse = event.target.checked
                 if (!event.target.checked) {
-                    SignupManager.isAcceptAllCheckList = false
+                    SignupManager._isAcceptAllCheckList = false
                 }
             }}
         />
@@ -64,7 +64,7 @@ export const SignupCheckList: React.FC<{
                 SignupManager.checkListState = SignUpCheckListState.Default
                 SignupManager.isAcceptPrivacy = event.target.checked
                 if (!event.target.checked) {
-                    SignupManager.isAcceptAllCheckList = false
+                    SignupManager._isAcceptAllCheckList = false
                 }
             }}
         />
@@ -77,7 +77,7 @@ export const SignupCheckList: React.FC<{
             onChange={event => {
                 SignupManager.isAcceptMarketing = event.target.checked
                 if (!event.target.checked) {
-                    SignupManager.isAcceptAllCheckList = false
+                    SignupManager._isAcceptAllCheckList = false
                 }
             }}
         />
