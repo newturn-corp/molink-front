@@ -101,6 +101,24 @@ export const ShortcutWhenInsertText = (editor: Editor, text: string) => {
             })
             return true
         }
+        // else {
+        //     const start = SlateEditor.before(editor, anchor, {
+        //         distance: 1,
+        //         unit: 'word'
+        //     })
+        //     if (start) {
+        //         const range = { anchor, focus: start }
+        //         const beforeText = SlateEditor.string(editor, range)
+        //         if (beforeText && beforeText[0] === '`') {
+        //             Transforms.select(editor, range)
+        //             Transforms.delete(editor)
+        //             Transforms.insertNodes(editor, {
+        //                 text: beforeText.slice(1, beforeText.length),
+        //                 code: true
+        //             })
+        //         }
+        //     }
+        // }
     }
 
     if (text === ']') {

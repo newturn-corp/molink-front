@@ -20,6 +20,7 @@ import LinkManager from '../../manager/Editing/Link/LinkManager'
 import { insertHTMLWhenInsertData } from './InsertHTMLWhenInsertData'
 import EventManager from '../../manager/global/Event/EventManager'
 import { Event } from '../../manager/global/Event/Event'
+import { clearTextWhenInsertBreak } from './clearTextPlugin'
 
 export const EditorPlugin = (editor: Editor) => {
     const { isVoid, isInline, insertBreak, deleteBackward, deleteForward, normalizeNode, insertText, insertData, onChange, insertNode } = editor
@@ -71,7 +72,10 @@ export const EditorPlugin = (editor: Editor) => {
         deleteForward(unit)
     }
 
-    const insertBreakHandlers: InsertBreakHandler[] = [CorrectVoidBehaviorWhenInsertBreak]
+    const insertBreakHandlers: InsertBreakHandler[] = [
+        CorrectVoidBehaviorWhenInsertBreak,
+        clearTextWhenInsertBreak
+    ]
     editor.insertBreak = () => {
         for (const handler of insertBreakHandlers) {
             const handled = handler(editor)
@@ -114,14 +118,12 @@ export const EditorPlugin = (editor: Editor) => {
     }
 
     editor.onChange = () => {
-        console.log(editor.operations)
         EventManager.issueEvent(Event.EditorChange)
         if (isBrowser) {
             CommandManager.handleEditorChange(editor)
         }
         FormattingManager.handleEditorChange()
         onChange()
-        console.log(editor.selection)
     }
 
     return editor

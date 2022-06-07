@@ -85,9 +85,9 @@ class AuthManager {
     async verifyEmail (hash: string) {
         const result = await AuthAPI.verifyEmail(hash)
         if (!result.success) {
-            await FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '이미 만료된 인증입니다.', '')
+            await FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '이미 만료된 인증입니다.', '', 5)
         } else {
-            await FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '이메일 인증 성공!', '')
+            await FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '이메일 인증 성공!', '', 5)
         }
         await RoutingManager.moveTo(Page.SignIn)
     }
@@ -112,7 +112,7 @@ class AuthManager {
             }
             return { success: false }
         }
-        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '비밀번호 변경 메일이 전송되었습니다!', '', 1000)
+        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '비밀번호 변경 메일이 전송되었습니다!', '', 5)
         return { success: true }
     }
 
@@ -134,7 +134,7 @@ class AuthManager {
             }
             return { success: false }
         }
-        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '비밀번호 변경이 완료되었습니다!', '')
+        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '비밀번호 변경이 완료되었습니다!', '', 5)
         return { success: true }
     }
 }

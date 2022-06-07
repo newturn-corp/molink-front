@@ -7,7 +7,7 @@ import {
     Node,
     Path,
     Point,
-    Range,
+    Range, Text,
     Transforms
 } from 'slate'
 import { TextCategory } from '../../Types/slate/CustomElement'
@@ -114,21 +114,33 @@ export const fixContentNextHeaderWhenSplitNodes: TransformsSplitNodeHandler = (e
             if (always || !beforeRef || !Editor.isEdge(editor, point, path)) {
                 split = true
                 const properties = Node.extractProps(node) as any
-                if (properties.type === 'text' && [TextCategory.Head1, TextCategory.Head2, TextCategory.Head3].includes(properties.category)) {
-                    if (isStart) {
-                        Transforms.setNodes<SlateElement>(editor, {
-                            type: 'text',
-                            category: TextCategory.Content3
-                        }, {
-                            match: n => SlateEditor.isBlock(editor, n)
-                        })
-                        editor.apply({
-                            type: 'split_node',
-                            path,
-                            position,
-                            properties
-                        })
-                    } else {
+                if (Element.isElement(node)) {
+                    if (properties.type === 'text' && [TextCategory.Head1, TextCategory.Head2, TextCategory.Head3].includes(properties.category)) {
+                        if (isStart) {
+                            Transforms.setNodes<SlateElement>(editor, {
+                                type: 'text',
+                                category: TextCategory.Content3
+                            }, {
+                                match: n => SlateEditor.isBlock(editor, n)
+                            })
+                            editor.apply({
+                                type: 'split_node',
+                                path,
+                                position,
+                                properties
+                            })
+                        } else {
+                            editor.apply({
+                                type: 'split_node',
+                                path,
+                                position,
+                                properties: {
+                                    type: 'text',
+                                    category: TextCategory.Content3
+                                }
+                            })
+                        }
+                    } else if (properties.type === 'block-quote') {
                         editor.apply({
                             type: 'split_node',
                             path,
@@ -138,18 +150,27 @@ export const fixContentNextHeaderWhenSplitNodes: TransformsSplitNodeHandler = (e
                                 category: TextCategory.Content3
                             }
                         })
+                    } else {
+                        editor.apply({
+                            type: 'split_node',
+                            path,
+                            position,
+                            properties
+                        })
                     }
-                } else if (properties.type === 'block-quote') {
+                } else if (Text.isText(node)) {
+                    // properties.code = undefined
+                    // properties.underlined = undefined
+                    // properties.bold = undefined
+                    // properties.italic = undefined
                     editor.apply({
                         type: 'split_node',
                         path,
                         position,
-                        properties: {
-                            type: 'text',
-                            category: TextCategory.Content3
-                        }
+                        properties
                     })
                 } else {
+                    console.log('etc')
                     editor.apply({
                         type: 'split_node',
                         path,

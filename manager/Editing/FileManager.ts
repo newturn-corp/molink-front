@@ -30,10 +30,10 @@ class FileManager {
 
     checkUploadAvail (file?: File) {
         if (UserManager.limit.uploadRestrictedByDailyLimit || (file && file.size > UserManager.limit.dailyUploadLimit)) {
-            FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '오늘 허용된 업로드 용량이 부족합니다.', '')
+            FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '오늘 허용된 업로드 용량이 부족합니다.', '', 5)
             return false
         } else if (UserManager.limit.uploadRestrictedByTotalLimit || (file && file.size > UserManager.limit.totalUploadLimit)) {
-            FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '용량이 부족합니다.', '')
+            FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '용량이 부족합니다.', '', 5)
             return false
         }
         return true
