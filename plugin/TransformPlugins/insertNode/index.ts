@@ -4,6 +4,7 @@ import { ChangePageFileRelationshipDTO } from '@newturn-develop/types-molink'
 import EventManager from '../../../manager/global/Event/EventManager'
 import { Event } from '../../../manager/global/Event/Event'
 import EditorPage from '../../../manager/Blog/Editor/EditorPage'
+import UserManager from '../../../manager/global/User/UserManager'
 
 const { insertNodes } = Transforms
 
@@ -14,8 +15,9 @@ export const customInsertNode = (editor: Editor, nodes: Node | Node[], options) 
             break
         }
         if (node.type === 'image' || node.type === 'video' || node.type === 'file') {
+            console.log(`insertNode ${node.size}`)
             if (node.size > 0) {
-                EventManager.issueEvent(Event.PageFileUsageChange, { usage: node.size })
+                UserManager.limit.handleInsertFile(node.size)
             }
             if (node.url && node.url.includes(`${process.env.SERVER_BASE_URL}/files`)) {
                 const handle = node.url.split('/').pop()

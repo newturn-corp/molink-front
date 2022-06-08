@@ -41,7 +41,7 @@ class SupportManager {
             NOTIFICATION_TYPE.SUCCESS,
             '의견을 보내주셔서 감사합니다.',
             '',
-            5)
+            3)
     }
 
     handleCancel () {

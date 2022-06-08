@@ -72,13 +72,13 @@ export class EditorPageInfo {
         }
 
         if (this.lastPublishedAt && moment(this.lastPublishedAt).isAfter(moment().subtract(3, 'days'))) {
-            FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '아직 발행할 수 없어요!', '', 5)
+            FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '아직 발행할 수 없어요!', '', 3)
             return
         }
         await ContentAPI.publishPage(new PublishPageDTO(EditorPage.pageId))
         await EditorPage.editor.permanenceManager.persistPageDataInSearchEngine()
 
-        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, `${title} 페이지가 발행되었습니다!`, '', 5)
+        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, `${title} 페이지가 발행되었습니다!`, '', 3)
         this.lastPublishedAt = Number(new Date())
         this.isPublishable = false
     }

@@ -62,7 +62,7 @@ class UploadManager {
         })
         const { url, size } = result
         if (isNumber(size)) {
-            UserManager.limit.dailyUploadLimit -= size
+            UserManager.limit.handleFileUpload(size)
         }
         const handle = url.split('/').pop()
         await FileAPI.addPageFileRelationship(new ChangePageFileRelationshipDTO(pageId, handle))
@@ -89,7 +89,7 @@ class UploadManager {
         }, this.getTag()) as any
         const { url, size } = result
         if (isNumber(size)) {
-            UserManager.limit.dailyUploadLimit -= size
+            UserManager.limit.handleFileUpload(size)
         }
         const handle = url.split('/').pop()
         await FileAPI.addPageFileRelationship(new ChangePageFileRelationshipDTO(pageId, handle))

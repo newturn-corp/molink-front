@@ -1,89 +1,67 @@
 import * as Y from 'yjs'
-import moment from 'moment-timezone'
-import EventManager from '../Event/EventManager'
-import { Event } from '../Event/Event'
 import { makeAutoObservable } from 'mobx'
+import { Transaction, YEvent } from 'yjs'
+import { HierarchyDocumentInfoInterface } from '@newturn-develop/types-molink'
 
-// 일 업로드 용량 제한은 업로드마다 차감되고, 다음날 원상복구된다.
 // 총 업로드 용량은 Insert Node, Set Node에서 차감되고, removeNodes에서 복구된다.
 export class UserLimit {
     yLimit: Y.Map<any> = null
+    limitListener: (arg0: YEvent<any>[], arg1: Transaction) => void = null
+
+    sizeLimitPerUpload: number = 0
+    maxDailyUploadLimit: number = 0
+    dailyUploadLimit: number = 0
+    maxTotalUploadLimit: number = 0
+    totalUploadLimit: number = 0
 
     constructor () {
-        EventManager.addEventListener(Event.PageFileUsageChange, (param: any) => {
-            this.totalUploadLimit -= param.usage
-        }, 1)
-        makeAutoObservable(this)
+        makeAutoObservable(this, {
+            yLimit: false,
+            limitListener: false
+        })
     }
 
-    get dailyUploadLimit () {
-        return this.yLimit?.get('dailyUploadLimit') || 0
+    handleFileUpload (fileSize: number) {
+        this.yLimit.set('dailyUploadLimit', this.dailyUploadLimit - fileSize)
     }
 
-    set dailyUploadLimit (limit: number) {
-        if (limit < 0) {
-            this.uploadRestrictedByDailyLimit = true
-        } else {
-            this.uploadRestrictedByDailyLimit = false
-        }
-        this.yLimit.set('dailyUploadLimit', limit)
+    handleFileDeletion (fileSize: number) {
+        this.yLimit.set('totalUploadLimit', this.totalUploadLimit + fileSize)
     }
 
-    get totalUploadLimit () {
-        return this.yLimit?.get('totalUploadLimit') || 0
+    handleFileChange (prevFileSize: number, newFileSize: number) {
+        this.handleFileDeletion(prevFileSize)
+        // this.handleFileUpload(newFileSize)
+        this.handleInsertFile(newFileSize)
     }
 
-    set totalUploadLimit (limit: number) {
-        if (limit < 0) {
-            this.uploadRestrictedByTotalLimit = true
-        } else {
-            this.uploadRestrictedByTotalLimit = false
-        }
-        this.yLimit.set('totalUploadLimit', limit)
+    handleInsertFile (fileSize: number) {
+        this.yLimit.set('totalUploadLimit', this.totalUploadLimit - fileSize)
     }
 
-    get lastDailyUploadLimitDate () {
-        return this.yLimit?.get('lastDailyUploadLimitDate') || 0
-    }
-
-    set lastDailyUploadLimitDate (dateString: string) {
-        this.yLimit.set('lastDailyUploadLimitDate', dateString)
-    }
-
-    get uploadRestrictedByDailyLimit () {
-        return this.yLimit?.get('uploadRestrictedByDailyLimit') || 0
-    }
-
-    set uploadRestrictedByDailyLimit (limit: boolean) {
-        this.yLimit.set('uploadRestrictedByDailyLimit', limit)
-    }
-
-    get uploadRestrictedByTotalLimit () {
-        return this.yLimit?.get('uploadRestrictedByTotalLimit') || 0
-    }
-
-    set uploadRestrictedByTotalLimit (limit: boolean) {
-        this.yLimit.set('uploadRestrictedByTotalLimit', limit)
-    }
-
-    checkUploadAvail () {
-        return !this.uploadRestrictedByDailyLimit || !this.uploadRestrictedByTotalLimit
+    handlePageDeletion (page: HierarchyDocumentInfoInterface) {
+        this.yLimit.set('totalUploadLimit', this.totalUploadLimit + page.fileUsage)
     }
 
     sync (yLimit: Y.Map<any>) {
         this.yLimit = yLimit
-        if (isNaN(this.totalUploadLimit) || this.totalUploadLimit === undefined || this.totalUploadLimit === null) {
-            this.totalUploadLimit = 104857600 * 5 // 500MB
+        this.limitListener = () => {
+            this.sizeLimitPerUpload = this.yLimit.get('sizeLimitPerUpload')
+            this.maxDailyUploadLimit = this.yLimit.get('maxDailyUploadLimit')
+            this.dailyUploadLimit = this.yLimit.get('dailyUploadLimit')
+            this.maxTotalUploadLimit = this.yLimit.get('maxTotalUploadLimit')
+            this.totalUploadLimit = this.yLimit.get('totalUploadLimit')
+            console.log(this.yLimit.toJSON())
         }
-        const today = moment().format('YYYY-MM-DD')
-        if (this.lastDailyUploadLimitDate !== today) {
-            this.dailyUploadLimit = 104857600 // 100MB
-            this.lastDailyUploadLimitDate = today
-            this.uploadRestrictedByDailyLimit = false
-        }
+        this.yLimit.observeDeep(this.limitListener)
     }
 
     reset () {
+        this.yLimit.unobserveDeep(this.limitListener)
+        this.maxDailyUploadLimit = 0
+        this.dailyUploadLimit = 0
+        this.maxTotalUploadLimit = 0
+        this.totalUploadLimit = 0
         this.yLimit = null
     }
 }

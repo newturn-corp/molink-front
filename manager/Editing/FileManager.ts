@@ -13,6 +13,7 @@ import React from 'react'
 import FeedbackManager, { NOTIFICATION_TYPE } from '../global/FeedbackManager'
 import UserManager from '../global/User/UserManager'
 import EditorPage from '../Blog/Editor/EditorPage'
+import { numberToByteExpression } from '../../utils/numberToByteExpression'
 
 class FileManager {
     private _insert (editor: Editor, element: Element, insertPosition: BasePoint | number[]) {
@@ -20,8 +21,10 @@ class FileManager {
         const beforeRange = lineBefore && Editor.range(editor, lineBefore, insertPosition)
         const beforeText = beforeRange && Editor.string(editor, beforeRange)
         if (beforeText && beforeText.length > 0) {
+            console.log('insertNode 호출')
             Transforms.insertNodes(editor, element)
         } else {
+            console.log('setNodes 호출')
             Transforms.setNodes<Element>(editor, element, {
                 match: n => Editor.isBlock(editor, n)
             })
@@ -29,10 +32,11 @@ class FileManager {
     }
 
     checkUploadAvail (file?: File) {
-        if (UserManager.limit.uploadRestrictedByDailyLimit || (file && file.size > UserManager.limit.dailyUploadLimit)) {
+        const limit = UserManager.limit
+        if (file && file.size > limit.dailyUploadLimit) {
             FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '오늘 허용된 업로드 용량이 부족합니다.', '', 5)
             return false
-        } else if (UserManager.limit.uploadRestrictedByTotalLimit || (file && file.size > UserManager.limit.totalUploadLimit)) {
+        } else if (file && file.size > limit.totalUploadLimit) {
             FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '용량이 부족합니다.', '', 5)
             return false
         }
@@ -51,8 +55,8 @@ class FileManager {
                 const reader = new FileReader()
                 const [mime] = file.type.split('/')
                 // 5MB 이상은 못 올리도록
-                if (file.size > 5120000) {
-                    FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '5MB 이상의 파일은 업로드할 수 없습니다.', '')
+                if (file.size > UserManager.limit.sizeLimitPerUpload) {
+                    FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, `${numberToByteExpression(UserManager.limit.sizeLimitPerUpload)}를 초과하는 파일은 업로드할 수 없습니다.`, '', 5)
                     return true
                 }
                 reader.addEventListener('load', (event) => {
@@ -156,10 +160,12 @@ class FileManager {
                 captionHeight: 0,
                 size: file ? file.size : 0
             }
+            console.log(slateVideoElement.size)
             const insertPosition = this.getInsertPosition(editor)
             this._insert(editor, slateVideoElement, insertPosition)
             const insertedNodePosition = this.getInsertPosition(editor)
             const { url: uploadResultUrl, size } = await FileUploadManager.uploadFile(url, file)
+            console.log(size)
             Transforms.setNodes(editor,
                 {
                     url: uploadResultUrl,

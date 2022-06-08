@@ -101,7 +101,7 @@ class SignUpManager {
             }
             return { success: false }
         }
-        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '인증 메일이 발송되었습니다!', '', 5)
+        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '인증 메일이 발송되었습니다!', '', 3)
         return { success: true }
     }
 }
