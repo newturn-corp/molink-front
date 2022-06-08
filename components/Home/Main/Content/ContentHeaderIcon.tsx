@@ -13,6 +13,7 @@ export const ContentHeaderIcon: React.FC<{
 
       const onEmojiClick = useCallback((event, emojiObject: IEmojiData) => {
           openedPage.handleEmojiClick(emojiObject.emoji)
+          EmojiPicker.close()
       }, [iconRef])
 
       return <>

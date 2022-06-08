@@ -31,6 +31,7 @@ export const SlateCalloutElement: React.FC<{
         }, {
             at: getCurrentNodePath()
         })
+        EmojiPicker.close()
     }, [getCurrentNodePath])
 
     return (
