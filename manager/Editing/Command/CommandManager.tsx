@@ -10,7 +10,7 @@ import {
     Transforms
 } from 'slate'
 import { AvailCodeLanguage, DividerType, TextCategory } from '../../../Types/slate/CustomElement'
-import { ListTransforms } from '../../../plugin/GlobalPlugins/ListPlugin'
+import { ListEditor, ListTransforms } from '../../../plugin/GlobalPlugins/ListPlugin'
 import Command from './Command'
 import CommandGroup from './CommandGroup'
 import BulbIcon from '../../../public/image/icon/bulb.svg'
@@ -163,7 +163,10 @@ class CommandManager {
             }
             this.insertNode(editor, node)
             break
-        case '순서없는목록':
+        case LanguageManager.languageMap.BulletListCommandName:
+            if (ListEditor.isSelectionInList(editor)) {
+                break
+            }
             const unorderedRange = {
                 anchor: {
                     offset: 0,
@@ -175,7 +178,10 @@ class CommandManager {
             Transforms.delete(editor)
             ListTransforms.wrapInList(editor)
             break
-        case '숫자목록':
+        case LanguageManager.languageMap.OrderedListCommandName:
+            if (ListEditor.isSelectionInList(editor)) {
+                break
+            }
             const orderedRange = {
                 anchor: {
                     offset: 0,
@@ -187,7 +193,10 @@ class CommandManager {
             Transforms.delete(editor)
             ListTransforms.wrapInList(editor, 'ol-list')
             break
-        case '체크목록':
+        case LanguageManager.languageMap.CheckListCommandName:
+            if (ListEditor.isSelectionInList(editor)) {
+                break
+            }
             const checklistRange = {
                 anchor: {
                     offset: 0,
@@ -280,9 +289,13 @@ class CommandManager {
                 }
                 this._searchedCommandGroupList = []
                 this._searchedCommandCount = 0
+                const isInsideList = ListEditor.isSelectionInList(editor)
                 for (const commandGroup of this.commandGroupList) {
                     const searchedGroup = commandGroup.search(this.search)
                     if (searchedGroup.commands.length === 0) {
+                        continue
+                    }
+                    if (isInsideList && LanguageManager.languageMap.List === searchedGroup.name) {
                         continue
                     }
                     this._searchedCommandGroupList.push(searchedGroup)
