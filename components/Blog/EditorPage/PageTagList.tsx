@@ -54,7 +54,6 @@ export const PageTagList: React.FC<{
                             setIsTagFocus(false)
                         }}
                         onKeyDown={(event) => {
-                            console.log(event)
                             if (newTag !== '') {
                                 if (isMac && event.key === 'Enter' && event.keyCode === 229) {
                                     return
@@ -65,7 +64,7 @@ export const PageTagList: React.FC<{
                                     if (editor.tagList.tags.filter(v => v === newTag).length === 0) {
                                         editor.tagList.add(newTag)
                                     } else {
-                                        FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '이미 태그가 존재합니다.', '', 5)
+                                        FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '이미 태그가 존재합니다.', '', 3)
                                     }
                                     setNewTag('')
                                 }

@@ -30,6 +30,9 @@
   cursor: default;
   box-shadow: 0px 8px 16px rgba(24, 144, 255, 0.24);
 }
+.main-header .category-container .category:first-child {
+  margin-left: 40px;
+}
 .main-header .view-type-selector {
   display: flex;
   flex-direction: row;
@@ -72,4 +75,4 @@
   border-radius: 5px;
 }
 
-/*# sourceMappingURL=main.css.idMap */
+/*# sourceMappingURL=main.css.map */

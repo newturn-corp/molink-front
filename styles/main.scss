@@ -28,7 +28,11 @@
       cursor: default;
       box-shadow: 0px 8px 16px rgba(24, 144, 255, 0.24);
     }
+    .category:first-child {
+      margin-left: 40px;
+    }
   }
+
   .view-type-selector {
     display: flex;
     flex-direction: row;

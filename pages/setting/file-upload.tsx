@@ -7,6 +7,7 @@ import { Progress } from 'antd'
 import { SettingCategory } from '../../components/setting/SettingCategory'
 import UserManager from '../../manager/global/User/UserManager'
 import LanguageManager from '../../manager/global/LanguageManager'
+import { UploadLimitComponent } from '../../components/setting/FileUpload/UploadLimitComponent'
 
 const SettingProfile = observer(() => {
     useEffect(() => {
@@ -17,16 +18,12 @@ const SettingProfile = observer(() => {
                 }
             })
     }, [])
-    const maxTotalUploadLimit = 104857600 * 5
-    const totalUploadLimit = UserManager.limit.totalUploadLimit
-    console.log(`totalUploadLimit ${totalUploadLimit}`)
-    const totalUsage = maxTotalUploadLimit - totalUploadLimit
-    console.log(`totalUsage ${totalUsage}`)
-    const leftTotalSpaceMB = (totalUploadLimit / 1048576).toFixed(1)
-    const maxDailyUploadLimit = 104857600
-    const dailyUploadLimit = UserManager.limit.dailyUploadLimit
-    const dailyUsage = maxDailyUploadLimit - dailyUploadLimit
-    const leftDailySpaceMB = (dailyUploadLimit / 1048576).toFixed(1)
+    const {
+        maxTotalUploadLimit,
+        totalUploadLimit,
+        maxDailyUploadLimit,
+        dailyUploadLimit
+    } = UserManager.limit
     return <div className='setting-page' onClick={() => {
     } } >
         <Header />
@@ -36,30 +33,16 @@ const SettingProfile = observer(() => {
                     <SettingCategory/>
                 </div>
                 <div className='setting-list'>
-                    <div className={'total-upload-limit'}>
-                        <p className='setting-name'>
-                            {LanguageManager.languageMap.TotalFileSpace}
-                        </p>
-                        <Progress
-                            style={{
-                                width: 400,
-                                height: 50
-                            }}
-                            percent={totalUsage / maxTotalUploadLimit * 100}
-                            format={v => `500MB 중 ${leftTotalSpaceMB}MB 남음`}/>
-                    </div>
-                    <div className={'daily-upload-limit'}>
-                        <p className='setting-name'>
-                            {LanguageManager.languageMap.DailyFileSpace}
-                        </p>
-                        <Progress
-                            style={{
-                                width: 400,
-                                height: 50
-                            }}
-                            percent={dailyUsage / maxDailyUploadLimit * 100}
-                            format={v => `100MB 중 ${leftDailySpaceMB}MB 남음`}/>
-                    </div>
+                    <UploadLimitComponent
+                        settingName={LanguageManager.languageMap.TotalFileSpace}
+                        max={maxTotalUploadLimit}
+                        left={totalUploadLimit}
+                    />
+                    <UploadLimitComponent
+                        settingName={LanguageManager.languageMap.DailyFileSpace}
+                        max={maxDailyUploadLimit}
+                        left={dailyUploadLimit}
+                    />
                 </div>
             </div>
         </div>

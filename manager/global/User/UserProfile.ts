@@ -55,7 +55,7 @@ export class UserProfile {
             return
         }
         await UserAPI.updateUserBiography(new UpdateUserBiographyDTO(biography))
-        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '한 줄 소개가 수정되었습니다.', '', 5)
+        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '한 줄 소개가 수정되었습니다.', '', 3)
     }
 
     async updateUserProfileImage (event: React.ChangeEvent<HTMLInputElement>) {
@@ -66,7 +66,7 @@ export class UserProfile {
             reader.onloadend = async () => {
                 this.profileImageUrl = reader.result as string
                 await UserAPI.updateUserProfileImage(new UpdateUserProfileImageDTO(file))
-                FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '프로필 이미지가 수정되었습니다.', '', 5)
+                FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '프로필 이미지가 수정되었습니다.', '', 3)
             }
             reader.readAsDataURL(file)
         } catch (e) {

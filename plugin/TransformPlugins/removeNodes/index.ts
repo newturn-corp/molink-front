@@ -6,6 +6,7 @@ import { isNumber } from 'lodash'
 import EventManager from '../../../manager/global/Event/EventManager'
 import { Event } from '../../../manager/global/Event/Event'
 import EditorPage from '../../../manager/Blog/Editor/EditorPage'
+import UserManager from '../../../manager/global/User/UserManager'
 
 const matchPath = (editor: Editor, path: Path): ((node: Node) => boolean) => {
     console.log(editor)
@@ -46,7 +47,7 @@ export const customRemoveNodes: TransformsRemoveNodesHandler<Node> = (editor, op
                 const [node] = Editor.node(editor, path)
                 if (Element.isElement(node) && (node.type === 'image' || node.type === 'video' || node.type === 'file')) {
                     if (isNumber(node.size)) {
-                        EventManager.issueEvent(Event.PageFileUsageChange, { usage: -node.size })
+                        UserManager.limit.handleFileDeletion(node.size)
                     }
                     if (node.url && node.url.includes(`${process.env.SERVER_BASE_URL}/files`)) {
                         const handle = node.url.split('/').pop()

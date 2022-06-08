@@ -36,9 +36,9 @@ class SearchManager {
             RoutingManager.moveTo(Page.Index, url)
         } catch (err) {
             if (err instanceof UserNotExists) {
-                FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '유저가 존재하지 않습니다.', '')
+                FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '유저가 존재하지 않습니다.', '', 3)
             } else if (err instanceof RepresentativeDocumentNotExists) {
-                FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '유저의 공개된 문서가 존재하지 않습니다.', '')
+                FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '유저의 공개된 문서가 존재하지 않습니다.', '', 3)
             }
         }
     }
