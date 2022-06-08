@@ -7,7 +7,7 @@ import { Input } from 'antd'
 import { SettingCategory } from '../../components/setting/SettingCategory'
 import UserManager from '../../manager/global/User/UserManager'
 import LanguageManager from '../../manager/global/LanguageManager'
-const { TextArea } = Input
+import { BiographySetting } from '../../components/setting/Profile/BiographySetting'
 
 const SettingProfile = observer(() => {
     useEffect(() => {
@@ -48,20 +48,7 @@ const SettingProfile = observer(() => {
                                 {LanguageManager.languageMap.PressToChange}
                             </div>
                         </div>
-                        <div className='biography'>
-                            <p className='setting-name'>
-                                {LanguageManager.languageMap.Biography}
-                            </p>
-                            <TextArea
-                                maxLength={100}
-                                autoSize={{ minRows: 3, maxRows: 3 }}
-                                onChange={(e) => {
-                                    UserManager.profile.biography = e.target.value
-                                }}
-                                value={biography}
-                                onBlur={() => UserManager.profile.updateUserBiography(biography)}
-                            />
-                        </div>
+                        <BiographySetting/>
                     </div>
                 </div>
             </div>

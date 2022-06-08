@@ -6,6 +6,7 @@ import Identicon from 'identicon.js'
 import crypto from 'crypto'
 import UserAPI from '../../../api/UserAPI'
 import React from 'react'
+import FeedbackManager, { NOTIFICATION_TYPE } from '../FeedbackManager'
 
 export class UserProfile {
     yProfile: Y.Map<any> = null
@@ -50,7 +51,11 @@ export class UserProfile {
     }
 
     async updateUserBiography (biography: string) {
+        if (this.biography === biography) {
+            return
+        }
         await UserAPI.updateUserBiography(new UpdateUserBiographyDTO(biography))
+        FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '한 줄 소개가 수정되었습니다.', '', 5)
     }
 
     async updateUserProfileImage (event: React.ChangeEvent<HTMLInputElement>) {
@@ -61,6 +66,7 @@ export class UserProfile {
             reader.onloadend = async () => {
                 this.profileImageUrl = reader.result as string
                 await UserAPI.updateUserProfileImage(new UpdateUserProfileImageDTO(file))
+                FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '프로필 이미지가 수정되었습니다.', '', 5)
             }
             reader.readAsDataURL(file)
         } catch (e) {
