@@ -1,5 +1,6 @@
 import { Node, Range, Text } from 'slate'
 import EditorPage from '../../manager/Blog/Editor/EditorPage'
+import { isMac } from 'lib0/environment'
 
 const onKeyDown = (event, editor) => {
     const { selection } = editor
@@ -13,6 +14,10 @@ const onKeyDown = (event, editor) => {
     if (!Text.isText(node)) {
         return
     }
-    EditorPage.editor.showPlaceholder = !(node.text === '' && event.key === 'Process')
+    if (isMac) {
+        EditorPage.editor.showPlaceholder = !(node.text === '' && event.keyCode === 229)
+    } else {
+        EditorPage.editor.showPlaceholder = !(node.text === '' && event.key === 'Process')
+    }
 }
 export { onKeyDown }
