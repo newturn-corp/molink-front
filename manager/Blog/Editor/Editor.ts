@@ -16,6 +16,7 @@ import { EditorViewer } from './EditorViewer'
 import React from 'react'
 import { EditorToolbar } from './EditorToolbar'
 import { YjsEditor } from '@slate-yjs/core'
+import ImagePreLoader from '../../global/ImagePreLoader'
 
 export class Editor {
     public editable: boolean = false
@@ -83,6 +84,7 @@ export class Editor {
             this.slateEditor = this.synchronizer.getSlateEditor()
             YjsEditor.connect(this.slateEditor)
             this.permanenceManager = new EditorPermanenceManager(this.pageId, this.tagList, this.slateEditor)
+            ImagePreLoader.preloadCommandIcon()
         }
         this.isLoaded = true
         this.toolbar.isOpen = this.editable

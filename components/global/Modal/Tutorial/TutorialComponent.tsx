@@ -2,15 +2,11 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { Button, MobileStepper } from '@material-ui/core'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons'
+import TutorialManager from '../../../../manager/global/TutorialManager'
 
 export const TutorialComponent: React.FC<{
-    length: number,
-    currentStep: number,
-    handleNext: React.MouseEventHandler<HTMLButtonElement>,
-    handleBack: React.MouseEventHandler<HTMLButtonElement>,
-    disableNextButton: boolean,
-    disableBackButton: boolean
-}> = observer(({ length, children, handleBack, handleNext, disableNextButton, disableBackButton, currentStep }) => {
+    length: number
+}> = observer(({ length, children }) => {
     return <div>
         {
             children
@@ -22,14 +18,22 @@ export const TutorialComponent: React.FC<{
             style={{
                 backgroundColor: 'transparent'
             }}
-            activeStep={currentStep}
+            activeStep={TutorialManager.step}
             nextButton={
-                <Button size="small" onClick={handleNext} disabled={disableNextButton}>
+                <Button
+                    size="small"
+                    onClick={() => TutorialManager.handleNextButtonDown()}
+                    disabled={TutorialManager.disableNextButton}
+                >
                     <KeyboardArrowRight />
                 </Button>
             }
             backButton={
-                <Button size="small" onClick={handleBack} disabled={disableBackButton}>
+                <Button
+                    size="small"
+                    onClick={() => TutorialManager.handleBackButtonDown()}
+                    disabled={TutorialManager.disableBackButton}
+                >
                     <KeyboardArrowLeft />
                 </Button>
             }

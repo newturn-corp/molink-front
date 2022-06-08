@@ -6,26 +6,12 @@ import { TutorialComponent } from './TutorialComponent'
 import { TutorialPageControlLockPageDescription } from './PageControl/TutorialPageControlLockPageDescription'
 import { TutorialPageControlPublishDescription } from './PageControl/TutorialPageControlPublishDescription'
 import { TutorialPageControlVisibilityDescription } from './PageControl/TutorialPageControlVisibilityDescription'
+import TutorialManager from '../../../../manager/global/TutorialManager'
 
 export const PageControlTutorialComponent: React.FC<{
-    onStepUnderflow: Function
 }> = observer((props) => {
-    const [activeStep, setActiveStep] = React.useState(0)
-
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1)
-    }
-
-    const handleBack = () => {
-        if (activeStep === 0) {
-            props.onStepUnderflow()
-        } else {
-            setActiveStep((prevActiveStep) => prevActiveStep - 1)
-        }
-    }
-
     const getDescription = useCallback(() => {
-        switch (activeStep) {
+        switch (TutorialManager.step) {
         case 0:
             return <TutorialPageControlLockPageDescription/>
         case 1:
@@ -35,15 +21,10 @@ export const PageControlTutorialComponent: React.FC<{
         default:
             return <></>
         }
-    }, [activeStep])
+    }, [TutorialManager.step])
 
     return <TutorialComponent
         length={3}
-        currentStep={activeStep}
-        handleNext={handleNext}
-        handleBack={handleBack}
-        disableBackButton={false}
-        disableNextButton={activeStep === 2}
     >
         {
             getDescription()

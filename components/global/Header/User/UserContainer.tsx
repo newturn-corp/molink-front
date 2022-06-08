@@ -18,6 +18,7 @@ import LanguageManager from '../../../../manager/global/LanguageManager'
 import { Settings } from '@material-ui/icons'
 import ModalManager from '../../../../manager/global/ModalManager'
 import ImagePreLoader from '../../../../manager/global/ImagePreLoader'
+import TutorialManager from '../../../../manager/global/TutorialManager'
 
 export const UserContainer: React.FC<{
 }> = observer(() => {
@@ -46,8 +47,7 @@ export const UserContainer: React.FC<{
                     }),
                 new MenuItem('사용 방법',
                     async () => {
-                        ImagePreLoader.preloadTutorialImage()
-                        ModalManager.openTutorialModal = true
+                        TutorialManager.openTutorialModal()
                     }),
                 new MenuItem(LanguageManager.languageMap.PrivacyAndTerms,
                     async () => {
