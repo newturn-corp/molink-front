@@ -35,7 +35,8 @@ export class EditorPermanenceManager {
             return
         }
         const page = Blog.pageHierarchy.openedPage
-        const title = page.title
+        const title = page?.title
+        const visibility = page?.visibility && this.pageVisibilityToNumber(page.visibility)
         const image = this.slateEditor.children.filter(child => Element.isElement(child) && child.type === 'image')[0] as SlateImageElementType
         const { content, rawContent, description } = this.getPagePermanenceDataFromNodeArray(this.slateEditor.children)
 
@@ -45,7 +46,7 @@ export class EditorPermanenceManager {
             content,
             rawContent,
             description,
-            this.pageVisibilityToNumber(page.visibility),
+            visibility,
             this.shouldUpdateLastEditedAt ? Number(new Date()) : undefined,
             image ? `${image.url}?pageId=${this.pageId}` : undefined,
             this.tagList.tags

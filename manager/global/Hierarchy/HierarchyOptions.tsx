@@ -95,7 +95,8 @@ export class DeletePageOption extends HierarchyControlOption {
 
         const isOpenedDocumentIncludes = pageHierarchy.openedPage.pageId === page.id || childIDList.includes(pageHierarchy.openedPage.pageId)
         if (isOpenedDocumentIncludes) {
-            pageHierarchy.openedPage = null
+            pageHierarchy.closeOpenedPage()
+            await RoutingManager.moveTo(Page.Blog, `/${Blog.blogUserInfo.nickname}`)
         }
 
         // 페이지 먼저 삭제

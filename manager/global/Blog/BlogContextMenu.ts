@@ -6,6 +6,8 @@ import {
     HierarchyControlOption
 } from '../Hierarchy/HierarchyOptions'
 import { makeAutoObservable } from 'mobx'
+import EventManager from '../Event/EventManager'
+import { Event } from '../Event/Event'
 
 export class BlogContextMenu {
     public availControlOptions: HierarchyControlOption[] = []
@@ -15,6 +17,9 @@ export class BlogContextMenu {
 
     constructor () {
         makeAutoObservable(this)
+        EventManager.addEventListener(Event.PageBodyClick, () => {
+            this.close()
+        }, 1)
     }
 
     public open (pageId: string | null) {
