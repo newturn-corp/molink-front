@@ -2,6 +2,8 @@ import * as Y from 'yjs'
 import { makeAutoObservable } from 'mobx'
 import { Transaction, YEvent } from 'yjs'
 import { HierarchyDocumentInfoInterface } from '@newturn-develop/types-molink'
+import EditorPage from '../../Blog/Editor/EditorPage'
+import Blog from '../Blog/Blog'
 
 // 총 업로드 용량은 Insert Node, Set Node에서 차감되고, removeNodes에서 복구된다.
 export class UserLimit {
@@ -27,6 +29,9 @@ export class UserLimit {
 
     handleFileDeletion (fileSize: number) {
         this.yLimit.set('totalUploadLimit', this.totalUploadLimit + fileSize)
+        if (Blog.pageHierarchy && Blog.pageHierarchy.openedPage) {
+            Blog.pageHierarchy.openedPage.handleFileDeletion(fileSize)
+        }
     }
 
     handleFileChange (prevFileSize: number, newFileSize: number) {
@@ -37,6 +42,9 @@ export class UserLimit {
 
     handleInsertFile (fileSize: number) {
         this.yLimit.set('totalUploadLimit', this.totalUploadLimit - fileSize)
+        if (Blog.pageHierarchy && Blog.pageHierarchy.openedPage) {
+            Blog.pageHierarchy.openedPage.handleInsertFile(fileSize)
+        }
     }
 
     handlePageDeletion (page: HierarchyDocumentInfoInterface) {
