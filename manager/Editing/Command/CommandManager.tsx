@@ -19,6 +19,7 @@ import { Event } from '../../global/Event/Event'
 import LanguageManager from '../../global/LanguageManager'
 import CodeIcon from 'public/image/icon/code.svg'
 import EditorPage from '../../Blog/Editor/EditorPage'
+import { ReactEditor } from 'slate-react'
 
 // /(슬래시)로 수행하는 명령을 맡아 처리하는 매니저
 class CommandManager {
@@ -336,6 +337,7 @@ class CommandManager {
         }
         event.preventDefault()
         Transforms.select(editor, toJS(this.target))
+        ReactEditor.focus(editor)
         this.insertNodeByCommand(editor, this.getSearchedCommandByIndex(this.index))
             .then(() => {
                 this.target = null
