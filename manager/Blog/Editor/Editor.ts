@@ -42,6 +42,7 @@ export class Editor {
 
     lastPressedKey: string = null
     lastSelection: any
+    isComposing: boolean = false
     isLoaded: boolean = false
 
     constructor (title: string) {

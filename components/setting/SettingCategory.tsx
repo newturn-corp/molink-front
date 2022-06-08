@@ -56,27 +56,27 @@ const buttonPropsList: SettingButtonProps[] =
             buttonText: '파일 업로드',
             location: SettingLocation.FileUpload,
             isDisabled: false
-        },
-        {
-            buttonText: '팔로우 & 팔로잉',
-            location: SettingLocation.Follow,
-            isDisabled: true
-        },
-        {
-            buttonText: '하이어라키',
-            location: SettingLocation.Hierarchy,
-            isDisabled: true
-        },
-        {
-            buttonText: '구독',
-            location: SettingLocation.Subscribe,
-            isDisabled: true
-        },
-        {
-            buttonText: '위키',
-            location: SettingLocation.Wiki,
-            isDisabled: true
         }
+        // {
+        //     buttonText: '팔로우 & 팔로잉',
+        //     location: SettingLocation.Follow,
+        //     isDisabled: true
+        // },
+        // {
+        //     buttonText: '하이어라키',
+        //     location: SettingLocation.Hierarchy,
+        //     isDisabled: true
+        // },
+        // {
+        //     buttonText: '구독',
+        //     location: SettingLocation.Subscribe,
+        //     isDisabled: true
+        // },
+        // {
+        //     buttonText: '위키',
+        //     location: SettingLocation.Wiki,
+        //     isDisabled: true
+        // }
     ]
 
 export const SettingCategory: React.FC<{
