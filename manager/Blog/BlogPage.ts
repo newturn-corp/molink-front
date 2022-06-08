@@ -15,6 +15,7 @@ import LanguageManager from '../global/LanguageManager'
 import EditorPage from './Editor/EditorPage'
 import Blog from '../global/Blog/Blog'
 import UserInfoMap from '../global/User/UserInfoMap'
+import BlogUserInfoPage from './UserInfo/BlogUserInfoPage'
 
 enum BlogURLType {
     OnlyPageURL = 'only-page-url',
@@ -71,7 +72,7 @@ class BlogPage {
         }
         const userId = Number(userInfo.id)
         await Blog.load(userId)
-        await Blog.userPageList.loadPageSummaryList()
+        await BlogUserInfoPage.handleEnter()
         this.pageType = BlogPageType.UserMainPage
     }
 
