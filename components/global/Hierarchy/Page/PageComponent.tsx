@@ -99,8 +99,14 @@ export const PageComponent: React.FC<{
                   {
                       ((isMouseOver || isMobile) && currentHierarchy.editable) &&
                       <>
-                          <PageMenuButton pageID={pageID}/>
-                          <PageAddChildButton pageID={pageID}/>
+                          <PageMenuButton
+                              key={`page-menu-button-${pageID}`}
+                              pageID={pageID}
+                          />
+                          <PageAddChildButton
+                              key={`page-add-child-button-${pageID}`}
+                              pageID={pageID}
+                          />
                       </>
                   }
               </ListItem>
@@ -112,7 +118,10 @@ export const PageComponent: React.FC<{
                       id={`document-child-list-${page.id}`} component="div" disablePadding>
                       {
                           page.children.map(childDocumentId => {
-                              return <PageComponent key={Math.random()} pageID={childDocumentId} depth={depth + 1}/>
+                              return <PageComponent
+                                  key={`page-component-${childDocumentId}`} pageID={childDocumentId}
+                                  depth={depth + 1}
+                              />
                           })
                       }
                   </List>

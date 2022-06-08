@@ -108,7 +108,7 @@ export const ShortcutWhenInsertText = (editor: Editor, text: string) => {
             if (start) {
                 const range = { anchor, focus: start }
                 const beforeText = SlateEditor.string(editor, range)
-                if (beforeText && beforeText[0] === '`') {
+                if (beforeText && beforeText.length > 1 && beforeText[0] === '`') {
                     Transforms.select(editor, range)
                     Transforms.delete(editor)
                     Transforms.insertNodes(editor, {

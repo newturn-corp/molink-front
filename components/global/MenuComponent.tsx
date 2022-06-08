@@ -10,8 +10,11 @@ export const MenuComponent: React.FC<{}> = observer(() => {
         document.getElementsByTagName('body')[0].addEventListener('click', (event) => {
             MenuManager.close()
         })
-        MenuManager.menuRef = menuRef
-    }, [])
+        if (menuRef) {
+            MenuManager.menuRef = menuRef
+        }
+    }, [menuRef])
+
     return <Portal>
         <div
             style={{

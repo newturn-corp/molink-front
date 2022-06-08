@@ -20,7 +20,7 @@ export const HierarchyComponent: React.FC<{
               {
                   pageHierarchy.topLevelDocumentIdList.map(pageID => {
                       return <PageComponent
-                          key={`page-${pageID}`}
+                          key={`page-component-${pageID}`}
                           pageID={pageID}
                           depth={0}
                       />

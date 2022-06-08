@@ -1,8 +1,11 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { IEmojiData } from 'emoji-picker-react'
 import { Transforms } from 'slate'
 import { ReactEditor, useSlateStatic } from 'slate-react'
 import EmojiPicker from '../../../manager/global/EmojiPicker'
+import { MediaMenuButton } from '../Extra/MediaMenuButton'
+import MenuItem from '../../../manager/global/Menu/MenuItem'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 export const SlateCalloutElement: React.FC<{
     attributes,
@@ -13,15 +16,17 @@ export const SlateCalloutElement: React.FC<{
     children,
     element
 }) => {
-    const editor = useSlateStatic()
+    const editor = EditorPage.editor
+    const editable = editor.editable
+    const slateEditor = useSlateStatic()
     const iconRef = useRef(null)
-
+    const [isMouseOver, setIsMouseOver] = useState(false)
     const getCurrentNodePath = useCallback(() => (
-        ReactEditor.findPath(editor, element)
-    ), [editor, element])
+        ReactEditor.findPath(slateEditor, element)
+    ), [slateEditor, element])
 
     const onEmojiClick = useCallback((event, emojiObject: IEmojiData) => {
-        Transforms.setNodes(editor, {
+        Transforms.setNodes(slateEditor, {
             icon: emojiObject.emoji
         }, {
             at: getCurrentNodePath()
@@ -31,7 +36,8 @@ export const SlateCalloutElement: React.FC<{
     return (
         <div
             className='callout'
-            spellCheck='false'
+            onMouseOver={() => setIsMouseOver(true)}
+            onMouseLeave={() => setIsMouseOver(false)}
             {...attributes}>
             <div
                 ref={iconRef}
@@ -51,6 +57,17 @@ export const SlateCalloutElement: React.FC<{
                 {element.icon}
             </div>
             {children}
+            {
+                editable && <MediaMenuButton
+                    isShow={isMouseOver}
+                    menuItems={[new MenuItem('삭제', () => {
+                        if (editable) {
+                            Transforms.removeNodes(slateEditor, { at: getCurrentNodePath() })
+                        }
+                    })]}
+                    currentNodePath={getCurrentNodePath()}
+                />
+            }
         </div>
     )
 }

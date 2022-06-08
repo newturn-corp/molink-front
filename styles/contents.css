@@ -565,6 +565,7 @@
   font-size: 14px;
 }
 .content-container .content-body .contents .callout {
+  position: relative;
   padding: 16px;
   border-radius: 3px;
   background: rgb(239, 240, 241);
