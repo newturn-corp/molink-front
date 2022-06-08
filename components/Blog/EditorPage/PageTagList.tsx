@@ -1,15 +1,20 @@
-import React, { useState } from 'react'
+import React, { SyntheticEvent, useState } from 'react'
 import { observer } from 'mobx-react'
 import { Tag, Tooltip } from 'antd'
 import FeedbackManager, { NOTIFICATION_TYPE } from '../../../manager/global/FeedbackManager'
 import EditorPage from '../../../manager/Blog/Editor/EditorPage'
+import { isMac } from 'lib0/environment'
+
+interface CustomEvent extends SyntheticEvent {
+    data: string
+}
 
 export const PageTagList: React.FC<{
 }> = observer(() => {
     const [newTag, setNewTag] = useState('')
     const [isTagFocus, setIsTagFocus] = useState(false)
     const editor = EditorPage.editor
-    console.log(editor.tagList.tags)
+
     return <div
         className={'page-tag-list-container'}
     >
@@ -49,7 +54,11 @@ export const PageTagList: React.FC<{
                             setIsTagFocus(false)
                         }}
                         onKeyDown={(event) => {
+                            console.log(event)
                             if (newTag !== '') {
+                                if (isMac && event.key === 'Enter' && event.keyCode === 229) {
+                                    return
+                                }
                                 if (event.key === 'Enter' || event.key === ',') {
                                     // 중복이 없으면
                                     event.preventDefault()
@@ -60,6 +69,12 @@ export const PageTagList: React.FC<{
                                     }
                                     setNewTag('')
                                 }
+                            }
+                        }}
+                        onBeforeInput={(event: any) => {
+                            const data = event.data as any
+                            if (isMac && data[data.length - 1] === ',') {
+                                event.preventDefault()
                             }
                         }}
                     />

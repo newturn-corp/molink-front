@@ -2,6 +2,7 @@ import * as Y from 'yjs'
 import moment from 'moment-timezone'
 import EventManager from '../Event/EventManager'
 import { Event } from '../Event/Event'
+import { makeAutoObservable } from 'mobx'
 
 // 일 업로드 용량 제한은 업로드마다 차감되고, 다음날 원상복구된다.
 // 총 업로드 용량은 Insert Node, Set Node에서 차감되고, removeNodes에서 복구된다.
@@ -12,10 +13,11 @@ export class UserLimit {
         EventManager.addEventListener(Event.PageFileUsageChange, (param: any) => {
             this.totalUploadLimit -= param.usage
         }, 1)
+        makeAutoObservable(this)
     }
 
     get dailyUploadLimit () {
-        return this.yLimit.get('dailyUploadLimit')
+        return this.yLimit?.get('dailyUploadLimit') || 0
     }
 
     set dailyUploadLimit (limit: number) {
@@ -28,7 +30,7 @@ export class UserLimit {
     }
 
     get totalUploadLimit () {
-        return this.yLimit.get('totalUploadLimit')
+        return this.yLimit?.get('totalUploadLimit') || 0
     }
 
     set totalUploadLimit (limit: number) {
@@ -41,7 +43,7 @@ export class UserLimit {
     }
 
     get lastDailyUploadLimitDate () {
-        return this.yLimit.get('lastDailyUploadLimitDate')
+        return this.yLimit?.get('lastDailyUploadLimitDate') || 0
     }
 
     set lastDailyUploadLimitDate (dateString: string) {
@@ -49,7 +51,7 @@ export class UserLimit {
     }
 
     get uploadRestrictedByDailyLimit () {
-        return this.yLimit.get('uploadRestrictedByDailyLimit')
+        return this.yLimit?.get('uploadRestrictedByDailyLimit') || 0
     }
 
     set uploadRestrictedByDailyLimit (limit: boolean) {
@@ -57,7 +59,7 @@ export class UserLimit {
     }
 
     get uploadRestrictedByTotalLimit () {
-        return this.yLimit.get('uploadRestrictedByTotalLimit')
+        return this.yLimit?.get('uploadRestrictedByTotalLimit') || 0
     }
 
     set uploadRestrictedByTotalLimit (limit: boolean) {

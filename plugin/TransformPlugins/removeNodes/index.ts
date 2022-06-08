@@ -8,6 +8,11 @@ import { Event } from '../../../manager/global/Event/Event'
 import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 const matchPath = (editor: Editor, path: Path): ((node: Node) => boolean) => {
+    console.log(editor)
+    console.log(path)
+    console.log(Editor.path(editor, path))
+    console.log(Node.get(editor, path))
+    console.log(Editor.node(editor, path))
     const [node] = Editor.node(editor, path)
     return n => n === node
 }

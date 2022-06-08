@@ -6,6 +6,7 @@ import MenuManager from '../../../manager/global/Menu/MenuManager'
 import MenuItem from '../../../manager/global/Menu/MenuItem'
 import { ReactEditor, useSlate } from 'slate-react'
 import EditorPage from '../../../manager/Blog/Editor/EditorPage'
+import { MediaMenuButton } from '../Extra/MediaMenuButton'
 
 const availLanguages = [AvailCodeLanguage.Javascript, AvailCodeLanguage.Python, AvailCodeLanguage.HTML, AvailCodeLanguage.JAVA, AvailCodeLanguage.PHP, AvailCodeLanguage.SQL]
 
@@ -19,23 +20,24 @@ export const SlateCodeElement: React.FC<{
     element
 }) => {
     const editor = EditorPage.editor
+    const editable = editor.editable
     const slateEditor = useSlate()
     const changeLanguageButtonRef = useRef(null)
     const [isMouseOver, setIsMouseOver] = useState(false)
     const [isLanguageChangeButtonMouseOver, setIsLanguageChangeButtonMouseOver] = useState(false)
-    const currentNodePath = useCallback(() => (
+    const getCurrentNodePath = useCallback(() => (
         ReactEditor.findPath(slateEditor, element)
     ), [slateEditor, element])
     const changeLanguage = useCallback((language: AvailCodeLanguage) => {
         Transforms.setNodes(slateEditor, {
             language
         }, {
-            at: currentNodePath()
+            at: getCurrentNodePath()
         })
         Transforms.setNodes(slateEditor, {
             codeLanguage: language
         }, {
-            at: currentNodePath(),
+            at: getCurrentNodePath(),
             match: node => Text.isText(node)
         })
     }, [slateEditor])
@@ -82,6 +84,17 @@ export const SlateCodeElement: React.FC<{
             >
                 {children}
             </div>
+            {
+                editable && <MediaMenuButton
+                    isShow={isMouseOver}
+                    menuItems={[new MenuItem('삭제', () => {
+                        if (editable) {
+                            Transforms.removeNodes(slateEditor, { at: getCurrentNodePath() })
+                        }
+                    })]}
+                    currentNodePath={getCurrentNodePath()}
+                />
+            }
         </p>
     )
 })

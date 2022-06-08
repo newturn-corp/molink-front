@@ -19,7 +19,9 @@ const SettingProfile = observer(() => {
     }, [])
     const maxTotalUploadLimit = 104857600 * 5
     const totalUploadLimit = UserManager.limit.totalUploadLimit
+    console.log(`totalUploadLimit ${totalUploadLimit}`)
     const totalUsage = maxTotalUploadLimit - totalUploadLimit
+    console.log(`totalUsage ${totalUsage}`)
     const leftTotalSpaceMB = (totalUploadLimit / 1048576).toFixed(1)
     const maxDailyUploadLimit = 104857600
     const dailyUploadLimit = UserManager.limit.dailyUploadLimit

@@ -14,10 +14,9 @@ import TextArea, { TextAreaRef } from 'antd/lib/input/TextArea'
 import { FloatOption, SlateImageElementType, TextCategory } from '../../../Types/slate/CustomElement'
 import StyleManager from '../../../manager/global/Style/StyleManager'
 import FileUploadManager from '../../../manager/Editing/FileUploadManager'
-import MenuManager from '../../../manager/global/Menu/MenuManager'
 import MenuItem from '../../../manager/global/Menu/MenuItem'
-import MenuDotsIcon from '../../../public/image/icon/menu-dots.svg'
 import EditorPage from '../../../manager/Blog/Editor/EditorPage'
+import { MediaMenuButton } from '../Extra/MediaMenuButton'
 
 const Caption: React.FC<{
     selected: boolean,
@@ -26,7 +25,7 @@ const Caption: React.FC<{
   }> = ({ selected, caption, floatOption }) => {
       const inputRef = useRef<TextAreaRef>(null)
       const [captionFocused, setCaptionFocused] = useState(false)
-      const editor = useSlateStatic()
+      const slateEditor = useSlateStatic()
       const showCaption = selected || (caption && caption.length > 0)
 
       if (!selected) {
@@ -55,10 +54,10 @@ const Caption: React.FC<{
               //   readOnly={!captionFocused}
               rows={1}
               onChange={(e) => {
-                  Transforms.setNodes(editor, {
+                  Transforms.setNodes(slateEditor, {
                       caption: e.target.value
                   }, {
-                      at: editor.selection
+                      at: slateEditor.selection
                   })
               }}
               onBlur={(e) => {
@@ -70,22 +69,22 @@ const Caption: React.FC<{
                   }
                   if (e.key === 'ArrowDown') {
                       setCaptionFocused(false)
-                      const { selection } = editor
-                      if (selection.anchor.path[0] === editor.children.length - 1) {
-                          Transforms.insertNodes(editor, {
+                      const { selection } = slateEditor
+                      if (selection.anchor.path[0] === slateEditor.children.length - 1) {
+                          Transforms.insertNodes(slateEditor, {
                               type: 'text',
                               category: TextCategory.Content3,
                               children: [{ text: '' }]
                           })
                       }
                       inputRef.current.blur()
-                      ReactEditor.focus(editor)
-                      Transforms.select(editor, Editor.after(editor, editor.selection, { unit: 'line' }))
+                      ReactEditor.focus(slateEditor)
+                      Transforms.select(slateEditor, Editor.after(slateEditor, slateEditor.selection, { unit: 'line' }))
                   } else if (e.key === 'ArrowUp') {
                       setCaptionFocused(false)
                       inputRef.current.blur()
-                      ReactEditor.focus(editor)
-                      Transforms.select(editor, Editor.before(editor, editor.selection, {
+                      ReactEditor.focus(slateEditor)
+                      Transforms.select(slateEditor, Editor.before(slateEditor, slateEditor.selection, {
                           distance: 1
                       }))
                   }
@@ -262,28 +261,18 @@ export const SlateImageElement: React.FC<{
                           </>
                       }
                       {
-                          editable && <div
-                              ref={menuButtonRef}
-                              className={'menu-button'}
-                              style={{
-                                  display: isMouseOver ? undefined : 'none'
-                              }}
-                              onClick={(event) => {
-                                  event.stopPropagation()
+                          editable && <MediaMenuButton
+                              isShow={isMouseOver}
+                              menuItems={[new MenuItem('삭제', () => {
+                                  if (editable) {
+                                      Transforms.removeNodes(editor, { at: currentNodePath() })
+                                  }
+                              })]}
+                              onClick={() => {
                                   Transforms.select(editor, currentNodePath())
-                                  const rect = menuButtonRef.current.getBoundingClientRect()
-                                  MenuManager.open([new MenuItem('삭제', () => {
-                                      if (editable) {
-                                          Transforms.removeNodes(editor, { at: currentNodePath() })
-                                      }
-                                  })], {
-                                      top: rect.top + (rect.height / 2),
-                                      left: rect.left + (rect.width / 2)
-                                  }, true)
                               }}
-                          >
-                              <MenuDotsIcon/>
-                          </div>
+                              currentNodePath={currentNodePath()}
+                          />
                       }
                   </Rnd>
                   <Caption selected={selected && isSelectionCollapsed} caption={element.caption} floatOption={element.floatOption}/>
