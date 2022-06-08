@@ -42,6 +42,18 @@ export class BlogOpenedPage {
         }
     }
 
+    handleInsertFile (fileSize: number) {
+        const page = this.yMap.get(this.pageId)
+        page.fileUsage += fileSize
+        this.yMap.set(page.id, page)
+    }
+
+    handleFileDeletion (fileSize: number) {
+        const page = this.yMap.get(this.pageId)
+        page.fileUsage -= fileSize
+        this.yMap.set(page.id, page)
+    }
+
     public updateHierarchyChildrenOpen (pageId: string, isOpen: boolean) {
         const page = this.yMap.get(pageId)
         page.childrenOpen = isOpen
