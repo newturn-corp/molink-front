@@ -1,5 +1,7 @@
 import { Editor, Element, Node, Range, Text, Transforms } from 'slate'
 import { TextCategory } from '../../Types/slate/CustomElement'
+import { isMac } from 'lib0/environment'
+import EditorPage from '../../manager/Blog/Editor/EditorPage'
 
 const checkInsideIndependentBlock = (editor: Editor) => {
     const ancestors = Node.ancestors(editor, editor.selection.anchor.path)
@@ -12,6 +14,9 @@ const checkInsideIndependentBlock = (editor: Editor) => {
 }
 
 export const handleEnterInCode = (event, editor) => {
+    if (isMac && EditorPage.editor.isComposing) {
+        return false
+    }
     if (!checkInsideIndependentBlock(editor)) {
         return false
     }

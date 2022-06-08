@@ -2,8 +2,13 @@ import { Editor, Node, Range, Transforms } from 'slate'
 import React from 'react'
 import { TextCategory } from '../../Types/slate/CustomElement'
 import { ListEditor, ListTransforms } from '../GlobalPlugins/ListPlugin'
+import { isMac } from 'lib0/environment'
+import EditorPage from '../../manager/Blog/Editor/EditorPage'
 
 export const handleEnterInList = (event: React.KeyboardEvent<HTMLDivElement>, editor: Editor) => {
+    if (isMac && EditorPage.editor.isComposing) {
+        return false
+    }
     const currentItem = ListEditor.getCurrentItem(editor)
     if (!currentItem) {
         return false
@@ -21,16 +26,13 @@ export const handleEnterInList = (event: React.KeyboardEvent<HTMLDivElement>, ed
     ) {
         // Block is empty, we exit the list
         if (ListEditor.getItemDepth(editor) > 1) {
-            console.log(1)
             ListTransforms.decreaseItemDepth(editor)
         } else {
             // Exit list
-            console.log(2)
             ListTransforms.unwrapList(editor)
         }
     } else {
         // Split list item
-        console.log(3)
         ListTransforms.splitListItem(editor)
     }
     return true
