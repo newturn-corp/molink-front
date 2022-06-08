@@ -40,7 +40,7 @@ import { MenuComponent } from '../components/global/MenuComponent'
 import { LinkModalComponent } from '../components/global/Modal/LinkModalComponent'
 import { ShouldLoginNoticeModal } from '../components/global/Modal/ShouldLoginNoticeModal'
 import { EmojiPickerComponent } from '../components/global/EmojiPickerComponent'
-import { TutorialModal } from '../components/global/Modal/TutorialModal'
+import { TutorialModalComponent } from '../components/global/Modal/TutorialModalComponent'
 import ImagePreLoader from '../manager/global/ImagePreLoader'
 
 configure(
@@ -70,7 +70,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     useEffect(() => {
         GlobalManager.init()
             .then(() => LanguageManager.loadLanguage(navigator.language))
-        ImagePreLoader.preloadCommandIcon()
         removeConsoleLogOnProduction()
     }, [])
 
@@ -82,7 +81,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                 <MenuComponent />
                 <LinkModalComponent/>
                 <ShouldLoginNoticeModal/>
-                <TutorialModal/>
+                <TutorialModalComponent/>
                 <EmojiPickerComponent/>
                 <Component {...pageProps} />
             </SafeHydrate>

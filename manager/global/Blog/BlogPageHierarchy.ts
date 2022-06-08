@@ -51,7 +51,7 @@ export class BlogPageHierarchy {
         this.yMap = this.yDocument.getMap('documentHierarchyInfoMap')
         this.yMap.observeDeep(async () => {
             if (this.openedPage && !this.yMap.get(this.openedPage.pageId)) {
-                this.openedPage = null
+                this.closeOpenedPage()
                 await RoutingManager.moveTo(Page.Blog, `/${Blog.blogUserInfo.nickname}`)
             }
             this.map = this.yMap.toJSON()
@@ -62,7 +62,7 @@ export class BlogPageHierarchy {
         })
 
         EventManager.addEventListener(Event.MoveToAnotherPage, () => {
-            this.openedPage = null
+            this.closeOpenedPage()
         }, 1)
         makeAutoObservable(this, {
             yMap: false,
@@ -87,7 +87,18 @@ export class BlogPageHierarchy {
     }
 
     openPage (pageId) {
+        if (this.openedPage) {
+            this.openedPage.reset()
+        }
         this.openedPage = new BlogOpenedPage(pageId, this.yMap)
+    }
+
+    closeOpenedPage () {
+        if (!this.openedPage) {
+            return
+        }
+        this.openedPage.reset()
+        this.openedPage = null
     }
 
     public reset () {
@@ -100,7 +111,7 @@ export class BlogPageHierarchy {
 
         this.map = {}
         this.topLevelDocumentIdList = []
-        this.openedPage = null
+        this.closeOpenedPage()
         this.nameChangingPageId = null
     }
 

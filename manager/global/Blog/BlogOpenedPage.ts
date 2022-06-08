@@ -3,8 +3,8 @@ import { HierarchyDocumentInfoInterface, PageVisibility } from '@newturn-develop
 import { makeAutoObservable } from 'mobx'
 
 export class BlogOpenedPage {
-    private yMap: Y.Map<HierarchyDocumentInfoInterface>
-
+    public yMap: Y.Map<HierarchyDocumentInfoInterface>
+    public pageStatusListener = null
     public readonly pageId: string
     public icon: string
     public title: string
@@ -18,15 +18,20 @@ export class BlogOpenedPage {
         this.icon = page.icon
         this.title = page.title
         this.visibility = page.visibility
-
-        this.yMap.observeDeep(() => {
+        this.pageStatusListener = () => {
             const page = this.yMap.get(this.pageId)
-            this.icon = page.icon
-            this.title = page.title
-            this.visibility = page.visibility
-        })
+            if (page) {
+                this.icon = page.icon
+                this.title = page.title
+                this.visibility = page.visibility
+            }
+        }
+        this.yMap.observeDeep(this.pageStatusListener)
 
-        makeAutoObservable(this)
+        makeAutoObservable(this, {
+            yMap: false,
+            pageStatusListener: false
+        })
     }
 
     handleEmojiClick (emoji: string) {
@@ -41,5 +46,11 @@ export class BlogOpenedPage {
         const page = this.yMap.get(pageId)
         page.childrenOpen = isOpen
         this.yMap.set(pageId, page)
+    }
+
+    public reset () {
+        this.yMap.unobserveDeep(this.pageStatusListener)
+        this.pageStatusListener = null
+        this.yMap = null
     }
 }

@@ -1,4 +1,4 @@
-import { Editor, Element, Node, Text, Transforms } from 'slate'
+import { Editor, Element, Node, Range, Text, Transforms } from 'slate'
 import { TextCategory } from '../../Types/slate/CustomElement'
 
 const checkInsideIndependentBlock = (editor: Editor) => {
@@ -50,4 +50,26 @@ export const handleShiftEnterInCode = (event, editor) => {
         }
     )
     return true
+}
+
+export const handleSpaceInCodeMark = (event, editor: Editor) => {
+    const { selection } = editor
+    if (!Range.isCollapsed(selection)) {
+        return false
+    }
+    const currentNode = Node.get(editor, selection.anchor.path)
+    if (currentNode.code) {
+        const [start, end] = Range.edges(editor.selection)
+        const endAtEndOfNode = Editor.isEnd(editor, end, end.path)
+        if (endAtEndOfNode) {
+            Transforms.insertNodes(editor, { text: ' ' })
+            Transforms.move(editor, {
+                distance: 1,
+                unit: 'character',
+                reverse: true
+            })
+            return true
+        }
+    }
+    return false
 }

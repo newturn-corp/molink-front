@@ -4,7 +4,12 @@ import {
     handleShiftTabInList,
     handleTabInList
 } from './ListPlugin'
-import { handleEnterInCode, handleShiftEnterInCode, handleTabInCode } from './CodeHandleKeyDownPlugin'
+import {
+    handleEnterInCode,
+    handleShiftEnterInCode,
+    handleSpaceInCodeMark,
+    handleTabInCode
+} from './CodeHandleKeyDownPlugin'
 import CommandManager from '../../manager/Editing/Command/CommandManager'
 import {
     moveSelectionWhenArrowLeftDown,
@@ -75,6 +80,9 @@ handlerMap.set('shift+Enter', [
 handlerMap.set('Escape', [
     (event, editor) => LinkManager.menu.handleEscape(event, editor),
     (event, editor) => CommandManager.handleEscape(event, editor)
+])
+handlerMap.set(' ', [
+    handleSpaceInCodeMark
 ])
 
 const generalKeyDownHandlers = [

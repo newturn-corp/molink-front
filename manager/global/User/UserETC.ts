@@ -6,6 +6,7 @@ import { Event } from '../Event/Event'
 import { isBrowser } from 'react-device-detect'
 import ModalManager from '../ModalManager'
 import RoutingManager from '../RoutingManager'
+import TutorialManager from '../TutorialManager'
 
 export class UserETC {
     yETC: Y.Map<any> = null
@@ -22,7 +23,7 @@ export class UserETC {
         this.yETC.observeDeep(async () => {
             if (!this.yETC.get('shownTutorial')) {
                 this.yETC.set('shownTutorial', true)
-                ModalManager.openTutorialModal = true
+                TutorialManager.openTutorialModal()
             }
         })
     }

@@ -252,6 +252,9 @@ class CommandManager {
             }
             const [start] = Range.edges(selection)
             // 시작점을 가져옴
+            if (!start) {
+                return false
+            }
             const wordBefore = Editor.before(editor, start, { unit: 'word' })
             const wordBeforeText = Editor.string(editor, Editor.range(editor, wordBefore, start))
             const before = wordBeforeText[wordBeforeText.length - 1] === '/' ? Editor.before(editor, start, { unit: 'character' }) : Editor.before(editor, wordBefore, { unit: 'character' })

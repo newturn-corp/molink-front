@@ -6,14 +6,12 @@ import { TutorialBlogBatchPageDescription } from './Blog/TutorialBlogBatchPageDe
 import { TutorialBlogDeletePageDescription } from './Blog/TutorialBlogDeletePageDescription'
 import { TutorialComponent } from './TutorialComponent'
 import { TutorialInitialDescription } from './Blog/TutorialInitialDescription'
+import TutorialManager from '../../../../manager/global/TutorialManager'
 
 export const BlogTutorialComponent: React.FC<{
-    onStepOverflow: Function
 }> = observer((props) => {
-    const [activeStep, setActiveStep] = React.useState(0)
-
     const getDescription = useCallback(() => {
-        switch (activeStep) {
+        switch (TutorialManager.step) {
         case 0:
             return <TutorialInitialDescription/>
         case 1:
@@ -27,27 +25,10 @@ export const BlogTutorialComponent: React.FC<{
         default:
             return <></>
         }
-    }, [activeStep])
-
-    const handleNext = () => {
-        if (activeStep === 4) {
-            props.onStepOverflow()
-        } else {
-            setActiveStep((prevActiveStep) => prevActiveStep + 1)
-        }
-    }
-
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1)
-    }
+    }, [TutorialManager.step])
 
     return <TutorialComponent
         length={5}
-        currentStep={activeStep}
-        handleNext={handleNext}
-        handleBack={handleBack}
-        disableBackButton={activeStep === 0}
-        disableNextButton={false}
     >
         {
             getDescription()

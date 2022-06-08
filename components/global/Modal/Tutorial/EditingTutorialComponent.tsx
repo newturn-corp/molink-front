@@ -4,31 +4,12 @@ import { TutorialEditingCommandDescription } from './Editing/TutorialEditingComm
 import { TutorialEditingShortcutDescription } from './Editing/TutorialEditingShortcutDescription'
 import { TutorialEditingUploadFileDescription } from './Editing/TutorialEditingUploadFileDescription'
 import { TutorialComponent } from './TutorialComponent'
+import TutorialManager from '../../../../manager/global/TutorialManager'
 
 export const EditingTutorialComponent: React.FC<{
-    onStepOverflow: Function,
-    onStepUnderflow: Function
-}> = observer((props) => {
-    const [activeStep, setActiveStep] = React.useState(0)
-
-    const handleNext = () => {
-        if (activeStep === 2) {
-            props.onStepOverflow()
-        } else {
-            setActiveStep((prevActiveStep) => prevActiveStep + 1)
-        }
-    }
-
-    const handleBack = () => {
-        if (activeStep === 0) {
-            props.onStepUnderflow()
-        } else {
-            setActiveStep((prevActiveStep) => prevActiveStep - 1)
-        }
-    }
-
+}> = observer(() => {
     const getDescription = useCallback(() => {
-        switch (activeStep) {
+        switch (TutorialManager.step) {
         case 0:
             return <TutorialEditingCommandDescription/>
         case 1:
@@ -38,15 +19,10 @@ export const EditingTutorialComponent: React.FC<{
         default:
             return <></>
         }
-    }, [activeStep])
+    }, [TutorialManager.step])
 
     return <TutorialComponent
         length={3}
-        currentStep={activeStep}
-        handleNext={handleNext}
-        handleBack={handleBack}
-        disableBackButton={false}
-        disableNextButton={false}
     >
         {
             getDescription()
