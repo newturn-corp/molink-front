@@ -38,7 +38,6 @@ export class Editor {
 
     editableElement: HTMLElement = null
     contentBody: HTMLElement = null
-    titleRef: React.MutableRefObject<HTMLDivElement> = null
 
     lastPressedKey: string = null
     lastSelection: any
@@ -57,7 +56,6 @@ export class Editor {
         makeAutoObservable(this, {
             slateEditor: observable.ref,
             yjsDocument: false,
-            titleRef: false,
             synchronizer: false,
             viewer: false,
             selection: false
