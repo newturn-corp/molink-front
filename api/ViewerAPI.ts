@@ -10,7 +10,7 @@ import {
     GetPageListResponseDTO,
     GetFollowInfoResponseDTO,
     GetFollowStatusResponseDTO,
-    ESPageSummary, GetUserLikePageResponseDTO, ESComment, GetPageListDTO
+    ESPageSummary, GetUserLikePageResponseDTO, ESComment, GetPageListDTO, ESPageMetaInfo
 } from '@newturn-develop/types-molink'
 import { ContentNotExists, ContentUserNotExists } from '../Errors/ContentError'
 
@@ -96,6 +96,11 @@ class ViewerAPI extends BaseAPI {
 
     async getPageSummary (pageID: string): Promise<ESPageSummary> {
         const res = await this.get(`/viewer/pages/${pageID}/summary`)
+        return res.data
+    }
+
+    async getPageMetaInfo (pageID: string): Promise<ESPageMetaInfo> {
+        const res = await this.get(`/viewer/pages/${pageID}/meta-info`)
         return res.data
     }
 

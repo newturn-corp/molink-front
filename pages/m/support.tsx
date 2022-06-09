@@ -4,9 +4,11 @@ import { observer } from 'mobx-react'
 import { MobileHeader } from '../../components/mobile/MobileHeader'
 import RoutingManager from '../../manager/global/RoutingManager'
 import ArrowLeftIcon from 'public/image/icon/arrow-left.svg'
+import { SiteHead } from '../../components/global/SiteHead'
 
 const Support = observer(() => {
     return <>
+        <SiteHead/>
         {/* <MobileHeader/> */}
         <div
             className={'support-header'}

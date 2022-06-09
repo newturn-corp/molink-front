@@ -42,7 +42,6 @@ export class EditorSynchronizer {
             let isResolved = false
             const listener = () => {
                 isResolved = true
-                console.log(this.sharedType.toDelta())
                 this.sharedType.unobserveDeep(listener)
                 resolve()
             }

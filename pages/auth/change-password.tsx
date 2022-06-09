@@ -8,6 +8,7 @@ import { AuthButton } from '../../components/auth/AuthButton'
 import { AuthContainer } from '../../components/auth/AuthContainer'
 import LanguageManager from '../../manager/global/LanguageManager'
 import { observer } from 'mobx-react'
+import { SiteHead } from '../../components/global/SiteHead'
 
 const getPasswordHelperText = (passwordState: PasswordState) => {
     switch (passwordState) {
@@ -32,6 +33,7 @@ const AuthChangePasswordPage = observer(() => {
     })
     const [loading, setLoading] = useState(false)
     return <div className='auth-page change-password-page'>
+        <SiteHead/>
         <AuthHeader/>
         <AuthContainer
             loading={loading}

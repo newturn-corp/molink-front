@@ -11,6 +11,7 @@ import UserManager from '../../manager/global/User/UserManager'
 import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 import { AuthContainer } from '../../components/auth/AuthContainer'
 import LanguageManager from '../../manager/global/LanguageManager'
+import { SiteHead } from '../../components/global/SiteHead'
 
 const getEmailHelperText = (emailState: EmailState) => {
     if (emailState === EmailState.DEFAULT) {
@@ -29,6 +30,7 @@ const getEmailHelperText = (emailState: EmailState) => {
 const ChangePasswordRequest = observer(() => {
     const [loading, setLoading] = useState(false)
     return <div className='auth-page change-password-request-page'>
+        <SiteHead/>
         <AuthHeader/>
         <AuthContainer
             loading={loading}

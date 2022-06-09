@@ -76,7 +76,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     return (
         <>
             <SafeHydrate>
-                <SiteHead/>
                 <DialogComponent />
                 <MenuComponent />
                 <LinkModalComponent/>

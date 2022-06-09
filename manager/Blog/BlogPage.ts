@@ -17,7 +17,7 @@ import Blog from '../global/Blog/Blog'
 import UserInfoMap from '../global/User/UserInfoMap'
 import BlogUserInfoPage from './UserInfo/BlogUserInfoPage'
 
-enum BlogURLType {
+export enum BlogURLType {
     OnlyPageURL = 'only-page-url',
     UserMainURL = 'user-main-url',
     StandardDocumentURL = 'standard-document-url'
@@ -30,7 +30,7 @@ class BlogPage {
         makeAutoObservable(this)
     }
 
-    _interpretURLInfo (info: string[]) {
+    interpretURLInfo (info: string[]) {
         if (info.length === 0) {
             throw new InvalidParam()
         } else if (info.length === 1) {
@@ -93,7 +93,7 @@ class BlogPage {
     async handleEnter (info: string[]) {
         try {
             await UserManager.load()
-            const { type, nickname, pageId, documentName } = this._interpretURLInfo(info)
+            const { type, nickname, pageId, documentName } = this.interpretURLInfo(info)
             if (type === BlogURLType.OnlyPageURL) {
                 await this._handleEnterOnlyPageURL(pageId)
             } else if (type === BlogURLType.UserMainURL) {

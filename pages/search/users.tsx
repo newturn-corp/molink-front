@@ -4,6 +4,7 @@ import { SearchCategory, SearchCategoryEnum } from '../../components/search/Sear
 import SearchManager from '../../manager/global/SearchManager'
 import { SearchResults } from '../../components/search/SearchResult'
 import UserManager from '../../manager/global/User/UserManager'
+import { SiteHead } from '../../components/global/SiteHead'
 
 const Search = () => {
     const query = new URLSearchParams(window.location.search).get('q')
@@ -15,6 +16,7 @@ const Search = () => {
 
     return <div className='search-page' onClick={() => {
     } } >
+        <SiteHead/>
         <Header />
         <div className={'index-body'}>
             <div className='core'>

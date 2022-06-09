@@ -87,10 +87,6 @@ export class BlogPageHierarchy {
     }
 
     refreshAuthority () {
-        console.log('refreshAuthority')
-        console.log(UserManager.isUserAuthorized)
-        console.log(UserManager.userId)
-        console.log(this.id)
         this.editable = UserManager.isUserAuthorized && UserManager.userId === this.id
     }
 

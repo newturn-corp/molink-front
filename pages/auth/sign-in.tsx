@@ -12,6 +12,7 @@ import { AuthContainer } from '../../components/auth/AuthContainer'
 import { AuthSubButton } from '../../components/auth/AuthSubButton'
 import LanguageManager from '../../manager/global/LanguageManager'
 import GlobalManager from '../../manager/global/GlobalManager'
+import { SiteHead } from '../../components/global/SiteHead'
 
 const getEmailHelperText = (emailState: EmailState) => {
     if (emailState === EmailState.DEFAULT) {
@@ -71,6 +72,7 @@ const SignIn = observer(() => {
         }
     }, [SignInManager.emailState, SignInManager.passwordState, emailRef, passwordRef])
     return <div className='auth-page sign-in-page'>
+        <SiteHead/>
         <AuthHeader/>
         <AuthContainer loading={loading}>
             <AuthTitle text={LanguageManager.languageMap.SignIn}/>
