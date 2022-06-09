@@ -14,6 +14,7 @@ import { GetServerSideProps } from 'next'
 import ViewerAPI from '../../api/ViewerAPI'
 import { BlogPageHead } from '../../components/Blog/EditorPage/BlogPageHead'
 import { ESPageMetaInfo } from '@newturn-develop/types-molink'
+import { SERVER_BASE_URL } from '../../infra/constants'
 
 const BlogPageComponent: React.FC<{
     pageMetaInfo: ESPageMetaInfo | undefined
@@ -23,46 +24,54 @@ const BlogPageComponent: React.FC<{
         return <></>
     }
     BlogPage.handleEnter(router.query.info as string[])
-    return <div
-        onClick={async () => {
-            await EventManager.issueEvent(Event.PageBodyClick)
-        }}
-    >
+    return <div>
         <BlogPageHead
             pageMetaInfo={pageMetaInfo}
         />
-        <Header />
-        <MobileView>
-            <Portal>
-                <HierarchyContainer />
-            </Portal>
-        </MobileView>
         <div
-            className={'index-body'}
-            style={StyleManager.globalStyle.body}
+            onClick={async () => {
+                await EventManager.issueEvent(Event.PageBodyClick)
+            }}
         >
-            <HomeMainComponent/>
-            <BrowserView>
-                <HierarchyContainer />
-                <HierarchyWidthController/>
-            </BrowserView>
+
+            <Header />
+            <MobileView>
+                <Portal>
+                    <HierarchyContainer />
+                </Portal>
+            </MobileView>
+            <div
+                className={'index-body'}
+                style={StyleManager.globalStyle.body}
+            >
+                <HomeMainComponent/>
+                <BrowserView>
+                    <HierarchyContainer />
+                    <HierarchyWidthController/>
+                </BrowserView>
+            </div>
+            <div className={'drag-ghost-parent'}/>
         </div>
-        <div className={'drag-ghost-parent'}/>
     </div>
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const urlInfo = context.query.info as string[]
-    const { type, nickname, pageId, documentName } = BlogPage.interpretURLInfo(urlInfo)
-    if (type === BlogURLType.StandardDocumentURL) {
-        const authority = await ViewerAPI.getDocumentAuthority(pageId)
-        if (authority.viewable) {
-            const pageMetaInfo = await ViewerAPI.getPageMetaInfo(pageId)
+    if (urlInfo.length === 3) {
+        try {
+            const [a, pageID, b] = urlInfo
+            const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
+                method: 'GET'
+            })
+            const body = await res.json()
+            const pageMetaInfo = body.data
             return {
                 props: {
                     pageMetaInfo
                 }
             }
+        } catch (err) {
+            console.log(err)
         }
     }
 
