@@ -21,19 +21,18 @@ export const NotificationList: React.FC<{
 
     return <>
         {
-            requestedFollows.length > 0
-                ? <>
-                    <p className='label'>팔로우 요청</p>
-                    {
-                        requestedFollows.map((req, index) => {
-                            return <FollowRequestComponent
-                                key={'follow-request-' + req.id}
-                                followRequest={req}
-                                index={index}
-                            />
-                        })
-                    }</>
-                : <></>
+            requestedFollows.length > 0 && <>
+                <p className='label'>팔로우 요청</p>
+                {
+                    requestedFollows.map((req, index) => {
+                        return <FollowRequestComponent
+                            key={'follow-request-' + req.id}
+                            followRequest={req}
+                            index={index}
+                        />
+                    })
+                }
+            </>
         }
         {
             notifications.length > 0 && <>

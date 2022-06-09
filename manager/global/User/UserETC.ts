@@ -18,7 +18,7 @@ export class UserETC {
         })
     }
 
-    async sync (yETC: Y.Map<any>) {
+    sync (yETC: Y.Map<any>) {
         this.yETC = yETC
         this.yETC.observeDeep(async () => {
             if (!this.yETC.get('shownTutorial')) {

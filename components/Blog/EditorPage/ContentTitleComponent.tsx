@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react'
 import { isBrowser } from 'react-device-detect'
 import EditorPage from '../../../manager/Blog/Editor/EditorPage'
@@ -6,18 +6,12 @@ import Blog from '../../../manager/global/Blog/Blog'
 
 export const ContentTitleComponent: React.FC<{
 }> = observer(() => {
-    const titleRef = useRef<HTMLDivElement>()
-    useEffect(() => {
-        EditorPage.editor.titleRef = titleRef
-    }, [titleRef])
-
     const pageHierarchy = Blog.pageHierarchy
     const openedPage = pageHierarchy.openedPage
     const editor = EditorPage.editor
 
     return (
         <div
-            ref={titleRef}
             className='title'
             contentEditable={editor.editable && !editor.info.isLocked}
             suppressContentEditableWarning={true}

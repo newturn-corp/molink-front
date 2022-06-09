@@ -1,10 +1,7 @@
-import * as Y from 'yjs'
 import { makeAutoObservable, toJS } from 'mobx'
-import { ESUser, FollowRequest, NotificationInfo, NotificationType } from '@newturn-develop/types-molink'
+import { ESUser, NotificationInfo, NotificationType } from '@newturn-develop/types-molink'
 import UserAPI from '../../../api/UserAPI'
-import ViewerAPI from '../../../api/ViewerAPI'
 import { Notification } from '../../../domain/Notification'
-import NotificationAPI from '../../../api/NotificationAPI'
 import { Page } from '../RoutingManager'
 import UserInfoMap from './UserInfoMap'
 
@@ -37,6 +34,19 @@ export class UserNotification {
         }
     }
 
+    getNotificationLinkInfo (notificationInfo: NotificationInfo, userInfo: ESUser) {
+        switch (notificationInfo.notificationType) {
+        case NotificationType.Default:
+        case NotificationType.FollowRequest:
+        case NotificationType.NewFollow:
+        case NotificationType.FollowAccept:
+            return { page: Page.Blog, extra: `/${userInfo.nickname}` }
+        case NotificationType.NewComment:
+        case NotificationType.NewLike:
+            return { page: Page.Blog, extra: `/${notificationInfo.additionalInfo}` }
+        }
+    }
+
     async load () {
         const infoList = await UserAPI.getNotifications()
         const userIDList = Array.from(new Set(infoList.map(info => info.causedUserId)))
@@ -44,7 +54,10 @@ export class UserNotification {
         const notifications = []
         for (const info of infoList) {
             const userInfo = infoMap[info.causedUserId]
-            notifications.push(new Notification('1', userInfo.profileImageUrl, this.getNotificationMessage(userInfo, info), info.isViewed, new Date(info.createdAt), Page.Blog, `/${userInfo.nickname}`))
+            const {
+                page, extra
+            } = this.getNotificationLinkInfo(info, userInfo)
+            notifications.push(new Notification('1', userInfo.profileImageUrl, this.getNotificationMessage(userInfo, info), info.isViewed, new Date(info.createdAt), page, extra))
         }
         this._notifications = notifications
     }
