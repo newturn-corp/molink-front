@@ -7,9 +7,11 @@ import { observer } from 'mobx-react'
 import MailOutlineRoundedIcon from '@material-ui/icons/MailOutlineRounded'
 import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 import { AuthSubButton } from '../../components/auth/AuthSubButton'
+import { SiteHead } from '../../components/global/SiteHead'
 
 const NoticeEmailAuth = observer(() => {
     return <div className='auth-page notice-email-auth-page'>
+        <SiteHead/>
         <AuthHeader/>
         <AuthContainer
             loading={false}

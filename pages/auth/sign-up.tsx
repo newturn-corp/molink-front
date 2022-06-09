@@ -15,6 +15,7 @@ import { AuthSubButton } from '../../components/auth/AuthSubButton'
 import LanguageManager from '../../manager/global/LanguageManager'
 import axios from 'axios'
 import AuthAPI from '../../api/AuthAPI'
+import { SiteHead } from '../../components/global/SiteHead'
 
 const getEmailHelperText = (emailState: EmailState) => {
     switch (emailState) {
@@ -69,6 +70,7 @@ const SignUp = observer(() => {
             })
     }, [])
     return <div className='auth-page'>
+        <SiteHead/>
         <AuthHeader/>
         <AuthContainer
             loading={loading}

@@ -2,6 +2,7 @@ import React from 'react'
 import { Header } from '../components/global/Header/Header'
 import { ButtonGroup, Button } from '@material-ui/core'
 import { SearchResults } from '../components/search/SearchResult'
+import { SiteHead } from '../components/global/SiteHead'
 
 const Search = () => {
     // UserManager.updateUserProfile()
@@ -13,6 +14,7 @@ const Search = () => {
 
     return <div className='search-page' onClick={() => {
     } } >
+        <SiteHead/>
         <Header />
         <div className={'index-body'}>
             <div className='core'>

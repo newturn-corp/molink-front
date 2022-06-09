@@ -20,6 +20,9 @@ export const SiteHead: React.FC<{
       } = EditorPage.userInfo || {
           nickname: 'Molink'
       }
+      // console.log(`headText: ${headText}`)
+      // console.log(`pageDescription: ${pageDescription}`)
+      // console.log(`author: ${nickname}`)
 
       return <Head>
           <title>{headText}</title>

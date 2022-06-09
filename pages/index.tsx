@@ -11,6 +11,7 @@ import { MainHeader } from '../components/Main/MainHeader'
 import { PageListComponent } from '../components/global/PageList/PageListComponent'
 import MainPage from '../manager/Main/MainPage'
 import ContentContainer from '../components/global/ContentContainer'
+import { SiteHead } from '../components/global/SiteHead'
 
 const MainPageComponent = observer(() => {
     useEffect(() => {
@@ -23,6 +24,7 @@ const MainPageComponent = observer(() => {
     const pageList = MainPage.pageLists[MainPage.currentCategoryIndex]
 
     return <div>
+        <SiteHead/>
         <Header />
         <div
             className={'index-body'}
