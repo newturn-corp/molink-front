@@ -3,6 +3,8 @@ import { BlogUserInfo } from '../../Blog/BlogUserInfo'
 import { BlogPageHierarchy } from './BlogPageHierarchy'
 import { makeAutoObservable } from 'mobx'
 import UserManager from '../User/UserManager'
+import EventManager from '../Event/EventManager'
+import { Event } from '../Event/Event'
 
 class Blog {
     id: number = null
@@ -13,6 +15,12 @@ class Blog {
 
     constructor () {
         makeAutoObservable(this)
+        EventManager.addEventListener(Event.UserAuthorization, async ({ result }: any) => {
+            if (result) {
+                this.reset()
+                await this.load(UserManager.userId)
+            }
+        }, 1)
     }
 
     async load (id: number) {
@@ -30,14 +38,18 @@ class Blog {
     }
 
     reset () {
+        this.id = null
         if (this.pageHierarchy) {
             this.pageHierarchy.reset()
+            this.pageHierarchy = null
         }
         if (this.blogUserInfo) {
             this.blogUserInfo.reset()
+            this.blogUserInfo = null
         }
         if (this.userPageList) {
             this.userPageList.clear()
+            this.userPageList = null
         }
     }
 

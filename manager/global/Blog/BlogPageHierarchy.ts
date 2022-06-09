@@ -72,7 +72,7 @@ export class BlogPageHierarchy {
 
     async load (userId: number) {
         this.id = userId
-        this.editable = UserManager.isUserAuthorized && UserManager.userId === this.id
+        this.refreshAuthority()
         if (this.editable) {
             this.visibilityController = new VisibilityController()
             this.locationController = new LocationController(this.yDocument, this.yMap, this.yTopLevelDocumentIdList, this.visibilityController)
@@ -84,6 +84,14 @@ export class BlogPageHierarchy {
             const dto = await ViewerAPI.getDocumentsHierarchy(this.id)
             Y.applyUpdate(this.yDocument, Uint8Array.from(dto.hierarchy))
         }
+    }
+
+    refreshAuthority () {
+        console.log('refreshAuthority')
+        console.log(UserManager.isUserAuthorized)
+        console.log(UserManager.userId)
+        console.log(this.id)
+        this.editable = UserManager.isUserAuthorized && UserManager.userId === this.id
     }
 
     openPage (pageId) {
