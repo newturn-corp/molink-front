@@ -59,13 +59,14 @@ export class UserLimit {
             this.dailyUploadLimit = this.yLimit.get('dailyUploadLimit')
             this.maxTotalUploadLimit = this.yLimit.get('maxTotalUploadLimit')
             this.totalUploadLimit = this.yLimit.get('totalUploadLimit')
-            console.log(this.yLimit.toJSON())
         }
         this.yLimit.observeDeep(this.limitListener)
     }
 
     reset () {
-        this.yLimit.unobserveDeep(this.limitListener)
+        if (this.yLimit) {
+            this.yLimit.unobserveDeep(this.limitListener)
+        }
         this.maxDailyUploadLimit = 0
         this.dailyUploadLimit = 0
         this.maxTotalUploadLimit = 0
