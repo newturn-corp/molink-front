@@ -85,12 +85,16 @@
     z-index: 900;
   }
 
+  .MuiDrawer-paperAnchorDockedLeft {
+    border: none;
+  }
+
   .MuiDrawer-paper {
     overflow-x: hidden;
     overflow-y: hidden;
     position: relative;
     z-index: 900;
-    background-color: #FFFFFF;
+    background-color: #FAFAFB;
     .MuiList-root::-webkit-scrollbar {
       width: 8px;
     }

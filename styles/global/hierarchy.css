@@ -78,12 +78,15 @@
 .hierarchy .MuiBackdrop-root {
   z-index: 900;
 }
+.hierarchy .MuiDrawer-paperAnchorDockedLeft {
+  border: none;
+}
 .hierarchy .MuiDrawer-paper {
   overflow-x: hidden;
   overflow-y: hidden;
   position: relative;
   z-index: 900;
-  background-color: #FFFFFF;
+  background-color: #FAFAFB;
 }
 .hierarchy .MuiDrawer-paper .MuiList-root::-webkit-scrollbar {
   width: 8px;

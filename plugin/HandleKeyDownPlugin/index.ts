@@ -24,14 +24,8 @@ import { isMac } from 'lib0/environment'
 import EditorPage from '../../manager/Blog/Editor/EditorPage'
 
 const handlerMap = new Map()
-handlerMap.set('ArrowLeft', [
-    moveSelectionWhenArrowLeftDown
-])
 handlerMap.set('command+ArrowLeft', [
     moveSelectionWhenCommandArrowLeftDown
-])
-handlerMap.set('ArrowRight', [
-    moveSelectionWhenArrowRightDown
 ])
 handlerMap.set('command+ArrowRight', [
     moveSelectionWhenCommandArrowRightDown
