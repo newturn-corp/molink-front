@@ -73,6 +73,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         } catch (err) {
             console.log(err)
         }
+    } else if (urlInfo.length === 1) {
+        const pageID = urlInfo[0]
+        if (pageID.length > 27) {
+            try {
+                const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
+                    method: 'GET'
+                })
+                const body = await res.json()
+                const pageMetaInfo = body.data
+                return {
+                    props: {
+                        pageMetaInfo
+                    }
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        }
     }
 
     return {

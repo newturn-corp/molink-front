@@ -7,6 +7,7 @@ export const BlogPageHead: React.FC<{
 }> = ({ pageMetaInfo }) => {
     const title = pageMetaInfo ? pageMetaInfo.title : 'Molink'
     const description = pageMetaInfo ? pageMetaInfo.description : '내가 주도하는 블로그 플랫폼, Molink'
+    const image = pageMetaInfo ? pageMetaInfo.image : 'https://www.molink.life/image/global/header/logo.png'
 
     return <Head>
         <title>{title}</title>
@@ -25,25 +26,24 @@ export const BlogPageHead: React.FC<{
         <link rel="canonical" href="https://molink.life" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta httpEquiv="Content-Script-Type" content="Text/javascript" />
+        <meta
+            property="og:image"
+            content={image}
+        />
+        <meta
+            property="twitter:image"
+            content={image}
+        />
         {
             pageMetaInfo && <>
                 <meta
                     name="keywords"
                     content={[pageMetaInfo.title, ...pageMetaInfo.tags].join(',')}
                 />
-                {
-                    pageMetaInfo.image && <>
-                        <meta
-                            property="og:image"
-                            content={pageMetaInfo.image}
-                        />
-                        <meta
-                            property="twitter:image"
-                            content={pageMetaInfo.image}
-                        />
-                    </>
-                }
-                <meta name="Date" content={new Date(pageMetaInfo.lastEditedAt).toISOString()}/>
+                <meta
+                    name="Date"
+                    content={new Date(pageMetaInfo.lastEditedAt).toISOString()}
+                />
             </>
         }
         <link rel='shortcut icon' href='/favicon.ico' />
