@@ -11,7 +11,7 @@ export const SiteHead: React.FC<{
       const {
           pageDescription,
           thumbnailImage
-      } = EditorPage.pageInfo || {
+      } = {
           pageDescription: '내가 주도하는 블로그 플랫폼, Molink',
           thumbnailImage: null
       }

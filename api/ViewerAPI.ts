@@ -10,7 +10,7 @@ import {
     GetPageListResponseDTO,
     GetFollowInfoResponseDTO,
     GetFollowStatusResponseDTO,
-    ESPageSummary, GetUserLikePageResponseDTO, ESComment, GetPageListDTO, ESPageMetaInfo
+    ESPageSummary, GetUserLikePageResponseDTO, ESComment, GetPageListDTO, ESEditorPageInfo
 } from '@newturn-develop/types-molink'
 import { ContentNotExists, ContentUserNotExists } from '../Errors/ContentError'
 
@@ -99,8 +99,8 @@ class ViewerAPI extends BaseAPI {
         return res.data
     }
 
-    async getPageMetaInfo (pageID: string): Promise<ESPageMetaInfo> {
-        const res = await this.get(`/viewer/pages/${pageID}/meta-info`)
+    async getEditorPageInfo (pageID: string): Promise<ESEditorPageInfo> {
+        const res = await this.get(`/viewer/pages/${pageID}/editor-page-info`)
         return res.data
     }
 
