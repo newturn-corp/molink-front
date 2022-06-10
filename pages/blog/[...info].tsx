@@ -17,7 +17,7 @@ import { ESPageMetaInfo } from '@newturn-develop/types-molink'
 import { SERVER_BASE_URL } from '../../infra/constants'
 
 const BlogPageComponent: React.FC<{
-    pageMetaInfo: ESPageMetaInfo | undefined
+    pageMetaInfo: ESPageMetaInfo | null
 }> = ({ pageMetaInfo }) => {
     const router = useRouter()
     if (!router.query.info) {
@@ -50,52 +50,40 @@ const BlogPageComponent: React.FC<{
                     <HierarchyWidthController/>
                 </BrowserView>
             </div>
-            <div className={'drag-ghost-parent'}/>
+            <div
+                className={'drag-ghost-parent'}
+            />
         </div>
     </div>
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const urlInfo = context.query.info as string[]
-    if (urlInfo.length === 3) {
-        try {
-            const [a, pageID, b] = urlInfo
-            const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
-                method: 'GET'
-            })
-            const body = await res.json()
-            const pageMetaInfo = body.data
-            return {
-                props: {
-                    pageMetaInfo
-                }
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    } else if (urlInfo.length === 1) {
-        const pageID = urlInfo[0]
-        if (pageID.length > 27) {
-            try {
-                const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
-                    method: 'GET'
-                })
-                const body = await res.json()
-                const pageMetaInfo = body.data
-                return {
-                    props: {
-                        pageMetaInfo
-                    }
-                }
-            } catch (err) {
-                console.log(err)
-            }
-        }
-    }
-
-    return {
-        props: {}
-    }
-}
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//     console.log(context)
+//     const urlInfo = context.query.info as string[]
+//     if (urlInfo.length === 3) {
+//         try {
+//             const [a, pageID, b] = urlInfo
+//             const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
+//                 method: 'GET'
+//             })
+//             const body = await res.json()
+//             const pageMetaInfo = body.data
+//             console.log(pageMetaInfo)
+//             return {
+//                 props: {
+//                     pageMetaInfo: pageMetaInfo || null
+//                 }
+//             }
+//         } catch (err) {
+//             console.log(err)
+//         }
+//     }
+//
+//     return {
+//         props: {
+//             pageMetaInfo: null
+//         }
+//     }
+// }
 
 export default BlogPageComponent
