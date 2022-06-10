@@ -1,6 +1,9 @@
-import { Range, Transforms } from 'slate'
+import { Editor, Range, Transforms } from 'slate'
 
-export const moveSelectionWhenArrowLeftDown = (event, editor) => {
+export const moveSelectionWhenArrowLeftDown = (event, editor: Editor) => {
+    if (editor.selection && !Range.isCollapsed(editor.selection)) {
+        return false
+    }
     event.preventDefault()
     Transforms.move(editor, {
         unit: 'offset',
@@ -20,6 +23,9 @@ export const moveSelectionWhenCommandArrowLeftDown = (event, editor) => {
 }
 
 export const moveSelectionWhenArrowRightDown = (event, editor) => {
+    if (editor.selection && !Range.isCollapsed(editor.selection)) {
+        return false
+    }
     event.preventDefault()
     Transforms.move(editor, { unit: 'offset' })
     return true
