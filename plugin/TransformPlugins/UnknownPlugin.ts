@@ -115,8 +115,6 @@ export default function<T extends Node> (
                     ['file', 'image', 'video'].includes((newProperties as any).type))) {
                     const newSize = (newProperties as any).size
                     const prevSize = (properties as any).size || 0
-                    console.log(`new Size ${newSize}`)
-                    console.log(`prev Size ${prevSize}`)
                     if (newSize && newSize !== prevSize) {
                         UserManager.limit.handleFileChange(prevSize, newSize)
                     }

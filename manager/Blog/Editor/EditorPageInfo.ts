@@ -14,11 +14,10 @@ export class EditorPageInfo {
     pageId: string
     lastEditedAt: number = Number(new Date())
     lastPublishedAt: number = Number(moment().subtract(7, 'days').toDate())
-    pageDescription: string = null
-    thumbnailImage: string = null
     likeCount: number = 0
     isLike: boolean = false
     isPublishable: boolean = false
+    tags: string[] = []
 
     constructor (pageId: string) {
         this.pageId = pageId
@@ -26,13 +25,12 @@ export class EditorPageInfo {
     }
 
     async load () {
-        const summary = await ViewerAPI.getPageSummary(EditorPage.pageId)
-        this.lastEditedAt = summary.lastEditedAt
-        this.lastPublishedAt = summary.lastPublishedAt
+        const info = await ViewerAPI.getEditorPageInfo(EditorPage.pageId)
+        this.lastEditedAt = info.lastEditedAt
+        this.lastPublishedAt = info.lastPublishedAt
         this.isPublishable = !this.lastPublishedAt || moment(this.lastPublishedAt).isBefore(moment().subtract(3, 'days'))
-        this.likeCount = summary.like
-        this.pageDescription = summary.description
-        this.thumbnailImage = summary.image
+        this.likeCount = info.like
+        this.tags = info.tags
         if (UserManager.isUserAuthorized) {
             const dto = await ViewerAPI.getUserLikePage(EditorPage.pageId)
             this.isLike = dto.isLike

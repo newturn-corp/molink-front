@@ -14,12 +14,13 @@ export const PageTagList: React.FC<{
     const [newTag, setNewTag] = useState('')
     const [isTagFocus, setIsTagFocus] = useState(false)
     const editor = EditorPage.editor
+    const tags = editor.synchronizer ? editor.tagList.tags : EditorPage.pageInfo.tags
 
     return <div
         className={'page-tag-list-container'}
     >
         {
-            editor.tagList.tags.map((tag, index) =>
+            tags.map((tag, index) =>
                 <Tag
                     key={`page-tag-${index}`}
                     closable={editor.editable && !editor.info.isLocked}
