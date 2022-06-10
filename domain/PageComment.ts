@@ -14,11 +14,8 @@ export class PageComment {
     }
 
     getAllChildrenCommentCount (map: { [index: string]: PageComment }) {
-        console.log(map)
         return this.children.reduce((prev, current) => {
-            console.log(current)
             const child = map[current]
-            console.log(child)
             return prev + child.getAllChildrenCommentCount(map)
         }, 0) + this.children.length
     }
