@@ -101,7 +101,6 @@ export const insertHTMLWhenInsertData = (editor, data) => {
 
     if (html) {
         const parsed = new DOMParser().parseFromString(html, 'text/html')
-        console.log(parsed.body)
         const fragment = deserialize(parsed.body)
         const listItemEntry = []
         for (let i = 0; i < fragment.length; i++) {
