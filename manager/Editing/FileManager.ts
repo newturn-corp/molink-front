@@ -165,7 +165,6 @@ class FileManager {
             this._insert(editor, slateVideoElement, insertPosition)
             const insertedNodePosition = this.getInsertPosition(editor)
             const { url: uploadResultUrl, size } = await FileUploadManager.uploadFile(url, file)
-            console.log(size)
             Transforms.setNodes(editor,
                 {
                     url: uploadResultUrl,

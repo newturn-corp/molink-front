@@ -1,20 +1,29 @@
-UserProfile-Agent: Googlebot
+User-agent: Googlebot
 Allow : /
 
-UserProfile-Agent: Yetibot
+User-agent: Yetibot
 Allow : /
 
-UserProfile-Agent: Daumoa
+User-agent: Yeti
 Allow : /
 
-UserProfile-Agent: Yahoo! Slurp
+User-agent: Daum
 Allow : /
 
-UserProfile-Agent: Msnbot
+User-agent: Daumoa
 Allow : /
 
-UserProfile-Agent: Bingbot
+User-agent: Yahoo! Slurp
 Allow : /
 
-UserProfile-agent: *
+User-agent: Msnbot
+Allow : /
+
+User-agent: Bingbot
+Allow : /
+
+User-agent: DuckDuckBot
+Allow : /
+
+User-agent: *
 Disallow: /
