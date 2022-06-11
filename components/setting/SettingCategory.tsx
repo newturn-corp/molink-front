@@ -9,7 +9,8 @@ enum SettingLocation {
     Hierarchy = 'document-list',
     Subscribe = 'subscribe',
     Wiki = 'wiki',
-    FileUpload = 'file-upload'
+    FileUpload = 'file-upload',
+    Editor = 'editor'
 }
 
 interface SettingButtonProps {
@@ -31,6 +32,8 @@ const handleSettingButtonDown = (location: SettingLocation, selected: boolean) =
         return RoutingManager.moveTo(Page.SettingDocumentList)
     case SettingLocation.FileUpload:
         return RoutingManager.moveTo(Page.SettingFileUpload)
+    case SettingLocation.Editor:
+        return RoutingManager.moveTo(Page.SettingEditor)
     }
 }
 
@@ -52,6 +55,11 @@ const buttonPropsList: SettingButtonProps[] =
             location: SettingLocation.Profile,
             isDisabled: false
         },
+        // {
+        //     buttonText: '에디터',
+        //     location: SettingLocation.Editor,
+        //     isDisabled: false
+        // },
         {
             buttonText: '파일 업로드',
             location: SettingLocation.FileUpload,
@@ -84,7 +92,7 @@ export const SettingCategory: React.FC<{
       return <ButtonGroup
           orientation="vertical"
           className='setting-category'
-          aria-label="vertical outlined primary button group"
+          aria-label="vertical primary button group"
       >
           {
               // eslint-disable-next-line react/prop-types

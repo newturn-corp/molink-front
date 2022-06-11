@@ -7,11 +7,11 @@ import Blog from '../../../../manager/global/Blog/Blog'
 
 export const EditorHeader: React.FC<{
 }> = observer(() => {
-    const editor = EditorPage.editor
+    const toolbar = EditorPage.editor.toolbar
     const pageHierarchy = Blog.pageHierarchy
 
     const getHeaderStyle = useCallback(() => {
-        if (!editor.editable || editor.info?.isLocked) {
+        if (!toolbar.enable) {
             return {
                 height: 40,
                 top: 0
@@ -19,12 +19,12 @@ export const EditorHeader: React.FC<{
         } else {
             return {
                 height: 40,
-                top: editor.toolbar.isOpen ? 90 : 40
+                top: toolbar.isOpen ? 90 : 40
             }
         }
-    }, [editor.toolbar, editor.toolbar?.isOpen, editor.editable, editor.info, editor.info?.isLocked])
+    }, [toolbar.enable, toolbar.isOpen])
 
-    if (!pageHierarchy || !pageHierarchy.openedPage || !editor.isLoaded) {
+    if (!pageHierarchy || !pageHierarchy.openedPage) {
         return <></>
     }
 

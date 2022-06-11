@@ -5,7 +5,7 @@
   right: none;
 
   .hierarchy-name {
-    height: 56px;
+    height: 48px;
     display: flex;
     cursor: pointer;
     .profile-image {
@@ -23,7 +23,10 @@
       font-weight: 600;
       font-size: 14px;
       line-height: 16px;
-      color: #212B36;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-wrap: break-word;
+      color: #131415;
     }
   }
   //.hierarchy-name:hover {
@@ -39,7 +42,7 @@
   }
 
   .hierarchy-button-group {
-    margin: 9.5px 5px;
+    margin: 0px 5px;
     .hierarchy-button {
       display: flex;
       flex-direction: row;
@@ -178,7 +181,7 @@
           background-color: transparent;
           border:none;
           outline-width: 0;
-          color: #26282B;
+          color: #131415;
         }
         .text-opened {
           color: #3A7BBF;
@@ -292,7 +295,7 @@
   //border: 1px solid rgba(0, 0, 0, 0.12);
   //filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.1));
-  background: #FFFFFF;
+  background: #F7F8F9;
   display: flex;
   cursor: pointer;
   svg {

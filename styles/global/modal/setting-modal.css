@@ -1,0 +1,125 @@
+.setting-modal {
+  width: 1200px;
+}
+.setting-modal .setting-category {
+  background-color: #FAFAFB;
+  width: 200px;
+  height: 600px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  padding-top: 15px;
+}
+.setting-modal .setting-category .category-group-name {
+  color: #a1a1a1;
+  margin-left: 16px;
+  user-select: none;
+  margin-bottom: 3px;
+}
+.setting-modal .setting-category .category {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  align-items: center;
+  height: 30px;
+  border-radius: 8px;
+  padding-left: 8px;
+  cursor: pointer;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.setting-modal .setting-category .category svg {
+  width: 20px;
+  height: 20px;
+  fill: #131415;
+}
+.setting-modal .setting-category .category .text {
+  margin-left: 10px;
+  color: #131415;
+  height: 15px;
+  user-select: none;
+  font-size: 15px;
+  line-height: 15px;
+  font-weight: 600;
+  outline-width: 0;
+}
+.setting-modal .setting-category .category:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+.setting-modal .setting-category .category.selected {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+.setting-modal .setting-category .category.selected .text {
+  color: #3A7BBF;
+}
+.setting-modal .ant-modal-content {
+  padding: 0px;
+}
+.setting-modal .setting-body {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  padding-left: 50px;
+  padding-right: 80px;
+  width: 800px;
+}
+.setting-modal .setting-body .setting-name {
+  margin-bottom: 0px;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.setting-modal .setting-body .profile-image {
+  position: relative;
+  margin: 0px;
+  margin-bottom: 25px;
+}
+.setting-modal .setting-body .profile-image .image {
+  width: 200px;
+  height: 200px;
+  font-size: 100px;
+  cursor: pointer;
+}
+.setting-modal .setting-body .profile-image .edit {
+  position: absolute;
+  display: inline;
+  font-size: 14px;
+  background-color: rgba(55, 53, 47, 0.7);
+  color: rgb(241, 241, 241);
+  padding: 4px;
+  bottom: 30px;
+  border-radius: 4px;
+  width: 120px;
+  text-align: center;
+  left: 40px;
+  margin: 0 auto;
+  cursor: pointer;
+  pointer-events: none;
+}
+.setting-modal .setting-body .biography {
+  width: 600px;
+  margin-bottom: 25px;
+}
+.setting-modal .setting-body .biography .ant-input-textarea {
+  height: 30px;
+}
+.setting-modal .setting-body .biography .button-container {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 10px;
+}
+.setting-modal .setting-body .toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.setting-modal .setting-body .toolbar .text-container {
+  display: flex;
+  flex-direction: column;
+}
+.setting-modal .setting-body .toolbar .text-container .main {
+  font-size: 16px;
+}
+
+/*# sourceMappingURL=setting-modal.css.map */

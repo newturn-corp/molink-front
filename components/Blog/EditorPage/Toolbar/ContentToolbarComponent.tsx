@@ -23,6 +23,7 @@ import FormattingManager, { Align, Format, List } from '../../../../manager/Edit
 import LinkManager from '../../../../manager/Editing/Link/LinkManager'
 import LanguageManager from '../../../../manager/global/LanguageManager'
 import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
+import UserManager from '../../../../manager/global/User/UserManager'
 
 const defaultContentToolbarStyle = {
     height: 90,
@@ -38,12 +39,10 @@ const closeStateContentToolbarStyle = {
 
 export const ContentToolbarComponent: React.FC<{
   }> = observer(() => {
-      const editor = EditorPage.editor
-      if (!editor.editable || editor.info.isLocked) {
+      const toolbar = EditorPage.editor.toolbar
+      if (!toolbar.enable) {
           return <></>
       }
-
-      const toolbar = editor.toolbar
 
       return <div
           className={'content-toolbar'}

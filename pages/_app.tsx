@@ -10,6 +10,8 @@ import '../styles/global/visibility-menu.css'
 import '../styles/global/user-menu.css'
 import '../styles/global/tutorial-modal.css'
 
+import '../styles/global/modal/setting-modal.css'
+
 import '../styles/components/mobile-column-drawer.css'
 import '../styles/components/menu.css'
 import '../styles/components/emoji-picker.css'
@@ -42,6 +44,7 @@ import { ShouldLoginNoticeModal } from '../components/global/Modal/ShouldLoginNo
 import { EmojiPickerComponent } from '../components/global/EmojiPickerComponent'
 import { TutorialModalComponent } from '../components/global/Modal/TutorialModalComponent'
 import ImagePreLoader from '../manager/global/ImagePreLoader'
+import { SettingModalComponent } from '../components/global/Modal/SettingModalComponent'
 
 configure(
     {
@@ -81,6 +84,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                 <LinkModalComponent/>
                 <ShouldLoginNoticeModal/>
                 <TutorialModalComponent/>
+                <SettingModalComponent/>
                 <EmojiPickerComponent/>
                 <Component {...pageProps} />
             </SafeHydrate>

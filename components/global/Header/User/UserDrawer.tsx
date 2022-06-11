@@ -73,19 +73,17 @@ const UserPart: React.FC<{
                 </div>
             </MobileColumnDrawerElement>
             {
-                UserManager.isUserAuthorized
-                    ? <>
-                        <MobileColumnDrawerElement
-                            onClick={async () => {
-                                UserManager.isUserDrawerOpen = false
-                                await AuthManager.signOut()
-                            }}
-                        >
-                            <LogOutIcon/>
-                            <div className={'name'}>{LanguageManager.languageMap.SignOut}</div>
-                        </MobileColumnDrawerElement>
-                    </>
-                    : <></>
+                UserManager.isUserAuthorized && <>
+                    <MobileColumnDrawerElement
+                        onClick={async () => {
+                            UserManager.isUserDrawerOpen = false
+                            await AuthManager.signOut()
+                        }}
+                    >
+                        <LogOutIcon/>
+                        <div className={'name'}>{LanguageManager.languageMap.SignOut}</div>
+                    </MobileColumnDrawerElement>
+                </>
             }
         </MobileColumnDrawerGroup>
     )

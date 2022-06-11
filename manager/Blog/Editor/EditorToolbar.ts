@@ -6,13 +6,26 @@ import React from 'react'
 import FileManager from '../../Editing/FileManager'
 import { AvailCodeLanguage, CodeElement } from '../../../Types/slate/CustomElement'
 import EditorPage from './EditorPage'
+import UserManager from '../../global/User/UserManager'
 
 export class EditorToolbar {
+    enable: boolean = false
     isOpen: boolean = true
     showMobileToolbar: boolean = false
 
     constructor () {
         makeAutoObservable(this)
+    }
+
+    tryEnable () {
+        if (UserManager.isUserAuthorized && !UserManager.setting.editorSetting.toolbarEnable) {
+            return
+        }
+        this.enable = true
+    }
+
+    disable () {
+        this.enable = false
     }
 
     async open () {

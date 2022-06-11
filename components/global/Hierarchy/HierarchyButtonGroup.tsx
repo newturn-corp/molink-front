@@ -38,9 +38,6 @@ export const HierarchyButtonGroup: React.FC<{
                     }}
                 />
             </div>
-            <div
-                className={'hierarchy-divider'}
-            />
         </>
     )
 })
