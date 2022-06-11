@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import { ContentToolbarComponent } from '../../Blog/EditorPage/Toolbar/ContentToolbarComponent'
+import { EditorToolbarComponent } from '../../Blog/EditorPage/Toolbar/EditorToolbarComponent'
 import { ContentComponent } from './Content/ContentComponent'
 import { EditorHeader } from '../../Blog/EditorPage/Header/EditorHeader'
 import { BrowserView, MobileView } from 'react-device-detect'
@@ -23,7 +23,7 @@ export const HomeMainComponent: React.FC<{
                           {
                               EditorPage.editor && <>
                                   <BrowserView>
-                                      <ContentToolbarComponent/>
+                                      <EditorToolbarComponent/>
                                       <EditorHeader/>
                                   </BrowserView>
                                   <EditorBodyComponent>

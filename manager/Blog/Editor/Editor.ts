@@ -34,7 +34,7 @@ export class Editor {
     viewer: EditorViewer = null
     synchronizer: EditorSynchronizer = null
 
-    toolbar: EditorToolbar
+    toolbar: EditorToolbar = null
 
     editableElement: HTMLElement = null
 

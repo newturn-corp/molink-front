@@ -6,10 +6,9 @@ import Blog from '../../../manager/global/Blog/Blog'
 export const EditorBodyComponent: React.FC<{
 }> = observer((props) => {
     const toolbar = EditorPage.editor.toolbar
-
-    const getBodyStyle = useCallback(() => {
+    const getBodyStyle = () => {
         const blogWidth = Blog.getBlogWidth()
-        if (!toolbar.enable) {
+        if (!toolbar || !toolbar.enable) {
             const top = 40
             return {
                 width: window.innerWidth - blogWidth,
@@ -24,7 +23,7 @@ export const EditorBodyComponent: React.FC<{
                 top
             }
         }
-    }, [toolbar.enable, toolbar.isOpen, Blog.getBlogWidth()])
+    }
 
     return <div
         className={'content-body'}

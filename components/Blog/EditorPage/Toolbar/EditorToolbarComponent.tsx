@@ -37,10 +37,10 @@ const closeStateContentToolbarStyle = {
     padding: 0
 }
 
-export const ContentToolbarComponent: React.FC<{
+export const EditorToolbarComponent: React.FC<{
   }> = observer(() => {
       const toolbar = EditorPage.editor.toolbar
-      if (!toolbar.enable) {
+      if (!toolbar || !toolbar.enable) {
           return <></>
       }
 

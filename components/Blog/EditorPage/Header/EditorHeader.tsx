@@ -10,8 +10,8 @@ export const EditorHeader: React.FC<{
     const toolbar = EditorPage.editor.toolbar
     const pageHierarchy = Blog.pageHierarchy
 
-    const getHeaderStyle = useCallback(() => {
-        if (!toolbar.enable) {
+    const getHeaderStyle = () => {
+        if (!toolbar || !toolbar.enable) {
             return {
                 height: 40,
                 top: 0
@@ -22,7 +22,7 @@ export const EditorHeader: React.FC<{
                 top: toolbar.isOpen ? 90 : 40
             }
         }
-    }, [toolbar.enable, toolbar.isOpen])
+    }
 
     if (!pageHierarchy || !pageHierarchy.openedPage) {
         return <></>
