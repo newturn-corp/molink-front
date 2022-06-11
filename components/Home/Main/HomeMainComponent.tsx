@@ -11,6 +11,7 @@ import BlogPage from '../../../manager/Blog/BlogPage'
 import { BlogPageType } from '../../../manager/Blog/Blog'
 import ContentContainer from '../../global/ContentContainer'
 import { EditorBodyComponent } from '../../Blog/EditorPage/EditorBodyComponent'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 export const HomeMainComponent: React.FC<{
   }> = observer(() => {
@@ -19,13 +20,17 @@ export const HomeMainComponent: React.FC<{
               {
                   BlogPage.pageType === BlogPageType.NormalPage
                       ? <>
-                          <BrowserView>
-                              <ContentToolbarComponent/>
-                              <EditorHeader/>
-                          </BrowserView>
-                          <EditorBodyComponent>
-                              <ContentComponent/>
-                          </EditorBodyComponent>
+                          {
+                              EditorPage.editor && <>
+                                  <BrowserView>
+                                      <ContentToolbarComponent/>
+                                      <EditorHeader/>
+                                  </BrowserView>
+                                  <EditorBodyComponent>
+                                      <ContentComponent/>
+                                  </EditorBodyComponent>
+                              </>
+                          }
                       </>
                       : BlogPage.pageType === BlogPageType.UserMainPage ? <BlogUserContent/> : <></>
               }
