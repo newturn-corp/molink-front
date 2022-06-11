@@ -1,7 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import { WebsocketProvider } from 'y-websocket'
 import * as Y from 'yjs'
-import { UserSetting } from './UserSetting'
 import EventManager from '../Event/EventManager'
 import { Event } from '../Event/Event'
 import UserAPI from '../../../api/UserAPI'
@@ -10,9 +9,8 @@ import { UserLimit } from './UserLimit'
 import { UserNotExists } from '../../../Errors/UserError'
 import { UserNotification } from './UserNotification'
 import { UserFollow } from './UserFollow'
-import { UpdateUserProfileImageDTO } from '@newturn-develop/types-molink'
-import React from 'react'
 import { UserETC } from './UserETC'
+import { UserSetting } from './UserSetting'
 
 class UserManager {
     isUserAuthorized: boolean = false
@@ -61,7 +59,7 @@ class UserManager {
             this.yjsDocument = new Y.Doc()
 
             this.profile.sync(this.yjsDocument.getMap<any>('profile'))
-            this.setting.sync(this.yjsDocument.getMap<any>('setting'))
+            this.setting.sync(this.yjsDocument.getMap<any>('setting'), this.yjsDocument)
             this.limit.sync(this.yjsDocument.getMap<any>('limit'))
             this.etc.sync(this.yjsDocument.getMap<any>('etc'))
             await this.notification.load()

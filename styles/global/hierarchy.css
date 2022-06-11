@@ -5,7 +5,7 @@
   right: none;
 }
 .hierarchy .hierarchy-name {
-  height: 56px;
+  height: 48px;
   display: flex;
   cursor: pointer;
 }
@@ -24,7 +24,10 @@
   font-weight: 600;
   font-size: 14px;
   line-height: 16px;
-  color: #212B36;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: break-word;
+  color: #131415;
 }
 .hierarchy .hierarchy-divider {
   height: 1px;
@@ -34,7 +37,7 @@
   background-color: #ECEFF2;
 }
 .hierarchy .hierarchy-button-group {
-  margin: 9.5px 5px;
+  margin: 0px 5px;
 }
 .hierarchy .hierarchy-button-group .hierarchy-button {
   display: flex;
@@ -78,12 +81,15 @@
 .hierarchy .MuiBackdrop-root {
   z-index: 900;
 }
+.hierarchy .MuiDrawer-paperAnchorDockedLeft {
+  border: none;
+}
 .hierarchy .MuiDrawer-paper {
   overflow-x: hidden;
   overflow-y: hidden;
   position: relative;
   z-index: 900;
-  background-color: #FFFFFF;
+  background-color: #FAFAFB;
 }
 .hierarchy .MuiDrawer-paper .MuiList-root::-webkit-scrollbar {
   width: 8px;
@@ -168,7 +174,7 @@
   background-color: transparent;
   border: none;
   outline-width: 0;
-  color: #26282B;
+  color: #131415;
 }
 .hierarchy .MuiDrawer-paper .MuiListItem-root .page-title .text-opened {
   color: #3A7BBF;
@@ -276,7 +282,7 @@
   z-index: 101;
   border-radius: 5px;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.1));
-  background: #FFFFFF;
+  background: #F7F8F9;
   display: flex;
   cursor: pointer;
 }

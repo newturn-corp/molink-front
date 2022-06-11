@@ -34,10 +34,9 @@ export class Editor {
     viewer: EditorViewer = null
     synchronizer: EditorSynchronizer = null
 
-    toolbar: EditorToolbar
+    toolbar: EditorToolbar = null
 
     editableElement: HTMLElement = null
-    contentBody: HTMLElement = null
 
     lastPressedKey: string = null
     lastSelection: any
@@ -74,10 +73,12 @@ export class Editor {
         this.editable = UserManager.isUserAuthorized && (await ViewerAPI.getDocumentAuthority(pageId)).editable
 
         if (!this.editable) {
+            this.toolbar.disable()
             this.viewer = new EditorViewer(pageId)
             await this.viewer.load()
             this.slateEditor = this.viewer.getSlateEditor()
         } else {
+            this.toolbar.tryEnable()
             this.synchronizer = new EditorSynchronizer(this.pageId, this.yjsDocument)
             await this.synchronizer.connect()
             this.slateEditor = this.synchronizer.getSlateEditor()

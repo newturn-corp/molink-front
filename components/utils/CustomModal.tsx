@@ -2,11 +2,12 @@ import React, { CSSProperties } from 'react'
 import Modal from 'antd/lib/modal/Modal'
 
 export interface CustomModalProps {
-    title: string
+    title?: string
     isOpen: boolean
     onCancel: Function
     className?: string
     width?: number
+    closable?: boolean
 }
 
 export const CustomModal: React.FC<CustomModalProps> = (props) => {
@@ -19,6 +20,7 @@ export const CustomModal: React.FC<CustomModalProps> = (props) => {
         cancelText={''}
         footer={null}
         width={props.width}
+        closable={props.closable}
     >
         {props.children}
     </Modal>

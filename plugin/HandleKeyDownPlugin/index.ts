@@ -12,8 +12,6 @@ import {
 } from './CodeHandleKeyDownPlugin'
 import CommandManager from '../../manager/Editing/Command/CommandManager'
 import {
-    moveSelectionWhenArrowLeftDown,
-    moveSelectionWhenArrowRightDown,
     moveSelectionWhenCommandArrowLeftDown, moveSelectionWhenCommandArrowRightDown
 } from './ArrowKeyMovementPlugin'
 import { redoWhenControlYKeyDown, undoWhenControlZKeyDown } from './UndoPlugin'
@@ -24,14 +22,11 @@ import { isMac } from 'lib0/environment'
 import EditorPage from '../../manager/Blog/Editor/EditorPage'
 
 const handlerMap = new Map()
-handlerMap.set('ArrowLeft', [
-    moveSelectionWhenArrowLeftDown
-])
 handlerMap.set('command+ArrowLeft', [
     moveSelectionWhenCommandArrowLeftDown
 ])
-handlerMap.set('ArrowRight', [
-    moveSelectionWhenArrowRightDown
+handlerMap.set('command+ArrowLeft', [
+    moveSelectionWhenCommandArrowLeftDown
 ])
 handlerMap.set('command+ArrowRight', [
     moveSelectionWhenCommandArrowRightDown
@@ -87,7 +82,9 @@ handlerMap.set(' ', [
 
 const generalKeyDownHandlers = [
     PlaceHolderOnKeyDown,
-    (event, editor) => EditorPage.editor.lastPressedKey = event.key
+    (event, editor) => {
+        EditorPage.editor.lastPressedKey = event.key
+    }
 ]
 
 export const handleKeyDown = (event, editor) => {
@@ -109,6 +106,7 @@ export const handleKeyDown = (event, editor) => {
     }
     keys.push(event.key)
     const eventKey = keys.join('+')
+
     const handlers = handlerMap.get(eventKey)
     if (!handlers || handlers.length === 0) {
         return false

@@ -21,10 +21,8 @@ class FileManager {
         const beforeRange = lineBefore && Editor.range(editor, lineBefore, insertPosition)
         const beforeText = beforeRange && Editor.string(editor, beforeRange)
         if (beforeText && beforeText.length > 0) {
-            console.log('insertNode 호출')
             Transforms.insertNodes(editor, element)
         } else {
-            console.log('setNodes 호출')
             Transforms.setNodes<Element>(editor, element, {
                 match: n => Editor.isBlock(editor, n)
             })
@@ -160,7 +158,6 @@ class FileManager {
                 captionHeight: 0,
                 size: file ? file.size : 0
             }
-            console.log(slateVideoElement.size)
             const insertPosition = this.getInsertPosition(editor)
             this._insert(editor, slateVideoElement, insertPosition)
             const insertedNodePosition = this.getInsertPosition(editor)

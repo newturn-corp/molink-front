@@ -8,6 +8,9 @@ import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 export const LockButton: React.FC<{
   }> = observer(() => {
       const editor = EditorPage.editor
+      if (!editor.info) {
+          return <></>
+      }
       const isLocked = editor.info.isLocked
       const tooltipText = isLocked ? LanguageManager.languageMap.Locked : LanguageManager.languageMap.Lock
       const buttonColor = isLocked ? '#000000' : '#ABB3BB'

@@ -27,7 +27,7 @@ const SettingDocumentList = observer(() => {
         {/* <div className={'index-body'}> */}
         {/*     <div className='core'> */}
         {/*         <div className='setting-meta'> */}
-        {/*             <SettingCategory/> */}
+        {/*             <SettingCategoryListComponent/> */}
         {/*         </div> */}
         {/*         <div className='setting-list'> */}
         {/*             <div className='show-sub-document-count'> */}

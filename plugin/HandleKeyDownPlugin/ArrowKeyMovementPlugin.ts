@@ -1,42 +1,39 @@
-import { Editor, Range, Transforms } from 'slate'
+import { Range, Transforms } from 'slate'
 
-export const moveSelectionWhenArrowLeftDown = (event, editor: Editor) => {
-    if (editor.selection && !Range.isCollapsed(editor.selection)) {
-        return false
-    }
-    event.preventDefault()
-    Transforms.move(editor, {
-        unit: 'offset',
-        reverse: true
-    })
-    return true
-}
-
+let isSelectionMovingLeft = false
+let isSelectionMovingRight = false
 export const moveSelectionWhenCommandArrowLeftDown = (event, editor) => {
     event.preventDefault()
-    const { selection } = editor
-    if (selection && Range.isExpanded(selection)) {
-        Transforms.collapse(editor, { edge: 'focus' })
-    }
-
-    Transforms.move(editor, { unit: 'line', reverse: true })
-}
-
-export const moveSelectionWhenArrowRightDown = (event, editor) => {
-    if (editor.selection && !Range.isCollapsed(editor.selection)) {
+    if (isSelectionMovingLeft) {
         return false
     }
-    event.preventDefault()
-    Transforms.move(editor, { unit: 'offset' })
+    isSelectionMovingLeft = true
+    setTimeout(() => {
+        const { selection } = editor
+        if (selection && Range.isExpanded(selection)) {
+            Transforms.collapse(editor, { edge: 'focus' })
+        }
+
+        Transforms.move(editor, { unit: 'line', reverse: true })
+        isSelectionMovingLeft = false
+    }, 0)
     return true
 }
 
 export const moveSelectionWhenCommandArrowRightDown = (event, editor) => {
     event.preventDefault()
-    const { selection } = editor
-    if (selection && Range.isExpanded(selection)) {
-        Transforms.collapse(editor, { edge: 'focus' })
+    if (isSelectionMovingRight) {
+        return false
     }
+    isSelectionMovingRight = true
+    setTimeout(() => {
+        const { selection } = editor
+        if (selection && Range.isExpanded(selection)) {
+            Transforms.collapse(editor, { edge: 'focus' })
+        }
 
-    Transforms.move(editor, { unit: 'line', reverse: false })
+        Transforms.move(editor, { unit: 'line', reverse: false })
+        isSelectionMovingRight = false
+    }, 0)
+    return true
 }

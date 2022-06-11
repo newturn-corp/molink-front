@@ -2,6 +2,7 @@ import * as Y from 'yjs'
 import EventManager from '../../global/Event/EventManager'
 import { Event } from '../../global/Event/Event'
 import { makeAutoObservable } from 'mobx'
+import EditorPage from './EditorPage'
 
 export class EditorInfo {
     private yInfo: Y.Map<any> = null
@@ -23,6 +24,9 @@ export class EditorInfo {
 
     updateIsLocked (isLocked: boolean) {
         this.yInfo.set('isLocked', isLocked)
+        if (!isLocked) {
+            EditorPage.editor.toolbar.tryEnable()
+        }
     }
 
     reset () {

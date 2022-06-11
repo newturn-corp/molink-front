@@ -11,9 +11,9 @@ export const PageHierarchyList: React.FC<{
       const pages = pageHierarchy.getPageHierarchy(openedPage.pageId)
       return <div
           className={'page-hierarchy-list'}
-          style={{
-              top: EditorPage.editor.toolbar.isOpen ? 81 : 25
-          }}
+          // style={{
+          //     top: EditorPage.editor.toolbar.isOpen ? 81 : 25
+          // }}
       >
           {
               pages.map((page, index) => {

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { observer } from 'mobx-react'
 import { SupportModal } from '../../Modal/SupportModal'
 import UserManager from '../../../../manager/global/User/UserManager'
@@ -11,13 +11,10 @@ import MenuManager from '../../../../manager/global/Menu/MenuManager'
 import MenuItem from '../../../../manager/global/Menu/MenuItem'
 import SupportManager from '../../../../manager/global/SupportManager'
 import AuthManager from '../../../../manager/Auth/AuthManager'
-import GlobalManager from '../../../../manager/global/GlobalManager'
 import StyleManager from '../../../../manager/global/Style/StyleManager'
 import { VisibilityDrawer } from '../Mobile/VisibilityDrawer'
 import LanguageManager from '../../../../manager/global/LanguageManager'
-import { Settings } from '@material-ui/icons'
-import ModalManager from '../../../../manager/global/ModalManager'
-import ImagePreLoader from '../../../../manager/global/ImagePreLoader'
+import ModalManager, { Modal } from '../../../../manager/global/ModalManager'
 import TutorialManager from '../../../../manager/global/TutorialManager'
 
 export const UserContainer: React.FC<{
@@ -56,7 +53,8 @@ export const UserContainer: React.FC<{
                     }),
                 new MenuItem(LanguageManager.languageMap.Setting,
                     async () => {
-                        await RoutingManager.moveTo(Page.SettingProfile)
+                        ModalManager.open(Modal.Setting)
+                        // await RoutingManager.moveTo(Page.SettingProfile)
                     }),
                 new MenuItem(LanguageManager.languageMap.SignOut,
                     async () => {

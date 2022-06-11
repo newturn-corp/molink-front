@@ -33,9 +33,6 @@ export const HierarchyName: React.FC<{
                     {`${nickname}의 공간`}
                 </div>
             </div>
-            <div
-                className={'hierarchy-divider'}
-            />
         </>
     )
 })

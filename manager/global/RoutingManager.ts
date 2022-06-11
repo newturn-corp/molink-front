@@ -12,9 +12,12 @@ export enum Page {
     ChangePasswordRequest = '/auth/change-password-request',
     SignUp = '/auth/sign-up',
     NoticeEmailAuth = '/auth/notice-email-auth',
+
     SettingProfile = '/setting/profile',
     SettingFollow = '/setting/follow',
     SettingDocumentList = '/setting/document-list',
+    SettingEditor = '/setting/editor',
+
     Home = '',
     Blog = '/blog',
     MobileSupport = '/m/support',
