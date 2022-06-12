@@ -1,9 +1,13 @@
 import { Transforms } from 'slate'
 import { jsx } from 'slate-hyperscript'
-import { CustomElement, TextCategory } from '../../Types/slate/CustomElement'
-import { Align } from '../../manager/Editing/FormattingManager'
-import { handleSpan } from './InsertHTMLPlugin/handleSpan'
-import { handleUnorderedList } from './InsertHTMLPlugin/handleUnorderedList'
+import { CustomElement, TextCategory } from '../../../Types/slate/CustomElement'
+import { Align } from '../../../manager/Editing/FormattingManager'
+import { handleSpan } from './handleSpan'
+import { handleUnorderedList } from './handleUnorderedList'
+import { handleFont } from './handleFont'
+import { handleImage } from './handleImage'
+import { handleP } from './handleP'
+import { handleHr } from './handleHr'
 
 const ELEMENT_TAGS = {
     A: el => ({ type: 'link', url: el.getAttribute('href') }),
@@ -19,6 +23,7 @@ const ELEMENT_TAGS = {
     OL: () => ({ type: 'numbered-list' }),
     P: () => ({ type: 'text', category: TextCategory.Content3 }),
     SPAN: () => ({ type: 'text', category: TextCategory.Content3 }),
+    FONT: () => ({ type: 'text', category: TextCategory.Content3 }),
     PRE: () => ({ type: 'code' }),
     UL: () => ({ type: 'ul-list' }),
     DT: () => ({ type: 'text', category: TextCategory.Content3 })
@@ -70,9 +75,10 @@ export const deserialize = el => {
     }
 
     if (el.nodeName === 'DIV') {
-        if (el.parentNode.nodeName === 'BODY') {
-            return null
-        }
+        // if (el.parentNode.nodeName === 'BODY') {
+        //     return jsx('fragment', {}, children)
+        // }
+        return jsx('fragment', {}, children)
     }
 
     if (nodeName === 'UL') {
@@ -81,6 +87,22 @@ export const deserialize = el => {
 
     if (nodeName === 'SPAN') {
         return handleSpan(el, children)
+    }
+
+    if (nodeName === 'FONT') {
+        return handleFont(el, children)
+    }
+
+    if (nodeName === 'IMG') {
+        return handleImage(el, children)
+    }
+
+    if (nodeName === 'P') {
+        return handleP(el, children)
+    }
+
+    if (nodeName === 'HR') {
+        return handleHr(el, children)
     }
 
     if (ELEMENT_TAGS[nodeName]) {
@@ -102,7 +124,7 @@ export const insertHTMLWhenInsertData = (editor, data) => {
     if (html) {
         const parsed = new DOMParser().parseFromString(html, 'text/html')
         const fragment = deserialize(parsed.body)
-        const listItemEntry = []
+        const remoteTarget = []
         for (let i = 0; i < fragment.length; i++) {
             const node = fragment[i]
             if (node.type === 'list-item') {
@@ -112,10 +134,10 @@ export const insertHTMLWhenInsertData = (editor, data) => {
                         frontNode.children.push(node)
                     }
                 }
-                listItemEntry.push(i)
+                remoteTarget.push(i)
             }
         }
-        for (const index of listItemEntry.reverse()) {
+        for (const index of remoteTarget.reverse()) {
             fragment.splice(index, 1)
         }
         Transforms.insertFragment(editor, fragment)

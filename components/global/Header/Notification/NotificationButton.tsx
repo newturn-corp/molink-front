@@ -72,7 +72,9 @@ export const NotificationButton: React.FC<{
               elevation={0}
               getContentAnchorEl={null}
           >
-              <NotificationList/>
+              <div>
+                  <NotificationList/>
+              </div>
           </Menu>
       </div>
   })

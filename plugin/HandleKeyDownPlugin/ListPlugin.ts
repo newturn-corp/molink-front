@@ -39,7 +39,6 @@ export const handleEnterInList = (event: React.KeyboardEvent<HTMLDivElement>, ed
 }
 
 export const handleTabInList = (event: React.KeyboardEvent<HTMLDivElement>, editor: Editor) => {
-    console.log('handleTabInList')
     if (
         Range.isExpanded(editor.selection) ||
         !ListEditor.getCurrentItem(editor)

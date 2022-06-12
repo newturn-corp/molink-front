@@ -18,7 +18,7 @@ export const SlateTextElement: React.FC<{
       const editor = EditorPage.editor
       const selection = slateEditor.selection
       const isSelectionCollapsed = selection !== null && Range.isCollapsed(slateEditor.selection)
-      const isEmpty = children[0].props.text.text === '' && children.length === 1
+      const isEmpty = children[0].props.text?.text === '' && children.length === 1
       const isHead = [TextCategory.Head1, TextCategory.Head2, TextCategory.Head3].includes(element.category)
 
       return (

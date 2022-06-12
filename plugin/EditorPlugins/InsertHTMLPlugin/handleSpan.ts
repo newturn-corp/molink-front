@@ -2,19 +2,25 @@ import { jsx } from 'slate-hyperscript'
 import { TextCategory } from '../../../Types/slate/CustomElement'
 
 // eslint-disable-next-line no-undef
-const shouldReturnText = (el: HTMLElement, prevSibling: ChildNode) => {
-    if (!prevSibling) {
-        return false
-    }
-
-    if (prevSibling.nodeName === 'A') {
-        console.log('여기 호출')
-        return shouldReturnText(el, prevSibling.previousSibling)
-    } else if (prevSibling.nodeName === 'SPAN') {
+const shouldReturnText = (el: HTMLElement, children: any) => {
+    const { parentNode, previousSibling } = el
+    if (['STRONG', 'B', 'CODE', 'I', 'EM', 'SPAN'].includes(parentNode.nodeName)) {
+        return true
+    } else if (Array.isArray(children) && children.filter(child => typeof child !== 'string').length === 0) {
         return true
     }
 
-    if (el.parentNode.nodeName === 'BODY') {
+    if (!previousSibling) {
+        return false
+    }
+
+    if (previousSibling.nodeName === 'A') {
+        return shouldReturnText(previousSibling as HTMLElement, previousSibling.childNodes)
+    } else if (previousSibling.nodeName === 'SPAN') {
+        return true
+    }
+
+    if (parentNode.nodeName === 'BODY') {
         return false
     } else {
         return true
@@ -22,10 +28,9 @@ const shouldReturnText = (el: HTMLElement, prevSibling: ChildNode) => {
 }
 
 export const handleSpan = (el: HTMLElement, children: any) => {
-    // if (shouldReturnText(el, el.previousSibling)) {
-    //     return el.textContent
-    // } else {
-    //     return jsx('element', ({ type: 'text', category: TextCategory.Content3 }), children)
-    // }
-    return el.textContent
+    if (shouldReturnText(el, children)) {
+        return el.textContent
+    } else {
+        return jsx('element', ({ type: 'text', category: TextCategory.Content3 }), children)
+    }
 }

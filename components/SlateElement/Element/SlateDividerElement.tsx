@@ -18,23 +18,23 @@ const DotDivider = () => {
 }
 
 const FaintLongLineDivider = () => {
-    return <div className='divider line-divider faint-long-line-divider'>
-    </div>
+    return <hr className='divider line-divider faint-long-line-divider'>
+    </hr>
 }
 
 const LongLineDivider = () => {
-    return <div className='divider line-divider long-line-divider'>
-    </div>
+    return <hr className='divider line-divider long-line-divider'>
+    </hr>
 }
 
 const ShortLineDivider = () => {
-    return <div className='divider line-divider short-line-divider'>
-    </div>
+    return <hr className='divider line-divider short-line-divider'>
+    </hr>
 }
 
 const FaintShortLineDivider = () => {
-    return <div className='divider line-divider faint-short-line-divider'>
-    </div>
+    return <hr className='divider line-divider faint-short-line-divider'>
+    </hr>
 }
 
 const getDividerByType = (type: DividerType) => {

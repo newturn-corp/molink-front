@@ -109,6 +109,30 @@
                     white-space: pre-wrap;
                     word-break: break-all;
                 }
+                .head1 {
+                    margin-top: 0.8rem;
+                    font-size: 2em;
+                    font-weight: 600;
+                }
+                .head2 {
+                    margin-top: 0.8rem;
+                    font-weight: 600;
+                    font-size: 1.75rem;
+                }
+                .head3 {
+                    margin-top: 0.8rem;
+                    font-weight: 600;
+                    font-size: 1.25rem;
+                }
+                .content1 {
+                    font-size: 1.25rem;
+                }
+                .content2 {
+                    font-size: 1.125rem;
+                }
+                .content3 {
+                    font-size: 1rem;
+                }
             }
 
             .menu-button {
@@ -312,30 +336,7 @@
                 top: 3px;
                 cursor: text;
             }
-            .head1 {
-                margin-top: 0.8rem;
-                font-size: 2em;
-                font-weight: 600;
-            }
-            .head2 {
-                margin-top: 0.8rem;
-                font-weight: 600;
-                font-size: 1.75rem;
-            }
-            .head3 {
-                margin-top: 0.8rem;
-                font-weight: 600;
-                font-size: 1.25rem;
-            }
-            .content1 {
-                font-size: 1.25rem;
-            }
-            .content2 {
-                font-size: 1.125rem;
-            }
-            .content3 {
-                font-size: 1rem;
-            }
+
             .textline {
                 .MuiInputBase-input {
                     color: rgb(34, 36, 38);
@@ -357,13 +358,15 @@
                 font-size: 1.5rem;
             }
             blockquote {
-                border-left: 2px
-                solid #ddd;
+                border-left: 5px solid #0094FF;
+                border-radius: 5px;
                 margin-left: 0;
                 margin-right: 0;
-                padding-left: 10px;
-                color: #aaa;
-                font-style: italic;
+                padding-left: 15px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                background-color: #f5f7ff;
+                margin: 1em 0px;
             }
 
             ul {
@@ -628,6 +631,8 @@
                 user-select: none;
                 .divider {
                     position: absolute;
+                    box-sizing: border-box;
+                    border-style: none;
                 }
                 .line-divider {
                     margin-top: calc(1em - 0.5px);
