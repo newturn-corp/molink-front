@@ -14,10 +14,8 @@ export const maintainBottomMargin = () => {
     // console.log(rect.top - StyleManager.contentStyle.body.top - 56)
     // console.log(StyleManager.contentStyle.body.height * 0.8)
     if (cursorTop < clientHeight * 0.2) {
-        console.log('top')
         contentContainer.scrollTop -= (clientHeight * 0.2 - cursorTop)
     } else if (cursorTop > clientHeight * 0.8) {
-        console.log('bottom')
         contentContainer.scrollTop += (cursorTop - clientHeight * 0.8)
     }
     return false

@@ -9,12 +9,9 @@ import EventManager from '../../manager/global/Event/EventManager'
 import { Event } from '../../manager/global/Event/Event'
 import { Portal } from '../../components/utils/Portal'
 import StyleManager from '../../manager/global/Style/StyleManager'
-import BlogPage, { BlogURLType } from '../../manager/Blog/BlogPage'
-import { GetServerSideProps } from 'next'
-import ViewerAPI from '../../api/ViewerAPI'
+import BlogPage from '../../manager/Blog/BlogPage'
 import { BlogPageHead } from '../../components/Blog/EditorPage/BlogPageHead'
 import { ESPageMetaInfo } from '@newturn-develop/types-molink'
-import { SERVER_BASE_URL } from '../../infra/constants'
 
 const BlogPageComponent: React.FC<{
     pageMetaInfo: ESPageMetaInfo | null

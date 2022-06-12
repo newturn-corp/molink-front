@@ -1,7 +1,5 @@
 import { Editor, Element, Location, Node, NodeMatch, Path, Range, Transforms } from 'slate'
 import UserManager from '../../manager/global/User/UserManager'
-import EventManager from '../../manager/global/Event/EventManager'
-import { Event } from '../../manager/global/Event/Event'
 
 const matchPath = (editor: Editor, path: Path): ((node: Node) => boolean) => {
     const [node] = Editor.node(editor, path)

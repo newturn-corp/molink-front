@@ -170,7 +170,6 @@ export const fixContentNextHeaderWhenSplitNodes: TransformsSplitNodeHandler = (e
                         properties
                     })
                 } else {
-                    console.log('etc')
                     editor.apply({
                         type: 'split_node',
                         path,

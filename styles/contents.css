@@ -113,6 +113,30 @@
   white-space: pre-wrap;
   word-break: break-all;
 }
+.content-container .content-body .contents .editor .head1 {
+  margin-top: 0.8rem;
+  font-size: 2em;
+  font-weight: 600;
+}
+.content-container .content-body .contents .editor .head2 {
+  margin-top: 0.8rem;
+  font-weight: 600;
+  font-size: 1.75rem;
+}
+.content-container .content-body .contents .editor .head3 {
+  margin-top: 0.8rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+.content-container .content-body .contents .editor .content1 {
+  font-size: 1.25rem;
+}
+.content-container .content-body .contents .editor .content2 {
+  font-size: 1.125rem;
+}
+.content-container .content-body .contents .editor .content3 {
+  font-size: 1rem;
+}
 .content-container .content-body .contents .menu-button {
   position: absolute;
   top: 6px;
@@ -309,30 +333,6 @@
   top: 3px;
   cursor: text;
 }
-.content-container .content-body .contents .head1 {
-  margin-top: 0.8rem;
-  font-size: 2em;
-  font-weight: 600;
-}
-.content-container .content-body .contents .head2 {
-  margin-top: 0.8rem;
-  font-weight: 600;
-  font-size: 1.75rem;
-}
-.content-container .content-body .contents .head3 {
-  margin-top: 0.8rem;
-  font-weight: 600;
-  font-size: 1.25rem;
-}
-.content-container .content-body .contents .content1 {
-  font-size: 1.25rem;
-}
-.content-container .content-body .contents .content2 {
-  font-size: 1.125rem;
-}
-.content-container .content-body .contents .content3 {
-  font-size: 1rem;
-}
 .content-container .content-body .contents .textline .MuiInputBase-input {
   color: rgb(34, 36, 38);
 }
@@ -352,12 +352,15 @@
   font-size: 1.5rem;
 }
 .content-container .content-body .contents blockquote {
-  border-left: 2px solid #ddd;
+  border-left: 5px solid #0094FF;
+  border-radius: 5px;
   margin-left: 0;
   margin-right: 0;
-  padding-left: 10px;
-  color: #aaa;
-  font-style: italic;
+  padding-left: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #f5f7ff;
+  margin: 1em 0px;
 }
 .content-container .content-body .contents ul {
   list-style: disc;
@@ -601,6 +604,8 @@
 }
 .content-container .content-body .contents .divider-container .divider {
   position: absolute;
+  box-sizing: border-box;
+  border-style: none;
 }
 .content-container .content-body .contents .divider-container .line-divider {
   margin-top: calc(1em - 0.5px);

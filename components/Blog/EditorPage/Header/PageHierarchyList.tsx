@@ -17,10 +17,16 @@ export const PageHierarchyList: React.FC<{
       >
           {
               pages.map((page, index) => {
-                  return <>
+                  return <div
+                      key={`page-hierarchy-container-${index}`}
+                      style={{
+                          display: 'flex',
+                          flexDirection: 'row'
+                      }}
+                  >
                       <div
                           className='document-block'
-                          key={`hierarchy-document-block-${index}`}
+                          key={`page-hierarchy-block-${index}`}
                           onClick={async () => {
                               if (page.id === openedPage.pageId) {
                                   return
@@ -35,12 +41,12 @@ export const PageHierarchyList: React.FC<{
                               ? <></>
                               : <div
                                   className={'document-divider'}
-                                  key={`document-divider-${index}`}
+                                  key={`page-hierarchy-divider-${index}`}
                               >
                                   /
                               </div>
                       }
-                  </>
+                  </div>
               })
           }
       </div>
