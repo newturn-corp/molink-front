@@ -46,7 +46,7 @@ export const LinkMenuComponent: React.FC<{
                     key={`link-menu-item-${item.name}`}
                     text={item.name}
                     selected={LinkManager.menu.index === index}
-                    onClick={() => item.onClick}
+                    onClick={() => item.onClick()}
                 />
             })
         }

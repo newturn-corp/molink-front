@@ -108,17 +108,17 @@
   flex-direction: row-reverse;
   margin-top: 10px;
 }
-.setting-modal .setting-body .toolbar {
+.setting-modal .setting-body .switch-setting {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.setting-modal .setting-body .toolbar .text-container {
+.setting-modal .setting-body .switch-setting .text-container {
   display: flex;
   flex-direction: column;
 }
-.setting-modal .setting-body .toolbar .text-container .main {
+.setting-modal .setting-body .switch-setting .text-container .main {
   font-size: 16px;
 }
 

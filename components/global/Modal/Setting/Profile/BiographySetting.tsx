@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react'
-import LanguageManager from '../../../manager/global/LanguageManager'
-import UserManager from '../../../manager/global/User/UserManager'
+import LanguageManager from '../../../../../manager/global/LanguageManager'
+import UserManager from '../../../../../manager/global/User/UserManager'
 import { Input } from 'antd'
-import { Button } from '../../global/Button'
+import { Button } from '../../../Button'
 const { TextArea } = Input
 
 export const BiographySetting: React.FC<{

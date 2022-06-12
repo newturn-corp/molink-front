@@ -2,13 +2,16 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { Switch } from 'antd'
 import UserManager from '../../../../manager/global/User/UserManager'
+import HierarchyAPI from '../../../../api/HierarchyAPI'
+import { SetHeaderIconActiveDTO } from '@newturn-develop/types-molink'
+import Blog from '../../../../manager/global/Blog/Blog'
 
 export const SettingEditorComponent: React.FC<{
 }> = observer(() => {
     const editorSetting = UserManager.setting.editorSetting
 
     return <>
-        <div className='toolbar'>
+        <div className='switch-setting'>
             <div className={'text-container'}>
                 <div
                     className={'main'}
@@ -28,6 +31,30 @@ export const SettingEditorComponent: React.FC<{
                         editorSetting.enableToolbar()
                     } else {
                         editorSetting.disableToolbar()
+                    }
+                }}
+            />
+        </div>
+        <div className='switch-setting'>
+            <div className={'text-container'}>
+                <div
+                    className={'main'}
+                >
+                    {'아이콘'}
+                </div>
+                <div
+                    className={'description'}
+                >
+                    {'페이지를 나타내는 아이콘을 활성화합니다.'}
+                </div>
+            </div>
+            <Switch
+                checked={Blog.pageHierarchy.headerIconActive}
+                onChange={async (checked) => {
+                    if (checked) {
+                        await HierarchyAPI.setBlogHeaderIconActive(new SetHeaderIconActiveDTO(UserManager.userId, true))
+                    } else {
+                        await HierarchyAPI.setBlogHeaderIconActive(new SetHeaderIconActiveDTO(UserManager.userId, false))
                     }
                 }}
             />

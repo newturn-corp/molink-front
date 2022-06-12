@@ -16,6 +16,10 @@ export const ContentHeaderIcon: React.FC<{
           EmojiPicker.close()
       }, [iconRef])
 
+      // if (!Blog.pageHierarchy.headerIconActive) {
+      //     return <></>
+      // }
+
       return <>
           <Button
               ref={iconRef}
