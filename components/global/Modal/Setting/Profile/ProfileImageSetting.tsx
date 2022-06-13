@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import LanguageManager from '../../../manager/global/LanguageManager'
-import UserManager from '../../../manager/global/User/UserManager'
+import LanguageManager from '../../../../../manager/global/LanguageManager'
+import UserManager from '../../../../../manager/global/User/UserManager'
 import { Avatar } from '@material-ui/core'
 
 export const ProfileImageSetting: React.FC<{

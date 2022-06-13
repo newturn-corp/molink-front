@@ -15,6 +15,7 @@ import { Event } from '../Event/Event'
 import ContentAPI from '../../../api/ContentAPI'
 import HierarchyAPI from '../../../api/HierarchyAPI'
 import Blog from './Blog'
+import { BlogSetting } from './BlogSetting'
 
 export enum BlogPageType {
     UserMainPage,
@@ -35,6 +36,9 @@ export class BlogPageHierarchy {
 
     public yTopLevelDocumentIdList: Y.Array<string>
     public topLevelDocumentIdList: string[] = []
+    public ySetting: Y.Map<any> = null
+    public headerIconActive: boolean = false
+    public setting: BlogSetting
 
     public nameChangingPageId: string | null = null
     public editable: boolean = false
@@ -60,6 +64,7 @@ export class BlogPageHierarchy {
         this.yTopLevelDocumentIdList.observeDeep(() => {
             this.topLevelDocumentIdList = this.yTopLevelDocumentIdList.toArray()
         })
+        this.setting = new BlogSetting(this.yDocument.getMap('setting'))
 
         EventManager.addEventListener(Event.MoveToAnotherPage, () => {
             this.closeOpenedPage()

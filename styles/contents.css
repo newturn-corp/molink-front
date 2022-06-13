@@ -104,6 +104,12 @@
 .content-container .content-body .contents .MuiButton-root.Mui-disabled {
   color: #000000;
 }
+.content-container .content-body .contents .editor-page-skeleton .MuiSkeleton-root {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+.content-container .content-body .contents .editor-page-skeleton .MuiSkeleton-wave::after {
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.02), transparent);
+}
 .content-container .content-body .contents .editor {
   width: 100%;
 }

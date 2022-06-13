@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Progress } from 'antd'
-import { numberToByteExpression } from '../../../utils/numberToByteExpression'
+import { numberToByteExpression } from '../../../../../utils/numberToByteExpression'
 
 export interface UploadLimitComponentInterface {
     settingName: string
