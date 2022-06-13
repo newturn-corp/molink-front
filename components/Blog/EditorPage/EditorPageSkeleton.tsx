@@ -31,7 +31,9 @@ const TagSkeleton = () => {
 
 export const EditorPageSkeleton: React.FC<{
 }> = observer(() => {
-    return <>
+    return <div
+        className={'editor-page-skeleton'}
+    >
         <Skeleton
             animation={'wave'}
             variant={'rect'}
@@ -67,5 +69,5 @@ export const EditorPageSkeleton: React.FC<{
         <ParagraphSkeleton/>
         <ParagraphSkeleton/>
         <ParagraphSkeleton/>
-    </>
+    </div>
 })
