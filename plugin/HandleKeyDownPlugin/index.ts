@@ -20,6 +20,7 @@ import { handleEnterInVoid } from './CorrectVoidBehaviorHandleKeyDown'
 import LinkManager from '../../manager/Editing/Link/LinkManager'
 import { isMac } from 'lib0/environment'
 import EditorPage from '../../manager/Blog/Editor/EditorPage'
+import { handleHead1Shortcut, handleHead2Shortcut, handleHead3Shortcut } from './ShortcutKeyPlugin'
 
 const handlerMap = new Map()
 handlerMap.set('command+ArrowLeft', [
@@ -31,6 +32,16 @@ handlerMap.set('command+ArrowLeft', [
 handlerMap.set('command+ArrowRight', [
     moveSelectionWhenCommandArrowRightDown
 ])
+handlerMap.set('command+1', [
+    handleHead1Shortcut
+])
+handlerMap.set('command+2', [
+    handleHead2Shortcut
+])
+handlerMap.set('command+2', [
+    handleHead3Shortcut
+])
+
 handlerMap.set('ArrowUp', [
     (event, editor) => LinkManager.menu.handleArrowUp(event, editor),
     (event, editor) => CommandManager.handleArrowUp(event, editor)
@@ -39,6 +50,7 @@ handlerMap.set('ArrowDown', [
     (event, editor) => LinkManager.menu.handleArrowDown(event, editor),
     (event, editor) => CommandManager.handleArrowDown(event, editor)
 ])
+
 handlerMap.set('ctrl+z', [
     (event) => LinkManager.menu.handleCtrlZDown(event),
     undoWhenControlZKeyDown
@@ -49,6 +61,16 @@ handlerMap.set('ctrl+y', [
 handlerMap.set('ctrl+s', [
     (event) => event.preventDefault()
 ])
+handlerMap.set('ctrl+1', [
+    handleHead1Shortcut
+])
+handlerMap.set('ctrl+2', [
+    handleHead2Shortcut
+])
+handlerMap.set('ctrl+3', [
+    handleHead3Shortcut
+])
+
 handlerMap.set('Backspace', [
     handleBackspaceInList
 ])
