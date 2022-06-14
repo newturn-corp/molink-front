@@ -168,6 +168,7 @@
   color: #0094FF;
   padding: 2px 4px;
   border-radius: 3px;
+  font-size: 0.9rem;
   font-family: "Fira Mono", source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 .content-container .content-body .contents .file-loading {

@@ -1,6 +1,5 @@
-import { Transforms, Node, Location, NodeMatch, Editor, Path, Range, Point, NodeEntry } from 'slate'
+import { Transforms, Node, Location, NodeMatch } from 'slate'
 import { fixContentNextHeaderWhenSplitNodes } from './FixHeadNextNormalTextPlugin'
-// import HoveringToolbar from './HoveringToolbarPlugin'
 import {
     TransformsSetNodeHandler,
     TransformsSplitNodeHandler
@@ -11,6 +10,7 @@ import { customInsertNode } from './insertNode'
 import { customRemoveNodes } from './removeNodes'
 import { customSelect } from './select'
 import { move } from './move'
+import { insertFragment } from './insertFragment'
 
 const { setNodes, select, splitNodes } = Transforms
 
@@ -19,6 +19,7 @@ Transforms.insertNodes = customInsertNode
 Transforms.removeNodes = customRemoveNodes
 Transforms.select = customSelect
 Transforms.move = move
+Transforms.insertFragment = insertFragment
 
 const transformsSetNodeHandler: TransformsSetNodeHandler<Node>[] = [
     UnknownPlugin
