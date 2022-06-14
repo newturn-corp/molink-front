@@ -23,7 +23,7 @@ export const HierarchyContextMenu: React.FC = observer(() => {
                             Blog.pageHierarchy.contextMenu.close()
                             option.handleOnClick()
                         }}
-                        key={`hierarchy-context-menu-${option}`}
+                        key={`hierarchy-context-menu-${option.name}`}
                         className="contextMenu--option"
                     >
                         {option.name}

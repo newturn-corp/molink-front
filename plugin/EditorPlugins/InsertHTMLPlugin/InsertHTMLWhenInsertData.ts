@@ -8,6 +8,8 @@ import { handleFont } from './handleFont'
 import { handleImage } from './handleImage'
 import { handleP } from './handleP'
 import { handleHr } from './handleHr'
+import { handleLi } from './handleLi'
+import { getFragmentFromHTML } from './getFragmentFromHTML'
 
 const ELEMENT_TAGS = {
     A: el => ({ type: 'link', url: el.getAttribute('href') }),
@@ -97,6 +99,10 @@ export const deserialize = el => {
         return handleImage(el, children)
     }
 
+    if (nodeName === 'LI') {
+        return handleLi(el, children)
+    }
+
     if (nodeName === 'P') {
         return handleP(el, children)
     }
@@ -122,24 +128,7 @@ export const insertHTMLWhenInsertData = (editor, data) => {
     const html = data.getData('text/html')
 
     if (html) {
-        const parsed = new DOMParser().parseFromString(html, 'text/html')
-        const fragment = deserialize(parsed.body)
-        const remoteTarget = []
-        for (let i = 0; i < fragment.length; i++) {
-            const node = fragment[i]
-            if (node.type === 'list-item') {
-                for (let j = i; j >= 0; j--) {
-                    const frontNode = fragment[j]
-                    if (frontNode.type === 'ul-list' || frontNode.type === 'ol-list') {
-                        frontNode.children.push(node)
-                    }
-                }
-                remoteTarget.push(i)
-            }
-        }
-        for (const index of remoteTarget.reverse()) {
-            fragment.splice(index, 1)
-        }
+        const fragment = getFragmentFromHTML(html)
         Transforms.insertFragment(editor, fragment)
         return true
     }

@@ -28,7 +28,16 @@ export const handleEnterInList = (event: React.KeyboardEvent<HTMLDivElement>, ed
         if (ListEditor.getItemDepth(editor) > 1) {
             ListTransforms.decreaseItemDepth(editor)
         } else {
-            // Exit list
+            // 리스트가 페이지의 마지막인 경우에 페이지를 나가는 경우, 아래에 Text Element 추가
+            if (Editor.isEnd(editor, editor.selection.focus, [editor.children.length - 1])) {
+                Transforms.insertNodes(editor, {
+                    type: 'text',
+                    category: TextCategory.Content3,
+                    children: [{ text: '' }]
+                }, {
+                    at: [editor.children.length]
+                })
+            }
             ListTransforms.unwrapList(editor)
         }
     } else {
@@ -88,9 +97,13 @@ export const handleBackspaceInList = (event: React.KeyboardEvent<HTMLDivElement>
         ListTransforms.decreaseItemDepth(editor)
     }
     ListTransforms.unwrapList(editor)
-    Transforms.setNodes(editor, {
-        type: 'text',
-        category: TextCategory.Content3
-    })
+    if (Editor.isEnd(editor, editor.selection.focus, [editor.children.length - 1])) {
+        Transforms.move(editor, { unit: 'offset', distance: 1 })
+    } else {
+        Transforms.setNodes(editor, {
+            type: 'text',
+            category: TextCategory.Content3
+        })
+    }
     return true
 }
