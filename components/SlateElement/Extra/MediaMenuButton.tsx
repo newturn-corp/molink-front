@@ -20,7 +20,7 @@ export const MediaMenuButton: React.FC<{
             ref={menuButtonRef}
             className={'menu-button'}
             style={{
-                display: isShow ? undefined : 'none'
+                opacity: isShow ? 1 : 0
             }}
             onClick={(event) => {
                 event.stopPropagation()

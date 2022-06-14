@@ -5,14 +5,15 @@ import { MentionListComponent } from '../../../Home/Main/Content/MentionListComp
 import { CommandListComponent } from '../Command/CommandListComponent'
 import { CustomElementComponent } from '../../../SlateElement/CustomElementComponent'
 import { CustomLeafComponent } from '../../../SlateElement/CustomLeafComponent'
-import { HoveringToolbar } from '../../../Home/Main/Content/HoveringToolbar/HoveringToolbar'
+import { HoveringToolbar } from './HoveringToolbar/HoveringToolbar'
 import { handleDOMBeforeInput, handleKeyDown } from '../../../../plugin'
 import { decorate as decorateFunc } from '../../../../plugin/Decorate'
 import { DOMNode } from 'slate-react/dist/utils/dom'
 import { Editor } from 'slate'
-import { LinkMenuComponent } from '../../../Home/Main/Content/LinkMenuComponent'
+import { LinkMenuComponent } from './LinkMenuComponent'
 import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 import { RemoteCursorOverlay } from './Overlay/Cursor/RemoteCursorOverlay'
+import { BookmarkInputComponent } from './BookmarkInput/BookmarkInputComponent'
 
 export const getDefaultView = (value: any): Window | null => {
     return (
@@ -72,6 +73,7 @@ export const EditorComponent: React.FC<{
       return <Slate editor={slateEditor} value={slateEditor.children} onChange={value => {
       }}>
           <HoveringToolbar/>
+          <BookmarkInputComponent/>
           <RemoteCursorOverlay>
               <Editable
                   id={'editable'}

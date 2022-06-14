@@ -1,0 +1,16 @@
+.bookmark-input {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  z-index: 1000;
+  width: 300px;
+
+  background: #FFFFFF;
+
+  border: 1px solid #DCE1E5;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+}

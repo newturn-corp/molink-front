@@ -24,6 +24,8 @@ import '../styles/contents/header.css'
 import '../styles/auth.css'
 import '../styles/auth/sign-up.css'
 
+import '../styles/blog/editor/bookmark-input.css'
+
 import '../styles/contents.css'
 
 import '../styles/home.css'

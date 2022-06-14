@@ -121,6 +121,8 @@ OrderedListCommandName	숫자목록
 OrderedListCommandDescription	숫자 목록
 CheckListCommandName	체크목록
 CheckListCommandDescription	체크 목록
+BookmarkCommandName	북마크
+BookmarkCommandDescription	링크를 시각화하기
 NoSearchResult	검색 결과가 없습니다.
 UserSearchResultCount	개의 사용자 검색 결과
 For	에 대한

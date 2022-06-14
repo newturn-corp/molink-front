@@ -156,6 +156,12 @@ export type BookmarkElementType = {
     children: EmptyText[]
 }
 
+export type TempBookmarkElementType = {
+    type: 'temp-bookmark',
+    isFirstInputOpen: boolean,
+    children: EmptyText[]
+}
+
 export type CalloutElementType = {
     type: 'callout',
     icon: string,
@@ -181,4 +187,5 @@ QuoteElement |
 SlateVideoElementType |
 SlateFileElementType |
 BookmarkElementType |
+TempBookmarkElementType |
 CalloutElementType

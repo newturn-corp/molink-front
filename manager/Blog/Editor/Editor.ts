@@ -17,6 +17,7 @@ import React from 'react'
 import { EditorToolbar } from './EditorToolbar'
 import { YjsEditor } from '@slate-yjs/core'
 import ImagePreLoader from '../../global/ImagePreLoader'
+import { EditorBookmarkInput } from './EditorBookmarkInput'
 
 export class Editor {
     public editable: boolean = false
@@ -35,7 +36,7 @@ export class Editor {
     synchronizer: EditorSynchronizer = null
 
     toolbar: EditorToolbar = null
-
+    bookmarkInput: EditorBookmarkInput = null
     editableElement: HTMLElement = null
 
     lastPressedKey: string = null
@@ -51,6 +52,7 @@ export class Editor {
         this.selection = new EditorSelection(this.yjsDocument.getMap('selection'))
         this.tagList = new EditorTagList(this.yjsDocument.getArray('tags'))
         this.toolbar = new EditorToolbar()
+        this.bookmarkInput = new EditorBookmarkInput()
 
         makeAutoObservable(this, {
             slateEditor: observable.ref,

@@ -18,6 +18,7 @@ import EventManager from '../../global/Event/EventManager'
 import { Event } from '../../global/Event/Event'
 import LanguageManager from '../../global/LanguageManager'
 import CodeIcon from 'public/image/icon/code.svg'
+import BookmarkOutlineIcon from 'public/image/icon/bookmark-outline.svg'
 import EditorPage from '../../Blog/Editor/EditorPage'
 import { ReactEditor } from 'slate-react'
 
@@ -58,7 +59,8 @@ class CommandManager {
         new CommandGroup(
             'Media',
             [
-                new Command('CodeCommandName', 'CodeCommandDescription', <CodeIcon/>, 'code-command', 'svg')
+                new Command('CodeCommandName', 'CodeCommandDescription', <CodeIcon/>, 'code-command', 'svg'),
+                new Command('BookmarkCommandName', 'BookmarkCommandDescription', <BookmarkOutlineIcon/>, 'bookmark-command', 'svg')
             ]
         ),
         new CommandGroup(
@@ -104,6 +106,7 @@ class CommandManager {
                 match: n => Editor.isBlock(editor, n)
             })
         }
+        return editor.selection.focus.path
         // Transforms.select(editor, beforeRange)
 
         // const selectedNodePath = Path.parent(editor.selection.anchor.path)
@@ -225,6 +228,14 @@ class CommandManager {
                 }]
             }
             Transforms.insertNodes(editor, node)
+            break
+        case LanguageManager.languageMap.BookmarkCommandName:
+            node = {
+                type: 'temp-bookmark',
+                isFirstInputOpen: false,
+                children: [{ text: '' }]
+            }
+            this.insertNode(editor, node)
             break
         // case '페이지':
         //     if (!ContentManager.openedDocument) {

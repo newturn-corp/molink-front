@@ -141,6 +141,36 @@
                 .content3 {
                     font-size: 1rem;
                 }
+
+                .temp-bookmark {
+                    background-color: #E8EBED;
+                    border-radius: 5px;
+                    height: 50px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    padding: 10px;
+                    cursor: pointer;
+                    margin: 2px 0px;
+                    position: relative;
+
+                    .icon {
+                        margin: auto 0;
+                        margin-right: 10px;
+                        width: 26px;
+                        height: 26px;
+                        user-select: none;
+                        svg {
+                            width: 26px;
+                            height: 26px;
+                            fill: #6C7177;
+                        }
+                    }
+                    .text {
+                        user-select: none;
+                        color: #6C7177;
+                    }
+                }
             }
 
             .menu-button {
