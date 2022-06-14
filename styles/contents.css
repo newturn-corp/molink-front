@@ -143,6 +143,34 @@
 .content-container .content-body .contents .editor .content3 {
   font-size: 1rem;
 }
+.content-container .content-body .contents .editor .temp-bookmark {
+  background-color: #E8EBED;
+  border-radius: 5px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  margin: 2px 0px;
+  position: relative;
+}
+.content-container .content-body .contents .editor .temp-bookmark .icon {
+  margin: auto 0;
+  margin-right: 10px;
+  width: 26px;
+  height: 26px;
+  user-select: none;
+}
+.content-container .content-body .contents .editor .temp-bookmark .icon svg {
+  width: 26px;
+  height: 26px;
+  fill: #6C7177;
+}
+.content-container .content-body .contents .editor .temp-bookmark .text {
+  user-select: none;
+  color: #6C7177;
+}
 .content-container .content-body .contents .menu-button {
   position: absolute;
   top: 6px;

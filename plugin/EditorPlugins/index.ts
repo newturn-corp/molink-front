@@ -25,7 +25,7 @@ import { clearTextWhenInsertBreak } from './clearTextPlugin'
 export const EditorPlugin = (editor: Editor) => {
     const { isVoid, isInline, insertBreak, deleteBackward, deleteForward, normalizeNode, insertText, insertData, onChange, insertNode } = editor
 
-    const voidTypeList: string[] = ['divider', 'image', 'document', 'mention', 'youtube', 'video', 'file', 'bookmark']
+    const voidTypeList: string[] = ['divider', 'image', 'document', 'mention', 'youtube', 'video', 'file', 'bookmark', 'temp-bookmark']
     editor.isVoid = element => {
         return voidTypeList.includes(element.type) || isVoid(element)
     }

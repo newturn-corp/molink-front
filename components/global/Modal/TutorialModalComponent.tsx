@@ -25,6 +25,7 @@ export const TutorialModalComponent: React.FC<{
             activeKey={TutorialManager.key}
             onChange={(key) => {
                 TutorialManager.key = key
+                TutorialManager.step = 0
             }}
         >
             <TabPane tab="블로그" key="blog">
