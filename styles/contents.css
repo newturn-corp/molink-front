@@ -348,7 +348,7 @@
   position: relative;
 }
 .content-container .content-body .contents .selected-empty-text:after {
-  content: "명령어 사용 /";
+  content: attr(placeholder);
   font-size: 1em;
   color: #aaa;
   position: absolute;
@@ -359,7 +359,7 @@
   position: relative;
 }
 .content-container .content-body .contents .selected-empty-text-align-right::after {
-  content: "명령어 사용 /";
+  content: attr(placeholder);
   font-size: 1em;
   color: #aaa;
   position: absolute;

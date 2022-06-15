@@ -355,7 +355,7 @@
                 position: relative;
             }
             .selected-empty-text:after {
-                content: "명령어 사용 /";
+                content: attr(placeholder);
                 font-size: 1em;
                 color: #aaa;
                 position: absolute;
@@ -366,7 +366,7 @@
                 position: relative;
             }
             .selected-empty-text-align-right::after {
-                content: "명령어 사용 /";
+                content: attr(placeholder);
                 font-size: 1em;
                 color: #aaa;
                 position: absolute;
@@ -375,6 +375,14 @@
                 top: 3px;
                 cursor: text;
             }
+            //.text-placeholder {
+            //    user-select: none;
+            //    font-size: 1em;
+            //    position: absolute;
+            //    top: 3px;
+            //    color: #aaa;
+            //    cursor: text;
+            //}
 
             .textline {
                 .MuiInputBase-input {
