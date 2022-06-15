@@ -15,32 +15,37 @@ export const PageSearchResult: React.FC<{
     return <ListItem
         alignItems="flex-start"
         className='page-search-result'
+        key={`page-search-result-container-${result.id}`}
         onClick={async () => {
             await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${result.id}`)
         }}
     >
         <div
             className={'text-container'}
+            key={`page-search-result-text-container-${result.id}`}
         >
             <div
                 className={'title'}
+                key={`page-search-result-title-${result.id}`}
                 dangerouslySetInnerHTML={{
                     __html: result.title
                 }}
             />
             <div
                 className={'content'}
+                key={`page-search-result-content-${result.id}`}
                 dangerouslySetInnerHTML={{
                     __html: result.content
                 }}
             />
             <div
                 className={'search-tag-list-container'}
+                key={`page-search-result-tag-list-container-${result.id}`}
             >
                 {
                     result.tags.length > 0 && result.tags.map((tag, index) =>
                         <Tag
-                            key={`page-tag-${index}`}
+                            key={`page-search-result-${result.id}-tag-${index}`}
                         >
                             {tag}
                         </Tag>)
@@ -48,6 +53,7 @@ export const PageSearchResult: React.FC<{
             </div>
             <div
                 className={'user-container'}
+                key={`page-search-result-user-container-${result.id}`}
                 onClick={(event) => {
                     event.stopPropagation()
                     RoutingManager.moveTo(Page.Blog, `/${userInfo.nickname}`)
@@ -55,11 +61,13 @@ export const PageSearchResult: React.FC<{
             >
                 <img
                     className={'profile-image'}
+                    key={`page-search-result-profile-image-${result.id}`}
                     src={userInfo.profileImageUrl}
                     width={20}
                 />
                 <div
                     className={'nickname'}
+                    key={`page-search-result-nickname-${result.id}`}
                 >
                     {userInfo.nickname}
                 </div>

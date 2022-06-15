@@ -10,9 +10,6 @@ export const SearchResultContainer: React.FC<{
     searchText: string
 }> = observer((props) => {
     const searchEngine = SearchManager.searchEngine
-    if (!searchEngine) {
-        return <></>
-    }
     const searchResults = searchEngine.searchResults
     if (!searchResults) {
         return <></>

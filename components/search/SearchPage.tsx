@@ -6,17 +6,23 @@ import UserManager from '../../manager/global/User/UserManager'
 import { DefaultSiteHead } from '../../manager/global/DefaultSiteHead'
 import { SearchPagination } from '../../components/search/SearchPagination'
 import { SearchResultContainer } from '../../components/search/SearchResultContainer'
+import { observer } from 'mobx-react'
 
-export const SearchPageComponent: React.FC<{ searchCategory: SearchCategory }> = ({ searchCategory }) => {
-    const url = new URLSearchParams(window.location.search)
-    const queryText = url.get('q')
-    const page = Number(url.get('page') || 1)
-
+export const SearchPageComponent: React.FC<{
+    searchCategory: SearchCategory
+    queryText: string,
+    page: number
+}> = observer(({
+    searchCategory,
+    queryText,
+    page
+}) => {
     useEffect(() => {
         UserManager.load()
         SearchManager.initSearchEngine(searchCategory)
         SearchManager.searchEngine.search(queryText, page)
-    }, [queryText, page])
+        console.log('search 호출')
+    }, [queryText, page, searchCategory])
 
     return <div
         className={'search-page'}
@@ -32,7 +38,7 @@ export const SearchPageComponent: React.FC<{ searchCategory: SearchCategory }> =
         >
             <div className={'core'}>
                 {
-                    SearchManager.searchEngine && <>
+                    SearchManager.searchEngine && SearchManager.searchEngine.searchResults && <>
                         <SearchCategoryComponent
                             currentCategory={searchCategory}
                         />
@@ -53,4 +59,4 @@ export const SearchPageComponent: React.FC<{ searchCategory: SearchCategory }> =
             </div>
         </div>
     </div>
-}
+})

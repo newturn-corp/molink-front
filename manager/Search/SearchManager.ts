@@ -26,7 +26,6 @@ class SearchManager {
         if (this.currentCategory === searchCategory) {
             return
         }
-        console.log(searchCategory)
         this.currentCategory = searchCategory
         if (searchCategory === SearchCategory.User) {
             this.searchEngine = new UserSearchEngine()

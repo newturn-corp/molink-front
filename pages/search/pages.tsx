@@ -3,8 +3,13 @@ import { SearchCategory } from '../../manager/Search/SearchManager'
 import { SearchPageComponent } from '../../components/search/SearchPage'
 
 const PageSearchPageComponent = () => {
+    const url = new URLSearchParams(window.location.search)
+    const queryText = url.get('q')
+    const page = Number(url.get('page') || 1)
     return <SearchPageComponent
         searchCategory={SearchCategory.Page}
+        queryText={queryText}
+        page={page}
     />
 }
 
