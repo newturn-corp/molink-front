@@ -67,7 +67,7 @@ PublicVisibility	전체 공개
 OnlyFollowerVisibility	팔로워만
 PrivateVisibility	비공개
 Privacy	개인정보 처리 방침
-SearchPlaceholder	현재 사용자만 검색할 수 있습니다.
+
 FollowRequestText	님이 팔로우 요청을 보냈습니다.
 Setting	설정
 PrivateVisibilityDescription	나만 이 페이지를 볼 수 있습니다.
@@ -124,7 +124,10 @@ CheckListCommandDescription	체크 목록
 BookmarkCommandName	북마크
 BookmarkCommandDescription	링크를 시각화하기
 NoSearchResult	검색 결과가 없습니다.
+
+SearchPlaceholder	검색
 UserSearchResultCount	개의 사용자 검색 결과
+PageSearchResultCount	개의 페이지 검색 결과
 For	에 대한
 PressToChange	눌러서 변경하기
 TotalFileSpace	총 저장 공간

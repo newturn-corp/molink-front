@@ -18,12 +18,117 @@
                     font-size: 16px;
                 }
             }
+
+            .selected-category {
+                cursor: default;
+                background-color: #e4edf8;
+            }
+            .selected-category:hover {
+                background-color: #e4edf8;
+            }
+        }
+
+        .pagination {
+            width: 100%;
+            margin-top: 20px;
+            padding-bottom: 50px;
+            .MuiPagination-ul {
+                margin: 0 auto;
+                width: fit-content;
+            }
+        }
+
+        .page-search-result {
+            display: flex;
+            flex-direction: row;
+            padding: 20px 0px;
+            .text-container {
+                display: flex;
+                flex-direction: column;
+                width: 506px;
+                margin-right: 20px;
+                em {
+                    font-weight: 600;
+                    font-style: unset;
+                }
+                .title {
+                    font-size: 20px;
+                    line-height: 32px;
+                    margin-bottom: 3px;
+                    overflow-x: hidden;
+                }
+                .content {
+                    font-size: 15px;
+                    line-height: 24px;
+                    height: 72px;
+                    margin-bottom: 6px;
+                }
+                .search-tag-list-container {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    height: 36px;
+                    .ant-tag {
+                        font-size: 14px;
+                        line-height: 28px;
+                        color: #0094FF;
+                        border-radius: 13.5px;
+                        padding: 2px 12px;
+                        border: none;
+                        margin-bottom: 4px;
+                        background-color: #F7F8F9;
+                        display: flex;
+                        align-items: center;
+                    }
+                }
+                .user-container {
+                    display: flex;
+                    flex-direction: row;
+                    height: 20px;
+                    width: fit-content;
+                    margin-top: 5px;
+                    .profile-image {
+                        margin-right: 4px;
+                        border-radius: 10px;
+                    }
+                    .nickname {
+                        font-size: 14px;
+                        line-height: 20px;
+                        font-weight: 400;
+                    }
+                }
+            }
+            .thumbnail {
+                width: 174px;
+                height: 174px;
+                display: flex;
+                border-radius: 5px;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 5px;
+                }
+                .text {
+                    justify-content: center;
+                    color: white;
+                    margin: auto auto;
+                    user-select: none;
+                    font-size: 20px;
+                    font-weight: 600;
+                    max-width: 200px;
+                    line-height: 30px;
+                    max-height: 60px;
+                    text-align: center;
+                }
+            }
         }
 
         .search-result {
             width: 700px;
-            height: 100%;
+            height: fit-content;
             cursor: pointer;
+            margin-left: 30px;
             .search-text {
                 font-size: 24px;
             }

@@ -2,10 +2,10 @@ import React from 'react'
 import { SearchCategory } from '../../manager/Search/SearchManager'
 import { SearchPageComponent } from '../../components/search/SearchPage'
 
-const UserSearchPageComponent = () => {
+const PageSearchPageComponent = () => {
     return <SearchPageComponent
-        searchCategory={SearchCategory.User}
+        searchCategory={SearchCategory.Page}
     />
 }
 
-export default UserSearchPageComponent
+export default PageSearchPageComponent
