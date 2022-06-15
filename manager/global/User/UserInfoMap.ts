@@ -11,15 +11,20 @@ class UserInfoMap {
     }
 
     async updateUserInfoMapByUserIDList (userIDList: number[]) {
-        const newUserIDList: number[] = userIDList.filter((userID) => !this.idMap[userID])
-        if (newUserIDList.length > 0) {
-            const { infoMap } = await ViewerAPI.getUserInfoMapByIDList(newUserIDList)
-            for (const userID of newUserIDList) {
-                const info = infoMap[userID] as ESUser
-                this.idMap[userID] = info
-                if (this.nicknameMap[info.nickname]) {
-                    this.nicknameMap[info.nickname] = info
-                }
+        const set = new Set<number>()
+        userIDList.filter((userID) => !this.idMap[userID]).forEach(id => {
+            set.add(id)
+        })
+        const newUserIDList: number[] = Array.from(set)
+        if (newUserIDList.length === 0) {
+            return
+        }
+        const { infoMap } = await ViewerAPI.getUserInfoMapByIDList(newUserIDList)
+        for (const userID of newUserIDList) {
+            const info = infoMap[userID] as ESUser
+            this.idMap[userID] = info
+            if (this.nicknameMap[info.nickname]) {
+                this.nicknameMap[info.nickname] = info
             }
         }
     }

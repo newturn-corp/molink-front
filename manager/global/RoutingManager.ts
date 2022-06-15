@@ -8,7 +8,7 @@ export enum Page {
     Index = '/',
     SignIn = '/auth/sign-in',
     Search = '/search',
-    SearchUser = '/search/users',
+
     ChangePasswordRequest = '/auth/change-password-request',
     SignUp = '/auth/sign-up',
     NoticeEmailAuth = '/auth/notice-email-auth',
@@ -17,6 +17,9 @@ export enum Page {
     SettingFollow = '/setting/follow',
     SettingDocumentList = '/setting/document-list',
     SettingEditor = '/setting/editor',
+
+    SearchUser = '/search/users',
+    SearchPage = '/search/pages',
 
     Home = '',
     Blog = '/blog',

@@ -10,7 +10,7 @@ const { Search } = Input
 export const SearchComponent: React.FC<{
   }> = observer(() => {
       const onSearch = async value => {
-          await RoutingManager.moveTo(Page.SearchUser, `?q=${value}`)
+          await RoutingManager.moveTo(Page.SearchPage, `?q=${value}&page=1`)
       }
 
       return <div
