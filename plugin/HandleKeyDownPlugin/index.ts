@@ -22,8 +22,11 @@ import { isMac } from 'lib0/environment'
 import EditorPage from '../../manager/Blog/Editor/EditorPage'
 import { handleHead1Shortcut, handleHead2Shortcut, handleHead3Shortcut } from './ShortcutKeyPlugin'
 import MenuManager from '../../manager/global/Menu/MenuManager'
+import { Editor } from 'slate'
 
-const handlerMap = new Map()
+type Handler = (event, editor: Editor) => boolean
+
+const handlerMap = new Map<string, Handler[]>()
 handlerMap.set('command+ArrowLeft', [
     moveSelectionWhenCommandArrowLeftDown
 ])

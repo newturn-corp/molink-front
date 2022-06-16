@@ -5,6 +5,7 @@ import EditorPage from '../../manager/Blog/Editor/EditorPage'
 
 const checkInsideIndependentBlock = (editor: Editor) => {
     const ancestors = Node.ancestors(editor, editor.selection.anchor.path)
+    console.log(ancestors)
     for (const [ancestor] of ancestors) {
         if (Element.isElement(ancestor) && ['code', 'callout'].includes(ancestor.type)) {
             return true
@@ -14,6 +15,7 @@ const checkInsideIndependentBlock = (editor: Editor) => {
 }
 
 export const handleEnterInCode = (event, editor) => {
+    console.log('handleEnterInCode')
     if (isMac && EditorPage.editor.isComposing) {
         return false
     }

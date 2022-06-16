@@ -68,7 +68,7 @@ export class EditorLinkModifier {
         FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '클립보드에 복사되었습니다!', '', 5)
     }
 
-    async deleteLink () {
+    deleteLink () {
         const editor = EditorPage.editor.slateEditor
         Transforms.unwrapNodes(editor, {
             match: (n : Node) =>
@@ -116,17 +116,17 @@ export class EditorLinkModifier {
         return true
     }
 
-    async handleEnter (event: React.KeyboardEvent, editor: Editor) {
+    handleEnter (event: React.KeyboardEvent, editor: Editor) {
         if (!this.isOpen) {
             return false
         }
         event.preventDefault()
         if (this.index === 0) {
-            await this.moveToLinkPage()
+            this.moveToLinkPage()
         } else if (this.index === 1) {
-            await this.copyLink()
+            this.copyLink()
         } else if (this.index === 2) {
-            await this.deleteLink()
+            this.deleteLink()
         }
         this.close()
         return true
