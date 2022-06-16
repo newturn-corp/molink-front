@@ -56,31 +56,31 @@ const BlogPageComponent: React.FC<{
     </div>
 }
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//     const urlInfo = context.query.info as string[]
-//     if (urlInfo.length === 3) {
-//         try {
-//             const [a, pageID, b] = urlInfo
-//             const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
-//                 method: 'GET'
-//             })
-//             const body = await res.json()
-//             const pageMetaInfo = body.data
-//             return {
-//                 props: {
-//                     pageMetaInfo: pageMetaInfo || null
-//                 }
-//             }
-//         } catch (err) {
-//             console.log(err)
-//         }
-//     }
-//
-//     return {
-//         props: {
-//             pageMetaInfo: null
-//         }
-//     }
-// }
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const urlInfo = context.query.info as string[]
+    if (urlInfo.length === 3) {
+        try {
+            const [a, pageID, b] = urlInfo
+            const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
+                method: 'GET'
+            })
+            const body = await res.json()
+            const pageMetaInfo = body.data
+            return {
+                props: {
+                    pageMetaInfo: pageMetaInfo || null
+                }
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    return {
+        props: {
+            pageMetaInfo: null
+        }
+    }
+}
 
 export default BlogPageComponent

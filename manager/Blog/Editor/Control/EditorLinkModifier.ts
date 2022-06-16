@@ -47,7 +47,7 @@ export class EditorLinkModifier {
         const linkModifierElementRect = linkModifierElement.getBoundingClientRect()
 
         const position = {
-            top: rect.top + rect.height + linkModifierElementRect.height + 10,
+            top: rect.top + rect.height,
             left: rect.left + rect.width / 2 - linkModifierElementRect.width / 2
         }
 

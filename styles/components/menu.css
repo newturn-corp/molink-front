@@ -5,6 +5,7 @@
   align-items: flex-start;
   padding: 8px;
   z-index: 1000;
+  min-width: 200px;
   background: #FFFFFF;
   border: 1px solid #DCE1E5;
   box-sizing: border-box;

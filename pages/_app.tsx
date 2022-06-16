@@ -89,8 +89,8 @@ const App = ({ Component, pageProps }: AppProps) => {
                 <TutorialModalComponent/>
                 <SettingModalComponent/>
                 <EmojiPickerComponent/>
-                <Component {...pageProps} />
             </SafeHydrate>
+            <Component {...pageProps} />
         </>
     )
 }
