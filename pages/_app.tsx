@@ -60,7 +60,7 @@ function SafeHydrate ({ children }: { children: JSX.Element[] }) {
         <div
             suppressHydrationWarning
         >
-            {children}
+            {typeof window === 'undefined' ? null : children}
         </div>
     )
 }
@@ -89,8 +89,8 @@ const App = ({ Component, pageProps }: AppProps) => {
                 <TutorialModalComponent/>
                 <SettingModalComponent/>
                 <EmojiPickerComponent/>
-                <Component {...pageProps} />
             </SafeHydrate>
+            <Component {...pageProps} />
         </>
     )
 }
