@@ -23,15 +23,23 @@ const getPasswordHelperText = (passwordState: PasswordState) => {
 }
 
 const AuthChangePasswordPage = observer(() => {
-    const key = new URLSearchParams(window.location.search).get('key')
     useEffect(() => {
+        if (!window) {
+            return
+        }
         AuthManager.checkPasswordChangeExist(new URLSearchParams(window.location.search).get('key')).then(res => {
             if (!res) {
                 RoutingManager.moveTo(Page.SignIn)
             }
         })
-    })
+    }, [window])
     const [loading, setLoading] = useState(false)
+
+    if (!window) {
+        return <></>
+    }
+
+    const key = new URLSearchParams(window.location.search).get('key')
     return <div className='auth-page change-password-page'>
         <SiteHead/>
         <AuthHeader/>

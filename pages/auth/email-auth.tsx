@@ -4,11 +4,11 @@ import FeedbackManager, { NOTIFICATION_TYPE } from '../../manager/global/Feedbac
 import RoutingManager, { Page } from '../../manager/global/RoutingManager'
 
 const EmailAuth = () => {
+    if (!window) {
+        return <></>
+    }
     const key = new URLSearchParams(window.location.search).get('key')
-    useEffect(() => {
-        AuthManager.verifyEmail(key)
-    },
-    [])
+    AuthManager.verifyEmail(key)
     return <></>
 }
 
