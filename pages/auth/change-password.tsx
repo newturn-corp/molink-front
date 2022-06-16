@@ -24,7 +24,7 @@ const getPasswordHelperText = (passwordState: PasswordState) => {
 
 const AuthChangePasswordPage = observer(() => {
     useEffect(() => {
-        if (!window) {
+        if (typeof window === 'undefined' || !window) {
             return
         }
         AuthManager.checkPasswordChangeExist(new URLSearchParams(window.location.search).get('key')).then(res => {
@@ -35,7 +35,7 @@ const AuthChangePasswordPage = observer(() => {
     }, [window])
     const [loading, setLoading] = useState(false)
 
-    if (!window) {
+    if (typeof window === 'undefined' || !window) {
         return <></>
     }
 

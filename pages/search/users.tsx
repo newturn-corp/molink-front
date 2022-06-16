@@ -3,7 +3,7 @@ import { SearchCategory } from '../../manager/Search/SearchManager'
 import { SearchPageComponent } from '../../components/search/SearchPage'
 
 const UserSearchPageComponent = () => {
-    if (!window) {
+    if (typeof window === 'undefined' || !window) {
         return <></>
     }
     const url = new URLSearchParams(window.location.search)
