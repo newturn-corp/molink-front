@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import { Editor } from './Editor'
-import { CommentInfo } from './CommentInfo'
-import { EditorPageUserInfo } from './EditorPageUserInfo'
+import { CommentInfo } from './View/CommentInfo'
+import { EditorPageUserInfo } from './View/EditorPageUserInfo'
 import { EditorPageInfo } from './EditorPageInfo'
 import Blog from '../../global/Blog/Blog'
 

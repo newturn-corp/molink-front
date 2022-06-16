@@ -375,15 +375,6 @@
                 top: 3px;
                 cursor: text;
             }
-            //.text-placeholder {
-            //    user-select: none;
-            //    font-size: 1em;
-            //    position: absolute;
-            //    top: 3px;
-            //    color: #aaa;
-            //    cursor: text;
-            //}
-
             .textline {
                 .MuiInputBase-input {
                     color: rgb(34, 36, 38);
@@ -617,10 +608,10 @@
                 color: rgb(104, 104, 104);
                 border-bottom: 1px solid rgb(104, 104, 104);
             }
-            .link.selected {
-                border: 2px solid rgb(176, 176, 176);
-                border-radius: 2px;
-            }
+            //.link.selected {
+            //    border: 2px solid rgb(176, 176, 176);
+            //    border-radius: 2px;
+            //}
             .code {
                 position: relative;
                 padding: 30px;

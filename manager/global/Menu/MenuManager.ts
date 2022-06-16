@@ -79,7 +79,7 @@ class MenuManager {
         return true
     }
 
-    async handleEnterAndTab (event: React.KeyboardEvent, editor: Editor) {
+    async handleEnter (event: React.KeyboardEvent, editor: Editor) {
         if (!this.isOpen || !this.keyboardSelectionChange) {
             return false
         }

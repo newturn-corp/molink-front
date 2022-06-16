@@ -1,10 +1,10 @@
 import { makeAutoObservable } from 'mobx'
-import ViewerAPI from '../../../api/ViewerAPI'
-import UserInfoMap from '../../global/User/UserInfoMap'
-import { PageComment } from '../../../domain/PageComment'
-import ContentAPI from '../../../api/ContentAPI'
+import ViewerAPI from '../../../../api/ViewerAPI'
+import UserInfoMap from '../../../global/User/UserInfoMap'
+import { PageComment } from '../../../../domain/PageComment'
+import ContentAPI from '../../../../api/ContentAPI'
 import { SaveCommentDTO } from '@newturn-develop/types-molink/dist/DTO'
-import UserManager from '../../global/User/UserManager'
+import UserManager from '../../../global/User/UserManager'
 
 export class CommentInfo {
     pageId: string

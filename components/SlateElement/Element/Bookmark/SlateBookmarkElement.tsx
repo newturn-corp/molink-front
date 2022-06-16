@@ -29,7 +29,7 @@ export const SlateBookmarkElement: React.FC<{
     const menuButtonRef = useRef<HTMLDivElement>()
 
     const [info, setInfo] = useState<AnalyzeLinkResponseDTO>({
-        title: new URL('https://velog.io/recent').hostname,
+        title: new URL(element.url).hostname,
         description: '',
         imageURL: undefined,
         iconURL: undefined
@@ -102,9 +102,19 @@ export const SlateBookmarkElement: React.FC<{
         {
             editable && <MediaMenuButton
                 isShow={isMouseOver}
-                menuItems={[new MenuItem(LanguageManager.languageMap.Delete, () => {
-                    Transforms.removeNodes(slateEditor, { at: currentNodePath() })
-                })]}
+                menuItems={[
+                    new MenuItem(LanguageManager.languageMap.Delete, () => {
+                        Transforms.removeNodes(slateEditor, { at: currentNodePath() })
+                    }),
+                    new MenuItem('복제', () => {
+                        Transforms.insertNodes(slateEditor, {
+                            ...element
+                        }, {
+                            at: currentNodePath(),
+                            mode: 'lowest'
+                        })
+                    })
+                ]}
                 onClick={() => {
                     Transforms.select(slateEditor, currentNodePath())
                 }}

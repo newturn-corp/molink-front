@@ -14,6 +14,7 @@ import { LinkMenuComponent } from './LinkMenuComponent'
 import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 import { RemoteCursorOverlay } from './Overlay/Cursor/RemoteCursorOverlay'
 import { BookmarkInputComponent } from './BookmarkInput/BookmarkInputComponent'
+import { LinkModifierComponent } from './LinkModifier/LinkModifierComponent'
 
 export const getDefaultView = (value: any): Window | null => {
     return (
@@ -74,6 +75,7 @@ export const EditorComponent: React.FC<{
       }}>
           <HoveringToolbar/>
           <BookmarkInputComponent/>
+          <LinkModifierComponent/>
           <RemoteCursorOverlay>
               <Editable
                   id={'editable'}
