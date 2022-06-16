@@ -153,6 +153,11 @@ export type YoutubeElement = {
 export type BookmarkElementType = {
     type: 'bookmark',
     url: string,
+    title: string,
+    description: string,
+    imageURL: string | undefined,
+    iconURL: string | undefined,
+    lastLoadedAt: string | undefined,
     children: EmptyText[]
 }
 
