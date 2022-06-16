@@ -64,6 +64,8 @@ export class LinkModal {
         Transforms.insertNodes(slateEditor, {
             type: 'bookmark',
             url: this.content,
+            title: new URL(this.content).hostname,
+            description: '',
             children: [{ text: '' }]
         }, {
             at: this.getInsertPosition(slateEditor)

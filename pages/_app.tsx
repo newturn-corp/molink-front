@@ -25,6 +25,7 @@ import '../styles/auth.css'
 import '../styles/auth/sign-up.css'
 
 import '../styles/blog/editor/bookmark-input.css'
+import '../styles/blog/editor/link-modifier.css'
 
 import '../styles/contents.css'
 

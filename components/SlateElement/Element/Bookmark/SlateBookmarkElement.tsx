@@ -14,6 +14,8 @@ import LanguageManager from '../../../../manager/global/LanguageManager'
 import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 import { MediaMenuButton } from '../../Extra/MediaMenuButton'
 import { SlateBookmarkImageContainer } from './SlateBookmarkImageContainer'
+import moment from 'moment-timezone'
+import { HistoryEditor } from 'slate-history'
 
 export const SlateBookmarkElement: React.FC<{
     attributes,
@@ -26,18 +28,21 @@ export const SlateBookmarkElement: React.FC<{
         ReactEditor.findPath(slateEditor, element)
     ), [slateEditor, element])
     const [isMouseOver, setIsMouseOver] = useState(false)
-    const menuButtonRef = useRef<HTMLDivElement>()
-
-    const [info, setInfo] = useState<AnalyzeLinkResponseDTO>({
-        title: new URL('https://velog.io/recent').hostname,
-        description: '',
-        imageURL: undefined,
-        iconURL: undefined
-    })
 
     useEffect(() => {
-        mainAPI.analyzeLink(element.url)
-            .then((dto) => setInfo(dto))
+        if (!element.lastLoadedAt || moment(element.lastLoadedAt).isBefore(moment().subtract(7, 'days'))) {
+            mainAPI.analyzeLink(element.url)
+                .then((dto) => {
+                    HistoryEditor.withoutSaving(slateEditor, () => {
+                        Transforms.setNodes(slateEditor, {
+                            ...dto,
+                            lastLoadedAt: moment().format('YYYY-MM-DD HH:mm:ss')
+                        }, {
+                            at: currentNodePath()
+                        })
+                    })
+                })
+        }
     }, [])
 
     useEffect(() => {
@@ -66,15 +71,15 @@ export const SlateBookmarkElement: React.FC<{
                 className={'title'}
                 contentEditable={false}
             >
-                {info.title}
+                {element.title}
             </div>
             {
-                info.description &&
+                element.description &&
                 <div
                     className={'description'}
                     contentEditable={false}
                 >
-                    {info.description}
+                    {element.description}
                 </div>
             }
             <div
@@ -82,9 +87,9 @@ export const SlateBookmarkElement: React.FC<{
                 contentEditable={false}
             >
                 {
-                    info.iconURL &&
+                    element.iconURL &&
                     <img
-                        src={info.iconURL}
+                        src={element.iconURL}
                         className={'icon'}
                     />
                 }
@@ -97,14 +102,24 @@ export const SlateBookmarkElement: React.FC<{
             </div>
         </div>
         <SlateBookmarkImageContainer
-            imageUrl={info.imageURL}
+            imageUrl={element.imageURL}
         />
         {
             editable && <MediaMenuButton
                 isShow={isMouseOver}
-                menuItems={[new MenuItem(LanguageManager.languageMap.Delete, () => {
-                    Transforms.removeNodes(slateEditor, { at: currentNodePath() })
-                })]}
+                menuItems={[
+                    new MenuItem(LanguageManager.languageMap.Delete, () => {
+                        Transforms.removeNodes(slateEditor, { at: currentNodePath() })
+                    }),
+                    new MenuItem('복제', () => {
+                        Transforms.insertNodes(slateEditor, {
+                            ...element
+                        }, {
+                            at: currentNodePath(),
+                            mode: 'lowest'
+                        })
+                    })
+                ]}
                 onClick={() => {
                     Transforms.select(slateEditor, currentNodePath())
                 }}

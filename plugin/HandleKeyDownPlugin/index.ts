@@ -21,6 +21,7 @@ import LinkManager from '../../manager/Editing/Link/LinkManager'
 import { isMac } from 'lib0/environment'
 import EditorPage from '../../manager/Blog/Editor/EditorPage'
 import { handleHead1Shortcut, handleHead2Shortcut, handleHead3Shortcut } from './ShortcutKeyPlugin'
+import MenuManager from '../../manager/global/Menu/MenuManager'
 
 const handlerMap = new Map()
 handlerMap.set('command+ArrowLeft', [
@@ -43,10 +44,14 @@ handlerMap.set('command+2', [
 ])
 
 handlerMap.set('ArrowUp', [
+    (event, editor) => EditorPage.editor.linkModifier.handleArrowUp(event, editor),
+    (event, editor) => MenuManager.handleArrowUp(event, editor),
     (event, editor) => LinkManager.menu.handleArrowUp(event, editor),
     (event, editor) => CommandManager.handleArrowUp(event, editor)
 ])
 handlerMap.set('ArrowDown', [
+    (event, editor) => EditorPage.editor.linkModifier.handleArrowDown(event, editor),
+    (event, editor) => MenuManager.handleArrowDown(event, editor),
     (event, editor) => LinkManager.menu.handleArrowDown(event, editor),
     (event, editor) => CommandManager.handleArrowDown(event, editor)
 ])
@@ -84,6 +89,8 @@ handlerMap.set('shift+Tab', [
     handleShiftTabInList
 ])
 handlerMap.set('Enter', [
+    (event, editor) => EditorPage.editor.linkModifier.handleEnter(event, editor),
+    (event, editor) => MenuManager.handleEnter(event, editor),
     (event, editor) => LinkManager.menu.handleEnterAndTab(event, editor),
     (event, editor) => CommandManager.handleEnterAndTabAndClick(event, editor),
     handleEnterInList,
@@ -95,6 +102,8 @@ handlerMap.set('shift+Enter', [
     insertNewLineWhenShiftEnterKeyDown
 ])
 handlerMap.set('Escape', [
+    (event, editor) => EditorPage.editor.linkModifier.handleEscape(event, editor),
+    (event, editor) => MenuManager.handleEscape(event, editor),
     (event, editor) => LinkManager.menu.handleEscape(event, editor),
     (event, editor) => CommandManager.handleEscape(event, editor)
 ])

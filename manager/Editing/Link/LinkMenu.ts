@@ -31,7 +31,12 @@ export class LinkMenu {
                 })
                 editor.insertElement({
                     type: 'bookmark',
-                    url,
+                    url: url,
+                    title: new URL(url).hostname,
+                    description: '',
+                    imageURL: undefined,
+                    lastLoadedAt: undefined,
+                    iconURL: undefined,
                     children: [{ text: '' }]
                 }, slateEditor.selection.focus)
                 this.close()

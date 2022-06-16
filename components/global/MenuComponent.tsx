@@ -47,6 +47,9 @@ export const MenuComponent: React.FC<{}> = observer(() => {
                             icon={item.icon}
                             selected={MenuManager.keyboardSelectionChange && MenuManager.index === index}
                             onClick={() => item.onClick()}
+                            onMouseOver={() => {
+                                MenuManager.index = index
+                            }}
                         />
                     })
                 }

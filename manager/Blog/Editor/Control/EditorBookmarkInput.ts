@@ -1,10 +1,10 @@
 import React, { ChangeEvent } from 'react'
-import { CSSPosition } from '../../global/Menu/MenuManager'
+import { CSSPosition } from '../../../global/Menu/MenuManager'
 import { makeAutoObservable } from 'mobx'
-import EventManager from '../../global/Event/EventManager'
-import { Event } from '../../global/Event/Event'
+import EventManager from '../../../global/Event/EventManager'
+import { Event } from '../../../global/Event/Event'
 import { isURL } from 'class-validator'
-import EditorPage from './EditorPage'
+import EditorPage from '../EditorPage'
 import { Path, Transforms } from 'slate'
 import { InputRef } from 'antd'
 
@@ -72,6 +72,8 @@ export class EditorBookmarkInput {
         Transforms.setNodes(slateEditor, {
             type: 'bookmark',
             url: this.content,
+            title: new URL(this.content).hostname,
+            description: '',
             children: [{ text: '' }]
         }, {
             at: this.tempBookmarkPath

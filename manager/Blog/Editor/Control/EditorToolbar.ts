@@ -1,12 +1,12 @@
 import { makeAutoObservable } from 'mobx'
-import EventManager from '../../global/Event/EventManager'
-import { Event } from '../../global/Event/Event'
+import EventManager from '../../../global/Event/EventManager'
+import { Event } from '../../../global/Event/Event'
 import { Element, Node, Path, Range, Transforms } from 'slate'
 import React from 'react'
-import FileManager from '../../Editing/FileManager'
-import { AvailCodeLanguage, CodeElement } from '../../../Types/slate/CustomElement'
-import EditorPage from './EditorPage'
-import UserManager from '../../global/User/UserManager'
+import FileManager from '../../../Editing/FileManager'
+import { AvailCodeLanguage, CodeElement } from '../../../../Types/slate/CustomElement'
+import EditorPage from '../EditorPage'
+import UserManager from '../../../global/User/UserManager'
 
 export class EditorToolbar {
     enable: boolean = false

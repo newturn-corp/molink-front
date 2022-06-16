@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
-import UserInfoMap from '../../global/User/UserInfoMap'
-import ViewerAPI from '../../../api/ViewerAPI'
+import UserInfoMap from '../../../global/User/UserInfoMap'
+import ViewerAPI from '../../../../api/ViewerAPI'
 
 export class EditorPageUserInfo {
     userId: number

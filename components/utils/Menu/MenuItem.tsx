@@ -4,6 +4,7 @@ import { observer } from 'mobx-react'
 export interface MenuItemProps {
     text: string
     onClick: MouseEventHandler<HTMLDivElement>
+    onMouseOver?: MouseEventHandler<HTMLDivElement>
     icon?: ReactNode
     selected?: boolean
 }
@@ -13,6 +14,11 @@ export const MenuItem: React.FC<MenuItemProps> = observer(
         return <div
             className={'menu-item'}
             onClick={(event) => props.onClick(event)}
+            onMouseOver={(event) => {
+                if (props.onMouseOver) {
+                    props.onMouseOver(event)
+                }
+            }}
             style={props.selected
                 ? {
                     backgroundColor: '#F2F3F5',

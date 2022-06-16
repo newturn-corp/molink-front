@@ -1,5 +1,5 @@
-import ViewerAPI from '../../../api/ViewerAPI'
-import { EditorPlugin } from '../../../plugin'
+import ViewerAPI from '../../../../api/ViewerAPI'
+import { EditorPlugin } from '../../../../plugin'
 import { withReact } from 'slate-react'
 import { createEditor, Editor as SlateEditor, Node } from 'slate'
 
