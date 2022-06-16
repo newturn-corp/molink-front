@@ -122,7 +122,9 @@ export const PageListComponent: React.FC<{
                                     title={summary.title}
                                     userNickname={userInfo.nickname}
                                     userProfileImageUrl={userInfo.profileImageUrl}
-                                    lastEditedAt={getRelativeTime(new Date(summary.lastEditedAt), true)}
+                                    lastEditedAt={getRelativeTime(new Date(summary.lastEditedAt), {
+                                        showDate: true
+                                    })}
                                     description={summary.description}
                                     image={summary.image}
                                     like={summary.like}
@@ -142,7 +144,10 @@ export const PageListComponent: React.FC<{
                                     title={summary.title}
                                     userNickname={userInfo.nickname}
                                     userProfileImageUrl={userInfo.profileImageUrl}
-                                    lastEditedAt={getRelativeTime(new Date(summary.lastEditedAt), true)}
+                                    lastEditedAt={getRelativeTime(new Date(summary.lastEditedAt), {
+                                        showDate: true,
+                                        onlyDay: true
+                                    })}
                                     description={summary.description}
                                     image={summary.image}
                                     like={summary.like}
