@@ -7,6 +7,7 @@ import { isURL } from 'class-validator'
 import EditorPage from '../EditorPage'
 import { Path, Transforms } from 'slate'
 import { InputRef } from 'antd'
+import { ReactEditor } from 'slate-react'
 
 export class EditorBookmarkInput {
     bookmarkInputRef: React.MutableRefObject<HTMLDivElement> = null
@@ -48,6 +49,8 @@ export class EditorBookmarkInput {
         this.isOpen = false
         this.helperText = undefined
         this.isError = false
+        this.bookmarkInputRef.current.style.top = '-9999px'
+        this.bookmarkInputRef.current.style.left = '-9999px'
     }
 
     public handleChange (value: string) {
@@ -79,5 +82,6 @@ export class EditorBookmarkInput {
             at: this.tempBookmarkPath
         })
         this.close()
+        ReactEditor.focus(slateEditor)
     }
 }

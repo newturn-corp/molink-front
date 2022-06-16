@@ -43,7 +43,7 @@ export const ShouldLoginNoticeModal: React.FC<{
                     ModalManager.openShouldLoginNoticeModal = false
                     RoutingManager.moveTo(Page.SignIn)
                 }}
-            ></Button>
+            />
         </div>
     </CustomModal>
 })

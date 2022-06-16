@@ -28,13 +28,9 @@ import {
 import StyleManager from './StyleManager'
 import EditorPage from '../../Blog/Editor/EditorPage'
 import Blog from '../Blog/Blog'
+import GlobalManager from '../GlobalManager'
 
 export class ContentStyle {
-    _container: ContentContainerStyleInterface = defaultContentContainerStyle
-    get container () {
-        return toJS(this._container)
-    }
-
     _body: ContentBodyStyleInterface = defaultContentBodyStyle
     get body () {
         return toJS(this._body)
@@ -136,10 +132,13 @@ export class ContentStyle {
     }
 
     private refreshBodyHeight () {
+        if (!GlobalManager.window) {
+            return
+        }
         if (isBrowser) {
-            this._body.height = window.innerHeight - this._body.top
+            this._body.height = GlobalManager.window.innerHeight - this._body.top
         } else {
-            this._body.height = window.innerHeight - this._body.top - this._mobileToolbar.height
+            this._body.height = GlobalManager.window.innerHeight - this._body.top - this._mobileToolbar.height
         }
     }
 
@@ -152,13 +151,12 @@ export class ContentStyle {
     }
 
     refresh () {
+        if (!GlobalManager.window) {
+            return
+        }
         const blogWidth = Blog.getBlogWidth()
         const containerSize = isBrowser ? globalThis.window.innerWidth - blogWidth : globalThis.window.innerWidth
         const contentSize = Math.min(800, containerSize * (isBrowser ? 0.75 : 0.9))
-        this._container = {
-            transform: isBrowser ? `translateX(${blogWidth}px)` : undefined,
-            width: containerSize
-        }
         this._body.width = containerSize
         this.refreshBodyHeight()
         this._main = {

@@ -43,7 +43,7 @@ export const SlateCodeElement: React.FC<{
     }, [slateEditor])
 
     return (
-        <p
+        <pre
             className='code'
             spellCheck='false'
             onMouseOver={() => setIsMouseOver(true)}
@@ -95,6 +95,6 @@ export const SlateCodeElement: React.FC<{
                     currentNodePath={getCurrentNodePath()}
                 />
             }
-        </p>
+        </pre>
     )
 })

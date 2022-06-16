@@ -60,7 +60,7 @@ function SafeHydrate ({ children }: { children: JSX.Element[] }) {
         <div
             suppressHydrationWarning
         >
-            {typeof window === 'undefined' ? null : children}
+            {children}
         </div>
     )
 }

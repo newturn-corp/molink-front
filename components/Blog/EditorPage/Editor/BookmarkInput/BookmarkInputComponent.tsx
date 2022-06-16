@@ -36,7 +36,9 @@ export const BookmarkInputComponent: React.FC<{
                     className={'bookmark-input'}
                     style={{
                         userSelect: bookmarkInput.isOpen ? undefined : 'none',
-                        opacity: bookmarkInput.isOpen ? '1' : '0'
+                        opacity: bookmarkInput.isOpen ? '1' : '0',
+                        top: -9999,
+                        left: -9999
                     }}
                     onClick={(event) => {
                         event.stopPropagation()
