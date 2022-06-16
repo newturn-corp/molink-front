@@ -12,6 +12,8 @@ import StyleManager from '../../manager/global/Style/StyleManager'
 import BlogPage from '../../manager/Blog/BlogPage'
 import { BlogPageHead } from '../../components/Blog/EditorPage/BlogPageHead'
 import { ESPageMetaInfo } from '@newturn-develop/types-molink'
+import { SERVER_BASE_URL } from '../../infra/constants'
+import { GetServerSideProps } from 'next'
 
 const BlogPageComponent: React.FC<{
     pageMetaInfo: ESPageMetaInfo | null
@@ -54,33 +56,31 @@ const BlogPageComponent: React.FC<{
     </div>
 }
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//     console.log(context)
-//     const urlInfo = context.query.info as string[]
-//     if (urlInfo.length === 3) {
-//         try {
-//             const [a, pageID, b] = urlInfo
-//             const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
-//                 method: 'GET'
-//             })
-//             const body = await res.json()
-//             const pageMetaInfo = body.data
-//             console.log(pageMetaInfo)
-//             return {
-//                 props: {
-//                     pageMetaInfo: pageMetaInfo || null
-//                 }
-//             }
-//         } catch (err) {
-//             console.log(err)
-//         }
-//     }
-//
-//     return {
-//         props: {
-//             pageMetaInfo: null
-//         }
-//     }
-// }
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const urlInfo = context.query.info as string[]
+    if (urlInfo.length === 3) {
+        try {
+            const [a, pageID, b] = urlInfo
+            const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
+                method: 'GET'
+            })
+            const body = await res.json()
+            const pageMetaInfo = body.data
+            return {
+                props: {
+                    pageMetaInfo: pageMetaInfo || null
+                }
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    return {
+        props: {
+            pageMetaInfo: null
+        }
+    }
+}
 
 export default BlogPageComponent
