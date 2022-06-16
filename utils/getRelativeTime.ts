@@ -1,6 +1,22 @@
 import moment from 'moment-timezone'
 
-export const getRelativeTime = (time: Date, showDate: boolean = false, useText: boolean = true) => {
+export interface GetRelativeTimeOption {
+    showDate?: boolean,
+    useText?: boolean,
+    onlyDay?: boolean
+}
+
+export const getRelativeTime = (time: Date, option: GetRelativeTimeOption = {}) => {
+    const {
+        showDate,
+        useText,
+        onlyDay
+    } = {
+        showDate: false,
+        useText: true,
+        onlyDay: false,
+        ...option
+    }
     const secondDiff = moment().diff(moment(time), 'second')
     if (secondDiff < 60) {
         if (useText) {
@@ -19,7 +35,7 @@ export const getRelativeTime = (time: Date, showDate: boolean = false, useText: 
         if (secondDiff < 604800) {
             return `${Math.floor(secondDiff / 86400)}일 전`
         } else {
-            return moment(time).format('YYYY.MM.DD HH:mm')
+            return moment(time).format(onlyDay ? 'YYYY.MM.DD' : 'YYYY.MM.DD HH:mm')
         }
     } else {
         return `${Math.floor(secondDiff / 86400)}일 전`

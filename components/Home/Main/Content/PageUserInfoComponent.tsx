@@ -38,7 +38,9 @@ export const PageUserInfoComponent: React.FC<{
             <div
                 className={'page-info'}
             >
-                {getRelativeTime(new Date(pageInfo.lastEditedAt), true)}
+                {getRelativeTime(new Date(pageInfo.lastEditedAt), {
+                    showDate: true
+                })}
             </div>
         </div>
     </div>
