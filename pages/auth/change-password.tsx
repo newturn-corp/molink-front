@@ -9,6 +9,7 @@ import { AuthContainer } from '../../components/auth/AuthContainer'
 import LanguageManager from '../../manager/global/LanguageManager'
 import { observer } from 'mobx-react'
 import { SiteHead } from '../../components/global/SiteHead'
+import { ChangePasswordPageComponent } from '../../components/auth/ChangePassword/ChangePasswordPageComponent'
 
 const getPasswordHelperText = (passwordState: PasswordState) => {
     switch (passwordState) {
@@ -22,86 +23,19 @@ const getPasswordHelperText = (passwordState: PasswordState) => {
     }
 }
 
-const AuthChangePasswordPage = observer(() => {
-    useEffect(() => {
-        if (typeof window === 'undefined' || !window) {
-            return
-        }
-        AuthManager.checkPasswordChangeExist(new URLSearchParams(window.location.search).get('key')).then(res => {
-            if (!res) {
-                RoutingManager.moveTo(Page.SignIn)
-            }
-        })
-    }, [window])
-    const [loading, setLoading] = useState(false)
-
-    if (typeof window === 'undefined' || !window) {
+const AuthChangePasswordPage = () => {
+    if (typeof window === 'undefined') {
         return <></>
     }
 
     const key = new URLSearchParams(window.location.search).get('key')
-    return <div className='auth-page change-password-page'>
-        <SiteHead/>
-        <AuthHeader/>
-        <AuthContainer
-            loading={loading}
-        >
-            <AuthTitle
-                text={LanguageManager.languageMap.ChangePassword}
-            />
-            <AuthInput
-                label={LanguageManager.languageMap.Password}
-                type="password"
-                autoComplete="new-password"
-                variant='outlined'
-                error={AuthManager.passwordState !== PasswordState.DEFAULT}
-                onChange={(e) => {
-                    const { value } = e.target
-                    AuthManager.passwordState = PasswordState.DEFAULT
-                    AuthManager.pwd = value
-                }}
-                onFocus={(e) => {
-                    AuthManager.passwordState = PasswordState.DEFAULT
-                }}
-                onPaste={(e) => {
-                    e.preventDefault()
-                }}
-                helperText={getPasswordHelperText(AuthManager.passwordState)}
-            />
-            <AuthInput
-                label={LanguageManager.languageMap.PasswordConfirm}
-                type="password"
-                autoComplete="new-password"
-                variant='outlined'
-                error={AuthManager.passwordState !== PasswordState.DEFAULT}
-                onChange={(e) => {
-                    AuthManager.passwordState = PasswordState.DEFAULT
-                    AuthManager.pwdCheck = e.target.value
-                }}
-                onFocus={(e) => {
-                    AuthManager.passwordState = PasswordState.DEFAULT
-                }}
-                onPaste={(e) => {
-                    e.preventDefault()
-                }}
-            />
-            <AuthButton
-                text={LanguageManager.languageMap.ChangePassword}
-                theme={'primary'}
-                style={{
-                    marginTop: 44
-                }}
-                onClick={async (e) => {
-                    setLoading(true)
-                    const result = await AuthManager.endPasswordChange(key)
-                    if (result.success || result.goToLogin) {
-                        await RoutingManager.moveTo(Page.SignIn)
-                    }
-                    setLoading(false)
-                }}
-            />
-        </AuthContainer>
-    </div>
-})
+    AuthManager.checkPasswordChangeExist(key).then(res => {
+        if (!res) {
+            RoutingManager.moveTo(Page.SignIn)
+        }
+    })
+
+    return <ChangePasswordPageComponent/>
+}
 
 export default AuthChangePasswordPage
