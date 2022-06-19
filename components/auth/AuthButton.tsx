@@ -1,19 +1,22 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 
 export const AuthButton: React.FC<{
     text: string,
     onClick: Function,
     theme: 'primary' | 'primary-stroke',
-    style?: any,
+    style?: CSSProperties,
     border?: string,
+    textStyle?: CSSProperties
 }> = ({
     text,
     onClick,
     border,
     style,
-    theme
+    theme,
+    textStyle
 }) => {
     const customStyle = style || {}
+    const customTextStyle = textStyle || {}
     return <div
         className={'auth-button' + ' ' + theme}
         style={{
@@ -24,6 +27,9 @@ export const AuthButton: React.FC<{
     >
         <div
             className={'text'}
+            style={{
+                ...textStyle
+            }}
         >
             {text}
         </div>

@@ -1,38 +1,37 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import { Avatar } from '@material-ui/core'
+import { Avatar } from 'antd'
 import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
 import { getRelativeTime } from '../../../../utils/getRelativeTime'
 import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 
-export const PageUserInfoComponent: React.FC<{
+export const PageBlogInfoComponent: React.FC<{
 }> = observer(() => {
     const pageInfo = EditorPage.pageInfo
-    const userInfo = EditorPage.userInfo
+    const blogInfo = EditorPage.blogInfo
     return <div
-        className={'page-user-info-container'}
+        className={'page-blog-info-container'}
     >
         <div
-            className={'page-user-info'}
+            className={'page-blog-info'}
         >
             <div
-                className={'user-info'}
+                className={'blog-info'}
                 onClick={async () => {
-                    await RoutingManager.moveTo(Page.Blog, `/${userInfo.nickname}`)
+                    await RoutingManager.moveTo(Page.Blog, `/${blogInfo.name}`)
                 }}
             >
                 <Avatar
                     className='profile'
-                    style={{
-                        width: 30,
-                        height: 30
-                    }}
-                    src={userInfo.userProfileImageUrl}
-                />
+                    size={30}
+                    src={blogInfo.profileImageUrl}
+                >
+                    {blogInfo.profileImageUrl ? null : blogInfo.name}
+                </Avatar>
                 <div
                     className={'nickname'}
                 >
-                    {userInfo.nickname}
+                    {blogInfo.name}
                 </div>
             </div>
             <div

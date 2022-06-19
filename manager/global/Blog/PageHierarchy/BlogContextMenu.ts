@@ -1,13 +1,13 @@
-import GlobalManager from '../GlobalManager'
+import GlobalManager from '../../GlobalManager'
 import {
     ChangePageNameOption,
     CreateNewPageOption,
     DeletePageOption,
     HierarchyControlOption
-} from '../Hierarchy/HierarchyOptions'
+} from '../../Hierarchy/HierarchyOptions'
 import { makeAutoObservable } from 'mobx'
-import EventManager from '../Event/EventManager'
-import { Event } from '../Event/Event'
+import EventManager from '../../Event/EventManager'
+import { Event } from '../../Event/Event'
 
 export class BlogContextMenu {
     public availControlOptions: HierarchyControlOption[] = []

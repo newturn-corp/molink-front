@@ -5,6 +5,7 @@ import {
 import { action, computed, makeObservable, observable } from 'mobx'
 import { throttle } from 'lodash'
 import UserInfoMap from '../manager/global/User/UserInfoMap'
+import BlogInfoMap from '../manager/global/Blog/BlogInfoMap'
 
 export class PageList {
     pageSummaryList: ESPageSummary[] = []
@@ -47,8 +48,8 @@ export class PageList {
             this.listEnded = true
             return
         }
-        const userIDList = Array.from(new Set(results.map(summary => Number(summary.userId))))
-        await UserInfoMap.updateUserInfoMapByUserIDList(userIDList)
+        const blogIDList = Array.from(new Set(results.map(summary => Number(summary.blogID))))
+        await BlogInfoMap.updateByIDList(blogIDList)
         this.pageSummaryList.push(...results)
         this.from += results.length
         this.isLoading = false

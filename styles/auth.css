@@ -47,6 +47,12 @@
   margin-top: 11px;
   width: 290px;
 }
+.auth-container .description {
+  font-size: 16px;
+  line-height: 30px;
+  color: #5F6871;
+  user-select: none;
+}
 
 .auth-button {
   width: 320px;
@@ -169,4 +175,4 @@
   margin-top: 40px;
 }
 
-/*# sourceMappingURL=auth.css.idMap */
+/*# sourceMappingURL=auth.css.map */

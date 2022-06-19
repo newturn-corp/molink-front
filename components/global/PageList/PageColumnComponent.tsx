@@ -23,7 +23,7 @@ export const PageColumnComponent: React.FC<PageColumnComponentInterface> = obser
     return <div
         className={'page-column-component'}
         onClick={async () => {
-            await RoutingManager.moveTo(Page.Blog, `/${props.id}`)
+            await RoutingManager.moveTo(Page.Blog, `/blog-name/${props.id}/page-name`)
         }}
     >
         <Thumbnail

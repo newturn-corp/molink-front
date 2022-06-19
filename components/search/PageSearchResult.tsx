@@ -11,13 +11,13 @@ import { removeMaliciousHTML } from '../../utils/removeMalicousHTML'
 export const PageSearchResult: React.FC<{
     result: ESPageSearchResult
 }> = observer(({ result }) => {
-    const userInfo = UserInfoMap.idMap[result.userId]
+    const userInfo = UserInfoMap.idMap[result.id]
     return <ListItem
         alignItems="flex-start"
         className='page-search-result'
         key={`page-search-result-container-${result.id}`}
         onClick={async () => {
-            await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${result.id}`)
+            await RoutingManager.moveWithoutAddHistory(Page.Blog, `/blog-name/${result.id}/page-name`)
         }}
     >
         <div

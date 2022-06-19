@@ -10,7 +10,7 @@ import Blog from '../../../manager/global/Blog/Blog'
 export const HierarchyButtonGroup: React.FC<{
 }> = observer(() => {
     const pageHierarchy = Blog.pageHierarchy
-    if (!pageHierarchy.editable) {
+    if (!Blog.authority?.editable) {
         return <></>
     }
     return (

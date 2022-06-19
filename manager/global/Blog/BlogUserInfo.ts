@@ -1,7 +1,7 @@
-import ViewerAPI from '../../api/ViewerAPI'
 import { ESUser, FollowStatus } from '@newturn-develop/types-molink'
 import { makeAutoObservable } from 'mobx'
-import UserInfoMap from '../global/User/UserInfoMap'
+import UserInfoMap from '../User/UserInfoMap'
+import ViewerBlogAPI from '../../../api/Viewer/ViewerBlogAPI'
 
 export class BlogUserInfo {
     userId: number
@@ -9,7 +9,6 @@ export class BlogUserInfo {
     profileImageUrl: string = ''
     biography: string = ''
     followerCount: number = 0
-    followCount: number = 0
 
     constructor () {
         makeAutoObservable(this)
@@ -19,12 +18,11 @@ export class BlogUserInfo {
         const infoMap = await UserInfoMap.getUserInfoMapByUserIDList([userId])
         const userInfo = infoMap[userId] as ESUser
         this.userId = userId
-        this.nickname = userInfo.nickname
-        this.profileImageUrl = userInfo.profileImageUrl
-        this.biography = userInfo.biography
-        const dto = await ViewerAPI.getUserFollowInfo(userId)
-        this.followerCount = dto.followerCount
-        this.followCount = dto.followCount
+        // this.nickname = userInfo.blogName
+        // this.profileImageUrl = userInfo.profileImageUrl
+        // this.biography = userInfo.biography
+        // const dto = await ViewerBlogAPI.getBlogFollowerCount(this.blogID)
+        // this.followerCount = dto.count
     }
 
     reset () {
@@ -32,6 +30,6 @@ export class BlogUserInfo {
         this.profileImageUrl = ''
         this.biography = ''
         this.followerCount = 0
-        this.followCount = 0
+        // this.followCount = 0
     }
 }

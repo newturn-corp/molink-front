@@ -31,11 +31,6 @@ export const UserContainer: React.FC<{
         }
         if (UserManager.isUserAuthorized) {
             MenuManager.open([
-                new MenuItem('내 블로그',
-                    async () => {
-                        await RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.nickname}`)
-                        MenuManager.close()
-                    }),
                 new MenuItem(LanguageManager.languageMap.SupportInMenu,
                     () => {
                         UserManager.isUserMenuOpen = false

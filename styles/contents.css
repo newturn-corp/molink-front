@@ -1,27 +1,27 @@
 @charset "UTF-8";
-.page-user-info-container {
+.page-blog-info-container {
   display: flex;
   flex-direction: column;
   margin-bottom: 5px;
 }
-.page-user-info-container .page-user-info {
+.page-blog-info-container .page-blog-info {
   display: flex;
   flex-direction: row;
 }
-.page-user-info-container .page-user-info .user-info {
+.page-blog-info-container .page-blog-info .blog-info {
   display: flex;
   flex-direction: row;
   cursor: pointer;
   padding: 4px 8px 4px 0px;
   border-radius: 4px;
 }
-.page-user-info-container .page-user-info .user-info .profile {
+.page-blog-info-container .page-blog-info .blog-info .profile {
   margin-right: 10px;
 }
-.page-user-info-container .page-user-info .user-info .nickname {
+.page-blog-info-container .page-blog-info .blog-info .nickname {
   line-height: 30px;
 }
-.page-user-info-container .page-info {
+.page-blog-info-container .page-info {
   font-size: 14px;
   color: #a1a1a1;
   line-height: 38px;

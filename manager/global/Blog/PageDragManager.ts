@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import React from 'react'
-import { BlogPageHierarchy } from './BlogPageHierarchy'
+import { BlogPageHierarchy } from './PageHierarchy/BlogPageHierarchy'
 
 export class PageDragManager {
     pageHierarchy: BlogPageHierarchy

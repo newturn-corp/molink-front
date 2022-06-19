@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { SignUpCheckbox } from './SignUpCheckbox'
-import SignupManager from '../../manager/Auth/SignupManager'
+import SignupManager from '../../manager/Auth/SignUpManager'
 import { SignUpCheckListState } from '../../manager/Auth/AuthStates'
 import LanguageManager from '../../manager/global/LanguageManager'
 

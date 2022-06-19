@@ -22,7 +22,7 @@ export const PageCellComponent: React.FC<PageColumnComponentInterface> = observe
     return <div
         className={'page-cell-component'}
         onClick={async () => {
-            await RoutingManager.moveTo(Page.Blog, `/${props.id}`)
+            await RoutingManager.moveTo(Page.Blog, `/blog-name/${props.id}/page-name`)
         }}
     >
         <Thumbnail

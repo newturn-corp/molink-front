@@ -12,6 +12,7 @@ import GlobalManager from '../../../manager/global/GlobalManager'
 import { isBrowser } from 'react-device-detect'
 import StyleManager from '../../../manager/global/Style/StyleManager'
 import Blog from '../../../manager/global/Blog/Blog'
+import BlogInfoMap from '../../../manager/global/Blog/BlogInfoMap'
 
 const ScrollContainer: React.FC<{
     showScroll: boolean
@@ -111,7 +112,7 @@ export const PageListComponent: React.FC<{
                 {
                     viewType === PageListViewType.List
                         ? pageSummaryList.map((summary, index) => {
-                            const userInfo = UserInfoMap.idMap[summary.userId] as ESUser
+                            const blogInfo = BlogInfoMap.idMap[summary.blogID]
                             return <div
                                 key={`page-column-component-container-${summary.id}-${index}`}
                                 ref={index === pageSummaryList.length - 1 ? ref : undefined}
@@ -120,8 +121,8 @@ export const PageListComponent: React.FC<{
                                     key={`page-column-component-${summary.id}-${index}`}
                                     id={summary.id}
                                     title={summary.title}
-                                    userNickname={userInfo.nickname}
-                                    userProfileImageUrl={userInfo.profileImageUrl}
+                                    userNickname={blogInfo.name}
+                                    userProfileImageUrl={blogInfo.profileImageURL}
                                     lastEditedAt={getRelativeTime(new Date(summary.lastEditedAt), {
                                         showDate: true
                                     })}
@@ -133,7 +134,7 @@ export const PageListComponent: React.FC<{
                             </div>
                         })
                         : pageSummaryList.map((summary, index) => {
-                            const userInfo = UserInfoMap.idMap[summary.userId] as ESUser
+                            const blogInfo = BlogInfoMap.idMap[summary.blogID]
                             return <div
                                 key={`page-cell-component-container-${summary.id}-${index}`}
                                 ref={index === pageSummaryList.length - 1 ? ref : undefined}
@@ -142,8 +143,8 @@ export const PageListComponent: React.FC<{
                                     key={`page-cell-component-${summary.id}-${index}`}
                                     id={summary.id}
                                     title={summary.title}
-                                    userNickname={userInfo.nickname}
-                                    userProfileImageUrl={userInfo.profileImageUrl}
+                                    userNickname={blogInfo.name}
+                                    userProfileImageUrl={blogInfo.profileImageURL}
                                     lastEditedAt={getRelativeTime(new Date(summary.lastEditedAt), {
                                         showDate: true,
                                         onlyDay: true

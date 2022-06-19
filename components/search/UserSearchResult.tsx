@@ -36,6 +36,5 @@ export const UserSearchResult: React.FC<{
                 </React.Fragment>
             }
         />
-        <FollowButton userId={Number(result.id)}/>
     </ListItem>
 })

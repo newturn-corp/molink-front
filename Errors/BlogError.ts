@@ -8,3 +8,5 @@ export class BlogPageNotExist extends CustomError {
         this.blogNickname = blogNickname
     }
 }
+
+export class BlogNotExists extends CustomError {}
