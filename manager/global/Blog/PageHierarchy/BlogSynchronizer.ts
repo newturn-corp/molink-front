@@ -1,14 +1,14 @@
 import { WebsocketProvider } from 'y-websocket'
 import * as Y from 'yjs'
-import { HierarchyNotExists } from '../../../Errors/HierarchyError'
+import { HierarchyNotExists } from '../../../../Errors/HierarchyError'
 
 export class BlogSynchronizer {
     public websocketProvider: WebsocketProvider = null
 
-    constructor (userId: number, yDocument: Y.Doc) {
+    constructor (id: number, yDocument: Y.Doc) {
         this.websocketProvider = new WebsocketProvider(
             process.env.HIERARCHY_LIVE_SERVER_URL,
-            userId.toString(),
+            id.toString(),
             yDocument, {
                 connect: false
             })

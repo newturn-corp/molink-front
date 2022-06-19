@@ -34,7 +34,7 @@ export const EditorHeader: React.FC<{
     >
         <PageHierarchyList/>
         {
-            pageHierarchy.editable && <ContentControlButtonGroup/>
+            Blog.authority.editable && <ContentControlButtonGroup/>
         }
     </div>
 })

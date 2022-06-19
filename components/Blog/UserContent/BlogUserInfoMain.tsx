@@ -1,22 +1,20 @@
 import { observer } from 'mobx-react'
 import React from 'react'
 import { FollowButton } from '../../global/FollowButton'
-import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 import { SettingProfileButton } from './SettingProfileButton'
+import Blog from '../../../manager/global/Blog/Blog'
 
-export const BlogUserInfoMain: React.FC<{
-    userId: number,
-    nickname: string
-}> = observer(({ userId, nickname }) => {
+export const BlogUserInfoMain: React.FC<{}> = observer(() => {
+    const name = Blog.profile.name
     return <div
         className={'main-container'}
     >
         <div
-            className={'nickname'}
+            className={'name'}
         >
-            {nickname}
+            {name}
         </div>
-        <FollowButton userId={userId}/>
-        <SettingProfileButton userId={userId}/>
+        <FollowButton blogID={Blog.id}/>
+        <SettingProfileButton/>
     </div>
 })

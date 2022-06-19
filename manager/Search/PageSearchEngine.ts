@@ -2,6 +2,7 @@ import { ESPageSearchResult, ESUser } from '@newturn-develop/types-molink'
 import ViewerSearchAPI from '../../api/Viewer/ViewerSearchAPI'
 import { makeAutoObservable, toJS } from 'mobx'
 import UserInfoMap from '../global/User/UserInfoMap'
+import BlogInfoMap from '../global/Blog/BlogInfoMap'
 
 export class PageSearchEngine {
     searchResultCountPerPage = 7
@@ -28,7 +29,7 @@ export class PageSearchEngine {
         this.page = page
         const from = (page - 1) * this.searchResultCountPerPage
         const dto = await ViewerSearchAPI.searchPage(text, from, this.searchResultCountPerPage)
-        await UserInfoMap.updateUserInfoMapByUserIDList(dto.results.map(result => result.userId))
+        await BlogInfoMap.updateByIDList(dto.results.map(result => result.blogID))
         this.total = dto.total
         this._searchResults = dto.results
         this.isSearching = false

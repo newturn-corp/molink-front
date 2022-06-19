@@ -31,7 +31,7 @@ export const PageHierarchyList: React.FC<{
                               if (page.id === openedPage.pageId) {
                                   return
                               }
-                              await RoutingManager.moveTo(Page.Blog, `/${page.id}`)
+                              await RoutingManager.moveTo(Page.Blog, `/blog-name/${page.id}/page-name`)
                           }}
                       >
                           {page.icon + ' ' + page.title}

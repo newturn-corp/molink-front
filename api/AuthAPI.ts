@@ -1,15 +1,14 @@
 import { BaseAPI } from './baseAPI'
 import { APIError } from './APIError'
-import { SignUpDTO } from '@newturn-develop/types-molink'
-
-export enum SIGN_UP_FAIL_REASON {
-    ALREADY_EXISTS,
-    INVALID_EMAIL,
-    INVALID_PASSWORD,
-    INVALID_NICKNAME,
-    NICKNAME_ALREADY_EXISTS,
-    TOO_MANY_SIGN_UP_REQEUST
-}
+import { GetEmailStatusResponseDTO, SignUpDTO, SendSignUpAuthEmailDTO } from '@newturn-develop/types-molink'
+import {
+    BlogNameAlreadyExists,
+    EmailAlreadyExists, InvalidBlogName,
+    InvalidEmail,
+    InvalidNickname,
+    InvalidPassword, NicknameAlreadyExists,
+    TooManySignUpRequest
+} from '../Errors/AuthError'
 
 export enum SIGN_IN_FAIL_REASON {
     WRONG_EMAIL_PASSWORD,
@@ -33,22 +32,23 @@ export enum VERIFY_EMAIL_FAIL_REASON {
 class AutoAPI extends BaseAPI {
     async signUp (dto: SignUpDTO) {
         const res = await this.post('/auth/sign-up', dto)
-        if (res.status === 201) {
-            return { success: true }
-        } else if (res.status === 409001) {
-            return { success: false, reason: SIGN_UP_FAIL_REASON.ALREADY_EXISTS }
+        if (res.status === 409001) {
+            throw new EmailAlreadyExists()
         } else if (res.status === 409002) {
-            return { success: false, reason: SIGN_UP_FAIL_REASON.INVALID_EMAIL }
+            throw new InvalidEmail()
         } else if (res.status === 409003) {
-            return { success: false, reason: SIGN_UP_FAIL_REASON.INVALID_PASSWORD }
+            throw new InvalidPassword()
         } else if (res.status === 409004) {
-            return { success: false, reason: SIGN_UP_FAIL_REASON.TOO_MANY_SIGN_UP_REQEUST }
+            throw new TooManySignUpRequest()
         } else if (res.status === 409005) {
-            return { success: false, reason: SIGN_UP_FAIL_REASON.INVALID_NICKNAME }
+            throw new InvalidNickname()
         } else if (res.status === 409006) {
-            return { success: false, reason: SIGN_UP_FAIL_REASON.NICKNAME_ALREADY_EXISTS }
+            throw new NicknameAlreadyExists()
+        } else if (res.status === 409007) {
+            throw new InvalidBlogName()
+        } else if (res.status === 409008) {
+            throw new BlogNameAlreadyExists()
         }
-        return { success: true }
     }
 
     async signIn (email: string, pwd: string) {
@@ -69,10 +69,22 @@ class AutoAPI extends BaseAPI {
         }
     }
 
+    async sendSignUpAuthEmail (dto: SendSignUpAuthEmailDTO) {
+        const res = await this.post('/auth/send-sign-up-auth-email', dto)
+        if (res.status !== 201) throw new APIError(res)
+        return res.data.exist
+    }
+
     async checkPasswordChangeExist (hash: string) {
         const res = await this.get(`/auth/password-change/${hash}`)
         if (res.status !== 200) throw new APIError(res)
         return res.data.exist
+    }
+
+    async getEmailStatus (email: string): Promise<GetEmailStatusResponseDTO> {
+        const res = await this.get(`/auth/email-status/${email}`)
+        if (res.status !== 200) throw new APIError(res)
+        return res.data
     }
 
     async startPasswordChange (email: string) {

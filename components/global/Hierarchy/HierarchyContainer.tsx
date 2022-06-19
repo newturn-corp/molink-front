@@ -64,7 +64,7 @@ export const HierarchyContainer: React.FC<{
                           <HierarchyButtonGroup/>
                           <HierarchyComponent/>
                           {
-                              Blog.pageHierarchy.editable && <>
+                              Blog.authority.editable && <>
                                   <HierarchyContextMenu/>
                                   <DragIndicator/>
                               </>

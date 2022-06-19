@@ -10,7 +10,7 @@ import EditIcon from 'public/image/icon/edit.svg'
 import TrashCanIcon from 'public/image/icon/trash-can.svg'
 import LanguageManager from '../LanguageManager'
 import Blog from '../Blog/Blog'
-import { BlogPageHierarchy } from '../Blog/BlogPageHierarchy'
+import { BlogPageHierarchy } from '../Blog/PageHierarchy/BlogPageHierarchy'
 
 export abstract class HierarchyControlOption {
     name: string = ''
@@ -96,6 +96,8 @@ export class DeletePageOption extends HierarchyControlOption {
         const isOpenedDocumentIncludes = pageHierarchy.openedPage.pageId === page.id || childIDList.includes(pageHierarchy.openedPage.pageId)
         if (isOpenedDocumentIncludes) {
             pageHierarchy.closeOpenedPage()
+
+            // TODO: 여기 수정
             await RoutingManager.moveTo(Page.Blog, `/${Blog.blogUserInfo.nickname}`)
         }
 
@@ -131,6 +133,7 @@ export class DeletePageOption extends HierarchyControlOption {
 
         pageHierarchy.contextMenu.selectedPageId = null
         if (isOpenedDocumentIncludes) {
+            // TODO: 여기 수정
             await RoutingManager.moveTo(Page.Blog, `/${Blog.blogUserInfo.nickname}`)
         }
     }

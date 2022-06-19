@@ -35,29 +35,29 @@ export const SettingEditorComponent: React.FC<{
                 }}
             />
         </div>
-        <div className='switch-setting'>
-            <div className={'text-container'}>
-                <div
-                    className={'main'}
-                >
-                    {'아이콘'}
-                </div>
-                <div
-                    className={'description'}
-                >
-                    {'페이지를 나타내는 아이콘을 활성화합니다.'}
-                </div>
-            </div>
-            <Switch
-                checked={Blog.pageHierarchy.headerIconActive}
-                onChange={async (checked) => {
-                    if (checked) {
-                        await HierarchyAPI.setBlogHeaderIconActive(new SetHeaderIconActiveDTO(UserManager.userId, true))
-                    } else {
-                        await HierarchyAPI.setBlogHeaderIconActive(new SetHeaderIconActiveDTO(UserManager.userId, false))
-                    }
-                }}
-            />
-        </div>
+        {/* <div className='switch-setting'> */}
+        {/*     <div className={'text-container'}> */}
+        {/*         <div */}
+        {/*             className={'main'} */}
+        {/*         > */}
+        {/*             {'아이콘'} */}
+        {/*         </div> */}
+        {/*         <div */}
+        {/*             className={'description'} */}
+        {/*         > */}
+        {/*             {'페이지를 나타내는 아이콘을 활성화합니다.'} */}
+        {/*         </div> */}
+        {/*     </div> */}
+        {/*     <Switch */}
+        {/*         checked={Blog.pageHierarchy.headerIconActive} */}
+        {/*         onChange={async (checked) => { */}
+        {/*             if (checked) { */}
+        {/*                 await HierarchyAPI.setBlogHeaderIconActive(new SetHeaderIconActiveDTO(UserManager.blogID, true)) */}
+        {/*             } else { */}
+        {/*                 await HierarchyAPI.setBlogHeaderIconActive(new SetHeaderIconActiveDTO(UserManager.blogID, false)) */}
+        {/*             } */}
+        {/*         }} */}
+        {/*     /> */}
+        {/* </div> */}
     </>
 })

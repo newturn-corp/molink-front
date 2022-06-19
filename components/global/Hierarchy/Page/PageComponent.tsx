@@ -63,10 +63,10 @@ export const PageComponent: React.FC<{
                       marginLeft: 8,
                       width: 'inherit'
                   }}
-                  draggable={!isChangingName && currentHierarchy.editable}
+                  draggable={!isChangingName && Blog.authority.editable}
                   onClick={async (event) => {
                       if (!isOpen) {
-                          await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${pageID}`)
+                          await RoutingManager.moveWithoutAddHistory(Page.Blog, `/blog-name/${pageID}/page-name`)
                           if (isMobile) {
                               Blog.isOpen = false
                           }
@@ -97,7 +97,7 @@ export const PageComponent: React.FC<{
                       key={`page-title-${page.id}`}
                   />
                   {
-                      ((isMouseOver || isMobile) && currentHierarchy.editable) &&
+                      ((isMouseOver || isMobile) && Blog.authority.editable) &&
                       <>
                           <PageMenuButton
                               key={`page-menu-button-${pageID}`}

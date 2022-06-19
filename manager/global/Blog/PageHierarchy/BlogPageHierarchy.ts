@@ -1,21 +1,18 @@
 import { makeAutoObservable } from 'mobx'
-import { VisibilityController } from './VisibilityController'
-import { LocationController } from './LocationController'
-import { PageDragManager } from './PageDragManager'
+import { VisibilityController } from '../VisibilityController'
+import { LocationController } from '../LocationController'
+import { PageDragManager } from '../PageDragManager'
 import * as Y from 'yjs'
 import { CreatePageDTO, CreatePageInBlogDTO, HierarchyDocumentInfoInterface } from '@newturn-develop/types-molink'
-import RoutingManager, { Page } from '../RoutingManager'
+import RoutingManager, { Page } from '../../RoutingManager'
 import { BlogSynchronizer } from './BlogSynchronizer'
-import UserManager from '../User/UserManager'
-import ViewerAPI from '../../../api/ViewerAPI'
 import { BlogContextMenu } from './BlogContextMenu'
 import { BlogOpenedPage } from './BlogOpenedPage'
-import EventManager from '../Event/EventManager'
-import { Event } from '../Event/Event'
-import ContentAPI from '../../../api/ContentAPI'
-import HierarchyAPI from '../../../api/HierarchyAPI'
-import Blog from './Blog'
-import { BlogSetting } from './BlogSetting'
+import EventManager from '../../Event/EventManager'
+import { Event } from '../../Event/Event'
+import ContentAPI from '../../../../api/ContentAPI'
+import HierarchyAPI from '../../../../api/HierarchyAPI'
+import Blog from '../Blog'
 
 export enum BlogPageType {
     UserMainPage,
@@ -23,9 +20,7 @@ export enum BlogPageType {
 }
 
 export class BlogPageHierarchy {
-    id: number
     pageType: BlogPageType = BlogPageType.NormalPage
-
     public synchronizer: BlogSynchronizer
 
     public yDocument: Y.Doc
@@ -36,9 +31,6 @@ export class BlogPageHierarchy {
 
     public yTopLevelDocumentIdList: Y.Array<string>
     public topLevelDocumentIdList: string[] = []
-    public ySetting: Y.Map<any> = null
-    public headerIconActive: boolean = false
-    public setting: BlogSetting
 
     public nameChangingPageId: string | null = null
     public editable: boolean = false
@@ -50,21 +42,20 @@ export class BlogPageHierarchy {
     public contextMenu: BlogContextMenu = null
     public openedPage: BlogOpenedPage = null
 
-    constructor () {
-        this.yDocument = new Y.Doc()
-        this.yMap = this.yDocument.getMap('documentHierarchyInfoMap')
+    constructor (yDocument: Y.Doc) {
+        this.yMap = yDocument.getMap('pageInfoMap')
         this.yMap.observeDeep(async () => {
             if (this.openedPage && !this.yMap.get(this.openedPage.pageId)) {
                 this.closeOpenedPage()
+                // TODO: 여기 수정
                 await RoutingManager.moveTo(Page.Blog, `/${Blog.blogUserInfo.nickname}`)
             }
             this.map = this.yMap.toJSON()
         })
-        this.yTopLevelDocumentIdList = this.yDocument.getArray('topLevelDocumentIdList')
+        this.yTopLevelDocumentIdList = yDocument.getArray('topLevelPageIDList')
         this.yTopLevelDocumentIdList.observeDeep(() => {
             this.topLevelDocumentIdList = this.yTopLevelDocumentIdList.toArray()
         })
-        this.setting = new BlogSetting(this.yDocument.getMap('setting'))
 
         EventManager.addEventListener(Event.MoveToAnotherPage, () => {
             this.closeOpenedPage()
@@ -75,24 +66,11 @@ export class BlogPageHierarchy {
         })
     }
 
-    async load (userId: number) {
-        this.id = userId
-        this.refreshAuthority()
-        if (this.editable) {
-            this.visibilityController = new VisibilityController()
-            this.locationController = new LocationController(this.yDocument, this.yMap, this.yTopLevelDocumentIdList, this.visibilityController)
-            this.pageDragManager = new PageDragManager(this)
-            this.synchronizer = new BlogSynchronizer(this.id, this.yDocument)
-            this.contextMenu = new BlogContextMenu()
-            await this.synchronizer.connect(this.yMap)
-        } else {
-            const dto = await ViewerAPI.getDocumentsHierarchy(this.id)
-            Y.applyUpdate(this.yDocument, Uint8Array.from(dto.hierarchy))
-        }
-    }
-
-    refreshAuthority () {
-        this.editable = UserManager.isUserAuthorized && UserManager.userId === this.id
+    async loadEditingComponent () {
+        this.visibilityController = new VisibilityController()
+        this.locationController = new LocationController(this.yDocument, this.yMap, this.yTopLevelDocumentIdList, this.visibilityController)
+        this.pageDragManager = new PageDragManager(this)
+        this.contextMenu = new BlogContextMenu()
     }
 
     openPage (pageId) {
@@ -165,10 +143,10 @@ export class BlogPageHierarchy {
     }
 
     public async createPage (order:number, parentId: string | null) {
-        const { id: newPageId } = await ContentAPI.createContentV2(new CreatePageDTO(null, null, null, null))
-        await HierarchyAPI.createPageInBlog(new CreatePageInBlogDTO(newPageId, order, parentId))
+        const { id: newPageId } = await ContentAPI.createContentV2(new CreatePageDTO(null, null, null, null, Blog.id))
+        await HierarchyAPI.createPageInBlog(new CreatePageInBlogDTO(newPageId, Blog.id, undefined, undefined, order, parentId))
         this.contextMenu.selectedPageId = null
-        await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${newPageId}`)
+        await RoutingManager.moveWithoutAddHistory(Page.Blog, `/blog-name/${newPageId}/page-name`)
     }
 
     public getPageHierarchy (pageId: string) {

@@ -22,7 +22,7 @@ const BlogPageComponent: React.FC<{
     if (!router.query.info) {
         return <></>
     }
-    BlogPage.handleEnter(router.query.info as string[])
+    BlogPage.handleEnter(router.query.info as string[], pageMetaInfo)
     return <div>
         <BlogPageHead
             pageMetaInfo={pageMetaInfo}
@@ -58,21 +58,35 @@ const BlogPageComponent: React.FC<{
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const urlInfo = context.query.info as string[]
-    if (urlInfo.length === 3) {
+
+    const getMetaInfo = async (pageID: string): Promise<ESPageMetaInfo | undefined> => {
         try {
-            const [a, pageID, b] = urlInfo
             const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
                 method: 'GET'
             })
             const body = await res.json()
-            const pageMetaInfo = body.data
-            return {
-                props: {
-                    pageMetaInfo: pageMetaInfo || null
-                }
-            }
+            return body.data
         } catch (err) {
             console.log(err)
+        }
+    }
+
+    const getPageIDFromURLInfo = (urlInfo: string[]) => {
+        if (urlInfo.length === 3) {
+            const [a, pageID, b] = urlInfo
+            return pageID
+        }
+    }
+
+    const pageID = getPageIDFromURLInfo(urlInfo)
+    if (pageID) {
+        const metaInfo = await getMetaInfo(pageID)
+        if (metaInfo) {
+            return {
+                props: {
+                    pageMetaInfo: metaInfo
+                }
+            }
         }
     }
 

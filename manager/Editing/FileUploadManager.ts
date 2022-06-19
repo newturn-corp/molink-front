@@ -39,8 +39,7 @@ class UploadManager {
     getTag () {
         return {
             userId: UserManager.userId.toString(),
-            pageId: EditorPage.pageId,
-            visibility: Blog.pageHierarchy.openedPage.visibility
+            pageId: EditorPage.pageId
         }
     }
 

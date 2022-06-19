@@ -16,13 +16,13 @@ export const SiteHead: React.FC<{
           thumbnailImage: null
       }
       const {
-          nickname
-      } = EditorPage.userInfo || {
-          nickname: 'Molink'
+          name
+      } = EditorPage.blogInfo || {
+          blogName: 'Molink'
       }
       // console.log(`headText: ${headText}`)
       // console.log(`pageDescription: ${pageDescription}`)
-      // console.log(`author: ${nickname}`)
+      // console.log(`author: ${blogName}`)
 
       return <Head>
           <title>{headText}</title>
@@ -35,7 +35,7 @@ export const SiteHead: React.FC<{
                   content={thumbnailImage}
               />
           }
-          <meta property="og:article:author" content={nickname}/>
+          <meta property="og:article:author" content={name}/>
           <link rel='shortcut icon' href='/favicon.ico' />
       </Head>
   })
