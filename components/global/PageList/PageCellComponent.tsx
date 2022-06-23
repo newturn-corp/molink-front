@@ -5,6 +5,7 @@ import HeartIcon from 'public/image/icon/heart.svg'
 import { Thumbnail } from './Thumbnail'
 import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 import { PageColumnComponentUserInfo } from './PageColumnComponentUserInfo'
+import { getRelativeTime } from 'utils/getRelativeTime'
 
 export interface PageColumnComponentInterface {
     id: string
@@ -51,7 +52,9 @@ export const PageCellComponent: React.FC<PageColumnComponentInterface> = observe
             >
                 <div
                     className={'last-edited-at'}
-                >{props.lastEditedAt}</div>
+                >
+                    {props.lastEditedAt}
+                </div>
                 <div
                     style={{
                         display: 'flex',

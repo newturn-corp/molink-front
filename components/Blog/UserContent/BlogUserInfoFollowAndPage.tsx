@@ -5,7 +5,7 @@ import Blog from '../../../manager/global/Blog/Blog'
 
 export const BlogUserInfoFollowAndPage: React.FC<{
 }> = observer(() => {
-    const followerCount = Blog.blogUserInfo.followerCount
+    const followerCount = Blog.profile.followerCount
     const pageCount = Blog.blogPageList.totalPageCount
     return <div
         className={'follow-info-container'}

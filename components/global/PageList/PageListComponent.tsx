@@ -124,7 +124,8 @@ export const PageListComponent: React.FC<{
                                     userNickname={blogInfo.name}
                                     userProfileImageUrl={blogInfo.profileImageURL}
                                     lastEditedAt={getRelativeTime(new Date(summary.lastEditedAt), {
-                                        showDate: true
+                                        showDate: true,
+                                        onlyDay: true
                                     })}
                                     description={summary.description}
                                     image={summary.image}

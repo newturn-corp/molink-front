@@ -31,6 +31,10 @@ export const UserContainer: React.FC<{
         }
         if (UserManager.isUserAuthorized) {
             MenuManager.open([
+                new MenuItem('마이 페이지',
+                    async () => {
+                        await RoutingManager.moveTo(Page.User, `/${UserManager.profile.nickname}`)
+                    }),
                 new MenuItem(LanguageManager.languageMap.SupportInMenu,
                     () => {
                         UserManager.isUserMenuOpen = false
@@ -46,9 +50,9 @@ export const UserContainer: React.FC<{
                         await RoutingManager.rawMoveTo('https://www.molink.life/blog/Molink/4629add3ae7d9971bc539427afd127ad/%EC%9D%B4%EC%9A%A9%20%EC%95%BD%EA%B4%80', true)
                         MenuManager.close()
                     }),
-                new MenuItem(LanguageManager.languageMap.Setting,
+                new MenuItem(LanguageManager.languageMap.UserSetting,
                     async () => {
-                        ModalManager.open(Modal.Setting)
+                        ModalManager.open(Modal.UserSetting)
                         // await RoutingManager.moveTo(Page.SettingProfile)
                     }),
                 new MenuItem(LanguageManager.languageMap.SignOut,

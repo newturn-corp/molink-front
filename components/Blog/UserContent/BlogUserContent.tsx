@@ -9,9 +9,8 @@ import Blog from '../../../manager/global/Blog/Blog'
 
 export const BlogUserContent: React.FC<{
 }> = observer(() => {
-    const blogUserInfo = Blog.blogUserInfo
     const blogPageList = Blog.blogPageList
-    if (!blogUserInfo || !blogPageList) {
+    if (!blogPageList) {
         return <></>
     }
 

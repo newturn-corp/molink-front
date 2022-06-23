@@ -43,12 +43,13 @@ export class BlogPageHierarchy {
     public openedPage: BlogOpenedPage = null
 
     constructor (yDocument: Y.Doc) {
+        this.yDocument = yDocument
         this.yMap = yDocument.getMap('pageInfoMap')
         this.yMap.observeDeep(async () => {
             if (this.openedPage && !this.yMap.get(this.openedPage.pageId)) {
                 this.closeOpenedPage()
                 // TODO: 여기 수정
-                await RoutingManager.moveTo(Page.Blog, `/${Blog.blogUserInfo.nickname}`)
+                await RoutingManager.moveTo(Page.Blog, `/${Blog.profile.name}`)
             }
             this.map = this.yMap.toJSON()
         })

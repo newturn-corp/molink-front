@@ -5,6 +5,9 @@ import Blog from '../../../manager/global/Blog/Blog'
 
 export const HierarchyContextMenu: React.FC = observer(() => {
     const contextMenu = Blog.pageHierarchy.contextMenu
+    if (!contextMenu) {
+        return <></>
+    }
 
     return <Portal container={globalThis.document.body}>
         <div

@@ -318,17 +318,26 @@
   height: calc(100vh - 60px);
   top: 56px;
   color: transparent;
-}
-
-.hierarchy-width-controller::after {
-  position: absolute;
-  width: 8px;
-  height: calc(100vh - 60px);
-  z-index: 100;
-  cursor: ew-resize;
-  content: '';
-  color: transparent;
-  left: -4px;
+  &::after {
+    position: absolute;
+    width: 8px;
+    height: calc(100vh - 60px);
+    z-index: 100;
+    cursor: ew-resize;
+    content: '';
+    color: transparent;
+    left: -4px;
+  }
+  .bar {
+    width: 2px;
+    height: 100%;
+    transition: background-color 0.5s;
+  }
+  &:hover {
+    .bar {
+      background-color: #C9CDD2;
+    }
+  }
 }
 
 .drag-indicator {

@@ -1,9 +1,9 @@
 import Blog from '../../global/Blog/Blog'
 
-class BlogUserInfoPage {
+class BlogInfoPage {
     async handleEnter (blogID: number) {
         await Blog.load(blogID)
         await Blog.blogPageList.loadPageSummaryList()
     }
 }
-export default new BlogUserInfoPage()
+export default new BlogInfoPage()

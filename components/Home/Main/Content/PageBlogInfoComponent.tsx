@@ -8,7 +8,7 @@ import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 export const PageBlogInfoComponent: React.FC<{
 }> = observer(() => {
     const pageInfo = EditorPage.pageInfo
-    const blogInfo = EditorPage.blogInfo
+    const blogInfo = EditorPage.userInfo
     return <div
         className={'page-blog-info-container'}
     >
@@ -17,21 +17,21 @@ export const PageBlogInfoComponent: React.FC<{
         >
             <div
                 className={'blog-info'}
-                onClick={async () => {
-                    await RoutingManager.moveTo(Page.Blog, `/${blogInfo.name}`)
-                }}
+                // onClick={async () => {
+                //     await RoutingManager.moveTo(Page.Blog, `/${blogInfo.name}`)
+                // }}
             >
                 <Avatar
                     className='profile'
                     size={30}
                     src={blogInfo.profileImageUrl}
                 >
-                    {blogInfo.profileImageUrl ? null : blogInfo.name}
+                    {blogInfo.profileImageUrl ? null : blogInfo.nickname}
                 </Avatar>
                 <div
                     className={'nickname'}
                 >
-                    {blogInfo.name}
+                    {blogInfo.nickname}
                 </div>
             </div>
             <div

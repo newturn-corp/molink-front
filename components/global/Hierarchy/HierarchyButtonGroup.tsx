@@ -3,9 +3,11 @@ import { observer } from 'mobx-react'
 import { HierarchyButton } from './HierarchyButton'
 import NewPageIcon from 'public/image/icon/new-page.svg'
 import SearchIcon from 'public/image/icon/search.svg'
+import SettingIcon from 'public/image/icon/setting-outline.svg'
 import LanguageManager from '../../../manager/global/LanguageManager'
 import { isMobile } from 'react-device-detect'
 import Blog from '../../../manager/global/Blog/Blog'
+import ModalManager, { Modal } from '../../../manager/global/ModalManager'
 
 export const HierarchyButtonGroup: React.FC<{
 }> = observer(() => {
@@ -35,6 +37,14 @@ export const HierarchyButtonGroup: React.FC<{
                         if (isMobile) {
                             Blog.isOpen = false
                         }
+                    }}
+                />
+                <HierarchyButton
+                    icon={<SettingIcon/>}
+                    text={'설정'}
+                    onClick={async (event) => {
+                        event.stopPropagation()
+                        ModalManager.open(Modal.BlogSetting)
                     }}
                 />
             </div>

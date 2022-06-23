@@ -6,31 +6,31 @@ import Blog from '../../../manager/global/Blog/Blog'
 
 export const HierarchyName: React.FC<{
 }> = observer(() => {
-    if (!Blog.blogUserInfo) {
+    if (!Blog.profile) {
         return <></>
     }
     const {
-        nickname,
-        profileImageUrl
-    } = Blog.blogUserInfo
+        name,
+        profileImageURL
+    } = Blog.profile
 
     return (
         <>
             <div
                 className={'hierarchy-name'}
                 onClick={async () => {
-                    await RoutingManager.moveTo(Page.Blog, `/${nickname}`)
+                    await RoutingManager.moveTo(Page.Blog, `/${name}`)
                 }}
             >
                 <Avatar
                     className='profile-image'
                     sizes='32'
-                    src={profileImageUrl}
+                    src={profileImageURL}
                 />
                 <div
                     className='text'
                 >
-                    {`${nickname}의 공간`}
+                    {name }
                 </div>
             </div>
         </>

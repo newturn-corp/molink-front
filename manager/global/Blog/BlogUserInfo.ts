@@ -19,7 +19,7 @@ export class BlogUserInfo {
         const userInfo = infoMap[userId] as ESUser
         this.userId = userId
         // this.nickname = userInfo.blogName
-        // this.profileImageUrl = userInfo.profileImageUrl
+        // this.profileImageURL = userInfo.profileImageURL
         // this.biography = userInfo.biography
         // const dto = await ViewerBlogAPI.getBlogFollowerCount(this.blogID)
         // this.followerCount = dto.count

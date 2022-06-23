@@ -1,0 +1,103 @@
+.user-page-content {
+  position: fixed;
+  overflow-y: scroll;
+}
+.user-page-content .user-info {
+  display: flex;
+  flex-direction: row;
+  margin: 50px auto 0;
+  width: 800px;
+  padding-bottom: 30px;
+}
+.user-page-content .user-info .profile-container {
+  width: 120px;
+  height: 120px;
+  margin-right: 80px;
+}
+.user-page-content .user-info .profile-container .profile-image {
+  width: 120px;
+  height: 120px;
+}
+.user-page-content .user-info .text-container {
+  display: flex;
+  flex-direction: column;
+}
+.user-page-content .user-info .text-container .main-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.user-page-content .user-info .text-container .main-container .name {
+  line-height: 30px;
+  font-size: 24px;
+  margin-right: 20px;
+}
+.user-page-content .user-info .text-container .main-container .profile-setting-button {
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 7px 9px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+  border: 1px solid transparent;
+  margin: auto 0;
+  background-color: transparent;
+  color: inherit;
+  border: 1px solid #bebebe;
+}
+.user-page-content .user-info .text-container .follow-info-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.user-page-content .user-info .text-container .follow-info-container .info {
+  margin-right: 20px;
+  display: flex;
+  flex-direction: row;
+}
+.user-page-content .user-info .text-container .follow-info-container .info .name {
+  margin-right: 5px;
+}
+.user-page-content .user-info .text-container .follow-info-container .info .text {
+  min-width: 50px;
+  font-weight: 600;
+}
+.user-page-content .user-page-tabs-container {
+  width: 800px;
+  margin: 0 auto;
+}
+.user-page-content .user-blog-container {
+  margin-top: 20px;
+}
+.user-page-content .user-blog-container .user-blog-component {
+  display: flex;
+  flex-direction: row;
+  margin: 10px 0px;
+}
+.user-page-content .user-blog-container .user-blog-component .text-container {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  margin: auto 0;
+  margin-left: 100px;
+}
+.user-page-content .user-blog-container .user-blog-component .text-container .blog-name {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.user-page-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.user-page-content::-webkit-scrollbar-track {
+  background: #e7e7e7;
+}
+
+.user-page-content::-webkit-scrollbar-thumb {
+  background: rgb(209, 209, 209);
+  border-radius: 5px;
+}
+
+/*# sourceMappingURL=users.css.map */

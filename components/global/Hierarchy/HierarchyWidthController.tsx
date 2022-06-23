@@ -29,6 +29,9 @@ export const HierarchyWidthController: React.FC<{
                   }}
                   draggable='true'
               >
+                  <div
+                      className={'bar'}
+                  />
               </div>
           </>
 

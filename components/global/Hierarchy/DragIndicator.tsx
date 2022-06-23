@@ -10,9 +10,16 @@ export const DragIndicator: React.FC<{
       const tooltipRef = useRef<HTMLDivElement>(null)
       const indicatorRef = useRef<HTMLDivElement>(null)
       useEffect(() => {
+          if (!pageDragManager || !indicatorRef) {
+              return
+          }
           pageDragManager.indicatorTooltip = document.getElementsByClassName('drag-indicator-tooltip')[0] as HTMLElement
           pageDragManager.dragIndicator = indicatorRef.current
-      }, [pageHierarchy])
+      }, [pageDragManager, indicatorRef])
+
+      if (!pageDragManager) {
+          return <></>
+      }
 
       return (
           <Tooltip

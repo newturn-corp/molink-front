@@ -26,7 +26,7 @@ export const CommentInputContainer: React.FC<{
             <Avatar
                 className={'profile'}
                 size={parentCommentId ? 32 : 40}
-                src={UserManager.profile.profileImageUrl || '/image/global/header/login-button-profile.png'}
+                src={UserManager.profile.profileImageURL || '/image/global/header/login-button-profile.png'}
             />
         </div>
         <div

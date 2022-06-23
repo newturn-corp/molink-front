@@ -29,11 +29,13 @@ class Blog {
         this.yDocument = new Y.Doc()
         makeAutoObservable(this)
 
-        // Setting EventListener
+        // UserSetting EventListener
         EventManager.addEventListener(Event.UserAuthorization, async ({ result }: any) => {
             if (result) {
                 this.reset()
-                await this.load(UserManager.userId)
+                if (UserManager.blog?.blogs[0]) {
+                    await this.load(UserManager.blog.blogs[0])
+                }
             }
         }, 1)
     }
@@ -44,6 +46,7 @@ class Blog {
         } else {
             this.reset()
         }
+        console.log(`id: ${id}`)
         this.id = id
         this.authority = await ViewerAPI.getBlogAuthority(id)
         if (!this.authority.viewable) {
@@ -57,13 +60,13 @@ class Blog {
         this.profile = new BlogProfile(this.yDocument.getMap('profile'))
 
         await Promise.all([
-            this.blogUserInfo.load(id),
+            // this.blogUserInfo.load(id),
             this.profile.load(id)
         ])
 
         if (this.authority.editable) {
             this.synchronizer = new BlogSynchronizer(this.id, this.yDocument)
-            await this.synchronizer.connect(this.setting.ySetting)
+            await this.synchronizer.connect(this.profile.yProfile)
             await this.pageHierarchy.loadEditingComponent()
         } else {
             const dto = await ViewerAPI.getBlog(this.id)
@@ -81,10 +84,6 @@ class Blog {
         if (this.pageHierarchy) {
             this.pageHierarchy.reset()
             this.pageHierarchy = null
-        }
-        if (this.blogUserInfo) {
-            this.blogUserInfo.reset()
-            this.blogUserInfo = null
         }
         if (this.blogPageList) {
             this.blogPageList.clear()

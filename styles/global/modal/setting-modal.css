@@ -1,13 +1,20 @@
 .setting-modal {
   width: 1200px;
 }
+.setting-modal .setting-header {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  background-color: #3A3C3F;
+  font-size: 14px;
+  color: white;
+  padding: 1px 10px;
+}
 .setting-modal .setting-category {
   background-color: #FAFAFB;
   width: 200px;
   height: 600px;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
   padding-top: 15px;
+  border-bottom-left-radius: 4px;
 }
 .setting-modal .setting-category .category-group-name {
   color: #a1a1a1;
@@ -69,6 +76,10 @@
   font-weight: 600;
   margin-bottom: 4px;
 }
+.setting-modal .setting-body .blog-name {
+  width: 600px;
+  margin-bottom: 25px;
+}
 .setting-modal .setting-body .profile-image {
   position: relative;
   margin: 0px;
@@ -100,8 +111,9 @@
   width: 600px;
   margin-bottom: 25px;
 }
-.setting-modal .setting-body .biography .ant-input-textarea {
+.setting-modal .setting-body .biography .ant-input {
   height: 30px;
+  padding: 4px 8px;
 }
 .setting-modal .setting-body .biography .button-container {
   display: flex;
