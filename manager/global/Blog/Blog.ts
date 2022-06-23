@@ -1,17 +1,17 @@
-import { BlogPageList } from './BlogPageList'
-import { BlogUserInfo } from './BlogUserInfo'
-import { BlogPageHierarchy } from './PageHierarchy/BlogPageHierarchy'
 import { makeAutoObservable } from 'mobx'
 import UserManager from '../User/UserManager'
 import EventManager from '../Event/EventManager'
 import { Event } from '../Event/Event'
-import { BlogProfile } from './BlogProfile'
 import * as Y from 'yjs'
 import { BlogSetting } from './BlogSetting'
 import ViewerAPI from '../../../api/ViewerAPI'
 import { BlogAuthority } from '@newturn-develop/types-molink'
 import { BlogNotExists } from '../../../Errors/BlogError'
 import { BlogSynchronizer } from './PageHierarchy/BlogSynchronizer'
+import { BlogProfile } from './BlogProfile'
+import { BlogPageList } from './BlogPageList'
+import { BlogUserInfo } from './BlogUserInfo'
+import { BlogPageHierarchy } from './PageHierarchy/BlogPageHierarchy'
 
 class Blog {
     id: number = null
@@ -46,7 +46,6 @@ class Blog {
         } else {
             this.reset()
         }
-        console.log(`id: ${id}`)
         this.id = id
         this.authority = await ViewerAPI.getBlogAuthority(id)
         if (!this.authority.viewable) {
