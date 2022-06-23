@@ -1,7 +1,8 @@
 import { makeAutoObservable } from 'mobx'
 
 export enum Modal {
-    Setting
+    UserSetting,
+    BlogSetting
 }
 
 class ModalManager {
@@ -13,7 +14,8 @@ class ModalManager {
 
     constructor () {
         this.map = new Map<Modal, boolean>()
-        this.map.set(Modal.Setting, false)
+        this.map.set(Modal.UserSetting, false)
+        this.map.set(Modal.BlogSetting, false)
         makeAutoObservable(this)
     }
 

@@ -13,6 +13,10 @@ export const FollowButton: React.FC<{
         return <></>
     }
 
+    if (UserManager.blog.blogs.includes(blogID)) {
+        return <></>
+    }
+
     const followStatus = UserManager.follow.checkUserFollowStatus(blogID)
     const handleFollowButtonClick = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation()

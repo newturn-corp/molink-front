@@ -11,6 +11,7 @@ import { UserNotification } from './UserNotification'
 import { UserFollow } from './UserFollow'
 import { UserETC } from './UserETC'
 import { UserSetting } from './UserSetting'
+import { UserBlog } from './UserBlog'
 
 class UserManager {
     isUserAuthorized: boolean = false
@@ -27,6 +28,7 @@ class UserManager {
     notification: UserNotification
     follow: UserFollow
     etc: UserETC
+    blog: UserBlog
 
     constructor () {
         makeAutoObservable(this, {
@@ -40,6 +42,7 @@ class UserManager {
         this.notification = new UserNotification()
         this.follow = new UserFollow()
         this.etc = new UserETC()
+        this.blog = new UserBlog()
 
         EventManager.addEventListener(Event.SignOut, () => {
             this.reset()
@@ -62,6 +65,7 @@ class UserManager {
             this.setting.sync(this.yjsDocument.getMap<any>('setting'), this.yjsDocument)
             this.limit.sync(this.yjsDocument.getMap<any>('limit'))
             this.etc.sync(this.yjsDocument.getMap<any>('etc'))
+            this.blog.sync(this.yjsDocument.getArray<number>('blog'))
             await this.notification.load()
             await this.follow.load()
 
@@ -74,19 +78,47 @@ class UserManager {
             return new Promise<void>((resolve, reject) => {
                 let isResolved = false
 
-                const listener = async () => {
+                const checkResolved = {
+                    blog: false,
+                    profile: false
+                }
+                const resolver = async () => {
+                    if (isResolved) {
+                        return
+                    }
                     isResolved = true
-                    this.profile.yProfile.unobserveDeep(listener)
                     this.isUserAuthorized = true
                     this.isLoading = false
                     await EventManager.issueEvent(Event.UserAuthorization, { result: true })
                     resolve()
                 }
-                this.profile.yProfile.observeDeep(listener)
+                const blogListener = async () => {
+                    console.log('blogListener')
+                    checkResolved.blog = true
+                    this.blog.yBlog.unobserveDeep(blogListener)
+                    if (Object.values(checkResolved).filter(v => !v).length === 0) {
+                        await resolver()
+                    }
+                }
+                const profileListener = async () => {
+                    console.log('profileListener')
+                    checkResolved.profile = true
+                    this.profile.yProfile.unobserveDeep(profileListener)
+                    if (Object.values(checkResolved).filter(v => !v).length === 0) {
+                        await resolver()
+                    }
+                }
+                this.profile.yProfile.observeDeep(profileListener)
+                this.blog.yBlog.observeDeep(blogListener)
                 this.websocketProvider.connect()
                 setTimeout(() => {
                     if (!isResolved) {
-                        this.profile.yProfile.unobserveDeep(listener)
+                        if (!checkResolved.profile) {
+                            this.profile.yProfile.unobserveDeep(profileListener)
+                        }
+                        if (!checkResolved.blog) {
+                            this.blog.yBlog.unobserveDeep(blogListener)
+                        }
                         reject(new UserNotExists())
                     }
                 }, 10000)

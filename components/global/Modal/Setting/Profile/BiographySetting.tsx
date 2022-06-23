@@ -7,12 +7,15 @@ import { Button } from '../../../Button'
 const { TextArea } = Input
 
 export const BiographySetting: React.FC<{
-}> = observer(() => {
+    settingName: string,
+    currentBiography: string
+    onUpdate: (biography: string) => {}
+}> = observer((props) => {
     const [biography, setBiography] = useState('')
 
     useEffect(() => {
-        setBiography(UserManager.profile.biography)
-    }, [UserManager.profile.biography])
+        setBiography(props.currentBiography)
+    }, [props.currentBiography])
 
     return <div className='biography'>
         <p className='setting-name'>
@@ -27,7 +30,7 @@ export const BiographySetting: React.FC<{
             value={biography}
         />
         {
-            UserManager.profile.biography !== biography && <div
+            props.currentBiography !== biography && <div
                 className={'button-container'}
             >
                 <Button
@@ -40,7 +43,7 @@ export const BiographySetting: React.FC<{
                     }}
                     fontSize={14}
                     onClick={async () => {
-                        await UserManager.profile.updateUserBiography(biography)
+                        props.onUpdate(biography)
                     }}
                 />
                 <Button
@@ -53,7 +56,7 @@ export const BiographySetting: React.FC<{
                     }}
                     fontSize={14}
                     onClick={async () => {
-                        setBiography(UserManager.profile.biography)
+                        setBiography(props.currentBiography)
                     }}
                 />
             </div>

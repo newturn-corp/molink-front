@@ -10,7 +10,7 @@ import FeedbackManager, { NOTIFICATION_TYPE } from '../FeedbackManager'
 
 export class UserProfile {
     yProfile: Y.Map<any> = null
-    profileImageUrl: string = ''
+    profileImageURL: string = ''
     biography: string = ''
     nickname: string = ''
 
@@ -23,7 +23,7 @@ export class UserProfile {
     sync (yProfile: Y.Map<any>) {
         this.yProfile = yProfile
         this.yProfile.observeDeep(() => {
-            this.profileImageUrl = this.yProfile.get('profileImageUrl')
+            this.profileImageURL = this.yProfile.get('profileImageUrl')
             this.biography = this.yProfile.get('biography')
             this.nickname = this.yProfile.get('nickname')
         })
@@ -31,7 +31,7 @@ export class UserProfile {
 
     reset () {
         this.yProfile = null
-        this.profileImageUrl = ''
+        this.profileImageURL = ''
         this.biography = ''
         this.nickname = ''
     }
@@ -40,7 +40,7 @@ export class UserProfile {
         if (!UserManager.isUserAuthorized) {
             return '/image/global/header/login-button-profile.png'
         }
-        return UserManager.profile.profileImageUrl || `data:image/png;base64,${
+        return UserManager.profile.profileImageURL || `data:image/png;base64,${
             new Identicon(
                 crypto.createHash('sha512')
                     .update(UserManager.profile.nickname)
@@ -64,9 +64,9 @@ export class UserProfile {
         const file = event.target.files[0]
         try {
             reader.onloadend = async () => {
-                this.profileImageUrl = reader.result as string
+                this.profileImageURL = reader.result as string
                 await UserAPI.updateUserProfileImage(new UpdateUserProfileImageDTO(file))
-                FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '프로필 이미지가 수정되었습니다.', '', 3)
+                FeedbackManager.showFeedback(NOTIFICATION_TYPE.SUCCESS, '사용자 프로필 이미지가 수정되었습니다.', '', 3)
             }
             reader.readAsDataURL(file)
         } catch (e) {

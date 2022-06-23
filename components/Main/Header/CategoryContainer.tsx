@@ -13,7 +13,7 @@ export const CategoryContainer: React.FC<{
                 const isActiveCategory = index === MainPage.currentCategoryIndex
                 return <div
                     key={`main-page-category-${index}`}
-                    className={'category' + (isActiveCategory ? ' active-category' : '')}
+                    className={'category' + (isActiveCategory ? ' active-currentCategory' : '')}
                     onClick={() => {
                         if (!isActiveCategory) {
                             if (pageList.category === LanguageManager.languageMap.Follow && !UserManager.isUserAuthorized) {

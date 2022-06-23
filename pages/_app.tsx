@@ -34,20 +34,20 @@ import '../styles/search.css'
 import '../styles/setting.css'
 import '../styles/blog.css'
 import '../styles/main.css'
+import '../styles/users.css'
 
 import { AppProps } from 'next/dist/shared/lib/router/router'
 import { configure } from 'mobx'
 import LanguageManager from '../manager/global/LanguageManager'
 import GlobalManager from '../manager/global/GlobalManager'
 import { DialogComponent } from '../components/Dialog'
-import { SiteHead } from '../components/global/SiteHead'
 import { MenuComponent } from '../components/global/MenuComponent'
 import { LinkModalComponent } from '../components/global/Modal/LinkModalComponent'
 import { ShouldLoginNoticeModal } from '../components/global/Modal/ShouldLoginNoticeModal'
 import { EmojiPickerComponent } from '../components/global/EmojiPickerComponent'
 import { TutorialModalComponent } from '../components/global/Modal/TutorialModalComponent'
-import ImagePreLoader from '../manager/global/ImagePreLoader'
-import { SettingModalComponent } from '../components/global/Modal/SettingModalComponent'
+import { UserSettingModalComponent } from '../components/global/Modal/UserSetting/UserSettingModalComponent'
+import { BlogSettingModalComponent } from '../components/global/Modal/BlogSetting/BlogSettingModalComponent'
 
 configure(
     {
@@ -87,7 +87,8 @@ const App = ({ Component, pageProps }: AppProps) => {
                 <LinkModalComponent/>
                 <ShouldLoginNoticeModal/>
                 <TutorialModalComponent/>
-                <SettingModalComponent/>
+                <UserSettingModalComponent/>
+                <BlogSettingModalComponent/>
                 <EmojiPickerComponent/>
             </SafeHydrate>
             <Component {...pageProps} />

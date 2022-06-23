@@ -82,7 +82,7 @@ class BlogPage {
         }
         const pageTitle = metaInfo.title
         const blogID = metaInfo.blogID
-
+        const userID = metaInfo.userId
         const blogInfoMap = await BlogInfoMap.getBlogInfoMapByBlogIDList([metaInfo.blogID])
         const blogInfo = blogInfoMap[blogID]
         if (!blogInfo) {
@@ -90,16 +90,16 @@ class BlogPage {
         }
 
         const blogName = blogInfo.name
-        return { pageTitle, blogName, blogID }
+        return { pageTitle, blogName, blogID, userID }
     }
 
     private async _handleEnterStandardPageURL (metaInfo: ESPageMetaInfo | null, pageId: string, blogName: string, pageTitle: string) {
-        const { pageTitle: lastPageTitle, blogName: lastBlogName, blogID } = await this._getPageURLInfo(pageId, metaInfo)
-        if (lastPageTitle !== blogName || pageTitle === undefined || lastBlogName !== decodeURIComponent(pageTitle)) {
+        const { pageTitle: lastPageTitle, blogName: lastBlogName, blogID, userID } = await this._getPageURLInfo(pageId, metaInfo)
+        if (lastBlogName !== blogName || pageTitle === undefined || lastPageTitle !== decodeURIComponent(pageTitle)) {
             await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${lastBlogName}/${pageId}/${encodeURIComponent(lastPageTitle)}`)
             return
         }
-        await EditorPage.handleEnter(pageId, blogID)
+        await EditorPage.handleEnter(pageId, blogID, userID)
         this.pageType = BlogPageType.NormalPage
     }
 

@@ -1,8 +1,7 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
-import UserManager from '../../../manager/global/User/UserManager'
 import Blog from '../../../manager/global/Blog/Blog'
+import ModalManager, { Modal } from '../../../manager/global/ModalManager'
 
 export const SettingProfileButton: React.FC<{
 }> = observer(() => {
@@ -12,7 +11,7 @@ export const SettingProfileButton: React.FC<{
 
     return <div
         className='profile-setting-button no-select'
-        onClick={() => RoutingManager.moveTo(Page.SettingProfile)}
+        onClick={() => ModalManager.open(Modal.BlogSetting)}
     >
         {'프로필 편집'}
     </div>

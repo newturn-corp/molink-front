@@ -35,12 +35,18 @@ class MainPage {
         }
         this.pageLists[this.currentCategoryIndex].loadPageSummaryList()
         if (UserManager.isUserAuthorized) {
-            await Blog.load(UserManager.userId)
+            if (UserManager.blog.blogs[0]) {
+                console.log(UserManager.blog.blogs[0])
+                await Blog.load(UserManager.blog.blogs[0])
+            }
         } else {
             Blog.reset()
             EventManager.addDisposableEventListener(Event.UserAuthorization, async ({ result }: any) => {
                 if (result) {
-                    await Blog.load(UserManager.userId)
+                    if (UserManager.blog.blogs[0]) {
+                        console.log(UserManager.blog.blogs[0])
+                        await Blog.load(UserManager.blog.blogs[0])
+                    }
                 }
             }, 1)
         }

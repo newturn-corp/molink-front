@@ -1,0 +1,102 @@
+.user-page-content {
+  position: fixed;
+  overflow-y: scroll;
+  .user-info {
+    display: flex;
+    flex-direction: row;
+    margin: 50px auto 0;
+    width: 800px;
+    padding-bottom: 30px;
+    .profile-container {
+      width: 120px;
+      height: 120px;
+      margin-right: 80px;
+      .profile-image {
+        width: 120px;
+        height: 120px;
+      }
+    }
+    .text-container {
+      display: flex;
+      flex-direction: column;
+      .main-container {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+        .name {
+          line-height: 30px;
+          font-size: 24px;
+          margin-right: 20px;
+        }
+        .profile-setting-button {
+          color: #ffffff;
+          font-weight: 600;
+          cursor: pointer;
+
+          padding: 7px 9px;
+          border-radius: 5px;
+          font-size: 0.8rem;
+          line-height: 0.8rem;
+          border: 1px solid transparent;
+
+          margin: auto 0;
+
+          background-color: transparent;
+          color: inherit;
+          border: 1px solid #bebebe;
+        }
+      }
+      .follow-info-container {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+        .info {
+          margin-right: 20px;
+          display: flex;
+          flex-direction: row;
+          .name {
+            margin-right: 5px;
+          }
+          .text {
+            min-width: 50px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+  .user-page-tabs-container {
+    width: 800px;
+    margin: 0 auto;
+  }
+  .user-blog-container {
+    margin-top: 20px;
+    .user-blog-component {
+      display: flex;
+      flex-direction: row;
+      margin: 10px 0px;
+      .text-container {
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        margin: auto 0;
+        margin-left: 100px;
+        .blog-name {
+          font-size: 20px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+
+}
+.user-page-content::-webkit-scrollbar {
+  width: 10px;
+}
+.user-page-content::-webkit-scrollbar-track {
+  background: #e7e7e7;
+}
+.user-page-content::-webkit-scrollbar-thumb {
+  background: rgb(209, 209, 209);
+  border-radius: 5px;
+}

@@ -98,7 +98,7 @@ export class DeletePageOption extends HierarchyControlOption {
             pageHierarchy.closeOpenedPage()
 
             // TODO: 여기 수정
-            await RoutingManager.moveTo(Page.Blog, `/${Blog.blogUserInfo.nickname}`)
+            await RoutingManager.moveTo(Page.Blog, `/${Blog.profile.name}`)
         }
 
         // 페이지 먼저 삭제
@@ -134,7 +134,7 @@ export class DeletePageOption extends HierarchyControlOption {
         pageHierarchy.contextMenu.selectedPageId = null
         if (isOpenedDocumentIncludes) {
             // TODO: 여기 수정
-            await RoutingManager.moveTo(Page.Blog, `/${Blog.blogUserInfo.nickname}`)
+            await RoutingManager.moveTo(Page.Blog, `/${Blog.profile.name}`)
         }
     }
 }

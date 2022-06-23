@@ -6,6 +6,7 @@ import CommentIcon from 'public/image/icon/comment.svg'
 import HeartIcon from 'public/image/icon/heart.svg'
 import { Thumbnail } from './Thumbnail'
 import { PageColumnComponentUserInfo } from './PageColumnComponentUserInfo'
+import { getRelativeTime } from '../../../utils/getRelativeTime'
 
 export interface PageColumnComponentInterface {
     id: string
@@ -38,7 +39,9 @@ export const PageColumnComponent: React.FC<PageColumnComponentInterface> = obser
             >{props.title}</div>
             <div
                 className={'last-edited-at'}
-            >{props.lastEditedAt}</div>
+            >
+                {props.lastEditedAt}
+            </div>
             <PageColumnComponentUserInfo
                 userProfileImageUrl={props.userProfileImageUrl}
                 userNickname={props.userNickname}

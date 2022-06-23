@@ -122,18 +122,13 @@ class ViewerAPI extends BaseAPI {
         return res.data
     }
 
-    async getUserFollowInfo (userID: number): Promise<GetFollowInfoResponseDTO> {
-        const res = await this.get(`/viewer/users/${userID}/follow-info`)
-        return res.data
-    }
-
     async getUserFollowStatus (userID: number): Promise<GetFollowStatusResponseDTO> {
         const res = await this.get(`/viewer/users/${userID}/follow-status`)
         return res.data
     }
 
     async getPageMetaInfo (pageID: string): Promise<ESPageMetaInfo> {
-        const res = await this.get(`/viewer/pages/${pageID}/editor-page-info`)
+        const res = await this.get(`/viewer/pages/${pageID}/meta-info`)
         if (res.status === 404001) {
             throw new PageNotExists()
         } else if (res.status === 403001) {
