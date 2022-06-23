@@ -30,6 +30,9 @@ export const PageTagList: React.FC<{
                             editor.tagList.remove(index)
                         }
                     }}
+                    style={{
+                        userSelect: 'none'
+                    }}
                 >
                     {tag}
                 </Tag>)
@@ -67,7 +70,11 @@ export const PageTagList: React.FC<{
                                     } else {
                                         FeedbackManager.showFeedback(NOTIFICATION_TYPE.ERROR, '이미 태그가 존재합니다.', '', 3)
                                     }
+                                    setIsTagFocus(false)
                                     setNewTag('')
+                                    setTimeout(() => {
+                                        setIsTagFocus(true)
+                                    }, 0)
                                 }
                             }
                         }}

@@ -159,8 +159,6 @@
   top: calc(50% - 8px);
   display: flex;
   flex: 1 1 auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
   border: 0px;
   font-style: normal;
   font-weight: 600;
@@ -323,7 +321,7 @@
   transition: background-color 0.5s;
 }
 .hierarchy-width-controller:hover .bar {
-  background-color: #C9CDD2;
+  background-color: #E8EBED;
 }
 
 .drag-indicator {

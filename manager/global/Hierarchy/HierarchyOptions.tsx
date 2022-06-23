@@ -41,21 +41,28 @@ export class CreateNewPageOption extends HierarchyControlOption {
     }
 
     async handleOnClick () {
-        const order = this.getOrder(Blog.pageHierarchy)
+        const pageHierarchy = Blog.pageHierarchy
+        const order = this.getOrder(pageHierarchy)
         const parentId = this.pageID
-        await Blog.pageHierarchy.createPage(order, parentId)
+        await pageHierarchy.pageCreator.create(order, parentId)
+        pageHierarchy.contextMenu.selectedPageId = null
     }
 }
 
 export class ChangePageNameOption extends HierarchyControlOption {
-    constructor (pageID: string | null) {
+    pageRef: React.MutableRefObject<HTMLDivElement>
+
+    constructor (pageID: string | null, pageRef: React.MutableRefObject<HTMLDivElement>) {
         super(pageID)
+        this.pageRef = pageRef
         this.name = LanguageManager.languageMap.ChangePageName
         this.icon = <EditIcon/>
     }
 
     handleOnClick () {
-        Blog.pageHierarchy.nameChangingPageId = this.pageID
+        const pageHierarchy = Blog.pageHierarchy
+        pageHierarchy.pageTitleEditor.startTitleEditing(this.pageID, this.pageRef)
+        pageHierarchy.contextMenu.selectedPageId = null
     }
 }
 

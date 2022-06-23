@@ -28,7 +28,8 @@ export const TutorialEditingShortcutDescription: React.FC<{
             src={'https://knowlink-development-content-image.s3.ap-northeast-2.amazonaws.com/shortcut.PNG'}
             style={{
                 marginTop: 5,
-                marginBottom: 5
+                marginBottom: 5,
+                width: '100%'
             }}
         />
     </div>

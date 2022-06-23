@@ -3,15 +3,15 @@ import { observer } from 'mobx-react'
 import ListItem from '@material-ui/core/ListItem'
 import { PageTitle } from './PageTitle'
 import { PageIcon } from './PageIcon'
-import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
+import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 import { Collapse, List } from '@material-ui/core'
 import { PageChildrenOpenButton } from './PageChildrenOpenButton'
 import { PageAddChildButton } from './PageAddChildButton'
 import { PageMenuButton } from './PageMenuButton'
-import UserManager from '../../../../manager/global/User/UserManager'
+import UserManager from '../../../manager/global/User/UserManager'
 import { isMobile } from 'react-device-detect'
-import StyleManager from '../../../../manager/global/Style/StyleManager'
-import Blog from '../../../../manager/global/Blog/Blog'
+import StyleManager from '../../../manager/global/Style/StyleManager'
+import Blog from '../../../manager/global/Blog/Blog'
 
 let ghost
 export const PageComponent: React.FC<{
@@ -79,7 +79,7 @@ export const PageComponent: React.FC<{
                   onContextMenu={(event) => {
                       event.preventDefault()
                       event.stopPropagation()
-                      currentHierarchy.contextMenu.open(page.id)
+                      currentHierarchy.contextMenu.open(page.id, divRef)
                   }}
                   onMouseOver={() => setIsMouseOver(true)}
                   onMouseLeave={() => setIsMouseOver(false)}

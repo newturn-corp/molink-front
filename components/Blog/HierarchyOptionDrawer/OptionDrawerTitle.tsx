@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import Blog from '../../../../manager/global/Blog/Blog'
+import Blog from '../../../manager/global/Blog/Blog'
 
 export interface OptionDrawerTitlePropsInterface {
     title: string

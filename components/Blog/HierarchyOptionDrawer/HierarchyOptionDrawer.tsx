@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { isBrowser } from 'react-device-detect'
 import { OptionDrawerTitle } from './OptionDrawerTitle'
 import { OptionButtonGroup } from './OptionButtonGroup'
-import Blog from '../../../../manager/global/Blog/Blog'
+import Blog from '../../../manager/global/Blog/Blog'
 
 export const HierarchyOptionDrawer: React.FC<{
 }> = observer(() => {

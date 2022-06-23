@@ -1,9 +1,10 @@
 import React, { useRef } from 'react'
 import { observer } from 'mobx-react'
 import { HierarchyDocumentInfoInterface } from '@newturn-develop/types-molink'
-import UserManager from '../../../../manager/global/User/UserManager'
-import StyleManager from '../../../../manager/global/Style/StyleManager'
-import Blog from '../../../../manager/global/Blog/Blog'
+import UserManager from '../../../manager/global/User/UserManager'
+import StyleManager from '../../../manager/global/Style/StyleManager'
+import Blog from '../../../manager/global/Blog/Blog'
+import { isBrowser } from 'react-device-detect'
 
 const getTitle = (page: HierarchyDocumentInfoInterface, isChangingName: boolean) => {
     const childrenLength = page.children.length
@@ -44,7 +45,11 @@ export const PageTitle: React.FC<{
 
       return <div
           className={'page-title'}
-          style={StyleManager.hierarchyStyle.pageTitleStyle}
+          style={{
+              fontSize: isBrowser ? 15 : 16,
+              overflow: isChangingName ? undefined : 'hidden',
+              textOverflow: isChangingName ? undefined : 'ellipsis'
+          }}
       >
           <div
               contentEditable={isChangingName}

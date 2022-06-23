@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import List from '@material-ui/core/List'
 import { PageComponent } from './Page/PageComponent'
-import Blog from '../../../manager/global/Blog/Blog'
+import Blog from '../../manager/global/Blog/Blog'
 
 export const HierarchyComponent: React.FC<{
   }> = observer(() => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { ArrowDropDown, ArrowRight } from '@material-ui/icons'
-import Blog from '../../../../manager/global/Blog/Blog'
+import Blog from '../../../manager/global/Blog/Blog'
 
 export const PageChildrenOpenButton: React.FC<{
     pageID: string

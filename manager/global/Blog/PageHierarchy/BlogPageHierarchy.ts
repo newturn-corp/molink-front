@@ -13,6 +13,8 @@ import { Event } from '../../Event/Event'
 import ContentAPI from '../../../../api/ContentAPI'
 import HierarchyAPI from '../../../../api/HierarchyAPI'
 import Blog from '../Blog'
+import { BlogPageCreator } from './BlogPageCreator'
+import { BlogPageTitleEditor } from './BlogPageTitleEditor'
 
 export enum BlogPageType {
     UserMainPage,
@@ -39,6 +41,8 @@ export class BlogPageHierarchy {
     public visibilityController: VisibilityController
     public locationController: LocationController
     public pageDragManager: PageDragManager
+    public pageCreator: BlogPageCreator
+    public pageTitleEditor: BlogPageTitleEditor = null
     public contextMenu: BlogContextMenu = null
     public openedPage: BlogOpenedPage = null
 
@@ -72,6 +76,8 @@ export class BlogPageHierarchy {
         this.locationController = new LocationController(this.yDocument, this.yMap, this.yTopLevelDocumentIdList, this.visibilityController)
         this.pageDragManager = new PageDragManager(this)
         this.contextMenu = new BlogContextMenu()
+        this.pageCreator = new BlogPageCreator()
+        this.pageTitleEditor = new BlogPageTitleEditor(this.yMap)
     }
 
     openPage (pageId) {

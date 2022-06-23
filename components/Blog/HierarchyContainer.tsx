@@ -2,17 +2,19 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import Drawer from '@material-ui/core/Drawer'
 import { makeStyles } from '@material-ui/core/styles'
-import { HierarchyContextMenu } from './HierarchyContextMenu'
-import { DragIndicator } from './DragIndicator'
+import { HierarchyContextMenu } from './Overlay/HierarchyContextMenu'
+import { DragIndicator } from './Overlay/DragIndicator'
 import { HierarchyComponent } from './HierarchyComponent'
 import { HierarchyName } from './HierarchyName'
 import { HierarchyOnOffButton } from './HierarchyOnOffButton'
-import UserManager from '../../../manager/global/User/UserManager'
-import StyleManager from '../../../manager/global/Style/StyleManager'
-import { HierarchyButtonGroup } from './HierarchyButtonGroup'
+import UserManager from '../../manager/global/User/UserManager'
+import StyleManager from '../../manager/global/Style/StyleManager'
+import { HierarchyButtonGroup } from './ControlButton/HierarchyButtonGroup'
 import { BrowserView, isBrowser, MobileView } from 'react-device-detect'
 import { HierarchyOptionDrawer } from './HierarchyOptionDrawer/HierarchyOptionDrawer'
-import Blog from '../../../manager/global/Blog/Blog'
+import Blog from '../../manager/global/Blog/Blog'
+import { PageTitleEditorComponent } from './Overlay/PageTitleEditorComponent'
+import { BlogOverlayComponent } from './Overlay/BlogOverlayComponent'
 
 export const HierarchyContainer: React.FC<{
   }> = observer(() => {
@@ -47,7 +49,7 @@ export const HierarchyContainer: React.FC<{
                   onContextMenu={(event) => {
                       event.preventDefault()
                       event.stopPropagation()
-                      Blog.pageHierarchy.contextMenu.open(null)
+                      Blog.pageHierarchy.contextMenu.open(null, null)
                   }}
                   open={isBrowser ? undefined : Blog.isOpen}
                   onClose={isBrowser
@@ -71,8 +73,8 @@ export const HierarchyContainer: React.FC<{
                           }
                       </>
                   }
-
               </Drawer>
+              <BlogOverlayComponent/>
           </>
       )
   })

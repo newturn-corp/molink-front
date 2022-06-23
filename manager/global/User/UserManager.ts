@@ -93,7 +93,6 @@ class UserManager {
                     resolve()
                 }
                 const blogListener = async () => {
-                    console.log('blogListener')
                     checkResolved.blog = true
                     this.blog.yBlog.unobserveDeep(blogListener)
                     if (Object.values(checkResolved).filter(v => !v).length === 0) {
@@ -101,7 +100,6 @@ class UserManager {
                     }
                 }
                 const profileListener = async () => {
-                    console.log('profileListener')
                     checkResolved.profile = true
                     this.profile.yProfile.unobserveDeep(profileListener)
                     if (Object.values(checkResolved).filter(v => !v).length === 0) {

@@ -8,6 +8,7 @@ import LanguageManager from '../../../manager/global/LanguageManager'
 import { isMobile } from 'react-device-detect'
 import Blog from '../../../manager/global/Blog/Blog'
 import ModalManager, { Modal } from '../../../manager/global/ModalManager'
+import { Tooltip } from 'antd'
 
 export const HierarchyButtonGroup: React.FC<{
 }> = observer(() => {
@@ -33,7 +34,7 @@ export const HierarchyButtonGroup: React.FC<{
                     text={LanguageManager.languageMap.CreateNewPage}
                     onClick={async (event) => {
                         event.stopPropagation()
-                        await pageHierarchy.createPage(pageHierarchy.topLevelDocumentIdList.length, null)
+                        await pageHierarchy.pageCreator.create(pageHierarchy.topLevelDocumentIdList.length, null)
                         if (isMobile) {
                             Blog.isOpen = false
                         }

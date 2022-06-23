@@ -142,8 +142,6 @@ class BlogPage {
             } else if (err instanceof BlogPageNotExist) {
                 await DialogManager.openDialog(LanguageManager.languageMap.PageNotExistsNoticeMessage, LanguageManager.languageMap.MoveToMainPageNoticeMessage, [LanguageManager.languageMap.Accept])
                 await RoutingManager.moveTo(Page.Blog, `/${err.blogNickname}`)
-            } else {
-                throw err
             }
         }
     }

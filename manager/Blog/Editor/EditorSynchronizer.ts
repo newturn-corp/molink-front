@@ -11,7 +11,7 @@ import { withHistory } from 'slate-history'
 import { Cursor } from 'slate-yjs/dist/main/model'
 import { HierarchyNotExists } from '../../../Errors/HierarchyError'
 import { makeAutoObservable } from 'mobx'
-import { CursorData } from '../../../components/Blog/EditorPage/Editor/Overlay/Cursor/RemoteSelection'
+import { CursorData } from '../../../components/BlogPage/EditorPage/Editor/Overlay/Cursor/RemoteSelection'
 
 export class EditorSynchronizer {
     websocketProvider: WebsocketProvider = null

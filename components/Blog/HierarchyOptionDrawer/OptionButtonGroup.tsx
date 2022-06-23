@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { OptionButton } from './OptionButton'
-import Blog from '../../../../manager/global/Blog/Blog'
+import Blog from '../../../manager/global/Blog/Blog'
 
 export const OptionButtonGroup: React.FC<{}> = observer(() => {
     return (

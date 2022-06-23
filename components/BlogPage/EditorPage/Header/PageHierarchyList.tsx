@@ -12,7 +12,7 @@ export const PageHierarchyList: React.FC<{
       return <div
           className={'page-hierarchy-list'}
           // style={{
-          //     top: EditorPage.editor.toolbar.isOpen ? 81 : 25
+          //     top: EditorPage.editor.toolbar.isEditing ? 81 : 25
           // }}
       >
           {

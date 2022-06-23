@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { observer } from 'mobx-react'
 import { isBrowser } from 'react-device-detect'
 import MenuDotsIcon from 'public/image/icon/menu-dots.svg'
-import Blog from '../../../../manager/global/Blog/Blog'
+import Blog from '../../../manager/global/Blog/Blog'
 
 export const PageMenuButton: React.FC<{
     pageID: string
@@ -12,10 +12,10 @@ export const PageMenuButton: React.FC<{
         event.preventDefault()
         event.stopPropagation()
         if (isBrowser) {
-            Blog.pageHierarchy.contextMenu.open(pageID)
+            Blog.pageHierarchy.contextMenu.open(pageID, null)
         } else {
             pageHierarchy.contextMenu.selectedPageId = pageID
-            pageHierarchy.contextMenu.open(pageID)
+            pageHierarchy.contextMenu.open(pageID, null)
         }
     }, [])
 

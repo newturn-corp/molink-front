@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { Add } from '@material-ui/icons'
 import { isBrowser, isMobile } from 'react-device-detect'
-import Blog from '../../../../manager/global/Blog/Blog'
+import Blog from '../../../manager/global/Blog/Blog'
 
 export const PageAddChildButton: React.FC<{
     pageID: string
@@ -11,7 +11,7 @@ export const PageAddChildButton: React.FC<{
 
     const handleClick = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation()
-        pageHierarchy.createPage(document.children.length, pageID)
+        await pageHierarchy.pageCreator.create(document.children.length, pageID)
         if (isMobile) {
             Blog.isOpen = false
         }
