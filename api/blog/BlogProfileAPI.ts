@@ -10,7 +10,6 @@ class BlogProfileAPI extends BaseAPI {
     }
 
     async setBlogProfileImage (dto: SetBlogProfileImageDTO): Promise<void> {
-        console.log('setBlogProfileImage')
         const res = await this.putFormData('/hierarchy/profile/profile-image', dto)
         if (res.status !== 200) throw new APIError(res)
         return res.data

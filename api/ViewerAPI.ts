@@ -33,8 +33,8 @@ class ViewerAPI extends BaseAPI {
         return res.data as GetUserIDDTO
     }
 
-    async getDocumentAuthority (documentId: string) {
-        const res = await this.get(`/viewer/documents/${documentId}/authority`)
+    async getPageAuthority (documentId: string) {
+        const res = await this.get(`/viewer/pages/${documentId}/authority`)
         if (res.status === 404001) {
             throw new DocumentNotExists()
         } else if (res.status === 404002) {

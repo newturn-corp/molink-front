@@ -4,6 +4,8 @@ import { ESUser } from '@newturn-develop/types-molink'
 import { UserInfoProfileComponent } from './UserInfoProfileComponent'
 import { UserInfoMainComponent } from './UserInfoMainComponent'
 import UserPage from '../../manager/User/UserPage'
+import ModalManager, { Modal } from '../../manager/global/ModalManager'
+import UserManager from '../../manager/global/User/UserManager'
 
 export const UserInfoComponent: React.FC<{}> = observer((props) => {
     const biography = UserPage.info.biography

@@ -7,6 +7,7 @@ import { FollowButton } from '../global/FollowButton'
 export const UserBlogComponent: React.FC<{
     blog: ESBlog
 }> = observer((props) => {
+    const biography = !props.blog.biography || props.blog.biography === '' ? '소개가 없습니다.' : props.blog.biography
     return <div
         className={'user-blog-component'}
     >
@@ -25,7 +26,7 @@ export const UserBlogComponent: React.FC<{
             <div
                 className={'biography'}
             >
-                {props.blog.biography}
+                {biography}
             </div>
         </div>
         <div

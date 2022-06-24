@@ -43,6 +43,7 @@ export const SignUpUserAndBlogInfoStepComponent = observer(() => {
             text={LanguageManager.languageMap.AuthSignUpUserSetting}
         />
         <AuthInput
+            autoFocus
             inputRef={nicknameRef}
             type={'text'}
             label={LanguageManager.languageMap.AuthSignUpNicknameLabel}
@@ -98,7 +99,7 @@ export const SignUpUserAndBlogInfoStepComponent = observer(() => {
                 SignUpManager.step = SignUpStep.Password
             }}
             onNext={async () => {
-                await SignUpManager.handleNextAtPasswordStep()
+                await SignUpManager.signup()
             }}
         />
     </>

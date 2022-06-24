@@ -108,14 +108,6 @@ class SignUpManager {
         this.step = SignUpStep.UserAndBlogInfo
     }
 
-    handleNextAtUserSettingStep () {
-        if (!AuthValidator.validateNickname(this.blogName)) {
-            this.nicknameState = NicknameState.NicknameConditionNotSatisfied
-            return
-        }
-        this.nicknameState = NicknameState.Default
-    }
-
     async handleRandomGenerationNicknameButtonDown () {
         const { nickname } = await AuthAPI.getRandomNickname()
         this.nicknameState = NicknameState.Default

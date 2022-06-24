@@ -100,7 +100,7 @@ export class DeletePageOption extends HierarchyControlOption {
         }
         UserManager.limit.handlePageDeletion(page)
 
-        const isOpenedDocumentIncludes = pageHierarchy.openedPage.pageId === page.id || childIDList.includes(pageHierarchy.openedPage.pageId)
+        const isOpenedDocumentIncludes = pageHierarchy.openedPage && (pageHierarchy.openedPage.pageId === page.id || childIDList.includes(pageHierarchy.openedPage.pageId))
         if (isOpenedDocumentIncludes) {
             pageHierarchy.closeOpenedPage()
 

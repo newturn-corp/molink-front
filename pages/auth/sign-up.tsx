@@ -13,6 +13,7 @@ import LanguageManager from '../../manager/global/LanguageManager'
 import { SignUpTermsStepComponent } from '../../components/auth/SignUp/SignUpTermsStepComponent'
 import { SignUpPasswordStepComponent } from '../../components/auth/SignUp/SignUpPasswordStepComponent'
 import { SignUpUserAndBlogInfoStepComponent } from '../../components/auth/SignUp/SignUpUserAndBlogInfoStepComponent'
+import { SignUpEmailSentStepComponent } from '../../components/auth/SignUp/SignUpEmailSentStepComponent'
 
 const { Step } = Steps
 
@@ -79,6 +80,8 @@ const getStepComponentBySignUpStep = (step: SignUpStep) => {
         return <SignUpPasswordStepComponent/>
     case SignUpStep.UserAndBlogInfo:
         return <SignUpUserAndBlogInfoStepComponent/>
+    case SignUpStep.EmailSent:
+        return <SignUpEmailSentStepComponent/>
     default:
         return <></>
     }

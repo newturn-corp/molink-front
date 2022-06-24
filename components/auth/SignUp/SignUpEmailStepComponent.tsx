@@ -28,6 +28,7 @@ export const SignUpEmailStepComponent = observer(() => {
     return <>
         <AuthTitle text={'계정 만들기'}/>
         <AuthInput
+            autoFocus
             name={Math.random().toString()}
             type={'text'}
             label={LanguageManager.languageMap.Email}
@@ -41,6 +42,11 @@ export const SignUpEmailStepComponent = observer(() => {
             }}
             onFocus={(e) => {
                 SignUpManager.emailState = EmailState.Default
+            }}
+            onKeyDown={async (event) => {
+                if (event.key === 'Enter') {
+                    await SignUpManager.handleNextAtEmailStep()
+                }
             }}
             defaultValue={SignUpManager.email}
             helperText={getEmailHelperText(SignUpManager.emailState)}

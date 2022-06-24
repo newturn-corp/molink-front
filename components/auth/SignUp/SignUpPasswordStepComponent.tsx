@@ -25,6 +25,7 @@ export const SignUpPasswordStepComponent = observer(() => {
     return <>
         <AuthTitle text={'비밀번호 설정'}/>
         <AuthInput
+            autoFocus
             name={Math.random().toString()}
             type={'password'}
             label={LanguageManager.languageMap.Password}
