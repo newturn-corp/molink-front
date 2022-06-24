@@ -16,7 +16,7 @@ export const UserSearchResult: React.FC<{
         alignItems="flex-start"
         className='user-search-result'
         onClick={() => {
-            RoutingManager.moveTo(Page.Blog, `/${result.nickname}`)
+            RoutingManager.moveTo(Page.User, `/${result.nickname}`)
         }}
     >
         <ListItemAvatar>

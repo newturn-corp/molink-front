@@ -14,8 +14,10 @@ export const PublishButton: React.FC<{
         lastPublishedAt
     } = EditorPage.pageInfo
     const availTimeDiff = getTimeDiff(moment().toDate(), moment(lastPublishedAt || new Date()).add(3, 'days').toDate())
+    const tooltipVisible = isPublishable || moment(lastPublishedAt).isAfter(moment().subtract(10, 'seconds')) ? false : undefined
+
     return <Tooltip
-        visible={isPublishable ? false : undefined}
+        visible={tooltipVisible}
         title={`${availTimeDiff} 후에 발행할 수 있습니다.`}
         placement={'bottom'}
     >
@@ -31,7 +33,7 @@ export const PublishButton: React.FC<{
             }}
         >
             <PublishRoundedIcon/>
-            발행하기
+            {'발행하기'}
         </div>
     </Tooltip>
 })

@@ -19,6 +19,9 @@ class EditorPage {
     }
 
     async handleEnter (pageId: string, pageBlogID: number, pageUserID: number) {
+        console.log('editor page handle enter 호출')
+        console.log(pageId)
+        console.log(pageBlogID)
         this.pageId = pageId
         await Blog.load(pageBlogID)
         Blog.pageHierarchy.openPage(pageId)

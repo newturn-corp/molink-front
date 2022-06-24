@@ -12,6 +12,9 @@ import { BlogProfile } from './BlogProfile'
 import { BlogPageList } from './BlogPageList'
 import { BlogUserInfo } from './BlogUserInfo'
 import { BlogPageHierarchy } from './PageHierarchy/BlogPageHierarchy'
+import DialogManager from '../DialogManager'
+import LanguageManager from '../LanguageManager'
+import RoutingManager, { Page } from '../RoutingManager'
 
 class Blog {
     id: number = null
@@ -48,8 +51,11 @@ class Blog {
         }
         this.id = id
         this.authority = await ViewerAPI.getBlogAuthority(id)
+        console.log(this.authority)
         if (!this.authority.viewable) {
             this.reset()
+            await DialogManager.openDialog('블로그가 존재하지 않습니다.', '메인 페이지로 이동합니다.', [LanguageManager.languageMap.Accept])
+            await RoutingManager.moveTo(Page.Index)
             throw new BlogNotExists()
         }
         this.pageHierarchy = new BlogPageHierarchy(this.yDocument)

@@ -19,9 +19,9 @@ const BlogPageComponent: React.FC<{
     pageMetaInfo: ESPageMetaInfo | null
 }> = ({ pageMetaInfo }) => {
     const router = useRouter()
-    if (!router.query.info) {
-        return <></>
-    }
+    // if (!router.query.info) {
+    //     return <></>
+    // }
     BlogPage.handleEnter(router.query.info as string[], pageMetaInfo)
     return <div>
         <BlogPageHead
