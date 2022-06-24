@@ -3,10 +3,10 @@ import { TextCategory } from '../../Types/slate/CustomElement'
 import { isMac } from 'lib0/environment'
 import EditorPage from '../../manager/Blog/Editor/EditorPage'
 
-const checkInsideIndependentBlock = (editor: Editor) => {
+const checkInsideCodeBlock = (editor: Editor) => {
     const ancestors = Node.ancestors(editor, editor.selection.anchor.path)
     for (const [ancestor] of ancestors) {
-        if (Element.isElement(ancestor) && ['code', 'callout'].includes(ancestor.type)) {
+        if (Element.isElement(ancestor) && ancestor.type === 'code') {
             return true
         }
     }
@@ -17,7 +17,7 @@ export const handleEnterInCode = (event, editor) => {
     if (isMac && EditorPage.editor.isComposing) {
         return false
     }
-    if (!checkInsideIndependentBlock(editor)) {
+    if (!checkInsideCodeBlock(editor)) {
         return false
     }
     event.preventDefault()
@@ -26,7 +26,7 @@ export const handleEnterInCode = (event, editor) => {
 }
 
 export const handleTabInCode = (event, editor) => {
-    if (editor.children[editor.selection.anchor.path[0]].type !== 'code') {
+    if (!checkInsideCodeBlock(editor)) {
         return false
     }
     event.preventDefault()
@@ -35,7 +35,7 @@ export const handleTabInCode = (event, editor) => {
 }
 
 export const handleShiftEnterInCode = (event, editor) => {
-    if (!checkInsideIndependentBlock(editor)) {
+    if (!checkInsideCodeBlock(editor)) {
         return false
     }
     event.preventDefault()

@@ -39,7 +39,8 @@ export const SlateCalloutElement: React.FC<{
             className='callout'
             onMouseOver={() => setIsMouseOver(true)}
             onMouseLeave={() => setIsMouseOver(false)}
-            {...attributes}>
+            {...attributes}
+        >
             <div
                 ref={iconRef}
                 className={'emoji'}
@@ -57,7 +58,11 @@ export const SlateCalloutElement: React.FC<{
             >
                 {element.icon}
             </div>
-            {children}
+            <div
+                className={'callout-content'}
+            >
+                {children}
+            </div>
             {
                 editable && <MediaMenuButton
                     isShow={isMouseOver}
