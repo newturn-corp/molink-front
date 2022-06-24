@@ -65,6 +65,11 @@ export const SignUpPasswordStepComponent = observer(() => {
             onPaste={(e) => {
                 e.preventDefault()
             }}
+            onKeyDown={async (event) => {
+                if (event.key === 'Enter') {
+                    await SignUpManager.handleNextAtPasswordStep()
+                }
+            }}
             defaultValue={SignUpManager.pwdCheck}
             style={{
                 marginBottom: 32

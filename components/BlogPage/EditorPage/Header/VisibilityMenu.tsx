@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { observer } from 'mobx-react'
 import { Portal } from '../../../utils/Portal'
 import { VisibilityMenuItem } from './VisibilityMenuItem'
@@ -9,16 +9,30 @@ import Private from 'public/image/editor/toolbar/visibility/private.svg'
 import StyleManager from '../../../../manager/global/Style/StyleManager'
 import LanguageManager from '../../../../manager/global/LanguageManager'
 import Blog from '../../../../manager/global/Blog/Blog'
+import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 
 export const VisibilityMenu: React.FC<{}
 > = observer(() => {
     const pageHierarchy = Blog.pageHierarchy
     const visibilityController = pageHierarchy.visibilityController
 
+    const getVisibilityMenuStyle = () => {
+        const style: CSSProperties = {
+            right: 20
+        }
+        const toolbar = EditorPage.editor.toolbar
+        if (!EditorPage.editor.toolbar.enable) {
+            style.top = 105
+        } else {
+            style.top = toolbar.isOpen ? 195 : 142
+        }
+        return style
+    }
+
     return <Portal>
         <div
             className={'visibility-menu'}
-            style={StyleManager.contentStyle.visibilityMenu}
+            style={getVisibilityMenuStyle()}
         >
             <div
                 className={'title-container'}
