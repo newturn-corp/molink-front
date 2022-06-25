@@ -10,7 +10,6 @@ import { BlogNotExists } from '../../../Errors/BlogError'
 import { BlogSynchronizer } from './PageHierarchy/BlogSynchronizer'
 import { BlogProfile } from './BlogProfile'
 import { BlogPageList } from './BlogPageList'
-import { BlogUserInfo } from './BlogUserInfo'
 import { BlogPageHierarchy } from './PageHierarchy/BlogPageHierarchy'
 import DialogManager from '../DialogManager'
 import LanguageManager from '../LanguageManager'
@@ -25,13 +24,10 @@ class Blog {
     profile: BlogProfile = null
     setting: BlogSetting = null
     blogPageList: BlogPageList = null
-    blogUserInfo: BlogUserInfo = null
     pageHierarchy: BlogPageHierarchy = null
 
     constructor () {
-        this.yDocument = new Y.Doc()
         makeAutoObservable(this)
-
         // UserSetting EventListener
         EventManager.addEventListener(Event.UserAuthorization, async ({ result }: any) => {
             if (result) {
@@ -49,9 +45,9 @@ class Blog {
         } else {
             this.reset()
         }
+        this.yDocument = new Y.Doc()
         this.id = id
         this.authority = await ViewerAPI.getBlogAuthority(id)
-        console.log(this.authority)
         if (!this.authority.viewable) {
             this.reset()
             await DialogManager.openDialog('블로그가 존재하지 않습니다.', '메인 페이지로 이동합니다.', [LanguageManager.languageMap.Accept])
@@ -59,11 +55,9 @@ class Blog {
             throw new BlogNotExists()
         }
         this.pageHierarchy = new BlogPageHierarchy(this.yDocument)
-        // this.blogUserInfo = new BlogUserInfo()
         this.blogPageList = new BlogPageList(this.id)
         this.setting = new BlogSetting(this.yDocument.getMap('setting'))
         this.profile = new BlogProfile(this.yDocument.getMap('profile'))
-
         await Promise.all([
             // this.blogUserInfo.load(id),
             this.profile.load(id)
@@ -98,6 +92,7 @@ class Blog {
             this.profile.reset()
             this.profile = null
         }
+        this.yDocument = null
     }
 
     getBlogWidth () {

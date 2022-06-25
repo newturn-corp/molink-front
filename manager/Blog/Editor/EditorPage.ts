@@ -5,6 +5,8 @@ import { EditorPageBlogInfo } from './View/EditorPageBlogInfo'
 import { EditorPageInfo } from './EditorPageInfo'
 import Blog from '../../global/Blog/Blog'
 import { EditorPageUserInfo } from './View/EditorPageUserInfo'
+import EventManager from '../../global/Event/EventManager'
+import { Event } from '../../global/Event/Event'
 
 class EditorPage {
     pageId: string
@@ -19,9 +21,6 @@ class EditorPage {
     }
 
     async handleEnter (pageId: string, pageBlogID: number, pageUserID: number) {
-        console.log('editor page handle enter 호출')
-        console.log(pageId)
-        console.log(pageBlogID)
         this.pageId = pageId
         await Blog.load(pageBlogID)
         Blog.pageHierarchy.openPage(pageId)

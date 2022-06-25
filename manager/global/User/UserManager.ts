@@ -122,7 +122,6 @@ class UserManager {
                 }, 10000)
             })
         } catch (err) {
-            console.log(err)
             await EventManager.issueEvent(Event.UserAuthorization, { result: false })
             this.isUserAuthorized = false
             this.isLoading = false
