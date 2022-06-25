@@ -17,6 +17,12 @@ AuthSignUpGenerateRandomNicknameButtonText	무작위 생성
 AuthSignUpText	계정 생성
 AuthSignInText	로그인
 
+UserMenuUserSettingText	사용자 설정
+UserMenuTutorialText	사용 방법
+UserMenuMyPageText	마이 페이지
+UserMenuSignOutText	로그아웃
+UserMenuPrivacyAndTermsText	개인 정보 처리방침 & 약관
+UserMenuSupportText	문의 & 의견 보내기
 
 Image	이미지
 File	파일
