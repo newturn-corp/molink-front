@@ -6,6 +6,8 @@ import { Thumbnail } from './Thumbnail'
 import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 import { PageColumnComponentUserInfo } from './PageColumnComponentUserInfo'
 import { getRelativeTime } from 'utils/getRelativeTime'
+import ViewerAPI from '../../../api/ViewerAPI'
+import BlogInfoMap from '../../../manager/global/Blog/BlogInfoMap'
 
 export interface PageColumnComponentInterface {
     id: string

@@ -1,4 +1,4 @@
-import Router from 'next/router'
+import Router, { NextRouter } from 'next/router'
 import GlobalManager from './GlobalManager'
 import { Event } from './Event/Event'
 import EventManager from './Event/EventManager'
@@ -31,6 +31,7 @@ export enum Page {
 }
 
 class RoutingManager {
+    router: NextRouter
     history: RoutingHistory[] = []
 
     async moveTo (page: Page, extra: string = '', options = undefined) {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { Header } from '../../components/global/Header/Header'
 import { BrowserView, MobileView } from 'react-device-detect'
@@ -14,6 +14,7 @@ import { BlogPageHead } from '../../components/BlogPage/EditorPage/BlogPageHead'
 import { ESPageMetaInfo } from '@newturn-develop/types-molink'
 import { SERVER_BASE_URL } from '../../infra/constants'
 import { GetServerSideProps } from 'next'
+import RoutingManager from '../../manager/global/RoutingManager'
 
 const BlogPageComponent: React.FC<{
     pageMetaInfo: ESPageMetaInfo | null
@@ -58,11 +59,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const getMetaInfo = async (pageID: string): Promise<ESPageMetaInfo | undefined> => {
         try {
-            console.log('get meta info ssr ' + new Date() + ' ' + new Date().getMilliseconds())
             const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
                 method: 'GET'
             })
-            console.log('get meta info end ' + new Date() + ' ' + new Date().getMilliseconds())
             const body = await res.json()
             return body.data
         } catch (err) {

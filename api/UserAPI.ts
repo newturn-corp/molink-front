@@ -42,7 +42,6 @@ class UserAPI extends BaseAPI {
     }
 
     async updateUserProfileImage (dto: UpdateUserProfileImageDTO): Promise<void> {
-        console.log('updateUserProfileImage')
         const res = await this.putFormData('/users/profile-image', dto)
         if (res.status !== 200) throw new APIError(res)
     }
