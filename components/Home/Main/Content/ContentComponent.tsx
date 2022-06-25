@@ -17,7 +17,6 @@ import Blog from '../../../../manager/global/Blog/Blog'
 export const ContentComponent: React.FC<{
 }> = observer(() => {
     const editor = EditorPage.editor
-    console.log('isLoaded ' + editor.isLoaded)
     return <>
         <div className={'contents'}
             style={StyleManager.contentStyle.main}

@@ -5,9 +5,13 @@ import UserManager from '../../manager/global/User/UserManager'
 import StyleManager from '../../manager/global/Style/StyleManager'
 import EventManager from '../../manager/global/Event/EventManager'
 import { Event } from '../../manager/global/Event/Event'
+import Blog from '../../manager/global/Blog/Blog'
 
 export const HierarchyWidthController: React.FC<{
   }> = observer(() => {
+      if (!Blog.pageHierarchy) {
+          return <></>
+      }
       return (
           <>
               <div

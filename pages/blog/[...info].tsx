@@ -61,9 +61,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const getMetaInfo = async (pageID: string): Promise<ESPageMetaInfo | undefined> => {
         try {
+            console.log('get meta info ssr ' + new Date() + ' ' + new Date().getMilliseconds())
             const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
                 method: 'GET'
             })
+            console.log('get meta info end ' + new Date() + ' ' + new Date().getMilliseconds())
             const body = await res.json()
             return body.data
         } catch (err) {

@@ -30,13 +30,12 @@ class MainPage {
     async handleEnter () {
         await UserManager.load()
         this.currentCategoryIndex = 0
-        for (const pageList of this.pageLists) {
-            pageList.clear()
-        }
+        // for (const pageList of this.pageLists) {
+        //     pageList.clear()
+        // }
         this.pageLists[this.currentCategoryIndex].loadPageSummaryList()
         if (UserManager.isUserAuthorized) {
             if (UserManager.blog.blogs[0]) {
-                console.log(UserManager.blog.blogs[0])
                 await Blog.load(UserManager.blog.blogs[0])
             }
         } else {

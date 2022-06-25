@@ -23,7 +23,9 @@ export const PageCellComponent: React.FC<PageColumnComponentInterface> = observe
     return <div
         className={'page-cell-component'}
         onClick={async () => {
+            console.log('page-cell-component-click ' + new Date())
             await RoutingManager.moveTo(Page.Blog, `/blog-name/${props.id}/page-name`)
+            console.log('page-cell-component-click ' + new Date())
         }}
     >
         <Thumbnail

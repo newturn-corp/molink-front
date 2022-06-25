@@ -3,6 +3,7 @@ import GlobalManager from './GlobalManager'
 import { Event } from './Event/Event'
 import EventManager from './Event/EventManager'
 import { RoutingHistory } from './Routing/RoutingHistory'
+import { TransitionalOptions } from 'axios'
 
 export enum Page {
     Index = '/',
@@ -32,15 +33,17 @@ export enum Page {
 class RoutingManager {
     history: RoutingHistory[] = []
 
-    async moveTo (page: Page, extra: string = '') {
+    async moveTo (page: Page, extra: string = '', options = undefined) {
         await EventManager.issueEvent(Event.MoveToAnotherPage, { page })
-        await Router.push(page + extra)
+        console.log('Event Manager End ' + new Date() + ' ' + new Date().getMilliseconds())
+        await Router.push(page + extra, undefined, options)
+        console.log('Router Push End ' + new Date() + ' ' + new Date().getMilliseconds())
         this.history.push(new RoutingHistory(page, extra))
     }
 
-    async moveWithoutAddHistory (page: Page, extra: string = '') {
+    async moveWithoutAddHistory (page: Page, extra: string = '', options = undefined) {
         await EventManager.issueEvent(Event.MoveToAnotherPage, { page })
-        await Router.replace(page + extra)
+        await Router.replace(page + extra, undefined, options)
     }
 
     async rawMoveTo (url: string, shouldOpenNewWindow: boolean = false) {
