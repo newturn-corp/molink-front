@@ -1,5 +1,5 @@
 .sign-up-check-list {
-  margin: 32px 0px;
+  margin-bottom: 48px;
   .divider {
     width: 100%;
     height: 1px;
@@ -66,5 +66,18 @@
   .sign-up-check-list-helper-text {
     color: red;
     font-size: 13px;
+  }
+}
+.email-sent-step-content {
+  display: flex;
+  flex-direction: column;
+  .email-icon {
+    margin: 0px auto;
+    margin-bottom: 48px;
+  }
+  .description {
+    text-align: center;
+    margin-bottom: 48px;
+    line-height: 24px;
   }
 }

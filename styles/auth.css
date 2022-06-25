@@ -73,6 +73,26 @@
   margin: auto auto;
   user-select: none;
 }
+.auth-button.primary-stroke {
+  background: #FFFFFF;
+  color: #2E639A;
+}
+.auth-button.primary-stroke:hover {
+  background: #E8EBED;
+}
+.auth-button.primary-stroke:active {
+  background: #D6E6F6;
+}
+.auth-button.gray-stroke {
+  background: #FFFFFF;
+  color: #3A3C3F;
+}
+.auth-button.gray-stroke:hover {
+  background: #f3f3f3;
+}
+.auth-button.gray-stroke:active {
+  background: #f6f6f6;
+}
 
 .auth-button.primary {
   background: #3A7BBF;
@@ -83,17 +103,6 @@
 }
 .auth-button.primary:active {
   background: #183451;
-}
-
-.auth-button.primary-stroke {
-  background: #FFFFFF;
-  color: #2E639A;
-}
-.auth-button.primary-stroke:hover {
-  background: #E8EBED;
-}
-.auth-button.primary-stroke:active {
-  background: #D6E6F6;
 }
 
 .auth-sub-button {
@@ -118,6 +127,19 @@
 }
 .auth-input .MuiFilledInput-root {
   background-color: #FFFFFF;
+}
+
+.auth-sign-up-progress {
+  margin-bottom: 48px;
+}
+.auth-sign-up-progress .text {
+  color: #183451;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+}
+.auth-sign-up-progress .ant-progress-bg {
+  background-color: #3A7BBF;
 }
 
 .auth-page {

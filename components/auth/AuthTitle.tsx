@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import styled from 'styled-components'
 
 const Title = styled.div`
@@ -11,10 +11,18 @@ const Title = styled.div`
   color: #131415;
   margin-bottom: 40px;
   user-select: none;
+  word-break: keep-all;
 `
 
 export const AuthTitle: React.FC<{
     text: string
-}> = ({ text }) => {
-    return <Title className={'title'}>{text}</Title>
+    style?: CSSProperties
+}> = (props) => {
+    return <Title
+        className={'title'}
+        dangerouslySetInnerHTML={{
+            __html: props.text
+        }}
+        {...props}
+    />
 }

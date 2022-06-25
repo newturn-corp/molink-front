@@ -1,0 +1,13 @@
+.validating-email-content {
+  display: flex;
+  flex-direction: column;
+  .email-icon {
+    margin: 0px auto;
+    margin-bottom: 48px;
+  }
+  .description {
+    text-align: center;
+    margin-bottom: 48px;
+    line-height: 24px;
+  }
+}

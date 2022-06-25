@@ -105,7 +105,7 @@ const SignIn = observer(() => {
                 />
             </form>
             <AuthButton
-                text={LanguageManager.languageMap.SignIn}
+                text={LanguageManager.languageMap.AuthSignInText}
                 theme={'primary'}
                 style={{
                     marginTop: 22
@@ -115,7 +115,7 @@ const SignIn = observer(() => {
                 }}
             />
             <AuthButton
-                text={LanguageManager.languageMap.SignUp}
+                text={LanguageManager.languageMap.AuthSignUpText}
                 theme={'primary-stroke'}
                 border={'1px solid #3A7BBF'}
                 onClick={async () => {

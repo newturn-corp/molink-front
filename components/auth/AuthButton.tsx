@@ -3,7 +3,7 @@ import React, { CSSProperties } from 'react'
 export const AuthButton: React.FC<{
     text: string,
     onClick: Function,
-    theme: 'primary' | 'primary-stroke',
+    theme: 'primary' | 'primary-stroke' | 'gray-stroke',
     style?: CSSProperties,
     border?: string,
     textStyle?: CSSProperties

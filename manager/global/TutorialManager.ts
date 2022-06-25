@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx'
-import ModalManager from './ModalManager'
+import ModalManager, { Modal } from './ModalManager'
 import ImagePreLoader from './ImagePreLoader'
 
 class TutorialManager {
@@ -27,7 +27,7 @@ class TutorialManager {
     }
 
     openTutorialModal () {
-        ModalManager.openTutorialModal = true
+        ModalManager.open(Modal.Tutorial)
         ImagePreLoader.preloadTutorialImage()
     }
 
@@ -64,7 +64,7 @@ class TutorialManager {
     handleClose () {
         this.step = 0
         this.key = 'blog'
-        ModalManager.openTutorialModal = false
+        ModalManager.close(Modal.Tutorial)
     }
 }
 export default new TutorialManager()

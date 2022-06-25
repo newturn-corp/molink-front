@@ -67,6 +67,7 @@
     "patch-package": "^6.4.7",
     "prismjs": "^1.25.0",
     "randomcolor": "^0.6.2",
+    "rc-queue-anim": "^2.0.0",
     "react": "^17.0.2",
     "react-device-detect": "^2.1.2",
     "react-dom": "^17.0.2",

@@ -23,7 +23,6 @@ const getPasswordHelperText = (passwordState: PasswordState) => {
 
 export const SignUpPasswordStepComponent = observer(() => {
     return <>
-        <AuthTitle text={'비밀번호 설정'}/>
         <AuthInput
             autoFocus
             name={Math.random().toString()}
@@ -43,6 +42,9 @@ export const SignUpPasswordStepComponent = observer(() => {
             }}
             onPaste={(e) => {
                 e.preventDefault()
+            }}
+            style={{
+                marginBottom: 12
             }}
             defaultValue={SignUpManager.pwd}
             helperText={getPasswordHelperText(SignUpManager.passwordState)}
@@ -72,7 +74,7 @@ export const SignUpPasswordStepComponent = observer(() => {
             }}
             defaultValue={SignUpManager.pwdCheck}
             style={{
-                marginBottom: 32
+                marginBottom: 48
             }}
         />
         <SignUpMoveButton

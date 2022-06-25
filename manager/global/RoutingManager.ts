@@ -12,6 +12,7 @@ export enum Page {
     ChangePasswordRequest = '/auth/change-password-request',
     SignUp = '/auth/sign-up',
     NoticeEmailAuth = '/auth/notice-email-auth',
+    ValidatingEmail = '/auth/validating-email',
 
     SettingProfile = '/setting/profile',
     SettingFollow = '/setting/follow',
@@ -32,13 +33,13 @@ class RoutingManager {
     history: RoutingHistory[] = []
 
     async moveTo (page: Page, extra: string = '') {
-        await EventManager.issueEvent(Event.MoveToAnotherPage)
+        await EventManager.issueEvent(Event.MoveToAnotherPage, { page })
         await Router.push(page + extra)
         this.history.push(new RoutingHistory(page, extra))
     }
 
     async moveWithoutAddHistory (page: Page, extra: string = '') {
-        await EventManager.issueEvent(Event.MoveToAnotherPage)
+        await EventManager.issueEvent(Event.MoveToAnotherPage, { page })
         await Router.replace(page + extra)
     }
 

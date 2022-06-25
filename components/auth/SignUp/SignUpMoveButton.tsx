@@ -21,17 +21,11 @@ export const SignUpMoveButton: React.FC<{
     >
         {showNext && <AuthButton
             text={'다음'}
-            theme={'primary'}
+            theme={'primary-stroke'}
             onClick={() => {
                 if (props.onNext) {
                     props.onNext()
                 }
-            }}
-            style={{
-                width: 100,
-                height: 35,
-                borderRadius: 4,
-                margin: '0px 0px 20px 0px'
             }}
             textStyle={{
                 fontSize: 15
@@ -40,17 +34,15 @@ export const SignUpMoveButton: React.FC<{
         {
             showBack && <AuthButton
                 text={'뒤로'}
-                theme={'primary-stroke'}
+                theme={'gray-stroke'}
                 onClick={() => {
                     if (props.onBack) {
                         props.onBack()
                     }
                 }}
+                border={'1px solid #9DA7B0'}
                 style={{
-                    margin: '0px 10px 20px 0px',
-                    width: 100,
-                    height: 35,
-                    borderRadius: 4
+                    margin: '0px 16px 0px 0px'
                 }}
                 textStyle={{
                     fontSize: 15

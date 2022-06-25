@@ -10,7 +10,6 @@ import SignUpManager from '../../../manager/Auth/SignUpManager'
 
 export const SignUpTermsStepComponent = observer(() => {
     return <>
-        <AuthTitle text={'약관 동의'}/>
         <SignupCheckList/>
         <SignUpMoveButton
             showBack={false}

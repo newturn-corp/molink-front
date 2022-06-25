@@ -7,15 +7,15 @@ PasswordCondition	문자, 숫자 포함 최소 8글자
 AuthSignUpUserSetting	사용자 설정
 AuthSignUpBlogNameConditionHelperText	최대 2~20자, -,_,.(마침표) 사용 가능
 AuthSignUpBlogNameAlreadyExistsErrorHelperText	이미 존재하는 블로그 이름입니다.
-AuthSignUpNicknameConditionHelperText	최대 2~20글자, 특수문자는 -,_,.(마침표) 사용 가능
+AuthSignUpNicknameConditionHelperText	최대 2~20자, -,_,.(마침표) 사용 가능
 AuthSignUpNicknameLabel	닉네임
 AuthSignUpNicknameAlreadyExistsError	이미 존재하는 닉네임입니다.
 AuthSignUpBlogNamePostfix	의 공간
 AuthSignUpBlogNameLabel	블로그 이름
 AuthSignUpGenerateRandomNicknameButtonText	무작위 생성
 
-
-
+AuthSignUpText	계정 생성
+AuthSignInText	로그인
 
 
 Image	이미지
@@ -84,7 +84,7 @@ PrivateVisibility	비공개
 Privacy	개인정보 처리 방침
 
 FollowRequestText	님이 팔로우 요청을 보냈습니다.
-UserSetting	설정
+Setting	설정
 PrivateVisibilityDescription	나만 이 페이지를 볼 수 있습니다.
 OnlyFollowerVisibilityDescription	팔로워하는 사람들만 이 페이지를 볼 수 있습니다.
 PublicVisibilityDescription	모두 이 페이지를 볼 수 있습니다.

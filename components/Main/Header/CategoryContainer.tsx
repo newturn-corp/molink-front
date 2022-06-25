@@ -3,7 +3,7 @@ import React from 'react'
 import MainPage from '../../../manager/Main/MainPage'
 import LanguageManager from '../../../manager/global/LanguageManager'
 import UserManager from '../../../manager/global/User/UserManager'
-import ModalManager from '../../../manager/global/ModalManager'
+import ModalManager, { Modal } from '../../../manager/global/ModalManager'
 
 export const CategoryContainer: React.FC<{
 }> = observer(() => {
@@ -17,7 +17,7 @@ export const CategoryContainer: React.FC<{
                     onClick={() => {
                         if (!isActiveCategory) {
                             if (pageList.category === LanguageManager.languageMap.Follow && !UserManager.isUserAuthorized) {
-                                ModalManager.openShouldLoginNoticeModal = true
+                                ModalManager.open(Modal.ShouldLoginNotice)
                                 return
                             }
                             MainPage.setCurrentCategoryIndex(index)

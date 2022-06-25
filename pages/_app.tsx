@@ -23,6 +23,7 @@ import '../styles/contents/header.css'
 
 import '../styles/auth.css'
 import '../styles/auth/sign-up.css'
+import '../styles/auth/validating-email.css'
 
 import '../styles/blog/editor/bookmark-input.css'
 import '../styles/blog/editor/link-modifier.css'
@@ -43,11 +44,11 @@ import GlobalManager from '../manager/global/GlobalManager'
 import { DialogComponent } from '../components/Dialog'
 import { MenuComponent } from '../components/global/MenuComponent'
 import { LinkModalComponent } from '../components/global/Modal/LinkModalComponent'
-import { ShouldLoginNoticeModal } from '../components/global/Modal/ShouldLoginNoticeModal'
 import { EmojiPickerComponent } from '../components/global/EmojiPickerComponent'
 import { TutorialModalComponent } from '../components/global/Modal/TutorialModalComponent'
 import { UserSettingModalComponent } from '../components/global/Modal/UserSetting/UserSettingModalComponent'
 import { BlogSettingModalComponent } from '../components/global/Modal/BlogSetting/BlogSettingModalComponent'
+import { DefaultModal } from '../components/global/Modal/DefaultModal'
 
 configure(
     {
@@ -85,11 +86,11 @@ const App = ({ Component, pageProps }: AppProps) => {
                 <DialogComponent />
                 <MenuComponent />
                 <LinkModalComponent/>
-                <ShouldLoginNoticeModal/>
                 <TutorialModalComponent/>
                 <UserSettingModalComponent/>
                 <BlogSettingModalComponent/>
                 <EmojiPickerComponent/>
+                <DefaultModal/>
             </SafeHydrate>
             <Component {...pageProps} />
         </>

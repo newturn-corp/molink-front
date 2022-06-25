@@ -26,7 +26,6 @@ const getEmailHelperText = (emailState: EmailState) => {
 
 export const SignUpEmailStepComponent = observer(() => {
     return <>
-        <AuthTitle text={'계정 만들기'}/>
         <AuthInput
             autoFocus
             name={Math.random().toString()}

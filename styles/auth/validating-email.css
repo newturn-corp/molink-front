@@ -1,0 +1,15 @@
+.validating-email-content {
+  display: flex;
+  flex-direction: column;
+}
+.validating-email-content .email-icon {
+  margin: 0px auto;
+  margin-bottom: 48px;
+}
+.validating-email-content .description {
+  text-align: center;
+  margin-bottom: 48px;
+  line-height: 24px;
+}
+
+/*# sourceMappingURL=validating-email.css.map */

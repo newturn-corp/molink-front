@@ -3,8 +3,9 @@ import { observer } from 'mobx-react'
 import { Avatar, Input } from 'antd'
 import UserManager from '../../../../manager/global/User/UserManager'
 import { Button } from '../../../global/Button'
-import ModalManager from '../../../../manager/global/ModalManager'
+import ModalManager, { Modal } from '../../../../manager/global/ModalManager'
 import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
+
 const TextArea = Input.TextArea
 
 export const CommentInputContainer: React.FC<{
@@ -42,7 +43,7 @@ export const CommentInputContainer: React.FC<{
                 }}
                 onClick={() => {
                     if (!UserManager.isUserAuthorized) {
-                        ModalManager.openShouldLoginNoticeModal = true
+                        ModalManager.open(Modal.ShouldLoginNotice)
                     }
                 }}
                 onFocus={async () => {

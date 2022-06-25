@@ -15,3 +15,7 @@ export class NicknameAlreadyExists extends CustomError {}
 export class InvalidBlogName extends CustomError {}
 
 export class BlogNameAlreadyExists extends CustomError {}
+
+export class UserAlreadyAuthorized extends CustomError {}
+
+export class TooManyEmailRequest extends CustomError {}

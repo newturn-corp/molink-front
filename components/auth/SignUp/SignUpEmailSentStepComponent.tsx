@@ -1,32 +1,34 @@
 import React from 'react'
-import LanguageManager from '../../../manager/global/LanguageManager'
 import { observer } from 'mobx-react'
 import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
-import { AuthSubButton } from '../AuthSubButton'
-import { AuthTitle } from '../AuthTitle'
-import MailOutlineRoundedIcon from '@material-ui/icons/MailOutlineRounded'
+import AuthEmailIcon from '../../../public/image/auth/auth-email.svg'
+import SignUpManager from '../../../manager/Auth/SignUpManager'
+import { AuthButton } from '../AuthButton'
 
 export const SignUpEmailSentStepComponent = observer(() => {
     return <div
-        className={'notice-email-auth-page'}
+        className={'email-sent-step-content'}
     >
-        <AuthTitle
-            text={LanguageManager.languageMap.NoticeEmailAuthTitle}
-        />
         <div
-            className={'icon'}
+            className={'email-icon'}
         >
-            <MailOutlineRoundedIcon/>
+            <AuthEmailIcon/>
         </div>
-        <div className={'description'}>
-            {LanguageManager.languageMap.NoticeEmailAuthDescription1}
-        </div>
-        <div className={'description'}>
-            {LanguageManager.languageMap.NoticeEmailAuthDescription2}
-        </div>
-        <AuthSubButton
-            text={LanguageManager.languageMap.MoveToLoginPage}
-            onClick={() => RoutingManager.moveTo(Page.SignIn)}
+        <div
+            className={'description'}
+            dangerouslySetInnerHTML={{
+                __html: SignUpManager.email + ' 메일로 발송한<br> 이메일 인증을 완료해주세요.<br><br>*인증 메일이 오지 않았다면?'
+            }}
+        />
+        <AuthButton
+            text={'로그인 페이지로 이동'}
+            theme={'primary-stroke'}
+            onClick={async () => {
+                await RoutingManager.moveTo(Page.SignIn)
+            }}
+            style={{
+                margin: '0px 16px 0px 0px'
+            }}
         />
     </div>
 })

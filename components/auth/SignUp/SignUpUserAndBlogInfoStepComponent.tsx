@@ -39,9 +39,6 @@ export const SignUpUserAndBlogInfoStepComponent = observer(() => {
     const nicknameRef = useRef<HTMLInputElement>(null)
     const [nicknameFocus, setNicknameFocus] = useState(false)
     return <>
-        <AuthTitle
-            text={LanguageManager.languageMap.AuthSignUpUserSetting}
-        />
         <AuthInput
             autoFocus
             inputRef={nicknameRef}
@@ -64,6 +61,9 @@ export const SignUpUserAndBlogInfoStepComponent = observer(() => {
             onFocus={() => setNicknameFocus(true)}
             onBlur={() => setNicknameFocus(false)}
             InputLabelProps={{ shrink: SignUpManager.nickname !== '' || nicknameFocus }}
+            style={{
+                marginBottom: 12
+            }}
         />
         <AuthInput
             type={'text'}
@@ -88,7 +88,7 @@ export const SignUpUserAndBlogInfoStepComponent = observer(() => {
                 color: '#595959',
                 borderRadius: 5,
                 padding: 7,
-                marginBottom: 30
+                marginBottom: 48
             }}
             onClick={async () => {
                 await SignUpManager.handleRandomGenerationNicknameButtonDown()

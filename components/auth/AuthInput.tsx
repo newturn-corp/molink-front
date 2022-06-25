@@ -86,7 +86,7 @@ type AuthInputProps = {
     autoFocus?: boolean
 }
 
-export const AuthInput: React.FC<AuthInputProps> = (props: AuthInputProps) => {
+export const AuthInput: React.FC<AuthInputProps> = (props) => {
     const classes = useStyles()
     return <>
         <TextField
@@ -95,6 +95,6 @@ export const AuthInput: React.FC<AuthInputProps> = (props: AuthInputProps) => {
                 marginBottom: !props.helperText && 12
             }}
             {...props}
-        />
+        >{props.children}</TextField>
     </>
 }

@@ -4,7 +4,7 @@ import EventManager from '../global/Event/EventManager'
 import { Event } from '../global/Event/Event'
 import { makeAutoObservable } from 'mobx'
 import AuthValidator from './AuthValidator'
-import { AuthEmailStatus, SignUpDTO } from '@newturn-develop/types-molink'
+import { AuthEmailStatus, SendSignUpAuthEmailDTO, SignUpDTO } from '@newturn-develop/types-molink'
 import {
     BlogNameAlreadyExists,
     EmailAlreadyExists,
@@ -13,8 +13,15 @@ import {
     InvalidNickname,
     InvalidPassword,
     NicknameAlreadyExists,
-    TooManySignUpRequest
+    TooManyEmailRequest,
+    TooManySignUpRequest,
+    UserAlreadyAuthorized
 } from '../../Errors/AuthError'
+import AuthSignUpAPI from '../../api/Auth/AuthSignUpAPI'
+import { UserNotExists } from '../../Errors/UserError'
+import RoutingManager, { Page } from '../global/RoutingManager'
+import ModalManager, { Modal, ModalButton } from '../global/ModalManager'
+import EmailAuthenticator from './EmailAuthenticator'
 
 export enum SignUpStep {
     Terms,
@@ -25,6 +32,7 @@ export enum SignUpStep {
 }
 
 class SignUpManager {
+    isLoading: boolean = false
     step: SignUpStep = SignUpStep.Terms
     email: string = ''
     emailState: EmailState = EmailState.Default
@@ -80,20 +88,25 @@ class SignUpManager {
             this.emailState = EmailState.NotEmail
             return
         }
+        this.isLoading = true
         const { status } = await AuthAPI.getEmailStatus(this.email)
         switch (status) {
         case AuthEmailStatus.AlreadyAuthed:
             this.emailState = EmailState.SameEmail
-            return
+            break
         case AuthEmailStatus.InvalidEmail:
             this.emailState = EmailState.NotEmail
-            return
+            break
         case AuthEmailStatus.Validating:
-            this.emailState = EmailState.Validating
-            return
+            const { success } = await EmailAuthenticator.sendSignUpAuthEmail(this.email)
+            if (success) {
+                await RoutingManager.moveTo(Page.ValidatingEmail, `?email=${this.email}`)
+            }
+            break
         case AuthEmailStatus.NotExists:
             this.step = SignUpStep.Password
         }
+        this.isLoading = false
     }
 
     handleNextAtPasswordStep () {
