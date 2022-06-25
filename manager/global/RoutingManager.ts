@@ -35,9 +35,7 @@ class RoutingManager {
 
     async moveTo (page: Page, extra: string = '', options = undefined) {
         await EventManager.issueEvent(Event.MoveToAnotherPage, { page })
-        console.log('Event Manager End ' + new Date() + ' ' + new Date().getMilliseconds())
         await Router.push(page + extra, undefined, options)
-        console.log('Router Push End ' + new Date() + ' ' + new Date().getMilliseconds())
         this.history.push(new RoutingHistory(page, extra))
     }
 
