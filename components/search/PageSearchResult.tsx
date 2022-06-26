@@ -7,11 +7,12 @@ import { FollowButton } from '../global/FollowButton'
 import UserInfoMap from '../../manager/global/User/UserInfoMap'
 import { Tag } from 'antd'
 import { removeMaliciousHTML } from '../../utils/removeMalicousHTML'
+import BlogInfoMap from '../../manager/global/Blog/BlogInfoMap'
 
 export const PageSearchResult: React.FC<{
     result: ESPageSearchResult
 }> = observer(({ result }) => {
-    const userInfo = UserInfoMap.idMap[result.id]
+    const blogInfo = BlogInfoMap.idMap[result.blogID]
     return <ListItem
         alignItems="flex-start"
         className='page-search-result'
@@ -56,20 +57,20 @@ export const PageSearchResult: React.FC<{
                 key={`page-search-result-user-container-${result.id}`}
                 onClick={(event) => {
                     event.stopPropagation()
-                    RoutingManager.moveTo(Page.Blog, `/${userInfo.nickname}`)
+                    RoutingManager.moveTo(Page.Blog, `/${blogInfo.name}`)
                 }}
             >
                 <img
                     className={'profile-image'}
                     key={`page-search-result-profile-image-${result.id}`}
-                    src={userInfo.profileImageUrl}
+                    src={blogInfo.profileImageURL}
                     width={20}
                 />
                 <div
                     className={'nickname'}
                     key={`page-search-result-nickname-${result.id}`}
                 >
-                    {userInfo.nickname}
+                    {blogInfo.name}
                 </div>
             </div>
         </div>
