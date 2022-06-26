@@ -240,8 +240,6 @@
 .page-column-component .text-container .user-container {
   display: flex;
   flex-direction: row;
-  height: 40px;
-  align-items: center;
   width: fit-content;
   margin-bottom: 5px;
 }
@@ -338,7 +336,8 @@
 .page-cell-component .text-container .user-container {
   display: flex;
   flex-direction: row;
-  height: 20px;
+  height: 40px;
+  align-items: center;
   width: fit-content;
 }
 .page-cell-component .text-container .user-container .profile-image {
