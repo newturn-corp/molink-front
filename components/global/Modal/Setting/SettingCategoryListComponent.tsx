@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { observer } from 'mobx-react'
 import { PersonOutlined } from '@material-ui/icons'
 import EditIcon from 'public/image/icon/edit.svg'
 import OutlineUploadFileIcon from 'public/image/icon/outline-upload-file.svg'
-import { SettingCategoryEnum } from '../SettingModalComponent'
+import { SettingCategoryEnum } from '../UserSetting/UserSettingModalComponent'
 import { SettingCategoryComponent } from './SettingCategoryComponent'
 
 export const SettingCategoryListComponent: React.FC<{
-    category: SettingCategoryEnum
+    settingCategoryEntry: { category: number, text: string, icon: ReactNode }[]
+    currentCategory: number
     onCategoryChange: Function
 }> = observer((props) => {
     return <div
@@ -18,23 +19,16 @@ export const SettingCategoryListComponent: React.FC<{
         >
             {'설정'}
         </div>
-        <SettingCategoryComponent
-            icon={<PersonOutlined/>}
-            text={'프로필'}
-            selected={props.category === SettingCategoryEnum.Profile}
-            onClick={() => props.onCategoryChange(SettingCategoryEnum.Profile)}
-        />
-        <SettingCategoryComponent
-            icon={<EditIcon/>}
-            text={'에디터'}
-            selected={props.category === SettingCategoryEnum.Editor}
-            onClick={() => props.onCategoryChange(SettingCategoryEnum.Editor)}
-        />
-        <SettingCategoryComponent
-            icon={<OutlineUploadFileIcon/>}
-            text={'파일 업로드'}
-            selected={props.category === SettingCategoryEnum.FileUpload}
-            onClick={() => props.onCategoryChange(SettingCategoryEnum.FileUpload)}
-        />
+        {
+            props.settingCategoryEntry.map((value, index) =>
+                <SettingCategoryComponent
+                    key={`setting-category-${index}-${value.text}`}
+                    icon={value.icon}
+                    text={value.text}
+                    selected={props.currentCategory === value.category}
+                    onClick={() => props.onCategoryChange(value.category)}
+                />
+            )
+        }
     </div>
 })

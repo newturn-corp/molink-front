@@ -1,12 +1,13 @@
 export enum EmailState {
-    DEFAULT,
-    NOT_EMAIL,
-    SAME_EMAIL,
+    Default,
+    NotEmail,
+    SameEmail,
     TOO_MANY_REQUEST,
     EMAIL_NOT_EXIST,
     NOT_AUTHORIZED,
     WRONG_EMAIL_PASSWORD,
-    EmptyEmail
+    EmptyEmail,
+    Validating
 }
 
 export enum PasswordState {
@@ -19,6 +20,12 @@ export enum NicknameState {
     Default,
     NicknameAlreadyExists,
     NicknameConditionNotSatisfied
+}
+
+export enum BlogNameState {
+    Default,
+    BlogNameAlreadyExists,
+    BlogNameConditionNotSatisfied
 }
 
 export enum SignUpCheckListState {

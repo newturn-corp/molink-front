@@ -1,28 +1,22 @@
 import { makeAutoObservable } from 'mobx'
 import UserInfoMap from '../../../global/User/UserInfoMap'
-import ViewerAPI from '../../../../api/ViewerAPI'
 
 export class EditorPageUserInfo {
-    userId: number
+    userID: number
     nickname: string = null
-    userProfileImageUrl: string = null
+    profileImageUrl: string = null
     biography: string = null
-    followerCount: number = 0
-    followCount: number = 0
 
-    constructor (userId: number) {
-        this.userId = userId
+    constructor (userID: number) {
+        this.userID = userID
         makeAutoObservable(this)
     }
 
     async load () {
-        const infoMap = await UserInfoMap.getUserInfoMapByUserIDList([this.userId])
-        const userInfo = infoMap[this.userId]
+        const infoMap = await UserInfoMap.getUserInfoMapByUserIDList([this.userID])
+        const userInfo = infoMap[this.userID]
         this.nickname = userInfo.nickname
-        this.userProfileImageUrl = userInfo.profileImageUrl
+        this.profileImageUrl = userInfo.profileImageUrl
         this.biography = userInfo.biography
-        const dto = await ViewerAPI.getUserFollowInfo(this.userId)
-        this.followerCount = dto.followerCount
-        this.followCount = dto.followCount
     }
 }

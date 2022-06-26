@@ -57,6 +57,9 @@ export class CommentInfo {
     }
 
     async saveComment (parentCommentID: string | null, content: string) {
+        if (content === '') {
+            return
+        }
         const { commentID } = await ContentAPI.saveComment(new SaveCommentDTO(this.pageId, content, parentCommentID))
         this.commentCount += 1
         this.commentMap[commentID] = new PageComment(content, new Date(), UserManager.userId)

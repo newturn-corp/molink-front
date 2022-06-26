@@ -75,8 +75,7 @@ export class Editor {
 
     async load (pageId: string) {
         this.pageId = pageId
-        this.editable = UserManager.isUserAuthorized && (await ViewerAPI.getDocumentAuthority(pageId)).editable
-
+        this.editable = UserManager.isUserAuthorized && (await ViewerAPI.getPageAuthority(pageId)).editable
         if (!this.editable) {
             this.toolbar.disable()
             this.viewer = new EditorViewer(pageId)

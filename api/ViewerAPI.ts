@@ -10,9 +10,19 @@ import {
     GetPageListResponseDTO,
     GetFollowInfoResponseDTO,
     GetFollowStatusResponseDTO,
-    ESPageSummary, GetUserLikePageResponseDTO, ESComment, GetPageListDTO, ESEditorPageInfo
+    ESPageSummary,
+    GetUserLikePageResponseDTO,
+    ESComment,
+    GetPageListDTO,
+    ESEditorPageInfo,
+    BlogAuthority,
+    ESPageMetaInfo,
+    GetBlogNameResponseDTO
 } from '@newturn-develop/types-molink'
 import { ContentNotExists, ContentUserNotExists } from '../Errors/ContentError'
+import { BlogNotExists } from '../Errors/BlogError'
+import { PageNotExists } from '../Errors/HierarchyError'
+import { UnauthorizedForPage } from '../Errors/PageError'
 
 class ViewerAPI extends BaseAPI {
     async getUserIDByNickname (nickname: string) {
@@ -23,8 +33,8 @@ class ViewerAPI extends BaseAPI {
         return res.data as GetUserIDDTO
     }
 
-    async getDocumentAuthority (documentId: string) {
-        const res = await this.get(`/viewer/documents/${documentId}/authority`)
+    async getPageAuthority (documentId: string) {
+        const res = await this.get(`/viewer/pages/${documentId}/authority`)
         if (res.status === 404001) {
             throw new DocumentNotExists()
         } else if (res.status === 404002) {
@@ -39,6 +49,34 @@ class ViewerAPI extends BaseAPI {
 
     async getDocumentsHierarchy (userId: number): Promise<GetHierarcyResponseDTO> {
         const res = await this.get(`/viewer/hierarchy/${userId}`)
+        if (res.status === 404001) {
+            throw new UserNotExists()
+        } else if (res.status === 400001) {
+            throw new UnexpectedError()
+        }
+        return res.data
+    }
+
+    async getBlog (blogID: number): Promise<GetHierarcyResponseDTO> {
+        const res = await this.get(`/viewer/blog/${blogID}`)
+        if (res.status === 404001) {
+            throw new BlogNotExists()
+        } else if (res.status === 400001) {
+            throw new UnexpectedError()
+        }
+        return res.data
+    }
+
+    async getBlogName (blogID: number): Promise<GetBlogNameResponseDTO> {
+        const res = await this.get(`/viewer/blog/${blogID}/name`)
+        if (res.status === 404001) {
+            throw new BlogNotExists()
+        }
+        return res.data
+    }
+
+    async getBlogAuthority (blogID: number): Promise<BlogAuthority> {
+        const res = await this.get(`/viewer/blog/${blogID}/authority`)
         if (res.status === 404001) {
             throw new UserNotExists()
         } else if (res.status === 400001) {
@@ -84,18 +122,18 @@ class ViewerAPI extends BaseAPI {
         return res.data
     }
 
-    async getUserFollowInfo (userID: number): Promise<GetFollowInfoResponseDTO> {
-        const res = await this.get(`/viewer/users/${userID}/follow-info`)
-        return res.data
-    }
-
     async getUserFollowStatus (userID: number): Promise<GetFollowStatusResponseDTO> {
         const res = await this.get(`/viewer/users/${userID}/follow-status`)
         return res.data
     }
 
-    async getPageSummary (pageID: string): Promise<ESPageSummary> {
-        const res = await this.get(`/viewer/pages/${pageID}/summary`)
+    async getPageMetaInfo (pageID: string): Promise<ESPageMetaInfo> {
+        const res = await this.get(`/viewer/pages/${pageID}/meta-info`)
+        if (res.status === 404001) {
+            throw new PageNotExists()
+        } else if (res.status === 403001) {
+            throw new UnauthorizedForPage()
+        }
         return res.data
     }
 

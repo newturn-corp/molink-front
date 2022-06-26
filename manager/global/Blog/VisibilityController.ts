@@ -6,6 +6,7 @@ import EventManager from '../Event/EventManager'
 import { Event } from '../Event/Event'
 import HierarchyAPI from '../../../api/HierarchyAPI'
 import { ChildrenVisibilityWide, ParentVisibilityNarrow } from '../../../Errors/HierarchyError'
+import Blog from './Blog'
 
 export class VisibilityController {
     public isVisibilityMenuOpen: boolean = false
@@ -39,7 +40,7 @@ export class VisibilityController {
 
     public async updatePageVisibility (pageId: string, visibility: PageVisibility, force = false) {
         try {
-            await HierarchyAPI.changePageVisibility(new ChangePageVisibilityDTO(pageId, visibility, force))
+            await HierarchyAPI.changePageVisibility(new ChangePageVisibilityDTO(pageId, Blog.id, visibility, force))
         } catch (err) {
             if (err instanceof ParentVisibilityNarrow) {
                 const action = await DialogManager.openDialog(

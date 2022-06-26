@@ -31,32 +31,30 @@ export const UserContainer: React.FC<{
         }
         if (UserManager.isUserAuthorized) {
             MenuManager.open([
-                new MenuItem('내 블로그',
+                new MenuItem(LanguageManager.languageMap.UserMenuMyPageText,
                     async () => {
-                        await RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.nickname}`)
-                        MenuManager.close()
+                        await RoutingManager.moveTo(Page.User, `/${UserManager.profile.nickname}`)
                     }),
-                new MenuItem(LanguageManager.languageMap.SupportInMenu,
+                new MenuItem(LanguageManager.languageMap.UserMenuSupportText,
                     () => {
                         UserManager.isUserMenuOpen = false
                         SupportManager.openSupportModal()
                         MenuManager.close()
                     }),
-                new MenuItem('사용 방법',
+                new MenuItem(LanguageManager.languageMap.UserMenuTutorialText,
                     async () => {
                         TutorialManager.openTutorialModal()
                     }),
-                new MenuItem(LanguageManager.languageMap.PrivacyAndTerms,
+                new MenuItem(LanguageManager.languageMap.UserMenuPrivacyAndTermsText,
                     async () => {
                         await RoutingManager.rawMoveTo('https://www.molink.life/blog/Molink/4629add3ae7d9971bc539427afd127ad/%EC%9D%B4%EC%9A%A9%20%EC%95%BD%EA%B4%80', true)
                         MenuManager.close()
                     }),
-                new MenuItem(LanguageManager.languageMap.Setting,
+                new MenuItem(LanguageManager.languageMap.UserMenuUserSettingText,
                     async () => {
-                        ModalManager.open(Modal.Setting)
-                        // await RoutingManager.moveTo(Page.SettingProfile)
+                        ModalManager.open(Modal.UserSetting)
                     }),
-                new MenuItem(LanguageManager.languageMap.SignOut,
+                new MenuItem(LanguageManager.languageMap.UserMenuSignOutText,
                     async () => {
                         UserManager.isUserMenuOpen = false
                         await AuthManager.signOut()

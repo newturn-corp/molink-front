@@ -147,7 +147,7 @@
   flex-direction: row;
   margin-bottom: 10px;
 }
-.blog-user-info .text-container .main-container .nickname {
+.blog-user-info .text-container .main-container .name {
   line-height: 30px;
   font-size: 24px;
   margin-right: 20px;
@@ -284,7 +284,7 @@
 .page-cell-component {
   display: flex;
   flex-direction: column;
-  height: 370px;
+  height: fit-content;
   width: 320px;
   margin: 10px;
   cursor: pointer;
@@ -319,7 +319,7 @@
   text-align: center;
 }
 .page-cell-component .text-container {
-  padding: 21px 15px 12px;
+  padding: 21px 15px 8px;
   display: flex;
   flex-direction: column;
 }
@@ -365,8 +365,8 @@
   background-color: #ECEFF2;
   height: 1px;
   width: 100%;
-  margin-top: 14px;
-  margin-bottom: 12px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 .page-cell-component .number-container {
   display: flex;
@@ -424,6 +424,13 @@
   min-width: 40px;
   font-size: 14px;
   user-select: none;
+}
+
+.page-title-editor {
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 6px 10px;
 }
 
 /*# sourceMappingURL=blog.css.map */

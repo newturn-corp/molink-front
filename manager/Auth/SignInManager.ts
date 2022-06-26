@@ -1,4 +1,4 @@
-import AuthAPI, { SIGN_IN_FAIL_REASON, SIGN_UP_FAIL_REASON } from '../../api/AuthAPI'
+import AuthAPI, { SIGN_IN_FAIL_REASON } from '../../api/AuthAPI'
 import FeedbackManager, { NOTIFICATION_TYPE } from '../global/FeedbackManager'
 import { EmailState, NicknameState, PasswordState, SignUpCheckListState } from './AuthStates'
 import EventManager from '../global/Event/EventManager'
@@ -8,7 +8,7 @@ import AuthValidator from './AuthValidator'
 
 class SignInManager {
     email: string = ''
-    emailState: EmailState = EmailState.DEFAULT
+    emailState: EmailState = EmailState.Default
 
     pwd: string = ''
     passwordState: PasswordState = PasswordState.DEFAULT
@@ -16,7 +16,7 @@ class SignInManager {
     constructor () {
         makeAutoObservable(this)
         EventManager.addEventListener(Event.MoveToAnotherPage, () => {
-            this.emailState = EmailState.DEFAULT
+            this.emailState = EmailState.Default
             this.passwordState = PasswordState.DEFAULT
 
             this.email = ''
@@ -26,10 +26,10 @@ class SignInManager {
 
     async signIn () {
         if (!AuthValidator.validateEmail(this.email)) {
-            this.emailState = EmailState.NOT_EMAIL
+            this.emailState = EmailState.NotEmail
             return { success: false }
         }
-        this.emailState = EmailState.DEFAULT
+        this.emailState = EmailState.Default
         const result = await AuthAPI.signIn(this.email, this.pwd)
         if (result.success === false) {
             if (result.failReason === SIGN_IN_FAIL_REASON.EMAIL_NOT_AUTHORIZED) {

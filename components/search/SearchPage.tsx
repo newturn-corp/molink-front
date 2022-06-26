@@ -21,7 +21,6 @@ export const SearchPageComponent: React.FC<{
         UserManager.load()
         SearchManager.initSearchEngine(searchCategory)
         SearchManager.searchEngine.search(queryText, page)
-        console.log('search 호출')
     }, [queryText, page, searchCategory])
 
     return <div

@@ -9,7 +9,7 @@ class FollowAPI extends BaseAPI {
     async getFollowRequests (): Promise<FollowRequest[]> {
         const res = await this.get('/follow/requests')
         if (res.status !== 200) throw new APIError(res)
-        return res.arr.map(dto => new FollowRequest(dto.id, dto.profileImgUrl, dto.nickname, dto.isViewed, dto.createdAt))
+        return res.arr.map(dto => new FollowRequest(dto.id, dto.profileImgUrl, dto.blogName, dto.isViewed, dto.createdAt))
     }
 
     async rejectFollowRequest (dto: RejectFollowRequestDTO): Promise<void> {

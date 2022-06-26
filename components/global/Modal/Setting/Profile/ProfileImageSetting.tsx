@@ -1,28 +1,34 @@
 import React from 'react'
-import { observer } from 'mobx-react'
 import LanguageManager from '../../../../../manager/global/LanguageManager'
-import UserManager from '../../../../../manager/global/User/UserManager'
-import { Avatar } from '@material-ui/core'
+import { Avatar } from 'antd'
 
 export const ProfileImageSetting: React.FC<{
-}> = observer(() => {
+    text: string
+    onChange: React.ChangeEventHandler<HTMLInputElement>
+    profileImageSrc: string
+    id: string
+}> = (props) => {
     return <div className='profile-image'>
         <p className='setting-name'>
-            {LanguageManager.languageMap.ProfileImage}
+            {props.text}
         </p>
         <input
             accept='image/jpg,image/png,image/jpeg'
             style={{ display: 'none' }}
-            id="profile-image-button"
+            id={props.id}
             multiple
-            onChange={(event) => UserManager.profile.updateUserProfileImage(event)}
+            onChange={(event) => {
+                props.onChange(event)
+            }}
             type="file"
         />
-        <label htmlFor="profile-image-button">
-            <Avatar className='image' sizes='200' src={UserManager.profile.getUserProfileImageSrc()}/>
+        <label
+            htmlFor={props.id}
+        >
+            <Avatar className='image' size={200} src={props.profileImageSrc}/>
         </label>
         <div className='edit'>
             {LanguageManager.languageMap.PressToChange}
         </div>
     </div>
-})
+}

@@ -5,6 +5,9 @@ import HeartIcon from 'public/image/icon/heart.svg'
 import { Thumbnail } from './Thumbnail'
 import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 import { PageColumnComponentUserInfo } from './PageColumnComponentUserInfo'
+import { getRelativeTime } from 'utils/getRelativeTime'
+import ViewerAPI from '../../../api/ViewerAPI'
+import BlogInfoMap from '../../../manager/global/Blog/BlogInfoMap'
 
 export interface PageColumnComponentInterface {
     id: string
@@ -22,7 +25,7 @@ export const PageCellComponent: React.FC<PageColumnComponentInterface> = observe
     return <div
         className={'page-cell-component'}
         onClick={async () => {
-            await RoutingManager.moveTo(Page.Blog, `/${props.id}`)
+            await RoutingManager.moveTo(Page.Blog, `/blog-name/${props.id}/page-name`)
         }}
     >
         <Thumbnail
@@ -51,7 +54,9 @@ export const PageCellComponent: React.FC<PageColumnComponentInterface> = observe
             >
                 <div
                     className={'last-edited-at'}
-                >{props.lastEditedAt}</div>
+                >
+                    {props.lastEditedAt}
+                </div>
                 <div
                     style={{
                         display: 'flex',

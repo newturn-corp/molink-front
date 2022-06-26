@@ -1,5 +1,5 @@
 .sign-up-check-list {
-  margin: 32px 0px;
+  margin-bottom: 48px;
 }
 .sign-up-check-list .divider {
   width: 100%;
@@ -64,4 +64,18 @@
   font-size: 13px;
 }
 
-/*# sourceMappingURL=sign-up.css.idMap */
+.email-sent-step-content {
+  display: flex;
+  flex-direction: column;
+}
+.email-sent-step-content .email-icon {
+  margin: 0px auto;
+  margin-bottom: 48px;
+}
+.email-sent-step-content .description {
+  text-align: center;
+  margin-bottom: 48px;
+  line-height: 24px;
+}
+
+/*# sourceMappingURL=sign-up.css.map */

@@ -12,30 +12,30 @@ export const FollowRequestComponent: React.FC<{
     index: number
   }> = observer(({ followRequest, index }) => {
       return <MenuItem>
-          <div className='notification-block'>
-              <div className='avatar-part'
-                  onClick={() => RoutingManager.moveTo(Page.Blog, `/${followRequest.nickname}`)}
-              >
-                  <Avatar className='img' sizes='32' src={followRequest.profileImgUrl}/>
-              </div>
-              <div>
-                  <div className='view-part'>
-                      <div className='msg-container'>
-                          <div className='msg'><b>{followRequest.nickname}</b>{LanguageManager.languageMap.FollowRequestText}</div>
-                          <p className='createdAt'>{getRelativeTime(followRequest.createdAt)}</p>
-                      </div>
-                  </div>
-                  <div className='interaction'>
-                      <div
-                          className='button accept'
-                          onClick={() => UserManager.follow.acceptFollowRequest(index)}
-                      >{LanguageManager.languageMap.Accept}</div>
-                      <div
-                          className='button reject'
-                          onClick={() => UserManager.follow.rejectFollowRequest(index)}
-                      >{LanguageManager.languageMap.Delete}</div>
-                  </div>
-              </div>
-          </div>
+          {/* <div className='notification-block'> */}
+          {/*     <div className='avatar-part' */}
+          {/*         onClick={() => RoutingManager.moveTo(Page.Blog, `/${followRequest.blogName}`)} */}
+          {/*     > */}
+          {/*         <Avatar className='img' sizes='32' src={followRequest.profileImgUrl}/> */}
+          {/*     </div> */}
+          {/*     <div> */}
+          {/*         <div className='view-part'> */}
+          {/*             <div className='msg-container'> */}
+          {/*                 <div className='msg'><b>{followRequest.blogName}</b>{LanguageManager.languageMap.FollowRequestText}</div> */}
+          {/*                 <p className='createdAt'>{getRelativeTime(followRequest.createdAt)}</p> */}
+          {/*             </div> */}
+          {/*         </div> */}
+          {/*         <div className='interaction'> */}
+          {/*             <div */}
+          {/*                 className='button accept' */}
+          {/*                 onClick={() => UserManager.follow.acceptFollowRequest(index)} */}
+          {/*             >{LanguageManager.languageMap.Accept}</div> */}
+          {/*             <div */}
+          {/*                 className='button reject' */}
+          {/*                 onClick={() => UserManager.follow.rejectFollowRequest(index)} */}
+          {/*             >{LanguageManager.languageMap.Delete}</div> */}
+          {/*         </div> */}
+          {/*     </div> */}
+          {/* </div> */}
       </MenuItem>
   })

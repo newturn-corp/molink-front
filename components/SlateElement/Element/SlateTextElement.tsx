@@ -26,6 +26,7 @@ export const SlateTextElement: React.FC<{
           isBrowser &&
           !editor.info.isLocked &&
           editor.showPlaceholder &&
+          editor.editable &&
           !(isMac && editor.isComposing)
 
       const getPlaceholder = useCallback(() => {

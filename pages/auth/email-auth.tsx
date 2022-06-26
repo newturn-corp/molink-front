@@ -8,7 +8,9 @@ const EmailAuth = () => {
         return <></>
     }
     const key = new URLSearchParams(window.location.search).get('key')
-    AuthManager.verifyEmail(key)
+    useEffect(() => {
+        AuthManager.verifyEmail(key)
+    }, [])
     return <></>
 }
 

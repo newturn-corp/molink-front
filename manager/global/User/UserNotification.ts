@@ -39,11 +39,12 @@ export class UserNotification {
         case NotificationType.Default:
         case NotificationType.FollowRequest:
         case NotificationType.NewFollow:
+            // TODO: 여기 수정
         case NotificationType.FollowAccept:
             return { page: Page.Blog, extra: `/${userInfo.nickname}` }
         case NotificationType.NewComment:
         case NotificationType.NewLike:
-            return { page: Page.Blog, extra: `/${notificationInfo.additionalInfo}` }
+            return { page: Page.Blog, extra: `/blog-name/${notificationInfo.additionalInfo}/page-name` }
         }
     }
 

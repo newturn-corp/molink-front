@@ -15,11 +15,11 @@ import GlobalManager from '../../manager/global/GlobalManager'
 import { SiteHead } from '../../components/global/SiteHead'
 
 const getEmailHelperText = (emailState: EmailState) => {
-    if (emailState === EmailState.DEFAULT) {
+    if (emailState === EmailState.Default) {
         return undefined
     }
     switch (emailState) {
-    case EmailState.NOT_EMAIL:
+    case EmailState.NotEmail:
         return LanguageManager.languageMap.EmailFormatError
     case EmailState.NOT_AUTHORIZED:
         return LanguageManager.languageMap.EmailNotAuthorizedError
@@ -32,14 +32,6 @@ const getEmailHelperText = (emailState: EmailState) => {
 }
 
 const SignIn = observer(() => {
-    useEffect(() => {
-        UserManager.load()
-            .then(() => {
-                if (UserManager.isUserAuthorized) {
-                    RoutingManager.moveTo(Page.Blog, `/${UserManager.profile.nickname}`)
-                }
-            })
-    }, [])
     const [loading, setLoading] = useState(false)
     const login = useCallback(async () => {
         setLoading(true)
@@ -65,7 +57,7 @@ const SignIn = observer(() => {
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
     useEffect(() => {
-        if (emailRef.current && SignInManager.emailState !== EmailState.DEFAULT) {
+        if (emailRef.current && SignInManager.emailState !== EmailState.Default) {
             emailRef.current.focus()
         } else if (passwordRef.current && SignInManager.passwordState !== PasswordState.DEFAULT) {
             passwordRef.current.focus()
@@ -90,10 +82,10 @@ const SignIn = observer(() => {
                     style={{
                         marginBottom: 12
                     }}
-                    error={SignInManager.emailState !== EmailState.DEFAULT}
+                    error={SignInManager.emailState !== EmailState.Default}
                     onChange={(e) => {
                         const { value } = e.target
-                        SignInManager.emailState = EmailState.DEFAULT
+                        SignInManager.emailState = EmailState.Default
                         SignInManager.email = value
                     }}
                     helperText={getEmailHelperText(SignInManager.emailState)}
@@ -113,7 +105,7 @@ const SignIn = observer(() => {
                 />
             </form>
             <AuthButton
-                text={LanguageManager.languageMap.SignIn}
+                text={LanguageManager.languageMap.AuthSignInText}
                 theme={'primary'}
                 style={{
                     marginTop: 22
@@ -123,7 +115,7 @@ const SignIn = observer(() => {
                 }}
             />
             <AuthButton
-                text={LanguageManager.languageMap.SignUp}
+                text={LanguageManager.languageMap.AuthSignUpText}
                 theme={'primary-stroke'}
                 border={'1px solid #3A7BBF'}
                 onClick={async () => {

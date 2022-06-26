@@ -167,8 +167,6 @@
         top: calc(50% - 16px/2);
         display: flex;
         flex: 1 1 auto;
-        overflow: hidden;
-        text-overflow: ellipsis;
         border: 0px;
         font-style: normal;
         font-weight: 600;
@@ -318,17 +316,26 @@
   height: calc(100vh - 60px);
   top: 56px;
   color: transparent;
-}
-
-.hierarchy-width-controller::after {
-  position: absolute;
-  width: 8px;
-  height: calc(100vh - 60px);
-  z-index: 100;
-  cursor: ew-resize;
-  content: '';
-  color: transparent;
-  left: -4px;
+  &::after {
+    position: absolute;
+    width: 8px;
+    height: calc(100vh - 60px);
+    z-index: 100;
+    cursor: ew-resize;
+    content: '';
+    color: transparent;
+    left: -4px;
+  }
+  .bar {
+    width: 2px;
+    height: 100%;
+    transition: background-color 0.5s;
+  }
+  &:hover {
+    .bar {
+      background-color: #E8EBED;
+    }
+  }
 }
 
 .drag-indicator {

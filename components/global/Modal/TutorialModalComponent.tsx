@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { CustomModal } from '../../utils/CustomModal'
-import ModalManager from '../../../manager/global/ModalManager'
+import ModalManager, { Modal } from '../../../manager/global/ModalManager'
 import { Tabs } from 'antd'
 import { TabPane } from 'rc-tabs'
 import { BlogTutorialComponent } from './Tutorial/BlogTutorialComponent'
@@ -17,7 +17,7 @@ export const TutorialModalComponent: React.FC<{
         onCancel={() => {
             TutorialManager.handleClose()
         }}
-        isOpen={ModalManager.openTutorialModal}
+        isOpen={ModalManager.map.get(Modal.Tutorial)}
         width={650}
     >
         <Tabs

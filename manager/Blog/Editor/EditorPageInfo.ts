@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx'
 import UserManager from '../../global/User/UserManager'
 import ViewerAPI from '../../../api/ViewerAPI'
 import EditorPage from './EditorPage'
-import ModalManager from '../../global/ModalManager'
+import ModalManager, { Modal } from '../../global/ModalManager'
 import ContentAPI from '../../../api/ContentAPI'
 import { PageVisibility, PublishPageDTO } from '@newturn-develop/types-molink'
 import DialogManager from '../../global/DialogManager'
@@ -39,7 +39,7 @@ export class EditorPageInfo {
 
     async handleLikeButtonDown () {
         if (!UserManager.isUserAuthorized) {
-            ModalManager.openShouldLoginNoticeModal = true
+            ModalManager.open(Modal.ShouldLoginNotice)
             return
         }
 

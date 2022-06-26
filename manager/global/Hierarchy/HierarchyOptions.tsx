@@ -10,7 +10,7 @@ import EditIcon from 'public/image/icon/edit.svg'
 import TrashCanIcon from 'public/image/icon/trash-can.svg'
 import LanguageManager from '../LanguageManager'
 import Blog from '../Blog/Blog'
-import { BlogPageHierarchy } from '../Blog/BlogPageHierarchy'
+import { BlogPageHierarchy } from '../Blog/PageHierarchy/BlogPageHierarchy'
 
 export abstract class HierarchyControlOption {
     name: string = ''
@@ -41,21 +41,28 @@ export class CreateNewPageOption extends HierarchyControlOption {
     }
 
     async handleOnClick () {
-        const order = this.getOrder(Blog.pageHierarchy)
+        const pageHierarchy = Blog.pageHierarchy
+        const order = this.getOrder(pageHierarchy)
         const parentId = this.pageID
-        await Blog.pageHierarchy.createPage(order, parentId)
+        await pageHierarchy.pageCreator.create(order, parentId)
+        pageHierarchy.contextMenu.selectedPageId = null
     }
 }
 
 export class ChangePageNameOption extends HierarchyControlOption {
-    constructor (pageID: string | null) {
+    pageRef: React.MutableRefObject<HTMLDivElement>
+
+    constructor (pageID: string | null, pageRef: React.MutableRefObject<HTMLDivElement>) {
         super(pageID)
+        this.pageRef = pageRef
         this.name = LanguageManager.languageMap.ChangePageName
         this.icon = <EditIcon/>
     }
 
     handleOnClick () {
-        Blog.pageHierarchy.nameChangingPageId = this.pageID
+        const pageHierarchy = Blog.pageHierarchy
+        pageHierarchy.pageTitleEditor.startTitleEditing(this.pageID, this.pageRef)
+        pageHierarchy.contextMenu.selectedPageId = null
     }
 }
 
@@ -93,10 +100,12 @@ export class DeletePageOption extends HierarchyControlOption {
         }
         UserManager.limit.handlePageDeletion(page)
 
-        const isOpenedDocumentIncludes = pageHierarchy.openedPage.pageId === page.id || childIDList.includes(pageHierarchy.openedPage.pageId)
+        const isOpenedDocumentIncludes = pageHierarchy.openedPage && (pageHierarchy.openedPage.pageId === page.id || childIDList.includes(pageHierarchy.openedPage.pageId))
         if (isOpenedDocumentIncludes) {
             pageHierarchy.closeOpenedPage()
-            await RoutingManager.moveTo(Page.Blog, `/${Blog.blogUserInfo.nickname}`)
+
+            // TODO: 여기 수정
+            await RoutingManager.moveTo(Page.Blog, `/${Blog.profile.name}`)
         }
 
         // 페이지 먼저 삭제
@@ -131,7 +140,8 @@ export class DeletePageOption extends HierarchyControlOption {
 
         pageHierarchy.contextMenu.selectedPageId = null
         if (isOpenedDocumentIncludes) {
-            await RoutingManager.moveTo(Page.Blog, `/${Blog.blogUserInfo.nickname}`)
+            // TODO: 여기 수정
+            await RoutingManager.moveTo(Page.Blog, `/${Blog.profile.name}`)
         }
     }
 }

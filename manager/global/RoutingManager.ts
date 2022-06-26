@@ -1,8 +1,9 @@
-import Router from 'next/router'
+import Router, { NextRouter } from 'next/router'
 import GlobalManager from './GlobalManager'
 import { Event } from './Event/Event'
 import EventManager from './Event/EventManager'
 import { RoutingHistory } from './Routing/RoutingHistory'
+import { TransitionalOptions } from 'axios'
 
 export enum Page {
     Index = '/',
@@ -12,6 +13,7 @@ export enum Page {
     ChangePasswordRequest = '/auth/change-password-request',
     SignUp = '/auth/sign-up',
     NoticeEmailAuth = '/auth/notice-email-auth',
+    ValidatingEmail = '/auth/validating-email',
 
     SettingProfile = '/setting/profile',
     SettingFollow = '/setting/follow',
@@ -24,21 +26,23 @@ export enum Page {
     Home = '',
     Blog = '/blog',
     MobileSupport = '/m/support',
-    SettingFileUpload = '/setting/file-upload'
+    SettingFileUpload = '/setting/file-upload',
+    User = '/users'
 }
 
 class RoutingManager {
+    router: NextRouter
     history: RoutingHistory[] = []
 
-    async moveTo (page: Page, extra: string = '') {
-        await EventManager.issueEvent(Event.MoveToAnotherPage)
-        await Router.push(page + extra)
+    async moveTo (page: Page, extra: string = '', options = undefined) {
+        await EventManager.issueEvent(Event.MoveToAnotherPage, { page })
+        await Router.push(page + extra, undefined, options)
         this.history.push(new RoutingHistory(page, extra))
     }
 
-    async moveWithoutAddHistory (page: Page, extra: string = '') {
-        await EventManager.issueEvent(Event.MoveToAnotherPage)
-        await Router.replace(page + extra)
+    async moveWithoutAddHistory (page: Page, extra: string = '', options = undefined) {
+        await EventManager.issueEvent(Event.MoveToAnotherPage, { page })
+        await Router.replace(page + extra, undefined, options)
     }
 
     async rawMoveTo (url: string, shouldOpenNewWindow: boolean = false) {

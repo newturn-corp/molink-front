@@ -50,6 +50,13 @@
 
         width: 290px;
     }
+
+    .description {
+        font-size: 16px;
+        line-height: 30px;
+        color: #5F6871;
+        user-select: none;
+    }
 }
 .auth-button {
     width: 320px;
@@ -72,6 +79,26 @@
         margin: auto auto;
         user-select: none;
     }
+    &.primary-stroke {
+        background: #FFFFFF;
+        color: #2E639A;
+        &:hover {
+            background: #E8EBED;
+        }
+        &:active {
+            background: #D6E6F6;
+        }
+    }
+    &.gray-stroke {
+        background: #FFFFFF;
+        color: #3A3C3F;
+        &:hover {
+            background: #f3f3f3;
+        }
+        &:active {
+            background: #f6f6f6;
+        }
+    }
 }
 .auth-button.primary {
     background: #3A7BBF;
@@ -81,16 +108,6 @@
     }
     &:active {
         background: #183451;
-    }
-}
-.auth-button.primary-stroke {
-    background: #FFFFFF;
-    color: #2E639A;
-    &:hover {
-        background: #E8EBED;
-    }
-    &:active {
-        background: #D6E6F6;
     }
 }
 .auth-sub-button {
@@ -116,6 +133,18 @@
     width: 100%;
     .MuiFilledInput-root {
         background-color: #FFFFFF;
+    }
+}
+.auth-sign-up-progress {
+    margin-bottom: 48px;
+    .text {
+        color: #183451;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 16px;
+    }
+    .ant-progress-bg {
+        background-color: #3A7BBF;
     }
 }
 .auth-page {

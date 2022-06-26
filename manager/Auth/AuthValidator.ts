@@ -14,11 +14,21 @@ class AuthValidator {
     public validateNickname (nickname: string) {
         if (nickname.length < 2) {
             return false
-        } else if (nickname.length > 27) {
+        } else if (nickname.length > 20) {
             return false
         }
         const nicknameReg = /^([ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_\s-](?:(?:[ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_\s-]|(?:\.(?!\.))){0,28}(?:[ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_\s-]))?)$/
         return nicknameReg.test((nickname))
+    }
+
+    public validateBlogName (blogName: string) {
+        if (blogName.length < 2) {
+            return false
+        } else if (blogName.length > 20) {
+            return false
+        }
+        const nicknameReg = /^([ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_\s-](?:(?:[ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_\s-]|(?:\.(?!\.))){0,28}(?:[ㄱ-ㅎㅏ-ㅣ-가-힣A-Za-z0-9_\s-]))?)$/
+        return nicknameReg.test((blogName))
     }
 }
 export default new AuthValidator()

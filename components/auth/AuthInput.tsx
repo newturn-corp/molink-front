@@ -1,5 +1,11 @@
 import { createStyles, TextField, withStyles } from '@material-ui/core'
-import React, { ChangeEventHandler, ClipboardEventHandler, FocusEventHandler } from 'react'
+import React, {
+    ChangeEventHandler,
+    ClipboardEventHandler,
+    CSSProperties,
+    FocusEventHandler,
+    KeyboardEventHandler
+} from 'react'
 import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles(() =>
@@ -70,15 +76,17 @@ type AuthInputProps = {
     onFocus?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>,
     onBlur?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>
     onPaste?: ClipboardEventHandler<HTMLDivElement>,
-    style?: any,
+    onKeyDown?: KeyboardEventHandler<HTMLDivElement>,
+    style?: CSSProperties,
     helperText?: string,
     defaultValue?: string,
     isPassword?: boolean
     inputRef?: React.MutableRefObject<any>
     InputLabelProps?: any
+    autoFocus?: boolean
 }
 
-export const AuthInput: React.FC<AuthInputProps> = (props: AuthInputProps) => {
+export const AuthInput: React.FC<AuthInputProps> = (props) => {
     const classes = useStyles()
     return <>
         <TextField
@@ -87,6 +95,6 @@ export const AuthInput: React.FC<AuthInputProps> = (props: AuthInputProps) => {
                 marginBottom: !props.helperText && 12
             }}
             {...props}
-        />
+        >{props.children}</TextField>
     </>
 }

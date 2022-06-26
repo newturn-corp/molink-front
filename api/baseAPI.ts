@@ -34,10 +34,6 @@ export abstract class BaseAPI {
             console.log(path)
             throw new NetworkError()
         }
-        if (res.status === 500) throw new ServiceError()
-        if (res.status === 401) {
-            throw new AuthError()
-        }
         return res.json()
     }
 

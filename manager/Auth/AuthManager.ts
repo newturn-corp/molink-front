@@ -1,5 +1,5 @@
 import { makeAutoObservable, observable } from 'mobx'
-import AuthAPI, { PASSWORD_CHANGE_FAIL_REASON, SIGN_IN_FAIL_REASON, SIGN_UP_FAIL_REASON, START_PASSWORD_CHANGE_FAIL_REASON } from '../../api/AuthAPI'
+import AuthAPI, { PASSWORD_CHANGE_FAIL_REASON, SIGN_IN_FAIL_REASON, START_PASSWORD_CHANGE_FAIL_REASON } from '../../api/AuthAPI'
 import FeedbackManager, { NOTIFICATION_TYPE } from '../global/FeedbackManager'
 import RoutingManager, { Page } from '../global/RoutingManager'
 import EventManager from '../global/Event/EventManager'

@@ -1,8 +1,29 @@
+Auth	인증
 ChangePassword	비밀번호 변경
 PasswordMismatch	비밀번호가 일치하지 않습니다.
 Password	비밀번호
 PasswordConfirm	비밀번호 확인
 PasswordCondition	문자, 숫자 포함 최소 8글자
+AuthSignUpUserSetting	사용자 설정
+AuthSignUpBlogNameConditionHelperText	최대 2~20자, -,_,.(마침표) 사용 가능
+AuthSignUpBlogNameAlreadyExistsErrorHelperText	이미 존재하는 블로그 이름입니다.
+AuthSignUpNicknameConditionHelperText	최대 2~20자, -,_,.(마침표) 사용 가능
+AuthSignUpNicknameLabel	닉네임
+AuthSignUpNicknameAlreadyExistsError	이미 존재하는 닉네임입니다.
+AuthSignUpBlogNamePostfix	의 공간
+AuthSignUpBlogNameLabel	블로그 이름
+AuthSignUpGenerateRandomNicknameButtonText	무작위 생성
+
+AuthSignUpText	계정 생성
+AuthSignInText	로그인
+
+UserMenuUserSettingText	사용자 설정
+UserMenuTutorialText	사용 방법
+UserMenuMyPageText	마이 페이지
+UserMenuSignOutText	로그아웃
+UserMenuPrivacyAndTermsText	개인 정보 처리방침 & 약관
+UserMenuSupportText	문의 & 의견 보내기
+
 Image	이미지
 File	파일
 Video	비디오
@@ -22,13 +43,13 @@ SignIn	로그인
 SignUp	계정 생성
 Email	이메일
 ForgetPassword	비밀번호를 잊으셨나요?
-Nickname	닉네임
+
 EmptyEmailError	이메일을 입력해주세요.
 EmailFormatError	이메일 형식이 아닙니다.
 EmailAlreadyExistsError	이미 존재하는 이메일입니다.
-NicknameCondition	최대 2~27글자, 특수문자는 -,_,.(마침표) 사용 가능
-NicknameAlreadyExistsError	이미 존재하는 닉네임입니다.
-NicknameConditionError	2~27글자 내로 닉네임을 정해주세요.
+
+
+NicknameConditionError	2~20글자 내로 닉네임을 정해주세요.
 AlreadyAccountExists	이미 계정이 있나요? 로그인하기
 TooManyLoginRequestsError	요청을 너무 많이 보냈습니다. 잠시 뒤 다시 시도해주세요.
 WrongEmailPasswordError	이메일 혹은 비밀번호가 잘못 입력되었습니다.

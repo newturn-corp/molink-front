@@ -13,11 +13,10 @@ export const NotificationButton: React.FC<{
           return <></>
       }
       // 하나라도 isViewed가 false인 Notification이 있으면 보여줌
-      const isNewNotificationExists = UserManager.follow.isNewRequestedFollowExist || UserManager.notification.notifications.filter(noti => !noti.isViewed).length > 0
+      const isNewNotificationExists = UserManager.notification.notifications.filter(noti => !noti.isViewed).length > 0
 
       const handleClick = async (event: React.MouseEvent<HTMLElement>) => {
           setAnchorEl(event.currentTarget)
-          await UserManager.follow.checkFollowRequestsViewed()
           await UserManager.notification.checkNotificationsViewed()
       }
 

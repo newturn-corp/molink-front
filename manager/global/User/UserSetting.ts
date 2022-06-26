@@ -46,8 +46,6 @@ export class UserSetting {
 
     reset () {
         this.editorSetting.reset()
-        this.editorSetting = null
-
         this.ySetting = null
         this.setting = null
         this.hierarchyWidth = 240

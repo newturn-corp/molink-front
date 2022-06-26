@@ -23,6 +23,7 @@ import EditorPage from '../../manager/Blog/Editor/EditorPage'
 import { handleHead1Shortcut, handleHead2Shortcut, handleHead3Shortcut } from './ShortcutKeyPlugin'
 import MenuManager from '../../manager/global/Menu/MenuManager'
 import { Editor } from 'slate'
+import { handleEnterInCallout } from './CalloutHandleKeyDownPlugin'
 
 type Handler = (event, editor: Editor) => boolean
 
@@ -96,6 +97,7 @@ handlerMap.set('Enter', [
     (event, editor) => MenuManager.handleEnter(event, editor),
     (event, editor) => LinkManager.menu.handleEnterAndTab(event, editor),
     (event, editor) => CommandManager.handleEnterAndTabAndClick(event, editor),
+    handleEnterInCallout,
     handleEnterInList,
     handleEnterInCode,
     handleEnterInVoid

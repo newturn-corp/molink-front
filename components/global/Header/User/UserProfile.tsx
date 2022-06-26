@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import { Avatar } from '@material-ui/core'
+import { Avatar } from 'antd'
 import UserManager from '../../../../manager/global/User/UserManager'
 import { BrowserView, isBrowser } from 'react-device-detect'
 import LanguageManager from '../../../../manager/global/LanguageManager'
