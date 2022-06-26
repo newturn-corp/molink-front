@@ -54,45 +54,45 @@ const BlogPageComponent: React.FC<{
     </div>
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const urlInfo = context.query.info as string[]
-
-    const getMetaInfo = async (pageID: string): Promise<ESPageMetaInfo | undefined> => {
-        try {
-            const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
-                method: 'GET'
-            })
-            const body = await res.json()
-            return body.data
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    const getPageIDFromURLInfo = (urlInfo: string[]) => {
-        if (urlInfo.length === 3) {
-            const [a, pageID, b] = urlInfo
-            return pageID
-        }
-    }
-
-    const pageID = getPageIDFromURLInfo(urlInfo)
-    if (pageID) {
-        const metaInfo = await getMetaInfo(pageID)
-        if (metaInfo) {
-            return {
-                props: {
-                    pageMetaInfo: metaInfo
-                }
-            }
-        }
-    }
-
-    return {
-        props: {
-            pageMetaInfo: null
-        }
-    }
-}
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//     const urlInfo = context.query.info as string[]
+//
+//     const getMetaInfo = async (pageID: string): Promise<ESPageMetaInfo | undefined> => {
+//         try {
+//             const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
+//                 method: 'GET'
+//             })
+//             const body = await res.json()
+//             return body.data
+//         } catch (err) {
+//             console.log(err)
+//         }
+//     }
+//
+//     const getPageIDFromURLInfo = (urlInfo: string[]) => {
+//         if (urlInfo.length === 3) {
+//             const [a, pageID, b] = urlInfo
+//             return pageID
+//         }
+//     }
+//
+//     const pageID = getPageIDFromURLInfo(urlInfo)
+//     if (pageID) {
+//         const metaInfo = await getMetaInfo(pageID)
+//         if (metaInfo) {
+//             return {
+//                 props: {
+//                     pageMetaInfo: metaInfo
+//                 }
+//             }
+//         }
+//     }
+//
+//     return {
+//         props: {
+//             pageMetaInfo: null
+//         }
+//     }
+// }
 
 export default BlogPageComponent
