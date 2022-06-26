@@ -14,7 +14,7 @@ const moduleExports = {
     future: {
         webpack5: true
     },
-    swcMinify: true,
+    swcMinify: false,
     webpack: config => {
         // 아래를 추가합니다.
         config.module.rules.push({
