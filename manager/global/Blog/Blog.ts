@@ -37,6 +37,11 @@ class Blog {
                 }
             }
         }, 1)
+        EventManager.addEventListener(Event.MoveToAnotherPage, async ({ page }: { page: Page }) => {
+            if (page === Page.Index && !UserManager.isUserAuthorized) {
+                this.reset()
+            }
+        }, 1)
     }
 
     async load (id: number) {

@@ -240,7 +240,8 @@
 .page-column-component .text-container .user-container {
   display: flex;
   flex-direction: row;
-  height: 20px;
+  height: 40px;
+  align-items: center;
   width: fit-content;
   margin-bottom: 5px;
 }
