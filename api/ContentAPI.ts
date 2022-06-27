@@ -48,7 +48,7 @@ class ContentAPI extends BaseAPI {
     }
 
     async updatePageHeaderIcon (dto: UpdatePageHeaderIconDTO) {
-        await this.put('/contents/title', dto)
+        await this.put('/contents/icon', dto)
     }
 }
 export default new ContentAPI()
