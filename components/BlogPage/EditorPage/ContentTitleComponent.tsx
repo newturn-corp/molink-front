@@ -6,9 +6,8 @@ import Blog from '../../../manager/global/Blog/Blog'
 
 export const ContentTitleComponent: React.FC<{
 }> = observer(() => {
-    const pageHierarchy = Blog.pageHierarchy
-    const openedPage = pageHierarchy.openedPage
     const editor = EditorPage.editor
+    const editorInfo = editor.info
 
     return (
         <div
@@ -19,11 +18,11 @@ export const ContentTitleComponent: React.FC<{
                 outline: '0px solid transparent',
                 fontSize: isBrowser ? 40 : 32
             }}
-            onBlur={(e) => {
-                pageHierarchy.updatePageTitle(openedPage.pageId, e.currentTarget.textContent)
+            onBlur={async (e) => {
+                await editorInfo.updateTitle(e.currentTarget.textContent)
             }}
         >
-            {openedPage.title}
+            {editorInfo.title}
         </div>
     )
 })

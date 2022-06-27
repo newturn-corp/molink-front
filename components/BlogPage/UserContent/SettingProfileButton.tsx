@@ -4,15 +4,13 @@ import Blog from '../../../manager/global/Blog/Blog'
 import ModalManager, { Modal } from '../../../manager/global/ModalManager'
 
 export const SettingProfileButton: React.FC<{
-}> = observer(() => {
-    if (!Blog.authority.setProfile) {
-        return <></>
-    }
-
-    return <div
-        className='profile-setting-button no-select'
-        onClick={() => ModalManager.open(Modal.BlogSetting)}
-    >
-        {'프로필 편집'}
-    </div>
+    blogID: number
+}> = observer((props) => {
+    return <></>
+    // return <div
+    //     className='profile-setting-button no-select'
+    //     onClick={() => ModalManager.open(Modal.BlogSetting)}
+    // >
+    //     {'프로필 편집'}
+    // </div>
 })

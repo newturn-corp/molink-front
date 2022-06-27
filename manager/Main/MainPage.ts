@@ -43,7 +43,6 @@ class MainPage {
             EventManager.addDisposableEventListener(Event.UserAuthorization, async ({ result }: any) => {
                 if (result) {
                     if (UserManager.blog.blogs[0]) {
-                        console.log(UserManager.blog.blogs[0])
                         await Blog.load(UserManager.blog.blogs[0])
                     }
                 }

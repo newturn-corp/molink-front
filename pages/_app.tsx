@@ -9,6 +9,7 @@ import '../styles/global/hierarchy.css'
 import '../styles/global/visibility-menu.css'
 import '../styles/global/user-menu.css'
 import '../styles/global/tutorial-modal.css'
+import '../styles/global/user-blog-bar.css'
 
 import '../styles/global/modal/setting-modal.css'
 

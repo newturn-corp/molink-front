@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import { ContentHeaderIcon } from './ContentHeaderIcon'
+import { ContentHeaderIconComponent } from './ContentHeaderIconComponent'
 import { EditorContainer } from '../../../BlogPage/EditorPage/Editor/EditorContainer'
 import { ContentTitleComponent } from '../../../BlogPage/EditorPage/ContentTitleComponent'
 import { ContentFooter } from './ContentFooter'
@@ -17,14 +17,15 @@ import Blog from '../../../../manager/global/Blog/Blog'
 export const ContentComponent: React.FC<{
 }> = observer(() => {
     const editor = EditorPage.editor
+    const blogInfo = EditorPage.blogInfo
     return <>
         <div className={'contents'}
             style={StyleManager.contentStyle.main}
         >
             {
-                Blog.pageHierarchy && Blog.pageHierarchy.openedPage && editor.isLoaded
+                editor.isLoaded
                     ? <>
-                        <ContentHeaderIcon/>
+                        <ContentHeaderIconComponent/>
                         <div
                             style={{
                                 marginBottom: 20
@@ -47,7 +48,13 @@ export const ContentComponent: React.FC<{
                         (!editor.editable || editor.info.isLocked) &&
                             <>
                                 <LikeButton/>
-                                <BlogInfoComponent/>
+                                <BlogInfoComponent
+                                    followerCount={blogInfo.followerCount}
+                                    profileImageURL={blogInfo.profileImageUrl}
+                                    biography={blogInfo.biography}
+                                    blogID={blogInfo.blogID}
+                                    name={blogInfo.name}
+                                />
                                 <CommentContainer/>
                             </>
                     }

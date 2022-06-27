@@ -7,6 +7,7 @@ import Blog from '../../global/Blog/Blog'
 import { EditorPageUserInfo } from './View/EditorPageUserInfo'
 import EventManager from '../../global/Event/EventManager'
 import { Event } from '../../global/Event/Event'
+import { ESPageMetaInfo } from '@newturn-develop/types-molink'
 
 class EditorPage {
     pageId: string
@@ -20,12 +21,13 @@ class EditorPage {
         makeAutoObservable(this)
     }
 
-    async handleEnter (pageId: string, pageBlogID: number, pageUserID: number) {
+    async handleEnter (pageId: string, pageMetaInfo: ESPageMetaInfo) {
         this.pageId = pageId
+        const { blogID: pageBlogID, userId: pageUserID } = pageMetaInfo
         await Blog.load(pageBlogID)
         Blog.pageHierarchy.openPage(pageId)
 
-        this.editor = new Editor(Blog.pageHierarchy.openedPage.title)
+        this.editor = new Editor(pageMetaInfo)
         this.commentInfo = new CommentInfo(pageId)
         this.blogInfo = new EditorPageBlogInfo(pageBlogID)
         this.pageInfo = new EditorPageInfo(pageId)

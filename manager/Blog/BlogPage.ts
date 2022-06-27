@@ -76,10 +76,7 @@ class BlogPage {
         this.pageType = BlogPageType.UserMainPage
     }
 
-    private async _getPageURLInfo (pageID: string, metaInfo: ESPageMetaInfo | null) {
-        if (!metaInfo) {
-            metaInfo = await ViewerAPI.getPageMetaInfo(pageID)
-        }
+    private async _getPageURLInfo (metaInfo: ESPageMetaInfo | null) {
         const pageTitle = metaInfo.title
         const blogID = metaInfo.blogID
         const userID = metaInfo.userId
@@ -94,12 +91,15 @@ class BlogPage {
     }
 
     private async _handleEnterStandardPageURL (metaInfo: ESPageMetaInfo | null, pageId: string, blogName: string, pageTitle: string) {
-        const { pageTitle: lastPageTitle, blogName: lastBlogName, blogID, userID } = await this._getPageURLInfo(pageId, metaInfo)
+        if (!metaInfo) {
+            metaInfo = await ViewerAPI.getPageMetaInfo(pageId)
+        }
+        const { pageTitle: lastPageTitle, blogName: lastBlogName } = await this._getPageURLInfo(metaInfo)
         if (lastBlogName !== blogName || pageTitle === undefined || lastPageTitle !== decodeURIComponent(pageTitle)) {
             await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${lastBlogName}/${pageId}/${encodeURIComponent(lastPageTitle)}`)
             return
         }
-        await EditorPage.handleEnter(pageId, blogID, userID)
+        await EditorPage.handleEnter(pageId, metaInfo)
         this.pageType = BlogPageType.NormalPage
     }
 
@@ -115,6 +115,7 @@ class BlogPage {
                 await this._handleEnterStandardPageURL(metaInfo, pageId, blogName, pageName)
             }
         } catch (err) {
+            console.log(err)
             if (err instanceof UserNotExists) {
                 await DialogManager.openDialog(LanguageManager.languageMap.UserNotExistsNoticeMessage, LanguageManager.languageMap.MoveToMainPageNoticeMessage, [LanguageManager.languageMap.Accept])
                 await RoutingManager.moveTo(Page.Index)

@@ -12,6 +12,7 @@ import { PageListComponent } from '../components/global/PageList/PageListCompone
 import MainPage from '../manager/Main/MainPage'
 import ContentContainer from '../components/global/ContentContainer'
 import { SiteHead } from '../components/global/SiteHead'
+import { UserBlogBarComponent } from '../components/global/UserBlogBar/UserBlogBarComponent'
 
 const MainPageComponent = observer(() => {
     useEffect(() => {
@@ -31,6 +32,7 @@ const MainPageComponent = observer(() => {
             style={StyleManager.globalStyle.body}
         >
             <BrowserView>
+                <UserBlogBarComponent />
                 <HierarchyContainer />
                 <HierarchyWidthController/>
                 <ContentContainer>

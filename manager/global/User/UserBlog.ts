@@ -5,7 +5,7 @@ import BlogInfoMap from '../Blog/BlogInfoMap'
 
 export class UserBlog {
     yBlog: Y.Array<number> = null
-    blogs: number[] = null
+    blogs: number[] = []
     listener: (arg0: YEvent<any>[], arg1: Transaction) => void = null
 
     constructor () {
@@ -17,10 +17,10 @@ export class UserBlog {
 
     sync (yBlog: Y.Array<any>) {
         this.yBlog = yBlog
-        this.listener = () => {
-            this.blogs = this.yBlog.toJSON()
-            console.log(`blogs ${this.blogs}`)
-            BlogInfoMap.updateByIDList(this.blogs)
+        this.listener = async () => {
+            const blogs = this.yBlog.toJSON()
+            await BlogInfoMap.updateByIDList(blogs)
+            this.blogs = blogs
         }
         this.yBlog.observeDeep(this.listener)
     }

@@ -20,9 +20,6 @@ export const SiteHead: React.FC<{
       } = EditorPage.blogInfo || {
           blogName: 'Molink'
       }
-      // console.log(`headText: ${headText}`)
-      // console.log(`pageDescription: ${pageDescription}`)
-      // console.log(`author: ${blogName}`)
 
       return <Head>
           <title>{headText}</title>

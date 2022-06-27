@@ -48,7 +48,6 @@ export class PageList {
             this.listEnded = true
             return
         }
-        console.log(results)
         const blogIDList = Array.from(new Set(results.map(summary => Number(summary.blogID))))
         await BlogInfoMap.updateByIDList(blogIDList)
         this.pageSummaryList.push(...results)

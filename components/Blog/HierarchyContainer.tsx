@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { observer } from 'mobx-react'
 import Drawer from '@material-ui/core/Drawer'
 import { makeStyles } from '@material-ui/core/styles'
@@ -13,7 +13,6 @@ import { HierarchyButtonGroup } from './ControlButton/HierarchyButtonGroup'
 import { BrowserView, isBrowser, MobileView } from 'react-device-detect'
 import { HierarchyOptionDrawer } from './HierarchyOptionDrawer/HierarchyOptionDrawer'
 import Blog from '../../manager/global/Blog/Blog'
-import { PageTitleEditorComponent } from './Overlay/PageTitleEditorComponent'
 import { BlogOverlayComponent } from './Overlay/BlogOverlayComponent'
 
 export const HierarchyContainer: React.FC<{
@@ -33,11 +32,20 @@ export const HierarchyContainer: React.FC<{
           return <></>
       }
 
+      const style: CSSProperties = {
+          width: Blog.getBlogWidth(),
+          top: isBrowser ? 56 : 0,
+          left: isBrowser && UserManager.isUserAuthorized ? 64 : 0,
+          height: 1280 - 56,
+          zIndex: isBrowser ? 10 : 1000,
+          position: isBrowser ? 'fixed' : 'absolute'
+      }
+
       return (
           <>
-              <BrowserView>
-                  <HierarchyOnOffButton/>
-              </BrowserView>
+              {/* <BrowserView> */}
+              {/*     <HierarchyOnOffButton/> */}
+              {/* </BrowserView> */}
               <MobileView>
                   <HierarchyOptionDrawer/>
               </MobileView>
@@ -57,7 +65,7 @@ export const HierarchyContainer: React.FC<{
                       : () => {
                           Blog.isOpen = false
                       }}
-                  style={StyleManager.hierarchyStyle.containerStyle}
+                  style={style}
                   classes={classes}
               >
                   {
