@@ -39,7 +39,7 @@ class Blog {
         }, 1)
         EventManager.addEventListener(Event.MoveToAnotherPage, async ({ page }: { page: Page }) => {
             if (page === Page.Index && !UserManager.isUserAuthorized) {
-                this.reset()
+                this.powerReset()
             }
         }, 1)
     }
@@ -96,6 +96,12 @@ class Blog {
             this.profile = null
         }
         this.yDocument = null
+    }
+
+    powerReset () {
+        this.reset()
+        this.authority = null
+        this.pageHierarchy = null
     }
 
     getBlogWidth () {
