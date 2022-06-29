@@ -80,14 +80,12 @@ class Blog {
 
     reset () {
         this.id = null
-        this.authority = null
         if (this.synchronizer) {
             this.synchronizer.reset()
             this.synchronizer = null
         }
         if (this.pageHierarchy) {
             this.pageHierarchy.reset()
-            this.pageHierarchy = null
         }
         if (this.blogPageList) {
             this.blogPageList.clear()
