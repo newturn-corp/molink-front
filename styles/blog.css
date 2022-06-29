@@ -424,6 +424,8 @@
   min-width: 40px;
   font-size: 14px;
   user-select: none;
+  line-height: 25px;
+  height: 25px;
 }
 
 .page-title-editor {
