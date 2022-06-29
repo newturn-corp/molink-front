@@ -19,8 +19,8 @@ export class UserBlog {
         this.yBlog = yBlog
         this.listener = async () => {
             const blogs = this.yBlog.toJSON()
-            await BlogInfoMap.updateByIDList(blogs)
             this.blogs = blogs
+            await BlogInfoMap.updateByIDList(blogs)
         }
         this.yBlog.observeDeep(this.listener)
     }

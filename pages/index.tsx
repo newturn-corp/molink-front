@@ -16,10 +16,7 @@ import { UserBlogBarComponent } from '../components/global/UserBlogBar/UserBlogB
 
 const MainPageComponent = observer(() => {
     useEffect(() => {
-        UserManager.load()
-            .then(async () => {
-                MainPage.handleEnter()
-            })
+        MainPage.handleEnter()
     }, [])
 
     const pageList = MainPage.pageLists[MainPage.currentCategoryIndex]

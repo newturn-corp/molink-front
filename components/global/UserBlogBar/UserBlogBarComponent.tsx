@@ -14,7 +14,7 @@ export const UserBlogBarComponent: React.FC<{
             className={'user-blog-bar'}
         >
             {
-                UserManager.blog.blogs.map(blogID => <UserBlogBlock
+                UserManager.blog.blogs.map(blogID => BlogInfoMap.idMap[blogID] && <UserBlogBlock
                     key={`user-blog-${blogID}`}
                     info={BlogInfoMap.idMap[blogID]}
                 />)
