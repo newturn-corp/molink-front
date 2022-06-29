@@ -6,6 +6,7 @@ import {
     FollowRequestInfo,
     FollowStatus
 } from '@newturn-develop/types-molink'
+import BlogFollowAPI from '../../../api/blog/BlogFollowAPI'
 
 export class UserFollow {
     followMap: { [index: number]: true } = null
@@ -37,7 +38,7 @@ export class UserFollow {
     }
 
     public async requestFollow (targetId: number) {
-        await UserAPI.follow(new FollowRequestDTO(targetId))
+        await BlogFollowAPI.follow(new FollowRequestDTO(targetId))
         this.followRequestMap[targetId] = true
     }
 }

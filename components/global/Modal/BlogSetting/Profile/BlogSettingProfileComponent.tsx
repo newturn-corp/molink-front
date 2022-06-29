@@ -8,6 +8,10 @@ import { ProfileImageSetting } from '../../Setting/Profile/ProfileImageSetting'
 
 export const BlogSettingProfileComponent: React.FC<{
 }> = observer(() => {
+    if (!Blog.profile) {
+        return <></>
+    }
+
     return <>
         <BlogNameSettingComponent/>
         <ProfileImageSetting

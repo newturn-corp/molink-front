@@ -2,12 +2,9 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import CommentIcon from 'public/image/icon/comment.svg'
 import HeartIcon from 'public/image/icon/heart.svg'
-import { Thumbnail } from './Thumbnail'
+import { PageThumbnailComponent } from './PageThumbnailComponent'
 import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 import { PageColumnComponentUserInfo } from './PageColumnComponentUserInfo'
-import { getRelativeTime } from 'utils/getRelativeTime'
-import ViewerAPI from '../../../api/ViewerAPI'
-import BlogInfoMap from '../../../manager/global/Blog/BlogInfoMap'
 
 export interface PageColumnComponentInterface {
     id: string
@@ -28,9 +25,11 @@ export const PageCellComponent: React.FC<PageColumnComponentInterface> = observe
             await RoutingManager.moveTo(Page.Blog, `/blog-name/${props.id}/page-name`)
         }}
     >
-        <Thumbnail
+        <PageThumbnailComponent
             title={props.title}
             image={props.image}
+            thumbnailWidth={370}
+            thumbnailHeight={170}
         />
         <div
             className={'text-container'}
