@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { FollowStatus } from '@newturn-develop/types-molink'
+import { FollowRequestDTO, FollowStatus } from '@newturn-develop/types-molink'
 import { observer } from 'mobx-react'
 import UserManager from '../../manager/global/User/UserManager'
 import { CircularProgress } from '@material-ui/core'
 import LanguageManager from '../../manager/global/LanguageManager'
+import BlogFollowAPI from '../../api/blog/BlogFollowAPI'
 
 export const FollowButton: React.FC<{
     blogID: number

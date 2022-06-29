@@ -5,6 +5,7 @@ import { PersonOutlined } from '@material-ui/icons'
 import { SettingModalComponent } from '../SettingModalComponent'
 import { BlogSettingProfileComponent } from './Profile/BlogSettingProfileComponent'
 import FlagIcon from 'public/image/icon/flag.svg'
+import Blog from '../../../../manager/global/Blog/Blog'
 
 export enum SettingCategoryEnum {
     Profile,
@@ -27,6 +28,10 @@ const viewEntry = {
 export const BlogSettingModalComponent: React.FC<{
 }> = observer(() => {
     const isOpen = ModalManager.map.get(Modal.BlogSetting)
+
+    if (!Blog.authority?.editable) {
+        return <></>
+    }
 
     return <SettingModalComponent
         isOpen={isOpen}
