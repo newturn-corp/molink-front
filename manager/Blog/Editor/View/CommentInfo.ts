@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 import ViewerAPI from '../../../../api/ViewerAPI'
 import UserInfoMap from '../../../global/User/UserInfoMap'
 import { PageComment } from '../../../../domain/PageComment'
@@ -10,7 +10,11 @@ export class CommentInfo {
     pageId: string
     commentCount: number = 0
     commentMap: { [index: string]: PageComment } = {}
-    topLevelCommentIDList: string[] = []
+    _topLevelCommentIDList: string[] = []
+
+    get topLevelCommentIDList () {
+        return toJS(this._topLevelCommentIDList)
+    }
 
     constructor (pageId: string) {
         this.pageId = pageId
@@ -29,7 +33,7 @@ export class CommentInfo {
         await UserInfoMap.updateUserInfoMapByUserIDList(Array.from(commentUserIDSet))
         for (const comment of comments) {
             if (!comment.parentCommentId) {
-                this.topLevelCommentIDList.push(comment.id)
+                this._topLevelCommentIDList.push(comment.id)
             }
             this.commentMap[comment.id] = new PageComment(comment.content, new Date(comment.createdAt), comment.userId)
         }
@@ -49,7 +53,7 @@ export class CommentInfo {
                 })
             }
         }
-        this.topLevelCommentIDList.sort((a, b) => {
+        this._topLevelCommentIDList.sort((a, b) => {
             const aComment = this.commentMap[a]
             const bComment = this.commentMap[b]
             return Number(aComment.createdAt) - Number(bComment.createdAt)
@@ -66,7 +70,7 @@ export class CommentInfo {
         if (parentCommentID) {
             this.commentMap[parentCommentID].children.push(commentID)
         } else {
-            this.topLevelCommentIDList.push(commentID)
+            this._topLevelCommentIDList.push(commentID)
         }
     }
 }
