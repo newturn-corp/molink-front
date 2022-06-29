@@ -6,19 +6,15 @@ import EmojiPicker from '../../../../manager/global/EmojiPicker'
 import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 import Blog from '../../../../manager/global/Blog/Blog'
 
-export const ContentHeaderIcon: React.FC<{
+export const ContentHeaderIconComponent: React.FC<{
   }> = observer(() => {
       const iconRef = useRef(null)
-      const openedPage = Blog.pageHierarchy.openedPage
+      const editorInfo = EditorPage.editor.info
 
       const onEmojiClick = useCallback((event, emojiObject: IEmojiData) => {
-          openedPage.handleEmojiClick(emojiObject.emoji)
+          editorInfo.updateHeaderIcon(emojiObject.emoji)
           EmojiPicker.close()
       }, [iconRef])
-
-      // if (!Blog.pageHierarchy.headerIconActive) {
-      //     return <></>
-      // }
 
       return <>
           <Button
@@ -35,7 +31,7 @@ export const ContentHeaderIcon: React.FC<{
                   EmojiPicker.open(position, onEmojiClick)
               }}
           >
-              {openedPage.icon}
+              {editorInfo.icon}
           </Button>
       </>
   })

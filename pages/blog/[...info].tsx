@@ -15,11 +15,15 @@ import { ESPageMetaInfo } from '@newturn-develop/types-molink'
 import { SERVER_BASE_URL } from '../../infra/constants'
 import { GetServerSideProps } from 'next'
 import RoutingManager from '../../manager/global/RoutingManager'
+import { UserBlogBarComponent } from '../../components/global/UserBlogBar/UserBlogBarComponent'
 
 const BlogPageComponent: React.FC<{
     pageMetaInfo: ESPageMetaInfo | null
 }> = ({ pageMetaInfo }) => {
     const router = useRouter()
+    if (!router.query.info) {
+        return <></>
+    }
     BlogPage.handleEnter(router.query.info as string[], pageMetaInfo)
     return <div>
         <BlogPageHead
@@ -43,6 +47,7 @@ const BlogPageComponent: React.FC<{
             >
                 <HomeMainComponent/>
                 <BrowserView>
+                    <UserBlogBarComponent/>
                     <HierarchyContainer />
                     <HierarchyWidthController/>
                 </BrowserView>

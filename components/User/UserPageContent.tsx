@@ -10,7 +10,6 @@ import { UserPageTabs } from './UserPageTabs'
 export const UserPageContent: React.FC<{
 }> = observer(() => {
     const userPageList = UserPage.pageList
-    console.log(userPageList)
     if (!userPageList) {
         return <></>
     }

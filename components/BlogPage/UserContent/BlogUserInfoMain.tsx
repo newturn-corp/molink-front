@@ -3,9 +3,13 @@ import React from 'react'
 import { FollowButton } from '../../global/FollowButton'
 import { SettingProfileButton } from './SettingProfileButton'
 import Blog from '../../../manager/global/Blog/Blog'
+import { BlogInfo } from '@newturn-develop/types-molink'
 
-export const BlogUserInfoMain: React.FC<{}> = observer(() => {
-    const name = Blog.profile.name
+export const BlogUserInfoMain: React.FC<{
+    blogID: number
+    name: string
+}> = observer((props) => {
+    const { blogID, name } = props
     return <div
         className={'main-container'}
     >
@@ -14,7 +18,11 @@ export const BlogUserInfoMain: React.FC<{}> = observer(() => {
         >
             {name}
         </div>
-        <FollowButton blogID={Blog.id}/>
-        <SettingProfileButton/>
+        <FollowButton
+            blogID={blogID}
+        />
+        <SettingProfileButton
+            blogID={blogID}
+        />
     </div>
 })

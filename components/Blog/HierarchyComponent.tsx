@@ -40,7 +40,11 @@ export const HierarchyComponent: React.FC<{
                       width: '100%',
                       height: 250
                   }}
-                  onDragOver={() => pageHierarchy.pageDragManager.handleDragOverHierarchyMargin()}
+                  onDragOver={() => {
+                      if (pageHierarchy.editable) {
+                          pageHierarchy.pageDragManager.handleDragOverHierarchyMargin()
+                      }
+                  }}
               />
           </List>
       )

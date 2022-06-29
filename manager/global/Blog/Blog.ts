@@ -39,7 +39,7 @@ class Blog {
         }, 1)
         EventManager.addEventListener(Event.MoveToAnotherPage, async ({ page }: { page: Page }) => {
             if (page === Page.Index && !UserManager.isUserAuthorized) {
-                this.reset()
+                this.powerReset()
             }
         }, 1)
     }
@@ -80,14 +80,12 @@ class Blog {
 
     reset () {
         this.id = null
-        this.authority = null
         if (this.synchronizer) {
             this.synchronizer.reset()
             this.synchronizer = null
         }
         if (this.pageHierarchy) {
             this.pageHierarchy.reset()
-            this.pageHierarchy = null
         }
         if (this.blogPageList) {
             this.blogPageList.clear()
@@ -98,6 +96,12 @@ class Blog {
             this.profile = null
         }
         this.yDocument = null
+    }
+
+    powerReset () {
+        this.reset()
+        this.authority = null
+        this.pageHierarchy = null
     }
 
     getBlogWidth () {

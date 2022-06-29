@@ -19,6 +19,7 @@ import { YjsEditor } from '@slate-yjs/core'
 import ImagePreLoader from '../../global/ImagePreLoader'
 import { EditorBookmarkInput } from './Control/EditorBookmarkInput'
 import { EditorLinkModifier } from './Control/EditorLinkModifier'
+import { ESPageMetaInfo } from '@newturn-develop/types-molink'
 
 export class Editor {
     public editable: boolean = false
@@ -27,7 +28,6 @@ export class Editor {
     yjsDocument: Y.Doc = null
     slateEditor: SlateEditor = null
 
-    title: string = ''
     info: EditorInfo = null
     selection: EditorSelection = null
     tagList: EditorTagList = null
@@ -46,11 +46,9 @@ export class Editor {
     isComposing: boolean = false
     isLoaded: boolean = false
 
-    constructor (title: string) {
-        this.title = title
-
+    constructor (metaInfo: ESPageMetaInfo) {
         this.yjsDocument = new Y.Doc()
-        this.info = new EditorInfo(this.yjsDocument.getMap('info'))
+        this.info = new EditorInfo(this.yjsDocument.getMap('info'), metaInfo)
         this.selection = new EditorSelection(this.yjsDocument.getMap('selection'))
         this.tagList = new EditorTagList(this.yjsDocument.getArray('tags'))
         this.toolbar = new EditorToolbar()
@@ -83,6 +81,7 @@ export class Editor {
             this.slateEditor = this.viewer.getSlateEditor()
         } else {
             this.toolbar.tryEnable()
+            this.info.load(pageId)
             this.synchronizer = new EditorSynchronizer(this.pageId, this.yjsDocument)
             await this.synchronizer.connect()
             this.slateEditor = this.synchronizer.getSlateEditor()

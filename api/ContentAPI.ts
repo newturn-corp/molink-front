@@ -7,7 +7,7 @@ import {
     SaveCommentDTO,
     SaveCommentResponseDTO,
     PublishPageDTO, CreatePageDTO
-    , HierarchyDocumentInfoInterface, CreatePageResponseDTO
+    , HierarchyDocumentInfoInterface, CreatePageResponseDTO, UpdatePageTitleDTO, UpdatePageHeaderIconDTO
 } from '@newturn-develop/types-molink'
 import { DeleteContentsDTO } from '@newturn-develop/types-molink/DTO/ContentDTO'
 
@@ -41,6 +41,14 @@ class ContentAPI extends BaseAPI {
     async publishPage (dto: PublishPageDTO) {
         const res = await this.put('/contents/publish', dto)
         return res.data
+    }
+
+    async updatePageTitle (dto: UpdatePageTitleDTO) {
+        await this.put('/contents/title', dto)
+    }
+
+    async updatePageHeaderIcon (dto: UpdatePageHeaderIconDTO) {
+        await this.put('/contents/icon', dto)
     }
 }
 export default new ContentAPI()

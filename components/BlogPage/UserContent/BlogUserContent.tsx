@@ -22,7 +22,13 @@ export const BlogUserContent: React.FC<{
             width: GlobalManager.screenWidth - Blog.getBlogWidth()
         }}
     >
-        <BlogInfoComponent/>
+        <BlogInfoComponent
+            blogID={Blog.id}
+            name={Blog.profile.name}
+            followerCount={Blog.profile.followerCount}
+            biography={Blog.profile.biography}
+            profileImageURL={Blog.profile.profileImageURL}
+        />
         <PageListComponent
             pageSummaryList={blogPageList.pageSummaryList}
             isListEnded={blogPageList.listEnded}

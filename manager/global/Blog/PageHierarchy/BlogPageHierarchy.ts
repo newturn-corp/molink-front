@@ -3,7 +3,12 @@ import { VisibilityController } from '../VisibilityController'
 import { LocationController } from '../LocationController'
 import { PageDragManager } from '../PageDragManager'
 import * as Y from 'yjs'
-import { CreatePageDTO, CreatePageInBlogDTO, HierarchyDocumentInfoInterface } from '@newturn-develop/types-molink'
+import {
+    CreatePageDTO,
+    CreatePageInBlogDTO,
+    HierarchyDocumentInfoInterface,
+    UpdatePageTitleDTO
+} from '@newturn-develop/types-molink'
 import RoutingManager, { Page } from '../../RoutingManager'
 import { BlogSynchronizer } from './BlogSynchronizer'
 import { BlogContextMenu } from './BlogContextMenu'
@@ -115,13 +120,11 @@ export class BlogPageHierarchy {
         this.yMap.set(pageId, page)
     }
 
-    public updatePageTitle (pageId: string, title: string) {
+    public async updatePageTitle (pageId: string, title: string) {
         if (!this.editable) {
             return
         }
-        const page = this.yMap.get(pageId)
-        page.title = title
-        this.yMap.set(pageId, page)
+        await ContentAPI.updatePageTitle(new UpdatePageTitleDTO(pageId, title))
         this.contextMenu.selectedPageId = null
         this.nameChangingPageId = null
     }

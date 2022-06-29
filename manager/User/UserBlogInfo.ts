@@ -15,6 +15,5 @@ export class UserBlogInfo {
 
     async load (userID: number) {
         this._blogs = await ViewerUserAPI.getUserBlogs(userID)
-        console.log(this.blogs)
     }
 }

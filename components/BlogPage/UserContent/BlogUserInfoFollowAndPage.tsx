@@ -4,9 +4,10 @@ import LanguageManager from '../../../manager/global/LanguageManager'
 import Blog from '../../../manager/global/Blog/Blog'
 
 export const BlogUserInfoFollowAndPage: React.FC<{
-}> = observer(() => {
-    const followerCount = Blog.profile.followerCount
-    const pageCount = Blog.blogPageList.totalPageCount
+    followerCount: number,
+    pageCount?: number
+}> = observer((props) => {
+    const { followerCount, pageCount } = props
     return <div
         className={'follow-info-container'}
     >

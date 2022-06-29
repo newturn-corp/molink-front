@@ -24,7 +24,6 @@ export class UserSearchEngine implements SearchEngine {
         this.page = page
         const from = (page - 1) * 10
         const dto = await ViewerSearchAPI.searchUser(text, from, this.searchResultCountPerPage)
-        console.log(dto)
         this.total = dto.total
         this.searchResults = dto.results
         this.isSearching = false

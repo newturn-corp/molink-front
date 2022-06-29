@@ -1,0 +1,19 @@
+.user-blog-bar {
+  width: 64px;
+  height: 100%;
+  position: fixed;
+  left: 0px;
+  background-color: #F2F3F5;
+}
+.user-blog-bar .user-blog-block {
+  margin: 8px;
+  cursor: pointer;
+}
+.user-blog-bar .user-blog-block .ant-avatar {
+  border-radius: 12px;
+}
+.user-blog-bar .user-blog-block.active .ant-avatar {
+  border: 3px solid #7AACE0;
+}
+
+/*# sourceMappingURL=user-blog-bar.css.map */
