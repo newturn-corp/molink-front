@@ -14,6 +14,9 @@ const moduleExports = {
     future: {
         webpack5: true
     },
+    images: {
+        domains: [process.env.NODE_ENV === 'production' ? 'api.molink.life' : 'api.development.molink.life']
+    },
     swcMinify: false,
     webpack: config => {
         // 아래를 추가합니다.

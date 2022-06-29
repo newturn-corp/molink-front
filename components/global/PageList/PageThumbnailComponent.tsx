@@ -1,12 +1,15 @@
 import React from 'react'
 import { observer } from 'mobx-react'
+import Image from 'next/image'
 
 export interface ThumbnailInterface {
     image?: string
     title: string
+    thumbnailWidth: number,
+    thumbnailHeight: number
 }
 
-export const Thumbnail: React.FC<ThumbnailInterface> = observer((props) => {
+export const PageThumbnailComponent: React.FC<ThumbnailInterface> = observer((props) => {
     return <div
         className={'thumbnail'}
         style={{
@@ -16,8 +19,10 @@ export const Thumbnail: React.FC<ThumbnailInterface> = observer((props) => {
     >
         {
             props.image
-                ? <img
+                ? <Image
                     src={props.image}
+                    width={props.thumbnailWidth}
+                    height={props.thumbnailHeight}
                 />
                 : <div
                     className={'text'}

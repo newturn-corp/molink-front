@@ -4,7 +4,7 @@ import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 import { HeartFilled } from '@ant-design/icons'
 import CommentIcon from 'public/image/icon/comment.svg'
 import HeartIcon from 'public/image/icon/heart.svg'
-import { Thumbnail } from './Thumbnail'
+import { PageThumbnailComponent } from './PageThumbnailComponent'
 import { PageColumnComponentUserInfo } from './PageColumnComponentUserInfo'
 import { getRelativeTime } from '../../../utils/getRelativeTime'
 
@@ -27,9 +27,11 @@ export const PageColumnComponent: React.FC<PageColumnComponentInterface> = obser
             await RoutingManager.moveTo(Page.Blog, `/blog-name/${props.id}/page-name`)
         }}
     >
-        <Thumbnail
+        <PageThumbnailComponent
             title={props.title}
             image={props.image}
+            thumbnailWidth={250}
+            thumbnailHeight={152}
         />
         <div
             className={'text-container'}
