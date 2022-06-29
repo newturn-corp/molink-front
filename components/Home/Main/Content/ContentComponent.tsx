@@ -12,7 +12,6 @@ import { PageTagList } from '../../../BlogPage/EditorPage/PageTagList'
 import { EditorPageSkeleton } from '../../../BlogPage/EditorPage/EditorPageSkeleton'
 import { CommentContainer } from '../../../BlogPage/EditorPage/Comment/CommentContainer'
 import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
-import Blog from '../../../../manager/global/Blog/Blog'
 
 export const ContentComponent: React.FC<{
 }> = observer(() => {

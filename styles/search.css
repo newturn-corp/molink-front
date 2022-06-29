@@ -61,6 +61,7 @@
   line-height: 24px;
   height: 72px;
   margin-bottom: 6px;
+  overflow: hidden;
 }
 .search-page .core .page-search-result .text-container .search-tag-list-container {
   display: flex;
