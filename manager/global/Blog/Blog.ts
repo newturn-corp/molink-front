@@ -14,6 +14,7 @@ import { BlogPageHierarchy } from './PageHierarchy/BlogPageHierarchy'
 import DialogManager from '../DialogManager'
 import LanguageManager from '../LanguageManager'
 import RoutingManager, { Page } from '../RoutingManager'
+import { BlogNotifications } from './BlogNotifications'
 
 class Blog {
     id: number = null
@@ -25,6 +26,7 @@ class Blog {
     setting: BlogSetting = null
     blogPageList: BlogPageList = null
     pageHierarchy: BlogPageHierarchy = null
+    notifications: BlogNotifications = null
 
     constructor () {
         makeAutoObservable(this)
@@ -63,8 +65,10 @@ class Blog {
         this.blogPageList = new BlogPageList(this.id)
         this.setting = new BlogSetting(this.yDocument.getMap('setting'))
         this.profile = new BlogProfile(this.yDocument.getMap('profile'))
+        this.notifications = new BlogNotifications()
         await Promise.all([
             // this.blogUserInfo.load(id),
+            this.notifications.load(id),
             this.profile.load(id)
         ])
 
@@ -94,6 +98,10 @@ class Blog {
         if (this.profile) {
             this.profile.reset()
             this.profile = null
+        }
+        if (this.notifications) {
+            this.notifications.reset()
+            this.notifications = null
         }
         this.yDocument = null
     }

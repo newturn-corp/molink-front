@@ -15,7 +15,7 @@ export const BlogSettingProfileComponent: React.FC<{
     return <>
         <BlogNameSettingComponent/>
         <ProfileImageSetting
-            id={'blog-profile-image-setting'}
+            id={'blog-page-profile-image-setting'}
             text={LanguageManager.languageMap.ProfileImage}
             profileImageSrc={Blog.profile.profileImageURL}
             onChange={(event) => Blog.profile.updateProfileImage(event)}

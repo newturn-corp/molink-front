@@ -6,11 +6,13 @@ export interface HierarchyButtonInterface {
     text: string,
     onClick: React.MouseEventHandler<HTMLDivElement>
     disabled?: boolean
+    ref?: React.MutableRefObject<HTMLDivElement>
 }
 
 export const HierarchyButton: React.FC<HierarchyButtonInterface> = observer((props) => {
     return (
         <div
+            ref={props.ref}
             className={'hierarchy-button' + (props.disabled ? ' disabled' : '')}
             onClick={(event) => props.onClick(event)}
         >

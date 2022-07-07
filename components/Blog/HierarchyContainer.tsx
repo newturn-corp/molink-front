@@ -9,11 +9,12 @@ import { HierarchyName } from './HierarchyName'
 import { HierarchyOnOffButton } from './HierarchyOnOffButton'
 import UserManager from '../../manager/global/User/UserManager'
 import StyleManager from '../../manager/global/Style/StyleManager'
-import { HierarchyButtonGroup } from './ControlButton/HierarchyButtonGroup'
+import { BlogButtonGroupComponent } from './ControlButton/BlogButtonGroupComponent'
 import { BrowserView, isBrowser, MobileView } from 'react-device-detect'
 import { HierarchyOptionDrawer } from './HierarchyOptionDrawer/HierarchyOptionDrawer'
 import Blog from '../../manager/global/Blog/Blog'
 import { BlogOverlayComponent } from './Overlay/BlogOverlayComponent'
+import { BlogNotificationOverlayComponent } from './Overlay/BlogNotificationOverlayComponent'
 
 export const HierarchyContainer: React.FC<{
   }> = observer(() => {
@@ -71,12 +72,13 @@ export const HierarchyContainer: React.FC<{
                   {
                       Blog.isOpen && <>
                           <HierarchyName/>
-                          <HierarchyButtonGroup/>
+                          <BlogButtonGroupComponent/>
                           <HierarchyComponent/>
                           {
                               Blog.authority.editable && <>
                                   <HierarchyContextMenu/>
                                   <DragIndicator/>
+                                  <BlogNotificationOverlayComponent/>
                               </>
                           }
                       </>

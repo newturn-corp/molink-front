@@ -16,29 +16,13 @@ import { AcceptFollowRequestDTO, RejectFollowRequestDTO } from '../DTO/FollowDTO
 
 class UserAPI extends BaseAPI {
     async getUserID (): Promise<number> {
-        const res = await this.get('/main/users/id')
+        const res = await this.get('/users/id')
         if (res.status === 401) {
             throw new Unauthorized()
         }
         if (res.status !== 200) throw new APIError(res)
         const data = res.data as GetUserIDDTO
         return data.id
-    }
-
-    async searchUsers (dto: SearchUserDTO): Promise<ESUser[]> {
-        const res = await this.get(`/main/users/search?q=${dto.searchText}`)
-        if (res.status !== 200) throw new APIError(res)
-        return res.arr
-    }
-
-    async getUserRepresentativeDocumentUrl (dto: GetUserRepresentativeDocumentURLDTO): Promise<GetUserRepresentativeDocumentResponseDTO> {
-        const res = await this.get(`/main/users/representative-document-url?id=${dto.id}`)
-        if (res.status === 404001) {
-            throw new UserNotExists()
-        } else if (res.status === 409001) {
-            throw new RepresentativeDocumentNotExists()
-        }
-        return new GetUserRepresentativeDocumentResponseDTO(res.data.url)
     }
 
     async updateUserProfileImage (dto: UpdateUserProfileImageDTO): Promise<void> {
