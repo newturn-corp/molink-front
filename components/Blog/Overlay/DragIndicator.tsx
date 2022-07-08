@@ -6,17 +6,19 @@ import Blog from '../../../manager/global/Blog/Blog'
 export const DragIndicator: React.FC<{
   }> = observer(() => {
       const pageHierarchy = Blog.pageHierarchy
-      const pageDragManager = Blog.pageHierarchy.pageDragManager
+      const pageDragManager = pageHierarchy.pageDragManager
       const tooltipRef = useRef<HTMLDivElement>(null)
       const indicatorRef = useRef<HTMLDivElement>(null)
       useEffect(() => {
           if (!pageDragManager || !indicatorRef) {
               return
           }
+          console.log('여기 호출')
           pageDragManager.indicatorTooltip = document.getElementsByClassName('drag-indicator-tooltip')[0] as HTMLElement
           pageDragManager.dragIndicator = indicatorRef.current
       }, [pageDragManager, indicatorRef])
-
+      console.log(pageDragManager)
+      console.log(indicatorRef)
       if (!pageDragManager) {
           return <></>
       }

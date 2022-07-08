@@ -11,12 +11,12 @@ import {
 
 class MainAPI extends BaseAPI {
     async saveSupport (dto: SaveSupportDTO): Promise<void> {
-        const res = await this.post('/main/supports', dto)
+        const res = await this.post('/users/supports', dto)
         if (res.status !== 201) throw new APIError(res)
     }
 
     async analyzeLink (link: string): Promise<AnalyzeLinkResponseDTO> {
-        const res = await this.get(`/main/link/analyze?link=${encodeURIComponent(link)}`)
+        const res = await this.get(`/contents/link/analyze?link=${encodeURIComponent(link)}`)
         if (res.status !== 200) throw new APIError(res)
         return res.data
     }
