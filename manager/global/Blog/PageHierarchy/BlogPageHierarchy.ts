@@ -45,8 +45,8 @@ export class BlogPageHierarchy {
 
     public visibilityController: VisibilityController
     public locationController: LocationController
-    public pageDragManager: PageDragManager
-    public pageCreator: BlogPageCreator
+    public pageDragManager: PageDragManager = null
+    public pageCreator: BlogPageCreator = null
     public pageTitleEditor: BlogPageTitleEditor = null
     public contextMenu: BlogContextMenu = null
     public openedPage: BlogOpenedPage = null
@@ -76,7 +76,8 @@ export class BlogPageHierarchy {
         })
     }
 
-    async loadEditingComponent () {
+    loadEditingComponent () {
+        console.log('loadEditingComponent')
         this.visibilityController = new VisibilityController()
         this.locationController = new LocationController(this.yDocument, this.yMap, this.yTopLevelDocumentIdList, this.visibilityController)
         this.pageDragManager = new PageDragManager(this)

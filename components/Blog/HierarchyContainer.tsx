@@ -15,6 +15,7 @@ import { HierarchyOptionDrawer } from './HierarchyOptionDrawer/HierarchyOptionDr
 import Blog from '../../manager/global/Blog/Blog'
 import { BlogOverlayComponent } from './Overlay/BlogOverlayComponent'
 import { BlogNotificationOverlayComponent } from './Overlay/BlogNotificationOverlayComponent'
+import GlobalManager from '../../manager/global/GlobalManager'
 
 export const HierarchyContainer: React.FC<{
   }> = observer(() => {
@@ -37,7 +38,7 @@ export const HierarchyContainer: React.FC<{
           width: Blog.getBlogWidth(),
           top: isBrowser ? 56 : 0,
           left: isBrowser && UserManager.isUserAuthorized ? 64 : 0,
-          height: 1280 - 56,
+          height: GlobalManager.screenHeight - 56,
           zIndex: isBrowser ? 10 : 1000,
           position: isBrowser ? 'fixed' : 'absolute'
       }

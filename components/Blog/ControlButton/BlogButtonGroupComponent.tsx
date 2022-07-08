@@ -41,15 +41,15 @@ export const BlogButtonGroupComponent: React.FC<{
                         }
                     }}
                 />
-                <HierarchyButton
-                    ref={notificationButtonRef}
-                    icon={<NotificationIcon/>}
-                    text={'알림'}
-                    onClick={async (event) => {
-                        event.stopPropagation()
-                        Blog.notifications.view.open()
-                    }}
-                />
+                {/* <HierarchyButton */}
+                {/*     ref={notificationButtonRef} */}
+                {/*     icon={<NotificationIcon/>} */}
+                {/*     text={'알림'} */}
+                {/*     onClick={async (event) => { */}
+                {/*         event.stopPropagation() */}
+                {/*         Blog.notifications.view.open() */}
+                {/*     }} */}
+                {/* /> */}
                 <HierarchyButton
                     icon={<SettingIcon/>}
                     text={'설정'}

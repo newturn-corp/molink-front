@@ -15,7 +15,7 @@ export const UserBlogBlock: React.FC<{
             visible={isActive ? false : undefined}
         >
             <div
-                className={'user-blog-page-block' + (isActive ? ' active' : '')}
+                className={'user-blog-block' + (isActive ? ' active' : '')}
                 onClick={() => {
                     Blog.load(props.info.id)
                 }}

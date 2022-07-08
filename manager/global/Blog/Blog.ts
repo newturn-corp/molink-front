@@ -75,7 +75,7 @@ class Blog {
         if (this.authority.editable) {
             this.synchronizer = new BlogSynchronizer(this.id, this.yDocument)
             await this.synchronizer.connect(this.profile.yProfile)
-            await this.pageHierarchy.loadEditingComponent()
+            this.pageHierarchy.loadEditingComponent()
         } else {
             const dto = await ViewerAPI.getBlog(this.id)
             Y.applyUpdate(this.yDocument, Uint8Array.from(dto.hierarchy))

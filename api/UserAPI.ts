@@ -41,12 +41,6 @@ class UserAPI extends BaseAPI {
         return res.data
     }
 
-    async getFollowerMap (): Promise<GetFollowerMapResponseDTO> {
-        const res = await this.get('/users/follow/followers')
-        if (res.status !== 200) throw new APIError(res)
-        return res.data
-    }
-
     async getMyFollowRequestMap (): Promise<GetMyFollowRequestResponseDTO> {
         const res = await this.get('/users/follow/requests')
         if (res.status !== 200) throw new APIError(res)
