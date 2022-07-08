@@ -68,7 +68,6 @@ class Blog {
         this.notifications = new BlogNotifications()
         await Promise.all([
             // this.blogUserInfo.load(id),
-            this.notifications.load(id),
             this.profile.load(id)
         ])
 
@@ -76,6 +75,7 @@ class Blog {
             this.synchronizer = new BlogSynchronizer(this.id, this.yDocument)
             await this.synchronizer.connect(this.profile.yProfile)
             this.pageHierarchy.loadEditingComponent()
+            await this.notifications.load(id)
         } else {
             const dto = await ViewerAPI.getBlog(this.id)
             Y.applyUpdate(this.yDocument, Uint8Array.from(dto.hierarchy))
