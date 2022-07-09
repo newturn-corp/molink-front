@@ -44,6 +44,9 @@ class Blog {
                 this.powerReset()
             }
         }, 1)
+        EventManager.addEventListener(Event.SignOut, () => {
+            this.powerReset()
+        }, 1)
     }
 
     async load (id: number) {

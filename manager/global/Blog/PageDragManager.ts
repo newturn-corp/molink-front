@@ -155,7 +155,7 @@ export class PageDragManager {
     }
 
     async handleDragEnd (ghost: HTMLElement) {
-        globalThis.document.getElementsByClassName('drag-ghost-parent')[0].removeChild(ghost)
+        globalThis.document.getElementById('drag-ghost-parent').removeChild(ghost)
 
         this.setIndicatorVisible(false)
         this.setIndicatorTooltipVisible(false)

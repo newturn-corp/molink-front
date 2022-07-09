@@ -44,6 +44,10 @@ const MainPageComponent = observer(() => {
                 </ContentContainer>
             </BrowserView>
         </div>
+        <div
+            id={'drag-ghost-parent'}
+            className={'drag-ghost-parent'}
+        />
     </div>
 })
 

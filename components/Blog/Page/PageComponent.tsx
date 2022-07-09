@@ -40,7 +40,7 @@ export const PageComponent: React.FC<{
           ghost.style.position = 'absolute'
           ghost.style.top = '0px'
           ghost.style.right = '0px'
-          globalThis.document.getElementsByClassName('drag-ghost-parent')[0].appendChild(ghost)
+          globalThis.document.getElementById('drag-ghost-parent').appendChild(ghost)
           event.dataTransfer.setDragImage(ghost, event.clientX, event.clientY - divRef.current.getBoundingClientRect().y)
           pageDragManager.handleDragStart(page.id)
       }
