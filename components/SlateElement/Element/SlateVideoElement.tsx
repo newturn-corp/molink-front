@@ -37,6 +37,8 @@ export const SlateVideoElement: React.FC<{
     const [isMouseOver, setIsMouseOver] = useState(false)
     const menuButtonRef = useRef<HTMLDivElement>()
 
+    const editable = EditorPage.editor.editable
+
     return (
         <>
             {children}
@@ -69,13 +71,16 @@ export const SlateVideoElement: React.FC<{
                                 controls={true}
                             />
                             {
-                                <div
+                                editable && <div
                                     ref={menuButtonRef}
                                     className={'menu-button'}
                                     style={{
                                         display: isMouseOver ? undefined : 'none'
                                     }}
                                     onClick={(event) => {
+                                        if (!editable) {
+                                            return false
+                                        }
                                         event.stopPropagation()
                                         Transforms.select(slateEditor, currentNodePath())
                                         const rect = menuButtonRef.current.getBoundingClientRect()
