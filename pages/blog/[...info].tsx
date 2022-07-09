@@ -53,6 +53,7 @@ const BlogPageComponent: React.FC<{
                 </BrowserView>
             </div>
             <div
+                id={'drag-ghost-parent'}
                 className={'drag-ghost-parent'}
             />
         </div>
