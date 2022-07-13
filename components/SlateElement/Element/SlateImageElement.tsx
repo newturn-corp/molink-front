@@ -18,6 +18,7 @@ import MenuItem from '../../../manager/global/Menu/MenuItem'
 import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 import { MediaMenuButton } from '../Extra/MediaMenuButton'
 import { FileLoading } from './FileLoading'
+import MenuManager from '../../../manager/global/Menu/MenuManager'
 
 const Caption: React.FC<{
     selected: boolean,
@@ -274,6 +275,7 @@ export const SlateImageElement: React.FC<{
                                       if (editable) {
                                           Transforms.removeNodes(editor, { at: currentNodePath() })
                                       }
+                                      MenuManager.close()
                                   })]}
                                   onClick={() => {
                                       Transforms.select(editor, currentNodePath())
