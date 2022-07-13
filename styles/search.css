@@ -68,6 +68,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   height: 36px;
+  overflow: hidden;
 }
 .search-page .core .page-search-result .text-container .search-tag-list-container .ant-tag {
   font-size: 14px;
