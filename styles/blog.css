@@ -327,6 +327,10 @@
   font-weight: 600;
   margin-bottom: 8px;
   line-height: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 20px;
+  text-overflow: ellipsis;
 }
 .page-cell-component .text-container .last-edited-at {
   font-size: 12px;
@@ -435,4 +439,4 @@
   padding: 6px 10px;
 }
 
-/*# sourceMappingURL=blog-page.css.map */
+/*# sourceMappingURL=blog.css.map */

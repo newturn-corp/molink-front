@@ -334,6 +334,10 @@
       font-weight: 600;
       margin-bottom: 8px;
       line-height: 20px;
+      overflow: hidden;
+      white-space: nowrap;
+      height: 20px;
+      text-overflow: ellipsis;
     }
     .last-edited-at {
       font-size: 12px;
