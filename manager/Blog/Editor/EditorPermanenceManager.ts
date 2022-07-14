@@ -21,7 +21,7 @@ export class EditorPermanenceManager {
         this.tagList = tagList
         this.slateEditor = slateEditor
         EventManager.addDisposableEventListeners(
-            [Event.MoveToAnotherPage, Event.SignOut], async () => {
+            [Event.MoveToAnotherPage, Event.SignOut, Event.UnloadPage], async () => {
                 await this.persistPageDataInSearchEngine()
             }, 10)
         EventManager.addEventListener(
