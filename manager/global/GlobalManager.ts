@@ -41,10 +41,16 @@ class GlobalManager {
             this.mousePositionX = event.pageX
             this.mousePositionY = event.pageY
         })
-        this.window.onbeforeunload = () => {
+        // this.window.onbeforeunload = () => {
+        //     console.log('onbeforeunload')
+        //     EventManager.issueEvent(Event.UnloadPage, {})
+        //     return undefined
+        // }
+        this.window.addEventListener('beforeunload', (event) => {
+            // 표준에 따라 기본 동작 방지
+            event.preventDefault()
             EventManager.issueEvent(Event.UnloadPage, {})
-            return undefined
-        }
+        })
         this.window.onresize = async () => {
             this.screenHeight = this.window.innerHeight
             this.screenWidth = this.window.innerWidth
