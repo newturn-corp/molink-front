@@ -8,6 +8,7 @@ import LinkManager from '../../../../../manager/Editing/Link/LinkManager'
 import { Portal } from '../../../../utils/Portal'
 import FormattingManager, { Format } from '../../../../../manager/Editing/FormattingManager'
 import { LinkButton } from './LinkButton'
+import EditorPage from '../../../../../manager/Blog/Editor/EditorPage'
 
 interface BaseProps {
     className: string
@@ -119,6 +120,8 @@ export const HoveringToolbar: React.FC<{
         }
 
         if (
+            !EditorPage.editor ||
+            !EditorPage.editor.editable ||
             !selection ||
           Range.isCollapsed(selection) ||
           Editor.string(editor, selection) === ''
