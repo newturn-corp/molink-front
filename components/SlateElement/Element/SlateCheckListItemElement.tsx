@@ -28,6 +28,7 @@ export const SlateCheckListItemElement: React.FC<{
               otherChildren.push(children[i])
           }
       }
+
       return (
           <div>
               <div

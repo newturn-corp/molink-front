@@ -14,6 +14,9 @@ import { SlateFileElement } from './Element/SlateFileElement'
 import { SlateBookmarkElement } from './Element/Bookmark/SlateBookmarkElement'
 import { SlateCalloutElement } from './Element/CalloutElement'
 import { SlateTempBookmarkElement } from './Element/Bookmark/SlateTempBookmarkElement'
+import { SlateUnorderedListItemElement } from './Element/SlateUnorderedListItemElement'
+import { SlateUnorderedListElement } from './Element/SlateUnorderedListElement'
+import { SlateOrderedListItemElement } from './Element/SlateOrderedListItemElement'
 
 export const CustomElementComponent: React.FC<{
     attributes,
@@ -37,14 +40,15 @@ export const CustomElementComponent: React.FC<{
       case 'text':
           return <SlateTextElement { ...props } />
       case 'ul-list':
-          return <ul className='unordered-list' {...attributes}>{children}</ul>
+          return <SlateUnorderedListElement { ...props } />
       case 'check-list':
           return <ul className='check-list' {...attributes}>{children}</ul>
       case 'ol-list':
           return <SlateOrderedListElement { ...props }/>
       case 'list-item':
+          return <SlateUnorderedListItemElement { ...props }/>
       case 'ordered-list-item':
-          return <li {...attributes}>{children}</li>
+          return <SlateOrderedListItemElement { ...props }/>
       case 'check-list-item':
           return <SlateCheckListItemElement {...props} />
       case 'heading':

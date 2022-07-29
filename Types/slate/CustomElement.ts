@@ -108,25 +108,28 @@ export type MentionElement = {
 
 export type ListItemElement = {
     type: 'list-item'
+    isClosed: boolean
     children: CustomText[]
   }
 
 export type OrderedListItemElement = {
     type: 'ordered-list-item'
+    isClosed: boolean
     children: CustomText[]
   }
+
+export type CheckListItemElement = {
+    type: 'check-list-item'
+    checked: boolean
+    isClosed: boolean
+    children: CustomText[]
+}
 
 export type DocumentElement = {
     type: 'document',
     documentId: string,
     children: EmptyText[]
   }
-
-export type CheckListItemElement = {
-    type: 'check-list-item',
-    checked: boolean,
-    children: CustomText[]
-}
 
 export enum AvailCodeLanguage {
     Javascript = 'Javascript',

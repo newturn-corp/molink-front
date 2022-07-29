@@ -115,31 +115,41 @@ class FormattingManager {
             }
             Transforms.setNodes(editor, newProperties)
         } else {
-            if (ListEditor.isSelectionInList(editor)) {
-                const newProperties: Partial<SlateElement> = {
-                    type: list as any
+            const isOtherListActive = this.listMap.get(List.Dot) || this.listMap.get(List.Number) || this.listMap.get(List.Check)
+            if (!isOtherListActive) {
+                if (ListEditor.isSelectionInList(editor)) {
+                    const newProperties: Partial<SlateElement> = {
+                        type: list as any
+                    }
+                    Transforms.setNodes<SlateElement>(editor, newProperties, {
+                        match: n => ListElement.isList(n)
+                    })
+                } else {
+                    ListTransforms.wrapInList(editor, list)
                 }
-                Transforms.setNodes<SlateElement>(editor, newProperties, {
-                    match: n => ListElement.isList(n)
-                })
-            } else {
-                ListTransforms.wrapInList(editor, list)
             }
 
-            if (list === List.Check) {
+            if (list === List.Dot) {
+                const newProperties: Partial<SlateElement> = {
+                    type: 'list-item'
+                }
+                Transforms.setNodes<SlateElement>(editor, newProperties, {
+                    match: n => SlateEditor.isBlock(editor, n) && ListElement.isItem(n)
+                })
+            } else if (list === List.Number) {
+                const newProperties: Partial<SlateElement> = {
+                    type: 'ordered-list-item'
+                }
+                Transforms.setNodes<SlateElement>(editor, newProperties, {
+                    match: n => SlateEditor.isBlock(editor, n) && ListElement.isItem(n)
+                })
+            } else if (list === List.Check) {
                 const newProperties: Partial<SlateElement> = {
                     type: 'check-list-item',
                     checked: false
                 }
                 Transforms.setNodes<SlateElement>(editor, newProperties, {
-                    match: n => SlateEditor.isBlock(editor, n) && n.type === 'list-item'
-                })
-            } else {
-                const newProperties: Partial<SlateElement> = {
-                    type: 'list-item'
-                }
-                Transforms.setNodes<SlateElement>(editor, newProperties, {
-                    match: n => SlateEditor.isBlock(editor, n) && (n.type === 'list-item' || n.type === 'check-list-item')
+                    match: n => SlateEditor.isBlock(editor, n) && ListElement.isItem(n)
                 })
             }
         }
@@ -171,14 +181,14 @@ class FormattingManager {
         this.listMap.set(List.Check, false)
         const slateEditor = EditorPage.editor.slateEditor
         if (slateEditor.selection) {
-            const list = ListEditor.getListForItem(slateEditor, slateEditor.selection.anchor.path)
-            if (list) {
-                const [node] = list
-                if (node.type === 'ul-list') {
-                    this.listMap.set(List.Dot, true)
-                } else if (node.type === 'ol-list') {
+            const currentItem = ListEditor.getCurrentItem(slateEditor)
+            if (currentItem) {
+                const [node] = currentItem
+                if (node.type === 'ordered-list-item') {
                     this.listMap.set(List.Number, true)
-                } else if (node.type === 'check-list') {
+                } else if (node.type === 'list-item') {
+                    this.listMap.set(List.Dot, true)
+                } else if (node.type === 'check-list-item') {
                     this.listMap.set(List.Check, true)
                 }
             }
