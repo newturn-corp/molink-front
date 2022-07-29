@@ -1,6 +1,6 @@
 import { TextCategory } from '../../Types/slate/CustomElement'
 import { Editor as SlateEditor, Editor, Element as SlateElement, Node, Path, Transforms } from 'slate'
-import { ListTransforms } from '../../plugin'
+import { ListElement, ListTransforms } from '../../plugin'
 
 class ShortcutManager {
     getPropertyByShortcut (shortcut: string): Partial<SlateElement> {
@@ -86,6 +86,12 @@ class ShortcutManager {
         } else if (type === 'ol-list') {
             const start = beforeText.split('.')[0]
             ListTransforms.wrapInList(editor, 'ol-list', { start: Number(start) })
+            const newProperties: Partial<SlateElement> = {
+                type: 'ordered-list-item'
+            }
+            Transforms.setNodes<SlateElement>(editor, newProperties, {
+                match: n => SlateEditor.isBlock(editor, n) && ListElement.isItem(n)
+            })
             return true
         } else if (type === 'check-list') {
             ListTransforms.wrapInList(editor, 'check-list')
@@ -94,7 +100,7 @@ class ShortcutManager {
                 checked: false
             }
             Transforms.setNodes<SlateElement>(editor, newProperties, {
-                match: n => SlateEditor.isBlock(editor, n) && n.type === 'list-item'
+                match: n => SlateEditor.isBlock(editor, n) && ListElement.isItem(n)
             })
             return true
         }
