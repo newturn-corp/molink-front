@@ -9,8 +9,9 @@ import {
 } from 'slate'
 import { ListEditor, ListTransforms } from '../GlobalPlugins/ListPlugin'
 import { DeleteBackwardHandler } from './types'
-import { AvailCodeLanguage, DividerType } from '../../Types/slate/CustomElement'
+import { AvailCodeLanguage, DividerType, TextCategory } from '../../Types/slate/CustomElement'
 import ShortcutManager from '../../manager/Editing/ShortcutManager'
+import { CustomText } from '../../Types/slate/CustomText'
 
 const SHORTCUTS = {
     '*': 'unordered-list',
@@ -165,23 +166,8 @@ export const ShortcutWhenInsertText = (editor: Editor, text: string) => {
             }
             Transforms.select(editor, range)
             Transforms.delete(editor)
-            if (type === 'unordered-list') {
-                ListTransforms.wrapInList(editor)
-                return true
-            } else if (type === 'ol-list') {
-                const start = beforeText.split('.')[0]
-                ListTransforms.wrapInList(editor, 'ol-list', { start: Number(start) })
-                return true
-            } else if (type === 'check-list') {
-                ListTransforms.wrapInList(editor, 'check-list')
-                const newProperties: Partial<SlateElement> = {
-                    type: 'check-list-item',
-                    checked: false
-                }
-                Transforms.setNodes<SlateElement>(editor, newProperties, {
-                    match: n => SlateEditor.isBlock(editor, n) && n.type === 'list-item'
-                })
-                return true
+            if (['unordered-list', 'ol-list', 'check-list'].includes(type)) {
+                return ShortcutManager.handleInsertList(editor, type, path, beforeText)
             }
             const newProperties: Partial<SlateElement> = ShortcutManager.getPropertyByShortcut(beforeText)
             Transforms.setNodes<SlateElement>(editor, newProperties, {

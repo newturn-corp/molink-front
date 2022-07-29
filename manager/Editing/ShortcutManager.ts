@@ -1,5 +1,6 @@
 import { TextCategory } from '../../Types/slate/CustomElement'
-import { Element as SlateElement } from 'slate'
+import { Editor as SlateEditor, Editor, Element as SlateElement, Node, Path, Transforms } from 'slate'
+import { ListTransforms } from '../../plugin'
 
 class ShortcutManager {
     getPropertyByShortcut (shortcut: string): Partial<SlateElement> {
@@ -25,6 +26,77 @@ class ShortcutManager {
             }
         default:
             throw new Error('UnhandledShortCut')
+        }
+    }
+
+    isBeforeNodeList (editor: Editor, path: Path) {
+        if (path[0] > 0) {
+            const beforeNode = Node.get(editor, [path[0] - 1])
+            return ['ul-list', 'ol-list', 'check-list'].includes(beforeNode.type)
+        }
+    }
+
+    handleInsertList (editor: Editor, type: string, path: Path, beforeText: string) {
+        if (path[0] > 0) {
+            const beforeNode = Node.get(editor, [path[0] - 1])
+            if (['ul-list', 'ol-list', 'check-list'].includes(beforeNode.type)) {
+                const targetPath = [path[0] - 1, beforeNode.children.length]
+                if (type === 'unordered-list') {
+                    Transforms.insertNodes(editor, {
+                        type: 'list-item',
+                        children: [{
+                            type: 'text',
+                            category: TextCategory.Content3,
+                            children: [{ text: '' }]
+                        }]
+                    }, {
+                        at: targetPath
+                    })
+                } else if (type === 'ol-list') {
+                    Transforms.insertNodes(editor, {
+                        type: 'ordered-list-item',
+                        children: [{
+                            type: 'text',
+                            category: TextCategory.Content3,
+                            children: [{ text: '' }]
+                        }]
+                    }, {
+                        at: targetPath
+                    })
+                } else if (type === 'check-list') {
+                    Transforms.insertNodes(editor, {
+                        type: 'check-list-item',
+                        children: [{
+                            type: 'text',
+                            category: TextCategory.Content3,
+                            children: [{ text: '' }]
+                        }]
+                    }, {
+                        at: targetPath
+                    })
+                }
+                Transforms.select(editor, targetPath)
+                return true
+            }
+        }
+
+        if (type === 'unordered-list') {
+            ListTransforms.wrapInList(editor)
+            return true
+        } else if (type === 'ol-list') {
+            const start = beforeText.split('.')[0]
+            ListTransforms.wrapInList(editor, 'ol-list', { start: Number(start) })
+            return true
+        } else if (type === 'check-list') {
+            ListTransforms.wrapInList(editor, 'check-list')
+            const newProperties: Partial<SlateElement> = {
+                type: 'check-list-item',
+                checked: false
+            }
+            Transforms.setNodes<SlateElement>(editor, newProperties, {
+                match: n => SlateEditor.isBlock(editor, n) && n.type === 'list-item'
+            })
+            return true
         }
     }
 }

@@ -28,7 +28,7 @@ export const getPreviousItem = (
 
     if (!previousSibling) {
         return null
-    } else if (['list-item', 'check-list-item'].includes(previousSibling.type)) {
+    } else if (['list-item', 'check-list-item', 'ordered-list-item'].includes(previousSibling.type)) {
         return [previousSibling, previousSiblingPath]
     }
     return null
