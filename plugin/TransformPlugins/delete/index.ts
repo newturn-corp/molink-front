@@ -1,4 +1,5 @@
-import { Editor, NodeEntry, Path, Point, Range, Transforms } from 'slate'
+import { Editor, NodeEntry, Path, Point, Range, Transforms, Node } from 'slate'
+import { ListElement } from '../../GlobalPlugins'
 
 export const customDelete = (editor: Editor, options: {
     at?: any
@@ -172,6 +173,23 @@ export const customDelete = (editor: Editor, options: {
 
         if (options.at == null && point) {
             Transforms.select(editor, point)
+        }
+
+        // List 2개가 겹치는 경우 병합
+        const currentNodePath = [editor.selection.anchor.path[0]]
+        const currentNode = Node.get(editor, currentNodePath)
+        if (currentNode && ListElement.isList(currentNode)) {
+            const nextNodePath = [Path.next(currentNodePath)[0]]
+            const nextNode = Node.get(editor, nextNodePath)
+            if (nextNode && ListElement.isList(nextNode)) {
+                Transforms.insertNodes(editor, nextNode.children, {
+                    at: [currentNodePath[0], currentNode.children.length]
+                })
+                console.log(editor.children)
+                console.log(nextNodePath)
+                Transforms.delete(editor, { at: nextNodePath })
+                console.log(editor.children)
+            }
         }
     })
 }
