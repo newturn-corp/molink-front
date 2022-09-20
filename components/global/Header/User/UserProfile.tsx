@@ -22,15 +22,13 @@ export const UserProfile: React.FC<{
               }}
               src={UserManager.profile.getUserProfileImageSrc()}
           />
-          <BrowserView>
-              <div
-                  className='nickname'
-                  style={{
-                      color: isUserAuthorized ? '#2E639A' : '#454C53'
-                  }}
-              >
-                  {getUserNickname()}
-              </div>
-          </BrowserView>
+          <div
+              className='nickname'
+              style={{
+                  color: isUserAuthorized ? '#2E639A' : '#454C53'
+              }}
+          >
+              {getUserNickname()}
+          </div>
       </>
   })

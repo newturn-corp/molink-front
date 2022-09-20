@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx'
+import { isBrowser } from 'react-device-detect'
 import { Event } from './Event/Event'
 import EventManager from './Event/EventManager'
 
@@ -18,6 +19,7 @@ class GlobalManager {
     mousePositionY = 0
     screenWidth = 1920
     screenHeight = 1080
+    isBrowser = true
 
     async init () {
         this.navigator = navigator
@@ -61,6 +63,7 @@ class GlobalManager {
             this.screenHeight = this.window.innerHeight
             this.screenWidth = this.window.innerWidth
         }, 1000)
+        this.isBrowser = isBrowser
     }
 
     constructor () {

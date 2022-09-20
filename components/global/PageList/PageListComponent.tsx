@@ -2,14 +2,13 @@ import { observer } from 'mobx-react'
 import React, { useCallback, useEffect, useState } from 'react'
 import { ESPageSummary, ESUser } from '@newturn-develop/types-molink'
 import { useInView } from 'react-intersection-observer'
-import UserInfoMap from '../../../manager/global/User/UserInfoMap'
 import { PageColumnComponent } from './PageColumnComponent'
 import { CircleProgress } from '../CircleProgress'
 import { getRelativeTime } from '../../../utils/getRelativeTime'
 import { PageCellComponent } from './PageCellComponent'
 import { PageListViewType } from '../../../Enums/PageListViewType'
 import GlobalManager from '../../../manager/global/GlobalManager'
-import { isBrowser } from 'react-device-detect'
+import { isBrowser, isMobile } from 'react-device-detect'
 import StyleManager from '../../../manager/global/Style/StyleManager'
 import Blog from '../../../manager/global/Blog/Blog'
 import BlogInfoMap from '../../../manager/global/Blog/BlogInfoMap'
@@ -19,7 +18,7 @@ const ScrollContainer: React.FC<{
 }> = observer((props) => {
     if (props.showScroll) {
         return <div
-            className={'scroll-container'}
+            className={GlobalManager.isBrowser ? 'scroll-container' : 'scroll-container-mobile'}
             style={{
                 overflowY: 'scroll',
                 top: 0,
@@ -77,12 +76,15 @@ export const PageListComponent: React.FC<{
         if (isBrowser) {
             return GlobalManager.screenWidth - hierarchyWidth
         } else {
-            return GlobalManager.screenHeight
+            return GlobalManager.screenWidth
         }
-    }, [GlobalManager.screenWidth, GlobalManager.screenHeight, hierarchyWidth])
+    }, [GlobalManager.screenWidth, hierarchyWidth])
 
     const getListContainerSize = useCallback(() => {
         const size = getContentContainerSize()
+        if (isMobile) {
+            return size
+        }
         if (size > 1760) {
             return 1760
         } else if (size > 1420) {
@@ -94,7 +96,9 @@ export const PageListComponent: React.FC<{
         }
     }, [getContentContainerSize()])
 
-    return <ScrollContainer showScroll={showScroll}>
+    return <ScrollContainer
+        showScroll={showScroll}
+    >
         <div
             className={'page-list-container'}
             style={{
