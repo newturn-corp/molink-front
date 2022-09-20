@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx'
 import ViewerBlogAPI from '../../../api/Viewer/ViewerBlogAPI'
 import ViewerAPI from '../../../api/ViewerAPI'
 
-class UserInfoMap {
+class BlogInfoMap {
     idMap: { [index: number]: BlogInfo } = {}
     nameMap: { [index: string]: BlogInfo } = {}
 
@@ -81,4 +81,4 @@ class UserInfoMap {
         return map
     }
 }
-export default new UserInfoMap()
+export default new BlogInfoMap()
