@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from 'react'
 
 import { observer } from 'mobx-react'
-import UserManager from '../manager/global/User/UserManager'
 import { Header } from '../components/global/Header/Header'
 import StyleManager from '../manager/global/Style/StyleManager'
-import { BrowserView } from 'react-device-detect'
+import { BrowserView, MobileView } from 'react-device-detect'
 import { HierarchyContainer } from '../components/Blog/HierarchyContainer'
 import { HierarchyWidthController } from '../components/Blog/HierarchyWidthController'
 import { MainHeader } from '../components/Main/MainHeader'
@@ -43,6 +42,18 @@ const MainPageComponent = observer(() => {
                     />
                 </ContentContainer>
             </BrowserView>
+            <MobileView>
+                <ContentContainer>
+                    <MainHeader/>
+                    <PageListComponent
+                        pageSummaryList={pageList.pageSummaryList}
+                        isListEnded={pageList.listEnded}
+                        onLoadPageList={() => pageList.loadPageSummaryList()}
+                        viewType={MainPage.viewType}
+                        showScroll={true}
+                    />
+                </ContentContainer>
+            </MobileView>
         </div>
         <div
             id={'drag-ghost-parent'}

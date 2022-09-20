@@ -4,10 +4,16 @@ import MainPage from '../../../manager/Main/MainPage'
 import LanguageManager from '../../../manager/global/LanguageManager'
 import UserManager from '../../../manager/global/User/UserManager'
 import ModalManager, { Modal } from '../../../manager/global/ModalManager'
+import { isBrowser } from 'react-device-detect'
 
 export const CategoryContainer: React.FC<{
 }> = observer(() => {
-    return <div className={'category-container'}>
+    return <div
+        className={'category-container'}
+        style={{
+            margin: isBrowser ? '0 auto' : undefined
+        }}
+    >
         {
             MainPage.pageLists.map((pageList, index) => {
                 const isActiveCategory = index === MainPage.currentCategoryIndex

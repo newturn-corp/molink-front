@@ -9,7 +9,7 @@ import { getRelativeTime } from '../../../utils/getRelativeTime'
 import { PageCellComponent } from './PageCellComponent'
 import { PageListViewType } from '../../../Enums/PageListViewType'
 import GlobalManager from '../../../manager/global/GlobalManager'
-import { isBrowser } from 'react-device-detect'
+import { isBrowser, isMobile } from 'react-device-detect'
 import StyleManager from '../../../manager/global/Style/StyleManager'
 import Blog from '../../../manager/global/Blog/Blog'
 import BlogInfoMap from '../../../manager/global/Blog/BlogInfoMap'
@@ -77,12 +77,15 @@ export const PageListComponent: React.FC<{
         if (isBrowser) {
             return GlobalManager.screenWidth - hierarchyWidth
         } else {
-            return GlobalManager.screenHeight
+            return GlobalManager.screenWidth
         }
-    }, [GlobalManager.screenWidth, GlobalManager.screenHeight, hierarchyWidth])
+    }, [GlobalManager.screenWidth, hierarchyWidth])
 
     const getListContainerSize = useCallback(() => {
         const size = getContentContainerSize()
+        if (isMobile) {
+            return size
+        }
         if (size > 1760) {
             return 1760
         } else if (size > 1420) {
