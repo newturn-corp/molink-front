@@ -19,9 +19,9 @@ const ScrollContainer: React.FC<{
 }> = observer((props) => {
     if (props.showScroll) {
         return <div
-            className={'scroll-container'}
+            className={`scroll-container${isBrowser ? '' : '-mobile'}`}
             style={{
-                overflowY: 'scroll',
+                overflowY: isBrowser ? 'scroll' : 'scroll',
                 top: 0,
                 height: GlobalManager.screenHeight - StyleManager.globalStyle.header.height,
                 width: GlobalManager.screenWidth - Blog.getBlogWidth()
@@ -97,7 +97,9 @@ export const PageListComponent: React.FC<{
         }
     }, [getContentContainerSize()])
 
-    return <ScrollContainer showScroll={showScroll}>
+    return <ScrollContainer
+        showScroll={showScroll}
+    >
         <div
             className={'page-list-container'}
             style={{

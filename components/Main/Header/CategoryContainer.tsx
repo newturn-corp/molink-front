@@ -11,7 +11,7 @@ export const CategoryContainer: React.FC<{
     return <div
         className={'category-container'}
         style={{
-            margin: isBrowser ? '0 auto' : undefined
+            margin: isBrowser ? '0 auto' : null
         }}
     >
         {
