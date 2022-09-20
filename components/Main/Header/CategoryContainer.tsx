@@ -4,14 +4,14 @@ import MainPage from '../../../manager/Main/MainPage'
 import LanguageManager from '../../../manager/global/LanguageManager'
 import UserManager from '../../../manager/global/User/UserManager'
 import ModalManager, { Modal } from '../../../manager/global/ModalManager'
-import { isBrowser } from 'react-device-detect'
+import GlobalManager from '../../../manager/global/GlobalManager'
 
 export const CategoryContainer: React.FC<{
 }> = observer(() => {
     return <div
         className={'category-container'}
         style={{
-            margin: isBrowser ? '0 auto' : undefined
+            margin: GlobalManager.isBrowser ? '0 auto' : undefined
         }}
     >
         {

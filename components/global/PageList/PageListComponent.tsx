@@ -2,7 +2,6 @@ import { observer } from 'mobx-react'
 import React, { useCallback, useEffect, useState } from 'react'
 import { ESPageSummary, ESUser } from '@newturn-develop/types-molink'
 import { useInView } from 'react-intersection-observer'
-import UserInfoMap from '../../../manager/global/User/UserInfoMap'
 import { PageColumnComponent } from './PageColumnComponent'
 import { CircleProgress } from '../CircleProgress'
 import { getRelativeTime } from '../../../utils/getRelativeTime'
@@ -19,7 +18,7 @@ const ScrollContainer: React.FC<{
 }> = observer((props) => {
     if (props.showScroll) {
         return <div
-            className={isBrowser ? 'scroll-container' : 'scroll-container-mobile'}
+            className={GlobalManager.isBrowser ? 'scroll-container' : 'scroll-container-mobile'}
             style={{
                 overflowY: 'scroll',
                 top: 0,
