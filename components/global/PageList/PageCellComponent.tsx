@@ -5,6 +5,7 @@ import HeartIcon from 'public/image/icon/heart.svg'
 import { PageThumbnailComponent } from './PageThumbnailComponent'
 import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
 import { PageColumnComponentUserInfo } from './PageColumnComponentUserInfo'
+import GlobalManager from '../../../manager/global/GlobalManager'
 
 export interface PageColumnComponentInterface {
     id: string
@@ -15,12 +16,17 @@ export interface PageColumnComponentInterface {
     userNickname: string,
     description: string,
     like: number,
-    commentCount: number
+    commentCount: number,
+    width: number
 }
 
 export const PageCellComponent: React.FC<PageColumnComponentInterface> = observer((props) => {
     return <div
         className={'page-cell-component'}
+        style={{
+            minWidth: GlobalManager.isBrowser ? 320 : undefined,
+            width: props.width
+        }}
         onClick={async () => {
             await RoutingManager.moveTo(Page.Blog, `/blog-name/${props.id}/page-name`)
         }}
