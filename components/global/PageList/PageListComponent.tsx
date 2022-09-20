@@ -19,9 +19,9 @@ const ScrollContainer: React.FC<{
 }> = observer((props) => {
     if (props.showScroll) {
         return <div
-            className={`scroll-container${isBrowser ? '' : '-mobile'}`}
+            className={isBrowser ? 'scroll-container' : 'scroll-container-mobile'}
             style={{
-                overflowY: isBrowser ? 'scroll' : 'scroll',
+                overflowY: 'scroll',
                 top: 0,
                 height: GlobalManager.screenHeight - StyleManager.globalStyle.header.height,
                 width: GlobalManager.screenWidth - Blog.getBlogWidth()
