@@ -5,6 +5,7 @@ import UserManager from '../../../../manager/global/User/UserManager'
 import { Button } from '../../../global/Button'
 import ModalManager, { Modal } from '../../../../manager/global/ModalManager'
 import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
+import { isMobile } from 'react-device-detect'
 
 const TextArea = Input.TextArea
 
@@ -22,7 +23,7 @@ export const CommentInputContainer: React.FC<{
         }}
     >
         <div
-            className={'profile-container'}
+            className={'profile-container '}
         >
             <Avatar
                 className={'profile'}

@@ -70,6 +70,12 @@ export const UserContainer: React.FC<{
     }
 
     return <>
+        {
+            isMobile && <>
+                <UserDrawer/>
+                <VisibilityDrawer/>
+            </>
+        }
         <div
             className='user-container'
             ref={userContainerRef}
@@ -86,10 +92,6 @@ export const UserContainer: React.FC<{
         >
             <UserProfile/>
         </div>
-        <MobileView>
-            <UserDrawer/>
-            <VisibilityDrawer/>
-        </MobileView>
         <SupportModal/>
         <SupportDrawer/>
     </>

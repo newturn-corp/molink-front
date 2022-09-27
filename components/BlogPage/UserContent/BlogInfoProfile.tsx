@@ -14,7 +14,7 @@ export const BlogInfoProfile: React.FC<{
     >
         <Avatar
             className='profile-image'
-            size={120}
+            // size={120}
             src={profileImageURL}
         >
             {profileImageURL ? null : name[0]}

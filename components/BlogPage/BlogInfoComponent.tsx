@@ -5,6 +5,7 @@ import { BlogUserInfoMain } from './UserContent/BlogUserInfoMain'
 import { BlogUserInfoFollowAndPage } from './UserContent/BlogUserInfoFollowAndPage'
 import Blog from '../../manager/global/Blog/Blog'
 import { BlogInfo } from '@newturn-develop/types-molink'
+import { isBrowser } from 'react-device-detect'
 
 export const BlogInfoComponent: React.FC<{
     blogID: number
@@ -17,7 +18,7 @@ export const BlogInfoComponent: React.FC<{
     const { blogID, name, profileImageURL, biography, followerCount, pageCount } = props
     return <>
         <div
-            className={'blog-user-info'}
+            className={isBrowser ? 'blog-user-info' : 'mobile-blog-user-info'}
         >
             <BlogInfoProfile
                 name={name}
@@ -30,15 +31,19 @@ export const BlogInfoComponent: React.FC<{
                     blogID={blogID}
                     name={name}
                 />
-                <BlogUserInfoFollowAndPage
-                    followerCount={followerCount}
-                    pageCount={pageCount}
-                />
-                <div
-                    className={'biography-container'}
-                >
-                    {!biography || biography === '' ? '소개가 없습니다.' : biography}
-                </div>
+                {
+                    isBrowser && <>
+                        <BlogUserInfoFollowAndPage
+                            followerCount={followerCount}
+                            pageCount={pageCount}
+                        />
+                        <div
+                            className={'biography-container'}
+                        >
+                            {!biography || biography === '' ? '소개가 없습니다.' : biography}
+                        </div>
+                    </>
+                }
             </div>
         </div>
     </>
