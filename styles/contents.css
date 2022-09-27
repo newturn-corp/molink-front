@@ -710,6 +710,9 @@
 .content-container .content-body .contents .document:hover {
   background: rgb(236, 236, 236);
 }
+.content-container .content-body .mobile-contents {
+  margin-top: 30px;
+}
 .content-container .content-footer {
   width: 100%;
   height: 20vh;

@@ -4,7 +4,7 @@ import { UserContainer } from './User/UserContainer'
 import { SettingModal } from '../Setting/SettingModal'
 import { HeaderLogo } from './HeaderLogo'
 import StyleManager from '../../../manager/global/Style/StyleManager'
-import { BrowserView, MobileView } from 'react-device-detect'
+import { BrowserView, isBrowser, isMobile, MobileView } from 'react-device-detect'
 import { OpenHierarchyButton } from './OpenHierarchyButton'
 import { MobilePageTitle } from './Mobile/MobilePageTitle'
 import { NotificationButton } from './Notification/NotificationButton'
@@ -17,21 +17,20 @@ export const Header: React.FC<{
           style={StyleManager.globalStyle.header}
       >
           <UserContainer/>
-          <BrowserView>
-              <div className='navigator'>
-              </div>
-              <HeaderLogo/>
-              <NotificationButton/>
-              <SettingModal/>
-          </BrowserView>
-          <BrowserView>
-              <SearchComponent />
-          </BrowserView>
-          <MobileView>
-              <OpenHierarchyButton/>
-          </MobileView>
-          <MobileView>
-              <MobilePageTitle/>
-          </MobileView>
+          {
+              isBrowser
+                  ? <>
+                      {/* <div className='navigator'> */}
+                      {/* </div> */}
+                      <HeaderLogo/>
+                      <NotificationButton/>
+                      <SettingModal/>
+                      <SearchComponent />
+                  </>
+                  : <>
+                      <OpenHierarchyButton/>
+                      <MobilePageTitle/>
+                  </>
+          }
       </div>
   })

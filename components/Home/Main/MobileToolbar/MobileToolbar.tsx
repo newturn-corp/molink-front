@@ -10,6 +10,10 @@ export const MobileToolbar: React.FC<{
 }> = observer(() => {
     const ref = useRef<HTMLDivElement | null>(null)
 
+    if (!EditorPage.editor || !EditorPage.editor.editable) {
+        return <></>
+    }
+
     return <div
         ref={ref}
         className={'mobile-toolbar'}

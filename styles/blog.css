@@ -188,6 +188,37 @@
   font-weight: 600;
 }
 
+.mobile-blog-user-info {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  margin: 30px auto 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #dfe2e5;
+}
+.mobile-blog-user-info .profile-container {
+  width: 34px;
+  height: 34px;
+  margin-right: 10px;
+}
+.mobile-blog-user-info .profile-container .profile-image {
+  width: 100%;
+  height: 100%;
+}
+.mobile-blog-user-info .text-container {
+  display: flex;
+  flex-direction: column;
+}
+.mobile-blog-user-info .text-container .main-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.mobile-blog-user-info .text-container .main-container .name {
+  line-height: 34px;
+  font-size: 16px;
+}
+
 .page-column-component {
   display: flex;
   flex-direction: row;

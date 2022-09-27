@@ -12,13 +12,14 @@ import { PageTagList } from '../../../BlogPage/EditorPage/PageTagList'
 import { EditorPageSkeleton } from '../../../BlogPage/EditorPage/EditorPageSkeleton'
 import { CommentContainer } from '../../../BlogPage/EditorPage/Comment/CommentContainer'
 import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
+import { isMobile } from 'react-device-detect'
 
 export const ContentComponent: React.FC<{
 }> = observer(() => {
     const editor = EditorPage.editor
     const blogInfo = EditorPage.blogInfo
     return <>
-        <div className={'contents'}
+        <div className={'contents ' + (isMobile ? 'mobile-contents' : '')}
             style={StyleManager.contentStyle.main}
         >
             {

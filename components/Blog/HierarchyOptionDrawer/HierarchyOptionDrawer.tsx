@@ -17,7 +17,7 @@ export const HierarchyOptionDrawer: React.FC<{
     })
     const classes = useStyles()
     const pageHierarchy = Blog.pageHierarchy
-    if (!pageHierarchy) {
+    if (!pageHierarchy || !pageHierarchy.contextMenu) {
         return <></>
     }
     const selectedPage = pageHierarchy.map[pageHierarchy.contextMenu.selectedPageId]

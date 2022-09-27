@@ -10,6 +10,7 @@ import Private from '../../../../public/image/editor/toolbar/visibility/private.
 import { message } from 'antd'
 import LanguageManager from '../../../../manager/global/LanguageManager'
 import Blog from '../../../../manager/global/Blog/Blog'
+import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 
 interface VisibilityMenuItemProps {
     icon: ReactNode
@@ -56,6 +57,9 @@ export const VisibilityDrawer: React.FC<{
         return <></>
     }
     const visibilityController = pageHierarchy.visibilityController
+    if (!visibilityController) {
+        return <></>
+    }
 
     return (
         <MobileColumnDrawer
