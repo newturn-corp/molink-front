@@ -9,30 +9,29 @@ export const HierarchyName: React.FC<{
     if (!Blog.profile) {
         return <></>
     }
+
     const {
         name,
         profileImageURL
     } = Blog.profile
 
     return (
-        <>
+        <div
+            className={'hierarchy-name'}
+            onClick={async () => {
+                await RoutingManager.moveTo(Page.Blog, `/${name}`)
+            }}
+        >
+            <Avatar
+                className='profile-image'
+                sizes='32'
+                src={profileImageURL}
+            />
             <div
-                className={'hierarchy-name'}
-                onClick={async () => {
-                    await RoutingManager.moveTo(Page.Blog, `/${name}`)
-                }}
+                className='text'
             >
-                <Avatar
-                    className='profile-image'
-                    sizes='32'
-                    src={profileImageURL}
-                />
-                <div
-                    className='text'
-                >
-                    {name }
-                </div>
+                {name }
             </div>
-        </>
+        </div>
     )
 })

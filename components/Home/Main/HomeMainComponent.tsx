@@ -32,7 +32,7 @@ export const HomeMainComponent: React.FC<{
                               </>
                           }
                       </>
-                      : BlogPage.pageType === BlogPageType.UserMainPage ? <BlogUserContent/> : <></>
+                      : <BlogUserContent/>
               }
               <MobileView>
                   <MobileToolbar/>
