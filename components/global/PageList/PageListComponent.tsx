@@ -146,7 +146,7 @@ export const PageListComponent: React.FC<{
                             >
                                 <PageCellComponent
                                     key={`page-cell-component-${summary.id}-${index}`}
-                                    width={getListContainerSize() - 80}
+                                    width={isMobile ? getListContainerSize() - 80 : 320}
                                     id={summary.id}
                                     title={summary.title}
                                     userNickname={blogInfo.name}
