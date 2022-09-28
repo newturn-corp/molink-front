@@ -11,9 +11,9 @@ const moduleExports = {
         USER_SERVER_URL: process.env.USER_SERVER_URL,
         FILE_API_KEY: process.env.FILE_API_KEY
     },
-    future: {
-        webpack5: true
-    },
+    // future: {
+    //     webpack5: true
+    // },
     images: {
         domains: [process.env.NODE_ENV === 'production' ? 'api.molink.life' : 'api.development.molink.life']
     },
