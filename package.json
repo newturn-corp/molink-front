@@ -61,32 +61,31 @@
     "uuid": "^8.3.2",
     "y-websocket": "^1.4.3",
     "yjs": "^13.5.41",
-    "@types/node": "^18.7.23"
-  },
-  "devDependencies": {
+    "@types/node": "^18.7.23",
+    "typescript": "^4.5.2",
     "@babel/plugin-proposal-decorators": "^7.16.5",
     "@babel/plugin-proposal-private-property-in-object": "^7.16.5",
     "@babel/plugin-transform-runtime": "^7.16.5",
     "@babel/preset-env": "^7.16.5",
     "@babel/runtime": "^7.16.5",
+    "@newturn-develop/types-molink": "^0.0.209",    "@types/react": "^17.0.37",
+    "@types/slate-plain-serializer": "^0.7.1",
+    "@types/uuid": "^8.3.4"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/parser": "^5.6.0",
     "@capacitor/android": "^3.4.3",
     "@capacitor/cli": "^3.4.3",
     "@capacitor/core": "^3.4.3",
     "@capacitor/ios": "^3.4.3",
-    "@newturn-develop/types-molink": "^0.0.209",
     "@next/eslint-plugin-next": "^12.1.0",
-    "@types/react": "^17.0.37",
-    "@types/slate-plain-serializer": "^0.7.1",
-    "@types/uuid": "^8.3.4",
-    "@typescript-eslint/eslint-plugin": "^5.6.0",
-    "@typescript-eslint/parser": "^5.6.0",
     "eslint": "^7.12.1",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.27.1",
-    "lint-staged": "^12.1.4",
-    "typescript": "^4.5.2"
+    "lint-staged": "^12.1.4"
   }
 }
