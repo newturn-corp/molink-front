@@ -1,5 +1,4 @@
 import { EditListPlugin } from '@productboard/slate-edit-list'
-import { Editor, Element, Node, NodeEntry, Path, Range, Transforms } from 'slate'
 import { unwrapList } from './List/transforms/unwrapList'
 import { getItemDepth } from './List/editor/getItemDepth'
 import { getCurrentItem } from './List/editor/getCurrentItem'
