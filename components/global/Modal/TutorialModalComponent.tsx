@@ -3,11 +3,12 @@ import { observer } from 'mobx-react'
 import { CustomModal } from '../../utils/CustomModal'
 import ModalManager, { Modal } from '../../../manager/global/ModalManager'
 import { Tabs } from 'antd'
-import { TabPane } from 'rc-tabs'
 import { BlogTutorialComponent } from './Tutorial/BlogTutorialComponent'
 import { EditingTutorialComponent } from './Tutorial/EditingTutorialComponent'
 import { PageControlTutorialComponent } from './Tutorial/PageControlTutorialComponent'
 import TutorialManager from '../../../manager/global/TutorialManager'
+
+const TabPane = Tabs.TabPane
 
 export const TutorialModalComponent: React.FC<{
 }> = observer(() => {

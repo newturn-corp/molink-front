@@ -1,15 +1,11 @@
 import { observer } from 'mobx-react'
 import React from 'react'
 import UserPage from '../../manager/User/UserPage'
-import GlobalManager from '../../manager/global/GlobalManager'
-import StyleManager from '../../manager/global/Style/StyleManager'
-import Blog from '../../manager/global/Blog/Blog'
 import { PageListComponent } from '../global/PageList/PageListComponent'
 import { PageListViewType } from '../../Enums/PageListViewType'
-import { UserInfoComponent } from './UserInfoComponent'
 import { Tabs } from 'antd'
-import { TabPane } from 'rc-tabs'
 import { UserBlogsTab } from './UserBlogsTab'
+const TabPane = Tabs.TabPane
 
 export const UserPageTabs: React.FC<{
 }> = observer(() => {
