@@ -1,4 +1,3 @@
-import { EditListPlugin } from '@productboard/slate-edit-list'
 import { unwrapList } from './List/transforms/unwrapList'
 import { getItemDepth } from './List/editor/getItemDepth'
 import { getCurrentItem } from './List/editor/getCurrentItem'
@@ -19,30 +18,28 @@ const options = {
     typeItem: 'list-item'
 }
 
-const [
-    withEditList,
-    onDefaultKeyDown,
-    { Transforms: ListTransforms, Editor: ListEditor, Element: ListElement }
-] = EditListPlugin(options)
+export const ListTransforms = {
+    isItem,
+    splitListItem,
+    unwrapList,
+    wrapInList,
+    decreaseItemDepth,
+    increaseItemDepth
+}
 
-ListTransforms.isItem = isItem
+export const ListElement = {
+    isItem,
+    isList
+}
 
-ListElement.isItem = isItem
-ListElement.isList = isList
+export const ListEditor = {
+    getCurrentItem,
+    getTopmostItemsAtRange,
+    getListForItem,
+    getDeepestItemDepth,
+    getItemDepth,
+    getPreviousItem,
+    isSelectionInList
+}
 
-ListEditor.getCurrentItem = getCurrentItem
-ListEditor.getTopmostItemsAtRange = getTopmostItemsAtRange
-ListEditor.getListForItem = getListForItem
-ListEditor.getDeepestItemDepth = getDeepestItemDepth
-ListEditor.getItemDepth = getItemDepth
-ListEditor.getPreviousItem = getPreviousItem
-ListEditor.isSelectionInList = isSelectionInList
-
-ListTransforms.splitListItem = splitListItem
-ListTransforms.unwrapList = unwrapList
-ListTransforms.wrapInList = wrapInList
-ListTransforms.decreaseItemDepth = decreaseItemDepth
-ListTransforms.increaseItemDepth = increaseItemDepth
-
-export { withEditList, ListTransforms, ListEditor, ListElement }
 export const ListOptions = options

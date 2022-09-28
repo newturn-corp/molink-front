@@ -13,7 +13,7 @@ import BlogPage from '../../manager/Blog/BlogPage'
 import { BlogPageHead } from '../../components/BlogPage/EditorPage/BlogPageHead'
 import { ESPageMetaInfo } from '@newturn-develop/types-molink'
 import { SERVER_BASE_URL } from '../../infra/constants'
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, GetStaticProps } from 'next'
 import RoutingManager from '../../manager/global/RoutingManager'
 import { UserBlogBarComponent } from '../../components/global/UserBlogBar/UserBlogBarComponent'
 import { MobileBlogComponent } from '../../components/Blog/Mobile/MobileBlogComponent'
@@ -59,6 +59,55 @@ const BlogPageComponent: React.FC<{
             />
         </div>
     </div>
+}
+
+// This function gets called at build time on server-side.
+// It may be called again, on a serverless function, if
+// revalidation is enabled and a new request comes in
+export const getStaticProps: GetStaticProps = async (context) => {
+    const urlInfo = context.params.info as string[]
+
+    const getMetaInfo = async (pageID: string): Promise<ESPageMetaInfo | undefined> => {
+        try {
+            const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
+                method: 'GET'
+            })
+            const body = await res.json()
+            return body.data
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const getPageIDFromURLInfo = (urlInfo: string[]) => {
+        if (urlInfo.length === 3) {
+            const [a, pageID, b] = urlInfo
+            return pageID
+        }
+    }
+
+    const pageID = getPageIDFromURLInfo(urlInfo)
+    if (pageID) {
+        const metaInfo = await getMetaInfo(pageID)
+        if (metaInfo) {
+            return {
+                props: {
+                    pageMetaInfo: metaInfo
+                }
+            }
+        }
+    }
+
+    return {
+        props: {
+            pageMetaInfo: null
+        },
+        revalidate: 10
+    }
+}
+
+export const getStaticPaths = async () => {
+    return { paths: [], fallback: true }
 }
 
 // export const getServerSideProps: GetServerSideProps = async (context) => {
