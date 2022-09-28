@@ -17,8 +17,7 @@ export const DragIndicator: React.FC<{
           pageDragManager.indicatorTooltip = document.getElementsByClassName('drag-indicator-tooltip')[0] as HTMLElement
           pageDragManager.dragIndicator = indicatorRef.current
       }, [pageDragManager, indicatorRef])
-      console.log(pageDragManager)
-      console.log(indicatorRef)
+
       if (!pageDragManager) {
           return <></>
       }

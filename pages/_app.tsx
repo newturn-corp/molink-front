@@ -36,7 +36,7 @@ import '../styles/contents.css'
 import '../styles/home.css'
 import '../styles/search.css'
 import '../styles/setting.css'
-import '../styles/blog.css'
+import '../styles/blog/blog.css'
 import '../styles/main.css'
 import '../styles/users.css'
 

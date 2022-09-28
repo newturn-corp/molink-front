@@ -4,7 +4,7 @@ import { observer } from 'mobx-react'
 import { Header } from '../components/global/Header/Header'
 import StyleManager from '../manager/global/Style/StyleManager'
 import { BrowserView, MobileView } from 'react-device-detect'
-import { HierarchyContainer } from '../components/Blog/HierarchyContainer'
+import { BlogComponent } from '../components/Blog/BlogComponent'
 import { HierarchyWidthController } from '../components/Blog/HierarchyWidthController'
 import { MainHeader } from '../components/Main/MainHeader'
 import { PageListComponent } from '../components/global/PageList/PageListComponent'
@@ -29,7 +29,7 @@ const MainPageComponent = observer(() => {
         >
             <BrowserView>
                 <UserBlogBarComponent />
-                <HierarchyContainer />
+                <BlogComponent />
                 <HierarchyWidthController/>
                 <ContentContainer>
                     <MainHeader/>

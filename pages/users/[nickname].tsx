@@ -8,7 +8,7 @@ import { Event } from '../../manager/global/Event/Event'
 import { Header } from '../../components/global/Header/Header'
 import { BrowserView, MobileView } from 'react-device-detect'
 import { Portal } from '../../components/utils/Portal'
-import { HierarchyContainer } from '../../components/Blog/HierarchyContainer'
+import { BlogComponent } from '../../components/Blog/BlogComponent'
 import StyleManager from '../../manager/global/Style/StyleManager'
 import { HomeMainComponent } from '../../components/Home/Main/HomeMainComponent'
 import { HierarchyWidthController } from '../../components/Blog/HierarchyWidthController'
@@ -36,7 +36,7 @@ const UserPageComponent: React.FC<{
             <Header />
             <MobileView>
                 <Portal>
-                    <HierarchyContainer />
+                    <BlogComponent />
                 </Portal>
             </MobileView>
             <div
@@ -47,7 +47,7 @@ const UserPageComponent: React.FC<{
                     <UserPageContent/>
                 </ContentContainer>
                 <BrowserView>
-                    <HierarchyContainer />
+                    <BlogComponent />
                     <HierarchyWidthController/>
                 </BrowserView>
             </div>

@@ -11,89 +11,15 @@ import { Editor, Path, Range, Transforms } from 'slate'
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@material-ui/icons'
 
 import TextArea, { TextAreaRef } from 'antd/lib/input/TextArea'
-import { FloatOption, SlateImageElementType, TextCategory } from '../../../Types/slate/CustomElement'
-import StyleManager from '../../../manager/global/Style/StyleManager'
-import FileUploadManager from '../../../manager/Editing/FileUploadManager'
-import MenuItem from '../../../manager/global/Menu/MenuItem'
-import EditorPage from '../../../manager/Blog/Editor/EditorPage'
-import { MediaMenuButton } from '../Extra/MediaMenuButton'
-import { FileLoading } from './FileLoading'
-import MenuManager from '../../../manager/global/Menu/MenuManager'
-
-const Caption: React.FC<{
-    selected: boolean,
-    caption: string,
-    floatOption: FloatOption
-  }> = ({ selected, caption, floatOption }) => {
-      const inputRef = useRef<TextAreaRef>(null)
-      const [captionFocused, setCaptionFocused] = useState(false)
-      const slateEditor = useSlateStatic()
-      const showCaption = selected || (caption && caption.length > 0)
-
-      if (!selected) {
-          if (captionFocused) {
-              setCaptionFocused(false)
-          }
-      }
-      return <figcaption style={{
-          display: showCaption ? undefined : 'none'
-      }}>
-          <TextArea
-              ref={inputRef}
-              className={'caption'}
-              style={{
-                  userSelect: captionFocused ? 'auto' : undefined,
-                  textAlign: floatOption === FloatOption.Left ? 'left' : floatOption === FloatOption.Center ? 'center' : 'right'
-              }}
-              tabIndex={-1}
-              onClick={() => {
-                  setCaptionFocused(true)
-              }}
-              autoSize={true}
-              placeholder='이미지 설명'
-              bordered={false}
-              defaultValue={caption}
-              //   readOnly={!captionFocused}
-              rows={1}
-              onChange={(e) => {
-                  Transforms.setNodes(slateEditor, {
-                      caption: e.target.value
-                  }, {
-                      at: slateEditor.selection
-                  })
-              }}
-              onBlur={(e) => {
-                  setCaptionFocused(false)
-              }}
-              onKeyDown={(e) => {
-                  if (e.ctrlKey) {
-                      e.preventDefault()
-                  }
-                  if (e.key === 'ArrowDown') {
-                      setCaptionFocused(false)
-                      const { selection } = slateEditor
-                      if (selection.anchor.path[0] === slateEditor.children.length - 1) {
-                          Transforms.insertNodes(slateEditor, {
-                              type: 'text',
-                              category: TextCategory.Content3,
-                              children: [{ text: '' }]
-                          })
-                      }
-                      inputRef.current.blur()
-                      ReactEditor.focus(slateEditor)
-                      Transforms.select(slateEditor, Editor.after(slateEditor, slateEditor.selection, { unit: 'line' }))
-                  } else if (e.key === 'ArrowUp') {
-                      setCaptionFocused(false)
-                      inputRef.current.blur()
-                      ReactEditor.focus(slateEditor)
-                      Transforms.select(slateEditor, Editor.before(slateEditor, slateEditor.selection, {
-                          distance: 1
-                      }))
-                  }
-              }}
-          />
-      </figcaption>
-  }
+import { FloatOption, SlateImageElementType, TextCategory } from '../../../../Types/slate/CustomElement'
+import StyleManager from '../../../../manager/global/Style/StyleManager'
+import FileUploadManager from '../../../../manager/Editing/FileUploadManager'
+import MenuItem from '../../../../manager/global/Menu/MenuItem'
+import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
+import { MediaMenuButton } from '../../Extra/MediaMenuButton'
+import { FileLoading } from '../FileLoading'
+import MenuManager from '../../../../manager/global/Menu/MenuManager'
+import { Caption } from '../Caption'
 
 const getImageSrc = (src: string, version) => {
     if (src && src.includes('https://cdn.filestackcontent.com')) {
@@ -104,7 +30,7 @@ const getImageSrc = (src: string, version) => {
     return src
 }
 
-export const SlateImageElement: React.FC<{
+export const SlateEditableImageElement: React.FC<{
     attributes,
     children,
     element: SlateImageElementType

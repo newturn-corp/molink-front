@@ -1,9 +1,6 @@
-import React, { useState } from 'react'
-import { ReactEditor, useReadOnly, useSlateStatic } from 'slate-react'
+import React from 'react'
+import { useReadOnly } from 'slate-react'
 import { css } from '@emotion/css'
-import { Transforms } from 'slate'
-import EditorPage from '../../../manager/Blog/Editor/EditorPage'
-import { Collapse, List } from '@material-ui/core'
 
 export const SlateUnorderedListItemElement: React.FC<{
     attributes,
