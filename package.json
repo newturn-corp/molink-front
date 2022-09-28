@@ -60,7 +60,8 @@
     "tiny-invariant": "^1.2.0",
     "uuid": "^8.3.2",
     "y-websocket": "^1.4.3",
-    "yjs": "^13.5.41"
+    "yjs": "^13.5.41",
+    "@types/node": "^18.7.23"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.16.5",
@@ -74,7 +75,6 @@
     "@capacitor/ios": "^3.4.3",
     "@newturn-develop/types-molink": "^0.0.209",
     "@next/eslint-plugin-next": "^12.1.0",
-    "@types/node": "^18.7.23",
     "@types/react": "^17.0.37",
     "@types/slate-plain-serializer": "^0.7.1",
     "@types/uuid": "^8.3.4",
