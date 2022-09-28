@@ -1,5 +1,5 @@
 import React from 'react'
-import { SlateImageElement } from './Element/SlateImageElement'
+import { SlateEditableImageElement } from './Element/Image/SlateEditableImageElement'
 import { SlateTextElement } from './Element/SlateTextElement'
 import { SlateTitleElement } from './Element/SlateTitleElement'
 import { SlateLinkElement } from './Element/SlateLinkElement'
@@ -17,6 +17,8 @@ import { SlateTempBookmarkElement } from './Element/Bookmark/SlateTempBookmarkEl
 import { SlateUnorderedListItemElement } from './Element/SlateUnorderedListItemElement'
 import { SlateUnorderedListElement } from './Element/SlateUnorderedListElement'
 import { SlateOrderedListItemElement } from './Element/SlateOrderedListItemElement'
+import EditorPage from '../../manager/Blog/Editor/EditorPage'
+import { SlateReadonlyImageElement } from './Element/Image/SlateReadonlyImageElement'
 
 export const CustomElementComponent: React.FC<{
     attributes,
@@ -26,7 +28,7 @@ export const CustomElementComponent: React.FC<{
       const { attributes, children, element } = props
       switch (element.type) {
       case 'image':
-          return <SlateImageElement { ...props } />
+          return EditorPage.editor.editable ? <SlateEditableImageElement { ...props } /> : <SlateReadonlyImageElement { ...props } />
       case 'video':
           return <SlateVideoElement { ...props } />
       case 'file':
