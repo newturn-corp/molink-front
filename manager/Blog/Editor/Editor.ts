@@ -1,5 +1,5 @@
 import { makeAutoObservable, observable } from 'mobx'
-import { BasePoint, BaseRange, createEditor, Editor as SlateEditor, Element, Transforms } from 'slate'
+import { BasePoint, Editor as SlateEditor, Element, Transforms } from 'slate'
 import EventManager from '../../global/Event/EventManager'
 import * as Y from 'yjs'
 import { Event } from '../../global/Event/Event'
