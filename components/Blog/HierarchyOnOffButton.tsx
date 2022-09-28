@@ -16,9 +16,6 @@ export const HierarchyOnOffButton: React.FC<{
             onClick={async (event) => {
                 event.stopPropagation()
                 Blog.isOpen = !Blog.isOpen
-                await EventManager.issueEvent(Event.HierarchyOnOffChange, {
-                    onOff: Blog.isOpen
-                })
             }}
         >
             {

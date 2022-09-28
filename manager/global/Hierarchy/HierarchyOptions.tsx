@@ -36,7 +36,7 @@ export class CreateNewPageOption extends HierarchyControlOption {
             const block = hierarchy.yMap.get(this.pageID)
             return block.children.length
         } else {
-            return hierarchy.yTopLevelDocumentIdList.length
+            return hierarchy.yTopLevelPageIDList.length
         }
     }
 
@@ -116,8 +116,8 @@ export class DeletePageOption extends HierarchyControlOption {
             const targetDocument = pageHierarchy.yMap.get(this.pageID)
 
             if (targetDocument.parentId === null) {
-                pageHierarchy.yTopLevelDocumentIdList.delete(targetDocument.order, 1)
-                for (const [index, documentId] of pageHierarchy.yTopLevelDocumentIdList.toArray().entries()) {
+                pageHierarchy.yTopLevelPageIDList.delete(targetDocument.order, 1)
+                for (const [index, documentId] of pageHierarchy.yTopLevelPageIDList.toArray().entries()) {
                     const document = pageHierarchy.yMap.get(documentId)
                     document.order = index
                     pageHierarchy.yMap.set(documentId, document)

@@ -36,8 +36,8 @@ export class BlogPageHierarchy {
         [index: string]: HierarchyDocumentInfoInterface
     } = {}
 
-    public yTopLevelDocumentIdList: Y.Array<string>
-    public topLevelDocumentIdList: string[] = []
+    public yTopLevelPageIDList: Y.Array<string>
+    public topLevelPageIDList: string[] = []
 
     public nameChangingPageId: string | null = null
     public editable: boolean = false
@@ -62,9 +62,9 @@ export class BlogPageHierarchy {
             }
             this.map = this.yMap.toJSON()
         })
-        this.yTopLevelDocumentIdList = yDocument.getArray('topLevelPageIDList')
-        this.yTopLevelDocumentIdList.observeDeep(() => {
-            this.topLevelDocumentIdList = this.yTopLevelDocumentIdList.toArray()
+        this.yTopLevelPageIDList = yDocument.getArray('topLevelPageIDList')
+        this.yTopLevelPageIDList.observeDeep(() => {
+            this.topLevelPageIDList = this.yTopLevelPageIDList.toArray()
         })
 
         EventManager.addEventListener(Event.MoveToAnotherPage, () => {
@@ -72,14 +72,13 @@ export class BlogPageHierarchy {
         }, 1)
         makeAutoObservable(this, {
             yMap: false,
-            yTopLevelDocumentIdList: false
+            yTopLevelPageIDList: false
         })
     }
 
     loadEditingComponent () {
-        console.log('loadEditingComponent')
         this.visibilityController = new VisibilityController()
-        this.locationController = new LocationController(this.yDocument, this.yMap, this.yTopLevelDocumentIdList, this.visibilityController)
+        this.locationController = new LocationController(this.yDocument, this.yMap, this.yTopLevelPageIDList, this.visibilityController)
         this.pageDragManager = new PageDragManager(this)
         this.contextMenu = new BlogContextMenu()
         this.pageCreator = new BlogPageCreator()
@@ -110,7 +109,7 @@ export class BlogPageHierarchy {
         }
 
         this.map = {}
-        this.topLevelDocumentIdList = []
+        this.topLevelPageIDList = []
         this.closeOpenedPage()
         this.nameChangingPageId = null
     }
@@ -133,7 +132,7 @@ export class BlogPageHierarchy {
     public getSibling (pageId: string, order: number) {
         const document = this.yMap.get(pageId)
         if (!document.parentId) {
-            return this.yMap.get(this.yTopLevelDocumentIdList.get(order))
+            return this.yMap.get(this.yTopLevelPageIDList.get(order))
         } else {
             const parent = this.yMap.get(document.parentId)
             return this.yMap.get(parent.children[order])

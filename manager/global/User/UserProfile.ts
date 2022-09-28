@@ -2,8 +2,6 @@ import * as Y from 'yjs'
 import { makeAutoObservable } from 'mobx'
 import { UpdateUserBiographyDTO, UpdateUserProfileImageDTO } from '@newturn-develop/types-molink'
 import UserManager from './UserManager'
-import Identicon from 'identicon.js'
-import crypto from 'crypto'
 import UserAPI from '../../../api/UserAPI'
 import React from 'react'
 import FeedbackManager, { NOTIFICATION_TYPE } from '../FeedbackManager'
@@ -40,14 +38,7 @@ export class UserProfile {
         if (!UserManager.isUserAuthorized) {
             return '/image/global/header/login-button-profile.png'
         }
-        return UserManager.profile.profileImageURL || `data:image/png;base64,${
-            new Identicon(
-                crypto.createHash('sha512')
-                    .update(UserManager.profile.nickname)
-                    .digest('base64'), {
-                    size: 64,
-                    foreground: [58, 123, 191, 255]
-                }).toString()}`
+        return UserManager.profile.profileImageURL
     }
 
     async updateUserBiography (biography: string) {

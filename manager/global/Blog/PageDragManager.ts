@@ -126,7 +126,7 @@ export class PageDragManager {
         if (!this.draggingPageId) {
             return
         }
-        const lastPageId = this.pageHierarchy.topLevelDocumentIdList[this.pageHierarchy.topLevelDocumentIdList.length - 1]
+        const lastPageId = this.pageHierarchy.topLevelPageIDList[this.pageHierarchy.topLevelPageIDList.length - 1]
         if (this.draggingPageId === lastPageId || !lastPageId) {
             return
         }

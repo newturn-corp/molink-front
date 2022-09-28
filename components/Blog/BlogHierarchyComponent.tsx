@@ -4,7 +4,7 @@ import List from '@material-ui/core/List'
 import { PageComponent } from './Page/PageComponent'
 import Blog from '../../manager/global/Blog/Blog'
 
-export const HierarchyComponent: React.FC<{
+export const BlogHierarchyComponent: React.FC<{
   }> = observer(() => {
       const pageHierarchy = Blog.pageHierarchy
       return (
@@ -14,11 +14,11 @@ export const HierarchyComponent: React.FC<{
               style={{
                   overflowX: 'hidden',
                   overflowY: 'auto',
-                  marginTop: 5
+                  padding: '0px'
               }}
           >
               {
-                  pageHierarchy.topLevelDocumentIdList.map(pageID => {
+                  pageHierarchy.topLevelPageIDList.map(pageID => {
                       return <PageComponent
                           key={`page-component-${pageID}`}
                           pageID={pageID}

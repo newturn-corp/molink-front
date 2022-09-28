@@ -9,7 +9,7 @@ export interface HierarchyButtonInterface {
     ref?: React.MutableRefObject<HTMLDivElement>
 }
 
-export const HierarchyButton: React.FC<HierarchyButtonInterface> = observer((props) => {
+export const BlogButton: React.FC<HierarchyButtonInterface> = observer((props) => {
     return (
         <div
             ref={props.ref}

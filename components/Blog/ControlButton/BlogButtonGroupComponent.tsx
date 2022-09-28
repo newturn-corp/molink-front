@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { observer } from 'mobx-react'
-import { HierarchyButton } from './HierarchyButton'
+import { BlogButton } from './BlogButton'
 import NewPageIcon from 'public/image/icon/new-page.svg'
 import SearchIcon from 'public/image/icon/search.svg'
 import SettingIcon from 'public/image/icon/setting-outline.svg'
@@ -22,7 +22,7 @@ export const BlogButtonGroupComponent: React.FC<{
             <div
                 className={'hierarchy-button-group'}
             >
-                <HierarchyButton
+                <BlogButton
                     icon={<SearchIcon/>}
                     text={LanguageManager.languageMap.SearchInHierarchy}
                     onClick={async (event) => {
@@ -30,18 +30,18 @@ export const BlogButtonGroupComponent: React.FC<{
                     }}
                     disabled={true}
                 />
-                <HierarchyButton
+                <BlogButton
                     icon={<NewPageIcon/>}
                     text={LanguageManager.languageMap.CreateNewPage}
                     onClick={async (event) => {
                         event.stopPropagation()
-                        await pageHierarchy.pageCreator.create(pageHierarchy.topLevelDocumentIdList.length, null)
+                        await pageHierarchy.pageCreator.create(pageHierarchy.topLevelPageIDList.length, null)
                         if (isMobile) {
                             Blog.isOpen = false
                         }
                     }}
                 />
-                {/* <HierarchyButton */}
+                {/* <BlogButton */}
                 {/*     ref={notificationButtonRef} */}
                 {/*     icon={<NotificationIcon/>} */}
                 {/*     text={'알림'} */}
@@ -50,7 +50,7 @@ export const BlogButtonGroupComponent: React.FC<{
                 {/*         Blog.notifications.view.open() */}
                 {/*     }} */}
                 {/* /> */}
-                <HierarchyButton
+                <BlogButton
                     icon={<SettingIcon/>}
                     text={'설정'}
                     onClick={async (event) => {

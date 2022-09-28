@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { Header } from '../../components/global/Header/Header'
-import { BrowserView, MobileView } from 'react-device-detect'
+import { BrowserView, isBrowser, isMobile, MobileView } from 'react-device-detect'
 import { HomeMainComponent } from '../../components/Home/Main/HomeMainComponent'
 import { HierarchyWidthController } from '../../components/Blog/HierarchyWidthController'
-import { HierarchyContainer } from '../../components/Blog/HierarchyContainer'
+import { BlogComponent } from '../../components/Blog/BlogComponent'
 import EventManager from '../../manager/global/Event/EventManager'
 import { Event } from '../../manager/global/Event/Event'
 import { Portal } from '../../components/utils/Portal'
@@ -16,6 +16,7 @@ import { SERVER_BASE_URL } from '../../infra/constants'
 import { GetServerSideProps } from 'next'
 import RoutingManager from '../../manager/global/RoutingManager'
 import { UserBlogBarComponent } from '../../components/global/UserBlogBar/UserBlogBarComponent'
+import { MobileBlogComponent } from '../../components/Blog/Mobile/MobileBlogComponent'
 
 const BlogPageComponent: React.FC<{
     pageMetaInfo: ESPageMetaInfo | null
@@ -36,21 +37,21 @@ const BlogPageComponent: React.FC<{
         >
 
             <Header />
-            <MobileView>
-                <Portal>
-                    <HierarchyContainer />
-                </Portal>
-            </MobileView>
+            {
+                isMobile && <MobileBlogComponent/>
+            }
             <div
                 className={'index-body'}
                 style={StyleManager.globalStyle.body}
             >
                 <HomeMainComponent/>
-                <BrowserView>
-                    <UserBlogBarComponent/>
-                    <HierarchyContainer />
-                    <HierarchyWidthController/>
-                </BrowserView>
+                {
+                    isBrowser && <>
+                        <UserBlogBarComponent/>
+                        <BlogComponent />
+                        <HierarchyWidthController/>
+                    </>
+                }
             </div>
             <div
                 id={'drag-ghost-parent'}
@@ -60,45 +61,45 @@ const BlogPageComponent: React.FC<{
     </div>
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const urlInfo = context.query.info as string[]
-
-    const getMetaInfo = async (pageID: string): Promise<ESPageMetaInfo | undefined> => {
-        try {
-            const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
-                method: 'GET'
-            })
-            const body = await res.json()
-            return body.data
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    const getPageIDFromURLInfo = (urlInfo: string[]) => {
-        if (urlInfo.length === 3) {
-            const [a, pageID, b] = urlInfo
-            return pageID
-        }
-    }
-
-    const pageID = getPageIDFromURLInfo(urlInfo)
-    if (pageID) {
-        const metaInfo = await getMetaInfo(pageID)
-        if (metaInfo) {
-            return {
-                props: {
-                    pageMetaInfo: metaInfo
-                }
-            }
-        }
-    }
-
-    return {
-        props: {
-            pageMetaInfo: null
-        }
-    }
-}
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//     const urlInfo = context.query.info as string[]
+//
+//     const getMetaInfo = async (pageID: string): Promise<ESPageMetaInfo | undefined> => {
+//         try {
+//             const res = await fetch(`${SERVER_BASE_URL}/viewer/pages/${pageID}/meta-info`, {
+//                 method: 'GET'
+//             })
+//             const body = await res.json()
+//             return body.data
+//         } catch (err) {
+//             console.log(err)
+//         }
+//     }
+//
+//     const getPageIDFromURLInfo = (urlInfo: string[]) => {
+//         if (urlInfo.length === 3) {
+//             const [a, pageID, b] = urlInfo
+//             return pageID
+//         }
+//     }
+//
+//     const pageID = getPageIDFromURLInfo(urlInfo)
+//     if (pageID) {
+//         const metaInfo = await getMetaInfo(pageID)
+//         if (metaInfo) {
+//             return {
+//                 props: {
+//                     pageMetaInfo: metaInfo
+//                 }
+//             }
+//         }
+//     }
+//
+//     return {
+//         props: {
+//             pageMetaInfo: null
+//         }
+//     }
+// }
 
 export default BlogPageComponent

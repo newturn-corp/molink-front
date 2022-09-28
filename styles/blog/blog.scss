@@ -1,3 +1,255 @@
+.blog-drawer {
+  top: 56px;
+  flex-shrink: 0;
+  overflow-x: hidden;
+  z-index: 10;
+  position: fixed;
+  height: calc(100vh - 56px);
+  .MuiDrawer-paper {
+    top: 56px;
+    background-color: #FAFAFB;
+    border-right: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #e7e7e7;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(209, 209, 209);
+    border-radius: 5px;
+  }
+}
+.mobile-blog-drawer {
+  top: 0px;
+  z-index: 1000;
+  position: absolute;
+  height: 100vh;
+  .MuiDrawer-paper {
+    top: 0px;
+    background-color: transparent;
+    border-right: none;
+  }
+}
+.blog-name {
+  display: flex;
+  cursor: pointer;
+  .profile-image {
+    margin-left: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 32px;
+    height: 32px;
+  }
+  .text {
+    margin-top: 18px;
+    margin-left: 12px;
+    height: 16px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: break-word;
+    color: #131415;
+  }
+}
+//.hierarchy-name:hover {
+//  background-color: #a1a1a1;
+//}
+
+.hierarchy-divider {
+  height: 1px;
+  margin-left: 12px;
+  margin-right: 12px;
+  padding: 0.5px;
+  background-color: #ECEFF2;
+}
+
+.hierarchy-button-group {
+  margin: 0px 5px;
+  .hierarchy-button {
+    display: flex;
+    flex-direction: row;
+    margin: 2.5px 0px 2.5px 0px;
+    padding: 4px;
+    border-radius: 8px;
+    padding-left: 7px;
+    cursor: pointer;
+    svg {
+      width: 18px;
+      height: 18px;
+      margin: 2.5px 6px 2.5px 0px;
+      fill: #6C7177;
+    }
+    .text {
+      user-select: none;
+      margin-top: 2.5px;
+      line-height: 20px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+      transition: 0.3s;
+    }
+  }
+  .hierarchy-button.disabled {
+    cursor: unset;
+    svg {
+      fill: #aeaeaf;
+    }
+    .text {
+      color: #6b6b6b;
+    }
+    &:hover {
+      background-color: unset;
+      transition: unset;
+    }
+  }
+}
+
+.MuiBackdrop-root {
+  z-index: 900;
+}
+
+.MuiDrawer-paperAnchorDockedLeft {
+  border: none;
+}
+
+.MuiDrawer-paper {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  position: relative;
+  z-index: 900;
+  background-color: #FAFAFB;
+  .MuiList-root::-webkit-scrollbar {
+    width: 8px;
+  }
+  .MuiList-root::-webkit-scrollbar-track {
+    background: #e7e7e7;
+  }
+  .MuiList-root::-webkit-scrollbar-thumb {
+    background: rgb(209, 209, 209);
+    border-radius: 8px;
+  }
+
+  .MuiDrawer-paperAnchorDockedLeft {
+    border-right: 1px solid #ECEFF2;
+  }
+  .MuiListItemIcon-root {
+    min-width: 25px;
+  }
+  aside.emoji-picker-react {
+    position: absolute;
+    margin-top: -20px;
+    z-index: 100;
+  }
+  .MuiListItem-root {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    .child-open-button {
+      width: 20px;
+      height: 20px;
+      border-radius: 3px;
+      &:hover {
+        background-color: #dddddd;
+        transition: 0.3s;
+      }
+      .MuiSvgIcon-root {
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+        color: inherit;
+      }
+    }
+    .icon-container {
+      width: 20px;
+      height: 20px;
+      border-radius: 3px;
+      line-height: 20px;
+      font-size: 14.5px;
+      //font-size: 15px;
+      margin-right: 2px;
+      &:hover {
+        background-color: #dddddd;
+        transition: 0.3s;
+      }
+      .icon {
+        margin: 2px 4px 2px 2px;
+        width: 14px;
+        height: 14px;
+        font-size: 14px;
+        line-height: 14px;
+      }
+    }
+    .page-title {
+      //position: absolute;
+      height: 16px;
+      top: calc(50% - 16px/2);
+      display: flex;
+      flex: 1 1 auto;
+      border: 0px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 16px;
+      .text {
+        display: inline;
+        margin-left: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        background-color: transparent;
+        border:none;
+        outline-width: 0;
+        color: #131415;
+      }
+      .text-opened {
+        color: #3A7BBF;
+      }
+    }
+    .menu-button {
+      width: 20px;
+      height: 20px;
+      border-radius: 3px;
+      padding: 0px 2px 2px;
+      &:hover {
+        background-color: #dddddd;
+        transition: 0.3s;
+      }
+      svg {
+        width: 16px;
+        height: 16px;
+        fill: #6b6b6b;
+      }
+    }
+    .add-page-button {
+      width: 20px;
+      height: 20px;
+      border-radius: 3px;
+      border: 1px solid #cccccc;
+      &:hover {
+        background-color: #dddddd;
+        transition: 0.3s;
+      }
+      .MuiSvgIcon-root {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+        color: #6b6b6b;
+      }
+    }
+  }
+}
+
+
+
 .page-list-container {
   width: fit-content;
   margin: 20px auto 100px;

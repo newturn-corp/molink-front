@@ -16,7 +16,7 @@ const ContentContainer: React.FC<{
         if (isBrowser) {
             return GlobalManager.screenWidth - blogWidth - userBlogBarWidth
         } else {
-            return GlobalManager.screenHeight
+            return GlobalManager.screenWidth
         }
     }, [GlobalManager.screenWidth, GlobalManager.screenHeight, blogWidth, userBlogBarWidth])
 
