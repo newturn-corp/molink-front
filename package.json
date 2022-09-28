@@ -24,6 +24,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@sentry/nextjs": "^6.19.6",
+    "@slate-yjs/core": "^0.2.8",
     "@slate-yjs/react": "^0.2.4",
     "@svgr/webpack": "^6.2.1",
     "antd": "^4.23.3",
