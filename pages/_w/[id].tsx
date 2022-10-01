@@ -109,7 +109,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
 }
 
 export const getStaticPaths = async () => {
-    return { paths: [], fallback: true }
+    const res = await fetch(`${SERVER_BASE_URL}/viewer/pages`, {
+        method: 'GET'
+    })
+    const body = await res.json()
+    const paths = body.arr.map((id) => ({
+        params: { id }
+    }))
+    return { paths, fallback: true }
 }
 
 export default EditorPageComponent
