@@ -2,9 +2,9 @@ import { observer } from 'mobx-react'
 import React, { useCallback, useRef } from 'react'
 import { Button } from '@material-ui/core'
 import { IEmojiData } from 'emoji-picker-react'
-import EmojiPicker from '../../../../manager/global/EmojiPicker'
-import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
-import Blog from '../../../../manager/global/Blog/Blog'
+import EmojiPicker from '../../../manager/global/EmojiPicker'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
+import Blog from '../../../manager/global/Blog/Blog'
 
 export const ContentHeaderIconComponent: React.FC<{
   }> = observer(() => {

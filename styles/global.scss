@@ -10,6 +10,7 @@ body {
     font-size: 1rem;
     //background-color: #FAFAFB;
 }
+
 ::-moz-selection {
     background: #D6E6F6 !important;
     color: rgb(55, 53, 47) !important;
@@ -18,6 +19,17 @@ body {
     background: #D6E6F6 !important;
     color: rgb(55, 53, 47) !important;
 }
+
+.site-body {
+    top: 56px;
+    height: calc(100vh - 56px);
+}
+
+.mobile-site-body {
+    top: 44px;
+    height: calc(100vh - 44px);
+}
+
 .menu-background {
     position: fixed;
     top: 0px;

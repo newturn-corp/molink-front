@@ -2,7 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import { ESPageMetaInfo } from '@newturn-develop/types-molink'
 
-export const BlogPageHead: React.FC<{
+export const EditorPageHead: React.FC<{
     pageMetaInfo: ESPageMetaInfo | undefined
 }> = ({ pageMetaInfo }) => {
     const title = pageMetaInfo ? pageMetaInfo.title : 'Molink'

@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react'
 import React, { useCallback, useEffect } from 'react'
 import { Slate, Editable, ReactEditor } from 'slate-react'
-import { MentionListComponent } from '../../../Home/Main/Content/MentionListComponent'
+import { MentionListComponent } from '../../../EditorPage/Content/MentionListComponent'
 import { CommandListComponent } from '../Command/CommandListComponent'
 import { CustomElementComponent } from '../../../SlateElement/CustomElementComponent'
 import { CustomLeafComponent } from '../../../SlateElement/CustomLeafComponent'

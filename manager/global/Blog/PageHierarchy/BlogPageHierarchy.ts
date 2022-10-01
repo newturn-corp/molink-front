@@ -156,7 +156,7 @@ export class BlogPageHierarchy {
         const { id: newPageId } = await ContentAPI.createContentV2(new CreatePageDTO(null, null, null, null, Blog.id))
         await HierarchyAPI.createPageInBlog(new CreatePageInBlogDTO(newPageId, Blog.id, undefined, undefined, order, parentId))
         this.contextMenu.selectedPageId = null
-        await RoutingManager.moveWithoutAddHistory(Page.Blog, `/blog-name/${newPageId}/page-name`)
+        await RoutingManager.moveTo(Page.Editor, `/${newPageId}`)
     }
 
     public getPageHierarchy (pageId: string) {

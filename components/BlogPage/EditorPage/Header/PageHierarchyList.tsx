@@ -26,12 +26,12 @@ export const PageHierarchyList: React.FC<{
                   >
                       <div
                           className='document-block'
-                          key={`page-hierarchy-block-${index}`}
+                          key={`page-block-${index}`}
                           onClick={async () => {
                               if (page.id === openedPage.pageId) {
                                   return
                               }
-                              await RoutingManager.moveTo(Page.Blog, `/blog-name/${page.id}/page-name`)
+                              await RoutingManager.moveTo(Page.Editor, `/${page.id}`)
                           }}
                       >
                           {page.icon + ' ' + page.title}

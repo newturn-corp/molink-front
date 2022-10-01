@@ -6,7 +6,7 @@ import EventManager from '../../manager/global/Event/EventManager'
 import { Event } from '../../manager/global/Event/Event'
 import Blog from '../../manager/global/Blog/Blog'
 
-export const HierarchyWidthController: React.FC<{
+export const BlogWidthController: React.FC<{
   }> = observer(() => {
       if (!Blog.pageHierarchy) {
           return <></>
@@ -19,7 +19,7 @@ export const HierarchyWidthController: React.FC<{
                   style={{
                       left: Blog.getBlogWidth() + (UserManager.isUserAuthorized ? userBlogBarWidth : 0)
                   }}
-                  onDrag={async event => {
+                  onDrag={async () => {
                       const value = GlobalManager.mousePositionX
                       if (Math.round(value) % 3 !== 0) {
                           return

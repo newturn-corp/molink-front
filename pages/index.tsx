@@ -5,7 +5,7 @@ import { Header } from '../components/global/Header/Header'
 import StyleManager from '../manager/global/Style/StyleManager'
 import { BrowserView, MobileView } from 'react-device-detect'
 import { BlogComponent } from '../components/Blog/BlogComponent'
-import { HierarchyWidthController } from '../components/Blog/HierarchyWidthController'
+import { BlogWidthController } from '../components/Blog/BlogWidthController'
 import { MainHeader } from '../components/Main/MainHeader'
 import { PageListComponent } from '../components/global/PageList/PageListComponent'
 import MainPage from '../manager/Main/MainPage'
@@ -30,7 +30,7 @@ const MainPageComponent = observer(() => {
             <BrowserView>
                 <UserBlogBarComponent />
                 <BlogComponent />
-                <HierarchyWidthController/>
+                <BlogWidthController/>
                 <ContentContainer>
                     <MainHeader/>
                     <PageListComponent

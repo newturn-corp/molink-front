@@ -1,10 +1,10 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import { MobileColumnDrawer } from '../../../utils/MobileColumeDrawer/MobileColumnDrawer'
-import CommandManager from '../../../../manager/Editing/Command/CommandManager'
-import { MobileColumnDrawerGroup } from '../../../utils/MobileColumeDrawer/MobileColumnDrawerGroup'
-import LanguageManager from '../../../../manager/global/LanguageManager'
-import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
+import { MobileColumnDrawer } from '../../utils/MobileColumeDrawer/MobileColumnDrawer'
+import CommandManager from '../../../manager/Editing/Command/CommandManager'
+import { MobileColumnDrawerGroup } from '../../utils/MobileColumeDrawer/MobileColumnDrawerGroup'
+import LanguageManager from '../../../manager/global/LanguageManager'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 export const CommandDrawer: React.FC<{
 }> = observer(() => {

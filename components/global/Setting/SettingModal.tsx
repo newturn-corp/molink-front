@@ -10,7 +10,7 @@ export const SettingModal: React.FC<{
     return <Modal
         className='setting-modal'
         title={LanguageManager.languageMap.Setting}
-        visible={SettingManager.isShowSettingModal}
+        open={SettingManager.isShowSettingModal}
         onCancel={() => SettingManager.closeSettingModal()}
         okText
         cancelText
