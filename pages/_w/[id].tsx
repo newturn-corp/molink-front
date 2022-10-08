@@ -103,7 +103,8 @@ export const getStaticPaths = async () => {
     const paths = body.arr.map((id) => ({
         params: { id }
     }))
-    return { paths, fallback: false }
+    console.log(paths)
+    return { paths, fallback: true }
 }
 
 export default EditorPageComponent
