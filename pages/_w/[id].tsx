@@ -24,7 +24,9 @@ const EditorPageComponent: React.FC<{
     if (!router.query.id) {
         return <></>
     }
-    EditorPage.handleEnter(router.query.id as string)
+    if (typeof window !== 'undefined') {
+        EditorPage.handleEnter(router.query.id as string)
+    }
 
     return <div
         onClick={async () => {
