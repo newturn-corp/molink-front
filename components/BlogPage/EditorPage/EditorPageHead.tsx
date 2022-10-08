@@ -9,6 +9,7 @@ export const EditorPageHead: React.FC<{
     const description = pageMetaInfo ? pageMetaInfo.description : '내가 주도하는 블로그 플랫폼, Molink'
     const image = pageMetaInfo ? pageMetaInfo.image : 'https://www.molink.life/image/global/header/logo.png'
     const tags = pageMetaInfo && pageMetaInfo.tags && typeof pageMetaInfo.tags[Symbol.iterator] === 'function' ? pageMetaInfo.tags : []
+    const lastEditedAt = pageMetaInfo && pageMetaInfo.lastEditedAt && !isNaN(Number(new Date(pageMetaInfo.lastEditedAt))) ? pageMetaInfo.lastEditedAt : new Date()
 
     return <Head>
         <title>{title}</title>
@@ -39,11 +40,11 @@ export const EditorPageHead: React.FC<{
             pageMetaInfo && <>
                 <meta
                     name="keywords"
-                    content={[pageMetaInfo.title, ...tags].join(',')}
+                    content={[title, ...tags].join(',')}
                 />
                 <meta
                     name="Date"
-                    content={new Date(pageMetaInfo.lastEditedAt).toISOString()}
+                    content={new Date(lastEditedAt).toISOString()}
                 />
             </>
         }
