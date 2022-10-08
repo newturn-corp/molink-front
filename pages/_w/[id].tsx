@@ -25,6 +25,7 @@ const EditorPageComponent: React.FC<{
         return <></>
     }
     EditorPage.handleEnter(router.query.id as string)
+
     return <div
         onClick={async () => {
             await EventManager.issueEvent(Event.PageBodyClick)
@@ -33,22 +34,26 @@ const EditorPageComponent: React.FC<{
         <EditorPageHead
             pageMetaInfo={pageMetaInfo}
         />
-        <Header />
         {
-            isMobile && <MobileBlogComponent/>
+            typeof window !== 'undefined' && <>
+                <Header />
+                {
+                    isMobile && <MobileBlogComponent/>
+                }
+                <SiteBody>
+                    <ContentContainer>
+                        <EditorComponent/>
+                    </ContentContainer>
+                    {
+                        isBrowser && <>
+                            <UserBlogBarComponent/>
+                            <BlogComponent />
+                            <BlogWidthController/>
+                        </>
+                    }
+                </SiteBody>
+            </>
         }
-        <SiteBody>
-            <ContentContainer>
-                <EditorComponent/>
-            </ContentContainer>
-            {
-                isBrowser && <>
-                    <UserBlogBarComponent/>
-                    <BlogComponent />
-                    <BlogWidthController/>
-                </>
-            }
-        </SiteBody>
     </div>
 }
 
