@@ -14,12 +14,6 @@ import { UserBlogBarComponent } from '../../components/global/UserBlogBar/UserBl
 import { MobileBlogComponent } from '../../components/Blog/Mobile/MobileBlogComponent'
 import ContentContainer from '../../components/global/ContentContainer'
 import EditorPage from '../../manager/Blog/Editor/EditorPage'
-import { EditorToolbarComponent } from '../../components/BlogPage/EditorPage/Toolbar/EditorToolbarComponent'
-import { EditorHeader } from '../../components/BlogPage/EditorPage/Header/EditorHeader'
-import { EditorBodyComponent } from '../../components/BlogPage/EditorPage/EditorBodyComponent'
-import { ContentComponent } from '../../components/EditorPage/Content/ContentComponent'
-import { MobileToolbar } from '../../components/EditorPage/MobileToolbar/MobileToolbar'
-import { CommandDrawer } from '../../components/EditorPage/Content/CommandDrawer'
 import { SiteBody } from '../../components/global/SiteBody'
 import EditorComponent from '../../components/EditorPage/EditorComponent'
 
