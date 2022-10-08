@@ -18,6 +18,7 @@ export const ContentComponent: React.FC<{
 }> = observer(() => {
     const editor = EditorPage.editor
     const blogInfo = EditorPage.blogInfo
+    console.log(editor)
     return <>
         <div className={'contents ' + (isMobile ? 'mobile-contents' : '')}
             style={StyleManager.contentStyle.main}

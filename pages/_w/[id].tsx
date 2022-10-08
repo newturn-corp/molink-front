@@ -21,6 +21,7 @@ import { ContentComponent } from '../../components/EditorPage/Content/ContentCom
 import { MobileToolbar } from '../../components/EditorPage/MobileToolbar/MobileToolbar'
 import { CommandDrawer } from '../../components/EditorPage/Content/CommandDrawer'
 import { SiteBody } from '../../components/global/SiteBody'
+import EditorComponent from '../../components/EditorPage/EditorComponent'
 
 const EditorPageComponent: React.FC<{
     pageMetaInfo: ESPageMetaInfo | null
@@ -44,21 +45,7 @@ const EditorPageComponent: React.FC<{
         }
         <SiteBody>
             <ContentContainer>
-                {
-                    EditorPage.editor && <>
-                        <BrowserView>
-                            <EditorToolbarComponent/>
-                            <EditorHeader/>
-                        </BrowserView>
-                        <EditorBodyComponent>
-                            <ContentComponent/>
-                        </EditorBodyComponent>
-                    </>
-                }
-                <MobileView>
-                    <MobileToolbar/>
-                    <CommandDrawer/>
-                </MobileView>
+                <EditorComponent/>
             </ContentContainer>
             {
                 isBrowser && <>
@@ -116,7 +103,7 @@ export const getStaticPaths = async () => {
     const paths = body.arr.map((id) => ({
         params: { id }
     }))
-    return { paths, fallback: true }
+    return { paths, fallback: false }
 }
 
 export default EditorPageComponent
