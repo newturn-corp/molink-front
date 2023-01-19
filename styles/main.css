@@ -34,13 +34,17 @@
 .main-header .view-type-selector {
   display: flex;
   flex-direction: row;
-  margin-right: 25px;
+  margin-right: 15px;
+  position: absolute;
+  right: 0px;
 }
 .main-header .view-type-selector .change-view-button {
-  padding: 5px;
   cursor: pointer;
   border-radius: 4px;
   margin-left: 5px;
+  width: 31px;
+  height: 31px;
+  padding: 5px;
 }
 .main-header .view-type-selector .change-view-button:hover {
   background-color: rgba(0, 0, 0, 0.04);
