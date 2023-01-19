@@ -29,20 +29,20 @@ export const NotificationButton: React.FC<{
       }
 
       return <div className='notification'>
-          <Badge
-              variant="dot"
-              overlap={'circular'}
-              onClick={(event) => handleClick(event)}
-              invisible={!isNewNotificationExists}
-          >
-              <IconButton
-                  className={'button'}
-                  aria-label="delete"
-                  color="primary"
-              >
-                  <NotificationsOutlinedIcon/>
-              </IconButton>
-          </Badge>
+          {/* <Badge */}
+          {/*     variant="dot" */}
+          {/*     overlap={'circular'} */}
+          {/*     onClick={(event) => handleClick(event)} */}
+          {/*     invisible={!isNewNotificationExists} */}
+          {/* > */}
+          {/*     <IconButton */}
+          {/*         className={'button'} */}
+          {/*         aria-label="delete" */}
+          {/*         color="primary" */}
+          {/*     > */}
+          {/*         <NotificationsOutlinedIcon/> */}
+          {/*     </IconButton> */}
+          {/* </Badge> */}
           <Menu
               id="long-menu"
               className='notification-list'

@@ -28,6 +28,9 @@ export const BlogName: React.FC<{
             />
             <div
                 className='text'
+                style={{
+                    width: Blog.getBlogWidth() - 70
+                }}
             >
                 {name}
             </div>

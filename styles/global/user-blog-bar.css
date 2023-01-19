@@ -12,8 +12,9 @@
 .user-blog-bar .user-blog-block .ant-avatar {
   border-radius: 12px;
 }
-.user-blog-bar .user-blog-block.active .ant-avatar {
+.user-blog-bar .user-blog-block.active .ant-avatar img {
   border: 3px solid #7AACE0;
+  border-radius: 12px;
 }
 
-/*# sourceMappingURL=user-blog-page-bar.css.map */
+/*# sourceMappingURL=user-blog-bar.css.map */

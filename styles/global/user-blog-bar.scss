@@ -12,7 +12,10 @@
     }
     &.active {
       .ant-avatar {
-        border: 3px solid #7AACE0;
+        img {
+          border: 3px solid #7AACE0;
+          border-radius: 12px;
+        }
       }
     }
   }
