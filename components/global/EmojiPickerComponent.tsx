@@ -1,15 +1,15 @@
 import dynamic from 'next/dynamic'
-import { IEmojiPickerProps, IEmojiData } from 'emoji-picker-react'
 import React, { useEffect, useRef } from 'react'
 import { Portal } from '../utils/Portal'
 import EmojiPicker from '../../manager/global/EmojiPicker'
 import { observer } from 'mobx-react'
-const EmojiPickerNoSSRWrapper = dynamic<IEmojiPickerProps>(
-    () => import('emoji-picker-react'),
-    {
-        ssr: false,
-        loading: () => <></>
-    }
+import { Categories, EmojiStyle } from 'emoji-picker-react'
+
+const EmojiPickerNoSSRWrapper = dynamic(
+    () => {
+        return import('emoji-picker-react')
+    },
+    { ssr: false }
 )
 
 export const EmojiPickerComponent: React.FC<{
@@ -33,19 +33,47 @@ export const EmojiPickerComponent: React.FC<{
           >
               {
                   EmojiPicker.isOpen && <EmojiPickerNoSSRWrapper
-                      groupNames={{
-                          smileys_people: '사람들',
-                          animals_nature: '자연과 동물',
-                          food_drink: '음식',
-                          travel_places: '여행과 장소',
-                          activities: '활동',
-                          objects: '물건',
-                          symbols: '심볼',
-                          flags: '국기',
-                          recently_used: '최근 사용한 이모지'
-                      }}
-                      disableSearchBar={EmojiPicker.disableSearchbar}
-                      onEmojiClick={(event, data) => EmojiPicker.onEmojiClick(event, data)}
+                      categories={[
+                          {
+                              category: Categories.SUGGESTED,
+                              name: '추천'
+                          },
+                          {
+                              category: Categories.SMILEYS_PEOPLE,
+                              name: '사람들'
+                          },
+                          {
+                              category: Categories.ANIMALS_NATURE,
+                              name: '자연과 동물'
+                          },
+                          {
+                              category: Categories.FOOD_DRINK,
+                              name: '음식'
+                          },
+                          {
+                              category: Categories.TRAVEL_PLACES,
+                              name: '여행과 장소'
+                          },
+                          {
+                              category: Categories.ACTIVITIES,
+                              name: '활동'
+                          },
+                          {
+                              category: Categories.OBJECTS,
+                              name: '물건'
+                          },
+                          {
+                              category: Categories.SYMBOLS,
+                              name: '심볼'
+                          },
+                          {
+                              category: Categories.FLAGS,
+                              name: '국기'
+                          }
+                      ]}
+                      emojiStyle={EmojiStyle.GOOGLE}
+                      searchDisabled={EmojiPicker.disableSearchbar}
+                      onEmojiClick={(data, event) => EmojiPicker.onEmojiClick(data)}
                   />
               }
           </div>

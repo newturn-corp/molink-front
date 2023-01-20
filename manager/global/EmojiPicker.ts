@@ -1,5 +1,5 @@
 import React from 'react'
-import { IEmojiData } from 'emoji-picker-react'
+import { EmojiClickData } from 'emoji-picker-react'
 import { CSSPosition } from './Menu/MenuManager'
 import { makeAutoObservable } from 'mobx'
 import EventManager from './Event/EventManager'
@@ -9,13 +9,13 @@ class EmojiPicker {
     isOpen: boolean = false
     pickerRef: React.MutableRefObject<HTMLDivElement> = null
     disableSearchbar: boolean = false
-    onEmojiClick: (event: React.MouseEvent<Element, MouseEvent>, data: IEmojiData) => void
+    onEmojiClick: (data: EmojiClickData) => void
 
     constructor () {
         makeAutoObservable(this)
     }
 
-    open (position: CSSPosition, onEmojiClick: (event: React.MouseEvent<Element, MouseEvent>, data: IEmojiData) => void, disableSearchbar: boolean = false, margin: number = 100) {
+    open (position: CSSPosition, onEmojiClick: (data: EmojiClickData) => void, disableSearchbar: boolean = false, margin: number = 100) {
         this.onEmojiClick = onEmojiClick
         this.disableSearchbar = disableSearchbar
         const pickerElement = this.pickerRef.current
