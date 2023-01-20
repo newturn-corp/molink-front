@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react'
-import { IEmojiData } from 'emoji-picker-react'
+import { EmojiClickData } from 'emoji-picker-react'
 import { Transforms } from 'slate'
 import { ReactEditor, useSlateStatic } from 'slate-react'
 import EmojiPicker from '../../../manager/global/EmojiPicker'
@@ -25,9 +25,9 @@ export const SlateCalloutElement: React.FC<{
         ReactEditor.findPath(slateEditor, element)
     ), [slateEditor, element])
 
-    const onEmojiClick = useCallback((event, emojiObject: IEmojiData) => {
+    const onEmojiClick = useCallback((data: EmojiClickData) => {
         Transforms.setNodes(slateEditor, {
-            icon: emojiObject.emoji
+            icon: data.emoji
         }, {
             at: getCurrentNodePath()
         })
