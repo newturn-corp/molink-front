@@ -1,4 +1,5 @@
 import { Editor, Element, Node, Path, Range, Transforms } from 'slate'
+import { TextCategory } from '../../Types/slate/CustomElement'
 
 export const handleDeleteBackwardAfterMedia = (editor: Editor, unit: 'character' | 'word' | 'line' | 'block') => {
     if (
@@ -9,6 +10,10 @@ export const handleDeleteBackwardAfterMedia = (editor: Editor, unit: 'character'
         return false
     }
     const parentPath = Path.parent(editor.selection.anchor.path)
+    const currentNode = Node.get(editor, parentPath)
+    if (Element.isElement(currentNode) && currentNode.type === 'text' && [TextCategory.Head1, TextCategory.Head2, TextCategory.Head3].includes(currentNode.category)) {
+        return false
+    }
 
     if (Path.hasPrevious(parentPath)) {
         const prevNodePath = Path.previous(parentPath)

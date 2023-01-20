@@ -1,7 +1,8 @@
-import { Editor, Node, Path, Range, Transforms } from 'slate'
+import { Editor, Element, Node, Path, Range, Transforms } from 'slate'
 import { TextCategory } from '../../Types/slate/CustomElement'
 
 export const CorrectVoidBehaviorWhenDeleteBackward = (editor: Editor, unit: 'character' | 'word' | 'line' | 'block') => {
+    console.log('CorrectVoidBehaviorWhenDeleteBackward')
     if (
         !editor.selection ||
         !Range.isCollapsed(editor.selection) ||
@@ -10,8 +11,12 @@ export const CorrectVoidBehaviorWhenDeleteBackward = (editor: Editor, unit: 'cha
         return false
     }
     const parentPath = Path.parent(editor.selection.anchor.path)
-    const parentNode = Node.get(editor, parentPath)
-    const parentIsEmpty = Node.string(parentNode).length === 0
+    const currentNode = Node.get(editor, parentPath)
+    if (Element.isElement(currentNode) && currentNode.type === 'text' && [TextCategory.Head1, TextCategory.Head2, TextCategory.Head3].includes(currentNode.category)) {
+        return false
+    }
+
+    const parentIsEmpty = Node.string(currentNode).length === 0
 
     if (parentIsEmpty && Path.hasPrevious(parentPath)) {
         const prevNodePath = Path.previous(parentPath)

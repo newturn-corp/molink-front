@@ -13,10 +13,11 @@ export const maintainBottomMargin = () => {
     // const aaa = contentContainer.scrollHeight - contentContainer.scrollTop
     // console.log(rect.top - StyleManager.contentStyle.body.top - 56)
     // console.log(StyleManager.contentStyle.body.height * 0.8)
-    if (cursorTop < clientHeight * 0.2) {
-        contentContainer.scrollTop -= (clientHeight * 0.2 - cursorTop)
-    } else if (cursorTop > clientHeight * 0.8) {
-        contentContainer.scrollTop += (cursorTop - clientHeight * 0.8)
+    const marginValue = 0.4
+    if (cursorTop < clientHeight * marginValue) {
+        contentContainer.scrollTop -= (clientHeight * marginValue - cursorTop)
+    } else if (cursorTop > clientHeight * (1 - marginValue)) {
+        contentContainer.scrollTop += (cursorTop - clientHeight * (1 - marginValue))
     }
     return false
 }

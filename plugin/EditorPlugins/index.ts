@@ -21,6 +21,8 @@ import { insertHTMLWhenInsertData } from './InsertHTMLPlugin/InsertHTMLWhenInser
 import EventManager from '../../manager/global/Event/EventManager'
 import { Event } from '../../manager/global/Event/Event'
 import { clearTextWhenInsertBreak } from './clearTextPlugin'
+import { maintainBottomMargin } from './BottomMarginPlugin'
+import { insertTextData } from './insertData/insertTextData'
 
 export const EditorPlugin = (editor: Editor) => {
     const { isVoid, isInline, insertBreak, deleteBackward, deleteForward, normalizeNode, insertText, insertData, onChange, insertNode } = editor
@@ -73,6 +75,7 @@ export const EditorPlugin = (editor: Editor) => {
     }
 
     const insertBreakHandlers: InsertBreakHandler[] = [
+        maintainBottomMargin,
         CorrectVoidBehaviorWhenInsertBreak,
         clearTextWhenInsertBreak
     ]
@@ -90,13 +93,14 @@ export const EditorPlugin = (editor: Editor) => {
         (editor, text) => LinkManager.handleInsertText(editor, text),
         ShortcutWhenInsertText
     ]
-    editor.insertText = async (text: string) => {
+    editor.insertText = (text: string) => {
         for (const handler of insertTextHandlers) {
-            const handled = await handler(editor, text)
+            const handled = handler(editor, text)
             if (handled) {
                 return
             }
         }
+        console.log('기본 insertText')
         insertText(text)
     }
 
@@ -105,11 +109,12 @@ export const EditorPlugin = (editor: Editor) => {
         insertYoutubeWhenInsertData,
         (editor, data) => FileManager.handleInsertData(editor, data),
         (editor, data) => LinkManager.handleInsertData(editor, data),
-        insertHTMLWhenInsertData
+        insertHTMLWhenInsertData,
+        insertTextData
     ]
-    editor.insertData = async (data: DataTransfer) => {
+    editor.insertData = (data: DataTransfer) => {
         for (const handler of insertDataHandlers) {
-            const handled = await handler(editor, data)
+            const handled = handler(editor, data)
             if (handled) {
                 return
             }
@@ -118,8 +123,9 @@ export const EditorPlugin = (editor: Editor) => {
     }
 
     editor.onChange = () => {
-        EventManager.issueEvent(Event.EditorChange)
         console.log(editor.children)
+        console.log(editor.operations)
+        EventManager.issueEvent(Event.EditorChange)
         if (isBrowser) {
             CommandManager.handleEditorChange(editor)
         }

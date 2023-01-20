@@ -11,6 +11,7 @@ export const Caption: React.FC<{
 }> = ({ selected, caption, floatOption }) => {
     const inputRef = useRef<TextAreaRef>(null)
     const [captionFocused, setCaptionFocused] = useState(false)
+    console.log(captionFocused)
     const editor = useSlateStatic()
     if (!selected || !caption) {
         if (captionFocused) {
@@ -29,8 +30,9 @@ export const Caption: React.FC<{
                 textAlign: floatOption === FloatOption.Left ? 'left' : floatOption === FloatOption.Center ? 'center' : 'right'
             }}
             tabIndex={-1}
-            onClick={() => {
+            onClick={(e) => {
                 setCaptionFocused(true)
+                e.stopPropagation()
             }}
             autoSize={true}
             placeholder='설명'
@@ -49,7 +51,7 @@ export const Caption: React.FC<{
                 setCaptionFocused(false)
             }}
             onKeyDown={(e) => {
-                if (e.ctrlKey) {
+                if (e.ctrlKey && e.key !== 'v') {
                     e.preventDefault()
                 }
                 if (e.key === 'ArrowDown') {

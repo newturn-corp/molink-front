@@ -31,6 +31,7 @@ export const EditorBodyComponent: React.FC<{
 
     return <div
         className={'content-body'}
+        id={'content-body'}
         style={getBodyStyle()}
     >
         {props.children}

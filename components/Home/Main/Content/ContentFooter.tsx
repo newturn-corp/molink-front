@@ -6,6 +6,9 @@ export const ContentFooter: React.FC<{
 }> = observer(() => {
     return <div
         className='content-footer'
+        style={{
+            height: EditorPage.editor.editable ? '30vh' : '20vh'
+        }}
         onClick={() => EditorPage.editor.handleContentFooterClicked()}
     ></div>
 })
