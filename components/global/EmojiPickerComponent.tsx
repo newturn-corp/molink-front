@@ -72,6 +72,7 @@ export const EmojiPickerComponent: React.FC<{
                           }
                       ]}
                       emojiStyle={EmojiStyle.GOOGLE}
+                      lazyLoadEmojis={true}
                       searchDisabled={EmojiPicker.disableSearchbar}
                       onEmojiClick={(data, event) => EmojiPicker.onEmojiClick(data)}
                   />
