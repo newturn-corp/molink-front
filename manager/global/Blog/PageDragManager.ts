@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import React from 'react'
 import { BlogPageHierarchy } from './PageHierarchy/BlogPageHierarchy'
+import { isNull } from 'lodash'
 
 export class PageDragManager {
     pageHierarchy: BlogPageHierarchy
@@ -66,12 +67,15 @@ export class PageDragManager {
         if (!this.draggingPageId) {
             return
         }
+        console.log(this.draggingPageId)
+        console.log(pageID)
         if (this.draggingPageId === pageID) {
-            return
+            this.newParentId = null
+            this.newOrder = null
+            return this.setIndicatorTooltipVisible(false)
         }
         event.preventDefault()
         const document = this.pageHierarchy.map[pageID]
-
         const pageElement = globalThis.document.getElementById('document-' + document.id)
         const mouseY = event.pageY
         const y = pageElement.getBoundingClientRect().y
@@ -79,19 +83,20 @@ export class PageDragManager {
         const topStandard = y + height * 0.25
         const bottomStandard = y + height * 0.75
 
-        this.setIndicatorTooltipVisible(true)
         if (mouseY < topStandard) {
+            if (document.order === 0) {
+                this.viewerText = `${document.title} 위로 이동`
+            } else {
+                const pageOnTop = this.pageHierarchy.getSibling(document.id, document.order - 1)
+                if (pageOnTop.id === this.draggingPageId) {
+                    return this.setIndicatorTooltipVisible(false)
+                }
+                this.viewerText = `${pageOnTop.title} 아래로 이동`
+            }
             this.setViewerPosition(y)
             this.setIndicatorVisible(true)
             this.newOrder = document.order
             this.newParentId = document.parentId
-
-            if (document.order === 0) {
-                this.viewerText = `${document.title} 위로 이동`
-            } else {
-                const documentOnTop = this.pageHierarchy.getSibling(document.id, document.order - 1)
-                this.viewerText = `${documentOnTop.title} 아래로 이동`
-            }
 
             this._dragOverCount = 0
         } else if (mouseY > bottomStandard) {
@@ -120,6 +125,7 @@ export class PageDragManager {
                 this.viewerText = `${document.title}의 하위 페이지로 추가`
             }
         }
+        this.setIndicatorTooltipVisible(true)
     }
 
     handleDragOverHierarchyMargin () {
@@ -159,6 +165,9 @@ export class PageDragManager {
 
         this.setIndicatorVisible(false)
         this.setIndicatorTooltipVisible(false)
+        if (isNull(this.newOrder) && !this.newParentId) {
+            return
+        }
 
         // 만약 전혀 변하지 않았다면 따로 처리하지 않는다.
         const document = this.pageHierarchy.yMap.get(this.draggingPageId)
@@ -177,6 +186,8 @@ export class PageDragManager {
         await this.pageHierarchy.locationController.updatePageLocation(this.draggingPageId, this.newParentId, this.newOrder)
         this._dragOverCount = 0
         this.hierarchyMarginElement = null
+        this.newOrder = null
+        this.newParentId = null
     }
 
     clear () {

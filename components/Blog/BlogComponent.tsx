@@ -6,6 +6,8 @@ import { BlogButtonGroupComponent } from './ControlButton/BlogButtonGroupCompone
 import Blog from '../../manager/global/Blog/Blog'
 import { BlogOverlayComponent } from './Overlay/BlogOverlayComponent'
 import { BlogDrawer } from './BlogDrawer'
+import { DragIndicator } from './Overlay/DragIndicator'
+import { HierarchyContextMenu } from './Overlay/HierarchyContextMenu'
 
 export const BlogComponent: React.FC<{
   }> = observer(() => {
@@ -25,6 +27,12 @@ export const BlogComponent: React.FC<{
                               </>
                           }
                           <BlogHierarchyComponent/>
+                      </>
+                  }
+                  {
+                      Blog.isOpen && Blog.authority.editable && <>
+                          <DragIndicator/>
+                          <HierarchyContextMenu/>
                       </>
                   }
               </BlogDrawer>
