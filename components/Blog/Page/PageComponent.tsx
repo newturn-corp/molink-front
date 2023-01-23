@@ -86,6 +86,7 @@ export const PageComponent: React.FC<{
               >
                   <PageChildrenOpenButton
                       pageID={pageID}
+                      isChildrenExist={page.children.length > 0}
                       key={`page-children-open-${page.id}`}
                   />
                   <PageIcon
