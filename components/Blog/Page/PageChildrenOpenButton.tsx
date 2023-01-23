@@ -4,8 +4,9 @@ import { ArrowDropDown, ArrowRight } from '@material-ui/icons'
 import Blog from '../../../manager/global/Blog/Blog'
 
 export const PageChildrenOpenButton: React.FC<{
-    pageID: string
-  }> = observer(({ pageID }) => {
+    pageID: string,
+    isChildrenExist: boolean
+  }> = observer(({ pageID, isChildrenExist }) => {
       const pageHierarchy = Blog.pageHierarchy
       const page = pageHierarchy.map[pageID]
 
@@ -20,7 +21,9 @@ export const PageChildrenOpenButton: React.FC<{
       >
           {
               page.childrenOpen
-                  ? <ArrowDropDown />
+                  ? <ArrowDropDown style={{
+                      color: isChildrenExist ? '#000000' : '#00000022'
+                  }} />
                   : <ArrowRight />
           }
       </div>
