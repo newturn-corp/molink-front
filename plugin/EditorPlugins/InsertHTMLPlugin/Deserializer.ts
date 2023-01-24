@@ -79,11 +79,6 @@ export class Deserializer {
     }
 
     deserialize (el) {
-        console.log(el)
-        console.log(el.nodeType)
-        console.log(this.fragmentCount)
-        console.log(this.isEnded)
-
         if (this.isEnded) {
             return null
         }

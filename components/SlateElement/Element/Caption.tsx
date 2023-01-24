@@ -11,7 +11,6 @@ export const Caption: React.FC<{
 }> = ({ selected, caption, floatOption }) => {
     const inputRef = useRef<TextAreaRef>(null)
     const [captionFocused, setCaptionFocused] = useState(false)
-    console.log(captionFocused)
     const editor = useSlateStatic()
     if (!selected || !caption) {
         if (captionFocused) {

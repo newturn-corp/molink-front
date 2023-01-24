@@ -13,7 +13,6 @@ export const DragIndicator: React.FC<{
           if (!pageDragManager || !indicatorRef) {
               return
           }
-          console.log('여기 호출')
           pageDragManager.indicatorTooltip = document.getElementsByClassName('drag-indicator-tooltip')[0] as HTMLElement
           pageDragManager.dragIndicator = indicatorRef.current
       }, [pageDragManager, indicatorRef])

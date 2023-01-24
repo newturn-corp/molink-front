@@ -15,7 +15,6 @@ export const customInsertNode = (editor: Editor, nodes: Node | Node[], options) 
             break
         }
         if (node.type === 'image' || node.type === 'video' || node.type === 'file') {
-            console.log(`insertNode ${node.size}`)
             if (node.size > 0) {
                 UserManager.limit.handleInsertFile(node.size)
             }

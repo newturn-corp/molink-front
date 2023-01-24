@@ -94,7 +94,6 @@ class BlogPage {
         if (!metaInfo) {
             metaInfo = await ViewerAPI.getPageMetaInfo(pageId)
         }
-        console.log(metaInfo)
         const { pageTitle: lastPageTitle, blogName: lastBlogName } = await this._getPageURLInfo(metaInfo)
         if (lastBlogName !== blogName || pageTitle === undefined || lastPageTitle !== decodeURIComponent(pageTitle)) {
             await RoutingManager.moveWithoutAddHistory(Page.Blog, `/${lastBlogName}/${pageId}/${encodeURIComponent(lastPageTitle)}`)

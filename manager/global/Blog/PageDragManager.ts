@@ -67,8 +67,6 @@ export class PageDragManager {
         if (!this.draggingPageId) {
             return
         }
-        console.log(this.draggingPageId)
-        console.log(pageID)
         if (this.draggingPageId === pageID) {
             this.newParentId = null
             this.newOrder = null

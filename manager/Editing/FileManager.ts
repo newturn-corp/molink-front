@@ -41,7 +41,7 @@ class FileManager {
         return true
     }
 
-    async handleInsertData (editor: Editor, data) {
+    handleInsertData (editor: Editor, data) {
         const text = data.getData('text/plain')
         const { files } = data
 

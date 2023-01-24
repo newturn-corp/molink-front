@@ -3,7 +3,7 @@ import { Editor, Element, Node, Path, Text } from 'slate'
 
 export const insertCodeWhenInsertData: InsertDataHandler = (editor: Editor, data: DataTransfer) => {
     const text = data.getData('text/plain')
-    if (!text) {
+    if (!text || text === '') {
         return false
     }
     const { selection } = editor

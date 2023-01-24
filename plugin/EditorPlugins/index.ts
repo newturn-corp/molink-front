@@ -100,7 +100,6 @@ export const EditorPlugin = (editor: Editor) => {
                 return
             }
         }
-        console.log('기본 insertText')
         insertText(text)
     }
 
@@ -123,8 +122,6 @@ export const EditorPlugin = (editor: Editor) => {
     }
 
     editor.onChange = () => {
-        console.log(editor.children)
-        console.log(editor.operations)
         EventManager.issueEvent(Event.EditorChange)
         if (isBrowser) {
             CommandManager.handleEditorChange(editor)

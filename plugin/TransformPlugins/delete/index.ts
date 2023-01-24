@@ -185,10 +185,7 @@ export const customDelete = (editor: Editor, options: {
                 Transforms.insertNodes(editor, nextNode.children, {
                     at: [currentNodePath[0], currentNode.children.length]
                 })
-                console.log(editor.children)
-                console.log(nextNodePath)
                 Transforms.delete(editor, { at: nextNodePath })
-                console.log(editor.children)
             }
         }
     })
