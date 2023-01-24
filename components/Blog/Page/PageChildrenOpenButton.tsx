@@ -24,7 +24,9 @@ export const PageChildrenOpenButton: React.FC<{
                   ? <ArrowDropDown style={{
                       color: isChildrenExist ? '#000000' : '#00000022'
                   }} />
-                  : <ArrowRight />
+                  : <ArrowRight style={{
+                      color: isChildrenExist ? '#000000' : '#00000022'
+                  }} />
           }
       </div>
   })
