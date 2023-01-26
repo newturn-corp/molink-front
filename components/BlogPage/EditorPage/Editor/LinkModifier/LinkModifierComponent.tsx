@@ -23,6 +23,7 @@ export const LinkModifierComponent: React.FC<{
             <div
                 style={{
                     userSelect: linkModifier.isOpen ? undefined : 'none',
+                    display: linkModifier.isOpen ? undefined : 'none',
                     zIndex: 10000,
                     width: '100%',
                     height: '100%'
