@@ -28,7 +28,7 @@ export enum Page {
     MobileSupport = '/m/support',
     SettingFileUpload = '/setting/file-upload',
     User = '/users',
-    Editor = '_w'
+    Editor = '/_w'
 }
 
 class RoutingManager {
