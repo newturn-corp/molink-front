@@ -14,7 +14,7 @@ export const CustomModal: React.FC<CustomModalProps> = (props) => {
     return <Modal
         className={'modal' + (props.className ? ' ' + props.className : '')}
         title={props.title}
-        visible={props.isOpen}
+        open={props.isOpen}
         onCancel={() => props.onCancel()}
         okText={''}
         cancelText={''}

@@ -28,7 +28,7 @@ export const PageCellComponent: React.FC<PageColumnComponentInterface> = observe
             width: props.width
         }}
         onClick={async () => {
-            await RoutingManager.moveTo(Page.Blog, `/blog-name/${props.id}/page-name`)
+            await RoutingManager.moveTo(Page.Editor, `/${props.id}`)
         }}
     >
         <PageThumbnailComponent

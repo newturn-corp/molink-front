@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react'
 import React from 'react'
 import { Avatar } from 'antd'
-import RoutingManager, { Page } from '../../../../manager/global/RoutingManager'
-import { getRelativeTime } from '../../../../utils/getRelativeTime'
-import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
+import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
+import { getRelativeTime } from '../../../utils/getRelativeTime'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 export const PageBlogInfoComponent: React.FC<{
 }> = observer(() => {

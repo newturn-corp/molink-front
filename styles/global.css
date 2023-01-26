@@ -430,4 +430,14 @@ body {
   background: #D6E6F6;
 }
 
+.site-body {
+  top: 56px;
+  height: calc(100vh - 56px);
+}
+
+.mobile-site-body {
+  top: 44px;
+  height: calc(100vh - 44px);
+}
+
 /*# sourceMappingURL=global.css.map */

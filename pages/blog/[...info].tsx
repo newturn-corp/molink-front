@@ -1,20 +1,16 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { Header } from '../../components/global/Header/Header'
-import { BrowserView, isBrowser, isMobile, MobileView } from 'react-device-detect'
+import { isBrowser, isMobile } from 'react-device-detect'
 import { HomeMainComponent } from '../../components/Home/Main/HomeMainComponent'
-import { HierarchyWidthController } from '../../components/Blog/HierarchyWidthController'
+import { BlogWidthController } from '../../components/Blog/BlogWidthController'
 import { BlogComponent } from '../../components/Blog/BlogComponent'
 import EventManager from '../../manager/global/Event/EventManager'
 import { Event } from '../../manager/global/Event/Event'
-import { Portal } from '../../components/utils/Portal'
 import StyleManager from '../../manager/global/Style/StyleManager'
 import BlogPage from '../../manager/Blog/BlogPage'
-import { BlogPageHead } from '../../components/BlogPage/EditorPage/BlogPageHead'
+import { EditorPageHead } from '../../components/BlogPage/EditorPage/EditorPageHead'
 import { ESPageMetaInfo } from '@newturn-develop/types-molink'
-import { SERVER_BASE_URL } from '../../infra/constants'
-import { GetServerSideProps, GetStaticProps } from 'next'
-import RoutingManager from '../../manager/global/RoutingManager'
 import { UserBlogBarComponent } from '../../components/global/UserBlogBar/UserBlogBarComponent'
 import { MobileBlogComponent } from '../../components/Blog/Mobile/MobileBlogComponent'
 
@@ -27,7 +23,7 @@ const BlogPageComponent: React.FC<{
     }
     BlogPage.handleEnter(router.query.info as string[], pageMetaInfo)
     return <div>
-        <BlogPageHead
+        <EditorPageHead
             pageMetaInfo={pageMetaInfo}
         />
         <div
@@ -49,7 +45,7 @@ const BlogPageComponent: React.FC<{
                     isBrowser && <>
                         <UserBlogBarComponent/>
                         <BlogComponent />
-                        <HierarchyWidthController/>
+                        <BlogWidthController/>
                     </>
                 }
             </div>

@@ -1,12 +1,10 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import RoutingManager, { Page } from '../../../manager/global/RoutingManager'
-import { HeartFilled } from '@ant-design/icons'
 import CommentIcon from 'public/image/icon/comment.svg'
 import HeartIcon from 'public/image/icon/heart.svg'
 import { PageThumbnailComponent } from './PageThumbnailComponent'
 import { PageColumnComponentUserInfo } from './PageColumnComponentUserInfo'
-import { getRelativeTime } from '../../../utils/getRelativeTime'
 
 export interface PageColumnComponentInterface {
     id: string
@@ -24,7 +22,7 @@ export const PageColumnComponent: React.FC<PageColumnComponentInterface> = obser
     return <div
         className={'page-column-component'}
         onClick={async () => {
-            await RoutingManager.moveTo(Page.Blog, `/blog-name/${props.id}/page-name`)
+            await RoutingManager.moveTo(Page.Editor, `/${props.id}`)
         }}
     >
         <PageThumbnailComponent

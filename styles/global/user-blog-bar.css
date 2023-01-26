@@ -3,6 +3,7 @@
   height: 100%;
   position: fixed;
   left: 0px;
+  top: 56px;
   background-color: #F2F3F5;
 }
 .user-blog-bar .user-blog-block {

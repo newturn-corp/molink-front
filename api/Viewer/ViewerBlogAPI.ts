@@ -8,7 +8,6 @@ import {
 class ViewerBlogAPI extends BaseAPI {
     async getBlogInfoMapByIDList (blogIDList: number[]): Promise<GetBlogInfoMapByBlogIDListResponseDTO> {
         const res = await this.get(`/viewer/blog/info-map-by-id?blogIDList=${blogIDList.join(',')}`)
-        console.log(res)
         return res.data
     }
 

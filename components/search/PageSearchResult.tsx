@@ -18,7 +18,7 @@ export const PageSearchResult: React.FC<{
         className='page-search-result'
         key={`page-search-result-container-${result.id}`}
         onClick={async () => {
-            await RoutingManager.moveWithoutAddHistory(Page.Blog, `/blog-name/${result.id}/page-name`)
+            await RoutingManager.moveWithoutAddHistory(Page.Editor, `/${result.id}`)
         }}
     >
         <div

@@ -6,7 +6,7 @@ import EventManager from '../../manager/global/Event/EventManager'
 import { Event } from '../../manager/global/Event/Event'
 import Blog from '../../manager/global/Blog/Blog'
 
-export const HierarchyWidthController: React.FC<{
+export const BlogWidthController: React.FC<{
   }> = observer(() => {
       if (!Blog.pageHierarchy) {
           return <></>

@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react'
 import React, { useRef } from 'react'
 import { AddRounded } from '@material-ui/icons'
-import StyleManager from '../../../../manager/global/Style/StyleManager'
-import CommandManager from '../../../../manager/Editing/Command/CommandManager'
-import LanguageManager from '../../../../manager/global/LanguageManager'
-import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
+import StyleManager from '../../../manager/global/Style/StyleManager'
+import CommandManager from '../../../manager/Editing/Command/CommandManager'
+import LanguageManager from '../../../manager/global/LanguageManager'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 export const MobileToolbar: React.FC<{
 }> = observer(() => {

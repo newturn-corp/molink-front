@@ -9,6 +9,9 @@ import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
 export const PublishButton: React.FC<{
 }> = observer(() => {
     const pageInfo = EditorPage.pageInfo
+    if (!pageInfo) {
+        return <></>
+    }
     const {
         isPublishable,
         lastPublishedAt

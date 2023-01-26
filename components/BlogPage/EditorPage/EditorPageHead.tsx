@@ -2,12 +2,14 @@ import React from 'react'
 import Head from 'next/head'
 import { ESPageMetaInfo } from '@newturn-develop/types-molink'
 
-export const BlogPageHead: React.FC<{
+export const EditorPageHead: React.FC<{
     pageMetaInfo: ESPageMetaInfo | undefined
 }> = ({ pageMetaInfo }) => {
     const title = pageMetaInfo ? pageMetaInfo.title : 'Molink'
     const description = pageMetaInfo ? pageMetaInfo.description : '내가 주도하는 블로그 플랫폼, Molink'
     const image = pageMetaInfo ? pageMetaInfo.image : 'https://www.molink.life/image/global/header/logo.png'
+    const tags = pageMetaInfo && pageMetaInfo.tags && typeof pageMetaInfo.tags[Symbol.iterator] === 'function' ? pageMetaInfo.tags : []
+    const lastEditedAt = pageMetaInfo && pageMetaInfo.lastEditedAt && !isNaN(Number(new Date(pageMetaInfo.lastEditedAt))) ? pageMetaInfo.lastEditedAt : new Date()
 
     return <Head>
         <title>{title}</title>
@@ -38,11 +40,11 @@ export const BlogPageHead: React.FC<{
             pageMetaInfo && <>
                 <meta
                     name="keywords"
-                    content={[pageMetaInfo.title, ...pageMetaInfo.tags].join(',')}
+                    content={[title, ...tags].join(',')}
                 />
                 <meta
                     name="Date"
-                    content={new Date(pageMetaInfo.lastEditedAt).toISOString()}
+                    content={new Date(lastEditedAt).toISOString()}
                 />
             </>
         }
