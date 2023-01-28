@@ -85,7 +85,10 @@ class ShortcutManager {
             return true
         } else if (type === 'ol-list') {
             const start = beforeText.split('.')[0]
-            ListTransforms.wrapInList(editor, 'ol-list', { start: Number(start) })
+            console.log(start)
+            ListTransforms.wrapInList(editor, 'ol-list', {
+                start: Number(start)
+            })
             const newProperties: Partial<SlateElement> = {
                 type: 'ordered-list-item'
             }
