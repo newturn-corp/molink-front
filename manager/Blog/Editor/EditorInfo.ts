@@ -43,7 +43,6 @@ export class EditorInfo {
     }
 
     async updateTitle (title: string) {
-        console.log('update title' + title)
         await ContentAPI.updatePageTitle(new UpdatePageTitleDTO(this.pageID, title))
     }
 

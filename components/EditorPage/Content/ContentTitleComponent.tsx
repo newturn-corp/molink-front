@@ -8,7 +8,6 @@ export const ContentTitleComponent: React.FC<{
 }> = observer(() => {
     const editor = EditorPage.editor
     const editorInfo = editor.info
-    console.log(editorInfo)
     return (
         <div
             className='title'
@@ -18,8 +17,8 @@ export const ContentTitleComponent: React.FC<{
                 outline: '0px solid transparent',
                 fontSize: isBrowser ? 40 : 32
             }}
-            onBlur={async (e) => {
-                await editorInfo.updateTitle(e.currentTarget.textContent)
+            onBlur={(e) => {
+                editorInfo.updateTitle(e.currentTarget.textContent)
             }}
         >
             {editorInfo.title}
