@@ -13,14 +13,14 @@ export const EditorBodyComponent: React.FC<{
         const screenWidth = GlobalManager.screenWidth || window.innerWidth
         const screenHeight = GlobalManager.screenHeight || window.innerHeight
         if (!toolbar || !toolbar.enable) {
-            const top = 40
+            const top = 96
             return {
                 width: screenWidth - (isMobile ? 0 : blogWidth),
                 height: screenHeight - top,
                 top
             }
         } else {
-            const top = toolbar.isOpen ? 130 : 80
+            const top = toolbar.isOpen ? 186 : 136
             return {
                 width: screenWidth - (isMobile ? 0 : blogWidth),
                 height: screenHeight - top,
