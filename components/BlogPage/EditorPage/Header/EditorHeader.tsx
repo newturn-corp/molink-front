@@ -14,12 +14,12 @@ export const EditorHeader: React.FC<{
         if (!toolbar || !toolbar.enable) {
             return {
                 height: 40,
-                top: 0
+                top: 56
             }
         } else {
             return {
                 height: 40,
-                top: toolbar.isOpen ? 90 : 40
+                top: toolbar.isOpen ? 146 : 86
             }
         }
     }

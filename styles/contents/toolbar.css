@@ -1,6 +1,7 @@
 .content-toolbar {
   position: fixed;
   width: 100%;
+  top: 56px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -87,11 +88,11 @@
   transition: fill 0.25s;
   fill: #3A3C3F;
 }
-.content-toolbar .toolbar-control-button svg:hover {
-  fill: #3A7BBF;
-}
 .content-toolbar .toolbar-control-button:hover {
   background-color: rgba(0, 0, 0, 0.04);
+}
+.content-toolbar .toolbar-control-button:hover svg {
+  fill: #3A7BBF;
 }
 .content-toolbar .right-content-toolbar {
   position: absolute;
@@ -118,7 +119,7 @@
   cursor: pointer;
 }
 .content-toolbar .right-content-toolbar .setting-button svg {
-  fill: #242425;
+  fill: rgb(36, 36, 37);
 }
 .content-toolbar .right-content-toolbar .setting-button .text {
   position: static;
@@ -141,4 +142,4 @@
   background-color: rgba(0, 0, 0, 0.04);
 }
 
-/*# sourceMappingURL=toolbar.css.idMap */
+/*# sourceMappingURL=toolbar.css.map */

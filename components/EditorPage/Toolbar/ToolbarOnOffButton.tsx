@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import ArrowDownDoubleIcon from 'public/image/icon/arrow-down-double.svg'
 import ArrowUpDoubleIcon from 'public/image/icon/arrow-up-double.svg'
-import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 const closeStateStyle = {
     width: 24,

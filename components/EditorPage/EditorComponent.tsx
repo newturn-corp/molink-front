@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserView, MobileView } from 'react-device-detect'
 import EditorPage from '../../manager/Blog/Editor/EditorPage'
-import { EditorToolbarComponent } from '../../components/BlogPage/EditorPage/Toolbar/EditorToolbarComponent'
+import { EditorToolbarComponent } from './Toolbar/EditorToolbarComponent'
 import { EditorHeader } from '../../components/BlogPage/EditorPage/Header/EditorHeader'
 import { EditorBodyComponent } from '../../components/BlogPage/EditorPage/EditorBodyComponent'
 import { ContentComponent } from '../../components/EditorPage/Content/ContentComponent'

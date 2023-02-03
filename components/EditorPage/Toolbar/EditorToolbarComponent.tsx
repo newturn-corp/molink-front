@@ -2,11 +2,11 @@ import { observer } from 'mobx-react'
 import React from 'react'
 import { ToolbarOnOffButton } from './ToolbarOnOffButton'
 import { ToolbarEditingButton } from './ToolbarEditingButton'
-import Photo from '../../../../public/image/icon/photo.svg'
-import Video from '../../../../public/image/icon/video.svg'
-import File from '../../../../public/image/icon/folder.svg'
-import Code from '../../../../public/image/icon/code.svg'
-import CheckList from '../../../../public/image/icon/check-list.svg'
+import Photo from '../../../public/image/icon/photo.svg'
+import Video from '../../../public/image/icon/video.svg'
+import File from '../../../public/image/icon/folder.svg'
+import Code from '../../../public/image/icon/code.svg'
+import CheckList from '../../../public/image/icon/check-list.svg'
 import {
     BookRounded,
     FormatAlignCenterRounded,
@@ -19,21 +19,19 @@ import {
     FormatListBulletedRounded,
     FormatListNumberedRounded
 } from '@material-ui/icons'
-import FormattingManager, { Align, Format, List } from '../../../../manager/Editing/FormattingManager'
-import LinkManager from '../../../../manager/Editing/Link/LinkManager'
-import LanguageManager from '../../../../manager/global/LanguageManager'
-import EditorPage from '../../../../manager/Blog/Editor/EditorPage'
-import UserManager from '../../../../manager/global/User/UserManager'
+import FormattingManager, { Align, Format, List } from '../../../manager/Editing/FormattingManager'
+import LinkManager from '../../../manager/Editing/Link/LinkManager'
+import LanguageManager from '../../../manager/global/LanguageManager'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
+import UserManager from '../../../manager/global/User/UserManager'
 
 const defaultContentToolbarStyle = {
     height: 90,
-    top: 0,
     padding: 8
 }
 
 const closeStateContentToolbarStyle = {
     height: 32,
-    top: 0,
     padding: 0
 }
 
@@ -43,6 +41,8 @@ export const EditorToolbarComponent: React.FC<{
       if (!toolbar || !toolbar.enable) {
           return <></>
       }
+
+      console.log(toolbar.isOpen)
 
       return <div
           className={'content-toolbar'}
