@@ -28,11 +28,16 @@ export const EditorBodyComponent: React.FC<{
             }
         }
     }
+    const ref = useRef<HTMLDivElement>()
+    useEffect(() => {
+        ref.current.scrollTop = 0
+    })
 
     return <div
         className={'content-body'}
         id={'content-body'}
         style={getBodyStyle()}
+        ref={ref}
     >
         {props.children}
     </div>
