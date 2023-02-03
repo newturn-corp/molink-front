@@ -8,7 +8,7 @@ export const ContentTitleComponent: React.FC<{
 }> = observer(() => {
     const editor = EditorPage.editor
     const editorInfo = editor.info
-
+    console.log(editorInfo)
     return (
         <div
             className='title'

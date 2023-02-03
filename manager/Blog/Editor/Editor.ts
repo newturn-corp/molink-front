@@ -76,6 +76,7 @@ export class Editor {
         if (!this.editable) {
             this.toolbar.disable()
             this.viewer = new EditorViewer(pageId)
+            this.info.load(pageId)
             await this.viewer.load()
             this.slateEditor = this.viewer.getSlateEditor()
         } else {

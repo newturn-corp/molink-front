@@ -66,7 +66,9 @@ export const PageComponent: React.FC<{
                   draggable={!isChangingName && Blog.authority.editable}
                   onClick={async (event) => {
                       if (!isOpen) {
-                          await RoutingManager.moveTo(Page.Editor, `/${pageID}`)
+                          await RoutingManager.moveTo(Page.Editor, `/${pageID}`, {
+                              shallow: true
+                          })
                           if (isMobile) {
                               Blog.isOpen = false
                           }
