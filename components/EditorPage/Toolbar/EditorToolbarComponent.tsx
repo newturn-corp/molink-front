@@ -42,8 +42,6 @@ export const EditorToolbarComponent: React.FC<{
           return <></>
       }
 
-      console.log(toolbar.isOpen)
-
       return <div
           className={'content-toolbar'}
           style={toolbar.isOpen ? defaultContentToolbarStyle : closeStateContentToolbarStyle}

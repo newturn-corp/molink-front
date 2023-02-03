@@ -7,6 +7,9 @@ import Blog from '../../global/Blog/Blog'
 import { EditorPageUserInfo } from './View/EditorPageUserInfo'
 import UserManager from '../../global/User/UserManager'
 import ViewerAPI from '../../../api/ViewerAPI'
+import DialogManager from '../../global/DialogManager'
+import LanguageManager from '../../global/LanguageManager'
+import RoutingManager, { Page } from '../../global/RoutingManager'
 
 class EditorPage {
     pageId: string
@@ -26,7 +29,12 @@ class EditorPage {
         const metaInfo = await ViewerAPI.getPageMetaInfo(pageId)
         const { blogID: pageBlogID, userId: pageUserID } = metaInfo
         await Blog.load(pageBlogID)
-        Blog.pageHierarchy.openPage(pageId)
+        if (!Blog.pageHierarchy.yMap.get(pageId)) {
+            await DialogManager.openDialog('페이지가 존재하지 않습니다.', '메인 페이지로 이동합니다.', [LanguageManager.languageMap.Accept])
+            await RoutingManager.moveTo(Page.Index)
+            return
+        }
+        await Blog.pageHierarchy.openPage(pageId)
 
         this.editor = new Editor(metaInfo)
         this.commentInfo = new CommentInfo(pageId)

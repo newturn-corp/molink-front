@@ -20,6 +20,8 @@ import HierarchyAPI from '../../../../api/HierarchyAPI'
 import Blog from '../Blog'
 import { BlogPageCreator } from './BlogPageCreator'
 import { BlogPageTitleEditor } from './BlogPageTitleEditor'
+import DialogManager from '../../DialogManager'
+import LanguageManager from '../../LanguageManager'
 
 export enum BlogPageType {
     UserMainPage,
@@ -85,9 +87,13 @@ export class BlogPageHierarchy {
         this.pageTitleEditor = new BlogPageTitleEditor(this.yMap)
     }
 
-    openPage (pageId) {
+    async openPage (pageId) {
         if (this.openedPage) {
             this.openedPage.reset()
+        }
+        if (!this.yMap.get(pageId)) {
+            await DialogManager.openDialog('페이지가 존재하지 않습니다.', '메인 페이지로 이동합니다.', [LanguageManager.languageMap.Accept])
+            await RoutingManager.moveTo(Page.Index)
         }
         this.openedPage = new BlogOpenedPage(pageId, this.yMap)
     }

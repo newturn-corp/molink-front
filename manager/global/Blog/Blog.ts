@@ -15,6 +15,7 @@ import DialogManager from '../DialogManager'
 import LanguageManager from '../LanguageManager'
 import RoutingManager, { Page } from '../RoutingManager'
 import { BlogNotifications } from './BlogNotifications'
+import EditorPage from '../../Blog/Editor/EditorPage'
 
 class Blog {
     id: number = null
@@ -35,7 +36,11 @@ class Blog {
             if (result) {
                 this.reset()
                 if (UserManager.blog?.blogs[0]) {
-                    await this.load(UserManager.blog.blogs[0])
+                    setTimeout(async () => {
+                        if (!EditorPage.blogInfo) {
+                            await this.load(UserManager.blog.blogs[0])
+                        }
+                    }, 1000)
                 }
             }
         }, 1)
@@ -50,6 +55,7 @@ class Blog {
     }
 
     async load (id: number) {
+        console.log('load ' + id)
         if (this.id === id) {
             return
         } else {

@@ -36,6 +36,7 @@ class MainPage {
         this.pageLists[this.currentCategoryIndex].loadPageSummaryList()
         if (UserManager.isUserAuthorized) {
             if (UserManager.blog.blogs[0]) {
+                console.log('main page load')
                 await Blog.load(UserManager.blog.blogs[0])
             }
         } else {
@@ -43,6 +44,7 @@ class MainPage {
             EventManager.addDisposableEventListener(Event.UserAuthorization, async ({ result }: any) => {
                 if (result) {
                     if (UserManager.blog.blogs[0]) {
+                        console.log('main page load')
                         await Blog.load(UserManager.blog.blogs[0])
                     }
                 }
