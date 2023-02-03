@@ -41,14 +41,14 @@ export class EditorPermanenceManager {
         const { content, rawContent, description } = this.getPagePermanenceDataFromNodeArray(this.slateEditor.children)
 
         await ContentAPI.updatePageDataInSearchEngine(new UpdatePageDataInSearchEngineDTO(
-            this.pageId,
+            page.pageId,
             title,
             content,
             rawContent,
             description,
             visibility,
             this.shouldUpdateLastEditedAt ? Number(new Date()) : undefined,
-            image ? `${image.url}?pageId=${this.pageId}` : undefined,
+            image ? `${image.url}?pageId=${page.pageId}` : undefined,
             this.tagList.tags
         ))
     }
