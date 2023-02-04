@@ -1,15 +1,18 @@
 import React from 'react'
 import Head from 'next/head'
 import { ESPageMetaInfo } from '@newturn-develop/types-molink'
+import { observer } from 'mobx-react'
+import EditorPage from '../../../manager/Blog/Editor/EditorPage'
 
 export const EditorPageHead: React.FC<{
     pageMetaInfo: ESPageMetaInfo | undefined
-}> = ({ pageMetaInfo }) => {
-    const title = pageMetaInfo ? pageMetaInfo.title : 'Molink'
-    const description = pageMetaInfo ? pageMetaInfo.description : '내가 주도하는 블로그 플랫폼, Molink'
-    const image = pageMetaInfo ? pageMetaInfo.image : 'https://www.molink.life/image/global/header/logo.png'
-    const tags = pageMetaInfo && pageMetaInfo.tags && typeof pageMetaInfo.tags[Symbol.iterator] === 'function' ? pageMetaInfo.tags : []
-    const lastEditedAt = pageMetaInfo && pageMetaInfo.lastEditedAt && !isNaN(Number(new Date(pageMetaInfo.lastEditedAt))) ? pageMetaInfo.lastEditedAt : new Date()
+}> = observer(({ pageMetaInfo }) => {
+    const metaInfo = EditorPage.metaInfo || pageMetaInfo
+    const title = metaInfo ? metaInfo.title : 'Molink'
+    const description = metaInfo ? metaInfo.description : '내가 주도하는 블로그 플랫폼, Molink'
+    const image = metaInfo ? metaInfo.image : 'https://www.molink.life/image/global/header/logo.png'
+    const tags = metaInfo && metaInfo.tags && typeof metaInfo.tags[Symbol.iterator] === 'function' ? metaInfo.tags : []
+    const lastEditedAt = metaInfo && metaInfo.lastEditedAt && !isNaN(Number(new Date(metaInfo.lastEditedAt))) ? metaInfo.lastEditedAt : new Date()
 
     return <Head>
         <title>{title}</title>
@@ -50,4 +53,4 @@ export const EditorPageHead: React.FC<{
         }
         <link rel='shortcut icon' href='/favicon.ico' />
     </Head>
-}
+})

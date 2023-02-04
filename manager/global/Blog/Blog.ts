@@ -55,7 +55,6 @@ class Blog {
     }
 
     async load (id: number) {
-        console.log('load ' + id)
         if (this.id === id) {
             return
         } else {

@@ -16,6 +16,7 @@ import ContentContainer from '../../components/global/ContentContainer'
 import EditorPage from '../../manager/Blog/Editor/EditorPage'
 import { SiteBody } from '../../components/global/SiteBody'
 import EditorComponent from '../../components/EditorPage/EditorComponent'
+import { observer } from 'mobx-react'
 
 const EditorPageComponent: React.FC<{
     pageMetaInfo: ESPageMetaInfo | null

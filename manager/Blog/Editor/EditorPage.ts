@@ -10,10 +10,12 @@ import ViewerAPI from '../../../api/ViewerAPI'
 import DialogManager from '../../global/DialogManager'
 import LanguageManager from '../../global/LanguageManager'
 import RoutingManager, { Page } from '../../global/RoutingManager'
+import { ESPageMetaInfo } from '@newturn-develop/types-molink'
 
 class EditorPage {
     pageId: string
     editor: Editor = null
+    metaInfo: ESPageMetaInfo = null
     commentInfo: CommentInfo = null
     blogInfo: EditorPageBlogInfo = null
     userInfo: EditorPageUserInfo = null
@@ -27,6 +29,7 @@ class EditorPage {
         await UserManager.load()
         this.pageId = pageId
         const metaInfo = await ViewerAPI.getPageMetaInfo(pageId)
+        this.metaInfo = metaInfo
         const { blogID: pageBlogID, userId: pageUserID } = metaInfo
         await Blog.load(pageBlogID)
         if (!Blog.pageHierarchy.yMap.get(pageId)) {
